@@ -4,13 +4,13 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — Hannah's direction in the accountable session on 16 November 2026: deliver the video and, more importantly, a reusable workflow a weaker agent can run. Work through Astrid's tools; fix blockers at cause or file useful work that is too large; return creative choices to the owner. Owner direction: `/tmp/claude-0/-home-user/147d9c2d-d162-594a-abc0-e50a18b46d5e/scratchpad/work/owner-direction.md`. The [source brief](https://github.com/peteromallet/minkhole-h3av-handover) is also a source record.
+**Scope decision:** Accepted — Hannah's direction in the accountable session on 16 November 2026: deliver the video and, more importantly, a reusable workflow a weaker agent can run. Work through Astrid's tools; fix blockers at cause or file useful work that is too large; return creative choices to the owner. The [source brief](https://github.com/peteromallet/minkhole-h3av-handover) is also a source record.
 
-**Prior art:** Existing timeline transfer, rendering and H3 tools are the starting points. In the current findings, Release 14 rejects the rough-cut archive; issue [#346](https://github.com/banodoco/astrid-agent/issues/346) has a fix on a Release 15 branch, being brought into `release/14/plan-59`. Preview/export disagree, fit is track-level, and clip crop is not editable. The candidate appearance design is the composition package as the shared source for preview, export and composed visualize; it is being sized now. Earlier investigations also found no generic source-footage word transcription proof and no live GPU voice result. Reassess issues and source heads when each task begins.
+**Prior art:** Existing timeline transfer, rendering and H3 tools are the starting points. In the current findings, Release 14 rejects the rough-cut archive; issue [#346](https://github.com/banodoco/astrid-agent/issues/346) has a fix on a Release 15 branch, being brought into `release/14/plan-59`. Preview/export disagree, fit is track-level, and clip crop is not editable. The composition source is consolidated on `banodoco/timeline-composition` branch `release/14/plan-59`. The owner approved the crop on 16 November after editor preview, composed frame and export agreed on the cut; four independent reviews completed and the fix is merged. The approved Astrid archive is on the working machine, and its permanent home remains an owner decision. Timed-word transcription is now built and merged, with offline proof only; it has not run on a real machine. The first H3 take is composed and structurally verified, but its words and creative quality await the owner. Reassess issues and source heads when each task begins.
 
-**Approach:** Keep this as a live work loop rather than a fixed implementation plan. Start from the next creative result; extend the Astrid capability that owns each blocker; file a durable issue when the fix is too large for this run. The composition package is the proposed shared appearance source; D3 stays open until sizing.
+**Approach:** Keep this as a live work loop rather than a fixed implementation plan. Start from the next creative result; extend the Astrid capability that owns each blocker; file a durable issue when the fix is too large for this run. The composition package is the shared appearance source; D3 records its current source home.
 
-**Challenge:** Not needed — the owner directed a live work loop, not a fixed implementation plan, and no advisor reviewed it. Keep the task list intentionally short and mutable: only C1 is detailed; later creative tasks are one line each. A retrospective blocker log captures cause, decision, landing place and proof without maintaining a second backlog.
+**Challenge:** Not needed — the owner directed a live work loop, not a fixed implementation plan. Keep the task list intentionally short and mutable: only C1 is detailed; later creative tasks are one line each. A retrospective blocker log captures cause, decision, landing place and proof without maintaining a second backlog.
 
 **Proof and limits:** The ten user-visible outcomes in [plan.md](plan.md#outcome-and-scope) are the acceptance picture. Evidence belongs beside the task and blocker as work proceeds. The plan does not claim completion from CPU fixtures where a real GPU result is required.
 
@@ -22,9 +22,11 @@
 
 - **D1 — Release inclusion:** Decided 16 November 2026: yes, include in Release 14 (“add it to the release”). The release manager adds Plan 59 to the Included plans list in `releases/14.md`.
 - **D2 — Shared appearance and migration:** Decided 16 November 2026: one placement function owned by the composition package is called by export rendering, editor preview and editing handles; delete their local copies. Fit is authored per clip, falling back to its track. Replace the implicit “geometry or crop means cover” rule by writing the choice explicitly once when an old project is opened.
-- **D3 — Shipped composition package source:** Open pending the investigation into where the shipped 0.0.17 package source is. The first step is establishing that source location; then settle how its shared implementation is maintained.
+- **D3 — Shipped composition package source:** Resolved in substance (16 November 2026): exact 0.0.17 source recovered byte for byte at AstridPseudon/timeline-hub commit `14628ad5d`. `banodoco/timeline-composition` branch `release/14/plan-59` at `2c0740a` merges that lineage with staging as 0.0.18, adds a placement oracle against 0.0.17, stamps the source commit into packed `package.json`, and adds CI. The package now builds from its owning repository. Owner decisions remain: whether this branch becomes `main`, the missing license field, and which stray branches and copies to delete. Only the owner deletes those branches/copies.
 - **D4 — Budget:** Decided 16 November 2026: at most $2/hour; $3 pilot, $6 experiments, $4 retries, $3 fresh-agent trial, $9 reserve; $25 total. No other paid resource.
 - **D5 — Review:** Decided 16 November 2026: one review stop is fine.
+
+**Parallel work:** Automatic source conform is in Plan 60 RH-1. The first GPU take exercised the creation-time deadline and watchdog; the provider accepted the deadline and the watchdog acknowledged it, but provider termination was not observed because the machine was released first. Hivemind fixes are reviewed and merged.
 
 ## Source identities
 
@@ -34,4 +36,4 @@ The supplied rough-cut archive SHA-256 is `50e7bf1262f0b89bd95dcce5ee0edebf80eea
 
 ## References
 
-[Source brief and archive instructions](https://github.com/peteromallet/minkhole-h3av-handover) · [Release 14](../../releases/14.md) · Owner direction: `/tmp/claude-0/-home-user/147d9c2d-d162-594a-abc0-e50a18b46d5e/scratchpad/work/owner-direction.md`
+[Source brief and archive instructions](https://github.com/peteromallet/minkhole-h3av-handover) · [Release 14](../../releases/14.md)

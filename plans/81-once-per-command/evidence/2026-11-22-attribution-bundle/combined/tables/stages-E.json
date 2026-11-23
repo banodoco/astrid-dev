@@ -1,0 +1,219 @@
+[
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.02450673400198866,
+    "stage": "Runtime GET /v1/app-state/user/generation",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.01136086000042269,
+    "stage": "Runtime GET /v1/capabilities",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.006519479999951727,
+    "stage": "Runtime GET /v1/health",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A074c0ee12e41e59bf5f13f4e199e9bfb674a1ff45179bd571320c70196fd7d67",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A0fbdc6f767cf507d617aa7621c611ed67f6cd6182a9e4c0309460dfb2a6231d1",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A387d28c73d5e25288243a9a96ca55b8a595753974bb47606adf55c1e16e8cfac",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A6cec1a01819d67724c0eb28b8232af332bb1a6edc277f0559308fc36fb46ce7b",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.01875499400011904,
+    "stage": "Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Abbcbd2db4033baad83a9f4979a6c1d36dbf4df51ba662443fade0a94324b4104",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Ac3c5fb93cbe5070d20dd4f32fd1bae756363cf1c0a2e43034143337b7822b0e9",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Ad5cd0bfea9d771f671d3e2819964799ec21f7ba0479b91f05ed464d851f4e21c",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Ae05a80b0493f05248a6d36be66ea87eb1ac7264631fc129295792b795cb0d69f",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Af02d24aa267b6ef65442462077f5449572483b440a0c81397c4d877df16d19df",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Afcc41ffed7a5681128315f337c1c24ef8210c2008edaac104d980b434fde590a",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.00626592999924469,
+    "stage": "Runtime GET /v1/projects/0f5e5090a0444789b0c430fef2d6f701",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.00806477000060113,
+    "stage": "Runtime POST /v1/handshake",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.0344116070000382,
+    "stage": "Runtime POST /v1/projects/0f5e5090a0444789b0c430fef2d6f701/objects",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.009510300000329153,
+    "stage": "Runtime POST /v1/tasks",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.00028311399910307955,
+    "stage": "Runtime acquisition lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 1.0065970369996649,
+    "stage": "Runtime launcher connection",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 4,
+    "parent": null,
+    "seconds_median": 1.0881343500013827,
+    "stage": "entry lookup",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 1.617700036149472e-05,
+    "stage": "in-process Runtime acquisition lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.15698266700019303,
+    "stage": "model registry",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 6.183114261998526,
+    "stage": "other command work",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 18,
+    "parent": null,
+    "seconds_median": 6.608134146998054,
+    "stage": "pack discovery",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.23860862600122346,
+    "stage": "pack host attachment",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 3.314300010970328e-05,
+    "stage": "pack host lifecycle lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.007645405999937793,
+    "stage": "pack host readiness",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.1371519009999247,
+    "stage": "pack host source identity",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.006764064000890357,
+    "stage": "target check",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.4187766200011538,
+    "stage": "workflow build",
+    "total_seconds_median": null
+  }
+]

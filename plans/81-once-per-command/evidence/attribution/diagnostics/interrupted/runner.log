@@ -1,0 +1,34 @@
+W-plain-warmup ok
+W-plain-1 ok
+W-plain-2 ok
+W-plain-3 ok
+W-plain-4 ok
+W-plain-5 ok
+I-plain-warmup ok
+I-plain-1 ok
+generic host: lease {"attempt_id": "b503f00624514df485faf983c26b35f4", "category": "cancelled", "elapsed_seconds": 0.275, "last_acknowledged_heartbeat": "2026-11-22T10:06:18.306741+00:00", "runtime_code": null, "task_id": "87191ff104164f12ab3f2491a44f3ad5", "verdict": "cancelled"}
+Traceback (most recent call last):
+  File "/root/codex/plan-81m/attribution-evidence/plans/81-once-per-command/evidence/attribution/run.py", line 137, in <module>
+    monkeypatch.undo()
+                   ~^^
+  File "/root/codex/plan-81m/attribution-evidence/plans/81-once-per-command/evidence/attribution/run.py", line 132, in main
+    yield target_lifetime.enter_context(original_target(*a, **kw))
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/root/codex/plan-81m/a4-agent/tests/integrations/test_runpod_slot_path_cpu.py", line 265, in _drive
+    result = call(GenerationFacade(), controls, tmp_path)
+  File "/root/codex/plan-81m/attribution-evidence/plans/81-once-per-command/evidence/attribution/run.py", line 94, in call
+    before_a, before_p = len(admissions), len(acknowledgements)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 1223, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 2155, in _communicate
+    ready = selector.select(timeout)
+  File "/usr/local/lib/python3.13/selectors.py", line 398, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt

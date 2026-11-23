@@ -1,0 +1,202 @@
+[
+  {
+    "profile": "save-1.speedscope.json",
+    "request_thread": "Thread 10477 \"Thread-793 (process_request_thread)\"",
+    "sampled_profiles": 15,
+    "other_threads_with_commit_frames": [],
+    "active_commit_sample_s": 54.64,
+    "whole_selected_thread_sample_s": 54.68,
+    "off_request_sample_s_same_thread": 0.04,
+    "selected_thread_covered_pct": 100.0,
+    "partition_s": {
+      "old_history_verification": 38.13,
+      "validation_of_this_edit": 5.97,
+      "durable_writing": 0.16,
+      "other": 10.42
+    },
+    "top_self_frames_s": [
+      [
+        "iterencode (encoder.py:258)",
+        6.0
+      ],
+      [
+        "check (timeline_commit_store.py:344)",
+        2.03
+      ],
+      [
+        "is_type (_types.py:116)",
+        1.77
+      ],
+      [
+        "digest (timeline_commit_validation.py:96)",
+        1.71
+      ],
+      [
+        "value_equal (timeline_commit_producer.py:67)",
+        1.42
+      ],
+      [
+        "raw_decode (decoder.py:353)",
+        1.35
+      ],
+      [
+        "_deepcopy_dict (copy.py:231)",
+        1.33
+      ],
+      [
+        "type (_keywords.py:285)",
+        1.27
+      ],
+      [
+        "_read (timeline_commit_store.py:288)",
+        1.15
+      ],
+      [
+        "<genexpr> (timeline_commit_producer.py:67)",
+        1.15
+      ]
+    ],
+    "top_other_frames_s": [
+      [
+        "_deepcopy_dict (copy.py:231)",
+        0.99
+      ],
+      [
+        "_deepcopy_dict (copy.py:230)",
+        0.66
+      ],
+      [
+        "deepcopy (copy.py:146)",
+        0.65
+      ],
+      [
+        "deepcopy (copy.py:138)",
+        0.61
+      ],
+      [
+        "deepcopy (copy.py:144)",
+        0.48
+      ],
+      [
+        "deepcopy (copy.py:137)",
+        0.44
+      ],
+      [
+        "check (timeline_commit_store.py:344)",
+        0.41
+      ],
+      [
+        "equal (_command_state.py:40)",
+        0.3
+      ],
+      [
+        "iterencode (encoder.py:258)",
+        0.23
+      ],
+      [
+        "_call_with_frames_removed (<frozen importlib._bootstrap>:241)",
+        0.23
+      ]
+    ]
+  },
+  {
+    "profile": "save-2.speedscope.json",
+    "request_thread": "Thread 10783 \"Thread-907 (process_request_thread)\"",
+    "sampled_profiles": 14,
+    "other_threads_with_commit_frames": [],
+    "active_commit_sample_s": 17.38,
+    "whole_selected_thread_sample_s": 17.47,
+    "off_request_sample_s_same_thread": 0.09,
+    "selected_thread_covered_pct": 100.0,
+    "partition_s": {
+      "old_history_verification": 3.64,
+      "validation_of_this_edit": 3.88,
+      "durable_writing": 0.12,
+      "other": 9.83
+    },
+    "top_self_frames_s": [
+      [
+        "value_equal (timeline_commit_producer.py:67)",
+        1.26
+      ],
+      [
+        "_deepcopy_dict (copy.py:231)",
+        1.16
+      ],
+      [
+        "value_equal (timeline_commit_producer.py:69)",
+        0.95
+      ],
+      [
+        "<genexpr> (timeline_commit_producer.py:67)",
+        0.88
+      ],
+      [
+        "<genexpr> (timeline_commit_producer.py:69)",
+        0.81
+      ],
+      [
+        "deepcopy (copy.py:138)",
+        0.74
+      ],
+      [
+        "deepcopy (copy.py:146)",
+        0.68
+      ],
+      [
+        "_deepcopy_dict (copy.py:230)",
+        0.67
+      ],
+      [
+        "value_equal (timeline_commit_producer.py:62)",
+        0.67
+      ],
+      [
+        "deepcopy (copy.py:144)",
+        0.62
+      ]
+    ],
+    "top_other_frames_s": [
+      [
+        "_deepcopy_dict (copy.py:231)",
+        1.09
+      ],
+      [
+        "deepcopy (copy.py:138)",
+        0.7
+      ],
+      [
+        "deepcopy (copy.py:146)",
+        0.66
+      ],
+      [
+        "_deepcopy_dict (copy.py:230)",
+        0.62
+      ],
+      [
+        "deepcopy (copy.py:144)",
+        0.59
+      ],
+      [
+        "deepcopy (copy.py:137)",
+        0.48
+      ],
+      [
+        "deepcopy (copy.py:142)",
+        0.3
+      ],
+      [
+        "deepcopy (copy.py:139)",
+        0.3
+      ],
+      [
+        "deepcopy (copy.py:128)",
+        0.26
+      ],
+      [
+        "equal (_command_state.py:40)",
+        0.23
+      ]
+    ]
+  }
+]

@@ -4,13 +4,13 @@
 
 **Goal:** On your own computer with the model already loaded, a generation comes back in the time the model takes: Astrid adds under a tenth of a second for a caller that is already connected.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
 **Estimate:** 2–3
 
-**Waiting on:** LS-3, the design ([R14-P55-01](../../releases/14/packets/R14-P55-01.md)); owner approval for paid GPU work, a Windows tester, re-pins and product-main merges
+**Waiting on:** Release 15. On 22 November 2026 the owner moved the under-a-second work into separate plans: [Plan 81](../81-once-per-command/plan.md) starts from this plan’s meter, and [Plan 82](../82-reuse-across-commands/plan.md) follows it. This plan’s resident-session redesign remains deferred.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 

@@ -1,0 +1,6 @@
+#!/root/codex/plan-81m/attribution-evidence.env/bin/python
+import sys
+from hash_probe import install
+install()
+from astrid.console import entrypoint
+raise SystemExit(entrypoint())

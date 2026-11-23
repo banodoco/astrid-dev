@@ -1,0 +1,1808 @@
+{
+  "CFGGuider": {
+    "category": "sampling/custom_sampling/guiders",
+    "display_name": null,
+    "input": {
+      "required": {
+        "cfg": [
+          "FLOAT",
+          {
+            "default": 8.0,
+            "max": 100.0,
+            "min": 0.0,
+            "round": 0.01,
+            "step": 0.1
+          }
+        ],
+        "model": [
+          "MODEL",
+          {}
+        ],
+        "negative": [
+          "CONDITIONING",
+          {}
+        ],
+        "positive": [
+          "CONDITIONING",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "positive",
+        "negative",
+        "cfg"
+      ]
+    },
+    "name": "CFGGuider",
+    "output": [
+      "GUIDER"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "GUIDER"
+    ],
+    "output_node": false
+  },
+  "CLIPLoader": {
+    "category": "model/loaders",
+    "description": "Recipes:\nsd: clip-l\nstable cascade: clip-g\nsd3: t5 xxl / clip-g / clip-l\nstable audio: t5 base\nmochi: t5 xxl\ncogvideox: t5 xxl (226-token padding)\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\nhidream: llama-3.1 (Recommend) or t5\nomnigen2: qwen vl 2.5 3B\njoyimage: qwen3-vl 8B\nlens: gpt-oss-20b\npixeldit: gemma 2 2B elm\nminimax: MiniMax H3 Qwen3-VL or Music3 Qwen/RVQ",
+    "display_name": "Load CLIP",
+    "has_intermediate_output": false,
+    "input": {
+      "optional": {
+        "device": [
+          [
+            "default",
+            "cpu"
+          ],
+          {
+            "advanced": true
+          }
+        ]
+      },
+      "required": {
+        "clip_name": [
+          [
+            "minimax_music3_text_encoder_pruned_int8_convrot.safetensors",
+            "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+            "qwen3vl_8b_int8_convrot.safetensors",
+            "qwen_0.6b_ace15.safetensors",
+            "qwen_4b_ace15.safetensors"
+          ]
+        ],
+        "type": [
+          [
+            "stable_diffusion",
+            "stable_cascade",
+            "sd3",
+            "stable_audio",
+            "mochi",
+            "ltxv",
+            "pixart",
+            "cosmos",
+            "lumina2",
+            "wan",
+            "hidream",
+            "chroma",
+            "ace",
+            "omnigen2",
+            "qwen_image",
+            "hunyuan_image",
+            "flux2",
+            "ovis",
+            "longcat_image",
+            "cogvideox",
+            "lens",
+            "pixeldit",
+            "ideogram4",
+            "boogu",
+            "krea2",
+            "joyimage",
+            "mage",
+            "minimax",
+            "yue2"
+          ]
+        ]
+      }
+    },
+    "input_order": {
+      "optional": [
+        "device"
+      ],
+      "required": [
+        "clip_name",
+        "type"
+      ]
+    },
+    "is_input_list": false,
+    "name": "CLIPLoader",
+    "output": [
+      "CLIP"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CLIP"
+    ],
+    "output_node": false,
+    "python_module": "nodes",
+    "search_aliases": []
+  },
+  "CLIPTextEncode": {
+    "category": "conditioning",
+    "display_name": "CLIP Text Encode (Prompt)",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP",
+          {
+            "tooltip": "The CLIP model used for encoding the text."
+          }
+        ],
+        "text": [
+          "STRING",
+          {
+            "dynamicPrompts": true,
+            "multiline": true,
+            "tooltip": "The text to be encoded."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "text",
+        "clip"
+      ]
+    },
+    "name": "CLIPTextEncode",
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false
+  },
+  "ComfySwitchNode": {
+    "category": "logic",
+    "display_name": "Switch",
+    "input": {
+      "required": {
+        "on_false": [
+          "COMFY_MATCHTYPE_V3",
+          {
+            "lazy": true,
+            "template": {
+              "allowed_types": "*",
+              "template_id": "switch"
+            }
+          }
+        ],
+        "on_true": [
+          "COMFY_MATCHTYPE_V3",
+          {
+            "lazy": true,
+            "template": {
+              "allowed_types": "*",
+              "template_id": "switch"
+            }
+          }
+        ],
+        "switch": [
+          "BOOLEAN",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "switch",
+        "on_false",
+        "on_true"
+      ]
+    },
+    "name": "ComfySwitchNode",
+    "output": [
+      "COMFY_MATCHTYPE_V3"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "output"
+    ],
+    "output_node": false
+  },
+  "EmptyLatentImage": {
+    "category": "latent",
+    "display_name": "Empty Latent Image",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "default": 1,
+            "max": 4096,
+            "min": 1,
+            "tooltip": "The number of latent images in the batch."
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "max": 16384,
+            "min": 16,
+            "step": 8,
+            "tooltip": "The height of the latent images in pixels."
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "max": 16384,
+            "min": 16,
+            "step": 8,
+            "tooltip": "The width of the latent images in pixels."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "batch_size"
+      ]
+    },
+    "name": "EmptyLatentImage",
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false
+  },
+  "EmptySD3LatentImage": {
+    "category": "latent/sd3",
+    "display_name": null,
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 1024,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 1024,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "batch_size"
+      ]
+    },
+    "name": "EmptySD3LatentImage",
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false
+  },
+  "KSampler": {
+    "category": "sampling",
+    "display_name": "KSampler",
+    "input": {
+      "required": {
+        "cfg": [
+          "FLOAT",
+          {
+            "default": 8.0,
+            "max": 100.0,
+            "min": 0.0,
+            "round": 0.01,
+            "step": 0.1,
+            "tooltip": "The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality."
+          }
+        ],
+        "denoise": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01,
+            "tooltip": "The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling."
+          }
+        ],
+        "latent_image": [
+          "LATENT",
+          {
+            "tooltip": "The latent image to denoise."
+          }
+        ],
+        "model": [
+          "MODEL",
+          {
+            "tooltip": "The model used for denoising the input latent."
+          }
+        ],
+        "negative": [
+          "CONDITIONING",
+          {
+            "tooltip": "The conditioning describing the attributes you want to exclude from the image."
+          }
+        ],
+        "positive": [
+          "CONDITIONING",
+          {
+            "tooltip": "The conditioning describing the attributes you want to include in the image."
+          }
+        ],
+        "sampler_name": [
+          [
+            "euler",
+            "euler_cfg_pp",
+            "euler_ancestral",
+            "euler_ancestral_cfg_pp",
+            "heun",
+            "heunpp2",
+            "exp_heun_2_x0",
+            "exp_heun_2_x0_sde",
+            "dpm_2",
+            "dpm_2_ancestral",
+            "lms",
+            "dpm_fast",
+            "dpm_adaptive",
+            "dpmpp_2s_ancestral",
+            "dpmpp_2s_ancestral_cfg_pp",
+            "dpmpp_sde",
+            "dpmpp_sde_gpu",
+            "dpmpp_2m",
+            "dpmpp_2m_cfg_pp",
+            "dpmpp_2m_sde",
+            "dpmpp_2m_sde_gpu",
+            "dpmpp_2m_sde_heun",
+            "dpmpp_2m_sde_heun_gpu",
+            "dpmpp_3m_sde",
+            "dpmpp_3m_sde_gpu",
+            "ddpm",
+            "lcm",
+            "ipndm",
+            "ipndm_v",
+            "deis",
+            "res_multistep",
+            "res_multistep_cfg_pp",
+            "res_multistep_ancestral",
+            "res_multistep_ancestral_cfg_pp",
+            "gradient_estimation",
+            "gradient_estimation_cfg_pp",
+            "er_sde",
+            "seeds_2",
+            "seeds_3",
+            "sa_solver",
+            "sa_solver_pece",
+            "ddim",
+            "uni_pc",
+            "uni_pc_bh2"
+          ],
+          {
+            "tooltip": "The algorithm used when sampling, this can affect the quality, speed, and style of the generated output."
+          }
+        ],
+        "scheduler": [
+          [
+            "normal",
+            "karras",
+            "exponential",
+            "sgm_uniform",
+            "simple",
+            "ddim_uniform",
+            "beta",
+            "linear_quadratic",
+            "kl_optimal"
+          ],
+          {
+            "tooltip": "The scheduler controls how noise is gradually removed to form the image."
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "control_after_generate": true,
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0,
+            "tooltip": "The random seed used for creating the noise."
+          }
+        ],
+        "steps": [
+          "INT",
+          {
+            "default": 20,
+            "max": 10000,
+            "min": 1,
+            "tooltip": "The number of steps used in the denoising process."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "seed",
+        "steps",
+        "cfg",
+        "sampler_name",
+        "scheduler",
+        "positive",
+        "negative",
+        "latent_image",
+        "denoise"
+      ]
+    },
+    "name": "KSampler",
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false
+  },
+  "KSamplerSelect": {
+    "category": "sampling/custom_sampling/samplers",
+    "display_name": null,
+    "input": {
+      "required": {
+        "sampler_name": [
+          "COMBO",
+          {
+            "multiselect": false,
+            "options": [
+              "euler",
+              "euler_cfg_pp",
+              "euler_ancestral",
+              "euler_ancestral_cfg_pp",
+              "heun",
+              "heunpp2",
+              "exp_heun_2_x0",
+              "exp_heun_2_x0_sde",
+              "dpm_2",
+              "dpm_2_ancestral",
+              "lms",
+              "dpm_fast",
+              "dpm_adaptive",
+              "dpmpp_2s_ancestral",
+              "dpmpp_2s_ancestral_cfg_pp",
+              "dpmpp_sde",
+              "dpmpp_sde_gpu",
+              "dpmpp_2m",
+              "dpmpp_2m_cfg_pp",
+              "dpmpp_2m_sde",
+              "dpmpp_2m_sde_gpu",
+              "dpmpp_2m_sde_heun",
+              "dpmpp_2m_sde_heun_gpu",
+              "dpmpp_3m_sde",
+              "dpmpp_3m_sde_gpu",
+              "ddpm",
+              "lcm",
+              "ipndm",
+              "ipndm_v",
+              "deis",
+              "res_multistep",
+              "res_multistep_cfg_pp",
+              "res_multistep_ancestral",
+              "res_multistep_ancestral_cfg_pp",
+              "gradient_estimation",
+              "gradient_estimation_cfg_pp",
+              "er_sde",
+              "seeds_2",
+              "seeds_3",
+              "sa_solver",
+              "sa_solver_pece",
+              "ddim",
+              "uni_pc",
+              "uni_pc_bh2"
+            ]
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "sampler_name"
+      ]
+    },
+    "name": "KSamplerSelect",
+    "output": [
+      "SAMPLER"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SAMPLER"
+    ],
+    "output_node": false
+  },
+  "LoraLoaderModelOnly": {
+    "category": "loaders",
+    "display_name": "Load LoRA",
+    "input": {
+      "required": {
+        "lora_name": [
+          [
+            "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+            "pika_h3_flex_turbo_8step_hd_ref2va.safetensors"
+          ]
+        ],
+        "model": [
+          "MODEL"
+        ],
+        "strength_model": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "max": 100.0,
+            "min": -100.0,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "lora_name",
+        "strength_model"
+      ]
+    },
+    "name": "LoraLoaderModelOnly",
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false
+  },
+  "ManualSigmas": {
+    "category": "_for_testing/custom_sampling",
+    "display_name": null,
+    "input": {
+      "required": {
+        "sigmas": [
+          "STRING",
+          {
+            "default": "1, 0.5",
+            "multiline": false
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "sigmas"
+      ]
+    },
+    "name": "ManualSigmas",
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_node": false
+  },
+  "MiniMaxH3ReferenceToVideo": {
+    "api_node": false,
+    "category": "model/conditioning/minimax",
+    "deprecated": false,
+    "description": "<Picture i> / <Video k> / <Audio j> reference conditioning for MiniMax H3. Use the same tags when prompting.",
+    "dev_only": false,
+    "display_name": "MiniMax H3 Reference to Video",
+    "essentials_category": null,
+    "experimental": false,
+    "has_intermediate_output": false,
+    "input": {
+      "optional": {
+        "audio_vae": [
+          "VAE",
+          {
+            "tooltip": "Audio VAE. Without it reference audio only conditions the text encoder."
+          }
+        ],
+        "ref_audios": [
+          "COMFY_AUTOGROW_V3",
+          {
+            "template": {
+              "input": {
+                "required": {
+                  "ref_audio": [
+                    "AUDIO",
+                    {
+                      "tooltip": "Standalone reference audio"
+                    }
+                  ]
+                }
+              },
+              "max": 3,
+              "min": 0,
+              "prefix": "ref_audio_"
+            }
+          }
+        ],
+        "ref_images": [
+          "COMFY_AUTOGROW_V3",
+          {
+            "template": {
+              "input": {
+                "required": {
+                  "ref_image": [
+                    "IMAGE",
+                    {
+                      "tooltip": "Reference image (downscaled to 2048 short edge if larger, never upscaled)"
+                    }
+                  ]
+                }
+              },
+              "max": 9,
+              "min": 0,
+              "prefix": "ref_image_"
+            }
+          }
+        ],
+        "ref_video_audios": [
+          "COMFY_AUTOGROW_V3",
+          {
+            "template": {
+              "input": {
+                "required": {
+                  "ref_video_audio": [
+                    "AUDIO",
+                    {
+                      "tooltip": "Soundtrack of the same-numbered reference video"
+                    }
+                  ]
+                }
+              },
+              "max": 3,
+              "min": 0,
+              "prefix": "ref_video_audio_"
+            }
+          }
+        ],
+        "ref_videos": [
+          "COMFY_AUTOGROW_V3",
+          {
+            "template": {
+              "input": {
+                "required": {
+                  "ref_video": [
+                    "IMAGE",
+                    {
+                      "tooltip": "Reference video frames at 24 fps (2-15s)"
+                    }
+                  ]
+                }
+              },
+              "max": 3,
+              "min": 0,
+              "prefix": "ref_video_"
+            }
+          }
+        ],
+        "vae": [
+          "VAE",
+          {
+            "tooltip": "Video VAE. Without it reference images/videos only condition the text encoder."
+          }
+        ]
+      },
+      "required": {
+        "clip": [
+          "CLIP",
+          {}
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 768,
+            "max": 16384,
+            "min": 32,
+            "step": 32
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "default": 124,
+            "max": 3600,
+            "min": 5,
+            "step": 17,
+            "tooltip": "Frame count at 24 fps, (124 = ~5s, trained range is ~124-362)"
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ],
+        "ref_image_size": [
+          "COMBO",
+          {
+            "default": "match",
+            "multiselect": false,
+            "options": [
+              "match",
+              "max"
+            ],
+            "tooltip": "Reference image sizing. 'match' scales each ref (down only, keeping aspect) to the generation's pixel area; 'max' uses the reference pipeline's 2048px short edge for best identity fidelity. Reference tokens ride through every sampling step, so 'max' can be several times slower."
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 1344,
+            "max": 16384,
+            "min": 32,
+            "step": 32
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "optional": [
+        "vae",
+        "audio_vae",
+        "ref_images",
+        "ref_videos",
+        "ref_video_audios",
+        "ref_audios"
+      ],
+      "required": [
+        "clip",
+        "prompt",
+        "width",
+        "height",
+        "length",
+        "ref_image_size"
+      ]
+    },
+    "is_input_list": false,
+    "name": "MiniMaxH3ReferenceToVideo",
+    "output": [
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_matchtypes": null,
+    "output_name": [
+      "positive",
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null,
+      null
+    ],
+    "price_badge": null,
+    "python_module": "comfy_extras.nodes_minimax_h3",
+    "search_aliases": null
+  },
+  "ModelSamplingAuraFlow": {
+    "category": "advanced/model",
+    "display_name": "ModelSamplingAuraFlow",
+    "input": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "shift": [
+          "FLOAT",
+          {
+            "default": 1.73,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "shift"
+      ]
+    },
+    "name": "ModelSamplingAuraFlow",
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false
+  },
+  "QwenImage21Cache": {
+    "category": "model/conditioning/qwen image",
+    "display_name": "Qwen Image 2.1 Cache",
+    "input": {
+      "required": {
+        "device": [
+          [
+            "auto",
+            "gpu",
+            "cpu",
+            "off"
+          ],
+          {
+            "default": "auto",
+            "tooltip": "auto uses spare VRAM, then RAM. cpu (RAM) is prefetched behind compute and costs little speed. off recomputes the prefix every step, which is slower but is the one way to rule the cache out."
+          }
+        ],
+        "dtype": [
+          [
+            "default",
+            "int8",
+            "int4"
+          ],
+          {
+            "default": "default",
+            "tooltip": "Storage precision. default is lossless. int8 halves the cache at about bf16 accuracy, int4 quarters it but roughly doubles the per-step error."
+          }
+        ],
+        "model": [
+          "MODEL"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "device",
+        "dtype"
+      ]
+    },
+    "name": "QwenImage21Cache",
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "Model"
+    ],
+    "output_node": false
+  },
+  "RandomNoise": {
+    "category": "sampling/custom_sampling/noise",
+    "display_name": null,
+    "input": {
+      "required": {
+        "noise_seed": [
+          "INT",
+          {
+            "control_after_generate": true,
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "noise_seed"
+      ]
+    },
+    "name": "RandomNoise",
+    "output": [
+      "NOISE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "NOISE"
+    ],
+    "output_node": false
+  },
+  "SamplerCustomAdvanced": {
+    "category": "sampling/custom_sampling",
+    "display_name": null,
+    "input": {
+      "required": {
+        "guider": [
+          "GUIDER",
+          {}
+        ],
+        "latent_image": [
+          "LATENT",
+          {}
+        ],
+        "noise": [
+          "NOISE",
+          {}
+        ],
+        "sampler": [
+          "SAMPLER",
+          {}
+        ],
+        "sigmas": [
+          "SIGMAS",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "noise",
+        "guider",
+        "sampler",
+        "sigmas",
+        "latent_image"
+      ]
+    },
+    "name": "SamplerCustomAdvanced",
+    "output": [
+      "LATENT",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "output",
+      "denoised_output"
+    ],
+    "output_node": false
+  },
+  "SaveImage": {
+    "category": "image",
+    "display_name": "Save Image",
+    "input": {
+      "hidden": {
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "prompt": "PROMPT"
+      },
+      "required": {
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "ComfyUI",
+            "tooltip": "The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes."
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "The images to save."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "hidden": [
+        "prompt",
+        "extra_pnginfo"
+      ],
+      "required": [
+        "images",
+        "filename_prefix"
+      ]
+    },
+    "name": "SaveImage",
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true
+  },
+  "TextEncodeQwenImage21": {
+    "category": "model/conditioning/qwen image",
+    "display_name": "Text Encode Qwen Image 2.1",
+    "input": {
+      "optional": {
+        "images.image_1": [
+          "IMAGE"
+        ],
+        "images.image_10": [
+          "IMAGE"
+        ],
+        "images.image_11": [
+          "IMAGE"
+        ],
+        "images.image_12": [
+          "IMAGE"
+        ],
+        "images.image_13": [
+          "IMAGE"
+        ],
+        "images.image_14": [
+          "IMAGE"
+        ],
+        "images.image_15": [
+          "IMAGE"
+        ],
+        "images.image_16": [
+          "IMAGE"
+        ],
+        "images.image_2": [
+          "IMAGE"
+        ],
+        "images.image_3": [
+          "IMAGE"
+        ],
+        "images.image_4": [
+          "IMAGE"
+        ],
+        "images.image_5": [
+          "IMAGE"
+        ],
+        "images.image_6": [
+          "IMAGE"
+        ],
+        "images.image_7": [
+          "IMAGE"
+        ],
+        "images.image_8": [
+          "IMAGE"
+        ],
+        "images.image_9": [
+          "IMAGE"
+        ],
+        "vae": [
+          "VAE"
+        ]
+      },
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "negative_prompt": [
+          "STRING",
+          {
+            "dynamic_prompts": true,
+            "multiline": true
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "dynamic_prompts": true,
+            "multiline": true
+          }
+        ],
+        "resolution": [
+          "INT",
+          {
+            "default": 1024,
+            "max": 4096,
+            "min": 0,
+            "step": 32,
+            "tooltip": "Reference images are resized to about resolution x resolution pixels, at multiples of 32, preserving aspect ratio. 0 keeps each reference at its own size, rounded to a multiple of 32. "
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "optional": [
+        "vae",
+        "images.image_1",
+        "images.image_2",
+        "images.image_3",
+        "images.image_4",
+        "images.image_5",
+        "images.image_6",
+        "images.image_7",
+        "images.image_8",
+        "images.image_9",
+        "images.image_10",
+        "images.image_11",
+        "images.image_12",
+        "images.image_13",
+        "images.image_14",
+        "images.image_15",
+        "images.image_16"
+      ],
+      "required": [
+        "clip",
+        "prompt",
+        "negative_prompt",
+        "resolution"
+      ]
+    },
+    "name": "TextEncodeQwenImage21",
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false
+  },
+  "UNETLoader": {
+    "category": "advanced/loaders",
+    "display_name": "Load Diffusion Model",
+    "input": {
+      "required": {
+        "unet_name": [
+          [
+            "acestep_v1.5_turbo.safetensors",
+            "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+            "minimax_music3_dit_int8_convrot.safetensors",
+            "qwen_image_2.1_turbo_int8_convrot.safetensors"
+          ]
+        ],
+        "weight_dtype": [
+          [
+            "default",
+            "fp8_e4m3fn",
+            "fp8_e5m2",
+            "fp8_e4m3fn_fast"
+          ],
+          {
+            "advanced": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "unet_name",
+        "weight_dtype"
+      ]
+    },
+    "name": "UNETLoader",
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false
+  },
+  "VAEDecode": {
+    "category": "latent",
+    "display_name": "VAE Decode",
+    "input": {
+      "required": {
+        "samples": [
+          "LATENT",
+          {
+            "tooltip": "The latent to be decoded."
+          }
+        ],
+        "vae": [
+          "VAE",
+          {
+            "tooltip": "The VAE model used for decoding the latent."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "samples",
+        "vae"
+      ]
+    },
+    "name": "VAEDecode",
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false
+  },
+  "VAELoader": {
+    "category": "loaders",
+    "display_name": "Load VAE",
+    "input": {
+      "required": {
+        "vae_name": [
+          [
+            "ace_1.5_vae.safetensors",
+            "minimax_h3_audio_vae_fp32.safetensors",
+            "minimax_h3_video_vae_int8_convrot.safetensors",
+            "minimax_music3_dav.safetensors",
+            "qwen_image_2.1_vae_bf16.safetensors"
+          ]
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "vae_name"
+      ]
+    },
+    "name": "VAELoader",
+    "output": [
+      "VAE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VAE"
+    ],
+    "output_node": false
+  },
+  "VHS_VideoCombine": {
+    "category": "Video Helper Suite \ud83c\udfa5\ud83c\udd65\ud83c\udd57\ud83c\udd62",
+    "display_name": "Video Combine \ud83c\udfa5\ud83c\udd65\ud83c\udd57\ud83c\udd62",
+    "input": {
+      "hidden": {
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "prompt": "PROMPT",
+        "unique_id": "UNIQUE_ID"
+      },
+      "optional": {
+        "audio": [
+          "AUDIO"
+        ],
+        "meta_batch": [
+          "VHS_BatchManager"
+        ],
+        "vae": [
+          "VAE"
+        ]
+      },
+      "required": {
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "AnimateDiff"
+          }
+        ],
+        "format": [
+          [
+            "image/gif",
+            "image/webp",
+            "video/16bit-png",
+            "video/8bit-png",
+            "video/ProRes",
+            "video/av1-webm",
+            "video/ffmpeg-gif",
+            "video/ffv1-mkv",
+            "video/h264-mp4",
+            "video/h265-mp4",
+            "video/nvenc_av1-mp4",
+            "video/nvenc_h264-mp4",
+            "video/nvenc_hevc-mp4",
+            "video/webm"
+          ],
+          {
+            "formats": {
+              "image/webp": [
+                [
+                  "lossless",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ]
+              ],
+              "video/ProRes": [
+                [
+                  "profile",
+                  [
+                    "lt",
+                    "standard",
+                    "hq",
+                    "4444",
+                    "4444xq"
+                  ],
+                  {
+                    "default": "hq"
+                  }
+                ]
+              ],
+              "video/av1-webm": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p10le",
+                    "yuv420p"
+                  ]
+                ],
+                [
+                  "crf",
+                  "INT",
+                  {
+                    "default": 23,
+                    "max": 100,
+                    "min": 0,
+                    "step": 1
+                  }
+                ],
+                [
+                  "input_color_depth",
+                  [
+                    "8bit",
+                    "16bit"
+                  ]
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ]
+              ],
+              "video/ffmpeg-gif": [
+                [
+                  "dither",
+                  [
+                    "bayer",
+                    "heckbert",
+                    "floyd_steinberg",
+                    "sierra2",
+                    "sierra2_4a",
+                    "sierra3",
+                    "burkes",
+                    "atkinson",
+                    "none"
+                  ],
+                  {
+                    "default": "sierra2_4a"
+                  },
+                  "[0:v] split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse=dither=$val"
+                ]
+              ],
+              "video/ffv1-mkv": [
+                [
+                  "level",
+                  [
+                    "0",
+                    "1",
+                    "3"
+                  ],
+                  {
+                    "default": "3"
+                  }
+                ],
+                [
+                  "coder",
+                  [
+                    "0",
+                    "1",
+                    "2"
+                  ],
+                  {
+                    "default": "1"
+                  }
+                ],
+                [
+                  "context",
+                  [
+                    "0",
+                    "1"
+                  ],
+                  {
+                    "default": "1"
+                  }
+                ],
+                [
+                  "gop_size",
+                  "INT",
+                  {
+                    "default": 1,
+                    "max": 300,
+                    "min": 1,
+                    "step": 1
+                  }
+                ],
+                [
+                  "slices",
+                  [
+                    "4",
+                    "6",
+                    "9",
+                    "12",
+                    "16",
+                    "20",
+                    "24",
+                    "30"
+                  ],
+                  {
+                    "default": "16"
+                  }
+                ],
+                [
+                  "slicecrc",
+                  [
+                    "0",
+                    "1"
+                  ],
+                  {
+                    "default": "1"
+                  }
+                ],
+                [
+                  "pix_fmt",
+                  [
+                    "rgba64le",
+                    "bgra",
+                    "yuv420p",
+                    "yuv422p",
+                    "yuv444p",
+                    "yuva420p",
+                    "yuva422p",
+                    "yuva444p",
+                    "yuv420p10le",
+                    "yuv422p10le",
+                    "yuv444p10le",
+                    "yuv420p12le",
+                    "yuv422p12le",
+                    "yuv444p12le",
+                    "yuv420p14le",
+                    "yuv422p14le",
+                    "yuv444p14le",
+                    "yuv420p16le",
+                    "yuv422p16le",
+                    "yuv444p16le",
+                    "gray",
+                    "gray10le",
+                    "gray12le",
+                    "gray16le"
+                  ],
+                  {
+                    "default": "rgba64le"
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ],
+                [
+                  "trim_to_audio",
+                  "BOOLEAN",
+                  {
+                    "default": false
+                  }
+                ]
+              ],
+              "video/h264-mp4": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p",
+                    "yuv420p10le"
+                  ]
+                ],
+                [
+                  "crf",
+                  "INT",
+                  {
+                    "default": 19,
+                    "max": 100,
+                    "min": 0,
+                    "step": 1
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ],
+                [
+                  "trim_to_audio",
+                  "BOOLEAN",
+                  {
+                    "default": false
+                  }
+                ]
+              ],
+              "video/h265-mp4": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p10le",
+                    "yuv420p"
+                  ]
+                ],
+                [
+                  "crf",
+                  "INT",
+                  {
+                    "default": 22,
+                    "max": 100,
+                    "min": 0,
+                    "step": 1
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ]
+              ],
+              "video/nvenc_av1-mp4": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p",
+                    "p010le"
+                  ]
+                ],
+                [
+                  "bitrate",
+                  "INT",
+                  {
+                    "default": 10,
+                    "max": 999,
+                    "min": 1,
+                    "step": 1
+                  }
+                ],
+                [
+                  "megabit",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ]
+              ],
+              "video/nvenc_h264-mp4": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p",
+                    "p010le"
+                  ]
+                ],
+                [
+                  "bitrate",
+                  "INT",
+                  {
+                    "default": 10,
+                    "max": 999,
+                    "min": 1,
+                    "step": 1
+                  }
+                ],
+                [
+                  "megabit",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ]
+              ],
+              "video/nvenc_hevc-mp4": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p",
+                    "p010le"
+                  ]
+                ],
+                [
+                  "bitrate",
+                  "INT",
+                  {
+                    "default": 10,
+                    "max": 999,
+                    "min": 1,
+                    "step": 1
+                  }
+                ],
+                [
+                  "megabit",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ]
+              ],
+              "video/webm": [
+                [
+                  "pix_fmt",
+                  [
+                    "yuv420p",
+                    "yuva420p"
+                  ]
+                ],
+                [
+                  "crf",
+                  "INT",
+                  {
+                    "default": 20,
+                    "max": 100,
+                    "min": 0,
+                    "step": 1
+                  }
+                ],
+                [
+                  "save_metadata",
+                  "BOOLEAN",
+                  {
+                    "default": true
+                  }
+                ],
+                [
+                  "trim_to_audio",
+                  "BOOLEAN",
+                  {
+                    "default": false
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "frame_rate": [
+          "FLOAT",
+          {
+            "default": 8,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "images": [
+          "IMAGE"
+        ],
+        "loop_count": [
+          "INT",
+          {
+            "default": 0,
+            "max": 100,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "pingpong": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "save_output": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "hidden": [
+        "prompt",
+        "extra_pnginfo",
+        "unique_id"
+      ],
+      "optional": [
+        "audio",
+        "meta_batch",
+        "vae"
+      ],
+      "required": [
+        "images",
+        "frame_rate",
+        "loop_count",
+        "filename_prefix",
+        "format",
+        "pingpong",
+        "save_output"
+      ]
+    },
+    "name": "VHS_VideoCombine",
+    "output": [
+      "VHS_FILENAMES"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "Filenames"
+    ],
+    "output_node": true
+  }
+}

@@ -2,31 +2,45 @@
 
 **Project:** Execution host refactor
 
-**Goal:** Split the oversized execution host into clear, maintainable modules while preserving supported execution behavior.
+**Goal:** The oversized execution host is mapped, its behaviour is pinned by tests, it can no longer grow, and one measured move out of it shows what splitting it into modules will cost.
 
 **Status:** active
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
-**Estimate:** TBD
+**Estimate:** About 5 to 6 engineering days, all in Release 15: the growth guard, the safety net and the first, measured extraction. HM1 to HM3 are done. The rest of the extraction is [Plan 83](../83-execution-host-in-modules/plan.md).
 
-**Waiting on:** nothing for HM1 to HM3; scope agreement for the extraction (steps 3 and 4), which is Release 15's
+**Waiting on:** a manager for its Release 15 tasks. The owner chose the Release 15 scope and who may let the file grow on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)). It no longer waits for Plan 55, which left Release 15 the same day.
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
-Separate Astrid's execution host into cohesive modules while preserving its existing execution behavior. Current status, owner, and estimate remain in the [project queue](../../README.md).
+Prepare Astrid's execution host to be separated into cohesive modules, and make the first move, while preserving its existing execution behavior. This plan ends in Release 15; on 22 November 2026 the moves after the first became [Plan 83](../83-execution-host-in-modules/plan.md), so that each plan sits wholly in one release. Current status, owner, and estimate remain in the [project queue](../../README.md).
 
 ## Goal and scope
 
-- **Included:** map responsibilities and coupling in `generic_host.py`, then extract cohesive responsibilities incrementally while preserving public entry points and execution contracts.
-- **Deferred:** semantic behavior changes, a replacement execution framework, and arbitrary line-count targets.
+- **Included:** map responsibilities and coupling in `generic_host.py`, pin its behaviour, stop it growing, and extract its genuine leaves while preserving public entry points and execution contracts.
+- **Deferred:** every later extraction, which is [Plan 83](../83-execution-host-in-modules/plan.md); semantic behavior changes, a replacement execution framework, and arbitrary line-count targets.
 - **Still undecided:** exact module boundaries and executable task breakdown, which depend on inspecting the chosen source base.
 
 ## Release 14 scope
 
 Added on 16 November 2026, when the owner brought the first two steps of the [sequence](#sequence) into [Release 14](../../releases/14.md): the map of `generic_host.py`'s responsibilities, callers and shared state, and focused checks that pin the behaviour of each. Nothing moves in Release 14. The file is 18,784 lines at Release 13, and [Plan 55](../55-local-speed/tasks.md) changes it in LS-6, LS-7 and LS-8 during the same release, so the map is drawn on `release/14/main` and redrawn once Plan 55's fast lane has landed. Its first use is LS-8: resident sessions arrive as a module beside the host, not as more lines in it. The extraction, steps 3 and 4, is [Release 15](../../releases/15.md)'s, on the tests Plan 39 has made green.
+
+## Release 15 scope
+
+Drafted on 22 November 2026 and changed by an independent critique the same day. The [map](map.md) still holds: the same 188 top-level definitions, and `GenericPackHost` now has 102 methods, three more than mapped. The file is 18,888 lines, up from 397 on 30 August, and grew about 2,700 lines in the three weeks to 21 November.
+
+**The host coordinates; it does not compute.** Anything that needs none of the host's state leaves the file. Anything that owns state becomes its own object. Half the file is not the host class at all.
+
+**First, nothing can grow.** One check compares a pull request with its merge base: this file may not gain lines, the class may not gain methods, and a function already over 200 lines may not grow. Three fixed numbers would not be enough: deleting code elsewhere could pay for a longer method, and a baseline can be edited in the same change. The existing check only asks that a document's number be updated, and it is failing today ([#1290](https://github.com/banodoco/astrid-dev/issues/1290)). This is a guard, not a size target; the plan still sets none.
+
+**Then one small, measured extraction** of the genuine leaves, and a re-estimate the owner decides on before anything else moves. The first draft called a third of the definitions stateless; the critique found the exceptions among them, and that the Runtime adapter and source custody each stand on helpers that have to move first. So the order after the leaves is: what the adapter stands on, the adapter, source custody, interactive review, local preparation with Plan 38, and last the class. Those are [Plan 83](../83-execution-host-in-modules/plan.md)'s rows; this plan's are in [tasks.md](tasks.md#release-15-the-extraction).
+
+**A move is proved where the name is used.** Tests patch names on this module, Windows tests replace its `os`, production launches it with `-m`, and one test reads its source. A moved function with an identical body can still behave differently. Each card says how that is shown.
+
+**New code goes beside the host.** Plan 55's branch already puts its resident sessions in new files next to it, and still adds 233 lines to the host; when that work returns it fits under the guard or brings its own extraction.
 
 ## What we build on
 
@@ -45,7 +59,7 @@ The task outline and its draft limits are in [tasks.md](tasks.md).
 
 ## Completion
 
-The agreed responsibilities have clear module boundaries, existing callers still work, and focused before-and-after evidence demonstrates preserved behavior. Record results against the actual source identities and the existing publication authority in [inputs.md](inputs.md). This project does not establish an arbitrary size target or authorize implementation by itself.
+The guard rejects growth in the execution package, the characterisation tests pass on the Release 15 plan branch, the genuine leaves have left the file with existing callers still working, and the owner has the re-estimate for [Plan 83](../83-execution-host-in-modules/plan.md). Record results against the actual source identities and the existing publication authority in [inputs.md](inputs.md). This project does not establish an arbitrary size target or authorize implementation by itself.
 
 ## Read next
 

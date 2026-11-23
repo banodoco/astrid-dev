@@ -1,0 +1,3 @@
+**Verdict: (d) undetermined.** The task failed 20m 4.993s after claim, not at exactly 1,200 seconds. Custody evidence records a newly observed descendant, PID 10078, whose capture failed while it was still live. The retained evidence does not identify its executable or why it appeared.
+
+The full timeline, last progress events, source references, timer checks, retention gaps, and session-slot recovery findings are in REPORT.md (source: `~/twentymin/REPORT.md`). The report was written in the requested workspace; the live source trees and stack were not edited.

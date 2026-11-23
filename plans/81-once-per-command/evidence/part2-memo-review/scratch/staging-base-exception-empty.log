@@ -1,0 +1,3 @@
+after first staging write [['.workflow.py.vibe.lock', '0o600', 0], ['.workflow.py.w4bmxmi3.py', '0o600', 980]]
+OSError scheduled second staging allocation failure
+final [['.workflow.py.vibe.lock', '0o600', 0]] private staging [] existing bytes preserved True

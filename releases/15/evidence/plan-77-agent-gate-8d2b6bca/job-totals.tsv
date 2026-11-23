@@ -1,0 +1,10 @@
+job	pytest_totals_line	pytest_failed	pytest_errors	ids_FAILED	ids_ERROR	summary_hdr_line	totals_line
+unit shard 1 / 8	47 failed, 5444 passed, 3 skipped, 27767 deselected, 60 warnings, 54 errors, 153 subtests passed in 5834.50s (1:37:14)	47	54	47	54	20370	26218
+unit shard 2 / 8	79 failed, 4015 passed, 19 skipped, 29151 deselected, 2 warnings, 51 errors, 26 subtests passed in 4818.15s (1:20:18)	79	51	79	51	19291	23821
+unit shard 3 / 8	31 failed, 2022 passed, 31262 deselected, 2 warnings in 2566.80s (0:42:46)	31	0	31	0	19577	25653
+unit shard 4 / 8	32 failed, 2281 passed, 30983 deselected, 2 warnings, 19 errors in 4304.48s (1:11:44)	32	19	32	19	10020	12988
+unit shard 5 / 8	29 failed, 2481 passed, 30772 deselected, 17 warnings, 33 errors in 2466.15s (0:41:06)	29	33	29	33	54959	99542
+unit shard 6 / 8	259 failed, 5280 passed, 6 skipped, 27778 deselected, 59 warnings, 25 errors, 92 subtests passed in 7249.70s (2:00:49)	259	25	226	25	63760	70524
+unit shard 7 / 8	227 failed, 5900 passed, 4 skipped, 27042 deselected, 2 warnings, 142 errors, 118 subtests passed in 6147.46s (1:42:27)	227	142	227	142	50790	64206
+unit shard 8 / 8	78 failed, 3891 passed, 23 skipped, 29319 deselected, 2 warnings, 4 errors, 202 subtests passed in 2568.25s (0:42:48)	78	4	78	4	19612	25267
+darwin native	15 failed, 42 passed, 33062 deselected, 2 warnings in 812.15s (0:13:32)	15	0	15	0	4180	4472

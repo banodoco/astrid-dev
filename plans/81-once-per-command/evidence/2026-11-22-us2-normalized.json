@@ -1,0 +1,1819 @@
+{
+  "trials": [
+    {
+      "cleanup_process_check_clear": true,
+      "commands": [
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "a75e025c6da64a3eb3e8bf11c9612fa0",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "1",
+            "--idempotency-key",
+            "latency-edit-0",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 1,
+          "wall_seconds": 3.9066204629998538
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "a75e025c6da64a3eb3e8bf11c9612fa0",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "2",
+            "--idempotency-key",
+            "latency-edit-1",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 2,
+          "wall_seconds": 3.733351416000005
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "a75e025c6da64a3eb3e8bf11c9612fa0",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "3",
+            "--idempotency-key",
+            "latency-edit-2",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 3,
+          "wall_seconds": 4.13406582099924
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "a75e025c6da64a3eb3e8bf11c9612fa0",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "4",
+            "--idempotency-key",
+            "latency-edit-3",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 4,
+          "wall_seconds": 4.365752312999575
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "a75e025c6da64a3eb3e8bf11c9612fa0",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "5",
+            "--idempotency-key",
+            "latency-edit-4",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 5,
+          "wall_seconds": 4.514588765000553
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 1,
+          "wall_seconds": 20.779407558000457
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 2,
+          "wall_seconds": 20.916844700999718
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 3,
+          "wall_seconds": 19.734898832
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 4,
+          "wall_seconds": 19.62524726399988
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 5,
+          "wall_seconds": 19.471446925000237
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 0"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 6,
+          "wall_seconds": 19.752892520000387
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 1"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 7,
+          "wall_seconds": 19.02584484700037
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 2"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 8,
+          "wall_seconds": 19.500388890000067
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 3"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 9,
+          "wall_seconds": 19.53597224100031
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42335",
+            "--project",
+            "fe8fedd9abef427294ec12efcf0872ab",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 4"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 10,
+          "wall_seconds": 18.964576104000116
+        }
+      ],
+      "end_load_1_5_15": [
+        3.2,
+        2.21,
+        1.45
+      ],
+      "ended_utc": "2026-11-22T06:11:48.783550+00:00",
+      "pytest_exit": 0,
+      "samples": {
+        "changed": {
+          "request_counts": {
+            "Runtime GET /v1/app-state/user/{key}": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "Runtime GET /v1/capabilities": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/health": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime GET /v1/objects/{digest}": [
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "Runtime GET /v1/projects/{id}": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/handshake": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/projects/{id}/objects": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime POST /v1/tasks": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/app-state/user/{key}": 0.05144711000048119,
+            "Runtime GET /v1/capabilities": 0.06448799300051178,
+            "Runtime GET /v1/health": 0.01612015599857841,
+            "Runtime GET /v1/objects/{digest}": 0.11310566700103664,
+            "Runtime GET /v1/projects/{id}": 0.008619088999694213,
+            "Runtime POST /v1/handshake": 0.01623094000024139,
+            "Runtime POST /v1/projects/{id}/objects": 0.07947466899986466,
+            "Runtime POST /v1/tasks": 0.027105031000246527,
+            "Runtime acquisition lock": 0.0007890490005593165,
+            "Runtime launcher connection": 4.103005793000193,
+            "model registry": 0.04790738999963651,
+            "other command work": 11.712029732999326,
+            "pack discovery": 1.6941477149985076,
+            "pack host attachment": 0.536228061001566,
+            "pack host lifecycle lock": 5.943300038779853e-05,
+            "pack host readiness": 0.019253649999882327,
+            "pack host source identity": 0.25382979799996974,
+            "target check": 0.007241259999318572,
+            "workflow build": 0.35442569099996035
+          },
+          "wall_median": 19.500388890000067
+        },
+        "same": {
+          "request_counts": {
+            "Runtime GET /v1/app-state/user/{key}": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "Runtime GET /v1/capabilities": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/health": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime GET /v1/objects/{digest}": [
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "Runtime GET /v1/projects/{id}": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/handshake": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/projects/{id}/objects": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime POST /v1/tasks": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/app-state/user/{key}": 0.03578825000022334,
+            "Runtime GET /v1/capabilities": 0.03370255499976338,
+            "Runtime GET /v1/health": 0.02322348100005911,
+            "Runtime GET /v1/objects/{digest}": 0.10390829499920073,
+            "Runtime GET /v1/projects/{id}": 0.015225291000206198,
+            "Runtime POST /v1/handshake": 0.02761843999996927,
+            "Runtime POST /v1/projects/{id}/objects": 0.058669533998909174,
+            "Runtime POST /v1/tasks": 0.044990964000135136,
+            "Runtime acquisition lock": 0.0007737300011285697,
+            "Runtime launcher connection": 4.469563295999251,
+            "model registry": 0.04542230999959429,
+            "other command work": 11.917400773998452,
+            "pack discovery": 1.7578535220009144,
+            "pack host attachment": 0.535194166997826,
+            "pack host lifecycle lock": 7.179500062193256e-05,
+            "pack host readiness": 0.021210155999142444,
+            "pack host source identity": 0.2737307879997388,
+            "target check": 0.006329750999611861,
+            "workflow build": 0.36017314699984126
+          },
+          "wall_median": 19.734898832
+        },
+        "timeline": {
+          "request_counts": {
+            "Runtime GET /v1/health": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/projects/{id}/timelines": [
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/handshake": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/health": 0.010724276000473765,
+            "Runtime GET /v1/projects/{id}/timelines": 0.13529676600046514,
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": 0.3384440939998967,
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": 0.030248986000515288,
+            "Runtime POST /v1/handshake": 0.009994586999710009,
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": 0.4406735540005684,
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": 0.050132893001318735,
+            "Runtime acquisition lock": 0.0006121160004113335,
+            "Runtime launcher connection": 2.176425528999971,
+            "other command work": 0.8839593039992906
+          },
+          "wall_median": 4.13406582099924
+        }
+      },
+      "source_identity": {
+        "end": {
+          "dirty": false,
+          "head": "4a9c717523bb0f715760cd5f9896f544545bf02d",
+          "path": "/root/codex/plan-81/run/worktrees/us-2",
+          "present": true,
+          "tree": "7460768133aa344ea27f7e5a6998c255d46ee83e"
+        },
+        "start": {
+          "dirty": false,
+          "head": "4a9c717523bb0f715760cd5f9896f544545bf02d",
+          "path": "/root/codex/plan-81/run/worktrees/us-2",
+          "present": true,
+          "tree": "7460768133aa344ea27f7e5a6998c255d46ee83e"
+        },
+        "unchanged": true
+      },
+      "start_load_1_5_15": [
+        0.03,
+        0.24,
+        0.71
+      ],
+      "started_utc": "2026-11-22T06:06:37.764562+00:00",
+      "trial": "/root/codex/plan-81/run/us2-normalized/cpu-baseline-1",
+      "visualization": {
+        "error": {
+          "code": "invocation_error",
+          "details": {
+            "kernel_attempt_id": "51f7a1c7eee04106bcbdc28f81eec0cd",
+            "kernel_run_id": "c29840a7930a42f8b5fe7b376bbb453a",
+            "kernel_task_id": "8b48400143f54952b5bc266b8e1c2519",
+            "run_id": "c29840a7930a42f8b5fe7b376bbb453a",
+            "sdk_category": "runtime",
+            "sdk_error": "CapabilityRuntimeError",
+            "validation": null
+          },
+          "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.timeline_visualize' exited 1: {\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23247, \"elapsed_ms\": 2059}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 23247, \"elapsed_ms\": 41}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23247, \"elapsed_ms\": 2049}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23247, \"elapsed_ms\": 2170}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 23247, \"elapsed_ms\": 31}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"renderer lease channel closed\", \"error_details\": null}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"original host renderer cleanup is unresolved\", \"error_details\": null}\nrenderer lease channel closed\nFix: Review the details, correct the render settings or timeline, and try again."
+        },
+        "exit": 1,
+        "ok": false
+      }
+    },
+    {
+      "cleanup_process_check_clear": true,
+      "commands": [
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "632787709efa4a8e96b90e1dc38809fd",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "1",
+            "--idempotency-key",
+            "latency-edit-0",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 1,
+          "wall_seconds": 3.7960850010003924
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "632787709efa4a8e96b90e1dc38809fd",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "2",
+            "--idempotency-key",
+            "latency-edit-1",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 2,
+          "wall_seconds": 3.938952585000152
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "632787709efa4a8e96b90e1dc38809fd",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "3",
+            "--idempotency-key",
+            "latency-edit-2",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 3,
+          "wall_seconds": 4.076406456999393
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "632787709efa4a8e96b90e1dc38809fd",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "4",
+            "--idempotency-key",
+            "latency-edit-3",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 4,
+          "wall_seconds": 4.466571541999656
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "632787709efa4a8e96b90e1dc38809fd",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "5",
+            "--idempotency-key",
+            "latency-edit-4",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 5,
+          "wall_seconds": 4.15321897099966
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 1,
+          "wall_seconds": 20.560007091000443
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 2,
+          "wall_seconds": 19.553233422999256
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 3,
+          "wall_seconds": 19.937885721001294
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 4,
+          "wall_seconds": 19.99219703200106
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 5,
+          "wall_seconds": 19.995471435999207
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 0"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 6,
+          "wall_seconds": 19.61078501600059
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 1"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 7,
+          "wall_seconds": 19.82560938899951
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 2"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 8,
+          "wall_seconds": 19.876459672999772
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 3"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 9,
+          "wall_seconds": 19.800596773000507
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:33159",
+            "--project",
+            "22b5eb5eb11c4b4e903cfb36e7db02fc",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 4"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 10,
+          "wall_seconds": 20.249466912999196
+        }
+      ],
+      "end_load_1_5_15": [
+        3.63,
+        3.04,
+        2.02
+      ],
+      "ended_utc": "2026-11-22T06:17:40.036082+00:00",
+      "pytest_exit": 0,
+      "samples": {
+        "changed": {
+          "request_counts": {
+            "Runtime GET /v1/app-state/user/{key}": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "Runtime GET /v1/capabilities": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/health": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime GET /v1/objects/{digest}": [
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "Runtime GET /v1/projects/{id}": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/handshake": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/projects/{id}/objects": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime POST /v1/tasks": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/app-state/user/{key}": 0.07255412900121883,
+            "Runtime GET /v1/capabilities": 0.053489244000957115,
+            "Runtime GET /v1/health": 0.01878121600020677,
+            "Runtime GET /v1/objects/{digest}": 0.11913569100033783,
+            "Runtime GET /v1/projects/{id}": 0.020045585000843857,
+            "Runtime POST /v1/handshake": 0.017962498999622767,
+            "Runtime POST /v1/projects/{id}/objects": 0.10205438299999514,
+            "Runtime POST /v1/tasks": 0.015314205000322545,
+            "Runtime acquisition lock": 0.0007511999992857454,
+            "Runtime launcher connection": 4.425344672001302,
+            "model registry": 0.04357892099869787,
+            "other command work": 11.929803595008707,
+            "pack discovery": 1.7103220929984673,
+            "pack host attachment": 0.5476539360024617,
+            "pack host lifecycle lock": 5.4967998948995955e-05,
+            "pack host readiness": 0.02355240299948491,
+            "pack host source identity": 0.2702458759977162,
+            "target check": 0.008122845998514094,
+            "workflow build": 0.35327805699853343
+          },
+          "wall_median": 19.82560938899951
+        },
+        "same": {
+          "request_counts": {
+            "Runtime GET /v1/app-state/user/{key}": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "Runtime GET /v1/capabilities": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/health": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime GET /v1/objects/{digest}": [
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "Runtime GET /v1/projects/{id}": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/handshake": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/projects/{id}/objects": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime POST /v1/tasks": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/app-state/user/{key}": 0.0633241170016845,
+            "Runtime GET /v1/capabilities": 0.062348360999749275,
+            "Runtime GET /v1/health": 0.017294797999056755,
+            "Runtime GET /v1/objects/{digest}": 0.13151423800445627,
+            "Runtime GET /v1/projects/{id}": 0.01100360399868805,
+            "Runtime POST /v1/handshake": 0.027585113999521127,
+            "Runtime POST /v1/projects/{id}/objects": 0.12547061300028872,
+            "Runtime POST /v1/tasks": 0.03365534900149214,
+            "Runtime acquisition lock": 0.0009455979998165276,
+            "Runtime launcher connection": 4.240515267998489,
+            "model registry": 0.04610297099861782,
+            "other command work": 11.907427858990559,
+            "pack discovery": 1.7866653380006028,
+            "pack host attachment": 0.5628488639995339,
+            "pack host lifecycle lock": 5.86280002607964e-05,
+            "pack host readiness": 0.02003370999955223,
+            "pack host source identity": 0.2742835479984933,
+            "target check": 0.006496898002296803,
+            "workflow build": 0.3490365519992338
+          },
+          "wall_median": 19.99219703200106
+        },
+        "timeline": {
+          "request_counts": {
+            "Runtime GET /v1/health": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/projects/{id}/timelines": [
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/handshake": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/health": 0.013975243999084341,
+            "Runtime GET /v1/projects/{id}/timelines": 0.12765181900249445,
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": 0.33425191599963,
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": 0.02342283699908876,
+            "Runtime POST /v1/handshake": 0.008754989999943064,
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": 0.4184188679992076,
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": 0.05914346999998088,
+            "Runtime acquisition lock": 0.0005140510002092924,
+            "Runtime launcher connection": 2.173348137001085,
+            "other command work": 0.7370124164972367
+          },
+          "wall_median": 4.076406456999393
+        }
+      },
+      "source_identity": {
+        "end": {
+          "dirty": false,
+          "head": "4a9c717523bb0f715760cd5f9896f544545bf02d",
+          "path": "/root/codex/plan-81/run/worktrees/us-2",
+          "present": true,
+          "tree": "7460768133aa344ea27f7e5a6998c255d46ee83e"
+        },
+        "start": {
+          "dirty": false,
+          "head": "4a9c717523bb0f715760cd5f9896f544545bf02d",
+          "path": "/root/codex/plan-81/run/worktrees/us-2",
+          "present": true,
+          "tree": "7460768133aa344ea27f7e5a6998c255d46ee83e"
+        },
+        "unchanged": true
+      },
+      "start_load_1_5_15": [
+        1.64,
+        1.93,
+        1.39
+      ],
+      "started_utc": "2026-11-22T06:12:27.675452+00:00",
+      "trial": "/root/codex/plan-81/run/us2-normalized/cpu-baseline-2",
+      "visualization": {
+        "error": {
+          "code": "invocation_error",
+          "details": {
+            "kernel_attempt_id": "4e690ce710df41a6a404c50b526f9719",
+            "kernel_run_id": "3278adf114614eafa10a7f28cf9bd34a",
+            "kernel_task_id": "235066e77bde4b1aba2a88035fb9b701",
+            "run_id": "3278adf114614eafa10a7f28cf9bd34a",
+            "sdk_category": "runtime",
+            "sdk_error": "CapabilityRuntimeError",
+            "validation": null
+          },
+          "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.timeline_visualize' exited 1: {\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 10727, \"elapsed_ms\": 2043}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 10727, \"elapsed_ms\": 47}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 10727, \"elapsed_ms\": 2009}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 10727, \"elapsed_ms\": 2087}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 10727, \"elapsed_ms\": 32}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"renderer lease channel closed\", \"error_details\": null}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"original host renderer cleanup is unresolved\", \"error_details\": null}\nrenderer lease channel closed\nFix: Review the details, correct the render settings or timeline, and try again."
+        },
+        "exit": 1,
+        "ok": false
+      }
+    },
+    {
+      "cleanup_process_check_clear": true,
+      "commands": [
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "c0f0a31d928949019f061c5321a0f333",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "1",
+            "--idempotency-key",
+            "latency-edit-0",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 1,
+          "wall_seconds": 3.8064004949992523
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "c0f0a31d928949019f061c5321a0f333",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "2",
+            "--idempotency-key",
+            "latency-edit-1",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 2,
+          "wall_seconds": 3.77368098900115
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "c0f0a31d928949019f061c5321a0f333",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "3",
+            "--idempotency-key",
+            "latency-edit-2",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 3,
+          "wall_seconds": 4.156676589000199
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "c0f0a31d928949019f061c5321a0f333",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "4",
+            "--idempotency-key",
+            "latency-edit-3",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 4,
+          "wall_seconds": 4.03123179800059
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "timelines",
+            "edit",
+            "film",
+            "--project",
+            "c0f0a31d928949019f061c5321a0f333",
+            "--clip",
+            "parent/clip:timed-clip",
+            "--on",
+            "5",
+            "--idempotency-key",
+            "latency-edit-4",
+            "--json",
+            "--timings"
+          ],
+          "command": "timelines edit",
+          "exit": 0,
+          "sample": 5,
+          "wall_seconds": 4.43642559699947
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 1,
+          "wall_seconds": 19.597922199000095
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 2,
+          "wall_seconds": 19.81535164900015
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 3,
+          "wall_seconds": 18.784199512998384
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 4,
+          "wall_seconds": 19.42961330199978
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop."
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 5,
+          "wall_seconds": 19.547200155999235
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 0"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 6,
+          "wall_seconds": 19.493019164001453
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 1"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 7,
+          "wall_seconds": 19.50415831399914
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 2"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 8,
+          "wall_seconds": 20.552216973999748
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 3"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 9,
+          "wall_seconds": 19.29121544300142
+        },
+        {
+          "argv": [
+            "/root/codex/plan-81/run/worktrees/us-2.env/venv/bin/astrid",
+            "generate",
+            "workflow",
+            "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy/ready_templates/image/qwen_image_2_1_turbo.py",
+            "--placement",
+            "http://127.0.0.1:42589",
+            "--project",
+            "b1c553b82fbc4087ab330ea2de3cc592",
+            "--json",
+            "--timings",
+            "--no-wait",
+            "--prompt",
+            "A red cube on a white tabletop. variant 4"
+          ],
+          "command": "generate workflow",
+          "exit": 0,
+          "sample": 10,
+          "wall_seconds": 19.274205835999965
+        }
+      ],
+      "end_load_1_5_15": [
+        3.59,
+        3.18,
+        2.36
+      ],
+      "ended_utc": "2026-11-22T06:23:22.182470+00:00",
+      "pytest_exit": 0,
+      "samples": {
+        "changed": {
+          "request_counts": {
+            "Runtime GET /v1/app-state/user/{key}": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "Runtime GET /v1/capabilities": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/health": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime GET /v1/objects/{digest}": [
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "Runtime GET /v1/projects/{id}": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/handshake": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/projects/{id}/objects": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime POST /v1/tasks": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/app-state/user/{key}": 0.04242799400162767,
+            "Runtime GET /v1/capabilities": 0.07275605699942389,
+            "Runtime GET /v1/health": 0.016312217001541285,
+            "Runtime GET /v1/objects/{digest}": 0.10905249799907324,
+            "Runtime GET /v1/projects/{id}": 0.014006285000505159,
+            "Runtime POST /v1/handshake": 0.017512665001049754,
+            "Runtime POST /v1/projects/{id}/objects": 0.06606799099972704,
+            "Runtime POST /v1/tasks": 0.012109618000977207,
+            "Runtime acquisition lock": 0.0006854599978396436,
+            "Runtime launcher connection": 4.166732769999726,
+            "model registry": 0.04612286799965659,
+            "other command work": 11.781217075998939,
+            "pack discovery": 1.7548254879984597,
+            "pack host attachment": 0.5207729380035744,
+            "pack host lifecycle lock": 9.838200094236527e-05,
+            "pack host readiness": 0.02610696799820289,
+            "pack host source identity": 0.26927239899850974,
+            "target check": 0.00652114900003653,
+            "workflow build": 0.3394034950015339
+          },
+          "wall_median": 19.493019164001453
+        },
+        "same": {
+          "request_counts": {
+            "Runtime GET /v1/app-state/user/{key}": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "Runtime GET /v1/capabilities": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/health": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime GET /v1/objects/{digest}": [
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "Runtime GET /v1/projects/{id}": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/handshake": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/projects/{id}/objects": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime POST /v1/tasks": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/app-state/user/{key}": 0.04817948099844216,
+            "Runtime GET /v1/capabilities": 0.03849900199929834,
+            "Runtime GET /v1/health": 0.022429460001148982,
+            "Runtime GET /v1/objects/{digest}": 0.10996872600117058,
+            "Runtime GET /v1/projects/{id}": 0.010723670000515995,
+            "Runtime POST /v1/handshake": 0.028649481000684318,
+            "Runtime POST /v1/projects/{id}/objects": 0.0931534429983003,
+            "Runtime POST /v1/tasks": 0.047526137001113966,
+            "Runtime acquisition lock": 0.0006418650009436533,
+            "Runtime launcher connection": 4.1775561409995134,
+            "model registry": 0.040086755998345325,
+            "other command work": 11.981661198993606,
+            "pack discovery": 1.6869196799998463,
+            "pack host attachment": 0.526102494000952,
+            "pack host lifecycle lock": 7.228299909911584e-05,
+            "pack host readiness": 0.02762675400117587,
+            "pack host source identity": 0.2544269730005908,
+            "target check": 0.006329675999950268,
+            "workflow build": 0.3602796440009115
+          },
+          "wall_median": 19.547200155999235
+        },
+        "timeline": {
+          "request_counts": {
+            "Runtime GET /v1/health": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime GET /v1/projects/{id}/timelines": [
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": [
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "Runtime POST /v1/handshake": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": [
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          "stages": {
+            "Runtime GET /v1/health": 0.01701894400139281,
+            "Runtime GET /v1/projects/{id}/timelines": 0.13454526000350597,
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": 0.35034973199799424,
+            "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": 0.026832182998987264,
+            "Runtime POST /v1/handshake": 0.009480752998570097,
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": 0.41804262599907815,
+            "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": 0.05407832600030815,
+            "Runtime acquisition lock": 0.0005138890010130126,
+            "Runtime launcher connection": 2.076722324000002,
+            "other command work": 0.8062550899940106
+          },
+          "wall_median": 4.03123179800059
+        }
+      },
+      "source_identity": {
+        "end": {
+          "dirty": false,
+          "head": "4a9c717523bb0f715760cd5f9896f544545bf02d",
+          "path": "/root/codex/plan-81/run/worktrees/us-2",
+          "present": true,
+          "tree": "7460768133aa344ea27f7e5a6998c255d46ee83e"
+        },
+        "start": {
+          "dirty": false,
+          "head": "4a9c717523bb0f715760cd5f9896f544545bf02d",
+          "path": "/root/codex/plan-81/run/worktrees/us-2",
+          "present": true,
+          "tree": "7460768133aa344ea27f7e5a6998c255d46ee83e"
+        },
+        "unchanged": true
+      },
+      "start_load_1_5_15": [
+        2.02,
+        2.7,
+        1.95
+      ],
+      "started_utc": "2026-11-22T06:18:14.758321+00:00",
+      "trial": "/root/codex/plan-81/run/us2-normalized/cpu-baseline-3",
+      "visualization": {
+        "error": {
+          "code": "invocation_error",
+          "details": {
+            "kernel_attempt_id": "ff58625e11a74e319a8818807364f1a7",
+            "kernel_run_id": "23877719bc4347879241f3c0d7c2ce76",
+            "kernel_task_id": "11cd2d5ab38f4d33b666601a35a1e563",
+            "run_id": "23877719bc4347879241f3c0d7c2ce76",
+            "sdk_category": "runtime",
+            "sdk_error": "CapabilityRuntimeError",
+            "validation": null
+          },
+          "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.timeline_visualize' exited 1: {\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 30901, \"elapsed_ms\": 1893}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 30901, \"elapsed_ms\": 42}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 30901, \"elapsed_ms\": 2049}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 30901, \"elapsed_ms\": 2099}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 30901, \"elapsed_ms\": 26}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"renderer lease channel closed\", \"error_details\": null}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"original host renderer cleanup is unresolved\", \"error_details\": null}\nrenderer lease channel closed\nFix: Review the details, correct the render settings or timeline, and try again."
+        },
+        "exit": 1,
+        "ok": false
+      }
+    }
+  ]
+}

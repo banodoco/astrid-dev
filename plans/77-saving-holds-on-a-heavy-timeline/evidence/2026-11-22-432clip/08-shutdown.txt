@@ -1,0 +1,4 @@
+UTC 2026-11-22T18:14:42Z validated editor PID 2687; TERM
+Editor stopped; final state Zs
+Runtime down exit 0 at 2026-11-22T18:14:50Z
+Ports 2400, 17500, 17501 closed (connect_ex 111); no realm.sqlite3-wal or realm.sqlite3-shm found; free 44927712 KiB.

@@ -1,0 +1,17 @@
+## Findings
+
+- **MEASURED:** `generic_host.py` is 18,888 lines (`wc -l`); the rationale records 14,890, a **3,998-line** gap.
+- **READ:** [`test_giant_file_inventory_matches_rationale`](</home/user/astrid-agent/tests/test_structure_contracts.py:955>) scans Python files under `astrid/`, requires every file over 1,200 lines to appear in the rationale, and checks the recorded count is within 50 lines of the current count ([check](</home/user/astrid-agent/tests/test_structure_contracts.py:1002>), [tolerance](</home/user/astrid-agent/tests/test_structure_contracts.py:1024>)). It checks inventory accuracy, **not growth against a fixed ceiling**.
+- **MEASURED:** The requested pytest command ran: **31 passed, 2 failed**. The giant-file test fails because 17 other oversized files are undocumented; it would also fail on this file’s count mismatch. The other failure is an unexpected top-level `astrid/console.py`.
+- **READ:** This test is part of the full pytest suite in CI’s `unit-shard` job, split across eight groups ([workflow](</home/user/astrid-agent/.github/workflows/ci.yml:358>)). So it is intended as a blocking CI test, though the current checkout’s run fails.
+- **READ:** The documented count is edited manually: `git log -S'generic_host.py'` shows inventory edits, including 2,304 (Sept. 1), 13,598 (Oct. 19), 13,798 (Oct. 20), and 14,225 (Oct. 26). These snapshots were updated over time, but no immutable per-file ceiling prevents later growth; this file is listed as a rationale exemption ([entry](</home/user/astrid-agent/docs/giant-file-rationale.md:18>)).
+
+## Other structure rules
+
+- **READ:** Import direction is enforced in [`astrid/core/structure.py`](</home/user/astrid-agent/astrid/core/structure.py:82>) and described in [`docs/architecture/repo-shape.md`](</home/user/astrid-agent/docs/architecture/repo-shape.md:155>): core cannot import concrete pack implementations except through the generic host; pack code has sanctioned-entrypoint restrictions on importing core.
+- **READ:** `compare_structure_baseline.py` fails on any new normalized finding; resolved findings pass and are reported as improvements ([comparison](</home/user/astrid-agent/scripts/reshape/compare_structure_baseline.py:33>), [exit logic](</home/user/astrid-agent/scripts/reshape/compare_structure_baseline.py:55>)). The current baseline has 25 findings. **Not found:** per-file complexity or method-count limit in the searched Ruff/config files.
+- **READ:** GL.2 is a separate shrink-only ceiling. [Issue #964](https://github.com/banodoco/astrid-dev/issues/964) records the historical 103-versus-102 regression and its cause; that is not a ceiling enforced by the giant-file test.
+
+## Smallest growth guard
+
+**INFERRED:** Add a per-file line ceiling to `tests/test_structure_contracts.py`, with its value in a separately reviewed structure baseline, and require the ceiling to stay fixed or decrease. CI should fail if the file exceeds it. An emergency increase should require a separately approved baseline-change PR or explicit owner approval recorded outside the implementation PR; otherwise the assertion and growing file could be changed together. Method and top-level-definition caps are possible but less direct; banning sibling imports of `generic_host` guards dependencies, not file size.

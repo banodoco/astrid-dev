@@ -24,7 +24,7 @@ There are no unpushed commits in either base clone. `int/40-machine-lifetime` is
 ## Task state
 
 - **Complete on the candidate:** T1, T2, T3, T4 parts 1 and 2, T5, T5-R1, T6, T7, T7b and T8. Merge SHAs and focused proof are in [`tasks.md`](tasks.md); progress PRs #341–#343 document the last repairs and completions.
-- **Review round 1:** completed on the exact candidate `b15e286b686a5d1859406ebb8dc65969e84a14cb` by the configured reviewer (`gpt-6.1-sol`). The plan permits one round and that budget is consumed. Four blocking findings were recorded in PR #345 and as R1.1–R1.4 in [`tasks.md`](tasks.md):
+- **Review round 1:** completed on the exact candidate `b15e286b686a5d1859406ebb8dc65969e84a14cb` by the configured reviewer. The plan permits one round and that budget is consumed. Four blocking findings were recorded in PR #345 and as R1.1–R1.4 in [`tasks.md`](tasks.md):
   1. **R1.1 (S):** first `tasks.show` interruption can skip cancellation because no latest status/task state has been seeded; cover RunPod generation and claim, and non-RunPod isolation.
   2. **R1.2 (N):** explicit `--datacenter any` is confused with omission in setup; saved fixed DC can survive a JSON update and the interactive path can prompt/resolve incorrectly. Preserve volume-pinned DC.
   3. **R1.3 (N):** setup inventory `ValueError` and failed `runpod.setup` result can expose a resolved credential sentinel. Sanitize both paths while retaining typed local validation messages.

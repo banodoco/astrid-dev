@@ -1,0 +1,6977 @@
+{
+ "ok": true,
+ "data": {
+  "accepted_revision_id": "authoring-parent-revision-6c55dabb0eca3ceac3fa12354d883311817bbda7de9a44362f8b346a1ce425ad",
+  "base_publication_id": "txn-1957160531d742acafeaf7b76ea1ccc1",
+  "base_revision_id": "authoring-parent-revision-b030aa10fd3925e7b6ca86153612b29dd35b1615a76859892f9a383404c9b55d",
+  "canonical_document": {
+   "dependency_manifest": {
+    "documents": [
+     {
+      "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+      "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+      "version": 2
+     }
+    ],
+    "internal_timelines": [
+     {
+      "content_digest": "sha256:364b1045d092e0db9c0a596ca9cab756622cc620e3f3ae8e0f93b7f9b34e6c16",
+      "revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+      "timeline_id": "small1"
+     }
+    ],
+    "media": [],
+    "shots": [
+     {
+      "content_digest": "sha256:67e1267b16a7f4601e4767172f8069512642e8c724fe02a7bca7f8e7b2e24a8e",
+      "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+      "revision_id": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+      "shot_id": "le4-small1-shot-00"
+     }
+    ]
+   },
+   "internal_timeline_revisions": [
+    {
+     "content_digest": "sha256:364b1045d092e0db9c0a596ca9cab756622cc620e3f3ae8e0f93b7f9b34e6c16",
+     "payload": {
+      "clips": [
+       {
+        "at": 1,
+        "clipType": "le4-gold",
+        "elementRef": {
+         "id": "le4-gold",
+         "kind": "effect",
+         "packId": "project_4944f3baaa40481ba360",
+         "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+        },
+        "hold": 1.5,
+        "id": "effect-00",
+        "params": {
+         "color": "#FFD34E",
+         "size": 120,
+         "text": "REHEARSAL 1"
+        },
+        "track": "effects"
+       },
+       {
+        "at": 3,
+        "clipType": "le4-cyan",
+        "elementRef": {
+         "id": "le4-cyan",
+         "kind": "effect",
+         "packId": "project_4944f3baaa40481ba360",
+         "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+        },
+        "hold": 1.5,
+        "id": "effect-01",
+        "params": {
+         "background": "#42D9FF",
+         "label": "REHEARSAL 2",
+         "placeholder": true
+        },
+        "track": "effects"
+       },
+       {
+        "at": 5,
+        "clipType": "le4-gold",
+        "elementRef": {
+         "id": "le4-gold",
+         "kind": "effect",
+         "packId": "project_4944f3baaa40481ba360",
+         "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+        },
+        "hold": 1.5,
+        "id": "effect-02",
+        "params": {
+         "color": "#FFD34E",
+         "size": 120,
+         "text": "REHEARSAL 3"
+        },
+        "track": "effects"
+       },
+       {
+        "at": 7,
+        "clipType": "text-card",
+        "hold": 2,
+        "id": "shot-title-00",
+        "params": {
+         "content": "SMALL CONTROL TITLE"
+        },
+        "track": "picture"
+       },
+       {
+        "at": 10,
+        "clipType": "text-card",
+        "hold": 1.5,
+        "id": "new-title-1",
+        "params": {
+         "content": "NEW TITLE 1"
+        },
+        "track": "picture"
+       }
+      ],
+      "output": {
+       "background": null,
+       "background_scale": null,
+       "file": "output.mp4",
+       "fps": 30,
+       "resolution": "1280x720"
+      },
+      "registry": {
+       "assets": {}
+      },
+      "tracks": [
+       {
+        "id": "effects",
+        "kind": "visual",
+        "label": "Effects"
+       },
+       {
+        "id": "picture",
+        "kind": "visual",
+        "label": "Titles"
+       }
+      ]
+     },
+     "revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+     "timeline_id": "small1"
+    }
+   ],
+   "parent_revision": {
+    "content_digest": "sha256:942146fcfe6245e0d124e2b0e080a090dcabd4223d9513bd3a6da4da7b52adde",
+    "payload": {
+     "clips": [],
+     "config": {
+      "clips": [],
+      "output": {
+       "background": null,
+       "background_scale": null,
+       "file": "output.mp4",
+       "fps": 30,
+       "resolution": "1280x720"
+      },
+      "theme_overrides": {
+       "visual": {
+        "canvas": {
+         "fps": 30,
+         "height": 720,
+         "width": 1280
+        }
+       }
+      },
+      "tracks": [
+       {
+        "blendMode": "normal",
+        "fit": "contain",
+        "id": "V1",
+        "kind": "visual",
+        "label": "V1",
+        "opacity": 1,
+        "scale": 1
+       },
+       {
+        "blendMode": "normal",
+        "fit": "contain",
+        "id": "A1",
+        "kind": "audio",
+        "label": "A1",
+        "opacity": 1,
+        "scale": 1
+       }
+      ]
+     },
+     "name": "small1",
+     "occurrences": [
+      {
+       "duration_ms": 25000.0,
+       "gain": 1,
+       "occurrence_id": "le4-small1-occ-00",
+       "placement": {
+        "start_ms": 0.0,
+        "track": "V1"
+       },
+       "shot_id": "le4-small1-shot-00",
+       "shot_revision_id": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+       "source_offset": 0,
+       "speed": 1,
+       "track": "V1"
+      }
+     ],
+     "registry": {
+      "assets": {}
+     },
+     "slug": "small1"
+    },
+    "revision_id": "authoring-parent-revision-6c55dabb0eca3ceac3fa12354d883311817bbda7de9a44362f8b346a1ce425ad"
+   },
+   "project_id": "941463bd5d1d4d7f976ce8cc5e767b4e",
+   "schema_version": 1,
+   "shot_revisions": [
+    {
+     "content_digest": "sha256:67e1267b16a7f4601e4767172f8069512642e8c724fe02a7bca7f8e7b2e24a8e",
+     "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+     "payload": {
+      "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+      "items": [],
+      "name": "Synthetic shot 00"
+     },
+     "revision_id": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+     "shot_id": "le4-small1-shot-00"
+    }
+   ],
+   "timeline_id": "small1"
+  },
+  "commands": [
+   {
+    "args": {
+     "elementRef": {
+      "id": "le4-gold",
+      "kind": "effect",
+      "packId": "project_4944f3baaa40481ba360",
+      "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+     },
+     "placement": "place",
+     "schema_source": {
+      "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+      "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+      "version": 2
+     }
+    },
+    "authorship": {
+     "occurrence:le4-small1-occ-00/clip:effect-00::clipType": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-00::elementRef": "direct"
+    },
+    "bindings": {
+     "params.element": "occurrence:le4-small1-occ-00/clip:effect-00",
+     "scalar.owner": "occurrence:le4-small1-occ-00",
+     "scalar.target": "occurrence:le4-small1-occ-00/clip:effect-00"
+    },
+    "created": [],
+    "expect": {
+     "occurrence:le4-small1-occ-00/clip:effect-00::clipType": {
+      "state": "present",
+      "value": "am-type"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-00::elementRef": {
+      "state": "absent"
+     }
+    },
+    "intent": {},
+    "op": "clip.set-element",
+    "reads": [
+     {
+      "path": [
+       "id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "present",
+       "value": "effect-00"
+      }
+     },
+     {
+      "path": [
+       "occurrence_id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-occ-00"
+      }
+     },
+     {
+      "path": [
+       "shot_id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/shot",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-shot-00"
+      }
+     },
+     {
+      "path": [
+       "clipType"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "present",
+       "value": "am-type"
+      }
+     },
+     {
+      "path": [
+       "clip_type"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "hold"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "present",
+       "value": 1.5
+      }
+     },
+     {
+      "path": [
+       "asset"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "file"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "src"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "source"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "from"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "to"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "elementRef"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "element_ref"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "present",
+       "value": {
+        "text": "SMALL AM-TYPE 1"
+       }
+      }
+     }
+    ],
+    "resolved": [
+     "occurrence:le4-small1-occ-00/clip:effect-00"
+    ],
+    "schema_version": 1,
+    "select": "occurrence:le4-small1-occ-00/clip:effect-00",
+    "selections": [
+     {
+      "boundaries": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "key": "element.targets",
+      "members": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "order": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "owner": "occurrence:le4-small1-occ-00",
+      "policy": "guard-membership",
+      "query_version": 1
+     }
+    ],
+    "version": "1"
+   },
+   {
+    "args": {
+     "changes": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params",
+        "color"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "value": "#FFD34E"
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params",
+        "size"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "value": 120
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "SMALL AM-TYPE 1"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params",
+        "text"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "value": "REHEARSAL 1"
+      }
+     ]
+    },
+    "authorship": {
+     "occurrence:le4-small1-occ-00/clip:effect-00::params.color": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-00::params.size": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-00::params.text": "direct"
+    },
+    "bindings": {},
+    "created": [],
+    "expect": {
+     "occurrence:le4-small1-occ-00/clip:effect-00::params.color": {
+      "state": "absent"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-00::params.size": {
+      "state": "absent"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-00::params.text": {
+      "state": "present",
+      "value": "SMALL AM-TYPE 1"
+     }
+    },
+    "intent": {},
+    "op": "doc.patch",
+    "reads": [
+     {
+      "path": [
+       "params",
+       "color"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params",
+       "size"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params",
+       "text"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "state": {
+       "state": "present",
+       "value": "SMALL AM-TYPE 1"
+      }
+     }
+    ],
+    "resolved": [],
+    "schema_version": 1,
+    "select": null,
+    "selections": [],
+    "version": "1"
+   },
+   {
+    "args": {
+     "elementRef": {
+      "id": "le4-cyan",
+      "kind": "effect",
+      "packId": "project_4944f3baaa40481ba360",
+      "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+     },
+     "placement": "place",
+     "schema_source": {
+      "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+      "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+      "version": 2
+     }
+    },
+    "authorship": {
+     "occurrence:le4-small1-occ-00/clip:effect-01::clipType": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-01::elementRef": "direct"
+    },
+    "bindings": {
+     "params.element": "occurrence:le4-small1-occ-00/clip:effect-01",
+     "scalar.owner": "occurrence:le4-small1-occ-00",
+     "scalar.target": "occurrence:le4-small1-occ-00/clip:effect-01"
+    },
+    "created": [],
+    "expect": {
+     "occurrence:le4-small1-occ-00/clip:effect-01::clipType": {
+      "state": "present",
+      "value": "am-footage"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-01::elementRef": {
+      "state": "absent"
+     }
+    },
+    "intent": {},
+    "op": "clip.set-element",
+    "reads": [
+     {
+      "path": [
+       "id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "present",
+       "value": "effect-01"
+      }
+     },
+     {
+      "path": [
+       "occurrence_id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-occ-00"
+      }
+     },
+     {
+      "path": [
+       "shot_id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/shot",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-shot-00"
+      }
+     },
+     {
+      "path": [
+       "clipType"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "present",
+       "value": "am-footage"
+      }
+     },
+     {
+      "path": [
+       "clip_type"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "hold"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "present",
+       "value": 1.5
+      }
+     },
+     {
+      "path": [
+       "asset"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "file"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "src"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "source"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "from"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "to"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "elementRef"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "element_ref"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "present",
+       "value": {
+        "label": "SMALL FOOTAGE 1"
+       }
+      }
+     }
+    ],
+    "resolved": [
+     "occurrence:le4-small1-occ-00/clip:effect-01"
+    ],
+    "schema_version": 1,
+    "select": "occurrence:le4-small1-occ-00/clip:effect-01",
+    "selections": [
+     {
+      "boundaries": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "key": "element.targets",
+      "members": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "order": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "owner": "occurrence:le4-small1-occ-00",
+      "policy": "guard-membership",
+      "query_version": 1
+     }
+    ],
+    "version": "1"
+   },
+   {
+    "args": {
+     "changes": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params",
+        "background"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "value": "#42D9FF"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "SMALL FOOTAGE 1"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params",
+        "label"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "value": "REHEARSAL 2"
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params",
+        "placeholder"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "value": true
+      }
+     ]
+    },
+    "authorship": {
+     "occurrence:le4-small1-occ-00/clip:effect-01::params.background": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-01::params.label": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-01::params.placeholder": "direct"
+    },
+    "bindings": {},
+    "created": [],
+    "expect": {
+     "occurrence:le4-small1-occ-00/clip:effect-01::params.background": {
+      "state": "absent"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-01::params.label": {
+      "state": "present",
+      "value": "SMALL FOOTAGE 1"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-01::params.placeholder": {
+      "state": "absent"
+     }
+    },
+    "intent": {},
+    "op": "doc.patch",
+    "reads": [
+     {
+      "path": [
+       "params",
+       "background"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params",
+       "label"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "present",
+       "value": "SMALL FOOTAGE 1"
+      }
+     },
+     {
+      "path": [
+       "params",
+       "placeholder"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "state": {
+       "state": "absent"
+      }
+     }
+    ],
+    "resolved": [],
+    "schema_version": 1,
+    "select": null,
+    "selections": [],
+    "version": "1"
+   },
+   {
+    "args": {
+     "elementRef": {
+      "id": "le4-gold",
+      "kind": "effect",
+      "packId": "project_4944f3baaa40481ba360",
+      "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+     },
+     "placement": "place",
+     "schema_source": {
+      "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+      "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+      "version": 2
+     }
+    },
+    "authorship": {
+     "occurrence:le4-small1-occ-00/clip:effect-02::clipType": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-02::elementRef": "direct"
+    },
+    "bindings": {
+     "params.element": "occurrence:le4-small1-occ-00/clip:effect-02",
+     "scalar.owner": "occurrence:le4-small1-occ-00",
+     "scalar.target": "occurrence:le4-small1-occ-00/clip:effect-02"
+    },
+    "created": [],
+    "expect": {
+     "occurrence:le4-small1-occ-00/clip:effect-02::clipType": {
+      "state": "present",
+      "value": "am-type"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-02::elementRef": {
+      "state": "absent"
+     }
+    },
+    "intent": {},
+    "op": "clip.set-element",
+    "reads": [
+     {
+      "path": [
+       "id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "present",
+       "value": "effect-02"
+      }
+     },
+     {
+      "path": [
+       "occurrence_id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-occ-00"
+      }
+     },
+     {
+      "path": [
+       "shot_id"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/shot",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-shot-00"
+      }
+     },
+     {
+      "path": [
+       "clipType"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "present",
+       "value": "am-type"
+      }
+     },
+     {
+      "path": [
+       "clip_type"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "hold"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "present",
+       "value": 1.5
+      }
+     },
+     {
+      "path": [
+       "asset"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "file"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "src"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "source"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "from"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "to"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "elementRef"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "element_ref"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "present",
+       "value": {
+        "text": "SMALL AM-TYPE 2"
+       }
+      }
+     }
+    ],
+    "resolved": [
+     "occurrence:le4-small1-occ-00/clip:effect-02"
+    ],
+    "schema_version": 1,
+    "select": "occurrence:le4-small1-occ-00/clip:effect-02",
+    "selections": [
+     {
+      "boundaries": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "key": "element.targets",
+      "members": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "order": [
+       "occurrence:le4-small1-occ-00/clip:effect-00",
+       "occurrence:le4-small1-occ-00/clip:effect-01",
+       "occurrence:le4-small1-occ-00/clip:effect-02",
+       "occurrence:le4-small1-occ-00/clip:shot-title-00"
+      ],
+      "owner": "occurrence:le4-small1-occ-00",
+      "policy": "guard-membership",
+      "query_version": 1
+     }
+    ],
+    "version": "1"
+   },
+   {
+    "args": {
+     "changes": [
+      {
+       "after_id": "shot-title-00",
+       "before": {
+        "state": "absent"
+       },
+       "id": "new-title-1",
+       "op": "list.insert",
+       "order_before": [
+        "effect-00",
+        "effect-01",
+        "effect-02",
+        "shot-title-00"
+       ],
+       "path": [
+        "clips"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "value": {
+        "at": 10,
+        "clipType": "text-card",
+        "hold": 1.5,
+        "id": "new-title-1",
+        "params": {
+         "content": "NEW TITLE 1"
+        },
+        "track": "picture"
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params",
+        "color"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "value": "#FFD34E"
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params",
+        "size"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "value": 120
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "SMALL AM-TYPE 2"
+       },
+       "op": "set",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params",
+        "text"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "value": "REHEARSAL 3"
+      }
+     ]
+    },
+    "authorship": {
+     "occurrence:le4-small1-occ-00/clip:effect-02::params.color": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-02::params.size": "direct",
+     "occurrence:le4-small1-occ-00/clip:effect-02::params.text": "direct",
+     "occurrence:le4-small1-occ-00/source::clips": "direct"
+    },
+    "bindings": {},
+    "created": [
+     "occurrence:le4-small1-occ-00/clip:new-title-1"
+    ],
+    "expect": {
+     "occurrence:le4-small1-occ-00/clip:effect-02::params.color": {
+      "state": "absent"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-02::params.size": {
+      "state": "absent"
+     },
+     "occurrence:le4-small1-occ-00/clip:effect-02::params.text": {
+      "state": "present",
+      "value": "SMALL AM-TYPE 2"
+     },
+     "occurrence:le4-small1-occ-00/source::clips": {
+      "state": "present",
+      "value": [
+       {
+        "at": 1,
+        "clipType": "le4-gold",
+        "elementRef": {
+         "id": "le4-gold",
+         "kind": "effect",
+         "packId": "project_4944f3baaa40481ba360",
+         "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+        },
+        "hold": 1.5,
+        "id": "effect-00",
+        "params": {
+         "color": "#FFD34E",
+         "size": 120,
+         "text": "REHEARSAL 1"
+        },
+        "track": "effects"
+       },
+       {
+        "at": 3,
+        "clipType": "le4-cyan",
+        "elementRef": {
+         "id": "le4-cyan",
+         "kind": "effect",
+         "packId": "project_4944f3baaa40481ba360",
+         "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+        },
+        "hold": 1.5,
+        "id": "effect-01",
+        "params": {
+         "background": "#42D9FF",
+         "label": "REHEARSAL 2",
+         "placeholder": true
+        },
+        "track": "effects"
+       },
+       {
+        "at": 5,
+        "clipType": "le4-gold",
+        "elementRef": {
+         "id": "le4-gold",
+         "kind": "effect",
+         "packId": "project_4944f3baaa40481ba360",
+         "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+        },
+        "hold": 1.5,
+        "id": "effect-02",
+        "params": {
+         "text": "SMALL AM-TYPE 2"
+        },
+        "track": "effects"
+       },
+       {
+        "at": 7,
+        "clipType": "text-card",
+        "hold": 2,
+        "id": "shot-title-00",
+        "params": {
+         "content": "SMALL CONTROL TITLE"
+        },
+        "track": "picture"
+       }
+      ]
+     }
+    },
+    "intent": {},
+    "op": "doc.patch",
+    "reads": [
+     {
+      "path": [
+       "params",
+       "color"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params",
+       "size"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "path": [
+       "params",
+       "text"
+      ],
+      "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "state": {
+       "state": "present",
+       "value": "SMALL AM-TYPE 2"
+      }
+     }
+    ],
+    "resolved": [],
+    "schema_version": 1,
+    "select": null,
+    "selections": [],
+    "version": "1"
+   }
+  ],
+  "compiler_version": "authoring-bundle-1",
+  "document_digest": "sha256:5fa0164b0c206e78429f0048e662c74f6b7e0a6e0b0ad9e928863fb7a1ca442e",
+  "id_map": {},
+  "label": "Three motion retargets, parameters and one title",
+  "merge_mode": "atomic",
+  "previous_publication_id": "txn-1957160531d742acafeaf7b76ea1ccc1",
+  "previous_revision_id": "authoring-parent-revision-b030aa10fd3925e7b6ca86153612b29dd35b1615a76859892f9a383404c9b55d",
+  "provider_version": "astrid-v1",
+  "publisher": "astrid-c57502f068ed9947509521b5",
+  "rebased_onto": null,
+  "source": {
+   "via": "python"
+  },
+  "status": "accepted",
+  "steps": [
+   {
+    "command_ordinals": [
+     0
+    ],
+    "dependencies": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "id"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "present",
+       "value": "effect-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "occurrence_id"
+      ],
+      "ref": "parent",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-occ-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_id"
+      ],
+      "ref": "parent",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-shot-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "clipType"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "present",
+       "value": "am-type"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "clip_type"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "hold"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "present",
+       "value": 1.5
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "asset"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "file"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "src"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "source"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "from"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "to"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "elementRef"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "element_ref"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "params"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+      "state": {
+       "state": "present",
+       "value": {
+        "text": "SMALL AM-TYPE 1"
+       }
+      }
+     }
+    ],
+    "id": "step-1",
+    "intent": "",
+    "label": "Place element",
+    "patch": [
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+      "value": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "text": "SMALL AM-TYPE 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "am-footage",
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "label": "SMALL FOOTAGE 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "am-type",
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "text": "SMALL AM-TYPE 2"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      }
+     },
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e",
+      "value": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "items": [],
+       "name": "Synthetic shot 00"
+      }
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": "authoring-shot-revision-6db04ec287f34b7c063e9de23b39a21b16a9e8a8caa999fab42c5554d4f16ac6"
+      },
+      "op": "set",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_revision_id"
+      ],
+      "ref": "parent",
+      "value": "authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-6db04ec287f34b7c063e9de23b39a21b16a9e8a8caa999fab42c5554d4f16ac6"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "text": "SMALL AM-TYPE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "am-footage",
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019"
+     }
+    ],
+    "reads": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     }
+    ],
+    "tags": [
+     "element"
+    ]
+   },
+   {
+    "command_ordinals": [
+     1
+    ],
+    "dependencies": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "params",
+       "color"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "params",
+       "size"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-00",
+       "params",
+       "text"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+      "state": {
+       "state": "present",
+       "value": "SMALL AM-TYPE 1"
+      }
+     }
+    ],
+    "id": "step-2",
+    "intent": "",
+    "label": "Edit document",
+    "patch": [
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "value": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "am-footage",
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "label": "SMALL FOOTAGE 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "am-type",
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "text": "SMALL AM-TYPE 2"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      }
+     },
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9",
+      "value": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "items": [],
+       "name": "Synthetic shot 00"
+      }
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": "authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e"
+      },
+      "op": "set",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_revision_id"
+      ],
+      "ref": "parent",
+      "value": "authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "text": "SMALL AM-TYPE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "am-footage",
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37"
+     }
+    ],
+    "reads": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     }
+    ],
+    "tags": []
+   },
+   {
+    "command_ordinals": [
+     2
+    ],
+    "dependencies": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "id"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "present",
+       "value": "effect-01"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "occurrence_id"
+      ],
+      "ref": "parent",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-occ-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_id"
+      ],
+      "ref": "parent",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-shot-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "clipType"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "present",
+       "value": "am-footage"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "clip_type"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "hold"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "present",
+       "value": 1.5
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "asset"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "file"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "src"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "source"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "from"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "to"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "elementRef"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "element_ref"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "params"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+      "state": {
+       "state": "present",
+       "value": {
+        "label": "SMALL FOOTAGE 1"
+       }
+      }
+     }
+    ],
+    "id": "step-3",
+    "intent": "",
+    "label": "Place element",
+    "patch": [
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+      "value": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "le4-cyan",
+         "elementRef": {
+          "id": "le4-cyan",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+         },
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "label": "SMALL FOOTAGE 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "am-type",
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "text": "SMALL AM-TYPE 2"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      }
+     },
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2",
+      "value": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "items": [],
+       "name": "Synthetic shot 00"
+      }
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": "authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9"
+      },
+      "op": "set",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_revision_id"
+      ],
+      "ref": "parent",
+      "value": "authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "am-footage",
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706"
+     }
+    ],
+    "reads": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     }
+    ],
+    "tags": [
+     "element"
+    ]
+   },
+   {
+    "command_ordinals": [
+     3
+    ],
+    "dependencies": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "params",
+       "background"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "params",
+       "label"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+      "state": {
+       "state": "present",
+       "value": "SMALL FOOTAGE 1"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-01",
+       "params",
+       "placeholder"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+      "state": {
+       "state": "absent"
+      }
+     }
+    ],
+    "id": "step-4",
+    "intent": "",
+    "label": "Edit document",
+    "patch": [
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "value": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "le4-cyan",
+         "elementRef": {
+          "id": "le4-cyan",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+         },
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "background": "#42D9FF",
+          "label": "REHEARSAL 2",
+          "placeholder": true
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "am-type",
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "text": "SMALL AM-TYPE 2"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      }
+     },
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb",
+      "value": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "items": [],
+       "name": "Synthetic shot 00"
+      }
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": "authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2"
+      },
+      "op": "set",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_revision_id"
+      ],
+      "ref": "parent",
+      "value": "authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c"
+     }
+    ],
+    "reads": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     }
+    ],
+    "tags": []
+   },
+   {
+    "command_ordinals": [
+     4
+    ],
+    "dependencies": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "id"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "present",
+       "value": "effect-02"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "occurrence_id"
+      ],
+      "ref": "parent",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-occ-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_id"
+      ],
+      "ref": "parent",
+      "state": {
+       "state": "present",
+       "value": "le4-small1-shot-00"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "clipType"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "present",
+       "value": "am-type"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "clip_type"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "hold"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "present",
+       "value": 1.5
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "asset"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "file"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "src"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "source"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "from"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "to"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "elementRef"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "element_ref"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "params"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+      "state": {
+       "state": "present",
+       "value": {
+        "text": "SMALL AM-TYPE 2"
+       }
+      }
+     }
+    ],
+    "id": "step-5",
+    "intent": "",
+    "label": "Place element",
+    "patch": [
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+      "value": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "le4-cyan",
+         "elementRef": {
+          "id": "le4-cyan",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+         },
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "background": "#42D9FF",
+          "label": "REHEARSAL 2",
+          "placeholder": true
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "text": "SMALL AM-TYPE 2"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      }
+     },
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2",
+      "value": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "items": [],
+       "name": "Synthetic shot 00"
+      }
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": "authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb"
+      },
+      "op": "set",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_revision_id"
+      ],
+      "ref": "parent",
+      "value": "authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "background": "#42D9FF",
+           "label": "REHEARSAL 2",
+           "placeholder": true
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1"
+     }
+    ],
+    "reads": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     }
+    ],
+    "tags": [
+     "element"
+    ]
+   },
+   {
+    "command_ordinals": [
+     5
+    ],
+    "dependencies": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     },
+     {
+      "kind": "collection",
+      "members": [
+       "effect-00",
+       "effect-01",
+       "effect-02",
+       "shot-title-00"
+      ],
+      "order": [
+       "effect-00",
+       "effect-01",
+       "effect-02",
+       "shot-title-00"
+      ],
+      "path": [
+       "clips"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08"
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:new-title-1"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "params",
+       "color"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "params",
+       "size"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+      "state": {
+       "state": "absent"
+      }
+     },
+     {
+      "kind": "field",
+      "path": [
+       "clips",
+       "id:effect-02",
+       "params",
+       "text"
+      ],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+      "state": {
+       "state": "present",
+       "value": "SMALL AM-TYPE 2"
+      }
+     }
+    ],
+    "id": "step-6",
+    "intent": "",
+    "label": "Edit document",
+    "patch": [
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+      "value": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "le4-cyan",
+         "elementRef": {
+          "id": "le4-cyan",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+         },
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "background": "#42D9FF",
+          "label": "REHEARSAL 2",
+          "placeholder": true
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 3"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        },
+        {
+         "at": 10,
+         "clipType": "text-card",
+         "hold": 1.5,
+         "id": "new-title-1",
+         "params": {
+          "content": "NEW TITLE 1"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      }
+     },
+     {
+      "before": {
+       "state": "absent"
+      },
+      "op": "set",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+      "value": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+       "items": [],
+       "name": "Synthetic shot 00"
+      }
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": "authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2"
+      },
+      "op": "set",
+      "path": [
+       "occurrences",
+       "occurrence_id:le4-small1-occ-00",
+       "shot_revision_id"
+      ],
+      "ref": "parent",
+      "value": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "shot-revision:authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2"
+     },
+     {
+      "before": {
+       "state": "present",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "background": "#42D9FF",
+           "label": "REHEARSAL 2",
+           "placeholder": true
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      "op": "remove",
+      "path": [],
+      "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08"
+     }
+    ],
+    "reads": [
+     {
+      "kind": "scope",
+      "path": [],
+      "ref": "timeline"
+     }
+    ],
+    "tags": []
+   }
+  ],
+  "summary": "Committed \"Three motion retargets, parameters and one title\" as txn-8e764a2d932340299d0b568793cbdf8d.",
+  "replayed": false,
+  "confirmed": false,
+  "undo": {
+   "publications": [
+    "txn-8e764a2d932340299d0b568793cbdf8d"
+   ]
+  },
+  "accepted_publication_id": "txn-8e764a2d932340299d0b568793cbdf8d",
+  "show_command": "astrid timelines show small1 --project 941463bd5d1d4d7f976ce8cc5e767b4e --published --revision-id authoring-parent-revision-6c55dabb0eca3ceac3fa12354d883311817bbda7de9a44362f8b346a1ce425ad",
+  "changed_ranges": []
+ },
+ "error": null,
+ "receipt": {
+  "receipt_id": "txn-8e764a2d932340299d0b568793cbdf8d",
+  "command_kind": "timeline.commit",
+  "idempotency_key": "le4-small1-mixed-v1",
+  "request_hash": "6a7da6fd8960890bbb3eebf9051ec5a9eb243afa1777c3585280394befe1715f",
+  "project_id": "941463bd5d1d4d7f976ce8cc5e767b4e",
+  "project_seq": [
+   11,
+   11
+  ],
+  "event_ids": [
+   "73"
+  ],
+  "result": {
+   "accepted_revision_id": "authoring-parent-revision-6c55dabb0eca3ceac3fa12354d883311817bbda7de9a44362f8b346a1ce425ad",
+   "base_publication_id": "txn-1957160531d742acafeaf7b76ea1ccc1",
+   "base_revision_id": "authoring-parent-revision-b030aa10fd3925e7b6ca86153612b29dd35b1615a76859892f9a383404c9b55d",
+   "canonical_document": {
+    "dependency_manifest": {
+     "documents": [
+      {
+       "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+       "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+       "version": 2
+      }
+     ],
+     "internal_timelines": [
+      {
+       "content_digest": "sha256:364b1045d092e0db9c0a596ca9cab756622cc620e3f3ae8e0f93b7f9b34e6c16",
+       "revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+       "timeline_id": "small1"
+      }
+     ],
+     "media": [],
+     "shots": [
+      {
+       "content_digest": "sha256:67e1267b16a7f4601e4767172f8069512642e8c724fe02a7bca7f8e7b2e24a8e",
+       "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+       "revision_id": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+       "shot_id": "le4-small1-shot-00"
+      }
+     ]
+    },
+    "internal_timeline_revisions": [
+     {
+      "content_digest": "sha256:364b1045d092e0db9c0a596ca9cab756622cc620e3f3ae8e0f93b7f9b34e6c16",
+      "payload": {
+       "clips": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "le4-cyan",
+         "elementRef": {
+          "id": "le4-cyan",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+         },
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "background": "#42D9FF",
+          "label": "REHEARSAL 2",
+          "placeholder": true
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 3"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        },
+        {
+         "at": 10,
+         "clipType": "text-card",
+         "hold": 1.5,
+         "id": "new-title-1",
+         "params": {
+          "content": "NEW TITLE 1"
+         },
+         "track": "picture"
+        }
+       ],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "registry": {
+        "assets": {}
+       },
+       "tracks": [
+        {
+         "id": "effects",
+         "kind": "visual",
+         "label": "Effects"
+        },
+        {
+         "id": "picture",
+         "kind": "visual",
+         "label": "Titles"
+        }
+       ]
+      },
+      "revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+      "timeline_id": "small1"
+     }
+    ],
+    "parent_revision": {
+     "content_digest": "sha256:942146fcfe6245e0d124e2b0e080a090dcabd4223d9513bd3a6da4da7b52adde",
+     "payload": {
+      "clips": [],
+      "config": {
+       "clips": [],
+       "output": {
+        "background": null,
+        "background_scale": null,
+        "file": "output.mp4",
+        "fps": 30,
+        "resolution": "1280x720"
+       },
+       "theme_overrides": {
+        "visual": {
+         "canvas": {
+          "fps": 30,
+          "height": 720,
+          "width": 1280
+         }
+        }
+       },
+       "tracks": [
+        {
+         "blendMode": "normal",
+         "fit": "contain",
+         "id": "V1",
+         "kind": "visual",
+         "label": "V1",
+         "opacity": 1,
+         "scale": 1
+        },
+        {
+         "blendMode": "normal",
+         "fit": "contain",
+         "id": "A1",
+         "kind": "audio",
+         "label": "A1",
+         "opacity": 1,
+         "scale": 1
+        }
+       ]
+      },
+      "name": "small1",
+      "occurrences": [
+       {
+        "duration_ms": 25000.0,
+        "gain": 1,
+        "occurrence_id": "le4-small1-occ-00",
+        "placement": {
+         "start_ms": 0.0,
+         "track": "V1"
+        },
+        "shot_id": "le4-small1-shot-00",
+        "shot_revision_id": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+        "source_offset": 0,
+        "speed": 1,
+        "track": "V1"
+       }
+      ],
+      "registry": {
+       "assets": {}
+      },
+      "slug": "small1"
+     },
+     "revision_id": "authoring-parent-revision-6c55dabb0eca3ceac3fa12354d883311817bbda7de9a44362f8b346a1ce425ad"
+    },
+    "project_id": "941463bd5d1d4d7f976ce8cc5e767b4e",
+    "schema_version": 1,
+    "shot_revisions": [
+     {
+      "content_digest": "sha256:67e1267b16a7f4601e4767172f8069512642e8c724fe02a7bca7f8e7b2e24a8e",
+      "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+      "payload": {
+       "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+       "items": [],
+       "name": "Synthetic shot 00"
+      },
+      "revision_id": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+      "shot_id": "le4-small1-shot-00"
+     }
+    ],
+    "timeline_id": "small1"
+   },
+   "commands": [
+    {
+     "args": {
+      "elementRef": {
+       "id": "le4-gold",
+       "kind": "effect",
+       "packId": "project_4944f3baaa40481ba360",
+       "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+      },
+      "placement": "place",
+      "schema_source": {
+       "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+       "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+       "version": 2
+      }
+     },
+     "authorship": {
+      "occurrence:le4-small1-occ-00/clip:effect-00::clipType": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-00::elementRef": "direct"
+     },
+     "bindings": {
+      "params.element": "occurrence:le4-small1-occ-00/clip:effect-00",
+      "scalar.owner": "occurrence:le4-small1-occ-00",
+      "scalar.target": "occurrence:le4-small1-occ-00/clip:effect-00"
+     },
+     "created": [],
+     "expect": {
+      "occurrence:le4-small1-occ-00/clip:effect-00::clipType": {
+       "state": "present",
+       "value": "am-type"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-00::elementRef": {
+       "state": "absent"
+      }
+     },
+     "intent": {},
+     "op": "clip.set-element",
+     "reads": [
+      {
+       "path": [
+        "id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "present",
+        "value": "effect-00"
+       }
+      },
+      {
+       "path": [
+        "occurrence_id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-occ-00"
+       }
+      },
+      {
+       "path": [
+        "shot_id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/shot",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-shot-00"
+       }
+      },
+      {
+       "path": [
+        "clipType"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "present",
+        "value": "am-type"
+       }
+      },
+      {
+       "path": [
+        "clip_type"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "hold"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "present",
+        "value": 1.5
+       }
+      },
+      {
+       "path": [
+        "asset"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "file"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "src"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "source"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "from"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "to"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "elementRef"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "element_ref"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "present",
+        "value": {
+         "text": "SMALL AM-TYPE 1"
+        }
+       }
+      }
+     ],
+     "resolved": [
+      "occurrence:le4-small1-occ-00/clip:effect-00"
+     ],
+     "schema_version": 1,
+     "select": "occurrence:le4-small1-occ-00/clip:effect-00",
+     "selections": [
+      {
+       "boundaries": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "key": "element.targets",
+       "members": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "order": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "owner": "occurrence:le4-small1-occ-00",
+       "policy": "guard-membership",
+       "query_version": 1
+      }
+     ],
+     "version": "1"
+    },
+    {
+     "args": {
+      "changes": [
+       {
+        "before": {
+         "state": "absent"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-00",
+         "params",
+         "color"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+        "value": "#FFD34E"
+       },
+       {
+        "before": {
+         "state": "absent"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-00",
+         "params",
+         "size"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+        "value": 120
+       },
+       {
+        "before": {
+         "state": "present",
+         "value": "SMALL AM-TYPE 1"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-00",
+         "params",
+         "text"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+        "value": "REHEARSAL 1"
+       }
+      ]
+     },
+     "authorship": {
+      "occurrence:le4-small1-occ-00/clip:effect-00::params.color": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-00::params.size": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-00::params.text": "direct"
+     },
+     "bindings": {},
+     "created": [],
+     "expect": {
+      "occurrence:le4-small1-occ-00/clip:effect-00::params.color": {
+       "state": "absent"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-00::params.size": {
+       "state": "absent"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-00::params.text": {
+       "state": "present",
+       "value": "SMALL AM-TYPE 1"
+      }
+     },
+     "intent": {},
+     "op": "doc.patch",
+     "reads": [
+      {
+       "path": [
+        "params",
+        "color"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params",
+        "size"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params",
+        "text"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-00",
+       "state": {
+        "state": "present",
+        "value": "SMALL AM-TYPE 1"
+       }
+      }
+     ],
+     "resolved": [],
+     "schema_version": 1,
+     "select": null,
+     "selections": [],
+     "version": "1"
+    },
+    {
+     "args": {
+      "elementRef": {
+       "id": "le4-cyan",
+       "kind": "effect",
+       "packId": "project_4944f3baaa40481ba360",
+       "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+      },
+      "placement": "place",
+      "schema_source": {
+       "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+       "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+       "version": 2
+      }
+     },
+     "authorship": {
+      "occurrence:le4-small1-occ-00/clip:effect-01::clipType": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-01::elementRef": "direct"
+     },
+     "bindings": {
+      "params.element": "occurrence:le4-small1-occ-00/clip:effect-01",
+      "scalar.owner": "occurrence:le4-small1-occ-00",
+      "scalar.target": "occurrence:le4-small1-occ-00/clip:effect-01"
+     },
+     "created": [],
+     "expect": {
+      "occurrence:le4-small1-occ-00/clip:effect-01::clipType": {
+       "state": "present",
+       "value": "am-footage"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-01::elementRef": {
+       "state": "absent"
+      }
+     },
+     "intent": {},
+     "op": "clip.set-element",
+     "reads": [
+      {
+       "path": [
+        "id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "present",
+        "value": "effect-01"
+       }
+      },
+      {
+       "path": [
+        "occurrence_id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-occ-00"
+       }
+      },
+      {
+       "path": [
+        "shot_id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/shot",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-shot-00"
+       }
+      },
+      {
+       "path": [
+        "clipType"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "present",
+        "value": "am-footage"
+       }
+      },
+      {
+       "path": [
+        "clip_type"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "hold"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "present",
+        "value": 1.5
+       }
+      },
+      {
+       "path": [
+        "asset"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "file"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "src"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "source"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "from"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "to"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "elementRef"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "element_ref"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "present",
+        "value": {
+         "label": "SMALL FOOTAGE 1"
+        }
+       }
+      }
+     ],
+     "resolved": [
+      "occurrence:le4-small1-occ-00/clip:effect-01"
+     ],
+     "schema_version": 1,
+     "select": "occurrence:le4-small1-occ-00/clip:effect-01",
+     "selections": [
+      {
+       "boundaries": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "key": "element.targets",
+       "members": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "order": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "owner": "occurrence:le4-small1-occ-00",
+       "policy": "guard-membership",
+       "query_version": 1
+      }
+     ],
+     "version": "1"
+    },
+    {
+     "args": {
+      "changes": [
+       {
+        "before": {
+         "state": "absent"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-01",
+         "params",
+         "background"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+        "value": "#42D9FF"
+       },
+       {
+        "before": {
+         "state": "present",
+         "value": "SMALL FOOTAGE 1"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-01",
+         "params",
+         "label"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+        "value": "REHEARSAL 2"
+       },
+       {
+        "before": {
+         "state": "absent"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-01",
+         "params",
+         "placeholder"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+        "value": true
+       }
+      ]
+     },
+     "authorship": {
+      "occurrence:le4-small1-occ-00/clip:effect-01::params.background": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-01::params.label": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-01::params.placeholder": "direct"
+     },
+     "bindings": {},
+     "created": [],
+     "expect": {
+      "occurrence:le4-small1-occ-00/clip:effect-01::params.background": {
+       "state": "absent"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-01::params.label": {
+       "state": "present",
+       "value": "SMALL FOOTAGE 1"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-01::params.placeholder": {
+       "state": "absent"
+      }
+     },
+     "intent": {},
+     "op": "doc.patch",
+     "reads": [
+      {
+       "path": [
+        "params",
+        "background"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params",
+        "label"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "present",
+        "value": "SMALL FOOTAGE 1"
+       }
+      },
+      {
+       "path": [
+        "params",
+        "placeholder"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-01",
+       "state": {
+        "state": "absent"
+       }
+      }
+     ],
+     "resolved": [],
+     "schema_version": 1,
+     "select": null,
+     "selections": [],
+     "version": "1"
+    },
+    {
+     "args": {
+      "elementRef": {
+       "id": "le4-gold",
+       "kind": "effect",
+       "packId": "project_4944f3baaa40481ba360",
+       "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+      },
+      "placement": "place",
+      "schema_source": {
+       "content_digest": "sha256:5125d4ca61dc64a639273da26770e2d1cfd480a6cc4af5cefe69297ab44e906b",
+       "document_id": "document:72c67d63-0d49-55de-9239-a52795948dbb",
+       "version": 2
+      }
+     },
+     "authorship": {
+      "occurrence:le4-small1-occ-00/clip:effect-02::clipType": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-02::elementRef": "direct"
+     },
+     "bindings": {
+      "params.element": "occurrence:le4-small1-occ-00/clip:effect-02",
+      "scalar.owner": "occurrence:le4-small1-occ-00",
+      "scalar.target": "occurrence:le4-small1-occ-00/clip:effect-02"
+     },
+     "created": [],
+     "expect": {
+      "occurrence:le4-small1-occ-00/clip:effect-02::clipType": {
+       "state": "present",
+       "value": "am-type"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-02::elementRef": {
+       "state": "absent"
+      }
+     },
+     "intent": {},
+     "op": "clip.set-element",
+     "reads": [
+      {
+       "path": [
+        "id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "present",
+        "value": "effect-02"
+       }
+      },
+      {
+       "path": [
+        "occurrence_id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-occ-00"
+       }
+      },
+      {
+       "path": [
+        "shot_id"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/shot",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-shot-00"
+       }
+      },
+      {
+       "path": [
+        "clipType"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "present",
+        "value": "am-type"
+       }
+      },
+      {
+       "path": [
+        "clip_type"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "hold"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "present",
+        "value": 1.5
+       }
+      },
+      {
+       "path": [
+        "asset"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "file"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "src"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "source"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "from"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "to"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "elementRef"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "element_ref"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "present",
+        "value": {
+         "text": "SMALL AM-TYPE 2"
+        }
+       }
+      }
+     ],
+     "resolved": [
+      "occurrence:le4-small1-occ-00/clip:effect-02"
+     ],
+     "schema_version": 1,
+     "select": "occurrence:le4-small1-occ-00/clip:effect-02",
+     "selections": [
+      {
+       "boundaries": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "key": "element.targets",
+       "members": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "order": [
+        "occurrence:le4-small1-occ-00/clip:effect-00",
+        "occurrence:le4-small1-occ-00/clip:effect-01",
+        "occurrence:le4-small1-occ-00/clip:effect-02",
+        "occurrence:le4-small1-occ-00/clip:shot-title-00"
+       ],
+       "owner": "occurrence:le4-small1-occ-00",
+       "policy": "guard-membership",
+       "query_version": 1
+      }
+     ],
+     "version": "1"
+    },
+    {
+     "args": {
+      "changes": [
+       {
+        "after_id": "shot-title-00",
+        "before": {
+         "state": "absent"
+        },
+        "id": "new-title-1",
+        "op": "list.insert",
+        "order_before": [
+         "effect-00",
+         "effect-01",
+         "effect-02",
+         "shot-title-00"
+        ],
+        "path": [
+         "clips"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+        "value": {
+         "at": 10,
+         "clipType": "text-card",
+         "hold": 1.5,
+         "id": "new-title-1",
+         "params": {
+          "content": "NEW TITLE 1"
+         },
+         "track": "picture"
+        }
+       },
+       {
+        "before": {
+         "state": "absent"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-02",
+         "params",
+         "color"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+        "value": "#FFD34E"
+       },
+       {
+        "before": {
+         "state": "absent"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-02",
+         "params",
+         "size"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+        "value": 120
+       },
+       {
+        "before": {
+         "state": "present",
+         "value": "SMALL AM-TYPE 2"
+        },
+        "op": "set",
+        "path": [
+         "clips",
+         "id:effect-02",
+         "params",
+         "text"
+        ],
+        "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+        "value": "REHEARSAL 3"
+       }
+      ]
+     },
+     "authorship": {
+      "occurrence:le4-small1-occ-00/clip:effect-02::params.color": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-02::params.size": "direct",
+      "occurrence:le4-small1-occ-00/clip:effect-02::params.text": "direct",
+      "occurrence:le4-small1-occ-00/source::clips": "direct"
+     },
+     "bindings": {},
+     "created": [
+      "occurrence:le4-small1-occ-00/clip:new-title-1"
+     ],
+     "expect": {
+      "occurrence:le4-small1-occ-00/clip:effect-02::params.color": {
+       "state": "absent"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-02::params.size": {
+       "state": "absent"
+      },
+      "occurrence:le4-small1-occ-00/clip:effect-02::params.text": {
+       "state": "present",
+       "value": "SMALL AM-TYPE 2"
+      },
+      "occurrence:le4-small1-occ-00/source::clips": {
+       "state": "present",
+       "value": [
+        {
+         "at": 1,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-00",
+         "params": {
+          "color": "#FFD34E",
+          "size": 120,
+          "text": "REHEARSAL 1"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 3,
+         "clipType": "le4-cyan",
+         "elementRef": {
+          "id": "le4-cyan",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+         },
+         "hold": 1.5,
+         "id": "effect-01",
+         "params": {
+          "background": "#42D9FF",
+          "label": "REHEARSAL 2",
+          "placeholder": true
+         },
+         "track": "effects"
+        },
+        {
+         "at": 5,
+         "clipType": "le4-gold",
+         "elementRef": {
+          "id": "le4-gold",
+          "kind": "effect",
+          "packId": "project_4944f3baaa40481ba360",
+          "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+         },
+         "hold": 1.5,
+         "id": "effect-02",
+         "params": {
+          "text": "SMALL AM-TYPE 2"
+         },
+         "track": "effects"
+        },
+        {
+         "at": 7,
+         "clipType": "text-card",
+         "hold": 2,
+         "id": "shot-title-00",
+         "params": {
+          "content": "SMALL CONTROL TITLE"
+         },
+         "track": "picture"
+        }
+       ]
+      }
+     },
+     "intent": {},
+     "op": "doc.patch",
+     "reads": [
+      {
+       "path": [
+        "params",
+        "color"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params",
+        "size"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "path": [
+        "params",
+        "text"
+       ],
+       "ref": "occurrence:le4-small1-occ-00/clip:effect-02",
+       "state": {
+        "state": "present",
+        "value": "SMALL AM-TYPE 2"
+       }
+      }
+     ],
+     "resolved": [],
+     "schema_version": 1,
+     "select": null,
+     "selections": [],
+     "version": "1"
+    }
+   ],
+   "compiler_version": "authoring-bundle-1",
+   "document_digest": "sha256:5fa0164b0c206e78429f0048e662c74f6b7e0a6e0b0ad9e928863fb7a1ca442e",
+   "id_map": {},
+   "label": "Three motion retargets, parameters and one title",
+   "merge_mode": "atomic",
+   "previous_publication_id": "txn-1957160531d742acafeaf7b76ea1ccc1",
+   "previous_revision_id": "authoring-parent-revision-b030aa10fd3925e7b6ca86153612b29dd35b1615a76859892f9a383404c9b55d",
+   "provider_version": "astrid-v1",
+   "publisher": "astrid-c57502f068ed9947509521b5",
+   "rebased_onto": null,
+   "source": {
+    "via": "python"
+   },
+   "status": "accepted",
+   "steps": [
+    {
+     "command_ordinals": [
+      0
+     ],
+     "dependencies": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "id"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "present",
+        "value": "effect-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "occurrence_id"
+       ],
+       "ref": "parent",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-occ-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_id"
+       ],
+       "ref": "parent",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-shot-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "clipType"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "present",
+        "value": "am-type"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "clip_type"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "hold"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "present",
+        "value": 1.5
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "asset"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "file"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "src"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "source"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "from"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "to"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "elementRef"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "element_ref"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+       "state": {
+        "state": "present",
+        "value": {
+         "text": "SMALL AM-TYPE 1"
+        }
+       }
+      }
+     ],
+     "id": "step-1",
+     "intent": "",
+     "label": "Place element",
+     "patch": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "text": "SMALL AM-TYPE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "am-footage",
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "authoring-shot-revision-6db04ec287f34b7c063e9de23b39a21b16a9e8a8caa999fab42c5554d4f16ac6"
+       },
+       "op": "set",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_revision_id"
+       ],
+       "ref": "parent",
+       "value": "authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "internal_timeline_revision_id": "authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019",
+         "items": [],
+         "name": "Synthetic shot 00"
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-6db04ec287f34b7c063e9de23b39a21b16a9e8a8caa999fab42c5554d4f16ac6"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "clips": [
+          {
+           "at": 1,
+           "clipType": "am-type",
+           "hold": 1.5,
+           "id": "effect-00",
+           "params": {
+            "text": "SMALL AM-TYPE 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 3,
+           "clipType": "am-footage",
+           "hold": 1.5,
+           "id": "effect-01",
+           "params": {
+            "label": "SMALL FOOTAGE 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 5,
+           "clipType": "am-type",
+           "hold": 1.5,
+           "id": "effect-02",
+           "params": {
+            "text": "SMALL AM-TYPE 2"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 7,
+           "clipType": "text-card",
+           "hold": 2,
+           "id": "shot-title-00",
+           "params": {
+            "content": "SMALL CONTROL TITLE"
+           },
+           "track": "picture"
+          }
+         ],
+         "output": {
+          "background": null,
+          "background_scale": null,
+          "file": "output.mp4",
+          "fps": 30,
+          "resolution": "1280x720"
+         },
+         "registry": {
+          "assets": {}
+         },
+         "tracks": [
+          {
+           "id": "effects",
+           "kind": "visual",
+           "label": "Effects"
+          },
+          {
+           "id": "picture",
+           "kind": "visual",
+           "label": "Titles"
+          }
+         ]
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-0767735387f153bbc858a8eaff515d2d5bcc0995fd1d76f0ec884fc87656e019"
+      }
+     ],
+     "reads": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      }
+     ],
+     "tags": [
+      "element"
+     ]
+    },
+    {
+     "command_ordinals": [
+      1
+     ],
+     "dependencies": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params",
+        "color"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params",
+        "size"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-00",
+        "params",
+        "text"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+       "state": {
+        "state": "present",
+        "value": "SMALL AM-TYPE 1"
+       }
+      }
+     ],
+     "id": "step-2",
+     "intent": "",
+     "label": "Edit document",
+     "patch": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "am-footage",
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e"
+       },
+       "op": "set",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_revision_id"
+       ],
+       "ref": "parent",
+       "value": "authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "internal_timeline_revision_id": "authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37",
+         "items": [],
+         "name": "Synthetic shot 00"
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-ada67bab03c1805b7b5c437bf8af4314ea253d44d7299f5847513a5cf15b8a8e"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "clips": [
+          {
+           "at": 1,
+           "clipType": "le4-gold",
+           "elementRef": {
+            "id": "le4-gold",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+           },
+           "hold": 1.5,
+           "id": "effect-00",
+           "params": {
+            "text": "SMALL AM-TYPE 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 3,
+           "clipType": "am-footage",
+           "hold": 1.5,
+           "id": "effect-01",
+           "params": {
+            "label": "SMALL FOOTAGE 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 5,
+           "clipType": "am-type",
+           "hold": 1.5,
+           "id": "effect-02",
+           "params": {
+            "text": "SMALL AM-TYPE 2"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 7,
+           "clipType": "text-card",
+           "hold": 2,
+           "id": "shot-title-00",
+           "params": {
+            "content": "SMALL CONTROL TITLE"
+           },
+           "track": "picture"
+          }
+         ],
+         "output": {
+          "background": null,
+          "background_scale": null,
+          "file": "output.mp4",
+          "fps": 30,
+          "resolution": "1280x720"
+         },
+         "registry": {
+          "assets": {}
+         },
+         "tracks": [
+          {
+           "id": "effects",
+           "kind": "visual",
+           "label": "Effects"
+          },
+          {
+           "id": "picture",
+           "kind": "visual",
+           "label": "Titles"
+          }
+         ]
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-8a5d929601918cc201f0d41f16a8067ad75d10ab71f4aba01201d33e4ddaba37"
+      }
+     ],
+     "reads": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      }
+     ],
+     "tags": []
+    },
+    {
+     "command_ordinals": [
+      2
+     ],
+     "dependencies": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "id"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "present",
+        "value": "effect-01"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "occurrence_id"
+       ],
+       "ref": "parent",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-occ-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_id"
+       ],
+       "ref": "parent",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-shot-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "clipType"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "present",
+        "value": "am-footage"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "clip_type"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "hold"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "present",
+        "value": 1.5
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "asset"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "file"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "src"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "source"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "from"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "to"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "elementRef"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "element_ref"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+       "state": {
+        "state": "present",
+        "value": {
+         "label": "SMALL FOOTAGE 1"
+        }
+       }
+      }
+     ],
+     "id": "step-3",
+     "intent": "",
+     "label": "Place element",
+     "patch": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "label": "SMALL FOOTAGE 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9"
+       },
+       "op": "set",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_revision_id"
+       ],
+       "ref": "parent",
+       "value": "authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "internal_timeline_revision_id": "authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706",
+         "items": [],
+         "name": "Synthetic shot 00"
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-521fee368b6b2c877a44fd39ecf989ede3b69084bbea048b0a3a4d3642e739b9"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "clips": [
+          {
+           "at": 1,
+           "clipType": "le4-gold",
+           "elementRef": {
+            "id": "le4-gold",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+           },
+           "hold": 1.5,
+           "id": "effect-00",
+           "params": {
+            "color": "#FFD34E",
+            "size": 120,
+            "text": "REHEARSAL 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 3,
+           "clipType": "am-footage",
+           "hold": 1.5,
+           "id": "effect-01",
+           "params": {
+            "label": "SMALL FOOTAGE 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 5,
+           "clipType": "am-type",
+           "hold": 1.5,
+           "id": "effect-02",
+           "params": {
+            "text": "SMALL AM-TYPE 2"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 7,
+           "clipType": "text-card",
+           "hold": 2,
+           "id": "shot-title-00",
+           "params": {
+            "content": "SMALL CONTROL TITLE"
+           },
+           "track": "picture"
+          }
+         ],
+         "output": {
+          "background": null,
+          "background_scale": null,
+          "file": "output.mp4",
+          "fps": 30,
+          "resolution": "1280x720"
+         },
+         "registry": {
+          "assets": {}
+         },
+         "tracks": [
+          {
+           "id": "effects",
+           "kind": "visual",
+           "label": "Effects"
+          },
+          {
+           "id": "picture",
+           "kind": "visual",
+           "label": "Titles"
+          }
+         ]
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-9b3664fe6d4e0016a4bd04ac795fd0d12ca6534482662362ccd3f179033bf706"
+      }
+     ],
+     "reads": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      }
+     ],
+     "tags": [
+      "element"
+     ]
+    },
+    {
+     "command_ordinals": [
+      3
+     ],
+     "dependencies": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params",
+        "background"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params",
+        "label"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "state": {
+        "state": "present",
+        "value": "SMALL FOOTAGE 1"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-01",
+        "params",
+        "placeholder"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+       "state": {
+        "state": "absent"
+       }
+      }
+     ],
+     "id": "step-4",
+     "intent": "",
+     "label": "Edit document",
+     "patch": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "background": "#42D9FF",
+           "label": "REHEARSAL 2",
+           "placeholder": true
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "am-type",
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2"
+       },
+       "op": "set",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_revision_id"
+       ],
+       "ref": "parent",
+       "value": "authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "internal_timeline_revision_id": "authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c",
+         "items": [],
+         "name": "Synthetic shot 00"
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-085c67fa683e5e89a28ccc6b64a2ccccd64925fff757db46e1e85228471f28e2"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "clips": [
+          {
+           "at": 1,
+           "clipType": "le4-gold",
+           "elementRef": {
+            "id": "le4-gold",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+           },
+           "hold": 1.5,
+           "id": "effect-00",
+           "params": {
+            "color": "#FFD34E",
+            "size": 120,
+            "text": "REHEARSAL 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 3,
+           "clipType": "le4-cyan",
+           "elementRef": {
+            "id": "le4-cyan",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+           },
+           "hold": 1.5,
+           "id": "effect-01",
+           "params": {
+            "label": "SMALL FOOTAGE 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 5,
+           "clipType": "am-type",
+           "hold": 1.5,
+           "id": "effect-02",
+           "params": {
+            "text": "SMALL AM-TYPE 2"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 7,
+           "clipType": "text-card",
+           "hold": 2,
+           "id": "shot-title-00",
+           "params": {
+            "content": "SMALL CONTROL TITLE"
+           },
+           "track": "picture"
+          }
+         ],
+         "output": {
+          "background": null,
+          "background_scale": null,
+          "file": "output.mp4",
+          "fps": 30,
+          "resolution": "1280x720"
+         },
+         "registry": {
+          "assets": {}
+         },
+         "tracks": [
+          {
+           "id": "effects",
+           "kind": "visual",
+           "label": "Effects"
+          },
+          {
+           "id": "picture",
+           "kind": "visual",
+           "label": "Titles"
+          }
+         ]
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-10cbe7db3247c8ab8ffb54560bd93adf44da75d6135c3df795339e46c05aad4c"
+      }
+     ],
+     "reads": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      }
+     ],
+     "tags": []
+    },
+    {
+     "command_ordinals": [
+      4
+     ],
+     "dependencies": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "id"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "present",
+        "value": "effect-02"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "occurrence_id"
+       ],
+       "ref": "parent",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-occ-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_id"
+       ],
+       "ref": "parent",
+       "state": {
+        "state": "present",
+        "value": "le4-small1-shot-00"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "clipType"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "present",
+        "value": "am-type"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "clip_type"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "hold"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "present",
+        "value": 1.5
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "asset"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "file"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "src"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "source"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "from"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "to"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "elementRef"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "element_ref"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+       "state": {
+        "state": "present",
+        "value": {
+         "text": "SMALL AM-TYPE 2"
+        }
+       }
+      }
+     ],
+     "id": "step-5",
+     "intent": "",
+     "label": "Place element",
+     "patch": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "background": "#42D9FF",
+           "label": "REHEARSAL 2",
+           "placeholder": true
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "text": "SMALL AM-TYPE 2"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb"
+       },
+       "op": "set",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_revision_id"
+       ],
+       "ref": "parent",
+       "value": "authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "internal_timeline_revision_id": "authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1",
+         "items": [],
+         "name": "Synthetic shot 00"
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-2d73de7d5b7f1871e6bbd90a07263297b8ec59e55ccee0a32631cd389033d5cb"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "clips": [
+          {
+           "at": 1,
+           "clipType": "le4-gold",
+           "elementRef": {
+            "id": "le4-gold",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+           },
+           "hold": 1.5,
+           "id": "effect-00",
+           "params": {
+            "color": "#FFD34E",
+            "size": 120,
+            "text": "REHEARSAL 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 3,
+           "clipType": "le4-cyan",
+           "elementRef": {
+            "id": "le4-cyan",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+           },
+           "hold": 1.5,
+           "id": "effect-01",
+           "params": {
+            "background": "#42D9FF",
+            "label": "REHEARSAL 2",
+            "placeholder": true
+           },
+           "track": "effects"
+          },
+          {
+           "at": 5,
+           "clipType": "am-type",
+           "hold": 1.5,
+           "id": "effect-02",
+           "params": {
+            "text": "SMALL AM-TYPE 2"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 7,
+           "clipType": "text-card",
+           "hold": 2,
+           "id": "shot-title-00",
+           "params": {
+            "content": "SMALL CONTROL TITLE"
+           },
+           "track": "picture"
+          }
+         ],
+         "output": {
+          "background": null,
+          "background_scale": null,
+          "file": "output.mp4",
+          "fps": 30,
+          "resolution": "1280x720"
+         },
+         "registry": {
+          "assets": {}
+         },
+         "tracks": [
+          {
+           "id": "effects",
+           "kind": "visual",
+           "label": "Effects"
+          },
+          {
+           "id": "picture",
+           "kind": "visual",
+           "label": "Titles"
+          }
+         ]
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-1db601904e5766df04265cc5739a6ee4ea757a1fa5a757c5cdcdb4a32c20e8d1"
+      }
+     ],
+     "reads": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      }
+     ],
+     "tags": [
+      "element"
+     ]
+    },
+    {
+     "command_ordinals": [
+      5
+     ],
+     "dependencies": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      },
+      {
+       "kind": "collection",
+       "members": [
+        "effect-00",
+        "effect-01",
+        "effect-02",
+        "shot-title-00"
+       ],
+       "order": [
+        "effect-00",
+        "effect-01",
+        "effect-02",
+        "shot-title-00"
+       ],
+       "path": [
+        "clips"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08"
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:new-title-1"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params",
+        "color"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params",
+        "size"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "state": {
+        "state": "absent"
+       }
+      },
+      {
+       "kind": "field",
+       "path": [
+        "clips",
+        "id:effect-02",
+        "params",
+        "text"
+       ],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+       "state": {
+        "state": "present",
+        "value": "SMALL AM-TYPE 2"
+       }
+      }
+     ],
+     "id": "step-6",
+     "intent": "",
+     "label": "Edit document",
+     "patch": [
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+       "value": {
+        "clips": [
+         {
+          "at": 1,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-00",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 1"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 3,
+          "clipType": "le4-cyan",
+          "elementRef": {
+           "id": "le4-cyan",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+          },
+          "hold": 1.5,
+          "id": "effect-01",
+          "params": {
+           "background": "#42D9FF",
+           "label": "REHEARSAL 2",
+           "placeholder": true
+          },
+          "track": "effects"
+         },
+         {
+          "at": 5,
+          "clipType": "le4-gold",
+          "elementRef": {
+           "id": "le4-gold",
+           "kind": "effect",
+           "packId": "project_4944f3baaa40481ba360",
+           "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+          },
+          "hold": 1.5,
+          "id": "effect-02",
+          "params": {
+           "color": "#FFD34E",
+           "size": 120,
+           "text": "REHEARSAL 3"
+          },
+          "track": "effects"
+         },
+         {
+          "at": 7,
+          "clipType": "text-card",
+          "hold": 2,
+          "id": "shot-title-00",
+          "params": {
+           "content": "SMALL CONTROL TITLE"
+          },
+          "track": "picture"
+         },
+         {
+          "at": 10,
+          "clipType": "text-card",
+          "hold": 1.5,
+          "id": "new-title-1",
+          "params": {
+           "content": "NEW TITLE 1"
+          },
+          "track": "picture"
+         }
+        ],
+        "output": {
+         "background": null,
+         "background_scale": null,
+         "file": "output.mp4",
+         "fps": 30,
+         "resolution": "1280x720"
+        },
+        "registry": {
+         "assets": {}
+        },
+        "tracks": [
+         {
+          "id": "effects",
+          "kind": "visual",
+          "label": "Effects"
+         },
+         {
+          "id": "picture",
+          "kind": "visual",
+          "label": "Titles"
+         }
+        ]
+       }
+      },
+      {
+       "before": {
+        "state": "absent"
+       },
+       "op": "set",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323",
+       "value": {
+        "internal_timeline_revision_id": "authoring-timeline-revision-79aafdc05a99a72a7982969c57b6ae1ab4b0de32ec682e8bd21f579770aa25dd",
+        "items": [],
+        "name": "Synthetic shot 00"
+       }
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": "authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2"
+       },
+       "op": "set",
+       "path": [
+        "occurrences",
+        "occurrence_id:le4-small1-occ-00",
+        "shot_revision_id"
+       ],
+       "ref": "parent",
+       "value": "authoring-shot-revision-0b18abd0f52e2ef45e184f817cec2fa3acf356501b5de055696ea234460a5323"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "internal_timeline_revision_id": "authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08",
+         "items": [],
+         "name": "Synthetic shot 00"
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "shot-revision:authoring-shot-revision-6f8a845ffb633996e629c688a403dfac3962efb54489b6559fc90b657be727c2"
+      },
+      {
+       "before": {
+        "state": "present",
+        "value": {
+         "clips": [
+          {
+           "at": 1,
+           "clipType": "le4-gold",
+           "elementRef": {
+            "id": "le4-gold",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+           },
+           "hold": 1.5,
+           "id": "effect-00",
+           "params": {
+            "color": "#FFD34E",
+            "size": 120,
+            "text": "REHEARSAL 1"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 3,
+           "clipType": "le4-cyan",
+           "elementRef": {
+            "id": "le4-cyan",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea"
+           },
+           "hold": 1.5,
+           "id": "effect-01",
+           "params": {
+            "background": "#42D9FF",
+            "label": "REHEARSAL 2",
+            "placeholder": true
+           },
+           "track": "effects"
+          },
+          {
+           "at": 5,
+           "clipType": "le4-gold",
+           "elementRef": {
+            "id": "le4-gold",
+            "kind": "effect",
+            "packId": "project_4944f3baaa40481ba360",
+            "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8"
+           },
+           "hold": 1.5,
+           "id": "effect-02",
+           "params": {
+            "text": "SMALL AM-TYPE 2"
+           },
+           "track": "effects"
+          },
+          {
+           "at": 7,
+           "clipType": "text-card",
+           "hold": 2,
+           "id": "shot-title-00",
+           "params": {
+            "content": "SMALL CONTROL TITLE"
+           },
+           "track": "picture"
+          }
+         ],
+         "output": {
+          "background": null,
+          "background_scale": null,
+          "file": "output.mp4",
+          "fps": 30,
+          "resolution": "1280x720"
+         },
+         "registry": {
+          "assets": {}
+         },
+         "tracks": [
+          {
+           "id": "effects",
+           "kind": "visual",
+           "label": "Effects"
+          },
+          {
+           "id": "picture",
+           "kind": "visual",
+           "label": "Titles"
+          }
+         ]
+        }
+       },
+       "op": "remove",
+       "path": [],
+       "ref": "internal-revision:authoring-timeline-revision-c9da7ce34f2828f578fe422f4dfdc2bd9e0c11de6db8108a58d8760f767cbf08"
+      }
+     ],
+     "reads": [
+      {
+       "kind": "scope",
+       "path": [],
+       "ref": "timeline"
+      }
+     ],
+     "tags": []
+    }
+   ]
+  },
+  "created_at": "2026-11-23T15:00:08.052+00:00"
+ },
+ "idempotency_key": "le4-small1-mixed-v1",
+ "status": "accepted",
+ "undo": {
+  "publications": [
+   "txn-8e764a2d932340299d0b568793cbdf8d"
+  ]
+ },
+ "summary": "Committed \"Three motion retargets, parameters and one title\" as txn-8e764a2d932340299d0b568793cbdf8d.",
+ "replayed": false,
+ "confirmed": false,
+ "changed_ranges": []
+}

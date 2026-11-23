@@ -4,13 +4,13 @@
 
 **Goal:** A creator chooses the H3 working size per request (small for voice-only takes, other aspect ratios, larger where it's worth paying for), and masks, previews, composition and checks follow it.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Session `session_011EzfW4BJ221kXBNRB4xQcG` (the Plan 59 session)
 
 **Estimate:** 2 days (CPU only; the live test is separate and comes after)
 
-**Waiting on:** Plan 64 SR-3 (the shared input record and limits table), which DS-1 builds on.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

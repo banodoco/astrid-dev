@@ -1,0 +1,31 @@
+diff --git a/home/user/p81b/box/part2b/harness/run-ab-installed.sh b/harness/run-ab-installed.sh
+index cd4c06d..ef70fc5 100755
+--- a/home/user/p81b/box/part2b/harness/run-ab-installed.sh
++++ b/harness/run-ab-installed.sh
+@@ -35,7 +35,7 @@ echo "SETTING: installed builds, CPU container, stand-in ComfyUI; not covered: a
+ arm_manifest() { case "$1" in before) echo "${BEFORE_MANIFEST:-$SCRIPT_DIR/manifest-omp-npm.json}";; after) echo "${CANDIDATE_MANIFEST:-$SCRIPT_DIR/manifest-candidate.json}";; vc48) echo "${VC48_MANIFEST:-$SCRIPT_DIR/manifest-candidate-vc48.json}";; esac; }
+ arm_env() {  # sets HOME/XDG/TMPDIR/PROGRAM/DATA and the Runtime door port for one arm
+   case "$1" in
+-    before) SUF=""; DOOR=17340;; after) SUF="-after"; DOOR=17341;; vc48) SUF="-vc48"; DOOR=17342;;
++    before) SUF=""; DOOR=17340;; after) SUF="-after"; DOOR=17343;; vc48) SUF="-vc48"; DOOR=17342;;
+   esac
+   H=$IB/home$SUF; PROGRAM=$IB/program$SUF; DATA=$IB/data$SUF; TMPD=$IB/scratch/tmp$SUF
+   [ "$1" = before ] && TMPD=$IB/scratch/tmp
+@@ -91,7 +91,7 @@ cleanup() {
+   fi
+ }
+ trap cleanup EXIT
+-BPY="$(python3 "$SCRIPT_DIR/runtime_attestation.py" --selected "$IB/program/current")/py/bin/python"   # stand-in runs on the before arm's venv (validated to serve every arm)
++BPY="$(python3 "$SCRIPT_DIR/runtime_attestation.py" --selected "/home/user/p81b/box/part2b/installs/program/current")/py/bin/python"   # stand-in runs on the before arm's venv (validated to serve every arm)
+ "$BPY" -I "$SCRIPT_DIR/standin/standin_comfy.py" --port "$PORT" >"$EVIDENCE_DIR/standin.log" 2>&1 &
+ STANDIN_PID=$!
+ STANDIN_START=$(python3 "$SCRIPT_DIR/process_ownership.py" capture "$STANDIN_PID" "$$" "$SCRIPT_START") || { echo "FAIL: cannot establish stand-in identity" >&2; exit 1; }
+@@ -155,7 +155,7 @@ export ARMS_JSON=$(ARMS="$ARMS" python3 - <<'PY'
+ import json, os
+ IB = os.environ["IB"]
+ suf = {"before": "", "after": "-after", "vc48": "-vc48"}
+-ports = {"before": 17340, "after": 17341, "vc48": 17342}
++ports = {"before": 17340, "after": 17343, "vc48": 17342}
+ out = {}
+ for a in os.environ["ARMS"].split():
+     s = suf[a]

@@ -1,0 +1,24 @@
+The analysis is in mergescope/REPORT.md (source: `~/mergescope/REPORT.md`).
+
+**Recommendation:** do not merge `release/14/r6-fixes` as-is. Build issue-scoped branches from the current Release 14 head, then forward accepted fixes to Release 15. This is an **inference** from the verified history, trial conflicts and review findings.
+
+**Verified:** a direct merge into Release 14 would also bring 21 plan-69 lineage commits; Release 15 already contains that base. Both targets conflict on launch-context changes, and Release 14 also conflicts on timeline baseline handling. Later trial picks are conditional because conflicted picks were skipped.
+
+| Change | Disposition |
+|---|---|
+| Own-object route projection | Merge with tests |
+| Occurrence media swap | Merge with tests and 14-specific port |
+| Thumbnail metadata and locators | Merge with tests |
+| Launch-context diagnostics | Merge with tests and conflict reconciliation |
+| Legacy word-provenance exemption | **Redo first** |
+| Worker launch-context alignment | Merge with real worker-boundary tests |
+| Unchanged legacy overrun | Merge with tests; independent review needed |
+| Command readiness and worker pack roots | Merge with worker-boundary tests |
+| Heartbeat lease and generated client | **Redo first** |
+| Empty pack path and debug dump | **Redo first** |
+| Personal pack root for bundler | **Redo first** |
+| Webpack shared-path aliases | **Redo first** |
+
+The report lists the commits, per-target trial results, redo scope, workflow triggers, proposed test coverage and pin sequence. Actual branch-protection requirements, labels, brief rows and live CI status remain unverified.
+
+No tests, builds or installs were run. The throwaway worktrees were removed; the live worktrees were not modified.

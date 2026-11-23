@@ -1,0 +1,4 @@
+after first staging write [['.workflow.py.o5aq4gns.py', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]]
+transaction digest [['.workflow.py.9umy2rmr.bak', '0o600', 980], ['.workflow.py.o5aq4gns.py', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0], ['.workflow.vibe.json.emdmg0aj.json', '0o600', 784], ['.workflow.vibe.json.t6xhvdin.bak', '0o600', 784], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]]
+OK
+final [['.workflow.py.vibe.lock', '0o600', 0], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]] private staging [] existing bytes preserved True

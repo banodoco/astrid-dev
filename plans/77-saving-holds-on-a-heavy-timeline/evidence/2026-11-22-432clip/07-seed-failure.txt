@@ -1,0 +1,8 @@
+UTC 2026-11-22T18:04:24.737813+00:00
+Seed start 2026-11-22T16:28:28Z; end 2026-11-22T18:02:02Z; exit 1. No retry.
+First error: Runtime list_timeline_commits read timed out after 300 s in fetch_bundle before the next commit; transport_timeout; builder reports no write or commit for that request. Full traceback: run/receipts/seed.log.
+Read-only GET through authenticated editor proxy: project timeline index HTTP 200 in 1.912280 s; public composition revision HTTP 200 in 0.496488 s. Commands and curl exit 0: run/receipts/07-index-read.txt and 07-revision-read.txt; raw responses 07-timeline-index.json and 07-head-revision.json. Both reads used curl --max-time 60.
+Realm 0d6fd08f-8754-489c-8af9-276dcde43762; project 23e489705d764d1497e6c9b830f55ffe; timeline save-loop-heavy-c2930794.
+Public head revision authoring-parent-revision-811ee570a87ee8eb1a3fd7d94309320dd12485a2db35aef4e1f774fb6d4ad69b; publication txn-f3cbd404b1a0417ebc39901a3cd2b97a; content digest sha256:0a435fdabe2364b48c69d9e381948f13c6ec2197e2740c6240344b6e6b745b39. Index matches final accepted builder revision and receipt. Public revision payload and payload.config each contain 432 clips.
+36 accepted clip batches (12 clips each); full elapsed curve and each receipt/revision: run/receipts/07-accepted-batches.csv. Last batch 421-432 elapsed 418416.2 ms. The host message said 50 clip batches; the seed log has 36 clip batches plus 13 media import progress lines and one track batch.
+One-clip control was not populated or measured; public index shows its bootstrap revision only. Final builder checks and manifest were not reached. Runtime, editor, stack and probe remain running at host instruction; no backup or shutdown.

@@ -1,0 +1,32 @@
+**Verified: no render was produced.** The idle Runtime was responsive, so I skipped the restart. One render attempt exposed product blockers.
+
+Verified timings, **min/median/max in milliseconds**; zero timeouts:
+
+| Request | Before render | After failure |
+|---|---:|---:|
+| Door health, 15 each | 0.437/0.466/10.779 | 0.467/0.541/5.917 |
+| Door project, 15 each | 0.553/0.606/0.830 | 0.592/0.671/0.860 |
+| CLI, 10 each | 184/189/324 | 193/195/315 |
+
+Verified: Runtime/host CPU was 0.3%/1.0%, RSS 95/42 MiB, and `lsof` counts 30/18. Samples mostly showed waits. **Inferred:** no persistent idle saturation; the historical stalls remain unexplained. Details: [RUNTIME-HEALTH.md](render/RUNTIME-HEALTH.md).
+
+**Verified attempt 1:** `python3 -u render/run_attempt.py 1` executed the [saved exact `timelines render` argv](render/attempt-1-command.json), requesting full-length 1920×1080/30 fps with AAC. It exited 1 after **77.425 seconds**, reaching 10% progress. Verbatim executor error:
+
+```text
+capability 'rendering.render' exited 1: rendering.remotion does not support this render request
+reason: local assets are not renderable: Asset 'a09025f7-40ed-4202-ba40-2d4a61d352a9' contains retired media locator field(s): thumbnailUrl
+reason: runtime validation consumer context differs: this process's environment was not validated at launch (only the host and Remotion-capable capability workers are)
+```
+
+Verified: the last observed lease expiry was **17:32:55.726 UTC**, with task update **17:32:25.727**. **Inferred:** that update reflects renewal. Failure occurred **17:32:42.990**, without lease loss.
+
+Verified source blockers:
+
+- `managed_timeline.py:630` permits thumbnail metadata that `core/rendering/assets.py:266–275` rejects.
+- `core/rendering/remotion_runtime.py:1264–1268` rejects the worker’s launch-context match; the differing field is unverified.
+
+**Inferred smallest product fixes:** strip thumbnail locators from the render-only registry projection, and validate the exact effective worker context. The editor submits the same canonical task; Remotion already uses concurrency 1. I stopped after one attempt because configuration cannot resolve the registry mismatch. [Checked source trace](render/BLOCKER-TRACE.md).
+
+Verified: published head `f9237406…`, version 37, remained unchanged. No Desktop output exists. **Unverified:** all requested rendered-file stills, contact sheet, ffprobe/loudness facts, trombone presence, and bell absence—there was no successful file to inspect.
+
+[Full report](render/REPORT.md) · [Tooling friction](render/FRICTION.md)

@@ -1,0 +1,357 @@
+{
+  "observed_at_utc": "2026-11-22T21:10:30.563637+00:00",
+  "tasks": [
+    {
+      "id": "012acee7276f4dd083acc6c397fc3f1a",
+      "run_id": "17a4d19fe45148b8b5ee123d9ea1f894",
+      "capability": "rendering.render",
+      "spec_digest": "0aa59258bd344be55a4a6c73516f39f7357ce11e922fe4fd3f52feb283cdaa2c",
+      "status": "cancelled",
+      "executor_id": null,
+      "attempt": 1,
+      "expected_effect_json": null,
+      "result_json": {
+        "attempt_id": "34e394859bd6490c99dc506cd1eb193d",
+        "attempted": true,
+        "cancel": {
+          "requested": true,
+          "stop_observed": false
+        }
+      },
+      "created_at": "2026-11-22T19:43:13.702+00:00",
+      "updated_at": "2026-11-22T19:46:30.491+00:00",
+      "capability_digest": "sha256:26df12d1c63e621356cecadaa1f36a1746028a42e529d16863898149b26241e3",
+      "waiting_reason": null,
+      "lease_expires_at": null,
+      "lease_fence": 1,
+      "attempt_id": null,
+      "runtime_epoch": 19,
+      "execution_request_json": null,
+      "attempts": [
+        {
+          "id": "34e394859bd6490c99dc506cd1eb193d",
+          "settled": 1,
+          "lease_expires_at": "2026-11-22T19:46:10.483+00:00"
+        }
+      ]
+    },
+    {
+      "id": "8ce6fa34e4c34558a197316aff737f1e",
+      "run_id": "5bf99e6d59b24229ac9e67e6f1d56011",
+      "capability": "rendering.render",
+      "spec_digest": "b8266e3f910a34d6f5e2c6b606ae71a3a3343b534c62c7d7bbf7be2bd2c6e791",
+      "status": "failed",
+      "executor_id": "astrid-pack-host",
+      "attempt": 1,
+      "expected_effect_json": null,
+      "result_json": {
+        "error": {
+          "code": "executor_failed",
+          "message": "Headline: The render couldn't finish\nDetail: owned command cleanup uncertain: post-capture candidate is LIVE; terminal disposition is ineligible; original execution failure: CustodyError: post-capture candidate is LIVE; terminal disposition is ineligible\nFix: Review the details, correct the render settings or timeline, and try again.",
+          "retryable": false
+        },
+        "host_failure": {
+          "code": "executor_failed",
+          "message": "post-capture candidate is LIVE; terminal disposition is ineligible"
+        },
+        "outcomes": {
+          "execution": {
+            "status": "failed"
+          }
+        },
+        "outputs": [],
+        "status": "failed"
+      },
+      "created_at": "2026-11-22T19:49:29.951+00:00",
+      "updated_at": "2026-11-22T20:09:35.326+00:00",
+      "capability_digest": "sha256:26df12d1c63e621356cecadaa1f36a1746028a42e529d16863898149b26241e3",
+      "waiting_reason": null,
+      "lease_expires_at": null,
+      "lease_fence": 1,
+      "attempt_id": "bd5486737fe04fdc903674adbf2f8ade",
+      "runtime_epoch": 20,
+      "execution_request_json": null,
+      "attempts": [
+        {
+          "id": "bd5486737fe04fdc903674adbf2f8ade",
+          "settled": 1,
+          "lease_expires_at": "2026-11-22T20:19:32.196+00:00"
+        }
+      ]
+    },
+    {
+      "id": "0e2e4fe68146438f9c19cfbb155b9098",
+      "run_id": "c91cfc9e57ac4a11961eed5524e846da",
+      "capability": "rendering.render",
+      "spec_digest": "4b04a6d585b2b7b4a2b1f71b939500d40993ba0ddf96811860ed86049b3fbd0d",
+      "status": "cancelled",
+      "executor_id": null,
+      "attempt": 1,
+      "expected_effect_json": null,
+      "result_json": {
+        "attempt_id": "70b131ebf9724504aee061f7c452433b",
+        "attempted": true,
+        "cancel": {
+          "requested": true,
+          "stop_observed": false
+        }
+      },
+      "created_at": "2026-11-22T20:46:23.320+00:00",
+      "updated_at": "2026-11-22T20:59:04.162+00:00",
+      "capability_digest": "sha256:26df12d1c63e621356cecadaa1f36a1746028a42e529d16863898149b26241e3",
+      "waiting_reason": null,
+      "lease_expires_at": null,
+      "lease_fence": 1,
+      "attempt_id": null,
+      "runtime_epoch": 22,
+      "execution_request_json": null,
+      "attempts": [
+        {
+          "id": "70b131ebf9724504aee061f7c452433b",
+          "settled": 1,
+          "lease_expires_at": "2026-11-22T20:58:59.340+00:00"
+        }
+      ]
+    },
+    {
+      "id": "161473ef94c24092b50a80ceae3542cb",
+      "run_id": "3944da881c7f4a18acddb397135449bf",
+      "capability": "rendering.render",
+      "spec_digest": "856fc6e1f921bc55cb047625e5a1232c19f7f743283c67ce25ea9969c5d1625e",
+      "status": "completed",
+      "executor_id": "astrid-pack-host",
+      "attempt": 1,
+      "expected_effect_json": null,
+      "result_json": {
+        "adapter_family": "render",
+        "capability_digest": "sha256:26df12d1c63e621356cecadaa1f36a1746028a42e529d16863898149b26241e3",
+        "dependency_digest": "84f7d1e6b94ac7124f7f324e43d4ca96f148d6d00d4ac8dbf7939b6c3eb8ad18",
+        "execution_guards": {
+          "cleanup_path": "~/astrid-release/release-14-r6-fixes/data/attempts/a6ca237d33fc0577/astrid-attempt-5f6832db6794bbe7de8904c32ff139c9",
+          "collection_seconds": null,
+          "deadline_seconds": 3600.0,
+          "evidence": {
+            "attempt_delta_bytes": 0,
+            "cap_bytes": 2147483648,
+            "generated_file_count": 2,
+            "immutable_file_count": 0,
+            "immutable_input_bytes": 0,
+            "immutable_input_manifest_digest": "7f0fa6c5d1f2beed032dcece3b84dfdf966c742d653cd654559c29da0bcc742a",
+            "largest_paths": [
+              {
+                "bytes": 6148,
+                "classification": "generated",
+                "path": ".DS_Store"
+              },
+              {
+                "bytes": 34,
+                "classification": "generated",
+                "path": ".astrid-progress.json"
+              }
+            ],
+            "largest_paths_truncated": false,
+            "observed_bytes": 6182,
+            "path_classes": {
+              ".DS_Store": {
+                "bytes": 6148,
+                "files": 1
+              },
+              ".astrid-progress.json": {
+                "bytes": 34,
+                "files": 1
+              }
+            },
+            "root": "~/astrid-release/release-14-r6-fixes/data/attempts/a6ca237d33fc0577/astrid-attempt-5f6832db6794bbe7de8904c32ff139c9",
+            "run_observed_bytes": 6182,
+            "vanished_file_count": 0
+          },
+          "evidence_budget": {
+            "cap_bytes": 2147483648,
+            "run_observed_bytes": 6182
+          },
+          "lifetime": "bounded",
+          "retained_bytes": 0,
+          "retained_owner": "generic-pack-host",
+          "scratch_disposition": "cleanup_pending",
+          "setup_seconds": 3600.0,
+          "storage_envelope": {
+            "estimated_output_bytes": 107229216,
+            "estimated_scratch_bytes": 5295399914,
+            "estimated_total_bytes": 5402629130,
+            "output_bytes": 40096353,
+            "scratch_bytes": 2260593057,
+            "total_bytes": 2300689410
+          },
+          "warm_expectation": {
+            "listener_port": null,
+            "port_independent": true,
+            "warm_reuse_expected": false
+          }
+        },
+        "managed_tool_session": {
+          "admission_token": "893ee5be4be3422586cd061347b9c8b9",
+          "binding": {
+            "config_digest": "51922de058236028e48c25ec3b30c45861afed309c85180f2f05003c5d4d13f3",
+            "endpoint": "http://127.0.0.1:62542",
+            "engine_birth_id": "ps-lstart:Sun Nov 22 21:34:42 2026",
+            "execution_identity": "",
+            "launch_generation": "ps-lstart:Sun Nov 22 21:34:42 2026",
+            "process_birth_id": "ps-lstart:Sun Nov 22 21:34:42 2026",
+            "runtime_epoch": 22,
+            "runtime_instance_id": "3764578ac56c42f696b864c755839a89",
+            "session_id": "rendering.render:161473ef94c24092b50a80ceae3542cb",
+            "source_digest": "e941a24f4ce723e1525142cf84d04406067b0f52e25e88ffc5132c0889e1e720"
+          },
+          "capability": {
+            "admission_capacity": "serial",
+            "cancellation_strength": "fenced",
+            "capability_id": "rendering.render",
+            "ownership_mode": "manager_owned",
+            "residency_support": "unsupported",
+            "resources_claimed": [
+              "render"
+            ],
+            "terminate_authority": "generic_pack_host",
+            "uncertain_cancellation": "reconcile_before_settlement",
+            "warm_reuse_expected": false
+          },
+          "generation": 3,
+          "manager": "astrid-pack-host",
+          "schema_version": "astrid.managed-tool-session.v1",
+          "state": "settled",
+          "terminal": {
+            "invocation_id": "161473ef94c24092b50a80ceae3542cb:8a76f987b42a4ce8b1b08e7ac5fb42c0:1",
+            "kind": "settled"
+          }
+        },
+        "outputs": [
+          {
+            "digest": "sha256:543ba1d1baf61c1f3f58a61a7f7f7c0faba241494bbc0b0d807ad15d18b8d503",
+            "filename": "r6-part0-try1.mp4",
+            "is_primary": true,
+            "kind": "object",
+            "media_type": "video/mp4",
+            "name": "video",
+            "ordinal": 0,
+            "role": "result",
+            "size": 39951835
+          },
+          {
+            "digest": "sha256:d58d6531d8c6ed31b373e88ea9120b3927164f92b7d58b039a6ae866bd5034f0",
+            "filename": "r6-part0-try1.mp4.provenance.json",
+            "is_primary": false,
+            "kind": "object",
+            "media_type": "application/json",
+            "name": "provenance",
+            "ordinal": 1,
+            "role": "auxiliary",
+            "size": 143470
+          },
+          {
+            "digest": "sha256:60631a0c62fed8decde61b925a7e641c1b80957a06473768665182f0f496ce52",
+            "filename": "job.stdout.log",
+            "kind": "object",
+            "media_type": "text/plain",
+            "name": "job.stdout",
+            "output_port": "logs",
+            "role": "log",
+            "size": 161,
+            "variant_key": "job.stdout"
+          },
+          {
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "filename": "job.stderr.log",
+            "kind": "object",
+            "media_type": "text/plain",
+            "name": "job.stderr",
+            "output_port": "logs",
+            "role": "log",
+            "size": 0,
+            "variant_key": "job.stderr"
+          }
+        ],
+        "process_evidence": {
+          "attempt_id": "8a76f987b42a4ce8b1b08e7ac5fb42c0",
+          "capability_id": "rendering.render",
+          "child_boundary": "subprocess",
+          "fence": 1,
+          "process_id": 19869,
+          "returncode": 0
+        },
+        "process_id": 19869,
+        "provenance": {
+          "kind": "astrid.boot_manifest",
+          "sha256": "1d3663c955249be0d394d4ee3f6ca441da09b9b4ebde361359ce7c257d218d00"
+        },
+        "renderer_selection": {
+          "chosen_by": "task",
+          "remotion_ok": true,
+          "remotion_reason": null,
+          "selector": "rendering.remotion"
+        },
+        "returncode": 0,
+        "source_digest": "e941a24f4ce723e1525142cf84d04406067b0f52e25e88ffc5132c0889e1e720"
+      },
+      "created_at": "2026-11-22T20:38:57.258+00:00",
+      "updated_at": "2026-11-22T20:46:04.468+00:00",
+      "capability_digest": "sha256:26df12d1c63e621356cecadaa1f36a1746028a42e529d16863898149b26241e3",
+      "waiting_reason": null,
+      "lease_expires_at": null,
+      "lease_fence": 1,
+      "attempt_id": "8a76f987b42a4ce8b1b08e7ac5fb42c0",
+      "runtime_epoch": 22,
+      "execution_request_json": null,
+      "attempts": [
+        {
+          "id": "8a76f987b42a4ce8b1b08e7ac5fb42c0",
+          "settled": 1,
+          "lease_expires_at": "2026-11-22T20:56:03.851+00:00"
+        }
+      ]
+    },
+    {
+      "id": "480bca0b78d64ce89c88ffc626f463cf",
+      "run_id": "52a6f68d34ca435b93e3e986c92514b8",
+      "capability": "rendering.render",
+      "spec_digest": "527d98e779c3ab39a1ca147d2ed2a26ddb7c16cdfdb00f4d73823342c061ee17",
+      "status": "failed",
+      "executor_id": "astrid-pack-host",
+      "attempt": 1,
+      "expected_effect_json": null,
+      "result_json": {
+        "error": {
+          "code": "executor_failed",
+          "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.render' exited 1: render service failed: post-capture candidate is LIVE; terminal disposition is ineligible\nFix: Review the details, correct the render settings or timeline, and try again.",
+          "retryable": false
+        },
+        "host_failure": {
+          "code": "executor_failed",
+          "message": "capability 'rendering.render' exited 1: render service failed: post-capture candidate is LIVE; terminal disposition is ineligible"
+        },
+        "outcomes": {
+          "execution": {
+            "status": "failed"
+          }
+        },
+        "outputs": [],
+        "status": "failed"
+      },
+      "created_at": "2026-11-22T20:59:17.476+00:00",
+      "updated_at": "2026-11-22T21:04:18.797+00:00",
+      "capability_digest": "sha256:26df12d1c63e621356cecadaa1f36a1746028a42e529d16863898149b26241e3",
+      "waiting_reason": null,
+      "lease_expires_at": null,
+      "lease_fence": 1,
+      "attempt_id": "ae551ccde7d146978ba5a3b81242601a",
+      "runtime_epoch": 23,
+      "execution_request_json": null,
+      "attempts": [
+        {
+          "id": "ae551ccde7d146978ba5a3b81242601a",
+          "settled": 1,
+          "lease_expires_at": "2026-11-22T23:04:14.842+00:00"
+        }
+      ]
+    }
+  ]
+}

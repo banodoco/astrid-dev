@@ -1,0 +1,327 @@
+{
+  "started_utc": "2026-11-23T16:50:54.594100+00:00",
+  "samples": {
+    "before": [
+      6.1961,
+      5.8109,
+      6.2597,
+      6.3958,
+      6.9397
+    ],
+    "after": [
+      5.0603,
+      4.7256,
+      4.7964,
+      5.0284,
+      4.9344
+    ]
+  },
+  "medians_seconds": {
+    "before": 6.2597,
+    "after": 4.9344
+  },
+  "saving_before_minus_after_seconds": 1.3252999999999995,
+  "threshold_seconds": 1.5,
+  "all_measured_ok": true,
+  "all_measured_start_loads_below_1": true,
+  "instrumentation": [
+    {
+      "name": "same-before-warmup",
+      "arm": "before",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-after-warmup",
+      "arm": "after",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-before-1",
+      "arm": "before",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-after-1",
+      "arm": "after",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-before-2",
+      "arm": "before",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-after-2",
+      "arm": "after",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-before-3",
+      "arm": "before",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-after-3",
+      "arm": "after",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-before-4",
+      "arm": "before",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-after-4",
+      "arm": "after",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-before-5",
+      "arm": "before",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/A/data/astrid/versions/8b3efb4e2743/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    },
+    {
+      "name": "same-after-5",
+      "arm": "after",
+      "counts": {
+        "bytes": 287596236,
+        "calls": 246,
+        "files": {
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@object_info_comfyui_0.24.0.1.json": {
+            "bytes": 268590216,
+            "calls": 103
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/comfy_core@zz-official-426f5eea.json": {
+            "bytes": 2081160,
+            "calls": 41
+          },
+          "/home/user/p81b/box/pb7/installs/B/data/astrid/versions/8c3fa757e604/py/lib/python3.11/site-packages/vibecomfy/porting/cache/object_info/index.json": {
+            "bytes": 16924860,
+            "calls": 102
+          }
+        }
+      }
+    }
+  ],
+  "warmups": {
+    "before": 8.3331,
+    "after": 7.3887
+  },
+  "sample_loads": {
+    "before": [
+      0.5732421875,
+      0.92919921875,
+      0.98779296875,
+      0.99609375,
+      0.94140625
+    ],
+    "after": [
+      0.9228515625,
+      0.986328125,
+      0.99560546875,
+      0.93603515625,
+      0.9267578125
+    ]
+  },
+  "median_hash_calls": {
+    "before": 246.0,
+    "after": 246.0
+  },
+  "median_hash_bytes": {
+    "before": 287596236.0,
+    "after": 287596236.0
+  },
+  "hash_file_count": {
+    "before": 3,
+    "after": 3
+  },
+  "last_command_started_utc": "2026-11-23T16:54:07.586148+00:00",
+  "completed_utc": "2026-11-23T16:54:12.524097+00:00"
+}

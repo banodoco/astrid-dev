@@ -1,0 +1,133 @@
+diff --git a/astrid/_pack_discovery_scope.py b/astrid/_pack_discovery_scope.py
+index 4fb4184c8..cadfda103 100644
+--- a/astrid/_pack_discovery_scope.py
++++ b/astrid/_pack_discovery_scope.py
+@@ -14,6 +14,7 @@ class _DiscoveryCache(dict):
+         self.active = True
+         self._lock = Lock()
+         self._roots = {}
++        self._root_entries = {}
+         self._generation = 0
+ 
+     def read(self, key):
+@@ -50,10 +51,32 @@ class _DiscoveryCache(dict):
+                 self._roots.pop(root, None)
+                 return _tree_fingerprint(root)
+ 
++    def root_entries(self, root):
++        """Reuse immediate names only while the Linux directory is unchanged."""
++        with self._lock:
++            if not self.active or not sys.platform.startswith("linux"):
++                return tuple(root.iterdir())
++            def witness():
++                info = root.stat()
++                return (info.st_dev, info.st_ino, info.st_mode,
++                        info.st_mtime_ns, info.st_ctime_ns)
++
++            before = witness()
++            cached = self._root_entries.get(root)
++            if cached is not None and cached[0] == before:
++                return cached[1]
++            entries = tuple(root.iterdir())
++            if before == witness():
++                self._root_entries[root] = (before, entries)
++            else:
++                self._root_entries.pop(root, None)
++            return entries
++
+     def revoke(self):
+         with self._lock:
+             self.active = False
+             self._roots.clear()
++            self._root_entries.clear()
+             self.clear()
+ 
+ 
+diff --git a/astrid/core/pack/discovery.py b/astrid/core/pack/discovery.py
+index 9a3e7d594..fa7b525e1 100644
+--- a/astrid/core/pack/discovery.py
++++ b/astrid/core/pack/discovery.py
+@@ -497,6 +497,12 @@ def discover_pack_metadata(
+     provisional_paths: dict[str, Path] = {}
+     provisional_scanned: set[Path] = set()
+     canonical_core = Path(loader.packs_root()).expanduser().resolve()
++    managed_roots = set()
++    for source in provisional_managed_sources:
++        managed_root = Path(source.pack_root).expanduser()
++        if not managed_root.is_absolute():
++            managed_root = Path(project_root) / managed_root
++        managed_roots.add(managed_root.resolve())
+     for raw_root in provisional_roots:
+         root = Path(raw_root).expanduser()
+         if not root.is_absolute():
+@@ -506,7 +512,10 @@ def discover_pack_metadata(
+             continue
+         provisional_scanned.add(root)
+         try:
+-            children = (root,) if (root / "pack.yaml").is_file() else tuple(root.iterdir())
++            cache = _active_discovery_cache()
++            children = ((root,) if (root / "pack.yaml").is_file()
++                        else cache.root_entries(root) if cache is not None and root not in managed_roots
++                        else tuple(root.iterdir()))
+         except OSError as exc:
+             _LOGGER.warning("skipping unreadable ownership root %s: %s", root, exc)
+             continue
+diff --git a/tests/core/pack/test_discovery_admission_order.py b/tests/core/pack/test_discovery_admission_order.py
+index 176daa51b..40645698a 100644
+--- a/tests/core/pack/test_discovery_admission_order.py
++++ b/tests/core/pack/test_discovery_admission_order.py
+@@ -1,6 +1,8 @@
+ """Duplicate directory admission precedes managed inventory verification."""
+ 
+ from contextlib import nullcontext
++from pathlib import Path
++import sys
+ 
+ import pytest
+ 
+@@ -65,3 +67,45 @@ def test_unresolvable_declarations_path_does_not_change_empty_discovery(tmp_path
+         scoped = discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,))
+         assert discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,)) == scoped
+     assert scoped == unscoped == ()
++
++
++@pytest.mark.skipif(not sys.platform.startswith("linux"), reason="Linux directory witness")
++def test_scoped_root_names_reused_and_changes_readmitted(tmp_path, roots, monkeypatch):
++    source, extra, calls = roots
++    target = tmp_path / "target"
++    target.write_text("file")
++    (source / "same").symlink_to(target)
++    (extra / "same").mkdir()
++    original_iterdir = Path.iterdir
++    enumerated = []
++
++    def counted(path):
++        if path in (source, extra):
++            enumerated.append(path)
++        return original_iterdir(path)
++
++    monkeypatch.setattr(Path, "iterdir", counted)
++    with discovery.pack_discovery_scope():
++        assert discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,)) == ()
++        enumerated.clear()
++        assert discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,)) == ()
++        assert enumerated == []
++
++        # An entry can change type without changing its containing root.
++        target.unlink()
++        target.mkdir()
++        calls.clear()
++        with pytest.raises(PackValidationError, match="duplicate pack"):
++            discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,))
++        assert calls == []
++        assert enumerated == []
++
++        (source / "same").unlink()
++        calls.clear()
++        assert discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,)) == ()
++        assert source in enumerated
++        (source / "same").mkdir()
++        calls.clear()
++        with pytest.raises(PackValidationError, match="duplicate pack"):
++            discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,))
++        assert calls == []

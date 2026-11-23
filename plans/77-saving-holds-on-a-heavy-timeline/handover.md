@@ -7,11 +7,11 @@ Written on 18 November 2026 for whoever runs this plan next, on another machine.
 ## First actions on a new machine
 
 1. **Clone the repositories** (all under `banodoco` on GitHub): `astrid-dev`, `astrid-app`, `astrid-agent`, `astrid-runtime`. Free disk first: 25 GB (a stack is about 10 GB by the release script's README, on top of the 15 GB floor), and never below 15 GB during a run (the disk filled twice on 18 November from headless browser profiles and stack copies). Delete the old stack root before each rebuild; the fixture is rebuilt, so no data copy is kept. Needs Node 20, ffmpeg and Playwright. The release script needs macOS and a live install (APFS clones and launchd); any other machine uses the direct route in [SL-1](tasks.md).
-2. **Check out the branches** (all on origin, cut from `release/14/plan-59`): `release/14/plan-77` in each of astrid-app, astrid-agent and astrid-runtime, and astrid-dev `main` (this pack). One worktree per branch; keep the main clones clean. Record your session id in the `Owner` line of [plan.md](plan.md) ([authority](inputs.md#planning-evidence)).
+2. **Check out the branches:** `release/15/plan-77` in each of astrid-app, astrid-agent and astrid-runtime (cut on 21 November from Release 14's integration branch, with [Plan 69](../69-project-elements/plan.md) merged in; SHAs in [inputs](inputs.md#source-identities)), and astrid-dev `main` (this pack). Check them with `git ls-remote` first: a stack built from a missing branch name silently falls back to `release/15/main`, which lacks Plan 59. One worktree per branch; keep the main clones clean. Record your session id in the `Owner` line of [plan.md](plan.md) ([authority](inputs.md#planning-evidence)).
 3. **Create `run.yaml`** ([below](#runyaml)).
-4. **Build the stack** (SL-1, [below](#build-the-stack)).
+4. **Bring the branches current:** merge `release/15/main` (once Plan 69 has landed) or `release/15/plan-69` into each `release/15/plan-77`, and regenerate pins ([how](../69-project-elements/handover.md#pins)). Then **build the stack** (SL-1, [below](#build-the-stack)).
 5. **Build the fixture** (SL-0) on that stack: `scripts/save-loop/build-fixture.*` in astrid-app, not written yet.
-6. **Run round 1** ([live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round)), once SL-2 has retargeted the harness. SL-3 (recover the lost work) and SL-5 (astrid-dev PR #880) run beside these and do not block round 1.
+6. **Run round 1** once SL-2 has retargeted the harness, then keep looping ([a round, step by step](#a-round-step-by-step)). SL-3 (recover the lost work) runs beside these and does not block round 1.
 
 Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `python3 -m unittest discover -s scripts -p "test_*.py"` (Python 3.10 or later). For a PR add `--base <base commit> --body-file /dev/null` to the check.
 
@@ -19,9 +19,34 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 
 `.otto/` is gitignored, so create the run's `run.yaml` on the new machine from [`skills/shared/templates/run.yaml`](../../skills/shared/templates/run.yaml), under `plans/77-saving-holds-on-a-heavy-timeline/.otto/runs/<run-id>/`.
 
-- **Bindings:** bind `N`, `X`, the advisor and the reviewer from the owner's own delegation table (in their global agent instructions: normal, hard and sense-check tiers on Codex). If that table is not on the machine, ask the owner. Do not guess model IDs.
-- **If Codex is unavailable** (on the first machine its usage limit was exhausted until 20 November 00:00), run the same routes on the Claude families in the [run contract's routing table](../../skills/shared/run-contract.md#routing-and-bindings), record `--override`, and carry on. Do not wait.
-- The advisor is a role, not route `S`: it gives the strategy each round; the reviewer runs the final review.
+**Bindings.** These follow the [run contract's routing table](../../skills/shared/run-contract.md#routing-and-bindings) (`N` Luna, `X` Terra, `S` Sol, `T` Astra; reviews, plan judgment and advice on Astra) with the newest IDs a ChatGPT-login Codex accepted on 21 November 2026, each answering a one-line `codex exec` with that effort. Fill them in as below; if the owner gives other bindings, theirs win. Before dispatch, re-check each with `codex exec -m <id> -c model_reasoning_effort='"<effort>"' --skip-git-repo-check -s read-only "Reply with just OK." < /dev/null`, and set `availability: verified` only for those that answer. Refused on that login: `gpt-6.2-luna`, `gpt-6.1-luna`, `gpt-6.2-terra`, `gpt-6-terra`, `gpt-6.1-astra`.
+
+```yaml
+models:
+  normal:              {class: Luna/Haiku-class,      model_id: gpt-6-luna,    reasoning_effort: medium}
+  very_hard:           {class: Terra/Sonnet-class,    model_id: gpt-6.1-terra, reasoning_effort: high}
+  super_hard:          {class: Sol/Opus-class,        model_id: gpt-6.2-sol,   reasoning_effort: high}
+  taste:               {class: Astra/Opus-class,      model_id: gpt-6.2-astra, reasoning_effort: medium}
+  plan_judgment:       {class: Astra/Opus/Fable-class, model_id: gpt-6.2-astra, reasoning_effort: high}
+  advisor:             {class: Astra/Opus/Fable-class, model_id: gpt-6.2-astra, reasoning_effort: high}
+  completion_reviewer: {class: Astra/Opus/Fable-class, model_id: gpt-6.2-astra, reasoning_effort: high}
+```
+
+**If Codex is unavailable** (on the first machine its usage limit was exhausted until 20 November 00:00), run the same routes on the Claude families in the routing table (`N` Haiku, `X` Sonnet, `S` Opus; judgment on Opus or Fable, newest of each), record `--override`, and carry on. Do not wait.
+
+### Who runs what
+
+| Work | Runs on | Notes |
+| --- | --- | --- |
+| The coordinator (this plan's manager) | the session the plan is handed to | Keeps every judgment: picks fixes, checks each result against its diff and proof, writes `rounds.md`, merges into the plan branches. Never delegates a decision down. Best on a high-judgment model. |
+| SL-0 fixture, SL-1 stack, SL-3a and SL-3b recovery | `N` | One worktree each, background `codex exec -s workspace-write` (command in the [workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#roles)). |
+| SL-2 harness, SL-3c validation trim | `X` | Writes its `N` split first and runs the helpers in parallel, then merges their work ([tasks](tasks.md)). |
+| A round's fix | `N` by default; `X` when the cause is coupled or unclear | The coordinator tags it when picking. |
+| The strategist, once per round | `advisor`, read-only | Gets the round tables, not the coordinator's conclusion; asked what to remove first. Evidence, not a verdict. |
+| R, the final review | `completion_reviewer` | Up to five rounds after the loop stops. |
+| Fact-finding for anyone (status, logs, diffs) | `N` | Never gives a verdict. |
+
+**Moving up a tier** follows the contract's [cheapest model first](../../skills/shared/run-contract.md#cheapest-model-first): move `N` to `X` after two misses or 20 minutes without progress, or when the work is wrong in a way a better brief would not fix, and `X` to `S` on the same test; pass the previous attempt's diff, output and best guess up; drop back to `N` once the cause is known. A worker stops after three attempts or 45 minutes on one failure and hands back what it has.
 
 ## How to work
 
@@ -32,15 +57,37 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 - After a Runtime fix, regenerate the Agent's Runtime pins (`scripts/regenerate_runtime_pins.py` in astrid-agent) before rebuilding the stack.
 - Tag claims as verified or reported.
 
+
+### Local qualification before hosted CI
+
+Use the Runtime PR unit job’s selection on the candidate and comparison base. When that selection exceeds the lane machine’s available time, collect every static-tag, AST-pin, inventory and diagnostics test file with filename globs, and use a source search for AST and source assertions in files with other names. Keep the checkout, exact selections, failing test IDs and raw results for both trees. In Agent and App, use each PR’s own unit selection for the affected files and include the pin tests. Run the card’s focused and protected proof as well. Preserve every test and fixture when making a fix.
+
+For the repaired first-cut Runtime, the full unit job ran in CI because the lane reserves full suites for hosted CI and shares a four-CPU worker. The paired local preflight used the diagnostic, AST and inventory globs and additional source assertion discovery.
+
+The Runtime first-cut focused proof missed a duplicate canonical-mismatch refusal emitter that the existing static diagnostic test caught in all three hosted Python jobs. This local step covers such source contracts before dispatch. [Runtime landing PR](https://github.com/banodoco/astrid-runtime/pull/102)
+
+## A round, step by step
+
+The [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round) is the rule; this is the order on the machine.
+
+1. **Disk:** `df -h`; stop below 15 GB. Delete leftover browser profiles.
+2. **Stack:** if the last round merged an Agent or Runtime fix (after a Runtime fix, regenerate the Agent's pins first), delete the stack root and install fresh by SL-1's route; if it merged only App fixes, check out the new App head and restart the editor. Confirm the stack's App and Agent commits are the plan branch heads.
+3. **Fixture:** run SL-0's `build-fixture` script; it writes the manifest the harness reads.
+4. **Matrix:** run SL-2's harness against the editor port; it prints the round table and writes one JSON row per scenario run.
+5. **Record:** add the round's section to [rounds.md](rounds.md) (versions, the table, timings split into editor wait, commit and badge) and its one line under the loop card in [tasks.md](tasks.md).
+6. **Strategist:** give the advisor binding the new round and the earlier ones, read-only (`codex exec ... -s read-only`, command in the workstream), and ask what to remove first. Paste its advice into the round as evidence.
+7. **Pick and fix:** the coordinator picks the smallest fixes (one failing scenario, one cause, one change) and dispatches each as `N` or `X` in its own worktree; each lands as a PR into `release/15/plan-77` with the failed scenario as its red test. Write the round's plan deltas for Plans 63, 75, 76 and 18.
+8. **Stop or repeat:** check the stop rules on the [loop card](tasks.md); otherwise go to step 1.
+
 ## Where everything is
 
 - **This pack:** astrid-dev `main`, `plans/77-saving-holds-on-a-heavy-timeline/`. Evidence copies (the originals were in a folder not under git): [evidence/](evidence/). Start with `handover-facts-20261118.md`, then `sonnet-commit-profile-r14.md`, `fable-final-recommendations.md`, `fable-commit-proof-fit.md`, `fable-end-state-review.md` and `QUEUE.md`.
-- **Seeded harness:** astrid-app `release/14/plan-77`, `scripts/save-loop/` (`sweep.mjs`, `lib.mjs`, `sweep.b64`; head `36d2b8258`). Read its header for the flags and `SAVE_LOOP_*` environment variables. It starts its own headless Chrome on a random port from 9300 with a fresh profile, deleted on close (checked 21 November in `lib.mjs`; 9540 in the crash log was one such port). It defaults to the owner's `clip-2` and `music-song` at a 1700 by 1500 viewport; SL-2 retargets it. Row ids and pixel coordinates are hard-coded, and its timer cannot judge 2 s (see SL-2). The profiler helpers `prof_run.py` and `wall_run.py` were not found on disk; `scripts/perf/measure-editor.mjs` already exists in astrid-app.
+- **Seeded harness:** astrid-app `release/15/plan-77`, `scripts/save-loop/` (`sweep.mjs`, `lib.mjs`, `sweep.b64`; the seed commit `36d2b8258`, cherry-picked as `1f8da7f42`). Read its header for the flags and `SAVE_LOOP_*` environment variables. It starts its own headless Chrome on a random port from 9300 with a fresh profile, deleted on close (checked 21 November in `lib.mjs`; 9540 in the crash log was one such port). It defaults to the owner's `clip-2` and `music-song` at a 1700 by 1500 viewport; SL-2 retargets it. Row ids and pixel coordinates are hard-coded, and its timer cannot judge 2 s (see SL-2). The profiler helpers `prof_run.py` and `wall_run.py` were not found on disk; `scripts/perf/measure-editor.mjs` already exists in astrid-app.
 - **Crash work, pushed as wip branches** (verified by GitHub compare on 18 November):
 
-| Repository | Branch under `release/14/plan-77-wip/` | Head | Base | What it holds |
+| Repository | Branch under `release/14/plan-66-wip/` | Head | Base | What it holds |
 | --- | --- | --- | --- | --- |
-| astrid-app | `wt-app-concurrent-drops-registry` | `2402b1d97` | `2ffc0a300` (plan-59 tip, the plan-77 cut), 1 commit | concurrent drops refusing each other (`timelineLocalSaveHandoff(.test).ts`, `useAssetManagement.ts`, `useTimelineCommit.ts`) |
+| astrid-app | `wt-app-concurrent-drops-registry` | `2402b1d97` | `2ffc0a300` (plan-59 tip, the 18 November cut), 1 commit | concurrent drops refusing each other (`timelineLocalSaveHandoff(.test).ts`, `useAssetManagement.ts`, `useTimelineCommit.ts`) |
 | astrid-agent | `wt-r14-validate-trim` | `2bb8c1095` | `ec758a9b8`, 1 commit | the speed trim of `validate_final_candidate`, barely started, with a golden test |
 | astrid-runtime | `wt-rt-media-digest` | `a3acdc5fc` | `ee235d39d`, 1 commit | the media digest diagnostic log |
 | astrid-agent | `wt-r14-agentbase` | `ed0c6c6e4` | `ec758a9b8`, 1 commit | its only changed file on 18 November was the same golden test (reported inventory); check before ignoring it |
@@ -48,12 +95,18 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 | astrid-agent | `agent-src-main-clone` | `15ca752d1` | `f9642bd`, 6 ahead, 68 behind | same shot-trim task, out of scope |
 | astrid-runtime | `runtime-src-main-clone` | `1b3f36083` | `519b404`, 2 ahead, 16 behind | same shot-trim task, out of scope |
 
-  **Already contained in `release/14/plan-77`** (GitHub compare, ahead 0): App `release/14/same-file-drop`, App `release/14/quick-edits`, Agent `release/14/runtime-pin-r14b`. Merged into plan-59 before the cut (reported): Runtime #66, #67; App #308, #309.
+  **Already contained in `release/14/plan-59`, and so in `release/15/plan-77`** (GitHub compare, ahead 0): App `release/14/same-file-drop`, App `release/14/quick-edits`, Agent `release/14/runtime-pin-r14b`. Merged into plan-59 before the 18 November cut (reported): Runtime #66, #67; App #308, #309. The Runtime integration does not carry #67 ([inputs](inputs.md#source-identities)).
 - **Release 14 stack run on 18 November:** under `~/astrid-release/release-14-plan-59` on the first machine; stopped. It holds a copy of the owner's data and is not part of this plan.
 
 ## Build the stack
 
-**Where the script is (checked 21 November):** `scripts/astrid-release/` reached astrid-app `release/14/main` with Plan 61 on 20 November (App #320) but is not on `release/14/plan-77`, which was cut from plan-59 before it. Run it from a `release/14/main` checkout (it clones the branches it builds by name). The real route is `scripts/astrid-release/astrid-release release/14/plan-77` in astrid-app (it also has `status`, `stop` and `update <branch>`). It builds an isolated root under `~/astrid-release/release-14-plan-77` (the branch name with `/` as `-`), refuses the live ports (17340, 2222, 17336, 17391) and never writes the live install. **Known limit (read, not run):** it is macOS-only and stops at its start when the machine has no live install, so on any other machine SL-1 runs the steps it wraps by hand (the direct route in [SL-1](tasks.md)) and leaves the script alone; `release/14/main` then need not be merged into the plan branch. Ports and the editor URL are in SL-1 and SL-1 records the real ones here. The Runtime in a stack is the one the Agent's `runtime.lock.json` pins. Moving a built stack to newer commits is not supported without losing data (issue #825): to test new commits stop it, keep `data/`, delete the root and run it again.
+**Where the script is (checked 21 November):** `scripts/astrid-release/` reached astrid-app `release/14/main` with Plan 61 on 20 November (App #320), so it is on `release/15/plan-77` too; run it from the plan branch's own checkout. The real route is `scripts/astrid-release/astrid-release release/15/plan-77` in astrid-app (it also has `status`, `stop` and `update <branch>`). It builds an isolated root under `~/astrid-release/release-15-plan-77` (the branch name with `/` as `-`), refuses the live ports (17340, 2222, 17336, 17391) and never writes the live install. **Known limit (read, not run):** it is macOS-only and stops at its start when the machine has no live install, so on any other machine SL-1 runs the steps it wraps by hand (the direct route in [SL-1](tasks.md)) and leaves the script alone. Ports and the editor URL are in SL-1 and SL-1 records the real ones here. The Runtime in a stack is the one the Agent's `runtime.lock.json` pins. Moving a built stack to newer commits is not supported without losing data (issue #825): to test new commits stop it, keep `data/`, delete the root and run it again.
+
+### Isolated Linux direct route
+
+From the pinned App plan checkout, confirm free disk with `df -h /home/user`, then run `scripts/save-loop/start-isolated-linux.sh` in the foreground. If a specific Node is needed by the renderer, set `ASTRID_NODE_EXECUTABLE` to the installed v20.19.4 binary. The wrapper creates a new isolated root in the checkout’s scratch sibling, checks the installed Agent and Runtime against the manifest, and reports actual ports and the sandbox link in `stack/stack-info.txt`. Stop with Ctrl+C and discard the owned root before the next build.
+
+The first verified Linux tuple used App launcher candidate `7fc14d2f` (landed as `75120d7c`), Agent `c00721de`, Runtime `e43bfccc`, editor port 2400, proxy 17501 and door 17502. Use the report from each run for its exact ports. The editor opened with `?connect=1&project=<id>&timeline=<id>`. The wrapper uses the editor proxy for sandbox creation through `POST /v1/projects` and `POST /v1/projects/{projectId}/timelines`, each with an idempotency key.
 
 ## Known broken or open
 
@@ -63,3 +116,17 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 - **Other open items on the crash day** (reported, in [QUEUE.md](evidence/QUEUE.md)): a recovered draft from an old realm loops on Try again with a "Saved" badge; Discard left 37 old-realm outbox rows; an 11 s "Dirty" delay before the first send; the `direct-journey` check fails on plan-59 PRs, suspected pin skew.
 - **Fixture discrepancy:** the copied timeline has 8 clips and 140 KB, while the profile says 616 clips and 2.6 MB. The profile names "Almost Ready (trial v2)", so the copy probably read a different timeline. The fixture targets the profile; see [inputs](inputs.md#heavy-timeline-shape).
 - **Hygiene:** headless profiles and stack copies filled the disk; delete each profile after its run.
+
+## App paths for the Release 15 forward
+
+Plan 69 App `ff0e589a` changes none of these five paths from Release 15 App `2ef94b4c`. Plan 77 App `76c58ee3` changes four from its shared Plan 69 ancestor `74196d9b`. The Lead owns the incoming Release 14 App forward after [App #338](https://github.com/banodoco/astrid-app/pull/338).
+
+| App path | Plan 69 | Plan 77 |
+| --- | --- | --- |
+| `src/tools/travel-between-images/components/ShotTimelinePreview.tsx` | Unchanged | Unchanged |
+| `src/tools/video-editor/commands/localSaveSession.ts` | Unchanged | Declines appends during unresolved or replaying saves, fences dispatch after Discard, and reports accepted-save progress. |
+| `src/tools/video-editor/components/TimelineEditorShellCore.tsx` | Unchanged | Displays a parked drop's reason and actions alongside the ordinary save bar. |
+| `src/tools/video-editor/components/TimelineEditorShellCore.test.tsx` | Unchanged | Waits for the asynchronous save-bar action before exercising Discard. |
+| `src/tools/video-editor/hooks/useTimelineSave.ts` | Unchanged | Handles bootstrap, restart, Discard, deferred history, stale-base recovery and the selected save-bar action. |
+
+Plan 69's adjacent App change gates full-v2 commit on the accepted `0.2.15` contract and protects the retired `0.2.14` admission boundary. Plan 77's adjacent `commitOutbox.ts` change handles project and timeline discard across stale owners and releases empty rows.

@@ -1,0 +1,51 @@
+diff --git a/home/user/p81b/astrid-dev/plans/81-once-per-command/evidence/installed-container-baseline/ab_summary.py b/harness/ab_summary.py
+index d8ab036..2d36df9 100644
+--- a/home/user/p81b/astrid-dev/plans/81-once-per-command/evidence/installed-container-baseline/ab_summary.py
++++ b/harness/ab_summary.py
+@@ -7,7 +7,7 @@ from datetime import datetime, timezone
+ from ab_receipt import timings_error
+ from pathlib import Path
+ 
+-GROUPS = ("same", "changed", "timeline")
++GROUPS = ("same",)
+ BASE = "before"; FIX_ARM, NOFIX_ARM = "after", "vc48"   # saving = before - after; without the VibeComfy fix = before - vc48
+ 
+ def _med(v): return round(statistics.median(v), 3) if v else None
+@@ -99,8 +99,8 @@ def validate_records(records, arms, samples, legacy_missing_collector_span=False
+ def qualification(records, arms, samples, load_max, legacy=False, require_attestation=False):
+     """Assess the fixed release gate without discarding descriptive evidence."""
+     reasons = []
+-    if len(arms) != 3 or set(arms) != {"before", "after", "vc48"}:
+-        reasons.append("release qualification requires exactly before, after, and vc48 arms")
++    if set(arms) != {"before", "after"}:
++        reasons.append("Part 2b requires exactly before and after arms")
+     if samples != 5:
+         reasons.append("release qualification requires five measured samples per arm and group")
+     if legacy or any(r.get("reconstructed") is True for r in records):
+@@ -133,14 +133,14 @@ def qualification(records, arms, samples, load_max, legacy=False, require_attest
+                 reasons.append(f"{arm}: missing {field}")
+             elif len(set(ids)) != len(ids):
+                 reasons.append(f"{arm}: duplicate {field}")
+-    for group in ('same', 'changed'):
++    for group in ('same',):
+         medians = {}
+         for arm in ('before', 'after'):
+             walls = [r['wall_seconds'] for r in records if r.get('group') == group and r.get('arm') == arm and not is_warmup(r)]
+             if walls: medians[arm] = statistics.median(walls)
+         if ('before' not in medians or 'after' not in medians or medians['before'] <= 0
+-                or medians['after'] / medians['before'] > 0.5):
+-            reasons.append(f"{group}: after/before median ratio must be <= 0.5")
++                or medians['before'] - medians['after'] < 3.0):
++            reasons.append(f"{group}: median saving must be at least 3 seconds")
+     return {"passed": not reasons, "reasons": reasons}
+ 
+ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legacy_missing_collector_span=False, unqualified_legacy=False, require_attestation=False, attestation=None):
+@@ -150,7 +150,7 @@ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legac
+                "qualification": qualification(records, arms, SAMPLES, LOAD_MAX, legacy_missing_collector_span or unqualified_legacy, require_attestation),
+                "arms": {a: {"launcher": v.get("launcher"), "door_port": v.get("door_port"), "generate_extra": v.get("generate_extra", [])} for a, v in ARMS.items()},
+                "reconstructed": any(r.get("reconstructed") is True for r in records),
+-               "interpretation": "Fixed arm order and differing --timings instrumentation limit comparisons; median differences and shares do not establish causation.",
++               "interpretation": "Fixed arm order limits comparisons; both arms use --timings.",
+                "groups": {gr: group_summary(records, arms, gr) for gr in GROUPS}, "records": records,
+                "stage_tables": {a: {gr: stage_table(records, a, gr) for gr in ("same", "changed")}
+                                 for a in arms if ARMS[a].get("generate_extra")}}

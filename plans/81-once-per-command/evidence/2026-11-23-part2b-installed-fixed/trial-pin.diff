@@ -1,0 +1,78 @@
+diff --git a/astrid/packs/runpod/pins.json b/astrid/packs/runpod/pins.json
+index ac79f60fa..4cbaf4914 100644
+--- a/astrid/packs/runpod/pins.json
++++ b/astrid/packs/runpod/pins.json
+@@ -12,7 +12,7 @@
+     },
+     "vibecomfy": {
+       "repository": "https://github.com/banodoco/VibeComfy.git",
+-      "revision": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c"
++      "revision": "f9790674e0fc9610a51f4f3567fc1b59ef01128c"
+     },
+     "h3-motion-context": {
+       "repository": "https://github.com/seitanism/ComfyUI-H3-Motion-Context-MultiRef.git",
+diff --git a/astrid/packs/runpod/recipe.linux-cu130.json b/astrid/packs/runpod/recipe.linux-cu130.json
+index a62ba280f..cf9793d25 100644
+--- a/astrid/packs/runpod/recipe.linux-cu130.json
++++ b/astrid/packs/runpod/recipe.linux-cu130.json
+@@ -4,7 +4,7 @@
+   "platform": "linux-x86_64-cu130",
+   "pins": {
+     "path": "packs/runpod/pins.json",
+-    "sha256": "e80d1b154588d781c37655d0d7c6bdd0c7431a14b9f0e123fcf91605908a212b"
++    "sha256": "f418e3fbb368b909f30668f641fb44d630637220365fe1fbb8eda28c775fc44a"
+   },
+   "source_bindings": [
+     {
+diff --git a/astrid/packs/vibecomfy/environment.windows-nvidia.json b/astrid/packs/vibecomfy/environment.windows-nvidia.json
+index b1fe4de89..42d3f0197 100644
+--- a/astrid/packs/vibecomfy/environment.windows-nvidia.json
++++ b/astrid/packs/vibecomfy/environment.windows-nvidia.json
+@@ -25,6 +25,6 @@
+   ],
+   "pins": {
+     "path": "packs/vibecomfy/pins.json",
+-    "sha256": "017af7c1c173c82e926746682bc8d3cc31c8b10f227d4f1c25a08c9cfd35e1c7"
++    "sha256": "8803de5efdde36d51dced3d14f25c392a0d9d01867e097cb09091a7e8186ce69"
+   }
+ }
+diff --git a/astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml b/astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml
+index 3c12e5ff3..778a6bb86 100644
+--- a/astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml
++++ b/astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml
+@@ -6,7 +6,7 @@ entry: comfyui_engine.py:ENGINE
+ recipes:
+   - platform: linux-x86_64-cu130
+     path: packs/runpod/recipe.linux-cu130.json
+-    sha256: "86c0730f849a5c4873b90efe7af9d9866045a67ce4d34b5721cec9c273c33067"
++    sha256: "6a898797f094cb9c9481fc53c9847365dd548667dcf03aaa1b9711b912288113"
+   - platform: windows-x86_64-cu130
+     path: packs/vibecomfy/recipe.windows-cu130.json
+-    sha256: "8642c4acfde50d3fe5b079141f27551f1dde663299355ce2e41f98ca1ca3bd5f"
++    sha256: "f9eece6bcf60efb8250e48a412fbe32d24e8ef498d716c318ae8a15d9d1c99ed"
+diff --git a/astrid/packs/vibecomfy/pins.json b/astrid/packs/vibecomfy/pins.json
+index 8e496139d..078e60568 100644
+--- a/astrid/packs/vibecomfy/pins.json
++++ b/astrid/packs/vibecomfy/pins.json
+@@ -7,7 +7,7 @@
+     },
+     "vibecomfy": {
+       "repository": "https://github.com/banodoco/VibeComfy.git",
+-      "revision": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c"
++      "revision": "f9790674e0fc9610a51f4f3567fc1b59ef01128c"
+     },
+     "h3-motion-context": {
+       "repository": "https://github.com/seitanism/ComfyUI-H3-Motion-Context-MultiRef.git",
+diff --git a/astrid/packs/vibecomfy/recipe.windows-cu130.json b/astrid/packs/vibecomfy/recipe.windows-cu130.json
+index 2f5ef1e06..a90614389 100644
+--- a/astrid/packs/vibecomfy/recipe.windows-cu130.json
++++ b/astrid/packs/vibecomfy/recipe.windows-cu130.json
+@@ -4,7 +4,7 @@
+   "platform": "windows-x86_64-cu130",
+   "pins": {
+     "path": "packs/runpod/pins.json",
+-    "sha256": "e80d1b154588d781c37655d0d7c6bdd0c7431a14b9f0e123fcf91605908a212b"
++    "sha256": "f418e3fbb368b909f30668f641fb44d630637220365fe1fbb8eda28c775fc44a"
+   },
+   "source_bindings": [
+     {

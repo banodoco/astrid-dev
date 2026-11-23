@@ -104,3 +104,7 @@ The Release 14 fix branches that phase 0 built on, and the dependable-saving bas
 - Issues: [#838](https://github.com/banodoco/astrid-dev/issues/838), [#839](https://github.com/banodoco/astrid-dev/issues/839), [#842](https://github.com/banodoco/astrid-dev/issues/842), [#851](https://github.com/banodoco/astrid-dev/issues/851), [#852](https://github.com/banodoco/astrid-dev/issues/852), [#853](https://github.com/banodoco/astrid-dev/issues/853), [#854](https://github.com/banodoco/astrid-dev/issues/854).
 - Reviews of 17 and 18 November (edit refusals; astrid-app #285; Release 14 timeline-editing changes): held by the Release 14 Lead; their findings are summarised under Prior art.
 - Test-only family and live path: App `src/tools/video-editor/commands/commitSession.ts`, `hooks/timelineLocalSaveHandoff.ts`, `hooks/useTimelinePersistence.ts`, `hooks/useTimelineSave.ts`.
+
+## Plan 77 evidence for TL-1 and TL-5
+
+The Round 5 editor exposed the first usable affordance at 42.669 s on a fresh browser and 27.586 s on same-profile reload. The first complete subsecond metadata response followed the cold UI marker by 205.452 s. The real move entered Saving with no scoped request observed during the recorder window. Keep visible affordance, authenticated service availability, gesture-to-operation and operation-to-request as separate observations for TL-1 and TL-5. The existing TL-15a gesture matrix remains separate. [Plan 77 Round 5 and loop closure](../77-saving-holds-on-a-heavy-timeline/rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap)

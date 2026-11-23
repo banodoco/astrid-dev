@@ -1,0 +1,2 @@
+UTC 2026-11-22T16:28:28Z
+Command: setsid nohup /root/codex/p77box/run/seed-wrapper.sh > run/receipts/seed.log 2>&1 &; wrapper PID 3222; launch exit 0. Builder standard variant, 616 clips; receipt seed.started and seed.done written by wrapper.

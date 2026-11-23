@@ -1,0 +1,4 @@
+after first staging write [['.workflow.py.bfyboctl.py', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]]
+transaction digest [['.workflow.py.bfyboctl.py', '0o600', 980], ['.workflow.py.ips6vgc9.bak', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0], ['.workflow.vibe.json.3i265gt_.bak', '0o600', 784], ['.workflow.vibe.json.ghmjvgl2.json', '0o600', 784], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]]
+ObjectInfoCacheCorruptError object_info index must be an object: <tmp>/cache/index.json next action: vibecomfy schemas refresh
+final [['.workflow.py.vibe.lock', '0o600', 0], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]] private staging [] existing bytes preserved True

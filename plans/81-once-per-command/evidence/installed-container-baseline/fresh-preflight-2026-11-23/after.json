@@ -1,0 +1,25 @@
+{
+  "arm": "after",
+  "selected_version": "f53907446615",
+  "requested_manifest": "manifest-candidate.json",
+  "requested_manifest_sha256": "63410a2e3bee45da02c3f59da3b5e94b45c623ac6510c6674722ff3051c4a055",
+  "installed_manifest_sha256": "c9edf3cb95e4af7538701dac8d6ce2bbfcc18a8c9cc3b60709e444713accf1c7",
+  "pins": {
+    "agent": "868053db361e8355089d23c69b3a72fec60e7f3b",
+    "runtime": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
+    "vibecomfy": "06ad021ffc84f4ae687b144873d3745c7297c43c",
+    "lifecycle": "9f88ef7640bc664f697112d966ecefa123d44340"
+  },
+  "pins_match": {
+    "agent": true,
+    "runtime": true,
+    "vibecomfy": true,
+    "lifecycle": true
+  },
+  "omp_source": "@oh-my-pi/pi-coding-agent@18.12.6",
+  "version_stdout": "astrid/0.1.0",
+  "version_stderr": "",
+  "version_exit": 0,
+  "attestation": "off",
+  "scope": "selected manifest and launcher version; source bytes and connected Runtime not attested"
+}

@@ -1,0 +1,4 @@
+outer OK
+inner digest resumes, owner absent
+inner OK
+inner scalar lookups 30 index remains invalid True outer pair True True inner pair True True

@@ -1,0 +1,1 @@
+{"timings": [{"stage": "outer", "parent": null, "seconds": 0.3, "total_seconds": 0.6}, {"stage": "child", "parent": "outer", "seconds": 0.3, "total_seconds": 0.3}, {"stage": "other command work", "seconds": 0.2}]}

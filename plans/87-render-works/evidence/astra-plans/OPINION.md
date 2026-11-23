@@ -1,0 +1,30 @@
+Verified = checked local plans, evidence or release-ref code; inferred = judgement. No tests/builds run.
+
+1. **Route: revise RN-1.** **Verified:** success was four externally joined ranges, not a whole render. `221e5003` only archives a patch (`docs/r6/README.md`); `007c40d3` requires an explicit override. Sixteen cherry-picks therefore do not reproduce that stack. **Inferred:** retain the donor as a diagnostic reference; port `7bf7d908`, `cb90a4b9`, `7332e03d`, and `0f6aea92`’s intent with `f4f5a321`/`f84c80be`, resolving RN-3 once. Implement RN-4–6 directly; keep the three editing commits in Plan 88. Temporarily retain lease/custody experiments only where useful to isolate failures. Porting doomed aliases twice wastes conflict work; easing suppression and pack overrides can make incorrect output the regression oracle. Start short contract renders immediately, RN-7 concurrently, then whole renders at milestones—not after every replacement. This preserves useful work without accepting stopgap semantics.
+
+2. **Tasks: direction sound, contracts incomplete.** Recommendations below are **inferred**, supported by these **verified** code facts:
+
+- **RN-0:** record the exact Agent/Runtime/App/composition/pack tuple; qualify installed mode early, not only RN-11.
+- **RN-1:** use the selective port above.
+- **RN-2:** retain identity/digest and foreign-locator rejection; sound scope. Clarify that refusing unused foreign entries does not solve every stale-registry failure.
+- **RN-3:** shared environment construction is right; preserve selected-pack isolation and explicit-environment precedence, rather than inheriting arbitrary parent roots.
+- **RN-4:** registry-owned `ASTRID_RENDER_PACK_ROOTS` and named shared imports are right; include admitted project roots, validation/cache identity, installed generation, and the project compiler’s alias. A bundler-only change cannot fix worker discovery.
+- **RN-5/P2:** pin a qualified pack revision for both consumers, including RN-4’s import changes; report actual resolved provenance, not merely installer intent. Coordinate one decision with Plan 78.
+- **RN-6:** fix descriptor/metadata ownership, not presumed generator field loss. `_effect_registry.py:432` serializes metadata faithfully; `fade/element.yaml` lacks `supportsEasing`; `host-registries.ts:17` replaces bundled metadata. Composition 0.0.19 declares support (`chunk-BEWVSWLL.js:1689`) and correctly rejects unsupported metadata. Check all bundled animations; retain rejection for genuinely unsupported easing.
+- **RN-7:** measure host pump entry/exit, task-read gating, lock waits and acknowledged renewals as well as Runtime latency; logging itself must remain bounded.
+- **RN-8:** measurement-first is right. Include initial claim, setup, encoding and upload, worker death, and fence/epoch rejection. Ten minutes alone is insufficient qualification.
+- **RN-9:** exiting is unproved. `custody_broker.py:3658–3676` excludes `pid_for_task` from retry; `:3831` includes it only for terminal eligibility. Use bounded same-incarnation retry/reobservation; preserve birth/UID, ancestry, owner/root, leaf/no-prior-authority and port-release checks. Never equate LIVE, timeout or lease expiry with verified exit/cleanup.
+- **RN-10:** explicitly exercise many assets, large sources, overlapping audio, long duration, disk floor and large-output ingestion through Runtime completion. `assets.py:237` reads whole inputs; `generic_host.py:5844` reads whole outputs; `guards.py:48` defaults to one hour. Measure memory and configure supported duration limits. The 1 MiB cap is for timeline commits (`Runtime/server.py:1630`), not binary output; separate import/edit qualification from rendering.
+- **RN-11:** extend the existing integration early; add actual installed-profile and pack-parity assertions. A fixture-only render cannot establish installed provenance parity.
+
+3. **Cut: pull back minimal retry hygiene.** **Verified:** `eff/cancel.md` records scratch blocking admission, poisoned occupancy and orphan work after restart. **Inferred:** require a documented, verified stop/restart/reconcile/reclaim procedure before looping; implement only missing owner-fenced cleanup needed for the next attempt. Restart alone is insufficient. Keep resumability, progress UI and broad write-path redesign deferred; retain failure/progress logs.
+
+4. **Plan 88: keep the integration loop, tighten success.** **Verified:** TE-1/2 re-cherry-pick commits already inherited from RN-1. TE-3’s validator lacks authenticated word binding (`_commit_timing_validation.py:106`); reflow can choose nearest ambiguous words (`reflow.py:588`). **Inferred:** offset equality needs a valid baseline, unique unchanged word/source/transcript identity, both endpoints and unchanged duration/source mapping; otherwise use supported cut-relative edits or defer to Plan 18. Keep 69/77/76 ownership, but blocked evidence cannot satisfy promised restore/ripple success. Make swaps/retimes mandatory; classify project-element, bulk-save, restore and concurrency probes separately. Two fix PRs plus a retained acceptance plan are appropriate.
+
+5. **Estimates: optimistic allowances.** **Inferred:** nine/six days are not reliable commitments before P1/P2, lease diagnosis and TE-3 feasibility. Heavy-loop failures, installed qualification and recovery dominate uncertainty; re-estimate after those gates.
+
+6. **Contradictions: fix before dispatch.** **Verified:** Plan 87 would land Plan 88’s unsafe exemption; Plan 88 permits refusal while requiring ripple success. Historical inputs retain superseded Release-14 routing. Completion qualifies the plan branch. **Inferred:** distinguish RN-10’s exploratory stopgap runs from final qualification, and confirm the integrated release build before claiming the owner’s release-head outcome.
+
+**Change before dispatch:** selective port; RN-6/RN-9 contracts; resource/retry gates; TE-3 authority and honest acceptance; remove duplicate landing.
+
+**Fine, note the risk:** Release 15 only; reuse integration coverage; defer resumability; retain most session fixes; treat estimates as provisional.

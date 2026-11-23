@@ -4,13 +4,13 @@
 
 **Goal:** A developer runs the whole Astrid stack at one release or plan branch on a copy of their own work, isolated from their live install, and stops it with one command.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Hannah
 
 **Estimate:** About a day of engineering, plus one real run.
 
-**Waiting on:** the owner: one approved stop window for the RB-6 proofs ([handover](handover.md#waiting-on-the-owner)), then D3 (review rounds) before R. D4 can wait. No manager is named yet.
+**Waiting on:** Release 15 for the remaining real-stack run and follow-up work; the single-branch tool shipped with Release 14.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

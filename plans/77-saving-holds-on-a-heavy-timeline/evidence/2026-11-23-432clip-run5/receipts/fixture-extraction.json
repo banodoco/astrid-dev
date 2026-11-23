@@ -1,0 +1,23 @@
+{
+  "source": "/root/codex/p77box/fixture/outbox-c2930794/save-loop-heavy-c2930794.json",
+  "source_sha256": "9346d2d69188f1793f1abff3be6e2d5abfc3eae38dbf5861ed037f69797f8943",
+  "inventory_sha256": "8868cacf53b89ef4dd5084d1fa14ac3b46f28c90b9b5802df21434b8287c2634",
+  "recorded_at_utc": "2026-11-23T05:36:34.312844+00:00",
+  "acknowledged_entries": 37,
+  "clip_commands": 432,
+  "unique_clip_ids": 432,
+  "track_ids": [
+    "V1",
+    "A1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "A2",
+    "A3"
+  ],
+  "occurrences_in_every_recorded_selection": 0,
+  "last_pre_command_clip_selection": 431,
+  "digest_source": "run/receipts/READY.md independently recorded canonical SHA-256; public content_digest uses sha256: prefix"
+}

@@ -1,0 +1,25 @@
+--- a/public/install-manifest.json
++++ b/public/install-manifest.json
+@@ -8,6 +8,7 @@
+     "sha": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5",
+     "schema_digest": "sha256:2c6a76e17b4441398ab91e3e9d6283a719fd5b08807447db9dbf2ecc5e1339a2"
+   },
++  "packs": { "astrid_motion": { "repo": "https://github.com/banodoco/poms_packs", "commit": "2379ab54aca522019ff4f869cfdf9375bdb56dfc", "digest_rule": "pack-tree-v1", "digest": "75234c10217e67ec0f111a4cb6be4a6252e172a9cd382506498d07ce1d241029" } },
+   "tools": {
+     "uv": {
+       "version": "0.11.32"
+--- a/scripts/installer/manifest.test.mjs
++++ b/scripts/installer/manifest.test.mjs
+@@ -89,3 +89,12 @@
+   assert.match(`${result.stdout}${result.stderr}`, /--in needs --out/);
+   assert.equal(await readFile(file, 'utf8'), before);
+ });
++
++test('manifest pins the default motion pack to exact source and digest', async () => {
++  const manifest = JSON.parse(await readFile(path.join(repo, 'public/install-manifest.json'), 'utf8'));
++  const pin = manifest.packs?.astrid_motion;
++  assert.equal(pin?.repo, 'https://github.com/banodoco/poms_packs');
++  assert.match(pin?.commit ?? '', /^[0-9a-f]{40}$/);
++  assert.equal(pin?.digest_rule, 'pack-tree-v1');
++  assert.match(pin?.digest ?? '', /^[0-9a-f]{64}$/);
++});

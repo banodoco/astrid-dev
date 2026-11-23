@@ -1,0 +1,337 @@
+{
+  "metadata": {
+    "cleanup_process_check_clear": true,
+    "cleanup_processes_for_trial": [],
+    "end_load_1_5_15": [
+      3.75,
+      3.0,
+      2.91
+    ],
+    "ended_utc": "2026-11-22T07:26:33.144055+00:00",
+    "ending_repositories": {
+      "lifecycle": {
+        "dirty": false,
+        "head": "9f88ef7640bc664f697112d966ecefa123d44340",
+        "path": "/root/codex/plan-81/run/worktrees/us-2.env/lifecycle",
+        "present": true,
+        "tree": "557853a6368375e37598d02502532d0091659fa4"
+      },
+      "runtime": {
+        "dirty": false,
+        "head": "0af5af11d71016fa08f65058c558c56a47e9b5a7",
+        "path": "/root/codex/plan-81/run/worktrees/us-2.env/runtime",
+        "present": true,
+        "tree": "46330df2c132b7dfe5468074bb251dfe8dcfad26"
+      },
+      "source": {
+        "dirty": false,
+        "head": "2217ac4c5943e13ef7ba10d6affddb51036d9d99",
+        "path": "/root/codex/plan-81/run/worktrees/us-2",
+        "present": true,
+        "tree": "e4f0e9f4b76a7da03ab5044621fe1aabfb98eee3"
+      },
+      "vibecomfy": {
+        "dirty": false,
+        "head": "799d90f619a6723d0b376b7e77aef09c244a0821",
+        "path": "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy",
+        "present": true,
+        "tree": "9dea580ff2523e402269a4fb8065753bb211a2b7"
+      }
+    },
+    "family": "generate",
+    "pytest_exit": 0,
+    "repositories": {
+      "lifecycle": {
+        "dirty": false,
+        "head": "9f88ef7640bc664f697112d966ecefa123d44340",
+        "path": "/root/codex/plan-81/run/worktrees/us-2.env/lifecycle",
+        "present": true,
+        "tree": "557853a6368375e37598d02502532d0091659fa4"
+      },
+      "runtime": {
+        "dirty": false,
+        "head": "0af5af11d71016fa08f65058c558c56a47e9b5a7",
+        "path": "/root/codex/plan-81/run/worktrees/us-2.env/runtime",
+        "present": true,
+        "tree": "46330df2c132b7dfe5468074bb251dfe8dcfad26"
+      },
+      "source": {
+        "dirty": false,
+        "head": "2217ac4c5943e13ef7ba10d6affddb51036d9d99",
+        "path": "/root/codex/plan-81/run/worktrees/us-2",
+        "present": true,
+        "tree": "e4f0e9f4b76a7da03ab5044621fe1aabfb98eee3"
+      },
+      "vibecomfy": {
+        "dirty": false,
+        "head": "799d90f619a6723d0b376b7e77aef09c244a0821",
+        "path": "/root/codex/plan-81/run/worktrees/us-2.env/vibecomfy",
+        "present": true,
+        "tree": "9dea580ff2523e402269a4fb8065753bb211a2b7"
+      }
+    },
+    "repository_identity_unchanged": true,
+    "stage": null,
+    "start_load_1_5_15": [
+      0.32,
+      1.96,
+      2.64
+    ],
+    "started_utc": "2026-11-22T07:21:27.216471+00:00",
+    "trial": "/root/codex/plan-81/run/us2-normalized/exact-normal-2217"
+  },
+  "timings": {
+    "samples": {
+      "changed": {
+        "request_counts": {
+          "Runtime GET /v1/app-state/user/{key}": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "Runtime GET /v1/capabilities": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime GET /v1/health": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Runtime GET /v1/objects/{digest}": [
+            9,
+            9,
+            9,
+            9,
+            9
+          ],
+          "Runtime GET /v1/projects/{id}": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime POST /v1/handshake": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Runtime POST /v1/projects/{id}/objects": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "Runtime POST /v1/tasks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "stages": {
+          "Runtime GET /v1/app-state/user/{key}": 0.04602347599757195,
+          "Runtime GET /v1/capabilities": 0.04678222699840262,
+          "Runtime GET /v1/health": 0.018577107000965043,
+          "Runtime GET /v1/objects/{digest}": 0.16028316200208792,
+          "Runtime GET /v1/projects/{id}": 0.011973996000961051,
+          "Runtime POST /v1/handshake": 0.016977006000161055,
+          "Runtime POST /v1/projects/{id}/objects": 0.07750025799941795,
+          "Runtime POST /v1/tasks": 0.04838177900091978,
+          "Runtime acquisition lock": 0.0007767820025037508,
+          "Runtime launcher connection": 4.239258571000391,
+          "model registry": 0.0469372290008323,
+          "other command work": 11.690163555991603,
+          "pack discovery": 1.730149351995351,
+          "pack host attachment": 0.5161550009997882,
+          "pack host lifecycle lock": 7.76169999880949e-05,
+          "pack host readiness": 0.020479007000176352,
+          "pack host source identity": 0.2598678110007313,
+          "target check": 0.00663134199930937,
+          "workflow build": 0.32794043499961845
+        },
+        "wall_median": 19.49507040699973
+      },
+      "same": {
+        "request_counts": {
+          "Runtime GET /v1/app-state/user/{key}": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "Runtime GET /v1/capabilities": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime GET /v1/health": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Runtime GET /v1/objects/{digest}": [
+            9,
+            9,
+            9,
+            9,
+            9
+          ],
+          "Runtime GET /v1/projects/{id}": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime POST /v1/handshake": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Runtime POST /v1/projects/{id}/objects": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "Runtime POST /v1/tasks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "stages": {
+          "Runtime GET /v1/app-state/user/{key}": 0.06411704200036183,
+          "Runtime GET /v1/capabilities": 0.05707206899933226,
+          "Runtime GET /v1/health": 0.019404254002438392,
+          "Runtime GET /v1/objects/{digest}": 0.10063158400407701,
+          "Runtime GET /v1/projects/{id}": 0.011613405999014503,
+          "Runtime POST /v1/handshake": 0.014708222999615828,
+          "Runtime POST /v1/projects/{id}/objects": 0.07373538000138069,
+          "Runtime POST /v1/tasks": 0.04066744400006428,
+          "Runtime acquisition lock": 0.0007699069992668228,
+          "Runtime launcher connection": 4.285427287000857,
+          "model registry": 0.045891150999523234,
+          "other command work": 12.239834775007694,
+          "pack discovery": 1.7185080360013671,
+          "pack host attachment": 0.5744638249980198,
+          "pack host lifecycle lock": 5.8015000831801444e-05,
+          "pack host readiness": 0.026858741002797615,
+          "pack host source identity": 0.2714684309994482,
+          "target check": 0.00662075899890624,
+          "workflow build": 0.35408197799915797
+        },
+        "wall_median": 19.87438150699927
+      },
+      "timeline": {
+        "request_counts": {
+          "Runtime GET /v1/health": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime GET /v1/projects/{id}/timelines": [
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "Runtime POST /v1/handshake": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        "stages": {
+          "Runtime GET /v1/health": 0.01011527999980899,
+          "Runtime GET /v1/projects/{id}/timelines": 0.1011519479980052,
+          "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits": 0.34074583900110156,
+          "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}": 0.02360301099906792,
+          "Runtime POST /v1/handshake": 0.008672967000165954,
+          "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit": 0.3704550519996701,
+          "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect": 0.06669265600066865,
+          "Runtime acquisition lock": 0.0005263029997877311,
+          "Runtime launcher connection": 1.962183202000233,
+          "other command work": 0.7182643779979117
+        },
+        "wall_median": 3.8070026459990913
+      }
+    },
+    "start_to_ready": 1.9542173909994744,
+    "warm_runtime_acquisition": 5.963132285998654
+  },
+  "visualization": {
+    "error": {
+      "code": "invocation_error",
+      "details": {
+        "kernel_attempt_id": "24c25133a22248cb94ca64183ea0e4f4",
+        "kernel_run_id": "629b3f8a490642d6a2baa9a6bf55f6c5",
+        "kernel_task_id": "23d28693046047f8a606a2d8c7adc479",
+        "run_id": "629b3f8a490642d6a2baa9a6bf55f6c5",
+        "sdk_category": "runtime",
+        "sdk_error": "CapabilityRuntimeError",
+        "validation": null
+      },
+      "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.timeline_visualize' exited 1: {\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23663, \"elapsed_ms\": 1969}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 23663, \"elapsed_ms\": 45}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23663, \"elapsed_ms\": 1868}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23663, \"elapsed_ms\": 1972}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 23663, \"elapsed_ms\": 27}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"renderer lease channel closed\", \"error_details\": null}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"original host renderer cleanup is unresolved\", \"error_details\": null}\nrenderer lease channel closed\nFix: Review the details, correct the render settings or timeline, and try again."
+    },
+    "exit": 1,
+    "ok": false,
+    "seconds": 60.05256390899922
+  }
+}
