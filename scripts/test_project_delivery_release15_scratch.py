@@ -432,6 +432,75 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         )
         self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
 
+    def test_native_release15_enabler_inclusion_needs_authored_plan_line(self):
+        # The branch table states intended branch custody; only the actual
+        # Included plans bullet creates the release -> project edge. This
+        # checks the REAL composed checkout, not synthetic sample Markdown.
+        release = self.scratch / "releases/15.md"
+        original = release.read_bytes()
+
+        def native_relationships():
+            script = """
+import json, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(root / "scripts"))
+from project_delivery import load_delivery, deliveries_for_goal
+from relationships import RecordRef
+graph = load_delivery(root)
+enabler = RecordRef("project", "72")
+goal = RecordRef("goal", "pillar:artistic-ambition/finished-artistic-work")
+print(json.dumps({
+    "enabler": enabler in graph.enablers,
+    "addresses": len(graph.outgoing(enabler, "addresses")),
+    "includes": [[link.source.id, link.role, link.source_path]
+                 for link in graph.incoming(enabler, "includes")],
+    "real_releases": sorted({p.release.id
+                             for p in deliveries_for_goal(graph, goal)})
+}))
+"""
+            result = subprocess.run(
+                (sys.executable, "-c", script, str(self.scratch)),
+                cwd=self.scratch, text=True, capture_output=True,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0,
+                             result.stdout + result.stderr)
+            import json
+            return json.loads(result.stdout)
+
+        actual = native_relationships()
+        self.assertTrue(actual["enabler"])
+        self.assertEqual(actual["addresses"], 0)
+        self.assertEqual(
+            actual["includes"], [["15", "included", "releases/15.md"]]
+        )
+        self.assertEqual(actual["real_releases"], ["13"])
+
+        source = original.decode("utf-8")
+        plan72 = [
+            line for line in source.splitlines(keepends=True)
+            if line.startswith("- [Plan 72](")
+        ]
+        self.assertEqual(len(plan72), 1, "Expected one authored Plan72 bullet")
+        release.write_text(source.replace(plan72[0], "", 1), encoding="utf-8")
+        try:
+            unlisted = native_relationships()
+            self.assertTrue(unlisted["enabler"])
+            self.assertEqual(unlisted["addresses"], 0)
+            self.assertEqual(
+                unlisted["includes"], [],
+                "An orphan plan-72 branch-table row cannot grant release membership",
+            )
+            self.assertEqual(
+                unlisted["real_releases"], actual["real_releases"],
+                "Removing a Plan72 membership must not invent or erase "
+                "unrelated genuine Release13 delivery paths",
+            )
+        finally:
+            release.write_bytes(original)
+        self.assertEqual(release.read_bytes(), original)
+
     def test_native_project_delivery_cli_on_composed_release(self):
         # Exercise the actual user-facing read-only CLI from the temporary
         # Release15 checkout rather than importing it from the source PR.
