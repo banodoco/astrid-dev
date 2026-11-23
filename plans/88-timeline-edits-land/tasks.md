@@ -58,6 +58,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - 2026-11-23: TE-3 stationary-binding repair merged as `b978641c`; exact word/interval and source mapping are required, with 80 focused tests and 9 reflow goldens passing and the Astra source-remapping finding fixed. Full-fixture read-back and render remain pending; host clarified that no clip may move on reflow while the separate historical-overrun occurrence correction is recorded rather than hidden.
 - 2026-11-23: TE-5 pack/animation increment merged as App `8267cb33` (single commit `8263bb92`); 3 focused pack/animation checks and 12 existing unit checks passed without skips. Actual collection/project pack admission and render remain unverified on Plan 87’s stack; TE-5 stays incomplete.
 
+- 2026-11-23 (host): For TE-3 full-fixture acceptance, the repeated-word anchors and legacy-overrun occurrence precede a later 15-frame cut; reflow must move no clip, while any correction of the separate overrun occurrence is recorded. The first arranged attempt accepted the ripple and refused the negative cases, but reflow moved `footage-0-3` from 0.05 to 0.033333 seconds; proof remains open and the failed test is checkpointed at `dbe53ef9d`.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
