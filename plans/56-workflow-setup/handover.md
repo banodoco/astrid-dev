@@ -1,6 +1,6 @@
 # Handover: Plan 56, workflow set-up (Release 15)
 
-[Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md) · [Fixtures](evidence/fixtures/README.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md) · [Fixtures](evidence/sam-test-files/README.md)
 
 For the Plan 56 orchestrator and the Release 15 Lead. Read this once, then work from `tasks.md`.
 
@@ -30,7 +30,7 @@ The board, mailbox ([#1757](https://github.com/banodoco/astrid-dev/issues/1757))
 ## How the code is tested
 
 - Agent tests build VibeComfy at the Agent's own pin (astrid-agent `scripts/worker-env/agent-setup.sh`, `VIBECOMFY_ENGINE_REVISION`). A card that changes both repos is proved only after the Agent's `release/15/plan-56` points at the plan-56 VibeComfy head, by a generator-only pin commit (`scripts/vibecomfy_pin.py`). The Lead does it; pins into `release/15/main` are also the Lead's.
-- Proofs run on the **CPU stand-in target** defined in [evidence/fixtures/README.md](evidence/fixtures/README.md): a fake ComfyUI `object_info` server and a recorded-answer fake pod runner. No GPU, no SAM weights, no rented machine. The real SAM run is WS-L, the owner's, after R.
+- Proofs run on the **CPU stand-in target** defined in [evidence/sam-test-files/README.md](evidence/sam-test-files/README.md): a fake ComfyUI `object_info` server and a recorded-answer fake pod runner. No GPU, no SAM weights, no rented machine. The real SAM run is WS-L, the owner's, after R.
 - A packet session never dispatches hosted CI: it posts `READY-CI` on the mailbox and waits for the Lead's slot. The baseline for the Agent's compared run is [releases/15/evidence/agent-ci-baseline-8807f820](../../releases/15/evidence/agent-ci-baseline-8807f820/README.md).
 
 ## Order and the real conflicts
