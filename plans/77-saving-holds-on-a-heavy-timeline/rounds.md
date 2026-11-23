@@ -511,3 +511,17 @@ The cold browser's initial selection GET returned 404 in pair 1 and the fallback
 The separate guarded move confirmed Saved in 34.254 s. The exact committed public head reopened in 4.802 s in a fresh browser with zero timeline POSTs. Its single `doc.patch` added 2,695,119 bytes of measured logical text to the selected rows. The enclosing round through a clean shutdown grew the SQLite file by 2,895,872 bytes, including allocation and lifecycle effects. [Save and storage receipt](evidence/2026-11-22-release-15/first-cut-installed-requalification/RESULT.md#guarded-save-and-one-command-storage)
 
 On the separate signed ten-clip control, four exact compiled App and Runtime combinations and four SDK source overlays reached the unchanged public head. The candidate stale restore refused after a real Runtime move and kept the newer revision and publication. Stock and candidate returned the same two private bootstrap refusals with matching scoped requests. Both stacks closed idle-safe. [Compatibility and safeguards](evidence/2026-11-22-release-15/first-cut-installed-compatibility/RESULT.md)
+
+
+## Startup development probe on the 300-clip fixture
+
+On 23 November 2026 the isolated Runtime startup prototype `dff392a2` ran on a fresh verified restore of the signed 300-clip, v33 fixture. The private installed tuple used App `faa0174f`, Agent `66c1302c` and Runtime `dff392a2`. The App and Agent commits held only generated proof pins. The two timed routes started with the default admission budget after the setup owner stopped idle-safe. Each held a separate operation ID.
+
+| Route | Launcher wall time | Witnessed pending period | Result |
+| --- | --- | --- | --- |
+| Managed offline inspection | 132.609 s | 130.311 s | Returned `verified_offline` with the realm check green. Ten pending samples were at or after 120 s. No listener. |
+| Native detached startup | 161.101 s | 158.733 s | Stayed pending past 135 s. The exact child passed native health and process-birth checks after launcher exit. No periodic sample observed health while pending. |
+
+The observer sampled its final native health check after exit and did not record that check’s timestamp. The 161.101 s figure measures launcher wall time. The managed operation completed before the 135 s evidence threshold. Its larger-workload repeat is open. There were zero browser profiles. The stack shut down idle-safe, closed all reserved ports and was removed. This is development evidence for the Runtime-only startup slice. The first-cut default-budget restart limitation remains in its release gate. [First-cut gate](evidence/2026-11-22-release-15/first-cut-gate.md)
+
+Independent source review later cleared the Runtime-only `e27b5177` foundation. That head adds verified launcher-gap ordering and clearer native process custody, including unknown PID namespace and foreign UID refusal. Its exact paired result was 208 unchanged protected cases, one unchanged recorder-tamper integration and 20 new startup cases. The private startup slice is separate from the ordered first-cut landing.
