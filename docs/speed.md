@@ -15,11 +15,12 @@ A living summary of Astrid's speed work, so findings outlive the sessions that m
 | --- | ---: | --- |
 | Before Release 15 work | 14.7 to 16.6 s | [installed baseline](../plans/81-once-per-command/evidence/installed-container-baseline/) |
 | Plan 81 Part 1 (landed) | 10.8 to 12.3 s | [Part 2 three-arm run](../plans/81-once-per-command/evidence/installed-container-baseline/runs/2026-11-23-part2-lead-machine/README.md) |
-| Plan 81 Part 2b (VibeComfy `c0e910ca`) | 5.8 s (11.84 s on the same box without it) | Part 2b fixed-head receipts, astrid-dev #1679 |
+| Plan 81 Part 2b (VibeComfy `c0e910ca`) | 5.8 s (11.84 s on the same box without it) | Part 2b fixed-head receipts, astrid-dev #1679; landed on Agent `release/15/main` as `045064b6` (#564) |
+| Pack discovery once per command (PB-7b, **parked, not landed**) | 5.06 s (6.23 s on the same box without it; 1.17 s saved) | [hand-off](../plans/81-once-per-command/evidence/2026-11-23-pb7b-handoff/README.md), astrid-agent #557 (draft) |
 
 - **Where Part 2b's 6 s came from:** about 5 s of workflow emission was SHA-256 re-witnessing of the shipped offline node list (63 files, 13.7 MB) on every class lookup: about 7,550 witnesses and 5.4 GB per command. Part 2b checks each file once per call and the whole set once before publishing ([emission profile](../plans/81-once-per-command/evidence/2026-11-23-installed-emission-profile/README.md)). ComfyUI's own checks cost about 0.004 s.
 - **What is left in about 6 s:** pack discovery about 2.2 s (16 scans per command under four callers: model registry, candidate qualification, capability registries, unparented), workflow build 0.7 s, emission 0.5 s, other command work 0.5 s, pack host attachment 0.4 s, approval compile 0.4 s, launcher connection 0.2 s, interpreter start 0.1 s.
-- **Next:** discover packs once per command and reuse the result while no pack root changed (Plan 81 card PB-7, target about 4 s). Below about 3 s needs reuse across commands ([Plan 82](../plans/82-reuse-across-commands/plan.md)).
+- **Next:** pack discovery once per command was tried on Linux for unmanaged packs (Plan 81 PB-7b): 1.17 s saved after restoring the refusal order the first version had changed, below the 1.3 s line, so it is parked and handed to Plan 87 (RN-4: one place for pack roots) rather than landed. Below about 3 s needs reuse across commands ([Plan 82](../plans/82-reuse-across-commands/plan.md)).
 
 ## Saving a heavy timeline (300 clips, installed, release to "Saved")
 
