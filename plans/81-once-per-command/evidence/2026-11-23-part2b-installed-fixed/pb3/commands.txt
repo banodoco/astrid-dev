@@ -1,0 +1,16 @@
+Checkout verification:
+git -C /home/user/p81b/wt/pb3-fixed rev-parse HEAD
+git -C /home/user/p81b/wt/pb3-fixed status --porcelain=v1
+
+Environment creation:
+UV_PROJECT_ENVIRONMENT=/home/user/p81b/wt/pb3-fixed.env uv sync --frozen --no-dev --project wt/pb3-fixed
+
+Cold run (cwd=/home/user/p81b/wt/pb3-fixed):
+env PYTHONHASHSEED=0 TZ=UTC LC_ALL=C.UTF-8 /home/user/p81b/wt/pb3-fixed.env/bin/python /home/user/p81b/run/pb3_compare.py --mode cold --output-root /home/user/p81b/run/pb3-fixed/bundles > /home/user/p81b/run/pb3-fixed/fixed-cold.jsonl 2> /home/user/p81b/run/pb3-fixed/fixed-cold.stderr
+
+Warm run (cwd=/home/user/p81b/wt/pb3-fixed):
+env PYTHONHASHSEED=0 TZ=UTC LC_ALL=C.UTF-8 /home/user/p81b/wt/pb3-fixed.env/bin/python /home/user/p81b/run/pb3_compare.py --mode warm --output-root /home/user/p81b/run/pb3-fixed/bundles > /home/user/p81b/run/pb3-fixed/fixed-warm.jsonl 2> /home/user/p81b/run/pb3-fixed/fixed-warm.stderr
+
+Initial redirection setup typo (failed before Python started; no comparator attempt):
+mkdir -p run/pb3-fixed && env PYTHONHASHSEED=0 TZ=UTC LC_ALL=C.UTF-8 /home/user/p81b/wt/pb3-fixed.env/bin/python /home/user/p81b/run/pb3_compare.py --mode cold --output-root /home/user/p81b/run/pb3-fixed/bundles > /home/user/p81b/run/pb3-fixed/fixed-cold.jsonl 2> /home/user/p81b/run/pb3-fixed/fixed-cold.stderr
+Result: bash could not open the redirected output because mkdir was relative to the checkout while the evidence directory is /home/user/p81b/run/pb3-fixed. Corrected by creating the absolute evidence directory before running.

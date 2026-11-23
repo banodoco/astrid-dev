@@ -1,0 +1,33 @@
+SETTING: installed builds, CPU container, stand-in ComfyUI; not covered: a real ComfyUI's node-info answer, GPU work.
+  after: agent f2dd1434 runtime 737843e9 vibecomfy f9790674 lifecycle 9f88ef76 omp @oh-my-pi/pi-coding-agent@18.12.6
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared 4-vCPU box, --no-wait (times Astrid up to 'task queued')
+[same] warm-up, then 5 alternating rounds
+  same-after-warmup               8.379 s  exit 0  load 0.98 -> 1.13
+  same-after-1                    5.942 s  exit 0  load 0.94 -> 1.03
+  same-after-2                    5.764 s  exit 0  load 0.94 -> 0.94
+  same-after-3                    5.513 s  exit 0  load 0.94 -> 1.03
+  same-after-4                    6.027 s  exit 0  load 0.94 -> 0.95
+  same-after-5                    5.829 s  exit 0  load 0.95 -> 1.03
+
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared 4-vCPU box, --no-wait (times Astrid up to 'task queued')
+Attestation: off
+Qualification: PASS
+group       after med s   ok  load1 before-cmd
+same              5.829   5  0.94-0.95
+
+after arm stages, same (median of 5 commands; top 12 by exclusive seconds per command):
+     1.067 s exclusive/command  2 occurrences/command     0.436 s exclusive/occurrence  pack discovery  (in: model registry)
+     0.646 s exclusive/command  1 occurrences/command     0.646 s exclusive/occurrence  workflow build  (in: candidate preparation)
+     0.575 s exclusive/command  6 occurrences/command     0.093 s exclusive/occurrence  pack discovery  (in: candidate qualification)
+     0.504 s exclusive/command  1 occurrences/command     0.504 s exclusive/occurrence  workflow emission  (in: bundle materialisation)
+     0.470 s exclusive/command  1 occurrences/command     0.470 s exclusive/occurrence  other command work  (in: None)
+     0.410 s exclusive/command  1 occurrences/command     0.410 s exclusive/occurrence  pack host attachment  (in: Runtime connection)
+     0.335 s exclusive/command  2 occurrences/command     0.150 s exclusive/occurrence  approval compile  (in: candidate preparation)
+     0.287 s exclusive/command  4 occurrences/command     0.090 s exclusive/occurrence  pack discovery  (in: None)
+     0.199 s exclusive/command  1 occurrences/command     0.199 s exclusive/occurrence  Runtime launcher connection  (in: Runtime connection)
+     0.194 s exclusive/command  2 occurrences/command     0.094 s exclusive/occurrence  pack discovery  (in: capability registries)
+     0.164 s exclusive/command  1 occurrences/command     0.164 s exclusive/occurrence  pack host source identity  (in: pack host attachment)
+     0.127 s exclusive/command  1 occurrences/command     0.127 s exclusive/occurrence  interpreter start  (in: None)
+
+after arm stages, changed (median of 5 commands; top 12 by exclusive seconds per command):
+Cleanup: detached or reparented Runtime processes cannot be attributed safely and may still be running.
