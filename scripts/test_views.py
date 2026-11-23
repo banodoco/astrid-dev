@@ -14,6 +14,20 @@ def git(root, *args):
     return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
 
 
+def copy_repo_fixture(source: Path, destination: Path) -> None:
+    """Copy authored checkout fixtures, never derived skills or private run state.
+
+    Generated packages may contain repo symlinks pointing back to the checkout;
+    following them during an ordinary copytree can recurse indefinitely.
+    Preserve the *authored* legacy symlinks so the original view/alias tests run.
+    """
+    shutil.copytree(
+        source, destination,
+        ignore=shutil.ignore_patterns(".git", ".otto", "__pycache__", ".generated"),
+        symlinks=True,
+    )
+
+
 def commit_base(root):
     """Make a base only in a disposable test repository."""
     git(root, "init", "-q", "-b", "main")
@@ -25,12 +39,31 @@ def commit_base(root):
 
 
 class ViewTests(unittest.TestCase):
+    def test_fixture_copy_ignores_generated_repo_symlink_cycle(self):
+        with tempfile.TemporaryDirectory(prefix="view-derived-cycle-") as tmp:
+            root = Path(tmp)
+            source = root / "original"
+            (source / "skills").mkdir(parents=True)
+            (source / ".generated/skills/astrid-dev-start").mkdir(parents=True)
+            (source / "README.md").write_text("authored\n", encoding="utf-8")
+            (source / "skills/legacy.md").symlink_to("../README.md")
+            (source / ".generated/skills/astrid-dev-start/repo").symlink_to(
+                source, target_is_directory=True
+            )
+            copied = root / "fixture"
+            copy_repo_fixture(source, copied)
+            self.assertEqual((copied / "README.md").read_text(encoding="utf-8"), "authored\n")
+            self.assertTrue((copied / "skills/legacy.md").is_symlink())
+            self.assertEqual((copied / "skills/legacy.md").read_text(encoding="utf-8"), "authored\n")
+            self.assertFalse((copied / ".generated").exists())
+            self.assertTrue((source / ".generated/skills/astrid-dev-start/repo").is_symlink())
+
     def test_hand_edited_vision_title_fails_check(self):
         import astrid_dev
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             base = commit_base(root)
             target = root / "vision/README.md"
             content = target.read_text(encoding="utf-8")
@@ -90,7 +123,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             base_readme = root / "README.md"
             original_readme = base_readme.read_text(encoding="utf-8")
             base_readme.write_text(original_readme.replace("<!-- vision-summary:end -->", "", 1),
@@ -135,7 +168,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             base = commit_base(root)
             target = root / "README.md"
             content = target.read_text(encoding="utf-8")
@@ -196,7 +229,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             # main's generated pages may be stale between a merge and the refresh job's
             # commit; bring every view current first so only plans/index.md is left to change.
             sync(root)
@@ -980,7 +1013,7 @@ class StrategyViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'repo'
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            copy_repo_fixture(source, root)
             target = root / 'strategy.md'
             target.write_text(target.read_text().replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
             output = io.StringIO()
@@ -995,7 +1028,7 @@ class StrategyViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'repo'
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            copy_repo_fixture(source, root)
             target = root / 'strategy.md'
             target.write_text(target.read_text(encoding='utf-8').replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
             output = io.StringIO()

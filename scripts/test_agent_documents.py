@@ -154,16 +154,65 @@ class AgentDocumentTests(unittest.TestCase):
     def test_real_repository_markdown_catalog(self):
         root = Path(__file__).resolve().parents[1]
         documents = discover_documents(root)
-        self.assertEqual(len(documents), 29)
-        expected = {
-            "astrid-dev-start", "astrid-dev-leader", "astrid-dev-orchestrator",
-            "astrid-dev-manager", "astrid-dev-worker", "astrid-dev-bugfix",
-            "astrid-dev-gap", "astrid-dev-gpu-validate", "astrid-dev-green",
-            "astrid-dev-improve", "astrid-dev-iterate", "astrid-dev-merge",
-            "astrid-dev-plan", "astrid-dev-release",
+        by_path = {doc.relative.as_posix(): doc for doc in documents}
+        # Preserve every migrated original source and its required skill identity,
+        # while allowing MS-10 to add well-formed Markdown and opted-in skills.
+        required_skills = {
+            "start.md": "astrid-dev-start",
+            "roles/leader.md": "astrid-dev-leader",
+            "roles/orchestrator.md": "astrid-dev-orchestrator",
+            "roles/manager.md": "astrid-dev-manager",
+            "roles/worker.md": "astrid-dev-worker",
+            "shared/workstreams/bugfix.md": "astrid-dev-bugfix",
+            "shared/workstreams/gap.md": "astrid-dev-gap",
+            "shared/workstreams/gpu-validate.md": "astrid-dev-gpu-validate",
+            "shared/workstreams/green.md": "astrid-dev-green",
+            "shared/workstreams/improve.md": "astrid-dev-improve",
+            "shared/workstreams/iterate.md": "astrid-dev-iterate",
+            "shared/workstreams/merge.md": "astrid-dev-merge",
+            "shared/workstreams/plan.md": "astrid-dev-plan",
+            "shared/workstreams/release.md": "astrid-dev-release",
         }
-        self.assertEqual({doc.skill_name for doc in documents if doc.skill}, expected)
+        required_references = {
+            "README.md",
+            "guides/codex-cloud/README.md",
+            "guides/codex-in-claude-cloud/README.md",
+            "guides/codex-in-claude-cloud/manager-brief.md",
+            "roles/leader/multi-manager-release.md",
+            "roles/manager/chatgpt-packet.md",
+            "roles/manager/whole-project.md",
+            "roles/orchestrator/codex-cloud-sessions.md",
+            "roles/orchestrator/codex-in-claude-cloud.md",
+            "roles/orchestrator/multi-manager-dispatch.md",
+            "shared/domains.md",
+            "shared/glossary.md",
+            "shared/release-sources.md",
+            "shared/run-contract.md",
+            "shared/templates/decisions-ledger.md",
+        }
+        self.assertTrue(set(required_skills).issubset(by_path), sorted(set(required_skills) - set(by_path)))
+        self.assertTrue(required_references.issubset(by_path), sorted(required_references - set(by_path)))
+        for path, skill_name in required_skills.items():
+            with self.subTest(path=path):
+                self.assertEqual(by_path[path].skill_name, skill_name)
         self.assertEqual(validate_documents(root), [])
+
+    def test_valid_workstream_extension_adds_a_skill_without_removing_any(self):
+        from shutil import copytree
+        source = Path(__file__).resolve().parents[1]
+        with TemporaryDirectory(prefix="agent-extensibility-") as tmp:
+            root = Path(tmp)
+            copytree(source / "agent", root / "agent", symlinks=True)
+            before = discover_documents(root)
+            before_skills = {doc.skill_name for doc in before if doc.skill}
+            self.assertEqual(validate_documents(root), [])
+            addition = root / "agent/shared/workstreams/extension-probe.md"
+            addition.write_text(STREAM.replace("# Plan\n", "# Extension probe\n"), encoding="utf-8")
+            after = discover_documents(root)
+            after_skills = {doc.skill_name for doc in after if doc.skill}
+            self.assertEqual(len(after), len(before) + 1)
+            self.assertEqual(after_skills, before_skills | {"astrid-dev-extension-probe"})
+            self.assertEqual(validate_documents(root), [])
 
     def test_staged_dispatch_names_canonical_manager_and_ci_checks_packages(self):
         root = Path(__file__).resolve().parents[1]

@@ -43,6 +43,25 @@ class GoldenTests(unittest.TestCase):
             self.assertEqual(sorted(p.name for p in root.iterdir()), ["kept.md", "there"])
             self.assertEqual(list((root / "there").iterdir()), [])
 
+    def test_golden_fixture_copy_excludes_generated_symlink_cycle(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory(prefix="golden-derived-cycle-") as tmp:
+            root = Path(tmp)
+            source = root / "source"
+            (source / ".generated/skills/astrid-dev-start").mkdir(parents=True)
+            (source / "skills").mkdir(parents=True)
+            (source / "README.md").write_text("authored\n", encoding="utf-8")
+            (source / "skills/legacy.md").symlink_to("../README.md")
+            (source / ".generated/skills/astrid-dev-start/repo").symlink_to(
+                source, target_is_directory=True
+            )
+            target = root / "copy"
+            with patch.object(golden, "ROOT", source):
+                golden._copy_tree(target)
+            self.assertEqual((target / "README.md").read_text(encoding="utf-8"), "authored\n")
+            self.assertTrue((target / "skills/legacy.md").is_symlink())
+            self.assertFalse((target / ".generated").exists())
+
     def test_deleting_a_status_field_in_a_scratch_copy_fails_the_oracle(self):
         with tempfile.TemporaryDirectory(prefix="astrid-golden-negative-") as directory:
             root = Path(directory) / "repo"
