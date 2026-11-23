@@ -1,6 +1,6 @@
 # Plan 72 — release source-selection and recovery transfer packet (23 Nov 2026)
 
-**Status:** Off-release prepared evidence. **NOT** permission to start, integrate, merge, dispatch RS1, or publish. [Release 15 run board](../../../../releases/15/run.md) still records Plan 72 **HOLD**. Older manager retirement remains unverified. This packet was prepared solely on isolated [draft #1624](https://github.com/banodoco/astrid-dev/pull/1624), and the original #1212 chain was not changed.
+**Status:** Off-release prepared evidence. **NOT** permission to start, integrate, merge, dispatch RS1, or publish. [Release 15 run board on canonical main](https://github.com/banodoco/astrid-dev/blob/main/releases/15/run.md) still records Plan 72 **HOLD**. Older manager retirement remains unverified. This packet was prepared solely on isolated [draft #1624](https://github.com/banodoco/astrid-dev/pull/1624), and the original #1212 chain was not changed.
 
 ## Fixed identities
 
