@@ -162,10 +162,8 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
             if operation == "already":
                 actions.append(f"already-linked {link}")
                 continue
-            label = (
-                f"would-{operation} {link}" if dry_run
-                else f"{'retire': 'retired', 'retarget': 'retargeted', 'link': 'linked'}[operation]} {link}"
-            )
+            status = {"retire": "retired", "retarget": "retargeted", "link": "linked"}
+            label = f"{'would-' + operation if dry_run else status[operation]} {link}"
             if dry_run:
                 actions.append(label)
                 continue
