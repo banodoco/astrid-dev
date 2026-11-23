@@ -427,6 +427,120 @@ function timingFrom(up, attributed, browserTimeOrigin) {
   };
 }
 
+// Bursts: plain mouse drags on the clip's CURRENT rect. They do not call armFreeSpace, prepareSave or
+// prepareOverlapped, so the tape is not armed for them and its counts are not reset. Each drag first recentres the clip
+// in the view, reads its rect, presses at the centre and moves right by dx = max(18, ceil(right - x0) + 2) px, the
+// same formula the geometry plan uses. Drags are released on a fixed schedule and never wait for Saved.
+const burstSelector = `.clip-action[data-clip-id="${target.clip_id}"][data-row-id="${target.track_id}"]`;
+async function runBurst({page, scenario, head, recorder, pps}) {
+  const readClip = () => page.evaluate(sel => {
+    const el = document.querySelector(sel);
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    const canvas = el.closest('.timeline-canvas-edit-area');
+    // Document-space left edge, so that a recentre between drags is not read as a move.
+    return {left: r.left, right: r.right, top: r.top, bottom: r.bottom, doc_left: r.left + (canvas?.scrollLeft ?? 0)};
+  }, burstSelector);
+  const startBefore = head.payload.config.clips.find(clip => clip.id === target.clip_id).at;
+  const postsStart = recorder.posts().length;
+  const drags = [];
+  const ups = [];
+  const burstStart = performance.now();
+  for (let k = 0; k < scenario.drags; k += 1) {
+    await sleep(Math.max(0, burstStart + k * scenario.interval_ms - performance.now()));
+    const record = {index: k, mode: 'burst', scheduled_offset_ms: k * scenario.interval_ms, failed: false};
+    drags.push(record);
+    try {
+      await page.evaluate(sel => document.querySelector(sel)?.scrollIntoView({behavior: 'instant', block: 'center', inline: 'center'}),
+        burstSelector);
+      const rect = await readClip();
+      if (!rect) throw new Error('clip is not in the DOM');
+      record.before = rect;
+      const x0 = Math.round((rect.left + rect.right) / 2);
+      const y = Math.round((rect.top + rect.bottom) / 2);
+      const dx = Math.max(18, Math.ceil(rect.right - x0) + 2);
+      record.x0 = x0;
+      record.dx_px = dx;
+      await page.mouse.move(x0, y);
+      await page.mouse.down();
+      await page.mouse.move(x0 + Math.round(dx / 2), y, {steps: 3});
+      await page.mouse.move(x0 + dx, y, {steps: 4});
+      await page.mouse.up();
+      record.release_page_ms = await page.evaluate(() => performance.now());
+      ups.push(record.release_page_ms);
+    } catch (error) {
+      record.failed = true;
+      record.failed_reason = String(error?.message ?? error).slice(0, 200);
+    }
+  }
+  // The editor accepted an edit if the clip's document position moved between this edit's read and the next read.
+  // The last edit is judged against the rect read right after the burst.
+  const afterBurst = await readClip();
+  let accepted = 0;
+  drags.forEach((record, k) => {
+    const cur = record.before;
+    const next = drags[k + 1]?.before ?? afterBurst;
+    record.accepted_by_editor = Boolean(cur && next && record.release_page_ms !== undefined &&
+      Math.abs(next.doc_left - cur.doc_left) >= 1);
+    if (record.accepted_by_editor) accepted += 1;
+  });
+  const firstUp = ups[0];
+  let settleError = null;
+  if (firstUp !== undefined) {
+    try {
+      await page.waitForFunction(first => {
+        const tape = window.__p77DispatchTrace;
+        const rows = tape.rows.filter(row => row.at >= first && row.endpoint === 'timeline_commit');
+        const requests = rows.filter(row => row.phase === 'fetch-request').length;
+        const responses = rows.filter(row => row.phase === 'fetch-response').length;
+        const badge = tape.readBadge();
+        return requests >= 1 && responses >= requests && (badge.state === 'saved' || badge.kind === 'refused');
+      }, firstUp, {timeout: 120_000, polling: 100});
+    } catch (error) { settleError = error?.name ?? 'Error'; }
+  }
+  const postsAtSaved = recorder.posts().length - postsStart;
+  await sleep(2000);
+  await recorder.settle();
+  const posts = recorder.posts().slice(postsStart);
+  const stats = await page.evaluate(first => {
+    const tape = window.__p77DispatchTrace;
+    const rows = tape.rows.filter(row => row.at >= first && row.endpoint === 'timeline_commit');
+    return {
+      requests: rows.filter(row => row.phase === 'fetch-request').map(row => row.at),
+      responses: rows.filter(row => row.phase === 'fetch-response').map(row => ({at: row.at, status: row.status})),
+      saved: tape.rows.filter(row => row.phase === 'badge' && row.state === 'saved' && row.at >= first).map(row => row.at),
+      badge: tape.readBadge(),
+    };
+  }, firstUp ?? 0);
+  const lastUp = ups.at(-1);
+  const lastResponse = stats.responses.reduce((latest, row) => (!latest || row.at > latest.at ? row : latest), null);
+  const savedAfter = lastResponse ? stats.saved.find(at => at >= lastResponse.at) : undefined;
+  const refusals = posts.filter(post => post.status !== 200).map(post => ({status: post.status,
+    reason: post.body?.reason ?? null, body_code: post.body?.body_code ?? null}));
+  if (stats.badge?.kind === 'refused') refusals.push({status: null, reason: 'badge_refused', badge: stats.badge});
+  const finalHead = await bounded(120_000, () => publicSnapshot(page, origin, fixture)).catch(() => null);
+  const made = drags.filter(record => record.release_page_ms !== undefined);
+  const sumDx = made.reduce((sum, record) => sum + record.dx_px, 0);
+  const finalClip = finalHead?.payload.config.clips.find(clip => clip.id === target.clip_id);
+  const actualStart = finalClip?.at ?? null;
+  const expectedStart = startBefore + sumDx / pps;
+  const step = made.length ? (sumDx / made.length) / pps : null;
+  const summary = {
+    scenario: scenario.name, n_edits_requested: scenario.drags, n_edits_made: made.length,
+    failed_edits: drags.filter(record => record.failed).length, n_posts: posts.length, posts_at_saved: postsAtSaved,
+    no_post_after_settle: posts.length === postsAtSaved, statuses: stats.responses.map(row => row.status),
+    refusals, refusal_count: refusals.length, accepted_by_editor_count: accepted,
+    last_release_to_saved_ms: savedAfter !== undefined && lastUp !== undefined ? savedAfter - lastUp : null,
+    first_release_to_saved_ms: savedAfter !== undefined && firstUp !== undefined ? savedAfter - firstUp : null,
+    settle_error: settleError, badge_state: stats.badge?.state ?? null,
+    start_before_s: startBefore, expected_start_s: made.length ? expectedStart : null, actual_start_s: actualStart,
+    final_state_matches: actualStart !== null && made.length > 0 && Math.abs(actualStart - expectedStart) <= 0.05,
+    edits_in_document: actualStart !== null && step ? Math.round((actualStart - startBefore) / step) : null,
+    pixels_per_second_used: pps, tape_bypassed: true,
+  };
+  return {drags, head: finalHead ?? head, summary};
+}
+
 const profile = await mkdtemp(path.join(browserParent, 'profile-'));
 const receipt = {mode, tuple, runtime_sha: runtimeSha, data_root: data, candidate: {pid, start, instance},
   disk_floor_bytes: Number(diskFloorBytes), node_time_origin: performance.timeOrigin, load_1m_start: loadavg()[0],
@@ -440,14 +554,16 @@ const scenarios = profileVariant ? [
   {name: 'W1', mode: 'sequential', warm: true, drags: 1, gap_ms: 0, profile: true, stem: 'profile-w1'},
   {name: 'W2', mode: 'sequential', warm: true, drags: 1, gap_ms: 0, profile: true, stem: 'profile-w2'},
   {name: 'W3', mode: 'sequential', warm: true, drags: 1, gap_ms: 0, profile: true, stem: 'profile-w3'},
+  {name: 'B5', mode: 'burst', warm: true, drags: 5, interval_ms: 600},
+  {name: 'B10', mode: 'burst', warm: true, drags: 10, interval_ms: 500},
 ] : [
   {name: 'cold', mode: 'sequential', warm: false, drags: 1, gap_ms: 0},
   {name: 'S1', mode: 'sequential', warm: true, drags: 1, gap_ms: 0},
   {name: 'S2', mode: 'sequential', warm: true, drags: 2, gap_ms: 200},
-  {name: 'S2o', mode: 'overlapped', warm: true, drags: 2, gap_ms: 150},
   {name: 'S3', mode: 'sequential', warm: true, drags: 10, gap_ms: 150},
-  {name: 'S3o', mode: 'overlapped', warm: true, drags: 10, gap_ms: 150},
   {name: 'S4', mode: 'sequential', warm: true, drags: 5, gap_ms: 0},
+  {name: 'B5', mode: 'burst', warm: true, drags: 5, interval_ms: 600},
+  {name: 'B10', mode: 'burst', warm: true, drags: 10, interval_ms: 500},
 ];
 // Stops the sampler of one save. The hook stops itself on the scoped HTTP 200. This call only collects the record.
 async function finishProfile(profiler, reason) {
@@ -514,6 +630,7 @@ try {
 
   let sessionDrags = 0;
   let lastOk = true;
+  let lastPps = null;
   for (const scenario of scenarios) {
     phase = `scenario_${scenario.name}`;
     const result = {name: scenario.name, mode: scenario.mode, warm: scenario.warm, drags: [], settle_ms: 2000};
@@ -570,9 +687,15 @@ try {
         if (record.refusal || record.failed) receipt.refusals.push({scenario: scenario.name, index: i, ...(record.refusal ?? {}),
           failed_reason: record.failed_reason ?? null});
         result.drags.push(record);
+        if (record.pixels_per_second) lastPps = record.pixels_per_second;
         if (i < scenario.drags - 1) await sleep(scenario.gap_ms);
       }
       await sleep(2000);
+    } else if (scenario.mode === 'burst') {
+      const burst = await runBurst({page, scenario, head, recorder, pps: lastPps ?? 32});
+      result.drags = burst.drags;
+      result.burst = burst.summary;
+      head = burst.head;
     } else {
       // Overlapped chain: each edit is released without waiting for Saved. Attribution and Saved are read afterwards.
       const ups = [];

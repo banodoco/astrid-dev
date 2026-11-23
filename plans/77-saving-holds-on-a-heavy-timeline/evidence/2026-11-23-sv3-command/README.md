@@ -83,7 +83,7 @@ Not established:
 
 ## Scenarios per repetition (browser-sv3-measure.mjs)
 
-Order: S0, cold, S1, S2, S2o, S3, S3o, S4, then the Agent step. One fresh headless profile, one browser session.
+Order (normal mode): S0, cold, S1, S2, S3, S4, B5, B10, then the Agent step. Profile mode: S0, cold, W1, W2, W3, B5, B10, then the Agent step. One fresh headless profile, one browser session.
 
 - **S0.** Page load is the first browser action. It ends when the editor is writable. Recorded: navigation to writable
   in ms, and the status and body of `GET .../verified-head` (route family `timeline.verified_head.v1`, path
@@ -91,11 +91,10 @@ Order: S0, cold, S1, S2, S2o, S3, S3o, S4, then the Agent step. One fresh headle
 - **cold.** One sequential drag, checked against the expected start `191.3667`.
 - **S1** one sequential drag. **S2** two sequential drags, with 200 ms from Saved to the next drag. **S3** ten
   sequential drags, with 150 ms from Saved. **S4** five sequential drags, each waited to Saved.
-- **S2o and S3o** (overlapped). The next edit is released 150 ms after the previous release, WITHOUT waiting for
-  Saved. After the chain the driver waits, bounded at 180 s, until the requests have responded and the badge is
-  saved or refused. It then waits 2 s and reads the public head. If the editor coalesces edits, the POST count is
-  recorded and the timings are not attributed to drags. Overlap is not established. The predicted start of each
-  edit is the previous planned destination, and the editor's rendered projection may not match it (see the drag plan).
+- **S2o and S3o (overlapped) are removed from the scenario list.** On the run-4 receipts they never performed their
+  later drags: each failed with `tape refused the prepare step`, because the strict tape accepts one armed drag at a
+  time. They were single saves. The burst scenarios B5 and B10 replace them (see 'Bursts'). The overlapped code path
+  remains in the driver but is not reached.
 
 Each drag records: `release_to_post_ms`, `post_to_200_ms`, `response_to_saved_ms`, `release_to_saved_ms`
 (the sum of the first three), `post_to_saved_ms`, `http_status`, `refusal` (reason, body code and badge), the network
@@ -215,6 +214,40 @@ Files in the output directory:
 - `rep-1/browser-sv3-measure.json` and `summary.tsv`: the timings, with scenario names `cold`, `W1`, `W2`, `W3`.
 
 The POST count is recorded (`timeline_commit_posts`) and not asserted. Whether the sampler changes it is not established.
+
+## Bursts (B5, B10)
+
+What is measured: a fast sequence of edits on the pinned clip, released WITHOUT waiting for Saved between edits.
+- B5 is 5 edits, one every 600 ms (release to release, on a fixed schedule). B10 is 10 edits, one every 500 ms. They run
+  last in each repetition: after S4 in the normal mode, after W3 in the profile variant.
+- The burst drags bypass the tape. They do not call `armFreeSpace`, `prepareSave` or `prepareOverlapped`, and they do not
+  attach the sampler (`profileTwoSave` is reached only through the profiled single saves). The tape is therefore not armed
+  for a burst, and its counts are not reset by one. Since bursts run last, no strict single drag follows in the same
+  repetition. Whether the editor's own pointer handling accepts drags while a save is in flight is NOT established.
+- Each drag recentres the clip in the view, reads the clip's CURRENT rect, presses at its centre and moves right by
+  `dx = max(18, ceil(right - x0) + 2)` px, the formula the geometry plan uses. The clip is 4 s at 32 px/s, so each edit
+  moves it by about 2.07 s (66 to 67 px). B10 adds 10 edits to the clip's drift.
+
+What 'Saved' means here: the editor's own badge state is `saved` after the last POST's response, and there is no further
+POST during the 2 s settle that follows. The wait for Saved is bounded at 120 s. If it times out, `settle_error` records it.
+
+Recorded per burst (in `browser-sv3-measure.json` and `summary.tsv`): `n_edits_made` (drags whose mouse-up returned),
+`n_posts` and the POST count at Saved and after the settle, the response statuses and refusals (HTTP non-200 and a
+`refused` badge, with the reason text), `last_release_to_saved_ms` (the headline: last release to Saved),
+`first_release_to_saved_ms`, `accepted_by_editor` per edit (the clip's document position moved between this edit's read and
+the next read; the last edit is judged against the rect read after the burst), and the final document state. The final
+state is the accepted public head (`publicSnapshot`). `expected_start_s` is the start before the burst plus the sum of the
+completed edits' dx divided by the scale (pixels per second from the last sequential plan). `final_state_matches` is true
+when the actual start is within 0.05 s of that expectation. `edits_in_document` is the rounded number of steps moved.
+
+Not established:
+- How the editor coalesces overlapping edits. A POST count below `n_edits_made` means coalescing, and only the counts are
+  recorded, not the mapping of edits to POSTs.
+- Whether the editor accepts a drag while a save is in flight. `accepted_by_editor` is the only evidence.
+- Whether the clip keeps room on the right: each edit recentres the clip, and the timeline's own end is not known to clamp
+  the move.
+- The bursts' predicted start is not used. Each edit uses the live rect, so an optimistic display that is not yet updated can
+  make two edits start at the same place.
 
 ## Static checks for this change
 

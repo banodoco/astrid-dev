@@ -240,6 +240,8 @@ combine_outputs() {
       "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
     jq -c --argjson rep "$n" '.scenarios[] as $s | $s.drags[] | . + {repetition:$rep, scenario:$s.name, warm:$s.warm, mode:$s.mode}' \
       "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
+    jq -c --argjson rep "$n" '.scenarios[] | select(.mode == "burst") | {repetition:$rep, scenario:.name, burst_summary:(.burst // null)}' \
+      "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
     jq -c --argjson rep "$n" '{repetition:$rep, scenario:"pack-host", pack_host_status:.status, claim_lines,
       log_growth_bytes, pgrep_pack_host_count}' "$out/rep-$n/pack-host.json" >>"$out/measurements.jsonl"
   done
@@ -250,7 +252,7 @@ combine_outputs() {
     def nn(f): map(f) | map(select(. != null));
     def gate(xs): if (xs|length)==0 then "NO DATA"
       elif ((xs|med) <= 2000 and (xs|mx) <= 4000) then "PASS" else "FAIL" end;
-    def drags: map(select(.scenario != "S0" and .scenario != "pack-host"));
+    def drags: map(select(.scenario != "S0" and .scenario != "pack-host" and .burst_summary == null and .mode != "burst"));
     (["scenario","repetition","n_posts","release_to_post_ms","post_to_200_ms","200_to_saved_ms","refusals",
       "n_drags","failed_drags","release_to_saved_ms","post_to_saved_ms","mode","notes"] | @tsv),
     (drags | group_by([.scenario, .repetition])[] | . as $g |
@@ -264,6 +266,19 @@ combine_outputs() {
        length, (map(select(.failed))|length), ($xs|med), (nn(.post_to_saved_ms)|med), $g[0].mode,
        ("max_release_to_saved_ms=" + (($xs|mx)|tostring) + ";gate=" + gate($xs) +
         " (median<=2000 and max<=4000 on release_to_saved_ms)")] | @tsv),
+    (map(select(.burst_summary != null)) | .[] | .burst_summary as $b |
+      [.scenario, .repetition, ($b.n_posts // null), ($b.refusal_count // null), "", "", "",
+       ($b.n_edits_made // null), ($b.failed_edits // null), ($b.last_release_to_saved_ms // null),
+       ($b.first_release_to_saved_ms // null), "burst",
+       ("n_edits_made=" + (($b.n_edits_made // null)|tostring) + ";n_posts=" + (($b.n_posts // null)|tostring) +
+        ";refusals=" + (($b.refusal_count // null)|tostring) +
+        ";last_release_to_saved_ms=" + (($b.last_release_to_saved_ms // null)|tostring) +
+        ";first_release_to_saved_ms=" + (($b.first_release_to_saved_ms // null)|tostring) +
+        ";final_state_matches=" + (($b.final_state_matches // null)|tostring) +
+        ";expected_start_s=" + (($b.expected_start_s // null)|tostring) +
+        ";actual_start_s=" + (($b.actual_start_s // null)|tostring) +
+        ";accepted_by_editor=" + (($b.accepted_by_editor_count // null)|tostring) +
+        ";no_post_after_settle=" + (($b.no_post_after_settle // null)|tostring))] | @tsv),
     (map(select(.scenario == "S0")) | .[] |
       ["S0", .repetition, 0, "", "", "", (if .refusal then 1 else 0 end), "", "", "", "", "",
        ("page_ready_ms=" + ((.page_ready_ms // null)|tostring) + ";verified_head_status=" + ((.verified_head_status // null)|tostring))] | @tsv),
