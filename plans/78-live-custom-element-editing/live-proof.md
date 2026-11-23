@@ -55,6 +55,7 @@ On the fresh isolated install, a Runtime process first resolved an existing effe
 ## Limits
 
 - The Lead's 23 November gate defines a blocking finding as one that breaks the headline claim (a pack installed after startup used in a mixed commit), breaks or changes an existing base test, prints a falsehood, loses user data, or crosses a decided boundary. Other findings receive an issue each and a line under the plan's limits.
+- A pack can land after its root stamp is sampled and before a miss returns; a later lookup can see it: [#1584](https://github.com/banodoco/astrid-dev/issues/1584).
 - Animation and transition discovery after startup is outside this proof and plan scope: [#1564](https://github.com/banodoco/astrid-dev/issues/1564).
 - The pack-add message can say refresh is pending after the host has acknowledged it; the Lead accepted this over-cautious direction: [#1566](https://github.com/banodoco/astrid-dev/issues/1566).
 - The base group transaction can delete a concurrently written file inside a newly installed or updated pack during swap-back: [#1578](https://github.com/banodoco/astrid-dev/issues/1578).
