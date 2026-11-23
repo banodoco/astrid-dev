@@ -1,0 +1,17 @@
+The three punch-ins are published in **Almost Ready / trial v2**. The requested camera values and single-clip scope are verified; one timeline revision was accepted.
+
+| Clip frame | Zoom | Focus `(x, y)` |
+|---|---:|---|
+| 163 | 2 | (780, 600) |
+| 164, 169 | 4 | (712.897, 605.333) |
+| 170, 177 | 7.5 | (645.793, 610.667) |
+| 178 | 12 | (578.69, 616) |
+| 217 | 13.5 | (578.69, 616) |
+
+**Verified:** The outgoing change listed only `c02-02-am-discord`: its camera and its element revision. The project element’s zoom cap was raised from 8 to 16 and the new snapshot admitted. The revision was `177b6404…` → `facba43e…`; full IDs are in revisions.log (source: `~/zoom/revisions.log`).
+
+At frames 178 and 216, the word’s DOM bounds are respectively **0.03 px left / 0 px vertical** and **0.03 px left / 0 px vertical** of frame centre, on a 1920×1080 basis. Widths are **49.5%** and **55.5%**. The word looks sharp. The stills show hard jumps; the sampled coast grows steadily, consistent with the verified linear interpolation.
+
+**Visible limitation:** The unchanged frame 163 shows light background below the window, and frame 164 retains a narrow strip. Removing it would require departing from the specified camera or layout.
+
+Contact sheet (source: `~/zoom/verify/contact.jpg`) · Tool friction (source: `~/zoom/FRICTION.md`)

@@ -1,0 +1,11 @@
+Both overlay sets are published in **Almost Ready / trial v2**. The final head is `177b6404…`; the originals remain untouched. [Open the timeline in the editor](https://astrid.haus/tools/video-editor?project=801a01b3a87941a1ab25958c488afdbf&timeline=77f906f3242c48179ab86ca7c3e62eb4).
+
+- **Hair — done.** Added `r6-rw-00` through `r6-rw-03` on `sprite`. Revisions: `18e0ce9a… → 3f306499… → bd386ebd… → b8c56d4f…`. Verified first/last frame pairs: 2323–2333, 2334–2344, 2345–2355, 2356–2366. The window edges at x=564 and 607 match the before captures in the 742-pixel preview; sharpness and brightness look consistent with the untouched 79.1-second frame. The counter and effects remain visible above the pictures.
+
+- **Cream — done.** Added `r6-cream-d-typing`, `-d-lands`, `-d-preview-push`, `-d-typing2`, `-d-keyframes`, `-d-h3-f2`, and `-d-h3-f3` on `fx`. Revisions: `b8c56d4f… → cb64bcde… → 45cae3da… → 177b6404…`. Verified boundary pairs: 3242–3307, 3460–3557, 3558–3591, 3666–3703, 3788–3895, 3960–3989, and 3990–4149. The UI divider matches before at x=463/465 at 109.5 seconds and x=459 at 116 and 137 seconds.
+
+Each admission contained only temporary helpers and media admissions; each insertion contained only the listed overlays and their registry entries; cleanup removed only the helpers. Readback verifies the cream overlays immediately follow their originals and retain their timing and placement fields.
+
+**Draw order:** the renderer and freeze result support the chosen ordering. The hair stills visibly show effects above the new pictures. For cream, placement below `type` is verified structurally; its behavior with a simultaneous separate caption or sprite is **inferred**, because the inspected target intervals had no such overlapping shot clips.
+
+The editor initially timed out, and a fast capture produced black late frames; a focused retry with longer decoding showed the expected pictures. Stills and evidence are in overlay/verify (source: `~/overlay/verify`); cleanup details and orphan aliases are in UNDO.md (source: `~/overlay/UNDO.md`).

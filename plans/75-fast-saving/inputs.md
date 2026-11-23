@@ -62,6 +62,10 @@
 | One object reader and one URL builder | Deferred; file an issue | No incident needs the refactor; the GET-count test catches a returned bulk download |
 | Metadata reads other than object and health sharing the commit's mutex | Deferred | #62, #63 and N10 address the import and health waits; CC-2 re-measures |
 
+### Taken on by Plan 89 (23 November 2026)
+
+The owner had the cheap parts of this plan done now, as their own plan, [Plan 89](../89-heavy-saves-in-seconds/plan.md), run by the session that runs Plan 77's save run, after an independent Astra critique of a "Plan 75 lite" proposal (held by the save run's orchestrator, session_011EzfW2o5WfJcvHwr8fSDzC). Taken there: FS-0 (stage spans and size fields, on the save run's timing sink), FS-1 (timing from the editor), a narrow CC-1 (copy and compare counts equal at 3, 30 and 300 entries), CC-11 (accepted history immutable, with detection of an already corrupted store), and the verified-base part of CC-2. The critique's advice, kept here: wait for the installed measurement after the save run's copy and compare removal before funding anything else; defer FS-5 until real contention appears and FS-2 until the reply measurably costs; FS-3a, FS-5 and FS-2 are not standalone as written (they need Plan 63's CC-3, CC-4 and CC-5b); FS-3b and FS-6 stay here. What remains of this plan is re-estimated from the save run's final numbers.
+
 ## Owner decisions
 
 Decision ids keep the numbers they had in [Plan 18](../18-timeline-editing/inputs.md#owner-decisions) so references stay valid. **D9 (which release) is [Plan 63's](../63-dependable-saving/inputs.md#owner-decisions): one decision for the four plans, decided 18 November 2026: Release 15, with this plan running in parallel from the same day.** D19 (the 300 ms target, no conditional stage) is decided there too. The one decision that is this plan's:

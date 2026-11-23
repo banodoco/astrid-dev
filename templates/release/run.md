@@ -51,7 +51,7 @@ Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md
 Read releases/<N>/run.md at <SHA>, then on main at every hourly check. Ready rows link the packets.
 Mailbox: <issue URL>, format in its first post. Your mailbox name: <name>.
 First do the board's startup checks and post one STATUS with each result; dispatch nothing until
-the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in Pro mode,
+the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in the mode its packet's Route sets (N High, X Extra High, S Pro),
 with the workstream's packet start message. Every hour: read the mailbox, check every open packet,
 resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
 You may start, resume and replace packet sessions and comment on the mailbox. You may not merge,

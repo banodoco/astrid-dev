@@ -88,3 +88,26 @@ python3 scripts/astrid_dev.py check && python3 -m unittest discover -s scripts -
 | FS-C4 (evidence, not a gate) | **The measured numbers.** The time from a gesture ending in the editor to the accept, on "Almost Ready", at 3 and at 300 entries and during an import, with the target next to it (the first milestone, under 1 s; the target, 300 ms at the median). | FS-1's table, repeated after CC-2 |
 
 Negative cases: a same-size rewrite of a CAS object, a replaced file and a restored `mtime` are each re-hashed and refused; an `UPDATE` of an accepted history row fails FS-C1; a new whole-document copy per commit fails FS-C1's counts. Limits: this proves the commit costs the change on the corpus; it does not prove a number on the owner's machine, and the bisection's arithmetic after FS-3b reaches about 1.5 s: the rest depends on CC-2 and FS-6.
+
+## The follow-up run (proposed for Release 16)
+
+Set out by the Release 15 Lead on 23 November 2026, after [Plan 89](../89-heavy-saves-in-seconds/plan.md) took FS-0, FS-1, a narrow CC-1 and CC-11, and Plan 77's save run the verified-base part of CC-2 ([inputs](inputs.md#taken-on-by-plan-89-23-november-2026)). **Start only after Plan 89's final installed measurement**, and re-cut this list against its residual: a card whose cost the measurement does not show is dropped, not built. The prerequisites from [Plan 63](../63-dependable-saving/tasks.md) are pulled in here so that one run owns the whole path; Plan 63 keeps everything else.
+
+**Routes** follow the [run contract](../../skills/shared/run-contract.md#routing-and-bindings): N (Luna or Haiku) for ordinary work, X (Terra or Sonnet) for intricate changes, S (Sol or Opus) only where a wrong call silently accepts a bad document. Reviews go to Astra (or Opus). Every card proves its speed on the installed build before any hosted CI.
+
+| Card | Route | Days | Depends on | Why this route |
+| --- | --- | ---: | --- | --- |
+| Plan 63 CC-7 the long-lived corpus | N | 3 | — | mechanical generator and manifest |
+| Plan 63 CC-15 one record shape per effect kind | N | 1.5 | — | narrowing accepted shapes, tests say what is right |
+| Plan 63 CC-13 every edit kind through the real route, one harness | X | 3.5 | CC-7 | one harness across Agent and Runtime |
+| Plan 63 CC-14 close what CC-13 shows red | N | 2 | CC-13 | bounded fixes against named failures |
+| Plan 63 CC-3 rule registry and the delta gate | X | 5 | CC-7 | each rule declares what it reads; under-declaring is the risk FS-3b inherits |
+| FS-3a store the head's findings with the head | X | 1.5 | CC-3 | bind findings to head digest and rule-set version |
+| FS-3b validate only what the effects touch | **S** | 4.5 | FS-3a | a missed read silently accepts a broken document |
+| FS-5 one commit at a time per timeline | X | 2 | FS-3a, CC-11 | only if the save run's numbers show contention |
+| FS-6 the Runtime applies the effect list | **S** | 5 (3 to 8) | CC-13, CC-15, the shadow experiment | applier(effects, base) must equal the provider's document on every edit kind |
+| CC-9 the two transport tests | N | 1 | — | tests only |
+| FS-2 the reply without the document | N | 1.5 | Plan 63 CC-4 and CC-5b | deferred until the reply measurably costs |
+| FS-4 replay against the net difference | X | 2 | FS-3b, FS-5 | conditional on FS-0's spans |
+
+About 32.5 days if every card stays (29 without the deferred FS-2 and the conditional FS-4); the measurement after the save run is expected to drop some. Each S card gets its own independent review before anything builds on it.

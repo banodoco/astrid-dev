@@ -10,7 +10,7 @@
 
 **Estimate:** About 12 engineering days, no command layer needed. The Agent and Runtime half can start at once; the editor half follows [Plan 63](../63-dependable-saving/plan.md).
 
-**Waiting on:** a go to start (it is queued and not yet in a release brief; the owner decided **Release 15**, [Plan 63's D9](../63-dependable-saving/inputs.md#owner-decisions)); Plan 63's CC-4, CC-4b and CC-5b (the four outcomes for both writers and the parked change) for its editor half. It does not wait for Plan 75 (Fast saving), which helps: a fast commit stops an agent losing a race three times.
+**Waiting on:** a go to start (it is queued and not yet in a release brief; the owner decided **Release 16** on 23 November 2026, moving it from Release 15, [Plan 63's D9](../63-dependable-saving/inputs.md#owner-decisions)); Plan 63's CC-4, CC-4b and CC-5b (the four outcomes for both writers and the parked change) for its editor half. It does not wait for Plan 75 (Fast saving), which helps: a fast commit stops an agent losing a race three times.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. **To begin once the owner has chosen the release and said go:** read [tasks.md](tasks.md#start-here), then take ET-1 (narrow reads) and ET-5's first step on the Agent side; the editor half waits for Plan 63.
 

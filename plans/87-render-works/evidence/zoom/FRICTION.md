@@ -1,0 +1,9 @@
+# Tooling friction
+
+- The project element schema and component both capped zoom at 8, so the requested 12–13.5 would have been clamped. Raised both caps to 16 in the project-owned authoring pack and admitted a new snapshot; the timeline clip must pin the new revision for it to take effect.
+- The release-14 editor preview is loading slowly under machine load: two read-only Playwright attempts took about 83 and 148 seconds to signal readiness. The first text geometry probe returned no matching DOM text at the requested seek; investigating preview state before changing the timeline.
+- The shared SDK outbox contains an unrelated unknown flight, as documented in edits/DEFECTS.md. Use a separate SDK-managed outbox for this change.
+- Verified cause of the empty geometry probe: the editor displayed “Preview pack loading timed out” and the exact admitted element placeholder. Retrying the preview, per brief; no claim about word position is based on that failed probe.
+- A guarded raw document patch that changed the element revision and camera was refused without publication: `elementRef: selected project element has no unique retained schema`. Native `clip.set-element` plus `clip.set-params` with the admitted schema pin is required for the new revision; using the same isolated-session route as sweep.
+- The editor preview timed out again after publication; reloading succeeded. A first capture attempt failed due to our screenshot rectangle keys (`clip.width: expected float, got undefined`); corrected the script and captured all eight frames successfully.
+- Visual limitation: the unchanged frame 163 shows the light background below the Discord window; the prescribed frame 164 zoom/focus also leaves a narrow strip at the bottom. Frames 170 onward fill the canvas. Eliminating the strip would require changing the mandated camera values or the window/layout; neither was changed.

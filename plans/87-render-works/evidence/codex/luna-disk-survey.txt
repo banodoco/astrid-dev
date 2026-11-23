@@ -1,0 +1,15 @@
+**Survey complete.** At 19:03, `df -h ~` showed 8.7 GiB free. No safe deletion set reaches 10 GiB; nothing was deleted, moved, or killed.
+
+| Potential candidate | `du` size | Verdict |
+|---|---:|---|
+| Playwright browser cache (source: `~/Library/Caches/ms-playwright`) | 534 MiB | Unknown until the render/build owner confirms it’s idle; reinstall requires downloads. |
+| Siri TTS model cache (source: `~/Library/Caches/SiriTTS/BNNSModels`) | 222 MiB | Regenerable with a download cost; confirm no active speech synthesis. |
+| Spotify browser cache (source: `~/Library/Caches/com.spotify.client/Browser`) | 184 MiB | Regenerable with a cost; verify Spotify is idle. |
+| uv package cache (source: `~/.cache/uv`) | 170 MiB | Unknown until the build owner confirms it’s idle; recently used. |
+| Three old custody temp dirs | 60 KiB total | Unheld and regenerable; negligible. |
+
+Chrome’s separate 968 MiB cache is open in a running Google process, so it’s a hold. The conditional cache rows total about 1.3 GiB by `du`; actual `df` gain may be lower. No recommended set reaches the requested target.
+
+The 4.6 GiB CapCut projects, recent recordings, Astrid/Codex stores, active session scratch, and other protected or unique work are excluded from candidates.
+
+Full inventory, safety notes, and exact removal commands for conditional candidates: SURVEY.md (source: `~/disk/SURVEY.md`).

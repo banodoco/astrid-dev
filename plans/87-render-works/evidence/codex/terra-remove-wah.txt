@@ -1,0 +1,5 @@
+**The wah was not removed.** The fixed-stack checkout showed one SFX overlapping 24.0–29.5 s: `r6-sfx-wah-clip`, the trombone wah at 26.500–28.933 s. No other SFX was found there. **Verified.**
+
+The Runtime refused the targeted removal and reported that nothing was committed. The attempted base revision was `f9237406…e5488`; there is no after revision from this attempt. The head was not independently re-read after the refusal, so the requested final diff and empty-track check remain unverified.
+
+The refusal and revision details are recorded in FRICTION.md (source: `~/unwah/FRICTION.md`) and revisions.log (source: `~/unwah/revisions.log`).

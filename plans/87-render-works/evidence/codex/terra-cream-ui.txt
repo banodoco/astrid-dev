@@ -1,0 +1,17 @@
+**The cream recordings are baked and imported, but they are not yet in the film.** The required detached-document publisher rejected the new asset aliases as outside its runtime-verified inputs. The failed attempt left the timeline unchanged; a later head advance came from concurrent work. I rechecked out that head and reapplied the candidate locally.
+
+**Verified:** the fresh check (source: `~/cream/final-edit.check.json`) lists seven clip asset swaps and five new registry entries, with no other authored changes. The original attempt was based on revision `c723b440…`; the later checkout was `fe54bd8c…`. Full IDs are in revisions.log (source: `~/cream/revisions.log`).
+
+The recipe uses a fixed Lab lightness/chroma soft key, additive surface-color shifts, and protected preview regions. T2’s thumbnail protection begins when its images appear. All five outputs match their sources’ resolution, frame rate, duration and frame count; none has audio. A sampled static region had zero adjacent-frame difference.
+
+Each `R5-TOUR-` key below maps to the same suffix under `R6-TOUR-…-CREAM`. All are 1920×1080; sizes are source → bake:
+
+- `T1-TYPING`: 0.19 → 0.29 MB
+- `T2-THREEJS-LANDS-NT`: 6.16 → 8.26 MB
+- `T3-KEYFRAMES-NT`: 2.89 → 3.72 MB
+- `T3-EQUAL-4`: 4.22 → 2.66 MB
+- `T4-FINAL-LANDS-NT`: 11.22 → 13.59 MB
+
+Catalog receipts record resolution and variants. The timeline registry remains unchanged, so its original video entries still report **size unknown**. An earlier T2 test import also remains in the catalog.
+
+I inspected five T4 side-by-side comparisons (source: `~/cream/compare-nt/`). The requested editor stills (source: `~/cream/verify/baseline/`) are **baseline only**: the preview pack timed out, and a fresh load remained black. Post-swap playback and timing therefore remain unverified. Details and the publisher diagnosis are in FRICTION.md (source: `~/cream/FRICTION.md`).

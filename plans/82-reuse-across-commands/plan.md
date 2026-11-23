@@ -10,7 +10,7 @@
 
 **Estimate:** About 10 engineering days if the reuse is kept on disk; it is re-stated by RA-1, which may choose a process that stays running instead and hand most of the work to Plan 55.
 
-**Waiting on:** [Plan 81](../81-once-per-command/plan.md) landing. Its second baseline now exists (22 November 2026: `generate image` queued in 5.4 s on an installed build, down from 15.0 s); the owner's decisions D1 to D3 in [inputs.md](inputs.md#owner-decisions); a release.
+**Waiting on:** Release 16 (the owner placed it there on 23 November 2026 as the command-speed lead); Plan 81 Part 2b landed (installed `generate` about 5.8 s, astrid-agent `045064b6`); its cards are re-cut from the [first-principles note](evidence/2026-11-23-generate-first-principles/README.md); the owner's decisions D1 to D3 in [inputs.md](inputs.md#owner-decisions).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

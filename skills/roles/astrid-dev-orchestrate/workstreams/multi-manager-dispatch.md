@@ -22,7 +22,7 @@ Use when the [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [pa
 2. Do the board's startup checks: the mailbox both ways ([protocol](codex-cloud/README.md#establish-the-mailbox)), how sessions start and resume (a comment or session URL cannot wake one), and how many ChatGPT sessions this account's subscription can run at once. Tell the Lead if that is below the board's cap.
 3. **Find every earlier manager or packet session** on this release's plans: stopped, stalled, broken or finished early. Stop any you can reach, name any you cannot for the owner, and list each one's branches and open pull requests with heads; the Lead decides what each becomes.
 4. Dispatch the first packet alone: its early STATUS proves a packet session can push, open a pull request and comment. Each later packet's early STATUS proves its own repository.
-5. Give each Ready packet a **new ChatGPT session** with the [start message](#packet-start-message), and name it in your next STATUS; a packet's ID is its file name.
+5. Give each Ready packet a **new ChatGPT session** in the mode its **Route** sets ([N High, X Extra High, S Pro](../../../shared/run-contract.md#chatgpt-session-modes)) with the [start message](#packet-start-message), and name it in your next STATUS; a packet's ID is its file name.
 
 ## Packet start message
 

@@ -1,0 +1,5 @@
+The Discord edit is **not published**. The native SDK command targets only `c02-02-am-discord`, but its captured membership guard lists eight other clips. I refused to submit it under your outgoing-change restriction. The previous raw patch route was refused by the Runtime because it could not resolve the element schema. The captured payload is in outgoing-native.json (source: `~/zoom2/outgoing-native.json`).
+
+**Verified:** The project element was extended 420 px left and 220 px down without moving the original layout, and admitted as `sha256:d2a69a2e…` (`f08a5381…` → `d2a69a2e…`). The timeline still pins its prior element and camera; no timeline revision was submitted. The observed head was `f04036cf…`. Details are in revisions.log (source: `~/zoom2/revisions.log`) and FRICTION.md (source: `~/zoom2/FRICTION.md`).
+
+The prepared camera keeps frame 0 at `(750, 360), 1×` and uses `(578.69, 616)` at frames 34, 146, 163, 164, 169, 170, 177, 178 and 217, with the requested zooms and timing. This is **unverified**: no candidate stills, centring measurements, typing check, or contact sheet were possible without publishing the pin.
