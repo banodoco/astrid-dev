@@ -102,6 +102,7 @@ owned=(env HOME="$root/home" TMPDIR="$root/tmp" XDG_DATA_HOME="$root/home/.local
 watcher=''
 active=''
 preview=''
+pack_host_pid=''
 browser_temp=''
 rep_n=0
 rep_dir=''
@@ -162,16 +163,65 @@ log_delta() { # file mark out
   fi
 }
 
-# Pack host receipts. The script does not start, stop or alter the pack host. It records what the install did.
+# Pack host receipts. status is "pack host running" only when the pack host this script started (pack_host_start) was
+# alive at the end of the repetition. growth/claim/count describe the stack's own supervised pack-host log, which on a
+# copied data root records crash loops (see pack_host_start), and the pgrep count is a plain count.
 pack_host_receipt() { # repetition directory
-  local delta="$1/service-pack-host-delta.txt" growth claim count status
+  local delta="$1/service-pack-host-delta.txt" growth claim count status alive own own_claim ready
   growth=$(stat -c %s "$delta" 2>/dev/null || echo 0)
   claim=$(grep -c 'claim' "$delta" || true)
+  own=$(stat -c %s "$1/pack-host.log" 2>/dev/null || echo 0)
+  own_claim=$(grep -c 'claim' "$1/pack-host.log" 2>/dev/null || true)
   count=$(pgrep -fa 'pack' 2>/dev/null | grep -c 'host' || true)
-  if (( growth == 0 )); then status='pack host not polling'; else status='pack host log grew during the repetition'; fi
+  alive=$(cat "$1/pack-host-alive-at-end.txt" 2>/dev/null || echo unknown)
+  ready=$(jq -r '.ready_file_seen // false' "$1/pack-host-start.json" 2>/dev/null || echo false)
+  if [[ "$alive" == true ]]; then status='pack host running'; else status='pack host not polling'; fi
   jq -n --argjson growth "$growth" --argjson claim "${claim:-0}" --argjson count "${count:-0}" --arg status "$status" \
+    --argjson own "$own" --argjson own_claim "${own_claim:-0}" --arg alive "$alive" --argjson ready "$ready" \
     '{status:$status, log_growth_bytes:$growth, claim_lines:$claim, pgrep_pack_host_count:$count,
-      note:"counts only; no group or owner assertion"}' >"$1/pack-host.json"
+      own_pack_host_alive_at_end:$alive, own_pack_host_ready_file_seen:$ready, own_pack_host_log_bytes:$own,
+      own_pack_host_claim_lines:$own_claim, note:"counts only; no group or owner assertion"}' >"$1/pack-host.json"
+}
+
+# The retained program's supervisor starts the pack host against the installed layout (support root stack/data/runtime),
+# so on a copied data root it cannot find the Runtime (the first run's service-pack-host log shows FileNotFoundError on
+# stack/data/runtime/discovery.json) and never polls. This starts ONE pack host of our own with the same argv and env as
+# the retained services.json, only the data root and support root pointing at the work copy, so the idle claim poll
+# runs as in a normal install. It is stopped before `down`. The supervised instance keeps crash-looping; its log is
+# recorded as the stack log delta only.
+pack_host_start() { # repetition directory support-root
+  local services="$program/versions/4b62ab1a6521/services.json" ready_wait
+  local -a pargv penv
+  mapfile -t pargv < <(jq -r --arg from "$root/data" --arg to "$rep_work" \
+    '.services[] | select(.name=="pack-host") | .argv[] | if startswith($from) then $to + .[($from|length):] else . end' "$services")
+  mapfile -t penv < <(jq -r --arg from "$root/data" --arg to "$rep_work" \
+    '.services[] | select(.name=="pack-host") | .env | to_entries[] |
+     "\(.key)=\(if (.value|startswith($from)) then $to + .value[($from|length):] else .value end)"' "$services")
+  (( ${#pargv[@]} > 4 && ${#penv[@]} > 3 ))
+  printf '%s\n' "${pargv[@]}" >"$1/pack-host.argv.txt"
+  printf '%s\n' "${penv[@]%%=*}" >"$1/pack-host.env-names.txt"
+  (
+    cd "$launcher_cwd"
+    exec setsid --wait "${owned[@]}" "${penv[@]}" "${pargv[@]}"
+  ) >"$1/pack-host.log" 2>&1 &
+  pack_host_pid=$!
+  for ((ready_wait = 0; ready_wait < 60; ready_wait++)); do
+    kill -0 "$pack_host_pid" 2>/dev/null || break
+    [[ -f "$2/generic-host.ready.json" ]] && break
+    sleep 1
+  done
+  kill -0 "$pack_host_pid"
+  jq -n --argjson waited "$ready_wait" --argjson ready "$([[ -f "$2/generic-host.ready.json" ]] && echo true || echo false)" \
+    '{pack_host_started:true, waited_s:$waited, ready_file_seen:$ready}' >"$1/pack-host-start.json"
+}
+
+pack_host_stop() { # repetition directory
+  [[ -n "$pack_host_pid" ]] || return 0
+  kill -0 "$pack_host_pid" 2>/dev/null && echo true >"$1/pack-host-alive-at-end.txt" || echo false >"$1/pack-host-alive-at-end.txt"
+  stop_pid "$pack_host_pid"
+  pack_host_pid=''
+  # Nothing may still run against this copy's support root.
+  ! pgrep -f -- "--support-root $rep_work/runtime" >/dev/null
 }
 
 # Agent authoring commit (the installed Agent CLI against the same running Runtime). Not established from the files
@@ -266,6 +316,7 @@ cleanup() {
   trap - EXIT
   trap '' INT TERM
   if [[ -n "$active" ]]; then stop_pid "$active" || true; active=''; fi
+  if [[ -n "$pack_host_pid" ]]; then stop_pid "$pack_host_pid"; pack_host_pid=''; fi
   if [[ -n "$preview" ]]; then
     stop_pid "$preview"
     python3 "$verify" stop-preview-listeners || true
@@ -458,6 +509,7 @@ run_repetition() {
     sleep 1
   done
   (( poll < 120 ))
+  pack_host_start "$rep_dir" "$wsupport"
 
   browser_temp=$(mktemp -d /tmp/sl-p77-r7-XXXXXX)
   setsid --wait "${owned[@]}" TMPDIR=/tmp P77_R7_BROWSER_TMP="$browser_temp" LIBGL_ALWAYS_SOFTWARE=1 \
@@ -487,6 +539,7 @@ run_repetition() {
   python3 "$verify" preview-after "$rep_dir"
 
   agent_commit "$rep_dir"
+  pack_host_stop "$rep_dir"
 
   down_rep "$rep_dir"
   (( rep_down_ok )) || return 1
