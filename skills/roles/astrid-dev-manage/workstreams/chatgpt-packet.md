@@ -16,6 +16,7 @@ Use when a fresh ChatGPT session receives **one** accepted packet from the [Orch
 
 ## Receive → implement → submit
 
+0. **Check your mode.** Your session should run in the mode your packet's Route sets: N High, X Extra High, S Pro. If it doesn't, say so in your first STATUS.
 1. **Receive.** Read the mailbox for messages to you; do so again on every resume and before finishing. Then read the start message, the packet and its `tasks.md` rows, on astrid-dev `main` unless the packet names a branch. Confirm scope, proof, dependencies, working repository, base and **PR target**, limits and authorization. The start message is the owner's; the board's Authority section bounds it and its Standing rulings bind you ([run contract](../../../shared/run-contract.md#who-answers-for-a-run)).
 2. **Implement.** Work directly, and link the plan/task IDs.
    - **Branches.** In each repository, open PR(s) to the packet's **PR destination**: from `p<P>/<task-id>` into `release/<N>/plan-<P>`, or, for an issue packet, from `release/<N>/<topic>` into `release/<N>/main`; never `main`. Cut a new branch from the PR destination's current head. Continue an existing draft rather than open a second PR; if its head differs from the one the board lists, post BLOCKED and do not push. Merge a base in; never rebase. Post an early STATUS once your first branch is pushed and its draft PR open.
