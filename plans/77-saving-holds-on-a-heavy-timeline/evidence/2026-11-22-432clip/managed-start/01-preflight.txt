@@ -1,0 +1,11 @@
+UTC 2026-11-22T23:14:17.486+00:00
+free_bytes 35081068544
+port 2400 connect_ex 111
+port 17500 connect_ex 111
+port 17501 connect_ex 111
+stack_processes []
+source_sha256 1d0f661bb97ddf39c353f7d8538714da4d32c5dc44b4078688c096e7f8086060
+source-wal exists False
+source-shm exists False
+restore_proof_sha256 5d1c249a7564cbdd3acd2e82dd2506998e1341a5b4786f070e9a0080b0ccbbf8
+end_utc 2026-11-22T23:14:19.061+00:00

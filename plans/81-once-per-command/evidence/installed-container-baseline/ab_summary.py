@@ -86,10 +86,54 @@ def validate_records(records, arms, samples, legacy_missing_collector_span=False
     if seen != expected:
         raise ValueError(f"incomplete records: missing {sorted(expected - seen)}")
 
-def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legacy_missing_collector_span=False):
+def qualification(records, arms, load_max, legacy=False, require_attestation=False):
+    """Assess the fixed release gate without discarding descriptive evidence."""
+    reasons = []
+    if legacy or any(r.get("reconstructed") is True for r in records):
+        reasons.append("historical or reconstructed evidence cannot establish the release gate")
+    if (isinstance(load_max, bool) or not isinstance(load_max, (int, float))
+            or not math.isfinite(load_max) or load_max != 1.0):
+        reasons.append("release qualification requires the fixed load threshold 1.0")
+    for r in records:
+        if require_attestation:
+            before, after = r.get("listener_before"), r.get("listener_after")
+            required = {"port", "address_hex", "socket_table", "socket_inode", "pid", "start_ticks", "exe", "cwd", "selected_version", "manifest_shas", "scope"}
+            if (not isinstance(before, dict) or not isinstance(after, dict) or not required <= before.keys()
+                    or not required <= after.keys() or {k: v for k, v in before.items() if k != "scope"} !=
+                    {k: v for k, v in after.items() if k != "scope"} or before.get("port") != r.get("door_port")):
+                reasons.append(f"{r['name']}: missing or changed listener attestation")
+        load = r.get("load_before")
+        if (not isinstance(load, (list, tuple)) or not load
+                or isinstance(load[0], bool) or not isinstance(load[0], (int, float))
+                or not math.isfinite(load[0]) or load[0] < 0 or load[0] >= 1.0
+                or (isinstance(load_max, (int, float)) and math.isfinite(load_max) and load[0] >= load_max)):
+            reasons.append(f"{r['name']}: invalid or over-threshold start load")
+    for arm in arms:
+        if any(r.get('timeline_status') != 'accepted' for r in records
+               if r.get('arm') == arm and r.get('group') == 'timeline'):
+            reasons.append(f"{arm}: timeline receipt lacks accepted status")
+        for groups, field in ((('same', 'changed'), 'kernel_task_id'), (('timeline',), 'accepted_revision_id')):
+            rows = [r for r in records if r.get('arm') == arm and r.get('group') in groups]
+            ids = [r.get(field) for r in rows]
+            if any(not isinstance(value, str) or not value.strip() for value in ids):
+                reasons.append(f"{arm}: missing {field}")
+            elif len(set(ids)) != len(ids):
+                reasons.append(f"{arm}: duplicate {field}")
+    for group in ('same', 'changed'):
+        medians = {}
+        for arm in ('before', 'after'):
+            walls = [r['wall_seconds'] for r in records if r.get('group') == group and r.get('arm') == arm and not is_warmup(r)]
+            if walls: medians[arm] = statistics.median(walls)
+        if ('before' not in medians or 'after' not in medians or medians['before'] <= 0
+                or medians['after'] / medians['before'] > 0.5):
+            reasons.append(f"{group}: after/before median ratio must be <= 0.5")
+    return {"passed": not reasons, "reasons": reasons}
+
+def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legacy_missing_collector_span=False, unqualified_legacy=False, require_attestation=False):
     arms = list(ARMS)
     validate_records(records, arms, SAMPLES, legacy_missing_collector_span)
     summary = {"setting": SETTING, "when_utc": datetime.now(timezone.utc).isoformat(), "load_max": LOAD_MAX,
+               "qualification": qualification(records, arms, LOAD_MAX, legacy_missing_collector_span or unqualified_legacy, require_attestation),
                "arms": {a: {"launcher": v.get("launcher"), "door_port": v.get("door_port"), "generate_extra": v.get("generate_extra", [])} for a, v in ARMS.items()},
                "reconstructed": any(r.get("reconstructed") is True for r in records),
                "interpretation": "Fixed arm order and differing --timings instrumentation limit comparisons; median differences and shares do not establish causation.",
@@ -99,7 +143,7 @@ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legac
     if any(r.get("reconstructed") is True and r.get("collector_span_seconds") is None for r in records):
         summary["interpretation"] += " Some reconstructed records lack collector span data; it cannot be recovered from those records."
     if legacy_missing_collector_span:
-        summary["interpretation"] += " Historical import permits missing collector span data; those spans are unverified."
+        summary["interpretation"] += " Historical import permits missing collector span data; those spans are unverified. Historical receipts and release qualification are unverified."
     Path(OUT).mkdir(parents=True, exist_ok=True)
     (Path(OUT) / "summary-ab.json").write_text(json.dumps(summary, indent=2))
     if not quiet: print_summary(summary, SAMPLES)
@@ -107,6 +151,8 @@ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legac
 
 def print_summary(summary, SAMPLES):
     arms = list(summary["arms"]); print("\nSETTING:", summary["setting"])
+    print("Qualification:", "PASS" if summary["qualification"]["passed"] else "FAIL")
+    for reason in summary["qualification"]["reasons"]: print("  ", reason)
     head = f"{'group':9s}" + "".join(f"{a + ' med s':>14s}" for a in arms) + "".join(f"{a + '/before':>14s}" for a in arms[1:]) + "   ok  load1 before-cmd"
     print(head)
     for gr, g in summary["groups"].items():
@@ -154,8 +200,10 @@ def rebuild(d, legacy_missing_collector_span=False, legacy_arms=None, legacy_sam
     for a in arms:
         if any(r.get("arm") == a and "--timings" in r.get("args", []) for r in records):
             arm_config[a]["generate_extra"] = ["--timings"]
-    return summarize(records, d, "rebuilt from complete records.jsonl", None, arm_config, samples,
-                     legacy_missing_collector_span=legacy_missing_collector_span)
+    return summarize(records, d, "rebuilt from complete records.jsonl", marker.get("load_max"), arm_config, samples,
+                     legacy_missing_collector_span=legacy_missing_collector_span,
+                     unqualified_legacy=marker.get("qualification_schema") != 2,
+                     require_attestation=marker.get("qualification_schema") == 2)
 
 if __name__ == "__main__":
     try:
@@ -168,7 +216,10 @@ if __name__ == "__main__":
         options = parser.parse_args()
         if (options.arms is not None or options.samples is not None) and not options.legacy_records:
             parser.error("--arms and --samples require --legacy-records")
-        rebuild(options.directory, legacy_missing_collector_span=options.legacy_records,
-                legacy_arms=options.arms, legacy_samples=options.samples)
+        result = rebuild(options.directory, legacy_missing_collector_span=options.legacy_records,
+                         legacy_arms=options.arms, legacy_samples=options.samples)
+        marker = json.loads((Path(options.directory) / "records.jsonl").read_text().splitlines()[-1])
+        if marker.get("qualification_schema") in (1, 2) and not result["qualification"]["passed"]:
+            sys.exit("Qualification failed; summary and raw evidence retained")
     except (OSError, ValueError, TypeError, IndexError) as exc:
         sys.exit(f"Cannot rebuild summary: {exc}")

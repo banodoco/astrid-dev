@@ -30,10 +30,15 @@ def beneath(path, roots):
     return any(path == root or path.startswith(root + os.sep) for root in roots)
 
 
+def program_matches(proc, roots):
+    """Match only the kernel-reported executable inside an eligible root."""
+    return beneath(proc[2], roots)
+
+
 def matching_chain(snapshot, pid, ancestor, ancestor_start, roots):
     """Return identity chain if PID is an eligible descendant, otherwise None."""
     proc = snapshot.get(pid)
-    if not proc or pid == ancestor or not any(beneath(p, roots) for p in (proc[2], *proc[3])):
+    if not proc or pid == ancestor or not program_matches(proc, roots):
         return None
     chain, seen = [], set()
     while pid not in seen:
@@ -54,7 +59,7 @@ def chain_current(chain, snapshot, roots):
         old = snapshot[pid]
         if not now or now[1] != start or now[0] != old[0]:
             return False
-        if pid == chain[0][0] and not any(beneath(p, roots) for p in (now[2], *now[3])):
+        if pid == chain[0][0] and not program_matches(now, roots):
             return False
     return True
 
@@ -102,6 +107,8 @@ def main(args):
                 if p:
                     snapshot[int(name)] = p
         for pid in snapshot:
+            if pid == os.getpid():
+                continue
             chain = matching_chain(snapshot, pid, ancestor, ancestor_start, roots)
             if chain:
                 signal_identity(pid, chain[0][1], lambda: chain_current(chain, snapshot, roots))
