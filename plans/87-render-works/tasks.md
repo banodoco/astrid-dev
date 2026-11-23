@@ -55,3 +55,6 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - 2026-11-23 (Lead): RN-6 aligns all six bundled animation descriptors with the pinned package declaration; audit actual consumption separately and send the behavior/refusal findings to the composition and editor owners.
 - 2026-11-23: RN-3 will reproduce the baseline duplicate `rendering` pack-root collision observed in `run/rn11-diagnostic.log` while preserving discovery isolation and existing checks.
 - 2026-11-23 (Lead): RN-3 retains the native and command probe variants and all existing assertions; the command rule applies to actual command dispatch, and the shared builder must support both variants.
+- 2026-11-23 (Lead): RN-3 may make a minimal opt-in change in `astrid/sdk/host_bootstrap.py` while preserving the existing native and command probe variants and assertions.
+- 2026-11-23 (Lead): The isolated installed stack temporarily overlays Plan 88 Agent `850cae55e2b0c69a78b707383732068c695dccb3` and Runtime `46b38b03de9405b9883fe009ebcd613494d348a4`; original files are backed up and release identity is unchanged. Neither overlay goes on this plan branch.
+- 2026-11-23: RN-6's actual easing-consumption and refusal findings are tracked in [#1739](https://github.com/banodoco/astrid-dev/issues/1739); descriptor parity is reviewed separately from editor-frame behavior.
