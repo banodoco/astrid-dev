@@ -110,4 +110,4 @@ Set out by the Release 15 Lead on 23 November 2026, after [Plan 77's save run](.
 | FS-2 the reply without the document | N | 1.5 | Plan 63 CC-4 and CC-5b | deferred until the reply measurably costs |
 | FS-4 replay against the net difference | X | 2 | FS-3b, FS-5 | conditional on FS-0's spans |
 
-About 29 days if every card stays (27 without the two conditional ones); the measurement after the save run is expected to drop some. Each S card gets its own independent review before anything builds on it.
+About 32.5 days if every card stays (29 without the deferred FS-2 and the conditional FS-4); the measurement after the save run is expected to drop some. Each S card gets its own independent review before anything builds on it.
