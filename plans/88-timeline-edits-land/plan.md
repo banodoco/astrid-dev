@@ -4,9 +4,9 @@
 
 **Goal:** An agent can make the edits a real film needed on a heavy timeline (swap a clip's media, move word-anchored clips, remove and restore clips) on a build of `release/15/main`, and each edit is confirmed by reading it back and by a render.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Orchestrator session `session_011EzfVz6RTgoXjxNDgJP47L`, hosting one manager
+**Owner:** Orchestrator session `session_011EzfW2CaMLCifo6wA8AVqu`, hosting one manager
 
 **Estimate:** Provisional, about 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop. Re-estimate once TE-3's feasibility is known.
 
