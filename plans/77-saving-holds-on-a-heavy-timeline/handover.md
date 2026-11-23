@@ -62,6 +62,8 @@ models:
 
 Use the Runtime PR unit job’s selection on the candidate and comparison base. When that selection exceeds the lane machine’s available time, collect every static-tag, AST-pin, inventory and diagnostics test file with filename globs, and use a source search for AST and source assertions in files with other names. Keep the checkout, exact selections, failing test IDs and raw results for both trees. In Agent and App, use each PR’s own unit selection for the affected files and include the pin tests. Run the card’s focused and protected proof as well. Preserve every test and fixture when making a fix.
 
+For the repaired first-cut Runtime, the full unit job ran in CI because the lane reserves full suites for hosted CI and shares a four-CPU worker. The paired local preflight used the diagnostic, AST and inventory globs and additional source assertion discovery.
+
 The Runtime first-cut focused proof missed a duplicate canonical-mismatch refusal emitter that the existing static diagnostic test caught in all three hosted Python jobs. This local step covers such source contracts before dispatch. [Runtime landing PR](https://github.com/banodoco/astrid-runtime/pull/102)
 
 ## A round, step by step
