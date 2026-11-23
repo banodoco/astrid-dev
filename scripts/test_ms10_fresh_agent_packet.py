@@ -14,7 +14,9 @@ class FreshAgentPacketTests(unittest.TestCase):
     def test_assignment_does_not_leak_scoring_or_bespoke_recipe(self):
         actor = ACTOR.read_text(encoding="utf-8")
         self.assertIn("agent/README.md", actor)
-        self.assertIn("skill: true", actor)
+        # Do not coach the actor on the exact opt-in syntax; the README owns it.
+        self.assertNotIn("skill: true", actor)
+        self.assertIn("independently callable new shared workstream", actor)
         self.assertIn("disposable", actor)
         self.assertIn("NO-RESULT", actor)
         self.assertIn("Do not", actor)
