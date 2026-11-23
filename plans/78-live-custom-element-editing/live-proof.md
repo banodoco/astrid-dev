@@ -54,6 +54,8 @@ On the fresh isolated install, a Runtime process first resolved an existing effe
 
 ## Limits
 
+The ready [motion-pin patch](evidence/app-motion-pin.patch) is handed to the Release Lead for the single freeze pin; it does not merge into `release/15/main` from Plan 78 because it changes the App install tuple. This proof applies it to a disposable App copy only. Agent `astrid/installer/tools.py:validate_manifest` for `packs` and its tests land as source in Plan 78’s slot and tolerate a manifest without `packs`.
+
 - The Lead's 23 November gate defines a blocking finding as one that breaks the headline claim (a pack installed after startup used in a mixed commit), breaks or changes an existing base test, prints a falsehood, loses user data, or crosses a decided boundary. Other findings receive an issue each and a line under the plan's limits.
 - A stateful lookup callback can return different results on the two evaluations of a warm miss: [#1599](https://github.com/banodoco/astrid-dev/issues/1599).
 - A published registry can share the base process-global mutable kind registry with other callers: [#1588](https://github.com/banodoco/astrid-dev/issues/1588).
