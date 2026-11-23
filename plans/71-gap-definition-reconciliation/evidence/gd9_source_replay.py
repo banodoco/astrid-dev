@@ -16,6 +16,7 @@ S5 = PREFIX + 'gd9-s5-criterion-proof-workpackets-2026-11-23.md'
 ID = r'(?:AA|CA|CI|F|LS)-\d{3}-C\d{2}'
 GAPLINK = re.compile(r'\]\(\.\./\.\./vision/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)')
 PLANPATH = re.compile(r'^plans/\d{2}-[a-z0-9-]+/plan\.md$')
+RAW_GAP_ID = re.compile(r'\b(?:AA|CA|CI|F|LS)-\d{3}\b')
 
 
 def ids_in_plan(text):
@@ -36,6 +37,17 @@ def ids_in_plan(text):
     return ids
 
 
+def raw_declaration_ids(text):
+    """Count unique raw ID mentions on Vision gaps only, never coordination roles."""
+    gaps = re.findall(r'^\*\*Vision gaps:\*\*\s*(.+)$', text, re.M)
+    roles = re.findall(r'^\*\*Vision role:\*\*\s*(.+)$', text, re.M)
+    if len(gaps) + len(roles) != 1:
+        raise AssertionError('one Vision gaps/role declaration required')
+    if roles:
+        return []
+    return list(dict.fromkeys(RAW_GAP_ID.findall(gaps[0])))
+
+
 def self_test():
     assert ids_in_plan('**Vision gaps:** [F-001](../../vision/gaps/F-001-example.md) (primary)') == ['F-001']
     assert ids_in_plan('**Vision gaps:** [F-008](../../vision/gaps/F-008-example.md) (primary), [F-001](../../vision/gaps/F-001-example.md) (supporting)') == ['F-008', 'F-001']
@@ -47,7 +59,17 @@ def self_test():
             pass
         else:
             raise AssertionError('malformed plan accepted')
-    print('PASS parser self-test: 3 positive, 4 negative')
+    assert raw_declaration_ids('**Vision gaps:** [F-003](../../vision/gaps/F-003-example.md) (primary). Why F-003 and not AA-001 or LS-002.') == ['F-003', 'AA-001', 'LS-002']
+    assert raw_declaration_ids('**Vision gaps:** [LS-003](../../vision/gaps/LS-003-example.md) (primary). Former F-001 role transferred.') == ['LS-003', 'F-001']
+    assert raw_declaration_ids('**Vision role:** Foundational enabler [CA-003](../../vision/gaps/CA-003-example.md) not delivered.') == []
+    for malformed in ('**Vision gaps:** F-001\n**Vision role:** no', 'no declaration'):
+        try:
+            raw_declaration_ids(malformed)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('malformed raw declaration accepted')
+    print('PASS parser self-test: 6 positive, 6 negative')
 
 
 def audit(root, expected_head):
@@ -66,16 +88,22 @@ def audit(root, expected_head):
     assert changed and all(p.startswith(PREFIX) for p in changed), f'non-evidence changes: {changed}'
     assert not git('diff', '--check', A, head).strip(), 'git diff --check reported whitespace errors'
 
-    for name, ref, expected in (('A', A, (69, 60, 83)), ('B', B, (77, 68, 92)), ('C', C, (80, 71, 96))):
+    for name, ref, expected, expected_raw in (('A', A, (69, 60, 83), None), ('B', B, (77, 68, 92), 95), ('C', C, (80, 71, 96), 99)):
         paths = [p for p in git('ls-tree', '-r', '--name-only', ref, '--', 'plans').splitlines() if PLANPATH.fullmatch(p)]
-        linked, associations = 0, 0
+        linked, associations, raw = 0, 0, 0
         for path in paths:
-            found = ids_in_plan(read(ref, path))
+            plan_text = read(ref, path)
+            found = ids_in_plan(plan_text)
             linked += bool(found)
             associations += len(found)
+            raw += len(raw_declaration_ids(plan_text))
         got = (len(paths), linked, associations)
         assert got == expected, f'{name} authored plan census {got} != {expected}'
-        print(f'PASS {name}: {got[0]} plans, {got[1]} linked, {got[2]} affirmative links')
+        if expected_raw is not None:
+            assert raw == expected_raw, f'{name} raw declaration reconstruction {raw} != {expected_raw}'
+        print(f'PASS {name}: {got[0]} plans, {got[1]} linked, {got[2]} affirmative links' +
+              (f', {raw} reconstructed raw declaration IDs' if expected_raw is not None else ''))
+    print('NOTE historical plans.json algorithm not recovered; B/C declaration-line reconstruction independently matches 95/99')
 
     text = read(head, C2)
     first = text.split('## Frozen source and historical-owner crosswalk')[0]
