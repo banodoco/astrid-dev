@@ -1,0 +1,28 @@
+# SV-2a trace interface and acceptance
+
+Diagnostic Runtime: branch `p77/sv2a`, full SHA `667c450b927a4dc2471bbaa02f2631e6f6907cf2`. Run that exact source over the retained generation 4b62ab1a6521 venv; do not install packages or modify the venv.
+
+## Trace contract
+
+Set `ASTRID_TIMELINE_MEMO_TRACE` to the absolute path of a new, absent trace file in this attempt's evidence directory before daemon startup. A non-empty value enables tracing when the lazy timeline commit store is created for an eligible history or commit HTTP request. The file is created exclusively (no symlink, no append), mode 0600, and contains newline-delimited JSON envelopes with schema `timeline-memo-provenance-v1`. Each envelope has `overflow`, `unknown`, and `events`; events carry monotonically increasing `seq` and `monotonic_ns`. The trace is bounded to 384 in-memory events and 2 MiB output. Any `overflow`, `unknown`, `bounded_output_overflow`, `trace_output_failure`, or missing required witness makes the attempt inconclusive/fail.
+
+Relevant event meanings:
+
+- `trace_runtime_source`: Runtime PID and `runtime_protocol.__file__`; must identify the candidate source.
+- `request_scope_started` / `request_scope_finished`: trace-local request ID and fixed route label (`timeline_history_get` for GET `commits` or `verified-head`; `timeline_commit_post` for POST `commit`). IDs correlate route work and SQL attempts; they are not HTTP request IDs.
+- `sql_attempt`: parsed write verb/table shape, source caller `{file,function,line}`, request ID and transaction ID/correlation. SQL text and parameters are deliberately omitted. This proves an attempted statement only, not that it changed rows or committed.
+- `transaction_statement_attempt`: attempted transaction SQL (`BEGIN`, `COMMIT`, `ROLLBACK`, savepoint operations), with caller and available IDs.
+- `transaction_scope_started`, `transaction_outcome`: Runtime transaction/savepoint scope and its outcome (`committed`, `rolled_back`, `begin_failed`, `savepoint_released`, etc.); exception class only. `acceptance_transaction_outcome` separately marks the accepted commit's final transaction/post-check result. Use these outcomes, not `sql_attempt`, to attribute actual transaction completion.
+- `memo_clear`, `memo_invalidation_detected`: memo boundary, reason, generation, proof count and sampled version delta. Version fields include connection, total changes, data version, files, and package owner; unavailable samples are explicitly unknown.
+- `trace_connection_rebound`: replacement connection and a coverage gap; `unknown` is set. Treat any occurrence as a failed/inconclusive trace.
+- `http_error`: fixed route, request ID and exception class; message is not recorded.
+
+The trace attaches to the connection at store construction and follows an approved replacement, marking that replacement as a gap. Shutdown `close()` flushes. In source, request completion itself appends a finish event but does not flush; ordinary SELECTs are not recorded. Therefore the driver must issue exactly one read-only history/verified-head request first, then independently read the trace and require its matching `request_scope_started` witness before issuing the one save. If that witness is not on disk, stop without saving; do not infer it from the startup event. The successful save must then have a correlated `timeline_commit_post`, SQL write-attempt attribution (including caller, verb/table, request and transaction IDs), and acceptance/transaction outcome. Distinguish SQL attempts from commit/rollback and post-check outcomes.
+
+## Overlay and pass/fail receipts
+
+Run the wrapper as `python -I wrapper.py`; it must insert the candidate directory into `sys.path`, assert `runtime_protocol.__file__` resolves beneath that directory, and invoke the same runtime entrypoint. Record the source archive tree hash and its equality to the candidate Git tree; record the site-packages and `current` pointer before/after hashes (identical), and the empty dependency/lock diff against retained generation 4b62ab1a6521. Before any write, receipt the candidate module path and published source-profile/catalog candidate SHA. Copy original profile/catalog receipts aside before launch; prove signed backup and data/owner boundaries untouched. Re-verify the retained public head after candidate startup and immediately before the save; capture an independent public-head read after it.
+
+The single attempt passes only with all seven identity receipts: (1) archive tree equals Git tree; (2) retained site-packages and `current` hashes unchanged at end; (3) no dependency/lock changes; (4) running Runtime module and published source-profile/catalog identify the candidate SHA; (5) source-profile/catalog originals preserved and signed backup plus data/owner boundaries unchanged; (6) retained head independently re-verified before save; (7) daemon down is idle-safe, exact Runtime owner PID is proven exited, and end hashes/boundaries remain unchanged. Also retain the exact tuple and dist inventory, scoped launch/readiness, trace and timing with request correlation, one browser write/postflight receipt, final independent public head, free-disk samples, and cleanup receipt.
+
+Fail/stop on any identity receipt missing or changed, candidate source not loaded, dependency change, trace uncertainty/overflow/gap or absent history witness, unexpected SQL/transaction outcome, more than one write, head mismatch, cleanup/PID proof failure, or free disk below 16 GiB. Monitor free disk continuously through startup, opening, save, and cleanup. The package checklist must additionally prove preview process-group cleanup on every error path and include `verify-preview.mjs`. This is one save only; no retry on the fixture.
