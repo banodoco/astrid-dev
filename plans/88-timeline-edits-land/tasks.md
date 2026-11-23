@@ -62,6 +62,22 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23: TE-5 ripple fixture and acceptance merged as App `035af6ee` (commit `564350a0`); embedded Runtime confirms all later clips shift 15 frames at 30 fps, two unsafe retimes refuse, all 621 clip spans stay unchanged through reflow, and the separate overrun remains 4100 ms. Exactly two repeated-word declarations are position-pinned by reflow, also shown by the no-ripple control (Plan 18 evidence PR #1752); 15 focused Node checks passed without skips. Pack admission, live read-back, overlays and rendering still require the real stack.
 
+
+- 2026-11-23: R code review and its bounded confirmation are complete on the pinned Agent and App ranges. Repairs merged as Agent `97d1258d` and App `efbbd819`; final combined checks: 91 focused Agent tests, 9 reflow goldens, 7 swap/replace SDK tests, and embedded 621-clip ripple plus two-image/two-video builder checks passed. The public reflow test uses a transport double; live stack and render follow-ups remain open, so R stays unticked.
+
+| R finding | Outcome |
+| --- | --- |
+| R.1 Stationary word source can move alone or be trimmed into the word | Fixed in Agent `97d1258d`; regression covers narration-only movement, mapping/trim, ambiguity, matched ripple and source out-point. |
+| R.2 Public Timeline reflow loses retained transcript pins | Fixed in Agent `97d1258d`; public opener red/green test verifies exact retained pin and rejects a mismatch. |
+| R.3 Per-clip swap can rebind a key shared by another clip | Fixed in Agent `97d1258d`; SDK test checks complete binding and explicit global replacement. Runtime integration fixture could not bootstrap because baseline resolution was missing. |
+| R.4 Legacy overrun may ignore occurrence playback geometry | Not reproduced: one candidate was inadmissible because its source offset lacked the required internal clip trim; no code change. |
+| R.5 Overlay media cannot prove same-kind replacement | Fixed in App `efbbd819`; both pairs use distinct same-kind generated media and retained metadata. |
+| R.6 Accepted clip count can fail after side effects | Fixed in App `efbbd819`; 42 stays valid, minimum 23 is checked before media/project creation. |
+| R.7 Fixture can misreport ambiguous or incorrect word targets | Fixed in App `efbbd819`; accepted declaration, exact unique binding and real ambiguity are checked; transcript pin survives metadata checks. |
+| R.8 Retained-only reflow may drop unrelated narration from gap layout | Not reproduced: the single attempt used inline words and did not establish the alleged omission; no code change. |
+| R.9 Mislabelled old media may bypass kind match | Not reproduced through an admissible verified old object: the single attempt relied on a synthetic old-kind assumption; no code change. |
+| R.10 Ordinary audio swap follows replacement duration or beats | Out of Plan 88 scope; static observation recorded for Plan 18 in evidence PR #1754. |
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
