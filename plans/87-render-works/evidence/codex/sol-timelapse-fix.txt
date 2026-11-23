@@ -1,0 +1,23 @@
+Done — **verified**. Used guarded SDK swaps to already-registered assets: 49 asset fields changed. All 99 timings, overlays, first/final clips and end time remain unchanged.
+
+Revision: `facba43e… → f04036cf…` ([revision log](tlfix/revisions.log)).
+
+After order, using asset-number suffixes:
+
+```text
+Autumn:       123152351342153152152315231
+Winter:       152351435143514351435143
+Spring:       15213514213514213514213
+Summer:       1351431251
+Early autumn: 12121
+Mid autumn:   12121
+Late autumn:  12123
+```
+
+The penultimate slot uses 2, overriding the two-back preference once so it changes into the fixed final 3. All 27 original stills appear; no adjacent slots repeat. Full before/after order: [plan.txt](tlfix/plan.txt).
+
+**Pixel verification:** 62 slots, all 61 adjacent pairs visibly different. Minimum mean RGB difference: **12.22996/255**, at frames 1106→1110 (36.8667→37.0s). Minimum changed-pixel fraction: **56.90%**. Final frame 1269 is identical before/after: **maximum channel difference 0**.
+
+I inspected the [contact sheet](tlfix/verify/contact.jpg): seasons and hair progression read correctly, with no black or missing-media frames.
+
+[FRICTION.md](tlfix/FRICTION.md) records the SDK preview error, intermittent timeouts and capture-helper corrections. Workarounds succeeded without restarting the stack; the timeout cause remains undetermined.

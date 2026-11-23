@@ -1,0 +1,10 @@
+**Neither swap was landed.** A route that preserves the authored clips was not proven in the sandbox, so I did not send a film change.
+
+- **Hair stills — not done, verified.** Same-alias replacement is blocked by legacy entries without exact generation/variant pins. The remove-and-add route creates a parent clip; the occurrence-media guard rejects the existing `am-footage` type. A detached sandbox compiler probe also reproduced the missing exact word-binding error. The smallest product change is a verified occurrence media replacement that accepts `am-footage` and preserves its existing word binding.
+- **Cream recordings — not done, verified.** The same occurrence-media type restriction applies. The detached publisher previously rejected the new aliases as outside Runtime-verified inputs; the old aliases also lack the pins needed for same-alias rebinding. The product needs verified new-alias replacement for these existing occurrence clips, with their authored fields retained.
+
+For both sets, the observed film revision remained **58ed93cd… → 58ed93cd…**. No outgoing film change was submitted. A fresh read found all 13 target authored rows unchanged, including their media fields. The requested aliases occur in the target clips and were not found in clip references in the other five current project timelines; archived revisions were not checked.
+
+The exact-frame captures are **current-state evidence, not post-swap verification**: contact sheet (source: `~/land/verify/current-contact.jpg`), individual stills and seek evidence (source: `~/land/verify/current-capture-evidence.json`). Several earlier cream baselines show a preview-load failure, so they cannot establish visual alignment. Loading the editor also automatically issued a project-selection request; Almost Ready was already selected.
+
+Details, commands, errors and source references are in FRICTION.md (source: `~/land/FRICTION.md`), with heads in revisions.log (source: `~/land/revisions.log`).

@@ -1,0 +1,9 @@
+**The undo was not published.** Both atomic attempts were refused, so no clips were removed or restored by this session.
+
+The Runtime reserved the original slick ID. The authorized fallback, `r6-unfreeze-slick-clip`, preserved its authored fields but was refused with:
+
+> `candidate.timing: missing exact word binding for ('occ-77f906f3242c48179ab86ca7c3e62eb4-4dc61841478d1d6322b4-occ', '77f906f3242c48179ab86ca7c3e62eb4-4dc61841478d1d6322b4', 'r6-unfreeze-slick-clip').on`
+
+**Verified:** The attempted patch targeted the nine freeze additions and slick restore only. The head before the attempts was `…52976a7`; neither attempt produced a revision.
+
+**Not verified:** The requested post-publication timeline diff, audio check, editor stills, and orphan inventory could not be completed because the undo was refused. Details are recorded in FRICTION.md (source: `~/unfreeze/FRICTION.md`) and revisions.log (source: `~/unfreeze/revisions.log`).

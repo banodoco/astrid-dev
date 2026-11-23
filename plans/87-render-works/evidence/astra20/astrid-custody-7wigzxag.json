@@ -1,0 +1,157 @@
+{
+  "source": "~/astrid-release/release-14-r6-fixes/tmp/astrid-custody-7wigzxag/observed-containment.json",
+  "coverage": "retained_observed_set_and_final_owned_group_checks",
+  "capture_failures": [
+    {
+      "admitted": false,
+      "birth_id": "ps-lstart:Sun Nov 22 22:04:18 2026",
+      "capture_failure": {
+        "count": null,
+        "kern_return": 5,
+        "port_acquired": true,
+        "port_release_succeeded": true,
+        "substage": "pid_for_task"
+      },
+      "census_round": 0,
+      "census_sha256": "sha256:1fc02e57c1308ec731c4fd6f979abf00e7047b9ff713eff6df3e20a407a5fcf9",
+      "observation_sequence": 6776,
+      "observations": {
+        "ordering": [
+          "pre_capture",
+          "capture_failure",
+          "post_failure_native_observation",
+          "evidence_persist"
+        ],
+        "post": {
+          "identity": {
+            "birth_id": "ps-lstart:Sun Nov 22 22:04:18 2026",
+            "parent_pid": 25408,
+            "pid": 25622,
+            "uid": 501
+          },
+          "native": {
+            "parent_pid": 25408,
+            "pgid": 24769,
+            "pid": 25622,
+            "start_sec": 1795381458,
+            "start_usec": 467121,
+            "status": 2,
+            "uid": 501
+          },
+          "outcome": "LIVE"
+        },
+        "pre": {
+          "identity": {
+            "birth_id": "ps-lstart:Sun Nov 22 22:04:18 2026",
+            "parent_pid": 25408,
+            "pid": 25622,
+            "uid": 501
+          },
+          "native": {
+            "parent_pid": 25408,
+            "pgid": 24769,
+            "pid": 25622,
+            "start_sec": 1795381458,
+            "start_usec": 467121,
+            "status": 2,
+            "uid": 501
+          },
+          "outcome": "LIVE"
+        }
+      },
+      "observer": {
+        "birth_id": "ps-lstart:Sun Nov 22 22:02:22 2026",
+        "pid": 24769,
+        "uid": 501
+      },
+      "pid": 25622,
+      "root": {
+        "birth_id": "ps-lstart:Sun Nov 22 22:03:03 2026",
+        "pid": 25146
+      },
+      "ancestry": [
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 22:04:18 2026",
+          "parent_pid": 25408,
+          "pgid": 24769,
+          "pid": 25622,
+          "start_sec": 1795381458,
+          "start_usec": 467121,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 22:04:15 2026",
+          "parent_pid": 25146,
+          "pgid": 24769,
+          "pid": 25408,
+          "start_sec": 1795381455,
+          "start_usec": 211819,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 22:03:03 2026",
+          "parent_pid": 24769,
+          "pgid": 24769,
+          "pid": 25146,
+          "start_sec": 1795381383,
+          "start_usec": 411850,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 22:02:22 2026",
+          "parent_pid": 24103,
+          "pgid": 24769,
+          "pid": 24769,
+          "start_sec": 1795381342,
+          "start_usec": 530262,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 22:00:54 2026",
+          "parent_pid": 23815,
+          "pgid": 24103,
+          "pid": 24103,
+          "start_sec": 1795381254,
+          "start_usec": 354360,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 22:00:15 2026",
+          "parent_pid": 1,
+          "pgid": 23815,
+          "pid": 23815,
+          "start_sec": 1795381215,
+          "start_usec": 120127,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 12:27:24 2026",
+          "parent_pid": 0,
+          "pgid": 1,
+          "pid": 1,
+          "start_sec": 1795346844,
+          "start_usec": 461957,
+          "status": 2,
+          "uid": 0
+        },
+        {
+          "birth_id": "",
+          "parent_pid": 0,
+          "pgid": 0,
+          "pid": 0,
+          "start_sec": 1795346844,
+          "start_usec": 202727,
+          "status": 2,
+          "uid": 0
+        }
+      ]
+    }
+  ],
+  "unadmitted_count": 7
+}

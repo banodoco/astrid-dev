@@ -1,0 +1,16 @@
+The full evidence report is in branches/REPORT.md (source: `~/branches/REPORT.md`).
+
+| Defect group | 14/main | 15/main |
+|---|---|---|
+| Dry-run failures leaving durable pending state | **Fixed** by `5b98c1bca` | **Fixed** |
+| Timeline edit reflow, shared outbox, occurrence media swaps, and delete guard | **Unchanged** | **Unchanged** |
+| Composed preview failing on retired media locator | **Unchanged** | **Unchanged** |
+| Project-pack resolution/admission paths | **Changed; fix unclear** | **Changed; fix unclear** |
+| Video dimensions and Remotion preview jitter/seek | **Unchanged** | **Unchanged** |
+| Audio secrets, SFX, and excerpt tools | **Unchanged** | **Unchanged** |
+
+**Verified:** 14/main is an ancestor of 15/main in all three repos. Plan 69 is not merged as a complete tuple: its App pin remains outside both main heads, though its Agent and Runtime pins are included in 15/main. The Runtime schema version is 33 at the pin and both targets.
+
+**Recommendation (inferred): stay on the current stack for now.** The driver would create a separate stack, but both target directories are absent and the available 4.6 GiB is below its install disk floor; the README estimates about 10 GiB. It snapshots live data by default. Carrying over the film’s current edits requires a separate backup and a same-schema attach, which this exact switch has not been verified to do end to end.
+
+The running stack and existing worktrees were not checked out, reset, stopped, or rebuilt.
