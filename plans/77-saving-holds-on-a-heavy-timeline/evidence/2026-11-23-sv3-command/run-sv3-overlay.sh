@@ -57,8 +57,12 @@ pack_log="$root/home/.local/state/astrid-runtime/logs/service-pack-host.log"
 pristine="$out/pristine-data"
 owner_shell=$BASHPID
 minimum_kib=$((16 * 1024 * 1024))
-reps=${SV3_REPETITIONS:-3}
+# SV3_PROFILE=1 is the profile variant: one repetition, the cold save and three warm saves, each with the sampler.
+profile_variant="${SV3_PROFILE:-0}"
+[[ "$profile_variant" == 0 || "$profile_variant" == 1 ]]
+if [[ "$profile_variant" == 1 ]]; then reps=1; else reps=${SV3_REPETITIONS:-3}; fi
 [[ "$reps" =~ ^[1-9]$ ]]
+pyspy="${SV3_PYSPY:-/home/user/codex-run/run/toolchain/py-spy-0.4.1/bin/py-spy}"
 free_kib() { df -Pk /home/user | awk 'NR == 2 {print $4}'; }
 
 # Candidate identity: the ref must resolve to the approved SHA, the tree is recorded, the dependency and contract
@@ -92,6 +96,12 @@ python3 "$verify" ports-closed
 [[ ! -e "$orig_support/discovery.json" && ! -L "$orig_support/discovery.json" ]]
 mkdir -m 700 "$out"
 mkdir -m 700 -p "$archive" "$launcher_cwd"
+if [[ "$profile_variant" == 1 ]]; then
+  # Pre-flight: the sampler binary's version is recorded. A failing version check does not stop the run.
+  spy_version=$("$pyspy" --version 2>&1) && spy_rc=0 || spy_rc=$?
+  jq -n --arg spy "$pyspy" --arg version "$spy_version" --argjson rc "$spy_rc" \
+    '{sampler:$spy, version_output:$version, exit_code:$rc}' >"$out/profile-preflight.json"
+fi
 
 export PATH="/opt/node22/bin:$PATH"
 export ASTRID_NODE_EXECUTABLE="$work/run/toolchain/node-v20.19.4-linux-x64/bin/node"
@@ -513,3 +523,15 @@ for ((rep = 1; rep <= reps; rep++)); do
   run_repetition "$rep"
 done
 combine_outputs
+if [[ "$profile_variant" == 1 ]]; then
+  # One line per save from the sampler records. A save with no record is simply absent from the list.
+  : >"$out/profile-attach-lines.jsonl"
+  for f in "$out/rep-1"/profile-*-profile.json; do
+    [[ -f "$f" ]] || continue
+    jq -c --arg save "$(basename "$f" -profile.json)" '{save:$save, attached:(.attach_observed != null),
+      raw_stack_samples, sampling_sample_count, errors:{attach_error, attach_error_kind, sampling_error_count,
+      raw_error_kind}}' "$f" >>"$out/profile-attach-lines.jsonl"
+  done
+  jq -s . "$out/profile-attach-lines.jsonl" >"$out/profile-attach-summary.json"
+  rm -f -- "$out/profile-attach-lines.jsonl"
+fi

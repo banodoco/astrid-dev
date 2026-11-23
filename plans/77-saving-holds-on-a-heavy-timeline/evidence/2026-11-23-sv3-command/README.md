@@ -181,6 +181,41 @@ and fails the run if any remain (see the cleanup step above).
 - The pack host polls during every repetition. The package records this and does not assert it.
 - The `jq` filters were compiled and run on sample lines only. The full repetition receipt has not been produced by a run.
 
+## Commit-check fix (post-condition)
+
+The drag acceptance check `commit.exactCas && commit.exactAcceptedCas && commit.receipt` failed on every sequential
+drag after the cold save in run 4 (`sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb`, `failed_reason`), although
+HTTP 200 and Saved. Cause, from the code: `wireCommits(page, commitUrl, fixture, expectedCas, true)` captures the
+object it is given and compares each POST's base revision with that object at request time. Each scenario declared
+its own `expectedCas` and passed that object to `gesture`, which updates it. The wire kept the first, pinned object, so
+every later drag compared against the pinned head. The cold save matches the pin and passed, which matches the
+failures (18 of the 19 sequential drags). The fix is to pass one object only: the scenario-level redeclaration is
+removed. Evidence to check: `exactCas` is false for drags after the cold save in the run-4 receipt. The fix was not
+run.
+
+## Profile variant (SV3_PROFILE=1)
+
+Same entry point, with the variable set: `SV3_PROFILE=1 SV3_SIGNED_BACKUP=... SV3_RUNTIME_REF=... bash run-sv3-overlay.sh <SHA> <digest>`.
+It forces one repetition (`SV3_REPETITIONS` is ignored). The scenarios are S0, `cold`, `W1`, `W2` and `W3`, each a
+single sequential edit. The Agent step writes its `agent-commit: not established` receipt, as in the default mode.
+
+Each of the four saves has the existing sampler attached around it (`profile-save-hook.mjs`, a copy of
+`profile-two-save.mjs` with only the `spy` path changed to `SV3_PYSPY`, default `py-spy-0.4.1`). It attaches before
+pointer-down and stops on the scoped HTTP 200, at 100 Hz with `--threads --idle` and speedscope output. If py-spy cannot
+attach, the save is timed without a profile and the run does not fail.
+
+Files in the output directory:
+
+- `profile-preflight.json`: the output of `py-spy --version` and its exit code.
+- `rep-1/profile-cold-profile.json`, `rep-1/profile-w1-profile.json`, `rep-1/profile-w2-profile.json`,
+  `rep-1/profile-w3-profile.json`: the sampler record of each save (attach, samples, errors, runtime CPU).
+- `rep-1/profile-<save>.speedscope.json` and `rep-1/profile-<save>-sampler.log`: the raw profile and the sampler log.
+- `profile-attach-summary.json`: one entry per save with `attached`, `raw_stack_samples`,
+  `sampling_sample_count` and the errors.
+- `rep-1/browser-sv3-measure.json` and `summary.tsv`: the timings, with scenario names `cold`, `W1`, `W2`, `W3`.
+
+The POST count is recorded (`timeline_commit_posts`) and not asserted. Whether the sampler changes it is not established.
+
 ## Static checks for this change
 
 `bash -n run-sv3-overlay.sh`; `node --check` on the driver, `arm-free-space.mjs` and `reused-trace-helpers.mjs`; the

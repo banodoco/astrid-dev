@@ -11,6 +11,7 @@ import {loadavg} from 'node:os';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {armFreeSpace} from './arm-free-space.mjs';
+import {profileTwoSave} from './profile-save-hook.mjs';
 import {
   browserTape, canonicalFreeSpace, exactFreeSpaceDiff, exactOccurrences, freeSpacePointsMatch, wireCommits,
 } from './reused-trace-helpers.mjs';
@@ -250,7 +251,7 @@ function predictMove(move0, startSeconds) {
 }
 
 // One drag: prepare, plan, arm, press, move, release. Returns the release and the plan. Does not wait for Saved.
-async function gesture({page, move, plan0, prepareKind, record, cold, expectedCas, head, commitRequests}) {
+async function gesture({page, move, plan0, prepareKind, record, cold, expectedCas, head, commitRequests, profiler}) {
   let phase = 'identity_before_drag';
   let diskWatch, diskCheck, diskStop;
   try {
@@ -319,6 +320,16 @@ async function gesture({page, move, plan0, prepareKind, record, cold, expectedCa
     diskWatch = setInterval(() => {
       if (!diskCheck && !diskStop) diskCheck = watchDisk().finally(() => { diskCheck = null; });
     }, 500);
+    if (profiler) {
+      phase = 'sampler_attach';
+      profiler.current = await profileTwoSave({runtime: profiler.runtime, page, targetUrl: commitUrl, output,
+        stem: profiler.stem, cpu});
+      record.profiler = profiler.current.evidenceFile;
+      record.profile_attached = profiler.current.attached;
+      checkGeometry(await currentGeometry());
+      // Without an attached sampler the drag is timed without a profile. It is not a failure.
+      if (profiler.current.attached) profiler.current.beforePointerdown();
+    }
     phase = 'pointerdown';
     await page.mouse.down();
     const down = await page.evaluate(() => window.__p77DispatchTrace.pointer?.freeSpaceDown ?? null);
@@ -421,7 +432,15 @@ const receipt = {mode, tuple, runtime_sha: runtimeSha, data_root: data, candidat
   disk_floor_bytes: Number(diskFloorBytes), node_time_origin: performance.timeOrigin, load_1m_start: loadavg()[0],
   scenarios: [], s0: null, refusals: [], non_2xx_runtime: [], failed_drags: 0};
 // Order per repetition. Overlapped scenarios release the next edit without waiting for Saved.
-const scenarios = [
+// SV3_PROFILE=1: one repetition of cold plus three warm single-edit saves, each with the Runtime sampler attached.
+const profileVariant = process.env.SV3_PROFILE === '1';
+const profileRuntime = {pid, start};
+const scenarios = profileVariant ? [
+  {name: 'cold', mode: 'sequential', warm: false, drags: 1, gap_ms: 0, profile: true, stem: 'profile-cold'},
+  {name: 'W1', mode: 'sequential', warm: true, drags: 1, gap_ms: 0, profile: true, stem: 'profile-w1'},
+  {name: 'W2', mode: 'sequential', warm: true, drags: 1, gap_ms: 0, profile: true, stem: 'profile-w2'},
+  {name: 'W3', mode: 'sequential', warm: true, drags: 1, gap_ms: 0, profile: true, stem: 'profile-w3'},
+] : [
   {name: 'cold', mode: 'sequential', warm: false, drags: 1, gap_ms: 0},
   {name: 'S1', mode: 'sequential', warm: true, drags: 1, gap_ms: 0},
   {name: 'S2', mode: 'sequential', warm: true, drags: 2, gap_ms: 200},
@@ -430,6 +449,12 @@ const scenarios = [
   {name: 'S3o', mode: 'overlapped', warm: true, drags: 10, gap_ms: 150},
   {name: 'S4', mode: 'sequential', warm: true, drags: 5, gap_ms: 0},
 ];
+// Stops the sampler of one save. The hook stops itself on the scoped HTTP 200. This call only collects the record.
+async function finishProfile(profiler, reason) {
+  if (!profiler?.current) return null;
+  const sample = await profiler.current.stop(reason).catch(error => ({complete: null, error: error?.name ?? 'Error'}));
+  return {attached: profiler.current.attached, complete: sample?.complete ?? null, evidence: profiler.current.evidenceFile};
+}
 let context, recorder;
 let phase = 'browser_launch';
 try {
@@ -493,11 +518,11 @@ try {
     phase = `scenario_${scenario.name}`;
     const result = {name: scenario.name, mode: scenario.mode, warm: scenario.warm, drags: [], settle_ms: 2000};
     const postsBefore = recorder.posts().length;
-    const expectedCas = {headRevision: head.headRevision, publicationId: head.publicationId};
     if (scenario.mode === 'sequential') {
       for (let i = 0; i < scenario.drags; i += 1) {
         const record = {index: i, mode: 'sequential', cold: scenario.name === 'cold' && i === 0, browserTimeOrigin,
           failed: false, lastOk_before: lastOk};
+        const profiler = scenario.profile ? {runtime: profileRuntime, stem: scenario.stem, current: null} : null;
         const prepareKind = lastOk ? {kind: 'strict', expected: sessionDrags > 0 ? 1 : 0} : {kind: 'reset'};
         const postsStart = recorder.posts().length;
         let timing = {mapped: false};
@@ -505,10 +530,11 @@ try {
           const move = canonicalFreeSpace(head, clips, tracks);
           commitRequests.clear();
           const g = await gesture({page, move, plan0: null, prepareKind, record, cold: record.cold, expectedCas, head,
-            commitRequests});
+            commitRequests, profiler});
           sessionDrags += 1;
           await settle(page, g.up, 1, 90_000);
           const tape = await attribute(page, [g.up], recorder, postsStart);
+          record.profile = await finishProfile(profiler, 'settled');
           timing = timingFrom(g.up, tape.attributed[0], browserTimeOrigin);
           record.attribution = {observed: tape.observed, posts: tape.posts};
           if (!timing.mapped || timing.http_status !== 200) throw new Error(`commit not accepted (status ${timing.http_status ?? 'none'})`);
@@ -527,6 +553,7 @@ try {
           record.failed = true;
           record.failed_reason = String(error?.message ?? error).slice(0, 300);
           record.error_kind = error?.name ?? 'Error';
+          record.profile = await finishProfile(profiler, 'drag_failed');
           lastOk = false;
           sessionDrags += 1;
           const post = recorder.posts()[postsStart];
