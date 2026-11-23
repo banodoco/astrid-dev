@@ -46,6 +46,7 @@ interpreter="$program/versions/4b62ab1a6521/py/bin/python"
 base_runtime=77c38d037f98f744bd8f41c15d95429c124a8003
 app="$work/wt/astrid-app-p77-r7-firstcut-requalification-install"
 tooling="$work/wt/astrid-app-p77-quick-indicator"
+trace_tools="$work/wt/astrid-app-p77-current-compiled-trace"
 mirror="$evidence/sv2a-prep/candidate-runtime.git"
 out="$evidence/sv3-measure-$sha"
 archive="$out/source/$sha"
@@ -71,6 +72,8 @@ jq -e --arg runtime "$base_runtime" '.release==14 and .runtime.sha==$runtime and
 [[ "$(git -C "$app" rev-parse HEAD)" == 148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715 ]]
 [[ "$(git -C "$tooling" rev-parse HEAD)" == "$(jq -er .browser_tooling "$prep/approved-input.json")" ]]
 [[ -z "$(git -C "$tooling" status --porcelain -- scripts/save-loop)" ]]
+[[ "$(git -C "$trace_tools" rev-parse HEAD)" == "$(jq -er .trace_helpers "$prep/approved-input.json")" ]]
+[[ -z "$(git -C "$trace_tools" status --porcelain -- scripts/save-loop)" ]]
 [[ ! -e "$out" && ! -L "$out" ]]
 # The signed backup is not recorded in the package, so the operator names its canonical directory.
 backup="${SV3_SIGNED_BACKUP:-}"
@@ -458,6 +461,7 @@ run_repetition() {
 
   browser_temp=$(mktemp -d /tmp/sl-p77-r7-XXXXXX)
   setsid --wait "${owned[@]}" TMPDIR=/tmp P77_R7_BROWSER_TMP="$browser_temp" LIBGL_ALWAYS_SOFTWARE=1 \
+    P77_SV2A_TRACE_TOOLS="$trace_tools" \
     SAVE_LOOP_CHROME=/usr/bin/google-chrome SAVE_LOOP_PLAYWRIGHT=/opt/node-tools/node_modules/playwright/index.mjs \
     node "$prep/browser-sv3-measure.mjs" "$root" "$rep_work" "$rep_dir/fixture.json" "$rep_dir/versions.json" \
     "$app/dist" "$out/dist-files.sha256" "$tooling" "$rep_dir" candidate "$rep_dir/browser-preflight.json" \

@@ -187,3 +187,7 @@ and fails the run if any remain (see the cleanup step above).
 Python AST parse of `verify-overlay.py`, `overlay-direct.py` and `overlay-guard/sitecustomize.py`; the JSON parse of
 `approved-input.json`; `jq` compilation and sample runs of the combiner and the per-repetition filters; and a
 synthetic rebase self-test in the scratchpad. Nothing was run as a package, and no product process was started.
+
+## First run attempt, 23 November 2026
+
+The first run of this package (head `08fb5ba0`, candidate `f2da02e1dcf02439ee149f1412310c72aa4bf0bb`) stopped in repetition 1 before any measurement: `browser-sv3-measure.mjs` imports `reused-trace-helpers.mjs`, which needs `P77_SV2A_TRACE_TOOLS` (the trace-tools worktree) at import time, and this package had dropped that variable and its identity check along with the trace. The fix restores `trace_helpers` in `approved-input.json`, the HEAD and clean-tree checks of the trace-tools worktree, and the variable for the browser process. Nothing else changed.
