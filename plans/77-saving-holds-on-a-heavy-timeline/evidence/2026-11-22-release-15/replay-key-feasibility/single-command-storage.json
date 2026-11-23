@@ -1,0 +1,36 @@
+{
+  "archive_sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d",
+  "method": "Read-only immutable signed sandbox archive, UTF-8 sizes of exact SQLite TEXT cells",
+  "samples": [
+    {
+      "sequence": 2503,
+      "clips": 288,
+      "client_command": "doc.patch: set one clip's timeline position",
+      "logical_text_bytes": {
+        "history_records": 1748634,
+        "history_metadata": 101357,
+        "parent_payload": 175935,
+        "parent_manifest": 57373,
+        "idempotency_result": 547665,
+        "acceptance_event_payload": 721
+      },
+      "total_selected_text_bytes": 2631685
+    },
+    {
+      "sequence": 2505,
+      "clips": 288,
+      "client_command": "doc.patch: set one clip's timeline position",
+      "logical_text_bytes": {
+        "history_records": 1748685,
+        "history_metadata": 101362,
+        "parent_payload": 175935,
+        "parent_manifest": 57373,
+        "idempotency_result": 547694,
+        "acceptance_event_payload": 721
+      },
+      "total_selected_text_bytes": 2631770
+    }
+  ],
+  "excluded": "physical database and WAL delta, indexes, small scalar columns and other dependent rows",
+  "exact_300_clip_single_command_sample": false
+}

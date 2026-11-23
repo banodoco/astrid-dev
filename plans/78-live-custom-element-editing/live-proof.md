@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
-The editor's chat agent edited a disposable synthetic project on one local machine. The Runtime recorded one new history row and one accepted receipt for seven retargeted clips, their parameter changes and six new titles. Four after-stills were captured on the same open page without a reload. The original accepted response was redirected to scratch and was not independently captured; the receipt evidence is the Runtime history row.
+The editor's chat agent edited a disposable synthetic project on one local machine. The Runtime recorded one new history row and one accepted receipt for seven retargeted clips, their parameter changes and six new titles. The operator's live Playwright page and navigation record report that four after-stills were captured without a reload. The original accepted response was redirected to scratch and was not independently captured; the receipt evidence is the Runtime history row.
 
 Paths under `/root/codex/le4/` are machine-local to the proof run.
 
@@ -35,7 +35,7 @@ The first-shot titles `NEW TITLE 1`–`NEW TITLE 6` start at 10, 12, 14, 16, 18 
 
 ## Preview stills
 
-The before images were cropped to the preview box (device pixels x=26, y=116, 1484×956); after images were captured directly from the preview surface at the same size. These preview-only images show the same page without reload; the first before-still was at 1.49 s, 0.01 s before its after-still. The other displayed playheads matched. The source report's descriptions and the captured after-stills give the following comparison:
+The before images were cropped to the preview box (device pixels x=26, y=116, 1484×956); after images were captured directly from the preview surface at the same size. The live Playwright page and navigation record support the no-reload observation; the images show the visual comparisons, not page continuity. The first before-still was at 1.49 s, 0.01 s before its after-still. The other displayed playheads matched. The source report's descriptions and the captured after-stills give the following comparison:
 
 | Playhead | Before | After and intent |
 | --- | --- | --- |
@@ -58,6 +58,6 @@ On the fresh isolated install, a Runtime process first resolved an existing effe
 
 - This is one synthetic fixture on one machine, not evidence about hosted or shared use. The final chat ran on the 40-clip fixture, not the 136-clip fixture.
 - The editor's admitted-element list and imports share a 30 s deadline. Under load, the list waited on the Runtime store mutex while history was being read and validated; the observed wait does not establish a scaling law. Follow-up: [#1433](https://github.com/banodoco/astrid-dev/issues/1433).
-- A container restart interrupted the wider run. The final chat and its after-stills used one open page without reload; the earlier no-restart probe used the previous Runtime process.
+- A container restart interrupted the wider run. The live page and navigation record report that the final chat and after-stills used one open page without reload; the earlier no-restart probe used the previous Runtime process.
 - The owner's existing Codex login folder was used via `CODEX_HOME` on her explicit 22 November instruction. That login was exposed to the chat agent for this run; no login contents are included in this record.
 - One initial chat session was stopped before any edit; the second made the edit. The agent's dry run failed after admission, and it subsequently submitted the guarded commit. Admission, commit-response and first-visible-result durations were not individually captured.
