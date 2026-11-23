@@ -1,0 +1,18 @@
+{
+  "overlay_modules": {
+    "astrid.sdk.timeline._commit_patch": {
+      "file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/agent-overlay/astrid/sdk/timeline/_commit_patch.py",
+      "sha256": "2bcde680d52c45321a1efc3e0ed1500226de0c40ebe227d3fea0335fcde82956"
+    },
+    "astrid.sdk.timeline._doc_patch": {
+      "file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/agent-overlay/astrid/sdk/timeline/_doc_patch.py",
+      "sha256": "f063ebcdbbc9f3657a1275ff79a2981f9ddbbcdce0ad78acd280db6a9b5a1720"
+    }
+  },
+  "other_timeline_modules": {
+    "astrid.sdk.timeline._command_state": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/sdk/timeline/_command_state.py",
+    "astrid.sdk.timeline._common": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/sdk/timeline/_common.py"
+  },
+  "astrid.sdk.timeline.commit": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/sdk/timeline/commit.py",
+  "failures": []
+}
