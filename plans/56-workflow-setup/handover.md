@@ -24,7 +24,8 @@ The board, mailbox ([#1757](https://github.com/banodoco/astrid-dev/issues/1757))
 1. **Lead:** confirm the Run start in [inputs.md](inputs.md) and the board section are on astrid-dev `main`; cut `release/15/plan-56` (astrid-agent from `release/15/main` `045064b6`; VibeComfy from `c0e910ca`, which is VibeComfy `main` and the Agent's pin, not `release/15/main` `48b5fa9e`); record both in `releases/15.md` Branches and in `inputs.md` Source identities; set `plan.md` Status to active and Owner to the Lead.
 2. **Lead:** answer the Orchestrator's startup-check STATUS with a DECISION. Bindings: record the models this login accepts and an effort per route in a `run.yaml` in the shape of [Plan 77's handover](../77-saving-holds-on-a-heavy-timeline/handover.md#runyaml); model IDs stay out of repo files ("Codex Astra" means the newest ID the login accepts).
 3. **Orchestrator:** run the startup checks, then dispatch P56-01 alone; when its early STATUS proves a packet session can push, open a PR and comment, dispatch P56-02 to P56-04.
-4. **Lead:** when P56-01 merges, check the three shapes yourself (the fix schema, the `extra.nodes` shape, the approval record) before P56-05, P56-06 and P56-07 start.
+4. **Lead, ongoing:** post a heartbeat STATUS at least every 90 minutes; keep the mailbox cursor in the board; after each merge post DONE and open the `tasks.md` progress PR; copy the Orchestrator's STATUS into the board and move Blocked packets to Ready; add recurring rulings to Standing rulings; run `python3 scripts/release_branches.py check 15`; schedule your own check-ins on a scheduler that outlives your machine; tell the owner when #1755 is merged so she pastes the launch message.
+5. **Lead:** when P56-01 merges, check the three shapes yourself (the fix schema, the `extra.nodes` shape, the approval record) before P56-05, P56-06 and P56-07 start.
 
 ## How the code is tested
 

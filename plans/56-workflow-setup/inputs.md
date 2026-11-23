@@ -73,7 +73,7 @@
 
 ## Source identities
 
-Planning read: astrid-agent `a91c35dfd`, VibeComfy `dba38f86`; for the amendment, installed Release 15 `dd02e367bc24` (VibeComfy `48b5fa9e`) and astrid-dev `origin/main` `932156e8`. Code work: `release/15/plan-56` from each repository's `release/15/main` (astrid-agent, VibeComfy). Base for code work: see the code-work line below.
+Planning read: astrid-agent `a91c35dfd`, VibeComfy `dba38f86`; for the amendment, installed Release 15 `dd02e367bc24` (VibeComfy `48b5fa9e`) and astrid-dev `origin/main` `932156e8`. Code work: astrid-agent `release/15/plan-56` from `release/15/main` `045064b6`; VibeComfy `release/15/plan-56` from `c0e910ca` (not `release/15/main` `48b5fa9e`). Base for code work: see the code-work line in this section.
 
 ## References
 

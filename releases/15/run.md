@@ -79,6 +79,12 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 - **Bases:** astrid-agent `release/15/plan-56` from `release/15/main` (`045064b6`); VibeComfy `release/15/plan-56` from `c0e910ca`, the commit the Agent pins.
 - **Needs the owner:** the live SAM run (WS-L, after R), publishing, anything paid or touching her install or media, and decisions D10–D12 before landing (build to the recommendations meanwhile).
 
+### Standing rulings (Plan 56)
+
+1. **Different functions in one file are not a conflict** between packets; the same function or the same new test table is. (Proposed 23 November 2026; the Lead confirms or changes it.)
+2. **Cross-repo packets never move a pin:** they post `READY-PIN <VibeComfy head>` and the Lead adds the pin commit.
+3. **RS1 and R are commissioned by the Lead,** each by Codex Astra.
+
 ### Mailbox
 
 [astrid-dev #1757](https://github.com/banodoco/astrid-dev/issues/1757), run `r15-dispatch`, format in its first post.
@@ -109,17 +115,18 @@ A message is not ACKed after two cycles: the sender sends it again. A silent mai
 The Orchestrator does these first, posts one STATUS with each as passed or failed, and dispatches nothing until the Lead's DECISION answers it. A failure is a manual step for the owner, written here.
 
 1. **Mailbox both ways:** read #1757, post one non-sensitive ACK, see the Lead's reply.
-2. **Earlier sessions:** none exist for Plan 56; confirm no earlier branch `release/15/plan-56` or `p56/*` exists in astrid-agent or VibeComfy.
+2. **Branches:** confirm `release/15/plan-56` exists in astrid-agent and VibeComfy at the bases recorded in `releases/15.md` Branches, and that no `p56/*` branch exists yet.
 3. **A fresh ChatGPT session** in the mode the first packet's Route sets, with nothing from an earlier chat.
 4. **Resume:** reopen that session later and continue it.
 5. **The hour:** a reminder that fires every hour, verified by one firing.
 6. **GitHub from a packet session:** the session can push a `p56/<task id>` branch, open a draft pull request and comment on #1757, in astrid-agent, VibeComfy and astrid-dev.
 7. **GitHub for the Orchestrator:** it can read pull requests, commits and workflow runs in those repositories, and comment on #1757.
-8. **How many ChatGPT sessions the account can run at once.** Tell the Lead if that is below the cap below.
+8. **How many ChatGPT sessions the account can run at once.** Tell the Lead if that is below the cap below, and whether Extra High and Pro are offered.
+9. **A packet session can run the tests:** it can build the Agent environment (`env/agent-setup.sh`, VibeComfy at the pin) and run one focused test, for example `tests/core/generation/test_entries.py`.
 
 ### Dispatch queue (Plan 56)
 
-Cap: at most **four** packets in Running or Review at once (the Lead may lower or raise it). First round: P56-01 to P56-04 together, in that order if the account allows fewer. Dispatch the next as slots free and dependencies merge.
+Cap: at most **four** packets in Running or Review at once (the Lead may lower or raise it). P56-01 alone first; P56-02 to P56-04 after its early STATUS shows a session can push, open a draft PR and comment, in that order if the account allows fewer. Dispatch the next as slots free and dependencies merge.
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
@@ -134,6 +141,7 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Blocked | — | After P56-04, 07 and RS1. Extra High |
 | [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | After P56-05, 06, 07 and RS1. Extra High |
 | [R15-P56-11](packets/R15-P56-11.md) Renderer, wording, skill proof | LE-18b, LE-11, WS-6b | Blocked | — | After every other packet. Extra High |
+| Conflicts (do not run these together) | — | — | — | P56-06 with P56-07 (both write `cli.py:_workflow_command`; P56-07 first, it is the critical path); P56-08 with P56-09 (both write `entries.py:target_schema`); P56-10 with P56-06 and P56-08 (`cli.py`). P56-01 and P56-04 share two files in different functions (`comfyui_engine.py`, `managed_preparation.py`) and may run together under the ruling below. |
 | RS1 and R | Review stops | Lead | — | Codex Astra, commissioned by the Lead: RS1 after P56-07; R after P56-11 (up to two rounds) |
 
 ### Orchestrator launch message
@@ -145,7 +153,7 @@ You are the Orchestrator for Release 15 Plan 56, reporting to the Lead (mailbox 
 Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
 Read releases/15/run.md at main, section "Plan 56 dispatch", then on main at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1757, format in its first post. Your mailbox name: r15-orchestrator-1.
-First do the Orchestrator startup checks and post one STATUS with each result; dispatch nothing until the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in the mode its packet's Route sets (N High, X Extra High, S Pro), with the workstream's packet start message. Dispatch P56-01 alone first. Every hour: read the mailbox, check every open packet, run the parallelism pass (start every Ready packet that has no dependency and no file conflict with Running ones, up to the cap), resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
-You may start, resume and replace packet sessions and comment on the mailbox. You may not merge, edit the repository or approve anything. Send anything reserved to the owner to the Lead.
+First do the Orchestrator startup checks and post one STATUS with each result; dispatch nothing until the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in the mode its packet's Route sets (N High, X Extra High, S Pro), with the workstream's packet start message. Dispatch P56-01 alone first. Every hour: read the mailbox, check every open packet, run the parallelism pass (start every Ready packet that has no unmet dependency and no file conflict with a Running packet, up to the cap), resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
+You may start, resume, stop and replace packet sessions and comment on the mailbox. Never dispatch hosted CI: relay a packet's READY-CI to the Lead. You may not merge, edit the repository or approve anything. Send anything reserved to the owner to the Lead.
 If a check fails, say which manual step the owner must do instead of promising automation.
 ```
