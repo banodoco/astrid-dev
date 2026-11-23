@@ -1,0 +1,3 @@
+2026-11-23T05:05:42Z before_install free_kib=32260376 required_gib=25
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   39G   31G  56% /
