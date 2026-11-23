@@ -150,6 +150,27 @@ def prepare(orig_support, work_support, realm, archive, out):
     selected(work_support, realm, rebased_catalog)
     write_json(out / "rebased-original-catalog.json", rebased_catalog)
     profile = {**rebased_profile, "runtime_checkout": str(archive)}
+    # The retained services.json starts the pack host and chat against the installed layout (stack/data). Write a copy
+    # with every path under stack/data swapped to the work copy and name it as the service declaration, so the
+    # Runtime's own supervisor starts them against the copy (a host started by anyone else is refused by its custody).
+    stack_data = str(orig_support.parent.parent / "data")
+    declaration = Path(old["service_declaration"])
+    services = json.loads(declaration.read_text(encoding="utf-8"))
+
+    def swap(value):
+        if isinstance(value, str):
+            return str(work_support.parent) + value[len(stack_data):] if value.startswith(stack_data) else value
+        if isinstance(value, list):
+            return [swap(item) for item in value]
+        if isinstance(value, dict):
+            return {key: swap(item) for key, item in value.items()}
+        return value
+
+    swapped = swap(services)
+    if stack_data in json.dumps(swapped):
+        raise ValueError("residual installed-layout data path in the rewritten service declaration")
+    write_json(out / "services.json", swapped)
+    profile["service_declaration"] = str(out / "services.json")
     write_json(out / "candidate-source-profile.json", profile)
 
 
