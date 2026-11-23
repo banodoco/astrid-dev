@@ -51,8 +51,20 @@ def restore_legacy_links(directory: Path, checkout: Path, legacy: dict[str, str]
     Check name collisions before touching any entry. This is not atomic against
     noncooperating writers or failures during mutation.
     """
+    if directory.is_symlink() or not directory.is_dir():
+        raise ValueError("restoration destination must be a real directory")
+    if not legacy or not generated:
+        raise ValueError("restoration snapshots must be nonempty")
     directory, checkout = directory.resolve(), checkout.resolve()
     old_root, new_root = checkout / "skills", checkout / ".generated/skills"
+    # A stale/incomplete generated-link snapshot must never permit partial
+    # rollback. Refuse additional links into our generated package tree;
+    # foreign links outside it remain protected and untouched.
+    for entry in directory.iterdir():
+        if (entry.is_symlink() and entry.name not in generated
+                and entry.resolve().is_relative_to(new_root)):
+            raise ValueError(
+                f"unrecorded generated link, refusing restoration: {entry.name}")
     for name, raw in legacy.items():
         if "/" in name or name in (".", ".."):
             raise ValueError(f"unsafe legacy name {name!r}")

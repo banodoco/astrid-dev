@@ -63,5 +63,13 @@ class FreshAgentPacketTests(unittest.TestCase):
             self.assertTrue((EVIDENCE / name).is_file(), name)
 
 
+    def test_proctor_requires_selected_source_identity_not_just_skill_name(self):
+        content = EVALUATOR.read_text(encoding="utf-8")
+        self.assertIn("same-name", content)
+        self.assertIn("installed source path", content)
+        self.assertIn("content hash", content)
+        self.assertIn("NO-RESULT", content)
+        self.assertIn("actual client trace", content)
+
 if __name__ == "__main__":
     unittest.main()

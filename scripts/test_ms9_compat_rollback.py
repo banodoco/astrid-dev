@@ -70,5 +70,43 @@ class RollbackPreparationTests(unittest.TestCase):
         self.assertEqual(snapshot_links(self.destination), before)
 
 
+    def test_unrecorded_owned_generated_link_fails_before_any_mutation(self):
+        extra = self.repo / ".generated/skills/astrid-dev-extra"
+        extra.mkdir()
+        (self.destination / "astrid-dev-extra").symlink_to(
+            extra, target_is_directory=True)
+        before = snapshot_links(self.destination)
+        with self.assertRaisesRegex(ValueError, "unrecorded generated link"):
+            restore_legacy_links(
+                self.destination, self.repo, self.legacy, self.generated)
+        self.assertEqual(snapshot_links(self.destination), before)
+        self.assertFalse((self.destination / "astrid-dev").exists())
+
+    def test_unknown_foreign_symlink_is_preserved_during_restore(self):
+        foreign = Path(self.temp.name) / "unrelated-package"
+        foreign.mkdir()
+        (self.destination / "another-person").symlink_to(
+            foreign, target_is_directory=True)
+        before = os.readlink(self.destination / "another-person")
+        restore_legacy_links(self.destination, self.repo, self.legacy, self.generated)
+        self.assertEqual(snapshot_links(self.destination)["another-person"], before)
+        self.assertTrue((self.destination / "astrid-dev").is_symlink())
+
+    def test_empty_rollback_snapshots_fail_closed(self):
+        before = snapshot_links(self.destination)
+        for old, new in (({}, self.generated), (self.legacy, {}), ({}, {})):
+            with self.subTest(old=old, new=new):
+                with self.assertRaisesRegex(ValueError, "nonempty"):
+                    restore_legacy_links(self.destination, self.repo, old, new)
+                self.assertEqual(snapshot_links(self.destination), before)
+
+    def test_symlinked_destination_is_refused(self):
+        alias = Path(self.temp.name) / "symlinked-install"
+        alias.symlink_to(self.destination, target_is_directory=True)
+        before = snapshot_links(self.destination)
+        with self.assertRaisesRegex(ValueError, "real directory"):
+            restore_legacy_links(alias, self.repo, self.legacy, self.generated)
+        self.assertEqual(snapshot_links(self.destination), before)
+
 if __name__ == "__main__":
     unittest.main()
