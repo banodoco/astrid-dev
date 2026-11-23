@@ -35,6 +35,11 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - 23 Nov 2026: TE-3 authenticated identity probe passed for a unique pinned transcript/source/word; ambiguity refused. Refusal increment `f601acfba` passed 37 tests; full-rule work remains uncommitted and its initial no-op reflow proof fails on an inherited unrelated fixture mismatch. Latest placement and retained-transcript changes are untested.
 - 23 Nov 2026: Checkpoint requested for a revised run brief. TE-2 `9048fc12f` is pushed with 44 focused tests passing and reviewed correction; TE-1 and TE-3 branches are pushed, with uncommitted TE-3 work retained in its worktree. RN-6 remains outstanding. No tasks merged and no rented resources used.
 
+- 2026-11-23: Superseding the earlier TE-1 fixture block, the host supplied the identity required by the new donor test fixture; its assertions are unchanged, and the revised run authority permits this adaptation and host commit.
+- 2026-11-23: TE-1 `sync.py` is in scope because both submitted and interrupted CLI swaps must retain their provenance. Independent review of `0615e4e9..4c6b9207d` found three regressions (local-file verification, first asset assignment, and multi-swap ordering); fixes and follow-up review are required before live proof.
+- 2026-11-23: TE-3’s no-op reflow failure includes an unrelated parent fixture with a 2-second hold and a 0.5-second authored duration; the new fixture may be made internally consistent while preserving the no-movement assertion.
+- 2026-11-23: TE-5 uses generated media only, as the owner directed; the old film mapping request is withdrawn. Its builder needs a retained Runtime transcript and a separate fixture-specific check.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
