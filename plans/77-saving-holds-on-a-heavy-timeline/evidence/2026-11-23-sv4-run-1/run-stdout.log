@@ -1,0 +1,83 @@
+Cloning into '/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.DaKXam/package-repo'...
+HEAD is now at 37663859 Capture raw Runtime stage timing sink for SV-4
+approved-input.json: OK
+run-sv3-overlay.sh: OK
+verify-overlay.py: OK
+overlay-direct.py: OK
+overlay-guard/sitecustomize.py: OK
+browser-sv3-measure.mjs: OK
+arm-free-space.mjs: OK
+reused-trace-helpers.mjs: OK
+profile-save-hook.mjs: OK
+From https://github.com/banodoco/astrid-runtime
+ * branch            p77/sv4-measure-combined -> FETCH_HEAD
+From https://github.com/banodoco/astrid-agent
+ * branch                release/15/plan-89 -> FETCH_HEAD
+PACKAGE=37663859d3021c453290e6d26b3ad5ebfedd86e2
+PACKAGE_SHA256=750bcad7e6ded78283dd2ce5abe4975302aad871723379b9cd7001cf3545ef66
+RUNTIME=9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09
+AGENT=d10817a77b280b2ca6a7b945f841e9823bbbee3f
+RECEIPTS=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09
+approved-input.json: OK
+run-sv3-overlay.sh: OK
+verify-overlay.py: OK
+overlay-direct.py: OK
+overlay-guard/sitecustomize.py: OK
+browser-sv3-measure.mjs: OK
+arm-free-space.mjs: OK
+reused-trace-helpers.mjs: OK
+profile-save-hook.mjs: OK
+Traceback (most recent call last):
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.DaKXam/package-repo/plans/77-saving-holds-on-a-heavy-timeline/evidence/2026-11-23-sv3-command/verify-overlay.py", line 706, in <module>
+    agent_finish(*raw)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.DaKXam/package-repo/plans/77-saving-holds-on-a-heavy-timeline/evidence/2026-11-23-sv3-command/verify-overlay.py", line 686, in agent_finish
+    raise ValueError("the complete Agent package overlay changed during the run")
+ValueError: the complete Agent package overlay changed during the run
+SV4_RUN_EXIT=1
+DRIVER_LOG=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.DaKXam/driver.log
+RECEIPTS=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/boundary.json
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/cleanup.json
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/rep-1/timing-sink-capture.json
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/cleanup.json
+{
+  "exit_code": 1,
+  "idle_safe_stop_verified": true,
+  "browser_temp_removed": true,
+  "preview_ports_closed": true,
+  "no_leftover_chrome": true,
+  "boundaries_unchanged": true
+}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/boundary.json
+{
+  "signed_backup_path": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/bundles/large/backup",
+  "boundaries_unchanged": true,
+  "differing": "",
+  "one_root_lock": {
+    "opened_for_write_by_exec": true,
+    "size_and_mtime_before": "0 1795458836",
+    "size_and_mtime_after": "0 1795472184"
+  }
+}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/rep-1/timing-sink-capture.json
+{
+  "status": "missing",
+  "runtime_work_data": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/work-data-1",
+  "idle_safe_stop": true,
+  "captured_at_utc": "2026-11-23T22:17:57.396175+00:00",
+  "source_base": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/work-data-1/logs/commit-stage-timings.jsonl",
+  "files": [],
+  "reset_receipt": {
+    "work_copy": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/work-data-1",
+    "logs_directory": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/work-data-1/logs",
+    "removed_known_files": [],
+    "reset_at_utc": "2026-11-23T22:17:43.060148+00:00",
+    "scope": "only four known timing sink files inside the disposable work copy"
+  },
+  "error": null
+}
+SV4_SCRIPT_EXIT 1
