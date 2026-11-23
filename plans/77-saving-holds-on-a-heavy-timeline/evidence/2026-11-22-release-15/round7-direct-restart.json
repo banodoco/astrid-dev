@@ -1,0 +1,258 @@
+{
+  "scope": "Already-adopted signed 300-clip direct lifecycle equivalent",
+  "arms": {
+    "stock-direct-restart": {
+      "phase": "ordinary_up_refused",
+      "route": "direct",
+      "installed": {
+        "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+        "agent": "8807f820eb47d6018db723511e024a0a123fbe95",
+        "runtime": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5"
+      },
+      "startup_receipt_sha256": "59dcfb0aaa3103c847a1db3cfa4e548de4ef8d7d04c9cad6ceebdc2056164bf2",
+      "configured_admission_seconds": 120,
+      "cleanup_exit": 1,
+      "up_invocation_to_exit_s": 121.48099716100114
+    },
+    "stock-direct-restart-extended": {
+      "phase": "verified",
+      "route": "direct",
+      "installed": {
+        "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+        "agent": "8807f820eb47d6018db723511e024a0a123fbe95",
+        "runtime": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5"
+      },
+      "startup_receipt_sha256": "3b14ddd46c6815614dd8209087c676151964a7daf9376a95f730608fd88aab5a",
+      "configured_admission_seconds": 600,
+      "cleanup_exit": 0,
+      "startup_samples": [
+        {
+          "native_birth_ticks": 110110,
+          "threshold_s": 30,
+          "elapsed_s": 30.181642514000032,
+          "runtime_cpu_s": 29.91
+        },
+        {
+          "native_birth_ticks": 110110,
+          "threshold_s": 60,
+          "elapsed_s": 60.24736769800006,
+          "runtime_cpu_s": 59.72
+        },
+        {
+          "native_birth_ticks": 110110,
+          "threshold_s": 90,
+          "elapsed_s": 90.07311965899999,
+          "runtime_cpu_s": 89.39
+        },
+        {
+          "native_birth_ticks": 110110,
+          "threshold_s": 120,
+          "elapsed_s": 120.14145352100013,
+          "runtime_cpu_s": 119.1
+        },
+        {
+          "native_birth_ticks": 110110,
+          "threshold_s": 150,
+          "elapsed_s": 150.21555666900008,
+          "runtime_cpu_s": 148.65
+        }
+      ],
+      "startup_dumps": [
+        {
+          "threshold_s": 30,
+          "exit_code": 0,
+          "file": "extended-startup-at-30s.txt",
+          "sha256": "e75c1b56f49728213932c732affc49e6abe6a55c2bc4345d97e65cbd4ee8ecc1"
+        },
+        {
+          "threshold_s": 120,
+          "exit_code": 0,
+          "file": "extended-startup-at-120s.txt",
+          "sha256": "fc83a3cdbb814959f431834f993212b2fe24e291e504705f9ec718967553ed02"
+        }
+      ],
+      "process_birth_to_healthy_s": 159.49904092500014,
+      "bootstrap_invocation_to_healthy_s": 159.63990974900003,
+      "healthy_to_navigation_s": 3.221192626953125,
+      "healthy_to_writable_observed_s": 323.3126804199219,
+      "process_birth_to_writable_observed_s": 482.81172134492203,
+      "bootstrap_invocation_to_writable_observed_s": 482.9525901689219,
+      "navigation_to_editor_marker_s": 320.08260000000007,
+      "runtime_cpu_at_health_probe_s": 157.61,
+      "runtime_cpu_at_navigation_s": 157.66,
+      "runtime_cpu_navigation_to_writable_s": 308,
+      "original_verified": {
+        "revision": "authoring-parent-revision-9f192b38d84116ee33c8be94208102ef57f38787f4d5cd89c3073bc6e5b3f07d",
+        "publication": "txn-a3dbef5643ae4893bbe8d7fe5ffb1bbf",
+        "content_digest": "sha256:66bddaf88bde38ee8705d755bfb8f80b4cafaec4dce8fb9ffec6eef1ae3b8c95",
+        "active_heads": 1,
+        "clips": 300,
+        "occurrences": 10
+      },
+      "scoped_commit_posts": 0,
+      "cold_scoped_requests": [
+        {
+          "started_ms": 2293.442532,
+          "failed_ms": 62614.752312,
+          "limit": "50",
+          "has_cursor": false,
+          "route": "/commits"
+        },
+        {
+          "started_ms": 147809.29826699998,
+          "failed_ms": 207816.65203899998,
+          "limit": "50",
+          "has_cursor": false,
+          "route": "/commits"
+        },
+        {
+          "started_ms": 268075.111646,
+          "finished_ms": 313956.655731,
+          "status": 200,
+          "limit": "50",
+          "has_cursor": false,
+          "route": "/commits"
+        }
+      ],
+      "source_sha256": {
+        "startup": "3b14ddd46c6815614dd8209087c676151964a7daf9376a95f730608fd88aab5a",
+        "cold": "69413ba1398fcfd7720ea38b9b763d4e985349c647aae9d2c4f06d02554b6076",
+        "cleanup": "3c527d1c9190ef41177263f0dee897210e9addc21b7aadac31597187ae003476"
+      },
+      "bootstrap_command_cpu_s_last_sample": 1.19,
+      "no_save_reopen": {
+        "phase": "verified",
+        "scoped_requests": [
+          {
+            "started_ms": 1938.1314689999563,
+            "finished_ms": 9538.595150999958,
+            "status": 200,
+            "limit": "50",
+            "has_cursor": false,
+            "route": "/commits"
+          }
+        ],
+        "navigation_after_cold_s": 321.5153176269531,
+        "reopen_receipt_sha256": "92322a8ae07e6f0a7b3f2a4c22397cd277960142a27cb34c274907b0343d0b9a",
+        "navigation_to_writable_s": 14.9405,
+        "runtime_cpu_navigation_to_writable_s": 6.7000000000000455
+      }
+    },
+    "candidate-direct-restart": {
+      "phase": "verified",
+      "route": "direct",
+      "installed": {
+        "app": "ae3e0db0308dc35c1e45e3ceb48d6ed5de613795",
+        "agent": "85278e6f633cfab76acc5a76cafb333f837d23a8",
+        "runtime": "8dfa96aca3bbe08ffc9824cdf799354d028acbff"
+      },
+      "startup_receipt_sha256": "8fa033f0a4b9c1341e46c91cbe9dc56b0fd287fcfd8b0ce00b903edfbddb4fab",
+      "configured_admission_seconds": 600,
+      "cleanup_exit": 0,
+      "startup_samples": [
+        {
+          "native_birth_ticks": 949689,
+          "threshold_s": 30,
+          "elapsed_s": 30.18913650200011,
+          "runtime_cpu_s": 29.92
+        },
+        {
+          "native_birth_ticks": 949689,
+          "threshold_s": 60,
+          "elapsed_s": 60.011447994000264,
+          "runtime_cpu_s": 59.54
+        },
+        {
+          "native_birth_ticks": 949689,
+          "threshold_s": 90,
+          "elapsed_s": 90.08485225000004,
+          "runtime_cpu_s": 89.47
+        },
+        {
+          "native_birth_ticks": 949689,
+          "threshold_s": 120,
+          "elapsed_s": 120.15790974400079,
+          "runtime_cpu_s": 119.32
+        },
+        {
+          "native_birth_ticks": 949689,
+          "threshold_s": 150,
+          "elapsed_s": 150.238170998,
+          "runtime_cpu_s": 149.02
+        }
+      ],
+      "startup_dumps": [
+        {
+          "threshold_s": 30,
+          "exit_code": 0,
+          "file": "extended-startup-at-30s.txt",
+          "sha256": "0a0e7a79d200b8547b3edbea63e6bd3faee16be5733f0407697e8ecaf2071142"
+        },
+        {
+          "threshold_s": 120,
+          "exit_code": 0,
+          "file": "extended-startup-at-120s.txt",
+          "sha256": "ece031d206ec0a8b448e0bb91729785e5b37489b2ab70c9f06090cb6d356cf92"
+        }
+      ],
+      "preserved_default": {
+        "phase": "ordinary_up_refused",
+        "configured_admission_seconds": 120,
+        "up_invocation_to_exit_s": 124.24803676299962,
+        "source_sha256": "84b58493c4733742a102b17e5f1217d8c7aee234fb35dfe929d5fa3551571afe"
+      },
+      "process_birth_to_healthy_s": 157.00946197600024,
+      "bootstrap_invocation_to_healthy_s": 157.1428116879997,
+      "healthy_to_navigation_s": 2.125563232421875,
+      "healthy_to_writable_observed_s": 6.58991943359375,
+      "process_birth_to_writable_observed_s": 163.599381409594,
+      "bootstrap_invocation_to_writable_observed_s": 163.73273112159347,
+      "navigation_to_editor_marker_s": 4.451800000000745,
+      "runtime_cpu_at_health_probe_s": 155.62,
+      "runtime_cpu_at_navigation_s": 155.65,
+      "runtime_cpu_navigation_to_writable_s": 1.509999999999991,
+      "original_verified": {
+        "revision": "authoring-parent-revision-9f192b38d84116ee33c8be94208102ef57f38787f4d5cd89c3073bc6e5b3f07d",
+        "publication": "txn-a3dbef5643ae4893bbe8d7fe5ffb1bbf",
+        "content_digest": "sha256:66bddaf88bde38ee8705d755bfb8f80b4cafaec4dce8fb9ffec6eef1ae3b8c95",
+        "active_heads": 1,
+        "clips": 300,
+        "occurrences": 10
+      },
+      "scoped_commit_posts": 0,
+      "cold_scoped_requests": [
+        {
+          "started_ms": 1918.047883,
+          "finished_ms": 3195.943865,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "source_sha256": {
+        "startup": "8fa033f0a4b9c1341e46c91cbe9dc56b0fd287fcfd8b0ce00b903edfbddb4fab",
+        "cold": "6eb1e5952619d2b826a4bf12bc3ebb23baecdf42c509be2fdba63980900055b7",
+        "cleanup": "3681c15ce31751462e3337baa63e90d9331b228cd1c69de71b78c6968b5f8e79"
+      },
+      "bootstrap_command_cpu_s_last_sample": 1.21,
+      "no_save_reopen": {
+        "phase": "verified",
+        "scoped_requests": [
+          {
+            "started_ms": 1787.5043420000002,
+            "finished_ms": 36329.482360999995,
+            "status": 200,
+            "route": "/verified-head"
+          }
+        ],
+        "navigation_after_cold_s": 5.4123984375,
+        "reopen_receipt_sha256": "baa377234ac7b341c145ec8cae458a5250ba116ef50e999412d6e6054e2d0cb2",
+        "navigation_to_writable_s": 36.445400000000376,
+        "runtime_cpu_navigation_to_writable_s": 35.03,
+        "runtime_dump": {
+          "file": "same-process-reopen-runtime-at-15s.txt",
+          "sha256": "fee8580aa96be424aa0389446f662f2970caf7e3b35f0814792b9b2528155913"
+        }
+      }
+    }
+  }
+}
