@@ -432,6 +432,85 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         )
         self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
 
+    def test_stored_historical_row_patch_applies_natively_to_frozen_briefs(self):
+        # An exact path-limited *proposal* for the Release/Plan48 owner:
+        # it is valid Git source selection but not permission to change
+        # historical release records or claim these branch states were cut.
+        patch = (
+            REPO / ARTIFACT_DIR / "15-historical-release-row-selection.patch"
+        ).read_bytes()
+        paths = (
+            "releases/14.md", "releases/16.md", "releases/17.md",
+        )
+        self.assertEqual(
+            [line.decode() for line in patch.splitlines()
+             if line.startswith(b"diff --git ")],
+            [f"diff --git a/{path} b/{path}" for path in paths],
+        )
+        self.assertEqual(
+            len([line for line in patch.splitlines() if line.startswith(b"@@ ")]), 3
+        )
+        frozen_sha = (
+            "3abb990ef613c5ba8a13fa5f60130a8d6b510f8a",
+            "cd4fe6d0cd8f2e3a8551a9174654b99f90b9bf08",
+            "6c873adba56286bb7c6f5024de7ad69372aee364",
+        )
+        original = {}
+        for relative, sha in zip(paths, frozen_sha):
+            target = self.scratch / relative
+            data = target.read_bytes()
+            self.assertEqual(current_hash(data), sha)
+            original[target] = data
+
+        script = """
+import json, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(root / "scripts"))
+from records import release_brief, release_branch_errors
+result = {}
+for number in ("14", "16", "17"):
+    body = (root / "releases" / (number + ".md")).read_text()
+    record = release_brief(body)
+    result[number] = release_branch_errors(
+        body, number, tuple(plan["number"] for plan in record["plans"])
+    )
+print(json.dumps(result))
+"""
+        def inspect():
+            result = subprocess.run(
+                (sys.executable, "-c", script, str(self.scratch)),
+                cwd=self.scratch, text=True, capture_output=True,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0,
+                             result.stdout + result.stderr)
+            import json
+            return json.loads(result.stdout)
+
+        try:
+            old_errors = inspect()
+            for number in ("14", "16", "17"):
+                self.assertTrue(
+                    any("Included plan " in e and "has no" in e
+                        for e in old_errors[number]), old_errors,
+                )
+            # Git must verify exact context on the *real frozen* release
+            # files. This does not write any remote ref.
+            git("apply", "--check", "-", cwd=self.scratch, input_bytes=patch)
+            git("apply", "-", cwd=self.scratch, input_bytes=patch)
+            after = inspect()
+            self.assertEqual(after, {"14": [], "16": [], "17": []})
+            print(
+                "P72 HISTORIC PATCH: native_apply=PASS "
+                "release_pages=14,16,17 inserted_rows=22 "
+                "old_branch_errors=" + str(sum(map(len, old_errors.values())))
+            )
+        finally:
+            for path, data in original.items():
+                path.write_bytes(data)
+                self.assertEqual(path.read_bytes(), data)
+
     def test_historical_rows_and_direct_source_selection_classify_full_check(self):
         # CONDITIONAL, scratch-only proof. Never update Release15/main or
         # suggest the Lead has approved these historical branch records.
