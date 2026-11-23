@@ -153,6 +153,10 @@ The Lead parked startup slice 1 outside Release 15. The exact candidates below h
 
 The content-keyed sidecar measurement plan is parked with the startup slice. The Lead received the local draft at `run/evidence/plan-77/round7-acceptance/sidecar-measurement-plan/PLAN.md`. No sidecar or published Release 14 compatibility run was started.
 
+## Manager switch, 23 November 2026
+
+The owner's Codex account reached its usage limit (retry shown as 28 November 08:56), so the Codex manager stopped. The Release 15 Lead decided to continue on the run contract's Claude column, nothing paid. The Claude host session took over the manager's role for the remaining Release 15 steps (App qualification, PR and landing) and the one SV-2a diagnostic, using the Codex manager's last state from its run folder so nothing was redone. The manager's unpushed App fixes were preserved first on `release/15/parked-app-firstcut-fixes` at `678fdc0903f3e61d2cd0c4e5a5d12d3cf553ff10` (paired transport fix plus the Lead-accepted back-out of the recovery-basis handoff predicate; Release 16 issue [#1657](https://github.com/banodoco/astrid-dev/issues/1657)). Gates, standing limits and the Lead's written confirmations are unchanged.
+
 ## Save run (fresh run, 23 November 2026)
 
 Run: the "Run start (save)" line in [inputs.md](inputs.md). Goal: time to Saved about 2 s on the heavy fixture, for editor saves and Agent/SDK commits alike (both go through `POST /v1/projects/{p}/timelines/{t}/commit`). Base: astrid-runtime `release/15/main` `737843e9`; branches `release/15/plan-77-save`. Owner rules: speed over review machinery for very unlikely cases; existing tests unchanged; no fix before the profile.
