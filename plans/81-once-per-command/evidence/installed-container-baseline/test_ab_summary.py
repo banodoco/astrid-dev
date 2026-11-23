@@ -7,12 +7,12 @@ from ab_summary import summarize, stage_table, group_summary
 from rebuild_ab_summary import records_from_console, SETTING
 
 IB = Path(__file__).resolve().parent
-RUN1 = IB / "evidence" / "ab-run-1"
+RUN1 = IB / "ab-run-1"
 
 class Summary(unittest.TestCase):
     def test_reproduces_ab_run_1_medians(self):
         saved = json.loads((RUN1 / "summary-ab.json").read_text())
-        recs = records_from_console(RUN1, IB / "evidence" / "ab-run-1.console.log")
+        recs = records_from_console(RUN1, RUN1 / "console.log")
         with tempfile.TemporaryDirectory() as t:
             new = summarize(recs, t, SETTING, 1.0, {"before": {}, "after": {"generate_extra": ["--timings"]}}, 5, quiet=True)
         for group, g in saved["groups"].items():

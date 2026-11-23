@@ -7,7 +7,7 @@ runs. If the gate is not met within LOAD_WAIT_SECONDS the whole run FAILS (exit 
 Env (all required, set by the wrapper): IB, EVIDENCE_DIR, COMFY_URL, MEDIA_PNG, ARMS_JSON, optional LOAD_MAX, LOAD_WAIT_SECONDS, SAMPLES."""
 from ab_summary import summarize
 from ab_receipt import generation_error
-import fcntl, json, os, subprocess, sys, time
+import fcntl, json, math, os, subprocess, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -25,9 +25,13 @@ if (OUT / "records.jsonl").exists() or (OUT / "summary-ab.json").exists():
     sys.exit("evidence directory already contains A/B records or summary; choose a new directory")
 if not ARMS or SAMPLES < 1:
     sys.exit("at least one arm and one sample are required")
+if not math.isfinite(LOAD_MAX) or LOAD_MAX <= 0 or not math.isfinite(WAIT) or WAIT < 0:
+    sys.exit("LOAD_MAX must be finite and positive and LOAD_WAIT_SECONDS finite and nonnegative")
 
 def arm_env(arm):
-    h = ARMS[arm]["home"]; env = dict(os.environ)
+    # Do not inherit a prepared connection, endpoint, credential, or other
+    # Astrid runtime override from the invoking shell. Each arm owns its port.
+    h = ARMS[arm]["home"]; env = {k: v for k, v in os.environ.items() if not k.startswith("ASTRID_")}
     env.update(HOME=h, XDG_DATA_HOME=f"{h}/.local/share", XDG_STATE_HOME=f"{h}/.local/state",
                XDG_CONFIG_HOME=f"{h}/.config", XDG_CACHE_HOME=f"{h}/.cache", TMPDIR=ARMS[arm]["tmp"],
                ASTRID_RUNTIME_DOOR_PORT=str(ARMS[arm]["door_port"]))
@@ -46,20 +50,48 @@ def as_text(value):
     if value is None: return ""
     return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else value
 
-def command(name, group, arm, args, extra=None):
-    """Capture output and a durable record even when the process cannot complete."""
-    started = datetime.now(timezone.utc).isoformat(); t0 = time.monotonic()
-    stdout = stderr = ""; code = None; error = None
+def listener_attestation(name, arm, phase):
+    """Capture the listener identity, without claiming the command contacted it."""
+    path = RAW / f"{name}.listener-{phase}.json"
+    spec = ARMS[arm]
     try:
-        p = subprocess.run([ARMS[arm]["launcher"], *args], env=arm_env(arm), capture_output=True, text=True,
-                           stdin=subprocess.DEVNULL, timeout=900)
-        stdout, stderr, code = p.stdout, p.stderr, p.returncode
-    except subprocess.TimeoutExpired as exc:
-        stdout, stderr = as_text(exc.stdout), as_text(exc.stderr)
-        error = f"timeout after {exc.timeout} seconds"
-    except (OSError, ValueError, KeyError) as exc:
-        error = f"{type(exc).__name__}: {exc}"
-    wall = time.monotonic() - t0
+        p = subprocess.run([sys.executable, str(Path(__file__).resolve().parent / "runtime_attestation.py"),
+                            str(spec["door_port"]), str(spec["current"]), str(spec["manifest"]), str(path)],
+                           capture_output=True, text=True, stdin=subprocess.DEVNULL, timeout=30)
+        durable_write(RAW / f"{name}.listener-{phase}.stderr", p.stderr)
+        if p.returncode != 0:
+            return None, f"listener {phase} attestation failed (exit {p.returncode})"
+        identity = json.loads(path.read_text())
+        required = {"port", "address_hex", "socket_table", "socket_inode", "pid", "start_ticks", "exe", "cwd", "selected_version", "manifest_shas", "scope"}
+        if not isinstance(identity, dict) or not required <= identity.keys():
+            return None, f"listener {phase} attestation is malformed"
+        return identity, None
+    except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as exc:
+        return None, f"listener {phase} attestation failed: {type(exc).__name__}: {exc}"
+
+def command(name, group, arm, args, extra=None, before_evidence=None):
+    """Capture output and a durable record even when the process cannot complete."""
+    started = datetime.now(timezone.utc).isoformat()
+    stdout = stderr = ""; code = None; error = None
+    before, error = before_evidence if before_evidence is not None else listener_attestation(name, arm, "before")
+    after = None; wall = 0.0
+    if error is None:
+        t0 = time.monotonic()
+        try:
+            p = subprocess.run([ARMS[arm]["launcher"], *args], env=arm_env(arm), capture_output=True, text=True,
+                               stdin=subprocess.DEVNULL, timeout=900)
+            stdout, stderr, code = p.stdout, p.stderr, p.returncode
+        except subprocess.TimeoutExpired as exc:
+            stdout, stderr = as_text(exc.stdout), as_text(exc.stderr)
+            error = f"timeout after {exc.timeout} seconds"
+        except (OSError, ValueError, KeyError) as exc:
+            error = f"{type(exc).__name__}: {exc}"
+        wall = time.monotonic() - t0
+        after, attestation_error = listener_attestation(name, arm, "after")
+        if attestation_error:
+            error = f"{error}; {attestation_error}" if error else attestation_error
+        elif {k: v for k, v in before.items() if k != "scope"} != {k: v for k, v in after.items() if k != "scope"}:
+            error = f"{error}; listener identity changed during command" if error else "listener identity changed during command"
     durable_write(RAW / f"{name}.stdout", stdout)
     durable_write(RAW / f"{name}.stderr", stderr)
     parsed = None
@@ -75,6 +107,12 @@ def command(name, group, arm, args, extra=None):
     rec = {"name": name, "group": group, "arm": arm, "args": args, "started_at": started,
            "wall_seconds": round(wall, 4), "exit_code": code, "ok": error is None,
            "door_port": ARMS[arm].get("door_port"),
+           "listener_before": before, "listener_after": after,
+           "kernel_task_id": parsed.get("kernel_task_id") if isinstance(parsed, dict) else None,
+           "accepted_revision_id": (parsed["data"].get("accepted_revision_id")
+                                    if isinstance(parsed, dict) and isinstance(parsed.get("data"), dict) else None),
+           "timeline_status": (parsed["data"].get("status")
+                               if isinstance(parsed, dict) and isinstance(parsed.get("data"), dict) else None),
            "timings": parsed.get("timings") if isinstance(parsed, dict) else None,
            "collector_span_seconds": parsed.get("collector_span_seconds") if isinstance(parsed, dict) else None}
     if extra: rec.update(extra)
@@ -83,19 +121,23 @@ def command(name, group, arm, args, extra=None):
 
 def untimed(name, arm, args):
     rec = command(name, "setup", arm, args)
+    durable_write(OUT / "setup-records.jsonl", json.dumps(rec) + "\n", "a")
     if not rec["ok"]:
         append_record(rec)
         sys.exit(f"setup failed on {arm}: {rec['error']}; see {OUT / 'records.jsonl'} and raw output")
 
 def gated_run(name, group, arm, args):
     """Wait for load < LOAD_MAX and record every attempted command; abort on failure."""
-    deadline = time.monotonic() + WAIT; waited_from = time.monotonic()
+    deadline = time.monotonic() + WAIT; waited_from = time.monotonic(); attempt = 0
     with open("/tmp/astrid-timing.lock", "a") as lock:
         while True:
             if os.getloadavg()[0] < LOAD_MAX:
                 try:
                     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                    if os.getloadavg()[0] < LOAD_MAX: break
+                    attempt += 1
+                    before_evidence = listener_attestation(name, arm, f"before-{attempt}")
+                    lb = os.getloadavg()
+                    if before_evidence[1] is not None or lb[0] < LOAD_MAX: break
                     fcntl.flock(lock, fcntl.LOCK_UN)
                 except BlockingIOError:
                     pass
@@ -108,8 +150,8 @@ def gated_run(name, group, arm, args):
                 sys.exit(3)
             time.sleep(2)
         try:
-            lb = os.getloadavg(); gate_wait = time.monotonic() - waited_from
-            rec = command(name, group, arm, args, {"load_before": lb, "gate_wait_seconds": round(gate_wait, 2)})
+            gate_wait = time.monotonic() - waited_from
+            rec = command(name, group, arm, args, {"load_before": lb, "gate_wait_seconds": round(gate_wait, 2)}, before_evidence)
             rec["load_after"] = os.getloadavg()
         finally:
             fcntl.flock(lock, fcntl.LOCK_UN)
@@ -148,10 +190,15 @@ for group, make in groups:
 
 append_record({"records_complete": True, "count": len(records), "arms": list(ARMS), "samples": SAMPLES,
                "timing_receipt_schema": 1,
+               "qualification_schema": 2,
+               "load_max": LOAD_MAX,
                "door_ports": {a: ARMS[a]["door_port"] for a in ARMS},
                "when_utc": datetime.now(timezone.utc).isoformat()})
 try:
-    summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES)
+    summary = summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, require_attestation=True)
 except Exception as exc:   # the records are already on disk; never lose a run to the summary step
     print(f"SUMMARY FAILED ({type(exc).__name__}: {exc}); records are in {OUT / 'records.jsonl'}; rebuild with: python3 {Path(__file__).resolve().parent}/ab_summary.py {OUT}", file=sys.stderr)
     sys.exit(4)
+if not summary["qualification"]["passed"]:
+    print("QUALIFICATION FAILED: " + "; ".join(summary["qualification"]["reasons"]), file=sys.stderr)
+    sys.exit(5)
