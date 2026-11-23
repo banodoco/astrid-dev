@@ -55,6 +55,8 @@ def corrected_c2_in_memory(text, data, frozen_reader):
     """Fail closed against exact frozen source; never write or change historical C2."""
     if data.get('frozen_source') != A or data.get('authority') != 'PROPOSED_AND_SOURCE_GROUNDED_NOT_OWNER_APPROVED':
         raise AssertionError('wrong source pin or authority')
+    if any(data.get(k) != 'NO-RESULT' for k in ('reviewer_acceptance', 'outcome_proof', 'proof_owner')):
+        raise AssertionError('unaccepted review, proof, or owner asserted')
     rules = data.get('corrections')
     if not isinstance(rules, list) or not rules:
         raise AssertionError('missing corrections')
@@ -107,6 +109,7 @@ def self_test():
         else:
             raise AssertionError('malformed raw declaration accepted')
     toy = {'frozen_source': A, 'authority': 'PROPOSED_AND_SOURCE_GROUNDED_NOT_OWNER_APPROVED',
+           'reviewer_acceptance': 'NO-RESULT', 'outcome_proof': 'NO-RESULT', 'proof_owner': 'NO-RESULT',
            'corrections': [{'id': 'CA-005-C03', 'old': 'CA-005-C03 — incorrect',
                             'replacement': 'CA-005-C03 — corrected',
                             'category': 'UNPLANNED', 'gap_path': 'gap', 'gap_line': 1,
@@ -119,6 +122,8 @@ def self_test():
         (toy_text.replace('UNPLANNED', 'PLAN_SCOPE'), 'supported', toy),
         (toy_text, 'unrelated', toy),
         (toy_text, 'supported', {**toy, 'frozen_source': '0' * 40}),
+        (toy_text, 'supported', {**toy, 'outcome_proof': 'PASS'}),
+        (toy_text, 'supported', {**toy, 'proof_owner': 'historical P42 owner'}),
     ):
         try:
             corrected_c2_in_memory(bad_text, bad_data, lambda p: bad_source)
@@ -126,7 +131,7 @@ def self_test():
             pass
         else:
             raise AssertionError('invalid semantic correction accepted')
-    print('PASS source parser/correction self-test: 7 positive, 11 negative')
+    print('PASS source parser/correction self-test: 7 positive, 13 negative')
 
 
 
