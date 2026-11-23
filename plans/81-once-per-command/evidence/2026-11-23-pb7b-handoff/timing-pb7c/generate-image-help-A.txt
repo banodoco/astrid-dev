@@ -1,0 +1,61 @@
+usage: astrid generate image [-h] [--prompt NAMED_PROMPT] [--model MODEL]
+                             [--entry ENTRY] [--inputs-json FILE]
+                             [--mode MODE] [--execution EXECUTION]
+                             [--placement PLACEMENT] [--project PROJECT]
+                             [--out OUT] [--dry-run] [--edit IMAGE_REF]
+                             [--width WIDTH] [--height HEIGHT] [--steps STEPS]
+                             [--seed SEED] [--cfg GUIDANCE_SCALE]
+                             [--negative-prompt NEGATIVE_PROMPT]
+                             [--frames FRAMES] [--fps FPS]
+                             [--align {align,check,trust}] [--json]
+                             [--timings] [--input NAME=VALUE]
+                             [--engine ENGINE] [--no-wait]
+                             [--consent {user_env}]
+                             [--recovery-path RECOVERY_PATH]
+                             [prompt]
+
+positional arguments:
+  prompt                Describe the media to generate.
+
+options:
+  -h, --help            show this help message and exit
+  --prompt NAMED_PROMPT
+  --model MODEL         Generation catalog entry ID (legacy selector).
+  --entry ENTRY         Generation entry ID; use --help to inspect its
+                        declared inputs.
+  --inputs-json FILE    Read declared entry inputs from a JSON object.
+  --mode MODE           Generation mode; inferred from the supplied inputs by
+                        default.
+  --execution EXECUTION
+                        Catalog execution backend, when explicitly selected.
+  --placement PLACEMENT
+                        auto (default), managed, a loopback ComfyUI URL, or
+                        runpod.
+  --project PROJECT     Project ID or slug; otherwise use the selected
+                        project.
+  --out OUT             Caller-local output file or directory (default:
+                        ./outputs/<task-id>/).
+  --dry-run             Show the generation plan without running it.
+  --edit IMAGE_REF, --image-ref IMAGE_REF
+                        Reference image for an edit or image-to-video request.
+  --width WIDTH
+  --height HEIGHT
+  --steps STEPS
+  --seed SEED
+  --cfg GUIDANCE_SCALE, --guidance-scale GUIDANCE_SCALE
+  --negative-prompt NEGATIVE_PROMPT
+  --frames FRAMES
+  --fps FPS
+  --align {align,check,trust}
+                        align: fetch what the target lacks; check: judge
+                        models against the target's inventory, fetch nothing
+                        (local default); trust: accept the workflow's declared
+                        models as present on the target, unverified.
+  --json                Print the SDK result as JSON.
+  --timings             Print command stage timings.
+  --input NAME=VALUE
+  --engine ENGINE
+  --no-wait             Return the admitted task; follow it separately.
+  --consent {user_env}
+  --recovery-path RECOVERY_PATH
+                        Save the exact Runtime admission receipt.

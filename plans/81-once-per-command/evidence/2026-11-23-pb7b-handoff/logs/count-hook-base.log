@@ -1,0 +1,22 @@
+ERROR: found no collectors for /home/user/p81b/run/pb7c/base/tests/integrations/test_command_count_capture.py::test_inventory_count_hook_control
+
+
+==================================== ERRORS ====================================
+______ ERROR collecting tests/integrations/test_command_count_capture.py _______
+ImportError while importing test module '/home/user/p81b/run/pb7c/base/tests/integrations/test_command_count_capture.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/integrations/test_command_count_capture.py:17: in <module>
+    from tests.integrations.test_runpod_host_endpoint_r5 import tuple_sources  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/integrations/test_runpod_host_endpoint_r5.py:19: in <module>
+    from astrid.packs.runpod import target_selection
+astrid/packs/runpod/target_selection.py:28: in <module>
+    from runpod_lifecycle.rest import normalize_pod
+E   ModuleNotFoundError: No module named 'runpod_lifecycle'
+=========================== short test summary info ============================
+ERROR tests/integrations/test_command_count_capture.py
+1 error in 1.68s
