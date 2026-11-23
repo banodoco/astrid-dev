@@ -540,3 +540,9 @@ The operator stopped the setup owner idle-safe and recorded the grown database h
 The final public read-back matched the grown head and its 300 clips. The stack shut down idle-safe and all reserved ports closed. The machine started with 27 GiB free, reached an observed low of 19.93 GiB during restore and adoption, and returned to about 26.2 GiB after cleanup. The operator removed its one owned stack and left zero browser profiles.
 
 This development result covers the two Runtime-owned timelines on `e27b5177`. The later launcher custody and configured-scope fixes and the Agent caller changes still require qualification. [Startup issue #1521](https://github.com/banodoco/astrid-dev/issues/1521)
+
+## Two same-page save profiles on 23 November
+
+The one retry used the exact compiled App `148eaf381`, Agent `5e301956`, Runtime `77c38d03` and an authenticated v30 copy with 300 clips and ten occurrences. Each V6 move produced one accepted compare-and-swap HTTP 200, Saved and an independently verified public one-clip diff. Time to Saved was 57.498 s and 19.712 s. Release to POST took 1.238 s and 1.263 s, POST to 200 took 55.524 s and 17.733 s, and response to Saved took 0.736 s and 0.716 s. This single instrumented pair is development evidence for the follow-on save run.
+
+Old-history verification accounted for 38.130 s and 3.640 s of sampled request-thread time. In the first request, Runtime performed three semantic replays and discarded a cached proof after `total_changes` and file observations changed. In the second request it performed one replay and kept its proof generation. The raw profiles recorded two sampling errors on the first capture and zero on the second. The per-stage INFO lines were absent. Separate observations bracketed acceptance at 5.736 s and 5.324 s. The verified installed stack was stopped and retained for the follow-on run. [Raw profiles, timing and scope](https://github.com/banodoco/astrid-dev/pull/1638)
