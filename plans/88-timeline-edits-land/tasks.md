@@ -27,6 +27,10 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - 2026-11-23: Baseline `0615e4e9`: commit-boundary test file 30 passed; both named timeline files are absent at base. TE-2 candidate `c71be97be` has three new provenance cases passing; donor boundary proof 38 passed. Independent review found a grown-bound provenance bypass; correction is in progress.
 - 2026-11-23: TE-4 and TE-5 live work waits for RN-6. Evidence identifies eleven overlay IDs but not all original-to-media mappings; host asked for the undo list. No pods or paid resources used.
 
+- 2026-11-23: Superseding the preliminary TE-3 ruling: a concrete authenticated-transcript probe found a unique stable word identity can be derived for bounded inputs; the host declined the refusal-only gate pending that probe, and full-rule implementation proceeds. Film applicability remains unverified.
+- 2026-11-23: TE-2 candidate `9048fc12f` corrects the review's grown-bound provenance bypass; 44 focused tests pass and a separate bounded check accepted the correction. Integration waits on TE-1.
+- 2026-11-23: TE-1 remains blocked: its donor SDK test fixture lacks base-required session identity. The host proposed changing that new fixture but the run's direct no-fixture-edit instruction is stricter; clarification requested. No existing assertion or fixture was changed.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
