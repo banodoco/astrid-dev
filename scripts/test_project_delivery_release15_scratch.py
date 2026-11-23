@@ -504,7 +504,7 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
                     "\n## ", 1
                 )[0]
                 for plan in info["missing_plans"]:
-                    self.assertIn(f"- [Plan {int(plan)}]", included)
+                    self.assertIn(f"- [Plan {plan}]", included)
                     matches = [line for line in rows(canonical)
                                if f"| plan {plan} |" in line]
                     self.assertTrue(matches, f"release {number}: no canonical {plan}")
