@@ -37,3 +37,12 @@ Each failed, or needed a workaround, on 22 November.
 7. Remove a clip, then restore it exactly ([#1430](https://github.com/banodoco/astrid-dev/issues/1430)).
 8. Add clips, then undo all of them in one change ([#1430](https://github.com/banodoco/astrid-dev/issues/1430)).
 9. Run two edit sessions on different clips at once (Plan 76, [#1402](https://github.com/banodoco/astrid-dev/issues/1402)).
+
+## Run decisions
+
+One line per decision taken by the orchestrator during the run.
+
+- 23 Nov 2026: `release/15/plan-88` cut from `release/15/main` at `0615e4e9` (owner's instruction), not from `release/15/plan-87`; the render-backed proofs build against Plan 87's stack once RN-6 lands.
+- 23 Nov 2026: file order with Plan 89 agreed: Plan 89 touches only `_commit_patch.py` and `_doc_patch.py` in the Agent, so Plan 88 goes first on all its files; Plan 89 rebases onto Plan 88's merge SHAs.
+- 23 Nov 2026: Codex manager started on route X at high effort; workers by card route (Luna, Terra, Sol for TE-3), reviews by Astra. The Lead gave a standing go for the manager's `tasks.md`-only progress PRs.
+- 23 Nov 2026: render requests go to Plan 87's session one per message; TE-4's edits are batched into one request; Plan 87's RN-13 renders take priority.

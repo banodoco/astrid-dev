@@ -53,7 +53,7 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 
 ## Sequence and readiness
 
-**Branch.** `release/15/plan-88` in astrid-agent, cut from `release/15/plan-87` once Plan 87's RN-6 is done, so the loop has a stack that can render the film. The three donor commits are cherry-picked here; Plan 87's branch does not carry them. It lands on `release/15/main` after Plan 87 through the Release 15 Lead.
+**Branch.** `release/15/plan-88` in astrid-agent, cut from `release/15/main` (at `0615e4e9`, 23 November 2026); the render-backed proofs build on Plan 87's stack once its RN-6 is done, so the loop has a stack that can render the film. The three donor commits are cherry-picked here; Plan 87's branch does not carry them. It lands on `release/15/main` after Plan 87 through the Release 15 Lead.
 
 1. TE-1 and TE-2: cherry-pick, add tests, confirm on the stack with one real swap.
 2. TE-3: the retime rule, behind decision T1.
