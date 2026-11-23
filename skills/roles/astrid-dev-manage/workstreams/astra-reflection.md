@@ -28,7 +28,7 @@ Runs on the high-judgment role (Astra on Codex, Opus on Claude; [routing](../../
 
 ## Daily look
 
-Once a day, post on the mailbox a **Daily look** comment for the owner: what was accepted since the last one, the lab `main` commit to open in AI Studio's preview, and for each visible change the exact sizes, address options (`?planet-test-pose=fixed`, `?sky=<hour>`) and landmarks to look at. The owner replies with notes. Each note becomes a rework, a new packet or a ruling on the board; the owner's verdict on the look is final.
+Once a day, post on the mailbox a **Daily look** comment for the owner: what was accepted since the last one, the lab `main` commit to open in AI Studio's preview, and for each visible change the exact sizes, address options (`?planet-test-pose=fixed`, `?sky=HH:MM`) and landmarks to look at. The owner replies with notes. Each note becomes a rework, a new packet or a ruling on the board; the owner's verdict on the look is final.
 
 ## Replan (RF rows)
 
