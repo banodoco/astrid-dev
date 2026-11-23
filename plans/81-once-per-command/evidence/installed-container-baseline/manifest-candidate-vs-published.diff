@@ -1,12 +1,12 @@
---- manifest-release14-published.json
-+++ manifest-candidate.json
+--- /root/codex/plan-81m/frozen-heads-b5c30e/plans/81-once-per-command/evidence/installed-container-baseline/manifest-release14-published.json	2026-11-23 01:36:16.241946510 +0000
++++ /root/codex/plan-81m/frozen-heads-b5c30e/plans/81-once-per-command/evidence/installed-container-baseline/manifest-candidate.json	2026-11-23 01:38:15.757364811 +0000
 @@ -2,11 +2,12 @@
    "schema_version": 1,
    "release": 14,
    "agent": {
 -    "sha": "c0ad6b54aadd21630d98bb5039613e37efe92a8f"
-+    "sha": "868053db361e8355089d23c69b3a72fec60e7f3b",
-+    "repo": "/root/codex/plan-81m/final-agent-candidate"
++    "sha": "705298cd7da2ba9c7378998b4fe5c0ee28438f81",
++    "repo": "/root/codex/plan-81m/run/final-agent-b5"
    },
    "runtime": {
 -    "sha": "5120462d67479dc4719406d0d34440edb616ace1",
@@ -33,7 +33,7 @@
    },
    "vibecomfy": {
 -    "sha": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c"
-+    "sha": "06ad021ffc84f4ae687b144873d3745c7297c43c"
++    "sha": "950023c8846233f0006aac100d26b76711c42515"
    },
    "lifecycle": {
      "repo": "https://github.com/banodoco/runpod-lifecycle.git",

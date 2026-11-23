@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Installed-Astrid A/B/C run: three isolated installs, one shared stand-in ComfyUI, arms alternated per round, load-gated.
 #   before = published Release 14 tuple (omp from npm)
-#   after  = final local candidate: Agent 868053db (scratch repo), Runtime 72b129e5, VibeComfy 06ad021f
-#   vc48   = final comparison candidate: Agent 13d328dc, Runtime 72b129e5, VibeComfy 48b5fa9e
+#   after  = final local candidate: Agent 705298cd (scratch repo), Runtime 72b129e5, VibeComfy 950023c8
+#   vc48   = final comparison candidate: Agent b5c30e61, Runtime 72b129e5, VibeComfy 48b5fa9e
 #   ./run-ab-installed.sh            prepare + validate only (install if absent, versions, --timings check, one UNTIMED command per arm)
 #   ./run-ab-installed.sh --run      prepare, then the gated timed run (fails, does not run ungated, if load < 1.0 is not reached in 10 min)
 # Env: BEFORE_MANIFEST, CANDIDATE_MANIFEST, VC48_MANIFEST (defaults: manifest-omp-npm.json, manifest-candidate.json, manifest-candidate-vc48.json),

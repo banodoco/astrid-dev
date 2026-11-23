@@ -1,8 +1,8 @@
 # Final candidate tuples (manifest update)
 
-Current `manifest-candidate.json` selects Agent `868053db361e8355089d23c69b3a72fec60e7f3b` from local scratch repo `/root/codex/plan-81m/final-agent-candidate`, Runtime `72b129e5a2296dc58360a9896cc65fab9db4ad0c`, and VibeComfy `06ad021ffc84f4ae687b144873d3745c7297c43c`. Current `manifest-candidate-vc48.json` selects Agent `13d328dc01638b96bf7e07308737ca380f8eaef8`, the same Runtime, and VibeComfy `48b5fa9e45630e1bc502651975ec0ef3a5e74c4c`. Both candidate manifests retain the npm `omp` override.
+Current `manifest-candidate.json` selects Agent `705298cd7da2ba9c7378998b4fe5c0ee28438f81` from local scratch repo `/root/codex/plan-81m/run/final-agent-b5`, Runtime `72b129e5a2296dc58360a9896cc65fab9db4ad0c`, and VibeComfy `950023c8846233f0006aac100d26b76711c42515`. Current `manifest-candidate-vc48.json` selects Agent `b5c30e616e788308e9b6152adbc7064f2000db47`, the same Runtime, and VibeComfy `48b5fa9e45630e1bc502651975ec0ef3a5e74c4c`. Both candidate manifests retain the npm `omp` override.
 
-**All existing results, measured tables, run records, and historical narrative below refer only to their recorded historical tuples; they are not results for these final candidate heads. The historical measured table is retained as historical evidence. No installs or timing runs were made for the final tuples by this manifest update.** See `CANDIDATE-MANIFEST.md` for provenance and the local-only scratch recipe.
+**All existing measured tables and historical narrative below refer only to their recorded historical tuples; they are not results for these final candidate heads. No timing runs were made for the final tuples.** Fresh version and pin preflight is in `fresh-preflight-b5/`. See `CANDIDATE-MANIFEST.md` for provenance and the local-only scratch recipe. The vc48 manifest uses Agent parent `b5c30e616e788308e9b6152adbc7064f2000db47` with VibeComfy `48b5fa9e45630e1bc502651975ec0ef3a5e74c4c`.
 
 # Copied A/B tooling: current usage and limits
 
