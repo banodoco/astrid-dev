@@ -12,6 +12,7 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 31-releases-from-astrid-dev
 - 30-update-everywhere
 - 39-green-mains
+- 87-agent-main-green
 - 34-real-gpu-proof
 - 32-generation-placement-targets
 - 37-generate-time-destination
