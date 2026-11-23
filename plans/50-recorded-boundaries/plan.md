@@ -10,7 +10,7 @@
 
 **Estimate:** about 4–5
 
-**Waiting on:** the owner's scope decision (D1); Release 13's in-flight terminal-reconcile and Runtime inline-proof fixes, which RB-1 needs
+**Waiting on:** the owner's scope decision (D1); Release 13's in-flight terminal-reconcile and Runtime inline-proof fixes, which RB-1 needs; in Release 16 (moved from Release 15 by the owner on 23 November 2026).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
