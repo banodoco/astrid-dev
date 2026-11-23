@@ -47,6 +47,16 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
         raise RelationshipError(
             f"delivery root contains no canonical vision/, plans/, or releases/ "
             f"directories: {root}")
+    canonical_root = root.resolve()
+
+    def require_authored_source(path: Path) -> None:
+        # Authored facts may be aliased within this tree but not loaded from
+        # an external symlink destination masquerading as a canonical path.
+        if not path.resolve().is_relative_to(canonical_root):
+            raise RelationshipError(
+                f"{path.relative_to(root).as_posix()}: "
+                "authored source resolves outside delivery root")
+
     records: list[RecordRef] = []
     links: list[Relationship] = []
     enablers: list[RecordRef] = []
@@ -55,6 +65,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     # The existing subject reader owns goal parsing, including stable slug IDs.
     for directory, kind in (("pillars", "pillar"), ("principles", "principle")):
         for path in sorted((root / "vision" / directory).glob("*.md")):
+            require_authored_source(path)
             subject = parse_subject(path.read_text(encoding="utf-8"), path.as_posix())
             for item in subject.get("goals", subject.get("characteristics", ())):
                 records.append(RecordRef("goal", f"{kind}:{path.stem}/{item['id']}"))
@@ -62,6 +73,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     # The existing gap parser validates the *actual* subject and heading,
     # and determines the unique primary aspiration.
     for path in sorted((root / "vision/gaps").glob("*.md")):
+        require_authored_source(path)
         matched = GAP_FILE.fullmatch(path.name)
         if not matched:
             raise RelationshipError(f"{path}: gap filename lacks stable ID")
@@ -102,6 +114,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     for path in sorted((root / "plans").glob("*/plan.md")):
         if not PLAN_FOLDER.fullmatch(path.parent.name):
             continue  # Existing catalog-path check owns malformed folder names.
+        require_authored_source(path)
         project = RecordRef("project", project_number(path))
         provenance = path.relative_to(root).as_posix()
         first_folder = project_folders.get(project.id)
@@ -147,6 +160,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     for path in sorted((root / "releases").glob("*.md")):
         if not path.stem.isdigit():
             continue
+        require_authored_source(path)
         provenance = path.relative_to(root).as_posix()
         release = RecordRef("release", path.stem)
         try:
