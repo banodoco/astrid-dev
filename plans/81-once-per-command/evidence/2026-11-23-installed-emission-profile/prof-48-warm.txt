@@ -1,0 +1,89 @@
+         3125330 function calls (3037757 primitive calls) in 6.838 seconds
+
+   Ordered by: internal time
+   List reduced from 2072 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     5815    3.979    0.001    3.979    0.001 {built-in method _hashlib.openssl_sha256}
+     5844    0.454    0.000    0.454    0.000 {method 'read' of '_io.BufferedReader' objects}
+    37303    0.313    0.000    0.481    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:56(parse_parts)
+       72    0.234    0.003    0.234    0.003 {built-in method builtins.compile}
+    55046    0.095    0.000    0.095    0.000 {built-in method posix.lstat}
+     4141    0.091    0.000    0.346    0.000 <frozen posixpath>:421(_joinrealpath)
+    55125    0.085    0.000    0.134    0.000 <frozen posixpath>:71(join)
+   275854    0.078    0.000    0.088    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:239(splitroot)
+63171/2821    0.072    0.000    0.154    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/copy.py:128(deepcopy)
+    12822    0.066    0.000    0.117    0.000 {built-in method posix.stat}
+     7610    0.065    0.000    5.057    0.001 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/generation.py:85(cache_file_witness)
+        9    0.062    0.007    0.062    0.007 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/json/decoder.py:343(raw_decode)
+    37302    0.061    0.000    0.557    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:484(_parse_args)
+     5712    0.050    0.000    0.068    0.000 {built-in method io.open}
+    682/5    0.045    0.000    0.432    0.086 {built-in method builtins.exec}
+274375/269863    0.042    0.000    0.060    0.000 {built-in method builtins.isinstance}
+    22034    0.041    0.000    0.071    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:536(__str__)
+   310833    0.039    0.000    0.039    0.000 {built-in method sys.intern}
+   389453    0.039    0.000    0.039    0.000 {method 'append' of 'list' objects}
+    24902    0.027    0.000    0.478    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:504(_from_parts)
+     1904    0.025    0.000    5.471    0.003 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:197(_sync_reader)
+    10175    0.021    0.000    0.101    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:530(_make_child)
+    22015    0.020    0.000    0.030    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:523(_format_parsed_parts)
+    63453    0.020    0.000    0.028    0.000 <frozen posixpath>:41(_get_sep)
+   149887    0.019    0.000    0.019    0.000 {method 'get' of 'dict' objects}
+
+
+
+
+=== cumulative ===
+         3125330 function calls (3037757 primitive calls) in 6.838 seconds
+
+   Ordered by: cumulative time
+   List reduced from 2072 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    6.838    6.838 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/workflow_bundle.py:3234(emit_bundle)
+        2    0.000    0.000    5.485    2.742 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/entrypoints.py:185(emit_scratchpad_python)
+      476    0.001    0.000    5.484    0.012 /tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/emission/probe.py:48(rr)
+      476    0.002    0.000    5.483    0.012 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:308(_resolve_class_type)
+        2    0.000    0.000    5.478    2.739 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/entrypoints.py:35(emit_canonical_python)
+        2    0.000    0.000    5.477    2.739 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:804(emit_ready_template_python)
+        2    0.001    0.000    5.477    2.739 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:849(_emit_ready_template_python_inner)
+     1904    0.025    0.000    5.471    0.003 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:197(_sync_reader)
+     7610    0.065    0.000    5.057    0.001 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/generation.py:85(cache_file_witness)
+     7550    0.012    0.000    5.016    0.001 /tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/emission/probe.py:39(counted)
+      214    0.004    0.000    5.001    0.023 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/widgets/compact_resolver.py:150(compact_widget_names_for_node)
+      214    0.005    0.000    4.975    0.023 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/widgets/compact_resolver.py:312(_candidate_name_sources)
+     3383    0.006    0.000    4.636    0.001 {built-in method builtins.any}
+     5645    0.013    0.000    4.582    0.001 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:220(<genexpr>)
+     5815    0.017    0.000    3.998    0.001 /tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/emission/probe.py:27(__init__)
+     5815    3.979    0.001    3.979    0.001 {built-in method _hashlib.openssl_sha256}
+        1    0.000    0.000    3.812    3.812 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/workflow_bundle.py:1581(_canonicalize_for_v2_pair)
+        2    0.002    0.001    2.836    1.418 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:2819(_emit_build_function)
+      476    0.003    0.000    2.758    0.006 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:235(_load_index)
+      476    0.004    0.000    2.721    0.006 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:261(_load_pack)
+      232    0.001    0.000    2.675    0.012 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:377(get_class)
+      214    0.001    0.000    2.486    0.012 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/object_info/consume.py:782(object_info_widget_value_order)
+      214    0.002    0.000    2.473    0.012 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/widgets/compact_resolver.py:737(_object_info_entry_is_workflow_stub)
+       78    0.001    0.000    1.851    0.024 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:1645(_canonical_widget_channels)
+       26    0.002    0.000    1.594    0.061 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_kwargs.py:1066(_node_kwargs)
+       58    0.001    0.000    1.330    0.023 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:162(_resolved_field_values)
+        2    0.001    0.000    1.198    0.599 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_constants.py:690(_hoist_constants)
+       52    0.000    0.000    1.195    0.023 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_constants.py:901(_compact_input_aliases_for_node)
+        2    0.000    0.000    1.190    0.595 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/workflow_bundle.py:1760(_build_v2_sidecar)
+        2    0.000    0.000    0.967    0.484 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:330(_public_input_specs)
+        2    0.000    0.000    0.733    0.367 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:1285(canonical_v2_custody)
+        2    0.001    0.000    0.620    0.310 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:1208(_canonical_node_custody)
+       26    0.000    0.000    0.615    0.024 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:1690(_exceptional_authored_channels)
+        2    0.001    0.000    0.601    0.301 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_ready.py:200(_infer_public_input_bindings)
+    37302    0.061    0.000    0.557    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:484(_parse_args)
+     5688    0.013    0.000    0.555    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:1046(read_bytes)
+     4141    0.011    0.000    0.515    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:981(resolve)
+       26    0.000    0.000    0.490    0.019 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_kwargs.py:826(_edge_ref_expr)
+       26    0.000    0.000    0.490    0.019 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/porting/emit/emit_kwargs.py:620(_safe_output_name)
+       20    0.000    0.000    0.488    0.024 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/templates.py:1000(_normalized_output_names)
+       10    0.000    0.000    0.487    0.049 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/templates.py:859(_ready_native_schema_carrier)
+       10    0.000    0.000    0.486    0.049 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/schema/provider.py:1002(get_schema)
+       10    0.000    0.000    0.486    0.049 /root/codex/p81box/part2-attempt2/installs/program-vc48/versions/e2cc94baa2da/v/vibecomfy/schema/provider.py:582(get_schema)
+    37303    0.313    0.000    0.481    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:56(parse_parts)
+    24902    0.027    0.000    0.478    0.000 /root/codex/p81box/part2-attempt2/installs/home-vc48/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:504(_from_parts)
+
+

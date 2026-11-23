@@ -1,0 +1,89 @@
+         2136271 function calls (2048698 primitive calls) in 2.745 seconds
+
+   Ordered by: internal time
+   List reduced from 2090 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     1689    1.089    0.001    1.089    0.001 {built-in method _hashlib.openssl_sha256}
+       72    0.192    0.003    0.192    0.003 {built-in method builtins.compile}
+     1718    0.131    0.000    0.131    0.000 {method 'read' of '_io.BufferedReader' objects}
+    21654    0.123    0.000    0.188    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:56(parse_parts)
+       72    0.069    0.001    0.069    0.001 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/json/decoder.py:343(raw_decode)
+63171/2821    0.066    0.000    0.142    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/copy.py:128(deepcopy)
+    37069    0.060    0.000    0.060    0.000 {built-in method posix.lstat}
+     2758    0.054    0.000    0.211    0.000 <frozen posixpath>:421(_joinrealpath)
+    37148    0.050    0.000    0.082    0.000 <frozen posixpath>:71(join)
+    682/5    0.045    0.000    0.392    0.078 {built-in method builtins.exec}
+236503/231991    0.033    0.000    0.049    0.000 {built-in method builtins.isinstance}
+    21653    0.029    0.000    0.225    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:484(_parse_args)
+   107196    0.028    0.000    0.032    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:239(splitroot)
+     6396    0.028    0.000    0.047    0.000 {built-in method posix.stat}
+   198197    0.018    0.000    0.018    0.000 {method 'append' of 'list' objects}
+     2094    0.017    0.000    1.383    0.001 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/generation.py:101(cache_file_witness)
+   151273    0.017    0.000    0.017    0.000 {method 'get' of 'dict' objects}
+ 4183/917    0.017    0.000    0.124    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/copy.py:227(_deepcopy_dict)
+   136609    0.017    0.000    0.017    0.000 {built-in method sys.intern}
+    10098    0.015    0.000    0.027    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:536(__str__)
+11355/160    0.015    0.000    0.032    0.000 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/testing/canonical.py:36(_canonical_value)
+    14667    0.014    0.000    0.183    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/pathlib.py:504(_from_parts)
+     1585    0.014    0.000    0.019    0.000 {built-in method io.open}
+    42710    0.012    0.000    0.018    0.000 <frozen posixpath>:41(_get_sep)
+6930/6470    0.009    0.000    0.048    0.000 /root/codex/p81box/part2-attempt2/installs/home-after/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/copy.py:201(_deepcopy_list)
+
+
+
+
+=== cumulative ===
+         2136271 function calls (2048698 primitive calls) in 2.745 seconds
+
+   Ordered by: cumulative time
+   List reduced from 2090 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    2.748    2.748 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/workflow_bundle.py:3245(wrapped)
+        1    0.000    0.000    2.748    2.748 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/workflow_bundle.py:3271(emit_bundle)
+        1    0.000    0.000    1.812    1.812 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/workflow_bundle.py:1582(_canonicalize_for_v2_pair)
+        2    0.000    0.000    1.804    0.902 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/entrypoints.py:185(emit_scratchpad_python)
+        2    0.000    0.000    1.796    0.898 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/entrypoints.py:35(emit_canonical_python)
+        2    0.000    0.000    1.796    0.898 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_ready.py:804(emit_ready_template_python)
+        2    0.001    0.000    1.796    0.898 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_ready.py:849(_emit_ready_template_python_inner)
+      476    0.001    0.000    1.534    0.003 /tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/emission/probe.py:48(rr)
+      476    0.006    0.000    1.533    0.003 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/consume.py:504(_resolve_class_type)
+      214    0.003    0.000    1.390    0.006 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/widgets/compact_resolver.py:150(compact_widget_names_for_node)
+     2520    0.003    0.000    1.387    0.001 {built-in method builtins.any}
+     2094    0.017    0.000    1.383    0.001 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/generation.py:101(cache_file_witness)
+      214    0.003    0.000    1.368    0.006 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/widgets/compact_resolver.py:312(_candidate_name_sources)
+     2034    0.003    0.000    1.340    0.001 /tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/emission/probe.py:39(counted)
+      465    0.004    0.000    1.301    0.003 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/consume.py:455(validate)
+     2317    0.003    0.000    1.215    0.001 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/consume.py:470(<genexpr>)
+     1852    0.002    0.000    1.212    0.001 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/consume.py:463(matches)
+     1689    0.005    0.000    1.094    0.001 /tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/emission/probe.py:27(__init__)
+     1689    1.089    0.001    1.089    0.001 {built-in method _hashlib.openssl_sha256}
+        2    0.002    0.001    1.038    0.519 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_ready.py:2819(_emit_build_function)
+        2    0.000    0.000    0.805    0.403 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/workflow_bundle.py:1761(_build_v2_sidecar)
+      232    0.001    0.000    0.764    0.003 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/consume.py:599(get_class)
+       26    0.001    0.000    0.717    0.028 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_kwargs.py:1066(_node_kwargs)
+      214    0.001    0.000    0.714    0.003 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/widgets/compact_resolver.py:737(_object_info_entry_is_workflow_stub)
+      214    0.000    0.000    0.643    0.003 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/object_info/consume.py:1008(object_info_widget_value_order)
+       78    0.001    0.000    0.566    0.007 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_ready.py:1645(_canonical_widget_channels)
+       26    0.000    0.000    0.434    0.017 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_kwargs.py:826(_edge_ref_expr)
+       26    0.000    0.000    0.433    0.017 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_kwargs.py:620(_safe_output_name)
+       20    0.000    0.000    0.432    0.022 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/templates.py:1000(_normalized_output_names)
+       10    0.000    0.000    0.432    0.043 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/templates.py:859(_ready_native_schema_carrier)
+       10    0.000    0.000    0.431    0.043 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/schema/provider.py:1002(get_schema)
+       10    0.000    0.000    0.431    0.043 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/schema/provider.py:582(get_schema)
+   586/47    0.000    0.000    0.411    0.009 <frozen importlib._bootstrap>:233(_call_with_frames_removed)
+  488/238    0.002    0.000    0.405    0.002 <frozen importlib._bootstrap>:1165(_find_and_load)
+   288/39    0.001    0.000    0.404    0.010 <frozen importlib._bootstrap>:1120(_find_and_load_unlocked)
+    154/5    0.000    0.000    0.400    0.080 <frozen importlib._bootstrap_external>:934(exec_module)
+    167/3    0.002    0.000    0.393    0.131 <frozen importlib._bootstrap>:666(_load_unlocked)
+   460/37    0.000    0.000    0.392    0.011 {built-in method builtins.__import__}
+    682/5    0.045    0.000    0.392    0.078 {built-in method builtins.exec}
+        2    0.000    0.000    0.387    0.194 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_ready.py:1285(canonical_v2_custody)
+       10    0.000    0.000    0.385    0.039 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/schema/provider.py:727(_load_schema)
+        1    0.000    0.000    0.381    0.381 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/__init__.py:1(<module>)
+       58    0.001    0.000    0.351    0.006 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/porting/emit/emit_ready.py:162(_resolved_field_values)
+       10    0.004    0.000    0.328    0.033 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/schema/provider.py:651(_load_index)
+     2125    0.008    0.000    0.323    0.000 /root/codex/p81box/part2-attempt2/installs/program-after/versions/35fff130104c/v/vibecomfy/schema/provider.py:635(_validated_pack_path)
+
+
