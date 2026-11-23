@@ -68,6 +68,8 @@ The Lead initially narrowed the repairs to effect discovery and used a monotonic
 
 ## Next, in order
 
+**Lead CI rule, 23 November:** After the Plan 78 landing merge into `release/15/main`, when its tree equals the gated head, cancel that merge’s push-triggered CI and Lanes runs; once the gate is confirmed, also cancel the landing PR’s own CI. Do not dispatch or cancel other runs under this rule.
+
 1. Plan 81 Part 1 and Plan 40 have landed; the 10:50 host instruction allowed the release merge above. Timeline holds the Agent CI slot. Wait for the host to direct the next merge of its Runtime pin and give Plan 78 the CI slot.
 2. After those land and the Lead gives the slot, merge `release/15/main` into the plan branch with a merge commit, rerun touched named proofs and the 53-file local comparison. Tell the Lead before the one final integrated-head Agent CI run; only one Agent CI run may run across the release at a time. Compare failure IDs to the Lead’s hosted baseline.
 3. The host repeats LE-4 last on that candidate, including the headline measurement and evidence described above.
