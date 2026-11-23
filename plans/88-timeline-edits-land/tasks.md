@@ -60,6 +60,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23 (host): For TE-3 full-fixture acceptance, the repeated-word anchors and legacy-overrun occurrence precede a later 15-frame cut; reflow must move no clip, while any correction of the separate overrun occurrence is recorded. The first arranged attempt accepted the ripple and refused the negative cases, but reflow moved `footage-0-3` from 0.05 to 0.033333 seconds; proof remains open and the failed test is checkpointed at `dbe53ef9d`.
 
+- 2026-11-23: TE-5 ripple fixture and acceptance merged as App `035af6ee` (commit `564350a0`); embedded Runtime confirms all later clips shift 15 frames at 30 fps, two unsafe retimes refuse, all 621 clip spans stay unchanged through reflow, and the separate overrun remains 4100 ms. Exactly two repeated-word declarations are position-pinned by reflow, also shown by the no-ripple control (Plan 18 evidence PR #1752); 15 focused Node checks passed without skips. Pack admission, live read-back, overlays and rendering still require the real stack.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
@@ -91,3 +93,4 @@ One line per decision taken by the orchestrator during the run.
 - 23 Nov 2026 (Lead, owner's review rule, astrid-dev PR #1699): a per-card high-judgment review runs only for an S card, a change to what is accepted, refused or published, or code already judged unsound. So: TE-1 keeps the review it has had (its repair gets one confirming check, then the PR); TE-2 drops its separate review and folds into R; TE-3 (S) keeps one review before TE-4 builds on it; TE-4 and TE-5 go to R. Every other card is proved by its own focused tests.
 - 23 Nov 2026 (Lead): merging a task PR into the plan branch `release/15/plan-88` is the manager's, no gate needed; the Lead's gate is only for `release/15/main` and CI slots. TE-1 (PR #561) merged into the plan branch as `44b344d6` on that rule; its Progress box stays unticked until the live swap and render pass.
 - 23 Nov 2026: the standard builder has no transcript, word anchor or project-pack element, so TE-4's anchored edits (1 anchored, 3, 4) and TE-3's live proof need the film-shaped variant. TE-5's builder half is unparked ahead of them (word provenance, legacy overrun, shot-owned footage and overlays build on the embedded Runtime; pack admission needs Plan 87's stack). TE-4 runs edits 1 (non-anchored), 2 and 5 to 9 on the standard and large-shots builds meanwhile.
+- 23 Nov 2026 (host): allow only the two independently controlled repeated-word declaration rewrites in the new acceptance comparison; require all clip spans and other bundle fields unchanged through reflow.
