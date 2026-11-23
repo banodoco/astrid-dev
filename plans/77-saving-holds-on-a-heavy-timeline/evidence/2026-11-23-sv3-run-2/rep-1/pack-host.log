@@ -1,0 +1,32 @@
+{"event": "astrid.host_startup_timing", "phase": "module_import_begin", "elapsed_ms": 0}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":0,"phase":"module_import_begin","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "module_import_done", "elapsed_ms": 242}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":242,"phase":"module_import_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_begin", "elapsed_ms": 23}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":264,"phase":"bootstrap_begin","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_inventory_done", "elapsed_ms": 47}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":311,"phase":"bootstrap_inventory_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_identity_done", "elapsed_ms": 171}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":482,"phase":"bootstrap_identity_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_health_done", "elapsed_ms": 7}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":489,"phase":"bootstrap_health_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_manifest_done", "elapsed_ms": 25}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":514,"phase":"bootstrap_manifest_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_launch_done", "elapsed_ms": 51}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":564,"phase":"bootstrap_launch_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "cli_args_parsed", "elapsed_ms": 13}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":577,"phase":"cli_args_parsed","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "startup_identity_begin", "elapsed_ms": 1}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":579,"phase":"startup_identity_begin","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "startup_identity_done", "elapsed_ms": 166}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":744,"phase":"startup_identity_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "host_constructor_begin", "elapsed_ms": 0}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":744,"phase":"host_constructor_begin","process_id":7178}
+capability census drift (host keeps running; unapproved capabilities are unavailable): {'executor_inventory': {'added': [], 'missing': ['hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search']}}; review the diff and run: python -m astrid.core.execution.capability_ledger approve
+{"event": "astrid.host_startup_timing", "phase": "host_constructor_done", "elapsed_ms": 2582}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":3327,"phase":"host_constructor_done","process_id":7178}
+{"event": "astrid.host_startup_timing", "phase": "discovery_begin", "elapsed_ms": 1}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":3328,"phase":"discovery_begin","process_id":7178}
+generic host shutdown requested: signal=15 reason=SIGTERM
+{"event": "astrid.host_startup_timing", "phase": "discovery_done", "elapsed_ms": 2993}
+{"diagnostic":"astrid.host_startup_phase","elapsed_ms":6320,"phase":"discovery_done","process_id":7178}

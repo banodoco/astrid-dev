@@ -1,0 +1,4 @@
+{
+  "error": "registered host process scope is unverified at /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1/runtime/generic-host.json; retry down from the owning launcher after host readiness",
+  "ok": false
+}

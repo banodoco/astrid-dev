@@ -1,0 +1,10 @@
+/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python
+-X
+utf8
+-m
+astrid.core.execution.generic_host
+--service
+--source-checkout
+/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages
+--support-root
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1/runtime

@@ -1,0 +1,11 @@
+{
+  "status": "pack host not polling",
+  "log_growth_bytes": 13600,
+  "claim_lines": 0,
+  "pgrep_pack_host_count": 0,
+  "own_pack_host_alive_at_end": "unknown",
+  "own_pack_host_ready_file_seen": false,
+  "own_pack_host_log_bytes": 3442,
+  "own_pack_host_claim_lines": 0,
+  "note": "counts only; no group or owner assertion"
+}
