@@ -78,6 +78,11 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 | R.9 Mislabelled old media may bypass kind match | Not reproduced through an admissible verified old object: the single attempt relied on a synthetic old-kind assumption; no code change. |
 | R.10 Ordinary audio swap follows replacement duration or beats | Out of Plan 88 scope; static observation recorded for Plan 18 in evidence PR #1754. |
 
+
+- 2026-11-23: The Lead directed a local owned installed stack for commit/read-back proof: Runtime `24e2c929`, Agent `97d1258d` and App `efbbd819`; because committed Runtime locks still name `737843e9`, the disposable install uses an explicit exact-SHA manifest. The partial film timeline has 46 occurrences and word-anchored footage; the full builder stopped at project-pack placement, while project pack admission itself read back as admitted. No render or full-fixture acceptance is claimed.
+- 2026-11-23: TE-1 local swap capture failed on a retained parent word anchor; the verified-pin hydration fix merged as Agent `ff5d2781` (116 focused tests passed, bounded review passed). The next dry-run failed on a prefixed `content_sha256`; its raw-digest fix merged as Agent `2aa42d60` (31 focused tests passed, bounded review passed). Both refusals submitted no timeline commit and the fresh canonical head was unchanged; live swap proof remains open.
+- 2026-11-23: App film media import budget fix merged as `ee4e3ebe`: generated video bitrate scales with duration and every media file is checked below the 64 MiB Runtime limit before import. Nineteen focused tests passed, including small-resolution 90/192-second encoding; full-size live import remains unproved.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
@@ -110,3 +115,9 @@ One line per decision taken by the orchestrator during the run.
 - 23 Nov 2026 (Lead): merging a task PR into the plan branch `release/15/plan-88` is the manager's, no gate needed; the Lead's gate is only for `release/15/main` and CI slots. TE-1 (PR #561) merged into the plan branch as `44b344d6` on that rule; its Progress box stays unticked until the live swap and render pass.
 - 23 Nov 2026: the standard builder has no transcript, word anchor or project-pack element, so TE-4's anchored edits (1 anchored, 3, 4) and TE-3's live proof need the film-shaped variant. TE-5's builder half is unparked ahead of them (word provenance, legacy overrun, shot-owned footage and overlays build on the embedded Runtime; pack admission needs Plan 87's stack). TE-4 runs edits 1 (non-anchored), 2 and 5 to 9 on the standard and large-shots builds meanwhile.
 - 23 Nov 2026 (host): allow only the two independently controlled repeated-word declaration rewrites in the new acceptance comparison; require all clip spans and other bundle fields unchanged through reflow.
+- 23 Nov 2026 (Lead): up to two Agent CI runs may run at once; the host assigns a free slot.
+- 23 Nov 2026 (Lead): release gates use by-ID comparison to baseline `8807f820` plus its moving groups and latest completed release/15/main lanes run `45183456544`; focused tests and affected-shard reruns suffice after a small change.
+- 23 Nov 2026 (Lead): a test constant or witness explicitly marked for refresh when a pin moves belongs to that pin commit.
+- 23 Nov 2026 (Lead): when a fixture hits a product limit, shrink fixture inputs rather than raise the limit.
+- 23 Nov 2026 (Lead): filesystem authority belongs to the host, not a caller request; worker/host isolation is future work tracked in #1760.
+- 23 Nov 2026 (Lead): cross-lane findings go straight to the other lane through the host.
