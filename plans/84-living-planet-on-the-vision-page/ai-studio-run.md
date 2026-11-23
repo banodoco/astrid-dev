@@ -36,9 +36,9 @@ One packet runs at a time until RF-A; after that, packets with no shared files m
 
 The owner's go (sending the start message) starts the run. Within it, the manager may open AI Studio sessions on the owner's account, push `lab/*` branches, commission Astra subagents, merge a `lab/*` branch into the lab's `main` on an Astra accept verdict, merge Astra's brief rewrites into `packets/`, and update this board and Plan 84's progress through pull requests to astrid-dev `main`. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
 
-## Current blocker — 23 November 2026
+## EX-00 and preview — 23 November 2026
 
-EX-00 ran in a [fresh AI Studio session](https://aistudio.google.com/apps/0e1c114d-c81b-487c-9ec8-66ccc59a0160) imported from lab main `bfd8472b6be7eee1111a6eafc1db97a0df4d31b5`. AI Studio reported 90 tests and build passed and wrote its result note, but its sandbox has no `.git` or credentials. Its GitHub sync offered only force-pushing the imported app to `main`, which is prohibited. The result note remains in the session; no packet branch or verdict exists. Gate and RF-0 wait for branch delivery. The import automatically changed `bun.lock` and `vite.config.ts`; the pre-migration checkpoint was restored before the packet prompt, but the eventual branch must be independently checked for the required note-only diff.
+EX-00 ran in a [fresh AI Studio session](https://aistudio.google.com/apps/0e1c114d-c81b-487c-9ec8-66ccc59a0160) imported from lab main `bfd8472b6be7eee1111a6eafc1db97a0df4d31b5`. AI Studio reported 90 tests and build passed and wrote its result note, but its sandbox has no `.git` or credentials. Its GitHub sync offered only force-pushing the imported app to `main`, which is prohibited. The manager exported the result note and pushed `lab/EX-00` at `883855c`; Astra ACCEPTED after a fresh install, 90 tests, lab checks and a production build. Merged as `0539629c`. The import automatically changed `bun.lock` and `vite.config.ts`; the pre-migration checkpoint was restored before the packet prompt. The reviewed branch contained only the note. Restoring exposed a preview crash when the lab assigned getter-only `window.fetch`. AI Studio repaired its session by changing `src/lab/labFeed.ts` and adding `src/lab/labFeed.test.ts`; the visible preview now works, and AI Studio reports 92 tests and a successful build. This repair remains unsynced and unreviewed. RF-0 will decide how to carry it safely into the lab. The owner directed AI Studio to do engineering, with the manager operating controls such as GitHub sync; hourly supervision should respect quota reset times.
 
 ## Queue
 
@@ -46,7 +46,7 @@ Briefs: [`packets/`](https://github.com/banodoco/planet/tree/main/packets) in th
 
 | ID | Outcome (short) | Depends on | State | Branch @ commit | Verdict |
 | --- | --- | --- | --- | --- | --- |
-| EX-00 | Prove the loop: import, test, build, push | — | Blocked: branch delivery | Not pushed | Pending |
+| EX-00 | Prove the loop: import, test, build, push | — | Accepted | [`lab/EX-00` @ `883855c`](https://github.com/banodoco/planet/commit/883855cee9e94cfc93db2fcb723cb67cb935d0cf); merge `0539629c` | ACCEPT: independent checks passed |
 | RF-0 | Adjust rules and packet size to what AI Studio manages | EX-00 | | | |
 | EX-01 | Build the world without WebGL; scene fingerprint test | RF-0 | | | |
 | EX-02 | Types, resource owner, world config modules | EX-01 | | | |
