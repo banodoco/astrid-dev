@@ -1,0 +1,14 @@
+{
+  "from": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/direct-data/runtime",
+  "to": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/work-data-1/runtime",
+  "files": {
+    "catalog.json": {
+      "sha256_before": "66e2730ecba82153db35b6fec7bd784e5d6d46294753a9ac65bc4471ea554faa",
+      "sha256_after": "0a56bcd62b15505b6e9897ccd691df329c3f8aa5a4361cb1e6594e23c8318ed4"
+    },
+    "source-profiles/astrid.json": {
+      "sha256_before": "b0b4c48094b08c10ea48be968049145edc18c069176771e9b9201598a94c1115",
+      "sha256_after": "b0b4c48094b08c10ea48be968049145edc18c069176771e9b9201598a94c1115"
+    }
+  }
+}

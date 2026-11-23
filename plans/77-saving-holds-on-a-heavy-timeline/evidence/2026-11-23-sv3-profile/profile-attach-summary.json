@@ -1,0 +1,50 @@
+[
+  {
+    "save": "profile-cold",
+    "attached": true,
+    "raw_stack_samples": 42371,
+    "sampling_sample_count": 42371,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  },
+  {
+    "save": "profile-w1",
+    "attached": true,
+    "raw_stack_samples": 26018,
+    "sampling_sample_count": 26018,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  },
+  {
+    "save": "profile-w2",
+    "attached": true,
+    "raw_stack_samples": 38974,
+    "sampling_sample_count": 38974,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  },
+  {
+    "save": "profile-w3",
+    "attached": true,
+    "raw_stack_samples": 27270,
+    "sampling_sample_count": 27270,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  }
+]
