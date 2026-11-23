@@ -66,6 +66,12 @@ Also pending: owner `Scope decision` and `Challenge` acceptance in `inputs.md`; 
 5. Separately prove the **Goal → Gap → Project → recorded Release** query, **locally frozen Issue → Release** query, and **same-authored-input fixed-revision public-feed byte parity**. Original #1212 or #1624 source-only green CI cannot substitute for integrated Release 15 proof. `test_project_delivery_parity.py` may be carried as a *test*, but PD8 acceptance and the PD10 guide are after RS1. Never skip, weaken, xfail or delete original tests to manufacture a pass.
 6. Obtain an independent formal RS1 verdict at the actual authorized review stop, then execute approved downstream PD6–PD11 and final R. No Lead GO, no integration and no promotion have occurred in this recovery packet.
 
+## Parser and authored-record ownership packet (23 November 2026)
+
+The old Release15 generic branch parser and the new canonical authored records need **one Lead-owned migration**, not a Plan72-only `records.py` replacement. The frozen release brief lists Plans **39/50/40** with **zero plan rows**; the current stricter branch parser would reject all three until the Lead reconciles every included-plan row. Plan72 itself is a **Foundational enabler**, not a goal-gap delivery project.
+
+The [two-file five-hunk generic compatibility patch](09-release15-branch-parser-compat.patch) is pinned to frozen Release15 `records.py` and `test_check_docs.py`, and strict in-memory replay reconstructs the canonical main versions byte-for-byte. **Do not apply it independently of the release-owned authored records and branch-table migration.** The [exact authored-record inventory and integration gate](10-release15-authored-records.md) pins Plan72's canonical three source blobs and the necessary owner/test sequence, including preservation of Plan72's gapless enabler semantics. Six new fixture-based `test_project_delivery_release15_seam.py` tests rehearse the source branch semantics but do **not** claim a release branch cut or combined CI.
+
 ## Native source-only receipts (not release qualification)
 
 | Stage | Tests-first RED | Repaired hosted GREEN |
