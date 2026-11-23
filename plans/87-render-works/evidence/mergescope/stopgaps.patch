@@ -1,0 +1,210 @@
+diff --git a/astrid/core/execution/generic_host.py b/astrid/core/execution/generic_host.py
+index 47700ffc4..b14eb57b2 100644
+--- a/astrid/core/execution/generic_host.py
++++ b/astrid/core/execution/generic_host.py
+@@ -5681,10 +5681,17 @@ class RuntimeProtocolClient:
+                     f"{self._heartbeat_session}-{heartbeat_sequence}"
+                 ),
+                 "runtime_epoch": runtime_epoch,
++                # R6 stopgap: a long render starves heartbeats while the
++                # Runtime serves its inputs; ask for a lease that survives it.
++                "lease_seconds": 600,
+             }
+             if progress is not None:
+                 payload["progress"] = dict(progress)
+-            return self._lifecycle_client(deadline=deadline).heartbeat_attempt(attempt_id, **payload)
++            client = self._lifecycle_client(deadline=deadline)
++            if hasattr(client, "timeout"):
++                client.timeout = max(float(client.timeout), 20.0) if deadline is None else max(
++                    float(client.timeout), min(20.0, max(0.1, deadline - time.monotonic())))
++            return client.heartbeat_attempt(attempt_id, **payload)
+         finally:
+             self._heartbeat_lock.release()
+ 
+@@ -10698,6 +10705,7 @@ class GenericPackHost:
+             align=align,
+             generation_entry=generation_entry,
+             managed_preparation=managed_preparation,
++            readiness_worker_kind="command",
+             network_policy=(
+                 _network_policy(record, inputs)
+                 if record.id == "vibecomfy.run" and inputs.get("comfy_url") else None
+@@ -10734,6 +10742,10 @@ class GenericPackHost:
+         PreparedTimelineInputs.handoff_source(prepared_inputs, env)
+         if os.environ.get('ASTRID_HOST_EXECUTION_PROFILE') != 'installed':
+             env['PYTHONPATH'] = _command_worker_pythonpath(record, env.get('PYTHONPATH', ''))
++            # A source-mode command worker discovers packs like a native one:
++            # through the host's effective roots (including the personal
++            # collection), which launch validation already qualified.
++            env[ASTRID_PACKS_PATH] = os.pathsep.join(str(root) for root in self.pack_roots)
+         cwd = _confined_cwd(
+             binding.cwd,
+             attempt=attempt,
+diff --git a/astrid/core/rendering/remotion_runtime.py b/astrid/core/rendering/remotion_runtime.py
+index 7a4bb4462..12d4c555c 100644
+--- a/astrid/core/rendering/remotion_runtime.py
++++ b/astrid/core/rendering/remotion_runtime.py
+@@ -551,6 +551,10 @@ def _registry_context(environment: Mapping[str, str], *, generator: bool) -> dic
+     if not generator:
+         keys.update((*_REGISTRY_SELECTORS, 'PYTHONPATH', 'XDG_CONFIG_HOME'))
+     context = {k: environment[k] for k in sorted(keys) if k in environment}
++    # An empty pack search path selects no extra roots, exactly like an unset
++    # one; a child that inherits the empty spelling is the same context.
++    if context.get(ASTRID_PACKS_PATH) == '':
++        del context[ASTRID_PACKS_PATH]
+     # This mapping is the registry child's complete environment. Ambient
+     # Git/startup controls omitted here cannot influence that child.
+     probe_context(environment=context, python_executable=sys.executable)
+@@ -1272,6 +1276,12 @@ def _validated_runtime(project_dir: Path, *, environment: Mapping[str, str] | No
+             raise RemotionValidationError("runtime validation launch/source differs")
+         matches = [item for item in artifact['contexts'][role]['variants'] if item['context'] == context]
+         if len(matches) != 1:
++            try:  # R6-DEBUG (uncommitted): dump contexts for local diagnosis
++                import json as _j, os as _o, time as _t
++                with open('/private/tmp/r6-remotion-context-%s-%d.json' % (role, _o.getpid()), 'w') as _f:
++                    _j.dump({'role': role, 'actual': context, 'variants': [i.get('context') for i in artifact['contexts'][role]['variants']], 'environ_packs': _o.environ.get('ASTRID_PACKS_PATH'), 'argv': __import__('sys').argv}, _f, default=str, indent=1)
++            except Exception:
++                pass
+             differences = [_context_differences(item.get('context'), context)
+                            for item in artifact['contexts'][role]['variants']]
+             fields = min(differences, key=len) if differences else []
+diff --git a/astrid/packs/rendering/rendering/renderers/remotion/run.py b/astrid/packs/rendering/rendering/renderers/remotion/run.py
+index 728e743ce..d135288f6 100644
+--- a/astrid/packs/rendering/rendering/renderers/remotion/run.py
++++ b/astrid/packs/rendering/rendering/renderers/remotion/run.py
+@@ -1231,6 +1231,21 @@ def _execute_remotion_locked(
+             # worktrees and must never be inherited by the render child.
+             remotion_env_additions["PYTHONPATH"] = schema_pythonpath
+         remotion_env_additions["ASTRID_REMOTION_PROJECT_DIR"] = str(project_dir.resolve())
++        # The Python registry discovers the personal pack collection by its
++        # own root, so the generated registry can import its elements. The
++        # bundler resolves those imports only through ASTRID_PACKS_PATH, and a
++        # task's selected-pack environment names just the capability's packs.
++        personal_packs_root = resolve_personal_packs_root()
++        if personal_packs_root is not None and personal_packs_root.is_dir():
++            alias_roots = [item for item in os.environ.get("ASTRID_PACKS_PATH", "").split(os.pathsep) if item]
++            if str(personal_packs_root) not in alias_roots:
++                alias_roots.append(str(personal_packs_root))
++            remotion_env_additions["ASTRID_PACKS_PATH"] = os.pathsep.join(alias_roots)
++        # Propagated Astrid variables are copied from the parent mapping last,
++        # so the bundler's pack roots must be carried there as well.
++        remotion_parent_env = dict(os.environ)
++        if "ASTRID_PACKS_PATH" in remotion_env_additions:
++            remotion_parent_env["ASTRID_PACKS_PATH"] = remotion_env_additions["ASTRID_PACKS_PATH"]
+         if stage_summary.get("project_pack_roots"):
+             from astrid.core.rendering.project_elements import PACK_ROOTS_ENV, REGISTRY_ROOT_ENV
+ 
+@@ -1352,12 +1367,12 @@ def _execute_remotion_locked(
+                 with log_path.open("w") as stdout_log, RemotionProgressRelay(log_path, progress_path=progress_path):
+                     completed = subprocess.run(
+                         remotion_args, cwd=str(project_dir),
+-                        env=build_child_subprocess_env(explicit_env=remotion_env_additions),
++                        env=build_child_subprocess_env(parent=remotion_parent_env, explicit_env=remotion_env_additions),
+                         stdout=stdout_log, stderr=subprocess.PIPE, check=False, text=True)
+             else:
+                 completed = subprocess.run(
+                     remotion_args, cwd=str(project_dir),
+-                    env=build_child_subprocess_env(explicit_env=remotion_env_additions),
++                    env=build_child_subprocess_env(parent=remotion_parent_env, explicit_env=remotion_env_additions),
+                     capture_output=True, check=False, text=True)
+             if diagnostic_trace:
+                 diagnostic_stdout = completed.stdout
+diff --git a/astrid_runtime_client/generated.py b/astrid_runtime_client/generated.py
+index 1b7bc35d1..fbaa0d366 100644
+--- a/astrid_runtime_client/generated.py
++++ b/astrid_runtime_client/generated.py
+@@ -1340,8 +1340,9 @@ class WorkspaceClient:
+         _, _, body = self._request("POST", f"/v1/tasks/{_path_part(task_id)}/claim-delegated-child", body=json.dumps(payload, separators=(",", ":")).encode(), headers={"Content-Type": "application/json", "Idempotency-Key": idempotency_key}, expected=(200,))
+         return AttemptFence.from_json(self._json(body))
+ 
+-    def heartbeat_attempt(self, attempt_id: str, *, lease_id: str, fence: int, idempotency_key: str, runtime_epoch: int, progress: Mapping[str, Any] | None = None) -> MutationResult:
++    def heartbeat_attempt(self, attempt_id: str, *, lease_id: str, fence: int, idempotency_key: str, runtime_epoch: int, progress: Mapping[str, Any] | None = None, lease_seconds: int | None = None) -> MutationResult:
+         payload: dict[str, Any] = {"lease_id": lease_id, "fence": fence, "runtime_epoch": runtime_epoch}
++        if lease_seconds is not None: payload["lease_seconds"] = lease_seconds
+         if progress is not None: payload["progress"] = dict(progress)
+         _, _, body = self._request("POST", f"/v1/attempts/{_path_part(attempt_id)}/heartbeat", body=json.dumps(payload, separators=(",", ":")).encode(), headers={"Content-Type": "application/json", "Idempotency-Key": idempotency_key})
+         return self._mutation_json(body)
+diff --git a/remotion/webpack-alias.mjs b/remotion/webpack-alias.mjs
+index 0522e1ae5..c97c1736a 100644
+--- a/remotion/webpack-alias.mjs
++++ b/remotion/webpack-alias.mjs
+@@ -213,6 +213,11 @@ const applyAliasesForRoot = (currentConfiguration, remotionRoot) => {
+       alias: {
+         ...currentConfiguration.resolve?.alias,
+         ...packAliases,
++        // Collection packs outside the in-tree packs directory import the
++        // rendering pack's shared element contracts by the relative path they
++        // have in-tree; bind those requests to the product's own copy.
++        '../../../../rendering/shared': path.resolve(repoRoot, 'astrid/packs/rendering/shared'),
++        '../../../../../rendering/shared': path.resolve(repoRoot, 'astrid/packs/rendering/shared'),
+         ...selectedRegistries,
+         ...primitiveAliases(repoRoot),
+       },
+diff --git a/tests/core/rendering/test_remotion_host_regressions.py b/tests/core/rendering/test_remotion_host_regressions.py
+index 479ad940e..7a964af6a 100644
+--- a/tests/core/rendering/test_remotion_host_regressions.py
++++ b/tests/core/rendering/test_remotion_host_regressions.py
+@@ -3,6 +3,8 @@ from __future__ import annotations
+ 
+ import os
+ import pickle
++import ast
++import inspect
+ import subprocess
+ import sys
+ import tempfile
+@@ -76,9 +78,13 @@ def test_render_launch_projection_matches_runtime_selected_worker_pythonpath(tmp
+     assert generic_host._record_may_render(record)
+ 
+     package_parent = str(Path(generic_host.__file__).resolve().parents[3])
++    # Build the readiness-side path from stable inputs rather than the helper
++    # under test. Source-mode readiness adds the selected Runtime checkout,
++    # while dependency_pythonpath filters the host's approved dependencies.
+     expected_path = os.pathsep.join(dict.fromkeys((
+         package_parent,
+-        *generic_host._dependency_pythonpath(environment),
++        str(runtime_root),
++        *generic_host.dependency_pythonpath(environment),
+         *generic_host._admitted_python_roots(record.source_root, record.definition),
+     )))
+     expected_roots = os.pathsep.join(str(root) for root in host.pack_roots)
+@@ -115,9 +121,11 @@ def test_render_launch_projection_uses_host_personal_collection_roots(tmp_path,
+     record = next(record for record in host.discover() if record.id == "rendering.render")
+ 
+     expected_roots = os.pathsep.join(str(root) for root in host.pack_roots)
++    runtime_root = str(Path(__import__("runtime_protocol").__file__).resolve().parent.parent)
+     expected_path = os.pathsep.join(dict.fromkeys((
+         str(Path(generic_host.__file__).resolve().parents[3]),
+-        *generic_host._dependency_pythonpath(environment),
++        runtime_root,
++        *generic_host.dependency_pythonpath(environment),
+         *generic_host._admitted_python_roots(record.source_root, record.definition),
+     )))
+     stale_candidates = generic_host._launch_worker_probe_environments(
+@@ -138,6 +146,26 @@ def test_render_launch_projection_uses_host_personal_collection_roots(tmp_path,
+         for candidate in launch_candidates
+     )
+ 
++    # The actual deferred launch call must pass the expanded host roots. This
++    # guards the callsite that used to pass the raw CLI roots, even though a
++    # manually projected call with host.pack_roots would pass on old code.
++    tree = ast.parse(inspect.getsource(generic_host._cli_impl))
++    validation_calls = [
++        node for node in ast.walk(tree)
++        if isinstance(node, ast.Call)
++        and isinstance(node.func, ast.Name)
++        and node.func.id == "_prepare_render_validation"
++    ]
++    assert validation_calls
++    assert any(
++        len(node.args) >= 5
++        and isinstance(node.args[4], ast.Attribute)
++        and isinstance(node.args[4].value, ast.Name)
++        and node.args[4].value.id == "host"
++        and node.args[4].attr == "pack_roots"
++        for node in validation_calls
++    )
++
+ 
+ @pytest.mark.parametrize("failure", [
+     FileNotFoundError("missing Node"),

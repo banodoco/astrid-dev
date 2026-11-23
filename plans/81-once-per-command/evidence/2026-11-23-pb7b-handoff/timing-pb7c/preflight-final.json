@@ -1,0 +1,27 @@
+{
+  "utc_epoch": 1795456196.2740917,
+  "loadavg": [
+    0.419921875,
+    0.58837890625,
+    0.556640625
+  ],
+  "disk": {
+    "total": 270553174016,
+    "used": 57033404416,
+    "free": 16848207872
+  },
+  "ports": {
+    "standin": {
+      "port": 18188,
+      "state": "not-listening"
+    },
+    "A": {
+      "port": 18232,
+      "state": "listening"
+    },
+    "B": {
+      "port": 18233,
+      "state": "listening"
+    }
+  }
+}

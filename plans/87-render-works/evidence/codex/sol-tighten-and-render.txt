@@ -1,0 +1,27 @@
+The pause is unchanged, and no MP4 was produced.
+
+1. **Part 1 — verified:** The guarded SDK timing preview was refused:
+
+   ```text
+   candidate.timing: missing exact word binding for ('occ-77f906f3242c48179ab86ca7c3e62eb4-55940497dcea0a1f1f66-occ', '77f906f3242c48179ab86ca7c3e62eb4-55940497dcea0a1f1f66', 'c19-00-am-snap-plate').on
+   ```
+
+   **0 frames removed.** The 389-clip [plan.tsv](tighten/plan.tsv) passes its arithmetic assertions, but cannot be published while retaining the word anchors. I published only the render-registry repair: `943c209e… → f9237406…`. Fresh readback confirms all 389 clips, placements, music and the 5,897-frame ending remain unchanged.
+
+   `music.duck` is absent. Stereo source-window measurements across 26 lines average **8.24 LU below voice currently**, versus **8.29 LU** in hypothetical shifted windows. Music was untouched.
+
+2. **Part 2 — verified:** Twenty valid before-editor stills and a [contact sheet](tighten/verify/before/contact.jpg) were captured after retrying the preview. No after comparison or edited-after audio exists.
+
+   Current acoustic gap measures approximately **0.725 s** using −45 dBFS/10 ms thresholding; transcript timing gives 0.850 s. **Inferred:** removing 18 frames would leave approximately **0.125 s acoustically**. Preserving at least 0.250 s by that threshold permits **14 whole frames**, leaving approximately 0.258 s.
+
+3. **Part 3 — verified:** Ran `python3 -u tighten/render_attempt.py`, which invokes the product render with native 1920×1080, 30 fps and AAC audio; [exact argv](tighten/render-command.json).
+
+   The first attempt failed after **4.73 s** on #1238’s retired `file` locator. After repairing those two unused registry fields, the retry passed Remotion preflight but failed after **47.67 s**:
+
+   ```text
+   execution lease lost: lease_fenced
+   ```
+
+   The CLI reported unresolved custody; its documented cancellation command was executed. No output, Desktop copy, ffprobe result or rendered-file stills exists.
+
+**Inferred minimum product work:** support authenticated occurrence-owned word bindings and repair host lease renewal/reconciliation. The underlying transport-stall cause remains unproven. Exact commands, errors and source locations are recorded in [FRICTION.md](tighten/FRICTION.md).

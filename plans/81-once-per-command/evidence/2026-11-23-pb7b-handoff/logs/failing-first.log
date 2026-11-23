@@ -1,0 +1,88 @@
+.F.F.F                                                                   [100%]
+=================================== FAILURES ===================================
+__ test_action_entries_refuse_duplicate_before_dirty_managed_inventory[True] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9490d8f6f0>
+scoped = True
+
+    @pytest.mark.parametrize("scoped", [False, True])
+    def test_action_entries_refuse_duplicate_before_dirty_managed_inventory(monkeypatch, scoped):
+        from astrid.core.generation import entries
+    
+        project = Path(__file__).resolve().parents[3]
+        monkeypatch.setenv("HOME", "/nonexistent-pb7-review-home")
+        monkeypatch.setenv("ASTRID_PACKS_PATH", str(project / "tests" / "core"))
+        monkeypatch.setattr(loader, "packs_root", lambda: project / "astrid" / "core")
+        monkeypatch.setattr(source_setup, "active_sources", lambda **kwargs: ())
+    
+        def dirty_inventory():
+            raise source_setup.SourceSetupError("dirty managed checkout")
+    
+        monkeypatch.setattr(source_setup, "active_source_inventory", dirty_inventory)
+        with discovery.pack_discovery_scope() if scoped else nullcontext():
+            with pytest.raises(PackValidationError, match="duplicate pack id 'generation'"):
+>               entries.action_entries()
+
+tests/core/pack/test_discovery_admission_order.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+astrid/core/generation/entries.py:221: in action_entries
+    return reuse_pack_projection(_discover_action_entries)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+astrid/core/pack/discovery.py:192: in reuse_pack_projection
+    before = fingerprint()
+             ^^^^^^^^^^^^^
+astrid/core/pack/discovery.py:190: in fingerprint
+    return _discovery_fingerprint(REPO_ROOT, (), active_source_inventory(), discover_packs)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def dirty_inventory():
+>       raise source_setup.SourceSetupError("dirty managed checkout")
+E       astrid.core.pack.source_setup.SourceSetupError: dirty managed checkout
+
+tests/core/pack/test_discovery_admission_order.py:84: SourceSetupError
+_______ test_discovery_refuses_busy_collection_after_warm_metadata[True] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-51/test_discovery_refuses_busy_co0')
+roots = (PosixPath('/tmp/pytest-of-root/pytest-51/test_discovery_refuses_busy_co0/source'), PosixPath('/tmp/pytest-of-root/pytest-51/test_discovery_refuses_busy_co0/extra'), ['inventory', 'inventory'])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f949014e030>
+scoped = True
+
+    @pytest.mark.parametrize("scoped", [False, True])
+    def test_discovery_refuses_busy_collection_after_warm_metadata(tmp_path, roots, monkeypatch, scoped):
+        _, extra, _ = roots
+        with discovery.pack_discovery_scope() if scoped else nullcontext():
+            assert discovery.discover_pack_metadata(project_root=tmp_path, extra_pack_roots=(extra,)) == ()
+            _set_pending_exchange(tmp_path, extra, monkeypatch)
+>           with pytest.raises(PackInstallError) as caught:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE PackInstallError
+
+tests/core/pack/test_discovery_admission_order.py:98: Failed
+____ test_action_entries_refuse_busy_collection_after_warm_projection[True] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-51/test_action_entries_refuse_bus0')
+roots = (PosixPath('/tmp/pytest-of-root/pytest-51/test_action_entries_refuse_bus0/source'), PosixPath('/tmp/pytest-of-root/pyt...est_action_entries_refuse_bus0/extra'), ['inventory', 'inventory', 'inventory', 'inventory', 'inventory', 'inventory'])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f948b64cb50>
+scoped = True
+
+    @pytest.mark.parametrize("scoped", [False, True])
+    def test_action_entries_refuse_busy_collection_after_warm_projection(tmp_path, roots, monkeypatch, scoped):
+        from astrid.core.generation import entries
+    
+        _, extra, _ = roots
+        monkeypatch.setenv("ASTRID_PACKS_PATH", str(extra))
+        with discovery.pack_discovery_scope() if scoped else nullcontext():
+            assert entries.action_entries() == []
+            _set_pending_exchange(tmp_path, extra, monkeypatch)
+>           with pytest.raises(PackInstallError) as caught:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE PackInstallError
+
+tests/core/pack/test_discovery_admission_order.py:124: Failed
+4 tests left out by --splits/-k/--deselect (run by other shards or excluded by name)
+=========================== short test summary info ============================
+FAILED tests/core/pack/test_discovery_admission_order.py::test_action_entries_refuse_duplicate_before_dirty_managed_inventory[True]
+FAILED tests/core/pack/test_discovery_admission_order.py::test_discovery_refuses_busy_collection_after_warm_metadata[True]
+FAILED tests/core/pack/test_discovery_admission_order.py::test_action_entries_refuse_busy_collection_after_warm_projection[True]
+3 failed, 3 passed, 4 deselected in 19.88s

@@ -1,0 +1,4 @@
+AB_ATTEST=off
+ARMS_JSON={"before": {"launcher": "/home/user/p81b/box/pb7-merged/installs/pb7c/A/program/run-astrid", "home": "/home/user/p81b/box/pb7-merged/installs/pb7c/A/home", "tmp": "/home/user/p81b/box/pb7-merged/installs/pb7c/A/tmp", "door_port": 18232, "current": "/home/user/p81b/box/pb7-merged/installs/pb7c/A/program/current", "manifest": "/home/user/p81b/box/pb7-merged/evidence/pb7c-run-1/manifest-before.json", "generate_extra": ["--timings"]}, "after": {"launcher": "/home/user/p81b/box/pb7-merged/installs/pb7c/B/program/run-astrid", "home": "/home/user/p81b/box/pb7-merged/installs/pb7c/B/home", "tmp": "/home/user/p81b/box/pb7-merged/installs/pb7c/B/tmp", "door_port": 18233, "current": "/home/user/p81b/box/pb7-merged/installs/pb7c/B/program/current", "manifest": "/home/user/p81b/box/pb7-merged/evidence/pb7c-run-1/manifest-after.json", "generate_extra": ["--timings"]}}
+load_max=1.0 wait_seconds=600 samples=5
+standin_port=18188 A_door=18232 B_door=18233

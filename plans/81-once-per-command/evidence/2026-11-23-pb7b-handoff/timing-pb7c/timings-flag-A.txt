@@ -1,0 +1,2 @@
+                             [--timings] [--input NAME=VALUE]
+  --timings             Print command stage timings.

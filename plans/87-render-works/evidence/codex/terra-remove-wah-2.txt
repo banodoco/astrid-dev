@@ -1,0 +1,7 @@
+**Verified:** In Almost Ready, the only sound effect overlapping 24.0–29.5 seconds was the trombone wah, at 26.500–28.933 seconds. I removed it; no other non-voice, non-music audio was found in that window.
+
+Read-back confirmed the wah is gone, the sfx track is empty in that window, and all other clips, their order, placements, and shots are unchanged.
+
+Revision: `f9237406…` → `98609345…`.
+
+[Open the timeline editor](http://localhost:2400/tools/video-editor?project=801a01b3a87941a1ab25958c488afdbf&timeline=77f906f3242c48179ab86ca7c3e62eb4) and review around 24–29.5 seconds.

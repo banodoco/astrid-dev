@@ -1,0 +1,9 @@
+**No timeline changes were published.** The prepared shot edit targeted the requested clips, but each operation also listed other shot clips in a required `order_before` assertion. I withheld it under your instruction to refuse outgoing changes that list clips outside the authorized set. The known parent-removal route likewise includes the full parent clip list.
+
+Verified from the historical and current reads: the nine additions are `r6-freeze-hold`, `r6-freeze-label-1`, `r6-freeze-label-2`, `r6-freeze-ding`, `r6-freeze-dong-1`, `r6-freeze-dong-2`, and `r6-freeze-slick-a/b/c`. The original `r4-sfx-slick-clip` remains absent; its historical authored fields were recovered but not restored.
+
+The initial read was at `f04036cf…`; a later checkout was at `5a03c301…` after concurrent work. Neither is a revision I published. No post-edit diff or stills exist. Existing freeze registry entries include `PIPELINE-R3-FREEZE`, `media-b6edddd6f69d49868bd82daddb32ae2e`, and the bell media aliases; the currently used entries are not yet orphans.
+
+The prepared payload and the limitation are recorded in shot-commands.json (source: `~/unfreeze/shot-commands.json`) and FRICTION.md (source: `~/unfreeze/FRICTION.md`).
+
+May I proceed with operations that **name other clips only in required unchanged order assertions**, while changing only the nine additions and the slick restore?

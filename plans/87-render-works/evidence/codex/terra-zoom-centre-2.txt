@@ -1,0 +1,24 @@
+Published the Discord edit in **Almost Ready / trial v2**. [Open it in the editor](http://localhost:2400/tools/video-editor?project=801a01b3a87941a1ab25958c488afdbf&timeline=77f906f3242c48179ab86ca7c3e62eb4) at 1.90 seconds.
+
+**Verified:** the published change altered only `c02-02-am-discord`. Its camera is `(frame, zoom, focus)`:
+
+- `0, 1×, (750, 360)`
+- `34, 146, 163: 2×, (578.69, 616)`
+- `164, 169: 4×, (578.69, 616)`
+- `170, 177: 7.5×, (578.69, 616)`
+- `178: 12×; 217: 13.5×`, both at `(578.69, 616)`
+
+The element paints 420 px farther left and 220 px farther down while retaining the original content layout. Its revision changed from `f08a5381…` to `d2a69a2e…`; the timeline revision changed from `f04036cf…` to `5a03c301…`.
+
+**Verified in editor stills**, offsets on a 1920×1080 basis and word width as a percentage of frame width:
+
+| Frames | Offset x, y (px) | Width |
+|---|---:|---:|
+| 163 | −0.005, 0.000 | 8.25% |
+| 164, 169 | −0.010, 0.000 | 16.50% |
+| 170, 177 | −0.019, 0.000 | 30.93% |
+| 178 | −0.030, 0.000 | 49.49% |
+| 200 | −0.032, 0.000 | 52.98% |
+| 216 | −0.034, 0.000 | 55.52% |
+
+The captured zoomed frames show no exposed background, and the typing and join lines remain readable. Frames 0 and 20 retain visible light background around the opening window; its extended left side bleeds offscreen. The contact sheet (source: `~/zoom2/verify/contact.jpg`) includes both opening views and all requested stills.

@@ -1,0 +1,24 @@
+20:49:30 [0s] queued  waiting=-
+20:49:31 [1s] running  waiting=-
+20:50:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [1m 0s] running  waiting=-
+20:51:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [2m 0s] running  waiting=-
+20:52:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [3m 0s] running  waiting=-
+20:53:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [4m 0s] running  waiting=-
+20:54:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [5m 0s] running  waiting=-
+20:55:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [6m 0s] running  waiting=-
+20:56:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [7m 0s] running  waiting=-
+20:57:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [8m 0s] running  waiting=-
+20:58:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [9m 0s] running  waiting=-
+20:59:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [10m 0s] running  waiting=-
+21:00:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [11m 0s] running  waiting=-
+21:01:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [12m 0s] running  waiting=-
+21:02:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [13m 0s] running  waiting=-
+21:03:30 Still following task 8ce6fa34e4c34558a197316aff737f1e: [14m 0s] running  waiting=-
+21:04:31 Still following task 8ce6fa34e4c34558a197316aff737f1e: [15m 1s] running  waiting=-
+21:05:31 Still following task 8ce6fa34e4c34558a197316aff737f1e: [16m 1s] running  waiting=-
+21:06:31 Still following task 8ce6fa34e4c34558a197316aff737f1e: [17m 1s] running  waiting=-
+21:07:31 Still following task 8ce6fa34e4c34558a197316aff737f1e: [18m 1s] running  waiting=-
+21:08:31 Still following task 8ce6fa34e4c34558a197316aff737f1e: [19m 1s] running  waiting=-
+21:09:31 Still following task 8ce6fa34e4c34558a197316aff737f1e: [20m 1s] running  waiting=-
+21:09:35 [20m 5s] failed  waiting=-
+21:09:35 {"data":null,"error":{"code":"invocation_error","details":{"handoff":{"events":"python3 -m astrid tasks events 8ce6fa34e4c34558a197316aff737f1e --project 801a01b3a87941a1ab25958c488afdbf --json","follow":"python3 -m astrid tasks follow 8ce6fa34e4c34558a197316aff737f1e --project 801a01b3a87941a1ab25958c488afdbf","inspect":"python3 -m astrid tasks show 8ce6fa34e4c34558a197316aff737f1e --project 801a01b3a87941a1ab25958c488afdbf --json","open":"python3 -m astrid runs open 5bf99e6d59b24229ac9e67e6f1d56011 --project 801a01b3a87941a1ab25958c488afdbf","recent":"python3 -m astrid tasks list --project 801a01b3a87941a1ab25958c488afdbf --json"},"kernel_attempt_id":"bd5486737fe04fdc903674adbf2f8ade","kernel_run_id":"5bf99e6d59b24229ac9e67e6f1d56011","kernel_task_id":"8ce6fa34e4c34558a197316aff737f1e","run_id":"5bf99e6d59b24229ac9e67e6f1d56011","sdk_category":"runtime","sdk_error":"CapabilityRuntimeError","state":"failed","validation":null},"message":"Headline: The render couldn't finish\nDetail: owned command cleanup uncertain: post-capture candidate is LIVE; terminal disposition is ineligible; original execution failure: CustodyError: post-capture candidate is LIVE; terminal disposition is ineligible\nFix: Review the details, correct the render settings or timeline, and try again."},"idempotency_key":"","ok":false,"receipt":null}
