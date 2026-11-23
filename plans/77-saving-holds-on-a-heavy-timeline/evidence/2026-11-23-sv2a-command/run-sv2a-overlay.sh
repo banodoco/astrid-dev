@@ -62,7 +62,16 @@ jq -e --arg runtime "$base_runtime" '.release==14 and .runtime.sha==$runtime and
 [[ -z "$(git -C "$tooling" status --porcelain -- scripts/save-loop)" ]]
 [[ -z "$(git -C "$trace_tools" status --porcelain -- scripts/save-loop)" ]]
 [[ ! -e "$out" && ! -L "$out" && $(free_kib) -ge $minimum_kib ]]
+# The signed backup is not recorded in the package, so the operator names its canonical directory.
+backup="${SV2A_SIGNED_BACKUP:-}"
+if [[ -z "$backup" || ! -d "$backup" || -L "$backup" || "$(realpath "$backup")" != "$backup" \
+    || "$backup/" == "$data/"* || "$backup/" == "$out/"* ]]; then
+  printf '%s\n' 'Set SV2A_SIGNED_BACKUP to the canonical signed backup directory. Nothing was started.' >&2
+  exit 2
+fi
 [[ -d "$owner/.locks" && ! -L "$owner/.locks" && ! -L "$owner/.locks/one-root.lock" ]]
+# The next line opens the lock for writing and creates or truncates it; its stat is kept for the boundary receipt.
+lock_before=$(stat -c '%s %Y' "$owner/.locks/one-root.lock" 2>/dev/null || echo absent)
 exec 9>"$owner/.locks/one-root.lock"
 flock -n 9
 [[ ! -e "$owner/.quick-operation-lock" && ! -L "$owner/.quick-operation-lock" ]]
@@ -87,31 +96,95 @@ browser_temp=''
 launch_attempted=0
 published=0
 program_checked=0
+boundary_checked=0
+trace_save_done=0
 log_offset=0
 log_identity=''
 
+# Stat inventories of the signed backup and the owner, data and stack boundaries. Directories listed one level
+# deep carry no size or time, so only the entries themselves are compared, not what the Runtime may write inside.
+boundary_listing() {
+  { find "$1" -mindepth 1 -maxdepth 1 -type f -printf 'f %P %s %T@ %m %U:%G\n'
+    find "$1" -mindepth 1 -maxdepth 1 ! -type f -printf '%y %P %m %U:%G\n'; } | LC_ALL=C sort
+}
+boundary_snapshot() {
+  find "$backup" -printf '%y %P %s %T@ %m %U:%G %i\n' | LC_ALL=C sort >"$out/boundary-backup.$1.txt"
+  boundary_listing "$owner" >"$out/boundary-owner.$1.txt"
+  boundary_listing "$owner/.locks" | awk '$2 != "one-root.lock"' >"$out/boundary-owner-locks.$1.txt"
+  boundary_listing "$root" >"$out/boundary-root.$1.txt"
+  boundary_listing "$data" >"$out/boundary-data.$1.txt"
+}
+
+# Stop one setsid group we started: TERM, a bounded wait, then KILL. Succeeds only when no live member remains.
 stop_group() {
-  local leader="$1" process_group
-  [[ -n "$leader" ]] || return 0
-  process_group=$(ps -o pgid= -p "$leader" | tr -d ' ') || return 0
-  if [[ "$process_group" == "$leader" ]]; then
-    kill -TERM -- "-$leader" 2>/dev/null || true
+  local leader="$1" pgid try
+  [[ "$leader" =~ ^[0-9]+$ ]] && (( leader > 1 )) || return 0
+  pgid=$(ps -o pgid= -p "$leader" 2>/dev/null | tr -d ' ') || true
+  [[ -z "$pgid" || "$pgid" == "$leader" ]] || return 1
+  if python3 "$verify" group-live "$leader" >/dev/null; then wait "$leader" 2>/dev/null || true; return 0; fi
+  kill -TERM -- "-$leader" 2>/dev/null || true
+  for ((try=0; try<100; try++)); do
+    python3 "$verify" group-live "$leader" >/dev/null && break
+    sleep 0.1
+  done
+  if ! python3 "$verify" group-live "$leader" >/dev/null; then
+    kill -KILL -- "-$leader" 2>/dev/null || true
+    for ((try=0; try<50; try++)); do
+      python3 "$verify" group-live "$leader" >/dev/null && break
+      sleep 0.1
+    done
   fi
+  python3 "$verify" group-live "$leader" >/dev/null || return 1
+  wait "$leader" 2>/dev/null || true
+}
+
+scan_receipts() {
+  local names=(email token_like bearer secret_field backup_key_field codex_path private_key) index
+  local patterns=('[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}' '(sk|ghp|gho|xox[bap]|AKIA)[-_A-Za-z0-9]{16,}'
+    'Bearer[[:space:]]+[A-Za-z0-9._~+/=-]{8,}'
+    '(api[_-]?key|secret|password|passwd|token|authorization|cookie)"?[[:space:]]*[:=]' 'key_id|manifest_hmac'
+    '[.]codex' '-----BEGIN [A-Z ]*PRIVATE KEY')
+  printf 'pattern\tfile\n' >"$out/privacy-scan.tsv"
+  for index in "${!names[@]}"; do
+    { grep -rIlEi --exclude-dir=source --exclude-dir=launcher-cwd --exclude=privacy-scan.tsv -e "${patterns[index]}" "$out" || true; } |
+      awk -v name="${names[index]}" '{print name "\t" $0}' >>"$out/privacy-scan.tsv"
+  done
 }
 
 cleanup() {
-  local result=$? down_ok=1 profile_removed=1
+  local result=$? down_ok=1 profile_removed=1 preview_clean=1 chrome_clean=1 boundary_unchanged=1 trace_ok=1
+  local down_attempt part differing='' lock_after
   trap - EXIT
   trap '' INT TERM
-  if [[ -n "$active" ]]; then stop_group "$active"; wait "$active" || true; fi
-  if [[ -n "$preview" ]]; then stop_group "$preview"; wait "$preview" || true; fi
-  if (( launch_attempted )); then
-    (cd "$launcher_cwd" && "${overlaid[@]}" ASTRID_RUNTIME_DOOR_PORT=17501 "$interpreter" -I -B "$prep/overlay-direct.py" down \
-      --profile astrid --data-root "$data" --source-manifest "$source_profile" --door-port 17501 --json) \
-      >"$out/down.json" 2>"$out/down.stderr" || down_ok=0
-    jq -e '.status=="stopped" and .idle.safe==true' "$out/down.json" >/dev/null || down_ok=0
+  if [[ -n "$active" ]]; then stop_group "$active" || result=1; fi
+  if [[ -n "$preview" ]]; then
+    stop_group "$preview" || preview_clean=0
+    python3 "$verify" preview-after "$preview" "$out" || preview_clean=0
   fi
-  if [[ -n "$browser_temp" ]]; then rmdir -- "$browser_temp" || profile_removed=0; fi
+  if (( launch_attempted )); then
+    down_ok=0
+    for down_attempt in 1 2 3; do
+      if (cd "$launcher_cwd" && "${overlaid[@]}" ASTRID_RUNTIME_DOOR_PORT=17501 "$interpreter" -I -B "$prep/overlay-direct.py" down \
+          --profile astrid --data-root "$data" --source-manifest "$source_profile" --door-port 17501 --json) \
+          >"$out/down.$down_attempt.json" 2>"$out/down.$down_attempt.stderr" &&
+          jq -e '.status=="stopped" and .idle.safe==true' "$out/down.$down_attempt.json" >/dev/null; then
+        down_ok=1
+        break
+      fi
+      (( down_attempt == 3 )) || sleep 15
+    done
+    cp -- "$out/down.$down_attempt.json" "$out/down.json" || true
+    cp -- "$out/down.$down_attempt.stderr" "$out/down.stderr" || true
+  fi
+  if [[ -n "$browser_temp" ]]; then
+    if pgrep -f -- "--user-data-dir=$browser_temp/" >/dev/null; then
+      chrome_clean=0
+      pkill -KILL -f -- "--user-data-dir=$browser_temp/" || true
+      sleep 1
+      ! pgrep -f -- "--user-data-dir=$browser_temp/" >/dev/null || result=1
+    fi
+    rmdir -- "$browser_temp" || profile_removed=0
+  fi
   if (( program_checked )); then
     python3 "$verify" inventory "$program" "$interpreter" "$out/program.after.sha256" || result=1
     cmp -s "$out/program.before.sha256" "$out/program.after.sha256" || result=1
@@ -120,10 +193,29 @@ cleanup() {
     python3 "$verify" postflight "$support" "$realm" "$archive" "$out" || result=1
   else
     python3 "$verify" ports-closed || result=1
+    if [[ -f "$out/candidate-daemon-module.json" ]]; then python3 "$verify" owner-exited "$out" || result=1; fi
     if [[ -f "$out/original-source-profile.json" ]]; then
       cmp -s "$out/original-source-profile.json" "$support/source-profiles/astrid.json" || result=1
       cmp -s "$out/original-catalog.json" "$support/catalog.json" || result=1
     fi
+  fi
+  # The daemon is down by now, so closing it has flushed the trace.
+  if (( trace_save_done )); then python3 "$verify" trace-verdict "$trace_path" "$out" || trace_ok=0; fi
+  if (( boundary_checked )); then
+    boundary_snapshot after || boundary_unchanged=0
+    for part in backup owner owner-locks root data; do
+      if ! cmp -s "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt"; then
+        boundary_unchanged=0
+        differing+="$part "
+        diff -- "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt" >"$out/boundary-$part.diff" || true
+      fi
+    done
+    lock_after=$(stat -c '%s %Y' "$owner/.locks/one-root.lock" 2>/dev/null || echo absent)
+    jq -n --argjson unchanged "$boundary_unchanged" --arg differing "$differing" --arg backup "$backup" \
+      --arg lock_before "$lock_before" --arg lock_after "$lock_after" \
+      '{signed_backup_path:$backup, boundaries_unchanged:($unchanged==1), differing:$differing,
+        one_root_lock:{opened_for_write_by_exec:true, size_and_mtime_before:$lock_before, size_and_mtime_after:$lock_after}}' \
+      >"$out/boundary.json" || boundary_unchanged=0
   fi
   if [[ -n "$log_identity" && -f "$runtime_log" && ! -L "$runtime_log" ]]; then
     if [[ "$(stat -c '%d:%i' "$runtime_log")" == "$log_identity" ]] && (( $(stat -c %s "$runtime_log") >= log_offset )); then
@@ -135,9 +227,14 @@ cleanup() {
   fi
   if [[ -n "$watcher" ]]; then kill "$watcher" 2>/dev/null || true; wait "$watcher" || true; fi
   printf '%s\t%s\n' "$(date -u +%FT%T.%NZ)" "$(free_kib)" >>"$out/free-kib.tsv"
-  (( down_ok && profile_removed )) || result=1
+  (( down_ok && profile_removed && preview_clean && chrome_clean && boundary_unchanged && trace_ok )) || result=1
+  scan_receipts || true
   jq -n --argjson rc "$result" --argjson stopped "$down_ok" --argjson profile_removed "$profile_removed" \
-    '{exit_code:$rc,idle_safe_stop_verified:($stopped==1),browser_temp_removed:($profile_removed==1)}' >"$out/cleanup.json"
+    --argjson preview_clean "$preview_clean" --argjson chrome_clean "$chrome_clean" \
+    --argjson boundary_unchanged "$boundary_unchanged" --argjson trace_ok "$trace_ok" \
+    '{exit_code:$rc,idle_safe_stop_verified:($stopped==1),browser_temp_removed:($profile_removed==1),
+      preview_group_empty:($preview_clean==1),no_leftover_chrome:($chrome_clean==1),
+      boundaries_unchanged:($boundary_unchanged==1),trace_verdict_ok:($trace_ok==1)}' >"$out/cleanup.json"
   (cd "$out" && find . -maxdepth 1 -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum --) >"$out/SHA256SUMS"
   exit "$result"
 }
@@ -170,6 +267,8 @@ git -C "$mirror" archive --format=tar "$sha" | tar -xf - -C "$archive"
 python3 "$verify" archive "$mirror" "$sha" "$archive" "$out"
 python3 "$verify" inventory "$program" "$interpreter" "$out/program.before.sha256"
 program_checked=1
+boundary_snapshot before
+boundary_checked=1
 python3 "$verify" prepare "$support" "$realm" "$archive" "$out"
 cp -- "$prior/fixture.json" "$out/fixture.json"
 cp -- "$prep/package.sha256" "$out/script-package.sha256"
@@ -211,6 +310,7 @@ for ((poll=0; poll<120; poll++)); do
   sleep 1
 done
 (( poll < 120 ))
+python3 "$verify" preview-before "$preview" "$app" "$data" "$app/dist" "$out"
 
 browser_temp=$(mktemp -d /tmp/sl-p77-r7-XXXXXX)
 setsid --wait "${owned[@]}" TMPDIR=/tmp P77_R7_BROWSER_TMP="$browser_temp" LIBGL_ALWAYS_SOFTWARE=1 \
@@ -224,3 +324,4 @@ wait "$active"
 active=''
 jq -e '.phase=="verified" and .timeline_commit_posts==1 and .profile_removed and .trace_witness.http_status==200' "$out/browser-sv2a-first-save.json" >/dev/null
 [[ -f "$trace_path" && ! -L "$trace_path" ]]
+trace_save_done=1

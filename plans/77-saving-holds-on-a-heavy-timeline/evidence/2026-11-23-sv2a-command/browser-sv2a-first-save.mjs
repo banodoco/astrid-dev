@@ -368,6 +368,19 @@ function isScopedRead(row) {
     row.route === '/api/runtime/v1/projects/selection');
 }
 
+const traceFaults = new Set(['trace_connection_rebound', 'bounded_output_overflow', 'trace_output_failure',
+  'transaction_scope_mismatch', 'unknown_sql_attempt', 'unknown_trace_event']);
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function readTraceEnvelopes(tracePath) {
+  const info = await lstat(tracePath);
+  assert(info.isFile() && !info.isSymbolicLink() && (info.mode & 0o077) === 0);
+  assert(info.size > 0 && info.size <= 2_100_000);
+  // The last element is empty or a line still being written; only newline-terminated lines are parsed.
+  const lines = (await readFile(tracePath, 'utf8')).split('\n').slice(0, -1).filter(Boolean);
+  return lines.map(line => JSON.parse(line));
+}
+
 async function requireTraceWitness(context) {
   const tracePath = process.env.P77_SV2A_TRACE_PATH;
   assert.equal(tracePath, path.join(output, 'timeline-memo-trace.jsonl'));
@@ -383,19 +396,44 @@ async function requireTraceWitness(context) {
   assert.equal(history.items.length, 1);
   assert.equal(history.items[0].revision_id, pin.revision_id);
   assert.equal(history.items[0].publication_id, pin.publication_id);
-  const traceInfo = await lstat(tracePath);
-  assert(traceInfo.isFile() && !traceInfo.isSymbolicLink() && (traceInfo.mode & 0o077) === 0);
-  assert(traceInfo.size > 0 && traceInfo.size <= 2_100_000);
-  const first = JSON.parse((await readFile(tracePath, 'utf8')).split('\n', 1)[0]);
-  assert.equal(first.schema, 'timeline-memo-provenance-v1');
-  assert.equal(first.overflow, false);
-  const marker = first.events[0];
-  assert.equal(marker.kind, 'trace_runtime_source');
-  assert.equal(marker.pid, candidate.pid);
-  assert.equal(marker.module_file, preflight.module_proofs.runtime_protocol.file);
-  assert.equal(marker.module_file, path.join(preflight.archive, 'runtime_protocol/__init__.py'));
+  // request_started does not flush, so poll the trace file for a bounded time for the history request scope.
+  const deadline = performance.now() + 10_000;
+  let marker, scope, seen;
+  for (;;) {
+    let envelopes = [];
+    try { envelopes = await readTraceEnvelopes(tracePath); }
+    catch (error) { if (error?.code !== 'ENOENT') throw error; }
+    const events = envelopes.flatMap(item => item.events);
+    for (const item of envelopes) {
+      assert.equal(item.schema, 'timeline-memo-provenance-v1');
+      assert.equal(item.overflow, false);
+      assert.equal(item.unknown, false);
+    }
+    assert(!events.some(event => traceFaults.has(event.kind)), 'Trace holds a rebound, overflow or unknown event');
+    assert(!events.some(event => event.kind === 'request_scope_started' && event.route === 'timeline_commit_post'),
+      'A commit request scope exists before the save');
+    if (envelopes.length) {
+      marker = events[0];
+      assert.equal(marker.kind, 'trace_runtime_source');
+      assert.equal(marker.pid, candidate.pid);
+      assert.equal(marker.module_file, preflight.module_proofs.runtime_protocol.file);
+      assert.equal(marker.module_file, path.join(preflight.archive, 'runtime_protocol/__init__.py'));
+    }
+    const scopes = events.filter(event => event.kind === 'request_scope_started' && event.route === 'timeline_history_get');
+    seen = {envelopes: envelopes.length, events: events.length, history_scopes: scopes.length};
+    assert(scopes.length <= 1, 'More than one history request scope before the save');
+    if (scopes.length) { [scope] = scopes; break; }
+    if (performance.now() > deadline) break;
+    await sleep(250);
+  }
+  if (!scope) {
+    await writeReceipt('trace-witness-failure', {route, http_status: 200, before_read: beforeRead,
+      completed_read: completedRead, seen, reason: 'No request_scope_started witness for timeline_history_get within 10 s. ' +
+      'Nothing was navigated or written.'});
+    throw new Error('Trace request witness absent');
+  }
   return {route, http_status: 200, head: history.head, before_read: beforeRead,
-    completed_read: completedRead, trace_schema: first.schema, marker};
+    completed_read: completedRead, trace_schema: 'timeline-memo-provenance-v1', marker, request_scope: scope, seen};
 }
 
 const profile = await mkdtemp(path.join(browserParent, 'profile-'));
@@ -406,7 +444,7 @@ let phase = 'browser_launch';
 try {
   context = await chromium.launchPersistentContext(profile, {executablePath: process.env.SAVE_LOOP_CHROME,
     headless: true, viewport: {width: 1700, height: 1500}, args: ['--disable-gpu', '--no-first-run',
-      '--disk-cache-size=1', '--media-cache-size=1']});
+      '--disk-cache-size=1', '--media-cache-size=1', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1']});
   phase = 'trace_witness';
   receipt.trace_witness = await requireTraceWitness(context);
   await writeReceipt('trace-before-save', receipt.trace_witness);
