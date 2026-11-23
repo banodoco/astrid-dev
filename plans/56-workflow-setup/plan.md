@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 12 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8; a plain 90/10 without the loose-end tasks is about 6.
+**Estimate:** About 18.5 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8, and 6.5 from the UX review (LE-12 to LE-18 and consent hardening in LE-2), of which 3.75 (LE-12 to LE-15, LE-2 hardening) are needed for the SAM run to pass; a plain 90/10 without the loose-end tasks is about 6.
 
 **Waiting on:** the owner's decisions D4–D12 ([inputs.md](inputs.md#owner-decisions)); [Release 15](../../releases/15.md) membership (the owner's go)
 
