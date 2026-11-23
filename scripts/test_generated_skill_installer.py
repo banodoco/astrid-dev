@@ -258,10 +258,11 @@ class InstallTests(unittest.TestCase):
         foreign.mkdir(parents=True)
         (foreign / "SKILL.md").write_text("foreign instructions\n", encoding="utf-8")
         original_symlink = Path.symlink_to
+        destination = self.dest
 
         def inject_during_staging(self, target, *args, **kwargs):
             result = original_symlink(self, target, *args, **kwargs)
-            if self.name == "package" and self.parent.parent == self.dest:
+            if self.name == "package" and self.parent.parent == destination:
                 link.unlink()
                 original_symlink(link, foreign, target_is_directory=True)
             return result
