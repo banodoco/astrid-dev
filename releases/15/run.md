@@ -163,3 +163,53 @@ First do the Orchestrator startup checks and post one STATUS with each result; d
 You may start, resume, stop and replace packet sessions and comment on the mailbox. Never dispatch hosted CI: relay a packet's READY-CI to the Lead. You may not merge, edit the repository or approve anything. Send anything reserved to the owner to the Lead.
 If a check fails, say which manual step the owner must do instead of promising automation.
 ```
+
+## Plans 87 and 89 dispatch
+
+Added 23 November 2026 at the owner's request. It works like [Plan 56 dispatch](#plan-56-dispatch) above, with one difference: each plan's **lane orchestrator acts as the Lead for its own plan** (it writes packets, reviews them, merges them into its plan branch, runs the live proofs and requests the landing gate). A separate **dispatch manager** starts and minds a fresh ChatGPT session for each packet. The Release 15 Lead gates only the landing into `release/15/main`. Packets live in [packets/](packets/), and each plan's `tasks.md` stays the record of progress.
+
+### Authority
+
+On 23 November 2026, in the Release 15 Lead's session (`session_011EzfW1gtAhRQwk8pgJMzhG`), the owner asked for Plans 87 and 89 to farm their remaining tasks out this way, and for Plan 88 to finish as it runs now.
+
+- **Lane Leads.** For Plan 87, its lane orchestrator `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-lead`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-lead`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
+- **Dispatch managers.** `r15-p87-manager-1` and `r15-p89-manager-1`, one per plan, each started by the owner the same way as Plan 56's Orchestrator and acting in her ChatGPT account at her request. A manager may start, resume, stop and replace its own plan's packet sessions and comment on its mailbox. It does not edit the repository, merge, approve or dispatch hosted CI. It follows [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), with its lane Lead as "the Lead".
+- **Packet sessions** may push to the branches their packet's PR destination names, open pull requests there and comment on their plan's mailbox. They never merge, never edit `tasks.md`, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro.
+- **What stays in the lane:** real renders, installed save measurements, fixture builds and anything else that needs an installed stack. A packet's proof is its focused tests. Its acceptance proof is the lane's (Plan 56 ruling 6: packet sandboxes cannot reach `github.com`).
+- **Needs the owner:** publishing, anything paid, her install or media, and changing an existing test's assertion.
+
+### Standing rulings (Plans 87 and 89)
+
+1. Plan 56 rulings 1 (functions, not files, conflict), 2 (packets never move a pin; post `READY-PIN`), 5 (dependants wait only for their own cards) and 6 (proof runs where the network is; post `READY-PROOF <repo> <PR> <head> <selectors>`) apply as written.
+2. The lane Lead runs reviews itself on the run contract's routes (high-judgment for S cards, integrity or contract changes, or code already judged unsound; one final round otherwise). It never commissions a packet to review.
+3. The release-wide rulings in [the lane orchestrator workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md) bind the lane Leads: free CI slots, the by-id comparison with each gate request, pin witnesses, fixtures shrink, cross-lane findings go lane to lane.
+4. Cap: at most **four** packets in Running or Review per plan; the lane Lead may lower it. The first packet goes alone, until its early STATUS shows a session can push, open a draft PR and comment.
+
+### Mailboxes
+
+| Plan | Mailbox | Run | Lane Lead | Dispatch manager |
+|---|---|---|---|---|
+| 87 | [astrid-dev #1776](https://github.com/banodoco/astrid-dev/issues/1776) | `r15-p87-dispatch` | `r15-p87-lead` | `r15-p87-manager-1` |
+| 89 | [astrid-dev #1777](https://github.com/banodoco/astrid-dev/issues/1777) | `r15-p89-dispatch` | `r15-p89-lead` | `r15-p89-manager-1` |
+
+Cadence, quiet sessions and replacement follow [Plan 56's table](#when-a-session-goes-quiet), with "Lead" read as the lane Lead. The lane Lead posts a heartbeat STATUS on its mailbox at least every 90 minutes.
+
+### Manager startup checks
+
+These are [Plan 56's checks](#orchestrator-startup-checks) 1, 3, 4, 5, 7, 8 and 9, run against the plan's own mailbox. Check 2 becomes: `release/15/plan-<P>` exists in each repository the plan's packets name, and no `p<P>/*` branch exists that the board does not list. Check 6 becomes: a packet session can push a `p<P>/<task id>` branch, open a draft PR and comment on the mailbox, in each repository the packets name (Plan 87: astrid-agent, astrid-runtime, astrid-app; Plan 89: astrid-runtime, astrid-agent, astrid-app). The manager posts one STATUS with each result and dispatches nothing until its lane Lead's DECISION answers it.
+
+### Dispatch queue (Plan 87)
+
+The lane Lead writes the packets at its next break point and lists them here. Candidates from [tasks](../../plans/87-render-works/tasks.md): RN-5 (pin and revision report, X), RN-8 and RN-9 (S, Pro), RN-11 (CI render check, X), RN-14 (D2, the motion pack on a fresh install, X). RN-10, RN-12 and RN-13 are renders, so they stay in the lane.
+
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| — | — | — | — | The lane Lead writes the first packets |
+
+### Dispatch queue (Plan 89)
+
+The lane Lead writes the packets at its next break point and lists them here. Candidates from [tasks](../../plans/89-heavy-saves-in-seconds/tasks.md): SV-L2 (editor timing marks), SV-L3 (copy counters), SV-L5 (immutable accepted history, X), SV-L7 (burst coalescing, once sized), SV-L8 (commit schema validation). Installed measurements stay in the lane.
+
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| — | — | — | — | The lane Lead writes the first packets |
