@@ -124,6 +124,7 @@ set -euo pipefail
 ROOT=/root/codex/p81box/part2-once
 TOOL="$ROOT/dev/plans/81-once-per-command/evidence/installed-container-baseline"
 mkdir "$ROOT/installs"
+command -v ss >/dev/null 2>&1 || { echo "STOP: ss is required for port checks" >&2; exit 1; }
 for port in 17340 17341 17342 18188; do
   if ss -H -ltn "sport = :$port" | grep -q .; then echo "STOP: port $port occupied"; exit 1; fi
 done
@@ -168,6 +169,7 @@ This one invocation rechecks selected manifests, then runs the complete session.
 set -euo pipefail
 ROOT=/root/codex/p81box/part2-once
 TOOL="$ROOT/dev/plans/81-once-per-command/evidence/installed-container-baseline"
+command -v ss >/dev/null 2>&1 || { echo "STOP: ss is required for port checks" >&2; exit 1; }
 if ss -H -ltn "sport = :18188" | grep -q .; then echo "STOP: port 18188 occupied"; exit 1; fi
 export IB="$ROOT/installs" EVIDENCE_DIR="$ROOT/receipts/run"
 export BEFORE_MANIFEST="$ROOT/manifests/before.json" CANDIDATE_MANIFEST="$ROOT/manifests/after.json" VC48_MANIFEST="$ROOT/manifests/vc48.json"
