@@ -219,24 +219,27 @@ class InstallTests(unittest.TestCase):
             ROLE.replace("# Leader", "# Worker"), encoding="utf-8")
         build_packages(self.root)
 
-        real_replace = __import__("os").replace
+        original_symlink = Path.symlink_to
 
-        def fail_second_retarget(source, destination):
-            if Path(destination).name == "astrid-dev-leader":
-                raise OSError(errno.EIO, "injected later retarget failure")
-            return real_replace(source, destination)
+        def fail_later_new_package(self, target, *args, **kwargs):
+            if self.name == "astrid-dev-worker":
+                raise OSError(errno.EIO, "injected later new-package failure")
+            return original_symlink(self, target, *args, **kwargs)
 
-        with patch("skill_installer.os.replace", side_effect=fail_second_retarget):
-            with self.assertRaisesRegex(ValueError, "previous owned link was preserved"):
+        with patch.object(Path, "symlink_to", fail_later_new_package):
+            with self.assertRaisesRegex(ValueError, "could not create skill directory symlink"):
                 install_packages(self.root, [self.dest])
         self.assertEqual((self.dest / "astrid-dev").resolve(), old_start.resolve())
-        self.assertEqual((self.dest / "astrid-dev-leader").resolve(), old_lead.resolve())
+        # The earlier desired package was already retargeted: a real partial state.
+        self.assertEqual(
+            (self.dest / "astrid-dev-leader").resolve(),
+            (self.root / ".generated/skills/astrid-dev-leader").resolve())
         self.assertTrue((self.dest / "astrid-dev").is_symlink())
-        self.assertTrue((self.dest / "astrid-dev-worker/SKILL.md").is_file())
+        self.assertFalse((self.dest / "astrid-dev-worker").is_symlink())
         foreign = self.dest / "unrelated-user-file"
         foreign.write_text("never touch\n", encoding="utf-8")
         result = install_packages(self.root, [self.dest])
-        self.assertTrue(any("retargeted" in x for x in result))
+        self.assertTrue(any("linked" in x for x in result))
         self.assertTrue(any("retired" in x for x in result))
         self.assertFalse((self.dest / "astrid-dev").exists())
         self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())

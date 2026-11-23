@@ -252,7 +252,7 @@ def fail_green(self, target, *args, **kwargs):
 
 with patch.object(Path, "symlink_to", fail_green):
     try:
-        install_packages(Path.cwd(), [Path(__import__("sys").argv[1])])
+        install_packages(Path.cwd().parent, [Path(__import__("sys").argv[1])])
     except ValueError as exc:
         if "previous owned link was preserved" not in str(exc):
             raise
