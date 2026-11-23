@@ -5,4 +5,4 @@ Found while running Plan 78's live proof on an isolated install (Agent `64cecdae
 - `diag.md`: the diagnosis (mechanism, timings, runtime.log lines, controls, minimal repro in section 4).
 - `generate.py` and `hist-detail.py`: the two small scripts of the repro (`LE4_PANELS=40` for the 40-title case). They need the isolated install's Python and data root (the paths are the ones of the proof stack: replace them); the read reports the SDK refusal details.
 
-Status: the confirmation (pausing the pack host for 20 s during a read) is run separately; its result is added here when it exists.
+Pause-the-pack-host confirmation: `diag-sigstop.md` (CONFIRMED on the 40-title project: both the history read and `Timeline.open` are refused outside the pause and pass inside a 9 s pause of the pack host; refused again after resume).
