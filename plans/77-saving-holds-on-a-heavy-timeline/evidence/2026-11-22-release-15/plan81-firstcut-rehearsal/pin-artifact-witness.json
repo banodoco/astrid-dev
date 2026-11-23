@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "app": "c9a2a6b686cc0c58ef5f9596379fab0844aeb019",
+    "agent": "26737ad87cac91ac37fadcff4109507f203aeb9e",
+    "runtime": "332c140f476edb72257c452f3ebc6a3a4f7a42db"
+  },
+  "artifact_checks": {
+    "agent": {
+      "artifacts_verified": 16,
+      "lock_sha256": "d513358e0c3c0ce314f764708e50c7567a81ad31a393d2fb13f2876ae6092b3c"
+    },
+    "app": {
+      "artifacts_verified": 14,
+      "lock_sha256": "9d8ae0edb318f579d3c3c725018322ac38b5828a355f6a5c85cbf85ace45dca4"
+    }
+  },
+  "manifest_runtime_schema_digest": "sha256:2c6a76e17b4441398ab91e3e9d6283a719fd5b08807447db9dbf2ecc5e1339a2"
+}
