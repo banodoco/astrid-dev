@@ -50,6 +50,34 @@ for sha in 8807f820eb47d6018db723511e024a0a123fbe95 bd94a6e11dd0e9fb5e488e66f349
 for sha in 3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5 53a035ba7c04156dc45aa096f099b4c0224dfb14; do git -C "$ROOT/runtime" cat-file -e "$sha^{commit}"; git -C "$ROOT/runtime" rev-parse "$sha^{commit}"; done
 for sha in 48b5fa9e45630e1bc502651975ec0ef3a5e74c4c 675f5dc2658197318a95e0e1b7c5b232b17cd9d5; do git -C "$ROOT/vibe" cat-file -e "$sha^{commit}"; git -C "$ROOT/vibe" rev-parse "$sha^{commit}"; done
 git -C "$ROOT/vibe" checkout --detach 675f5dc2658197318a95e0e1b7c5b232b17cd9d5
+# Make each requested commit reachable by a local ref and permit SHA fetches.
+for item in \
+  agent:8807f820eb47d6018db723511e024a0a123fbe95 \
+  agent:bd94a6e11dd0e9fb5e488e66f349db564a8220a8 \
+  runtime:3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5 \
+  runtime:53a035ba7c04156dc45aa096f099b4c0224dfb14 \
+  vibe:48b5fa9e45630e1bc502651975ec0ef3a5e74c4c \
+  vibe:675f5dc2658197318a95e0e1b7c5b232b17cd9d5; do
+  repo=${item%%:*}; sha=${item#*:}
+  git -C "$ROOT/$repo" branch "run-proof-$sha" "$sha"
+  git -C "$ROOT/$repo" config uploadpack.allowAnySHA1InWant true
+  git -C "$ROOT/$repo" config uploadpack.allowReachableSHA1InWant true
+done
+# Prove each exact object can be fetched by SHA through the local Git transport.
+mkdir "$ROOT/fetch-proof"
+for item in \
+  agent:8807f820eb47d6018db723511e024a0a123fbe95 \
+  agent:bd94a6e11dd0e9fb5e488e66f349db564a8220a8 \
+  runtime:3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5 \
+  runtime:53a035ba7c04156dc45aa096f099b4c0224dfb14 \
+  vibe:48b5fa9e45630e1bc502651975ec0ef3a5e74c4c \
+  vibe:675f5dc2658197318a95e0e1b7c5b232b17cd9d5; do
+  repo=${item%%:*}; sha=${item#*:}; proof="$ROOT/fetch-proof/$repo-$sha"
+  git init -q "$proof"
+  git -C "$proof" fetch --depth=1 --no-tags "file://$ROOT/$repo" "$sha"
+  test "$(git -C "$proof" rev-parse 'FETCH_HEAD^{commit}')" = "$sha"
+  printf '%s %s fetchable\n' "$repo" "$sha" | tee -a "$ROOT/receipts/fetch-proof.txt"
+done
 ```
 
 The exact tuples are:
@@ -81,9 +109,19 @@ test -z "$(git -C "$ROOT/trial-agent" remote)"
 git -C "$ROOT/trial-agent" branch local-trial HEAD
 git -C "$ROOT/trial-agent" bundle create "$ROOT/receipts/trial.bundle" local-trial
 sha256sum "$ROOT/receipts/trial.bundle" > "$ROOT/receipts/bundle-sha256.txt"
+git -C "$ROOT/trial-agent" config uploadpack.allowAnySHA1InWant true
+git -C "$ROOT/trial-agent" config uploadpack.allowReachableSHA1InWant true
+trial_sha=$(git -C "$ROOT/trial-agent" rev-parse HEAD)
+trial_proof="$ROOT/fetch-proof/trial-$trial_sha"
+git init -q "$trial_proof"
+git -C "$trial_proof" fetch --depth=1 --no-tags "file://$ROOT/trial-agent" "$trial_sha"
+test "$(git -C "$trial_proof" rev-parse 'FETCH_HEAD^{commit}')" = "$trial_sha"
+printf 'trial-agent %s fetchable\n' "$trial_sha" | tee -a "$ROOT/receipts/fetch-proof.txt"
 git -C "$ROOT/trial-agent" diff HEAD^ HEAD > "$ROOT/receipts/trial-pin.diff"
 git -C "$ROOT/trial-agent" rev-parse HEAD HEAD^{tree} > "$ROOT/receipts/trial-identity.txt"
 ```
+
+All seven local fetch proofs use shallow fetches, and must pass before any install; return `fetch-proof.txt`. A failed proof stops the run.
 
 The six expected paths are precisely the six arguments to `git add` above. The tree check covers all files, including the generated digests. Never push the trial commit.
 
