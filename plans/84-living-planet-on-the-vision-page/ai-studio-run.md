@@ -10,9 +10,9 @@ This is the working document for running Plan 84's remaining work in Google AI S
 
 | Role | Who | Does | Workstream |
 | --- | --- | --- | --- |
-| **Manager** | One Codex session, started by the owner with the [start message](#manager-start-message), with browser control of the owner's AI Studio account | Runs the queue: drives each packet through AI Studio as its operator, commissions a reflection for each one, merges accepted packets into the lab's `main`, posts the daily look, keeps this board current | [Run one packet in AI Studio](../../skills/roles/astrid-dev-manage/workstreams/ai-studio-packet.md) for each packet |
+| **Manager** | One Codex session, started by the owner with the [start message](#manager-start-message), with browser control of the owner's AI Studio account | Runs the queue: drives each packet through AI Studio as its operator, commissions reflections at RF milestones, verifies and merges completed packets into the lab's `main`, posts the daily look, keeps this board current | [Run one packet in AI Studio](../../skills/roles/astrid-dev-manage/workstreams/ai-studio-packet.md) for each packet |
 | **Executor** | A fresh Google AI Studio Build session per packet | Changes the lab, runs its tests and build, writes a result note, pushes `lab/<id>` | The lab's [`LAB_RULES.md`](https://github.com/banodoco/planet/blob/main/LAB_RULES.md) and the packet brief |
-| **Reflection** | A fresh Astra subagent (the high-judgment role) that did none of the work, commissioned by the manager for every gate and RF row | Gates every packet (accept, rework, split), replans at RF rows, drafts the daily look | [Reflect on AI Studio lab packets](../../skills/roles/astrid-dev-manage/workstreams/astra-reflection.md) |
+| **Reflection** | A fresh Astra subagent (the high-judgment role) that did none of the work, commissioned by the manager at RF rows | Reviews progress and replans at RF rows, drafts the daily look | [Reflect on AI Studio lab packets](../../skills/roles/astrid-dev-manage/workstreams/astra-reflection.md) |
 | **Owner** | The owner | Looks at the lab once a day and replies with notes; final say on the look; gives the go for integration | — |
 | **Integrator** | An Astrid agent in astrid-app (IN rows only), commissioned by the manager after the owner's go | Imports the lab into astrid-app and proves it there | [Manage](../../skills/roles/astrid-dev-manage/SKILL.md) |
 
@@ -21,12 +21,12 @@ The manager does not write lab code itself and does not overrule a reflection ve
 ## The loop
 
 1. The board marks a packet **Ready** (its dependencies are Accepted).
-2. The manager runs it in a fresh AI Studio session and pushes `lab/<id>` → **Gate**.
-3. A fresh Astra subagent reruns the checks and reads the diff → **Accepted** (the manager merges it into lab `main` with a merge commit), **Rework** (at most twice) or **Split**.
+2. The manager gives the complete packet to AI Studio and delivers its `lab/<id>` branch using the available GitHub controls.
+3. The manager verifies its outcome, scope and checks, then merges a completed packet into lab `main` with a merge commit. Failed or unverified work is returned for rework. Astra reviews at the RF milestones, rather than gating every packet, per the owner's 23 November instruction.
 4. Once a day the manager gives the owner the **daily look** in its own chat; the owner opens the lab's `main` in AI Studio's preview at the listed sizes and settings and replies there with notes. Notes become rework, new packets or rulings below.
 5. At each **RF** row an Astra subagent re-estimates and rewrites the briefs ahead; the manager merges the brief changes into the lab's `main` and updates this board.
 
-One packet runs at a time until RF-A; after that, packets with no shared files may run in parallel, two at most.
+Run one packet at a time. Check hourly; if AI Studio reports a quota limit, wait until its stated reset or 24 hours if no reset is stated. A daily backup reminder checks for stalled work.
 
 **Talking to the owner:** the manager reports straight to the owner in its own chat: a short status after each packet and verdict, anything blocked, and the daily look. There is no mailbox issue. Astra reviewers report their verdicts back to the manager as subagents. Anything that must outlive the chat (each verdict and commit, the owner's rulings on the look) goes on this board.
 
@@ -34,11 +34,11 @@ One packet runs at a time until RF-A; after that, packets with no shared files m
 
 ## Authority
 
-The owner's go (sending the start message) starts the run. Within it, the manager may open AI Studio sessions on the owner's account, push `lab/*` branches, commission Astra subagents, merge a `lab/*` branch into the lab's `main` on an Astra accept verdict, merge Astra's brief rewrites into `packets/`, and update this board and Plan 84's progress through pull requests to astrid-dev `main`. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
+The owner's go (sending the start message) starts the run. Within it, the manager may open AI Studio sessions on the owner's account, push `lab/*` branches, commission Astra subagents, merge a verified, completed `lab/*` packet into the lab's `main`, merge Astra's brief rewrites into `packets/`, and update this board and Plan 84's progress through pull requests to astrid-dev `main`. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
 
 ## EX-00 and preview — 23 November 2026
 
-EX-00 ran in a [fresh AI Studio session](https://aistudio.google.com/apps/0e1c114d-c81b-487c-9ec8-66ccc59a0160) imported from lab main `bfd8472b6be7eee1111a6eafc1db97a0df4d31b5`. AI Studio reported 90 tests and build passed and wrote its result note, but its sandbox has no `.git` or credentials. Its GitHub sync offered only force-pushing the imported app to `main`, which is prohibited. The manager exported the result note and pushed `lab/EX-00` at `883855c`; Astra ACCEPTED after a fresh install, 90 tests, lab checks and a production build. Merged as `0539629c`. The import automatically changed `bun.lock` and `vite.config.ts`; the pre-migration checkpoint was restored before the packet prompt. The reviewed branch contained only the note. Restoring exposed a preview crash when the lab assigned getter-only `window.fetch`. AI Studio repaired its session by changing `src/lab/labFeed.ts` and adding `src/lab/labFeed.test.ts`; the visible preview now works, and AI Studio reports 92 tests and a successful build. This repair remains unsynced and unreviewed. RF-0 will decide how to carry it safely into the lab. The owner directed AI Studio to do engineering, with the manager operating controls such as GitHub sync; hourly supervision should respect quota reset times.
+EX-00 ran in a [fresh AI Studio session](https://aistudio.google.com/apps/0e1c114d-c81b-487c-9ec8-66ccc59a0160) imported from lab main `bfd8472b6be7eee1111a6eafc1db97a0df4d31b5`. AI Studio reported 90 tests and build passed and wrote its result note, but its sandbox has no `.git` or credentials. Its GitHub sync offered only force-pushing the imported app to `main`, which is prohibited. The manager exported the result note and pushed `lab/EX-00` at `883855c`; Astra ACCEPTED after a fresh install, 90 tests, lab checks and a production build. Merged as `0539629c`. The import automatically changed `bun.lock` and `vite.config.ts`; the pre-migration checkpoint was restored before the packet prompt. The reviewed branch contained only the note. Restoring exposed a preview crash when the lab assigned getter-only `window.fetch`. AI Studio repaired its session by changing `src/lab/labFeed.ts` and adding `src/lab/labFeed.test.ts`; the visible preview now works, and AI Studio reports 92 tests and a successful build. This repair remains unsynced and unreviewed. RF-0 added EX-00a to carry it safely into the lab. The owner directed AI Studio to do engineering, with the manager operating controls such as GitHub sync; hourly supervision should respect quota reset times.
 
 ## Queue
 
@@ -141,6 +141,8 @@ Never push to the lab's main except by merging an accepted packet, never change 
 ```
 
 ## Standing rulings
+
+- On 23 November the owner replaced separate Astra gates for every packet with Astra reviews at the planned RF milestones. The manager verifies each packet before merging; AI Studio does the engineering and receives each whole task.
 
 - On 23 November the owner asked AI Studio to remove the white fog over the planet. AI Studio changed `PublicAstridVision.css` in the session; preserve and review this separately from EX-00a. The owner has final say on its appearance.
 
