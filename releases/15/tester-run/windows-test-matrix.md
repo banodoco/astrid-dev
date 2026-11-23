@@ -139,7 +139,7 @@ Compare the **active** Agent, Runtime and VibeComfy installed source identities 
 
 ## Part 3: Connect ComfyUI
 
-Follow the **frozen Agent's** [astrid-setup skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/setup/docs/SKILL.md#4-set-up-generation) and [generation skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/generation/docs/SKILL.md#set-up-my-generation) for the read-only discovery, the person's permission to connect their own running ComfyUI, and setting placement. Do not launch, restart or add custom nodes to their ComfyUI. On Windows use the installed `run-astrid.cmd` launcher, not WSL.
+Follow the **exact frozen Agent SHA** of the [astrid-setup skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/setup/docs/SKILL.md#4-set-up-generation) and [generation skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/generation/docs/SKILL.md#set-up-my-generation) for read-only discovery, consent to connect the person's existing running ComfyUI, and setting placement. These branch links help locate files; read the instructions at the approved Agent commit. Setup's browser Connected/gallery steps concern the currently published App and do **not** qualify the unpublished Release 15 App. Do not launch, restart or add custom nodes to their ComfyUI. On Windows use the installed `run-astrid.cmd` launcher, not WSL.
 
 Record the `generate scan --json`, `generate targets --json` and `generate defaults --json` results, the actual selected local ComfyUI URL/port and whether each relevant model is ready. If the connection is missing or unusable, record the exact refusal. A paid or remote fallback is not evidence that local discovery passed.
 
@@ -149,7 +149,7 @@ Record the `generate scan --json`, `generate targets --json` and `generate defau
 
 `$url` is the ComfyUI address. Work in `C:\astrid-test`.
 
-**Models for A and B** (about 17 GB, shared). Astrid plans the download and writes nothing until you confirm:
+**Models for A and B** (about 17 GB, shared). The setup skill selects first-use defaults from installed `generate defaults`; these explicit-entry tests are **additional comparable test cells**, not a reason to change the person's saved defaults. Check installed Release 15 `--help`/entries first. Astrid plans the download and writes nothing until you confirm:
 
 ```powershell
 & $astrid generate fetch-models qwen-image-2.1-turbo t2i --comfy-url $url --json
@@ -161,7 +161,8 @@ Record the plan (files, sizes, folder) in your list of added files. If the downl
 ```powershell
 # A: image from text
 & $astrid generate image --entry qwen-image-2.1-turbo --mode t2i --prompt "A red bicycle leaning against a white wall in soft morning light" --width 768 --height 768 --seed 7 --placement $url --out C:\astrid-test\A --json
-# A2: the same with --seed 8 and --out C:\astrid-test\A2, straight after A. Record both times.
+# A2: same entry with a second seed, immediately after A; compare both timings
+& $astrid generate image --entry qwen-image-2.1-turbo --mode t2i --prompt "A red bicycle leaning against a white wall in soft morning light" --width 768 --height 768 --seed 8 --placement $url --out C:\astrid-test\A2 --json
 # B: edit the image from A
 & $astrid generate image --entry qwen-image-2.1-turbo-edit --mode edit --prompt "Repaint the bicycle frame a deep cobalt blue; keep everything else unchanged" --edit "<image from A>" --placement $url --out C:\astrid-test\B --json
 # C: music (uses nodes built into ComfyUI)
@@ -196,7 +197,7 @@ These need custom node packs, and video needs an exact ComfyUI environment. They
 - For video, use the **frozen Release 15 Agent's** `astrid/packs/vibecomfy/recipe.windows-cu130.json` and `astrid/packs/runpod/pins.json` as the source of truth for ComfyUI, nodes, torch and related versions. The old Release 13 ComfyUI pin is not an instruction for this build. Record actual versions and arguments; report and skip if the matching environment cannot be prepared without modifying the person's ComfyUI.
 - Start it as a background process with its output in a log file; the bundled `.bat` waits for a key press.
 - To reuse models already downloaded, point an `extra_model_paths.yaml` at the person's models folder.
-- Stop the person's ComfyUI while video runs and start it again afterwards; one GPU won't hold both. Tell the person first.
+- **Do not stop or restart the person's own ComfyUI as part of automated setup.** The optional test ComfyUI is a separate disposable instance. If one GPU cannot run both, ask the tester to stop and later restart their instance themselves, or obtain separate explicit permission for the agent to do this; otherwise skip optional video and record why.
 - **Before the 53 GB video download,** run E once against the test ComfyUI. Continue only when the refusal is about missing models, not about versions.
 
 Do them in this order and stop where disk, memory or time runs out.
@@ -227,7 +228,7 @@ $t = "http://127.0.0.1:8199"
 
 **RunPod is allowed, but not required.** A tester may use a paid RunPod GPU for supported Astrid generation, especially H3 video, after recording the person's explicit consent, maximum total spend, hourly ceiling and hard UTC deadline **on their Part 0 issue**. A RunPod success does not replace Part 2's Windows update/install check, Part 3's own-ComfyUI discovery, or Part 4's Windows-local cells. Record each cell's actual placement separately: own ComfyUI, disposable local ComfyUI or RunPod. Do not label inference on a RunPod Linux host as a successful Windows-local generation.
 
-**Use Astrid's supported retained-machine path** in the exact frozen Release 15 Agent's [RunPod machine skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/runpod/docs/SKILL.md#runpod-generation-machines). For supported H3 video generation, the placement is --entry h3 --placement runpod. Other model entries must be checked against the installed Release 15 CLI and [execution matrix](https://github.com/banodoco/astrid-agent/blob/release/15/main/docs/reference/where-things-run.md); not every image, speech or ComfyUI workflow supports RunPod. Do not use low-level provisioning scripts for ordinary generation, invent an unsupported command or substitute a different paid provider.
+**Use Astrid's supported retained-machine path** in the exact frozen Release 15 Agent commit's [RunPod machine skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/runpod/docs/SKILL.md#runpod-generation-machines). The branch URL is for discovery, not the evidence-pinned instructions. For supported H3 video generation, the placement is --entry h3 --placement runpod. Other model entries must be checked against the installed Release 15 CLI and [execution matrix](https://github.com/banodoco/astrid-agent/blob/release/15/main/docs/reference/where-things-run.md); not every image, speech or ComfyUI workflow supports RunPod. Do not use low-level provisioning scripts for ordinary generation, invent an unsupported command or substitute a different paid provider.
 
 **Before any claim:** the person must approve a maximum USD amount, maximum USD/hour rate, near-term UTC deadline, GPU/datacenter and the specific cells. The person or agent must actively supervise billing. With no approved ceiling, skip RunPod. Do not read or paste raw RunPod API keys. If another claim or cleanup is unresolved, reconcile it; never start an extra pod around uncertain custody.
 
@@ -273,7 +274,7 @@ Never delete a whole `models`, `custom_nodes`, `input` or `output` folder, and n
 
 **Finish `report.md` and the testing-session issue** with the issue URL; all three frozen Release 15 SHAs, installed/manifest identity and hash, active-build proof, fresh-install or update-from version, machine facts, cell table, problems in severity order, fixes, and exactly what was added/removed/kept/restored. **Add the user's experience:** positive moments, confusing or slow moments, expectations vs reality, workarounds, the tester's feedback after setup/first creation/end, plus links to every distinct problem issue and PR (or an existing issue it reproduced). Distinguish quotes from the agent's interpretation, and local Windows from RunPod results (approved spend, actual cost and verified teardown). Label served App/UI **NOT TESTED FOR RELEASE 15**. If you can export this agent session, add it to the folder: it shows what really happened.
 
-**Then zip the folder and attach it to the Part 0 issue,** pasting the summary as the final issue comment:
+**Then zip the folder and attach it to the testing-session issue**, after showing the tester the redacted contents and obtaining their approval to post; paste the summary as the final issue comment:
 
 ```powershell
 Compress-Archive -Path C:\astrid-test\report\* -DestinationPath C:\astrid-test\astrid-test-report.zip -Force
