@@ -195,8 +195,12 @@ class InstallTests(unittest.TestCase):
                 raise OSError(errno.EIO, "injected post-commit cleanup failure")
 
         with patch("skill_installer.tempfile.TemporaryDirectory", FailAfterCleanup):
-            with self.assertRaisesRegex(ValueError, "new link is installed"):
+            with self.assertRaises(PartialInstallationError) as received:
                 install_packages(self.root, [self.dest])
+        self.assertIn("new link is installed", str(received.exception))
+        self.assertEqual(len(received.exception.completed_changes), 1)
+        self.assertIn("retargeted", received.exception.completed_changes[0])
+        self.assertEqual(received.exception.failed_link, link)
         self.assertEqual(
             link.resolve(), (self.root / ".generated/skills/astrid-dev-leader").resolve())
         self.assertNotEqual(link.resolve(), old.resolve())

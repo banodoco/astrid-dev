@@ -8,6 +8,10 @@ import tempfile
 from skill_builder import OUTPUT, check_packages
 
 
+class CommittedRetargetCleanupError(ValueError):
+    """Retarget succeeded; the cleanup failure occurred after publication."""
+
+
 class PartialInstallationError(ValueError):
     """A later failure left earlier owned link changes installed.
 
@@ -79,7 +83,7 @@ def _retarget_owned_link(link: Path, source: Path, expected_identity: tuple) -> 
         if replaced:
             # TemporaryDirectory cleanup may fail AFTER os.replace committed.
             # Do not claim the old link survived; report the actual new target.
-            raise ValueError(
+            raise CommittedRetargetCleanupError(
                 f"retargeted skill directory symlink {link}, but staging cleanup failed: "
                 f"{exc}; the new link is installed"
             ) from exc
@@ -183,6 +187,10 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
             actions.append(label)
             completed_changes.append(label)
         except (OSError, ValueError) as exc:
+            if not dry_run and isinstance(exc, CommittedRetargetCleanupError):
+                # The replace already committed. Include this entry in the
+                # actual mutation list instead of under-reporting progress.
+                completed_changes.append(label)
             if not dry_run and completed_changes:
                 raise PartialInstallationError(completed_changes, link, exc) from exc
             raise
