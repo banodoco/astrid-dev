@@ -78,6 +78,8 @@ On the way: [Release 12 — Reliable updates](releases/12.md), [Release 13 — O
 - [Plan 09 — Install and update confidence](plans/09-install-and-update-confidence/plan.md) — [Release 16](releases/16.md): hosted tests for install, update, rollback and removal.
 - [Plan 38 — One process identity for Agent and Runtime](plans/38-one-process-identity/plan.md) — [Release 16](releases/16.md): one process identity across systems.
 - [Plan 31 — Releases defined and published from astrid-dev](plans/31-releases-from-astrid-dev/plan.md) — [Release 16](releases/16.md): releases and version numbers from astrid-dev.
+- [Plan 82 — Reuse across commands](plans/82-reuse-across-commands/plan.md) — [Release 16](releases/16.md): reuse across commands, the command-speed lead (owner's decision, 23 November 2026): a warm `astrid generate` recomputes only what depends on the request, from the [first-principles note](plans/82-reuse-across-commands/evidence/2026-11-23-generate-first-principles/README.md) (about 2 s estimated with disk caches, about 1.3 s with a thin client).
+- [Plan 75 — One acceptor (fast saving)](plans/75-fast-saving/plan.md) — [Release 16](releases/16.md): one acceptor, the save-speed lead (owner's decision, 23 November 2026): a save costs the change, not the history, after Plan 89's Release 15 measurement.
 - [Plan 19 — First-principles documentation](plans/19-first-principles-documentation/plan.md) — [Release 17](releases/17.md): documentation from purpose to finished work.
 
 [Release 14 issues](releases/14.md#issues): 94
