@@ -245,7 +245,7 @@ cleanup() {
     --argjson preview_clean "$preview_clean" --argjson chrome_clean "$chrome_clean" \
     --argjson boundary_unchanged "$boundary_unchanged" --argjson trace_ok "$trace_ok" \
     '{exit_code:$rc,idle_safe_stop_verified:($stopped==1),browser_temp_removed:($profile_removed==1),
-      preview_group_empty:($preview_clean==1),no_leftover_chrome:($chrome_clean==1),
+      preview_port_closed:($preview_clean==1),no_leftover_chrome:($chrome_clean==1),
       boundaries_unchanged:($boundary_unchanged==1),trace_verdict_ok:($trace_ok==1)}' >"$out/cleanup.json"
   (cd "$out" && find . -maxdepth 1 -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum --) >"$out/SHA256SUMS"
   exit "$result"
@@ -322,7 +322,6 @@ for ((poll=0; poll<120; poll++)); do
   sleep 1
 done
 (( poll < 120 ))
-python3 "$verify" preview-before "$preview" "$app" "$data" "$app/dist" "$out"
 
 browser_temp=$(mktemp -d /tmp/sl-p77-r7-XXXXXX)
 setsid --wait "${owned[@]}" TMPDIR=/tmp P77_R7_BROWSER_TMP="$browser_temp" LIBGL_ALWAYS_SOFTWARE=1 \

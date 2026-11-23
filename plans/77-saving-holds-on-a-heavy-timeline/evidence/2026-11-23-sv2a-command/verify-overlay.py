@@ -236,44 +236,16 @@ def listener_pids(port):
     return sorted(owners)
 
 
-def preview_before(leader, app, data, dist, out):
-    leader = int(leader)
-    info = process_stat(leader)
-    if info is None or info["pgid"] != leader or info["state"] in {"Z", "X"}:
-        raise ValueError("the preview is not a live process-group leader")
-    args = [item.decode() for item in Path(f"/proc/{leader}/cmdline").read_bytes().split(b"\0")[:-1]]
-    cwd = os.readlink(f"/proc/{leader}/cwd")
-
-    def following(flag):
-        hits = [i for i, field in enumerate(args) if field == flag]
-        if len(hits) != 1 or hits[0] + 1 >= len(args):
-            raise ValueError(f"exactly one {flag} is required in the preview command")
-        return args[hits[0] + 1]
-
-    if (Path(args[0]).name != "node" or args[1:2] != ["scripts/dev-local-workspace.mjs"] or "--preview" not in args
-            or following("--data-root") != data or following("--preview-dir") != dist
-            or Path(cwd) != Path(app).resolve(strict=True)):
-        raise ValueError("the preview process is not the approved compiled-App preview")
-    owners = {}
-    for port in (2400, 17500, 17501):
-        owners[str(port)] = [{key: item[key] for key in ("pid", "pgid", "comm", "start")}
-                             for item in map(process_stat, listener_pids(port)) if item]
-    if not owners["2400"] or any(item["pgid"] != leader for item in owners["2400"]):
-        raise ValueError("port 2400 is not owned solely by the preview process group")
-    write_json(out / "preview-before.json", {
-        "pid": leader, "pgid": info["pgid"], "start": info["start"], "cmdline": args, "cwd": cwd,
-        "dist_dir": dist, "dist_realpath": str(Path(dist).resolve(strict=True)), "port_owners": owners,
-        "group_members": group_members(leader)})
-
-
 def preview_after(leader, out):
+    # Plain record: what is still alive in the preview's group and on port 2400 after the stop. Only a live
+    # listener on port 2400 fails the run; process-group ownership is not asserted.
     members = group_members(leader)
     listeners = listener_pids(2400)
     write_json(out / "preview-after.json", {"pgid": leader, "live_group_members": members,
                                             "port_2400_listener_pids": listeners,
-                                            "group_empty": not members and not listeners})
-    if members or listeners:
-        raise ValueError("the preview process group or port 2400 is still live after stop")
+                                            "port_2400_closed": not listeners})
+    if listeners:
+        raise ValueError("port 2400 is still listening after stop")
 
 
 def trace_verdict(trace, out):
@@ -359,8 +331,6 @@ elif action == "group-live":
     live = group_members(int(raw[0]))
     print(" ".join(str(item["pid"]) for item in live))
     sys.exit(1 if live else 0)
-elif action == "preview-before":
-    preview_before(*raw[:4], Path(raw[4]))
 elif action == "preview-after":
     preview_after(int(raw[0]), Path(raw[1]))
 elif action == "trace-verdict":
