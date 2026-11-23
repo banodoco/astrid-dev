@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 24.5 engineering days committed, plus about 2 conditional (FS-4); no stage 2. Runs in parallel with Plan 63 from day one.
+**Estimate:** About 24.5 engineering days committed, plus about 2 conditional (FS-4); no stage 2. On 23 November 2026 Plan 77's save run took on FS-0, FS-1, a narrow CC-1 (copy and compare counts at 3, 30 and 300 entries), CC-11 and the verified-base part of CC-2 (its cards SV-L1 to SV-L5 and SV-2 to SV-2f), so about 17 days remain once those land; re-estimate from that run's final measurement.
 
-**Waiting on:** a release. On 22 November 2026 the owner took this plan out of Release 15, to wait in no release: it is the timeline half of the tenth-of-a-second work, and [Plan 81](../81-once-per-command/plan.md) and [Plan 82](../82-reuse-across-commands/plan.md) (under a second, by removing repeated work) and [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md)'s measured rounds come first. This reverses [Plan 63's D9](../63-dependable-saving/inputs.md#owner-decisions) for this plan only. When it is scheduled it still needs Plan 63's corpus (CC-7) first, Plan 63's CC-3 for FS-3b and its CC-13 and CC-15 for FS-6.
+**Waiting on:** the final installed measurement of [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md)'s save run (23 November 2026), which decides what is left; then a release (the Release 15 Lead proposes it as the lead item of Release 16). The owner took this plan out of Release 15 on 22 November 2026; on 23 November she had the cheap parts done in Plan 77's save run instead. [Plan 81](../81-once-per-command/plan.md) and [Plan 82](../82-reuse-across-commands/plan.md) remain the command half.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. **To begin once the owner has said go:** read [tasks.md](tasks.md#start-here), then take FS-0 (permanent stage spans) and FS-1 (measure from the editor) first.
 
