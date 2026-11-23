@@ -25,6 +25,6 @@ Approved for exactly: package head `53bbbda5b297ab82e640ed7cc885c77a77b42339`, `
 
 ## Caveats
 
-- Eighteen of the 21 sequential drags per repetition are flagged `failed` by the driver's own check, so the per-scenario `n_posts`, `failed_drags` and `refusals` columns in `summary.tsv` should be read as described above; the timing columns are from the observed POST and response.
+- 18 of the 19 sequential drags per repetition (every one except the cold save) and 10 of the 12 overlapped drags are flagged `failed` by the driver's own check (28 per repetition in all), so the per-scenario `n_posts`, `failed_drags` and `refusals` columns in `summary.tsv` should be read as described above; the timing columns are from the observed POST and response.
 - The scenario 5 (edit while a generation runs) was dropped by decision; no local generation exists.
 - The work copy, not the retained data, was written; the pristine and work copies were removed by the script.
