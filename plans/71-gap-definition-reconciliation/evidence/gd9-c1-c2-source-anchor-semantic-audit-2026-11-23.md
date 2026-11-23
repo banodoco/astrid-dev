@@ -19,7 +19,7 @@ Direct source reads confirm A→B's authored membership arithmetic: frozen A has
 | P63 B | F-001 | `c5bd06345ab4` |
 | P69 B | F-004, LS-001 | `490b2c31dc57` |
 | P75 B | F-001 | `84eb54fd4fd6` |
-| P76 B | F-001 | `7bff0d7937d` |
+| P76 B | F-001 | `7bff0d7937d7` |
 | P77 B | F-001 | `2e16d3703552` |
 | P78 B | F-004 | `42c5a33cf2e0` |
 | P79 B | F-003 | `2759971bd90b` |
