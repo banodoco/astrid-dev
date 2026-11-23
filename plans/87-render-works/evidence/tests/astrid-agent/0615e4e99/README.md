@@ -1,0 +1,7 @@
+# Starting Agent inventory — 23 November 2026
+
+Agent `0615e4e99bc06c6b4d201447d8f9f99db3da2dba`, Linux CPU, Python 3.13.18, Node 20.19.4. The Runtime installed in the worker environment was the Agent setup script's pinned dependency. Node used the system OpenSSL CA store with certificate verification enabled.
+
+The default-marker inventory was run with `PYTEST_ADDOPTS=-rA bash /home/user/p87/astrid-dev/env/agent-pytest.sh` followed by the eight Python files in the plan's test inventory. It reported 178 passed, 3 failed, 7 deselected. The generic-host integration file was then run with `-m integration`: 1 failed and 1 error, both during launch validation. The Remotion backend file was run with `-m integration`: 4 passed, 50 deselected. All exact logs are retained in the run folder as `agent-baseline-node20.log`, `agent-baseline-integration-node20.log`, and `agent-baseline-backend-system-ca.log`.
+
+`baseline-diff.py` sorted the three logs against themselves solely to inventory starting failures; its candidate column is the same starting SHA, not a tested change. No changed candidate or cross-version comparison is implied. The five preexisting identifiers include the two generic-host cases and three default-marker failures. A prior attempt with Node's bundled CA failed on the proxy certificate; the system-CA rerun is the result recorded here. This inventory does not prove the full editor-to-product-render path or installed profile.
