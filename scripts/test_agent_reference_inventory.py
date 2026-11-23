@@ -27,12 +27,36 @@ class ReferenceInventoryTests(unittest.TestCase):
         self.assertIsNone(mapped_target("sync.sh", "command"))
         self.assertEqual(mapped_target("astrid-dev-manage", "skill"), "astrid-dev-manager")
 
+    def test_every_primary_source_maps_to_a_staged_document(self):
+        root = Path(__file__).resolve().parents[1]
+        sources = ["skills/astrid-dev/SKILL.md"]
+        sources.extend(f"skills/roles/astrid-dev-{role}/SKILL.md" for role in
+                       ("lead", "orchestrate", "manage", "worker"))
+        sources.extend(f"skills/roles/astrid-dev-{role}/workstreams/{name}.md" for role, name in (
+            ("lead", "multi-manager-release"),
+            ("manage", "whole-project"), ("manage", "chatgpt-packet"),
+            ("orchestrate", "codex-cloud-sessions"),
+            ("orchestrate", "codex-in-claude-cloud"),
+            ("orchestrate", "multi-manager-dispatch")))
+        sources.extend(f"skills/shared/workstreams/astrid-dev-{name}/SKILL.md" for name in
+                       ("bugfix", "gap", "gpu-validate", "green", "improve", "iterate", "merge", "plan", "release"))
+        self.assertEqual(len(sources), 20)
+        full_checkout = (root / "agent/start.md").is_file()
+        for source in sources:
+            with self.subTest(source=source):
+                proposed = mapped_target(source, "path")
+                self.assertIsNotNone(proposed)
+                if full_checkout:
+                    self.assertTrue((root / proposed).is_file(), proposed)
+
     def test_scope_requires_human_decision_for_plan_and_release_records(self):
         expected = {
             "README.md": "active-consumer",
             "agent/roles/manager.md": "staged-agent",
             "skills/roles/astrid-dev-manage/SKILL.md": "current-authority",
             "plans/73-markdown-first-agent-skills/tasks.md": "plan-owner-review",
+            "plans/51-astrid-dev-clean-up/evidence/baseline.md": "historical-evidence",
+            "plans/20-zero-to-first-image/handoff.md": "historical-evidence",
             "releases/15.md": "release-lead-review",
             "releases/14/packets/R14-FIX-01.md": "release-lead-review",
             "releases/14/evidence/report.md": "historical-evidence",

@@ -37,6 +37,8 @@ def scope_for(path: str) -> str:
         or "/evidence/" in path
     ):
         return "historical-evidence"
+    if path.startswith("plans/") and ("/evidence/" in path or "/handoffs/" in path or path.endswith("/handoff.md")):
+        return "historical-evidence"
     if path.startswith("skills/"):
         return "current-authority"
     if path.startswith("agent/"):
