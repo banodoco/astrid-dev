@@ -12,27 +12,25 @@ Any ComfyUI workflow, on the person's own ComfyUI, a managed one or a rented mac
 
 | Role | Who | Does |
 | --- | --- | --- |
-| Lead | `session_011EzfW1gtAhRQwk8pgJMzhG` | Reads, decides and rules. Confirms the landing gate, gives CI slots, answers the orchestrator. Sends route `N` workers (Luna, or Haiku) to explore and runs the hourly parallelism pass; never gives them a verdict ([lane workstream](../../skills/roles/astrid-dev-lead/workstreams/lane-orchestrators.md)). |
-| Orchestrator | `session_011EzfW2WBWyoHTBJggpfEDm`, Claude, route X | Answers for the plan finishing. Hosts one Codex manager, runs the hourly parallelism pass, reports to the Lead hourly, merges its own plan-branch and record PRs. |
-| Codex manager | Terra, route X, effort high | Works through the cards by route; ticks `tasks.md`. |
-| Workers | by card route: Luna N, Terra X, Sol S, Astra T and reviews | One card each. |
-| Owner | Hannah | WS-L, publishing, paid or personal-machine actions, D10–D12 before landing. |
+| Lead (accountable) | `session_011EzfW1gtAhRQwk8pgJMzhG` | Reads, decides and rules; writes and orders packets; reviews and merges packet PRs into `release/15/plan-56`; runs RS1 and R with Codex Astra; confirms the landing gate; gives CI slots. Sends route `N` workers (Luna, or Haiku) to explore and runs the hourly parallelism pass; never gives them a verdict ([workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md)). |
+| Orchestrator | `session_011EzfW2WBWyoHTBJggpfEDm`, Claude | Starts one fresh ChatGPT session per packet in the owner's account, in the mode its Route sets (N High, X Extra High, S Pro); checks every open packet hourly; resumes or replaces stalled sessions; relays between Lead and packet sessions; posts one STATUS an hour. Does not merge or edit the repository ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md)). |
+| Packet session | a fresh ChatGPT session per packet | Implements and proves one packet ([chatgpt-packet workstream](../../skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md)); opens PRs; posts STATUS and BLOCKED; never merges, ticks `tasks.md` or takes a second packet. |
+| Owner | Hannah | Pastes the Orchestrator launch message; WS-L, publishing, paid or personal-machine actions; D10–D12 before landing. |
 
-## First actions
+The board, mailbox ([#1757](https://github.com/banodoco/astrid-dev/issues/1757)), startup checks and dispatch queue are in [releases/15/run.md](../../releases/15/run.md#plan-56-dispatch); the packets are in [releases/15/packets/](../../releases/15/packets/).
 
-1. Check the Run start in [inputs.md](inputs.md) is on astrid-dev `main` (it must not say "Pending"). If it does, stop and tell the Lead.
-2. Codex check: `codex exec --skip-git-repo-check -s read-only 'Reply ok.'`. If it fails, the owner must sign in; otherwise run cards on Claude subagents by the same routes and say so.
-3. Attach astrid-dev, astrid-agent and VibeComfy. The environment's setup script covers only repos present when the container was built, so run `/opt/astrid-dev/env/agent-setup.sh` and the VibeComfy setup by hand.
-4. Check heads with `git ls-remote`: astrid-agent `release/15/main` `045064b6`; VibeComfy `release/15/main` `48b5fa9e` but **VibeComfy `main` and the Agent's pin are `c0e910ca`**, which includes Plan 81's work.
-5. Cut `release/15/plan-56`: astrid-agent from `release/15/main`; VibeComfy from `c0e910ca`. Record both in `releases/15.md` Branches and in `inputs.md` Source identities. Set `plan.md` Status to active and Owner to the orchestrator.
-6. Bindings: record in a `run.yaml` the model IDs this login accepts and an effort per route, in the shape of [Plan 77's handover](../77-saving-holds-on-a-heavy-timeline/handover.md#runyaml). IDs are not written in repo files; "Codex Astra" means the newest ID the login accepts.
-7. Day one cards: LE-1a, WS-7a, LE-2a and WS-6a, plus phase 0 (WS-0a to WS-0e, WS-0g; never WS-0a and WS-0d at once), LE-4, LE-6 and LE-15. When LE-1a, WS-7a and LE-2a have merged, check their shapes yourself before the cards built on them start.
+## First actions (Lead, then Orchestrator)
+
+1. **Lead:** confirm the Run start in [inputs.md](inputs.md) and the board section are on astrid-dev `main`; cut `release/15/plan-56` (astrid-agent from `release/15/main` `045064b6`; VibeComfy from `c0e910ca`, which is VibeComfy `main` and the Agent's pin, not `release/15/main` `48b5fa9e`); record both in `releases/15.md` Branches and in `inputs.md` Source identities; set `plan.md` Status to active and Owner to the Lead.
+2. **Lead:** answer the Orchestrator's startup-check STATUS with a DECISION. Bindings: record the models this login accepts and an effort per route in a `run.yaml` in the shape of [Plan 77's handover](../77-saving-holds-on-a-heavy-timeline/handover.md#runyaml); model IDs stay out of repo files ("Codex Astra" means the newest ID the login accepts).
+3. **Orchestrator:** run the startup checks, then dispatch P56-01 alone; when its early STATUS proves a packet session can push, open a PR and comment, dispatch P56-02 to P56-04.
+4. **Lead:** when P56-01 merges, check the three shapes yourself (the fix schema, the `extra.nodes` shape, the approval record) before P56-05, P56-06 and P56-07 start.
 
 ## How the code is tested
 
-- Agent tests build VibeComfy at the Agent's own pin (`env/agent-setup.sh`, `VIBECOMFY_ENGINE_REVISION`). A card that changes both repos is proved only after the Agent's `release/15/plan-56` points at the plan-56 VibeComfy head, by a generator-only pin commit (`scripts/vibecomfy_pin.py`). That is yours to do; pins into `release/15/main` are the Lead's.
+- Agent tests build VibeComfy at the Agent's own pin (`env/agent-setup.sh`, `VIBECOMFY_ENGINE_REVISION`). A card that changes both repos is proved only after the Agent's `release/15/plan-56` points at the plan-56 VibeComfy head, by a generator-only pin commit (`scripts/vibecomfy_pin.py`). The Lead does it; pins into `release/15/main` are also the Lead's.
 - Proofs run on the **CPU stand-in target** defined in [evidence/fixtures/README.md](evidence/fixtures/README.md): a fake ComfyUI `object_info` server and a recorded-answer fake pod runner. No GPU, no SAM weights, no rented machine. The real SAM run is WS-L, the owner's, after R.
-- Never dispatch hosted CI. Post `READY-CI` on the mailbox and wait for the Lead's slot. The baseline for the Agent's compared run is [releases/15/evidence/agent-ci-baseline-8807f820](../../releases/15/evidence/agent-ci-baseline-8807f820/README.md).
+- A packet session never dispatches hosted CI: it posts `READY-CI` on the mailbox and waits for the Lead's slot. The baseline for the Agent's compared run is [releases/15/evidence/agent-ci-baseline-8807f820](../../releases/15/evidence/agent-ci-baseline-8807f820/README.md).
 
 ## Order and the real conflicts
 
@@ -40,7 +38,7 @@ The waves and the conflict map are in [tasks.md](tasks.md) (Parallel note) and c
 
 ## Every hour
 
-Run the parallelism pass ([lane-orchestrator workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md)), then report to the Lead: done, in progress, writers that ran, ready cards that waited and why, decisions taken, the one thing you are least sure about. Keep a hosting `send_later` at most 20 minutes away while the Codex manager runs.
+The Orchestrator reads the mailbox, checks every open packet, runs the parallelism pass ([orchestrator rule](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md); here the unit is the packet: start every Ready packet with no unmet dependency and no file conflict with a Running one, up to the cap), resumes or replaces stalled sessions, and posts one STATUS. The Lead does the same pass with `N` workers each check-in and rules on the result.
 
 ## Traps
 
