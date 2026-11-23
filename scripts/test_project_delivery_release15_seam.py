@@ -22,10 +22,10 @@ BRANCH_HEAD = (
     "| --- | --- | --- | --- | --- |\n"
 )
 RELEASE_ROW = (
-    "| astrid-dev | \`release/15/main\` | release | " + "a" * 40 + " | open |\n"
+    "| astrid-dev | `release/15/main` | release | " + "a" * 40 + " | open |\n"
 )
 PLAN_ROW = (
-    "| astrid-dev | \`release/15/plan-72\` | plan 72 | not yet cut | open |\n"
+    "| astrid-dev | `release/15/plan-72` | plan 72 | not yet cut | open |\n"
 )
 AUTHORED_BRIEF = RELEASE.replace(
     "## Publication", BRANCH_HEAD + RELEASE_ROW + PLAN_ROW + "\n## Publication"
