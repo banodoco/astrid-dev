@@ -2,6 +2,10 @@
 
 **Status:** Off-release prepared evidence. **NOT** permission to start, integrate, merge, dispatch RS1, or publish. [Release 15 run board on canonical main](https://github.com/banodoco/astrid-dev/blob/main/releases/15/run.md) still records Plan 72 **HOLD**. Older manager retirement remains unverified. This packet was prepared solely on isolated [draft #1624](https://github.com/banodoco/astrid-dev/pull/1624), and the original #1212 chain was not changed.
 
+## Next action for the Release 15 Lead
+
+The consolidated [HOLD-to-integration execution packet](14-release15-lift-hold-execution.md) is the **single entrypoint** for pending owner decisions, protection requirements, the generic parser/branch-table and Plan72 authored-record owners, source selection, CI proof and future RS1/landing sequence. It includes the latest observed CLI / missing-AA-001 / Plan72-membership controls and distinguishes real Release13 delivery paths from Plan72's proposed Release15 enabler membership. This packet **does not lift HOLD**.
+
 ## Fixed identities
 
 | Purpose | Exact source |
