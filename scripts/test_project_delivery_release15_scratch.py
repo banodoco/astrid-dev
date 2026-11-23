@@ -432,6 +432,42 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         )
         self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
 
+    def test_full_repository_checker_on_disposable_selected_release(self):
+        # A release candidate must eventually pass its real repository check,
+        # not only the relationship reader's check command. This intentionally
+        # does NOT label an incomplete scratch composition green: it records
+        # exact errors so the Lead can distinguish absent authored views from
+        # real implementation failures without changing protected checks.
+        result = subprocess.run(
+            (sys.executable, "scripts/astrid_dev.py", "check"),
+            cwd=self.scratch, text=True, capture_output=True,
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+            check=False,
+        )
+        self.assertIn(
+            result.returncode, (0, 1),
+            "The original checker crashed or returned an invalid exit:\n"
+            + result.stdout + result.stderr,
+        )
+        errors = [
+            line for line in result.stdout.splitlines()
+            if line.startswith("ERROR ")
+        ]
+        self.assertEqual(
+            result.returncode, int(bool(errors)),
+            "Check command exit and diagnostic presence contradict each other:\n"
+            + result.stdout + result.stderr,
+        )
+        # Explicitly report, rather than suppress, each checker error ID.
+        # A failing scratch source does not authorize changing any original
+        # test, default-main source, protection or release record.
+        for error in errors:
+            print("P72 SCRATCH CHECK DIAGNOSTIC: " + error)
+        print(
+            f"P72 SCRATCH CHECK RESULT: exit={result.returncode} "
+            f"diagnostics={len(errors)}"
+        )
+
     def test_native_release15_enabler_inclusion_needs_authored_plan_line(self):
         # The branch table states intended branch custody; only the actual
         # Included plans bullet creates the release -> project edge. This
