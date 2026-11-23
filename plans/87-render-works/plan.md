@@ -56,7 +56,7 @@ Nothing else on the test stack's branches is missing from Release 15: the stack'
 1. Cherry-pick the six sound render changes onto a plan branch cut from `release/15/main`. The two conflicting files are known (`generic_host.py`, `remotion_runtime.py`) and are resolved once.
 2. Carry the lease and custody stopgaps as two tracked experiments, because nothing long can render without them and their proper fixes need measurement first.
 3. Write the pack-root, pack-revision and animation fixes directly. Their stopgaps are not ported: porting code that is about to be replaced costs a second conflict resolution, and a render that depends on an override or a suppressed error is not a trustworthy reference.
-4. After each fix, run a short real render. Render the film whole at three milestones. Compare with the editor, never with an earlier render.
+4. After each fix, run a short real render. Render the film-shaped fixture variant (621 clips at the film's scale; see Decisions in tasks.md) whole at three milestones. Compare with the editor, never with an earlier render.
 5. Nothing merges to `release/15/main` while an experiment remains.
 
 A first version of this plan ported all sixteen commits before fixing anything. A second opinion showed that sixteen cherry-picks would not reproduce the session's stack anyway (the animation patch lived outside the repository and the pack override needed a machine-local setting), so we changed it ([opinion](evidence/astra-plans/OPINION.md), [what we took and left](inputs.md#second-opinion)).
@@ -94,7 +94,7 @@ A first version of this plan ported all sixteen commits before fixing anything. 
 2. On failure, read the first real error. If the cause is in the render path (admission, worker launch, bundling, composition, lease, custody, encode, output), fix it on the plan branch with a focused test and render again.
 3. If the cause is elsewhere, file or update an issue, note the workaround, and continue.
 4. On completion, compare frames against the editor at chosen times and check the audio. A mismatch is a failure.
-5. Stop when one render of each variant completes and matches, twice in a row, with no stopgap on the branch. The heavy fixture proves scale and long duration; the film timeline from 22 November proves custom elements. Both must pass.
+5. Stop when one render of each variant completes and matches, twice in a row, with no stopgap on the branch. The heavy fixture proves scale and long duration; the film-shaped fixture variant proves custom elements, word-anchored and shot-owned clips at the film's scale. Both must pass. No proof depends on the owner's own film.
 
 **Phase 4: keep it working (RN-11).** Extend the existing real-render integration test and run it in the lane that already installs Remotion and a browser.
 
@@ -106,7 +106,7 @@ A first version of this plan ported all sixteen commits before fixing anything. 
 - Inputs and outputs are read whole into memory, and an attempt has a one-hour default deadline. The heavy fixture may meet both; RN-10 measures them on every run.
 - A failed render can leave the stack refusing work. RN-0's reset procedure is the only recovery this plan provides; if resets start to dominate the loop, the smallest missing clean-up comes back in from [#1514](https://github.com/banodoco/astrid-dev/issues/1514).
 - `generic_host.py` is large and changed on Release 15; RN-1 and RN-3 conflict there. Keep RN-3 to the builder and its callers.
-- The heavy fixture is far larger than the film (616 clips and 480-second shots against 3 minutes 16 seconds). Phase 3 has no fixed end; the estimate assumes two days.
+- The standard and large-shots variants are far larger than the film-shaped variant (616 clips and 480-second shots against 621 clips at the film's 3 minutes 16 seconds). Phase 3 has no fixed end; the estimate assumes two days.
 - The fixture builder asks for 25 GiB of free disk and stops below 15 GiB. The session's Mac had under 10. Phase 3 needs a machine with room.
 - The motion pack's install pin is also an open decision in [Plan 78](../78-live-custom-element-editing/plan.md). P2 settles it for rendering; Plan 78's manager should be told before RN-5 starts.
 
@@ -122,7 +122,7 @@ A first version of this plan ported all sixteen commits before fixing anything. 
 
 - The heavy fixture, standard and `large-shots`, renders whole, in one product render each, twice in a row, through to the Runtime's completion receipt and a registered output, on a build of the plan branch with no experiment commit and no local patch.
 - Sampled frames match the editor and the audio matches the timeline.
-- The film timeline from 22 November renders whole in one render on the same build, on the source stack and the installed stack.
+- The film-shaped fixture variant renders whole in one render on the same build, on the source stack and the installed stack.
 - The CI render check is green on the plan branch and fails when any one of RN-2 to RN-6 is reverted.
 - After the branch lands, the same three renders complete on a build of `release/15/main` (RN-12). Only then is the goal met.
 - Every defect met during the loop that was not fixed here has an issue.
