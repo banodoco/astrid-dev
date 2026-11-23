@@ -41,6 +41,12 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     root = Path(root)
     if not root.is_dir():
         raise RelationshipError(f"delivery root is not an existing directory: {root}")
+    # A real (possibly partial) authored tree needs at least one canonical
+    # source area; an unrelated existing directory is not a valid empty graph.
+    if not any((root / name).is_dir() for name in ("vision", "plans", "releases")):
+        raise RelationshipError(
+            f"delivery root contains no canonical vision/, plans/, or releases/ "
+            f"directories: {root}")
     records: list[RecordRef] = []
     links: list[Relationship] = []
     enablers: list[RecordRef] = []
