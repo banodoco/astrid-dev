@@ -10,7 +10,7 @@
   "python": "/redacted/program/versions/<generation>/py/bin/python",
   "profile": "/redacted/program/versions/<generation>/profile.json",
   "env": {"ASTRID_NODE_EXECUTABLE": "/redacted/pinned-node/bin/node"},
-  "identity": {"release": 15, "managed_by": null}
+  "identity": {"release": 14, "managed_by": null}
 }
 ```
 
