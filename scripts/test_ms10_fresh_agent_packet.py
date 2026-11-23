@@ -71,5 +71,60 @@ class FreshAgentPacketTests(unittest.TestCase):
         self.assertIn("NO-RESULT", content)
         self.assertIn("actual client trace", content)
 
+    def test_clean_clone_of_pr_only_head_needs_explicit_fetch(self):
+        """Use file transport so a new client receives main, not the PR-only ref."""
+        import subprocess
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory(prefix="p73-pr-ref-fixture-") as temp:
+            root = Path(temp)
+            bare = root / "origin.git"
+            writer = root / "writer"
+            fresh = root / "fresh"
+
+            def git(*args, cwd=None):
+                p = subprocess.run(
+                    ["git", *args], cwd=cwd, capture_output=True, text=True,
+                    timeout=30, check=False,
+                )
+                self.assertEqual(p.returncode, 0, f"git {args}: {p.stderr}")
+                return p.stdout.strip()
+
+            git("init", "-q", "--bare", "--initial-branch=main", str(bare))
+            git("clone", "-q", "file://" + str(bare), str(writer))
+            git("config", "user.name", "Fixture", cwd=writer)
+            git("config", "user.email", "fixture@example.invalid", cwd=writer)
+            (writer / "README.md").write_text("main\n", encoding="utf-8")
+            git("add", "README.md", cwd=writer)
+            git("commit", "-qm", "main", cwd=writer)
+            git("push", "-q", "origin", "HEAD:refs/heads/main", cwd=writer)
+            (writer / "draft.md").write_text("PR-only candidate\n", encoding="utf-8")
+            git("add", "draft.md", cwd=writer)
+            git("commit", "-qm", "draft PR", cwd=writer)
+            pinned = git("rev-parse", "HEAD", cwd=writer)
+            git("push", "-q", "origin", "HEAD:refs/pull/1627/head", cwd=writer)
+            git("clone", "-q", "file://" + str(bare), str(fresh))
+
+            absent = subprocess.run(
+                ["git", "checkout", "-q", "--detach", pinned],
+                cwd=fresh, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(absent.returncode, 0)
+            git("fetch", "-q", "--no-tags", "origin", "pull/1627/head", cwd=fresh)
+            self.assertEqual(git("rev-parse", "FETCH_HEAD", cwd=fresh), pinned)
+            git("checkout", "-q", "--detach", pinned, cwd=fresh)
+            self.assertEqual(git("rev-parse", "HEAD", cwd=fresh), pinned)
+
+    def test_proctor_fetches_and_verifies_pinned_pr_head_before_checkout(self):
+        content = EVALUATOR.read_text(encoding="utf-8")
+        fetch = 'git fetch --no-tags origin "pull/${SOURCE_PR}/head"'
+        verify = 'test "$(git rev-parse FETCH_HEAD)" = "$SOURCE_SHA"'
+        checkout = 'git checkout --detach "$SOURCE_SHA"'
+        self.assertIn(fetch, content)
+        self.assertIn(verify, content)
+        self.assertLess(content.index(fetch), content.index(verify))
+        self.assertLess(content.index(verify), content.index(checkout))
+        self.assertIn("stop and obtain a new pinned assignment", content)
+
 if __name__ == "__main__":
     unittest.main()

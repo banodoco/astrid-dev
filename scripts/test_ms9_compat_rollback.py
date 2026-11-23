@@ -80,6 +80,7 @@ class RollbackPreparationTests(unittest.TestCase):
         self.assertEqual(snapshot_links(self.destination), before)
 
     def test_missing_legacy_target_does_not_erase_generated_links(self):
+        (self.legacy_root / "SKILL.md").unlink()
         self.legacy_root.rmdir()
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "outside authored checkout"):

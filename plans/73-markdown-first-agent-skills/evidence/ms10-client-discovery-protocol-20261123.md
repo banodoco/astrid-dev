@@ -18,15 +18,24 @@ export SOURCE_SHA="<verified-40-character-commit>"
 export SCRATCH="$(mktemp -d)"
 git clone https://github.com/banodoco/astrid-dev.git "$SCRATCH/astrid-dev"
 cd "$SCRATCH/astrid-dev"
+export SOURCE_PR=1627
+# A normal clone can omit PR-only refs; fetch the pinned PR head.
+git fetch --no-tags origin "pull/${SOURCE_PR}/head"
+test "$(git rev-parse FETCH_HEAD)" = "$SOURCE_SHA" || {
+  echo "PR head moved or source SHA differs; stop and obtain a new pinned assignment" >&2
+  exit 1
+}
 git checkout --detach "$SOURCE_SHA"
 test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
-git status --porcelain
+test -z "$(git status --porcelain)"
 python3 scripts/astrid_dev.py skills build
 python3 scripts/astrid_dev.py skills check
 mkdir -p "$SCRATCH/home/.agents/skills" "$SCRATCH/home/.claude/skills"
 python3 scripts/astrid_dev.py skills install --dry-run --destination "$SCRATCH/home/.agents/skills"
 python3 scripts/astrid_dev.py skills install --dry-run --destination "$SCRATCH/home/.claude/skills"
 ```
+
+A clean clone normally fetches branch heads, not necessarily GitHub's PR-only refs. The explicit PR fetch above is required for this draft. If the PR has moved, **stop rather than substituting a newer commit**: a different revision needs a newly pinned assignment, even if an old commit remains available through another ref.
 
 The *actor* should decide how to use the README. This setup shows the proctor which directories to provision, not a step-by-step answer to give the actor. After the actor creates its workstream, repeat build/check and install in those disposable destinations. For each client, **ensure the actual client uses that disposable user home or explicitly supported repository skill root**. A `HOME` override may also hide that client's login, so use a dedicated sandbox login or authorized ephemeral session rather than reusing any personal credential directory.
 
