@@ -22,7 +22,7 @@ We want to know what works, what fails, and the exact error when it fails. A fai
 
 1. **Get one explicit approval** before installing an unpublished build, updating an existing installation or downloading large model files. State the disk/download budget, check free space and clean up only test-added files. Never delete any pre-existing models.
 2. **Never install node packs or Python packages into the person's ComfyUI.** Adding model files to it is fine.
-3. **Spend no money.** Never use a RunPod or other paid option, even if Astrid offers one.
+3. **RunPod is permitted, but optional and paid.** The agent may claim a RunPod machine after the person approves a dollar ceiling, hourly rate and UTC deadline (Part 5A). Do not buy other cloud services, launch an uncapped pod, or claim RunPod work as proof of local Windows generation. Record actual costs. A spending estimate is **not** a provider-side cap: independently monitor the account and verify termination.
 4. **Fix small Astrid problems that block you, and share the fix.** If a small change to Astrid's installed code gets a step working (a wrong path, a quoting bug, a missing Windows case), make it, keep going, and add the exact diff to `fixes.diff` straight away. Keep fixes minimal, and say in the cell table which cells ran on patched code. If Astrid then refuses to run because its own files changed, undo the change and report both. If it needs more than a small change, report it and move on. Don't work around an Astrid problem by changing the person's ComfyUI. A fix here lasts only until the next update, so it must be in the report to count.
 
 **Shell.** Use Windows PowerShell, not WSL. No admin rights are needed. If your shell doesn't keep variables between commands, or isn't PowerShell, put each block in a `.ps1` file and run `powershell -NoProfile -ExecutionPolicy Bypass -File <file>`. The install, the downloads and the video cells run longer than most command time limits: run them in the background and poll.
@@ -59,7 +59,7 @@ gh issue create --repo banodoco/astrid-dev --title "observation: Release 15 Wind
 ~~~
 
 3. Record the returned issue URL at the top of report.md. If the CLI cannot create issues, ask the person to create an [observation issue](https://github.com/banodoco/astrid-dev/issues/new?template=observation.yml) in their browser and give you its URL. **Do not proceed until an actual issue URL exists.**
-4. Post a STARTED comment with Windows edition, GPU/VRAM, fresh-install or update, and planned scope. Do not disclose private names or paths. After Part 2, add the frozen SHAs and manifest digest. Keep all results, exact errors, task IDs and the final ZIP on **this same issue**.
+4. Post a STARTED comment with Windows edition, GPU/VRAM, fresh-install or update, planned scope, and whether RunPod is permitted, with approved budget/rate if used (never credentials). Do not disclose private names or paths. After Part 2, add frozen SHAs and the manifest digest. Keep all results, exact errors, task IDs, RunPod costs/termination evidence and final ZIP on **this same issue**.
 
 For questions, post a comment beginning QUESTION:. If the agent cannot post, the person can paste the comment. Keep tokens and personal data out of issue text and logs.
 
@@ -211,7 +211,7 @@ A resumable download that ships with Windows (in the repository these files sit 
 curl.exe -L -C - -o "<models folder>\<subfolder>\<file>" "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/main/split_files/<subfolder>/<file>"
 ```
 
-**Do not inherit Release 13 exemptions.** Record A/A2 cold and warm wall times, overhead, download coverage and image-to-video first-frame behavior. Report real problems even if they were known in Release 13. Check entry IDs and CLI flags against the **installed** Release 15 --help/defaults; if an example was removed, report its replacement rather than silently using another model or paid backend.
+**Do not inherit Release 13 exemptions.** Record A/A2 cold and warm wall times, overhead, download coverage and image-to-video first-frame behavior. Report real problems even if they were known in Release 13. Check entry IDs and CLI flags against the **installed** Release 15 --help/defaults; if an example was removed, report its replacement rather than silently using another model or paid backend. Approved RunPod cells belong in a **separate remote-results column**; they do not replace the Windows-local evidence.
 
 **Two no-download preflight checks.** Run cells D and E from Part 5 against `$url`, using A for E. Record whether they run or refuse and whether the actual messages name any missing nodes/models correctly. Do not assume Release 15 must refuse just because Release 13 did.
 
@@ -256,16 +256,55 @@ $t = "http://127.0.0.1:8199"
 & $astrid generate video --entry h3 --mode video-edit --prompt "Gently brighten the scene, keeping the composition" --video-ref "<video from E>" --steps 8 --placement $t --out C:\astrid-test\G --json
 ```
 
+## Part 5A (optional): RunPod GPU generation
+
+**RunPod is allowed, but not required.** A tester may use a paid RunPod GPU for supported Astrid generation, especially H3 video, after recording the person's explicit consent, maximum total spend, hourly ceiling and hard UTC deadline **on their Part 0 issue**. A RunPod success does not replace Part 2's Windows update/install check, Part 3's own-ComfyUI discovery, or Part 4's Windows-local cells. Record each cell's actual placement separately: own ComfyUI, disposable local ComfyUI or RunPod. Do not label inference on a RunPod Linux host as a successful Windows-local generation.
+
+**Use Astrid's supported retained-machine path** in the exact frozen Release 15 Agent's [RunPod machine skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/runpod/docs/SKILL.md#runpod-generation-machines). For supported H3 video generation, the placement is --entry h3 --placement runpod. Other model entries must be checked against the installed Release 15 CLI and [execution matrix](https://github.com/banodoco/astrid-agent/blob/release/15/main/docs/reference/where-things-run.md); not every image, speech or ComfyUI workflow supports RunPod. Do not use low-level provisioning scripts for ordinary generation, invent an unsupported command or substitute a different paid provider.
+
+**Before any claim:** the person must approve a maximum USD amount, maximum USD/hour rate, near-term UTC deadline, GPU/datacenter and the specific cells. The person or agent must actively supervise billing. With no approved ceiling, skip RunPod. Do not read or paste raw RunPod API keys. If another claim or cleanup is unresolved, reconcile it; never start an extra pod around uncertain custody.
+
+~~~powershell
+# Commands from the installed Release 15 $astrid launcher:
+& $astrid credential set runpod     # prompts securely for the key
+& $astrid machines setup            # choose GPU, datacenter/volume, budget
+& $astrid machines setup --show
+& $astrid generate describe --placement runpod --json
+~~~
+
+Use --help to confirm the installed flags. **Illustrative only**: the person must substitute their approved GPU, dollar ceiling, rate and future UTC deadline; the values shown here are examples, *not* authorization.
+
+~~~powershell
+& $astrid machines claim --gpu "RTX 4090" --max-hourly-usd 1 --max-usd 3 --deadline FUTURE_UTC_DEADLINE --for 30m --consent paid
+& $astrid machines --json
+# Run a supported H3 generation cell, adapting Part 5's inputs,
+# with --entry h3 --placement runpod instead of the local ComfyUI URL.
+~~~
+
+Claiming is billable. Saving preferences alone is not approval to spend. Record actual claim ID, pod ID, GPU, region, hourly rate, task ID, timestamps, progress and accrued cost from machines --json and the provider. Check before and after each cell. Do not leave a pod idle between tests without monitoring. After a failed job, it may **continue billing**; stop unsafe retries, cancel the task if appropriate, and release the pod.
+
+**Cost safety is part of the test.** A locally enforced timer can stop working if the Windows computer sleeps, loses connection or the Astrid host exits, so never promise a provider-side spending cap. Keep the computer awake and independently inspect the RunPod account while charges are possible. End the claim before stopping the host or the approved test window:
+
+~~~powershell
+& $astrid machines --json
+& $astrid machines release MACHINE_ID   # use the exact claimed ID
+& $astrid machines --json
+~~~
+
+A release command returning is **not yet proof that billing stopped**. Confirm that the *same* pod is terminated in the provider account and record the release/termination receipt. Look for any remaining paid network volumes/storage. If termination is uncertain, immediately alert the person, do not create another pod, and preserve custody records while reconciling the original claim.
+
+Add a separate RunPod table to report.md: frozen build pins, cell, GPU/region/pod ID, claim/lease ID, task ID, start/end UTC, approved caps, estimated vs observed billed cost, result, exact termination evidence, and any uncertainty. Share redacted evidence on the same issue. Never count this as proof of the tester's local Windows GPU or ComfyUI.
+
 ## Part 6: Clean up and report
 
 1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\report\astrid-doctor.zip`. Copy the images from A and B into the report folder too.
 2. **Delete every model this test added to the person's ComfyUI,** from your list. If the person asks to keep some, keep those and say which.
 3. **Do not silently leave unpublished Release 15 installed.** Ask whether to keep the development build, restore the previous published version using the supported rollback/update route, or remove a new test install without deleting any pre-existing data. Any restore/uninstall requires explicit consent. Record the selected final version, backup/rollback result, folders under `%LOCALAPPDATA%` that start with `Astrid`, the `Astrid Runtime` scheduled task, and any `astrid` command remaining.
-4. **Delete the test ComfyUI** and everything else on your list.
+4. **Delete the test ComfyUI** and everything else on your list. If RunPod was used, release the exact pod and verify its termination independently in RunPod before closing the test; list any billed volumes or unresolved charges.
 
 Never delete a whole `models`, `custom_nodes`, `input` or `output` folder, and never delete a file you didn't add.
 
-**Finish `report.md`** with the issue URL; all three frozen Release 15 SHAs, local manifest hash, active-build proof, fresh-install or update-from version, machine facts, cell table, problems in severity order, fixes, and exactly what was added/removed/kept/restored. Label App/UI **NOT TESTED**. If you can export this agent session, add it to the folder: it shows what really happened.
+**Finish `report.md`** with the issue URL; all three frozen Release 15 SHAs, local manifest hash, active-build proof, fresh-install or update-from version, machine facts, cell table, problems in severity order, fixes, and exactly what was added/removed/kept/restored. Distinguish local Windows and RunPod results, including approved spend, actual cost and verified teardown. Label App/UI **NOT TESTED**. If you can export this agent session, add it to the folder: it shows what really happened.
 
 **Then zip the folder and attach it to the Part 0 issue,** pasting the summary as the final issue comment:
 
