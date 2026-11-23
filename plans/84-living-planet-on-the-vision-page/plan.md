@@ -4,13 +4,13 @@
 
 **Goal:** The public vision page opens on a living 3D planet in place of the hero's pixel-art mink; the planet continues behind one translucent panel, Foundations, that holds the Pillars and the Principles; and it arrives with an authored intro, runs smoothly, and looks right on every device.
 
-**Status:** paused
+**Status:** active
 
-**Owner:** the hosting Orchestrator (`session_011EzfW1Df4SCkBoafGdR1di`), which hosts the plan's manager
+**Owner:** the AI Studio run's manager, a Codex session the owner starts with the start message in [ai-studio-run.md](ai-studio-run.md#manager-start-message); the session is named on that board
 
-**Estimate:** About 16 engineering days, including one shared time of day and splitting the engine into modules: the planet is already built as a mock-up, so this is integration, performance, devices, the intro and polish. It is re-stated after the device trial (PL-0), which decides how much has to be drawn live on a phone.
+**Estimate:** About 27 engineering days from 23 November 2026: about 23 one-day packets in AI Studio (the engine split, what the page needs from the engine, then the page itself), plus 4 days to import it into astrid-app and prove it there, with reflection and the owner's daily looks alongside. It is re-stated at the run's RF-0 and RF-A rows from what the first packets actually take.
 
-**Waiting on:** the owner's go to start a second run. The first run was stopped by the owner on 22 November 2026 after PL-0 and PL-1; PL-2 is nearly done on its own branch. What exists, and where, is in [tasks.md](tasks.md#run-1-stopped--22-november-2026) and [inputs.md](inputs.md).
+**Waiting on:** the owner to send the manager start message; the first packet is EX-00. The work now runs in Google AI Studio in the planet lab (banodoco/planet) and is imported into astrid-app at the end; the queue, roles and authority are in [ai-studio-run.md](ai-studio-run.md). Run 1 (PL-0, PL-1 and most of PL-2) is in [tasks.md](tasks.md#run-1-stopped--22-november-2026).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -37,6 +37,7 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 
 - **The mock-up is the design reference and the donor of the engine:** banodoco/planet at `037293de`. One function, `initPlanetEngine(canvas, callbacks)`, in one 8,996-line file, drives a single three.js scene with 22 named places; four story cards turn the planet to four of them. It builds to 979 kB of JavaScript (266 kB compressed). What it does and does not yet do is in [evidence/research-planet-mock-up.txt](evidence/research-planet-mock-up.txt).
 - **The page already has a home, tests and a way of working:** the App's `vision-content` checks include screenshot captures of the hero, the Pillars and the Principles, mobile layout checks and a reduced-motion path; three.js is already one of the App's dependencies. See [evidence/research-vision-page-and-manager-route.txt](evidence/research-vision-page-and-manager-route.txt).
+- **Decision (23 November 2026): the rest is built in the planet lab and imported.** banodoco/planet becomes the lab, no longer read only; see [inputs.md](inputs.md#owner-decisions). The engine still lands in the App as decided below; nothing is published from the lab.
 - **Decision: the engine moves into the App.** It is brought into astrid-app beside the page and loaded only when the page needs it, on the App's own version of three.js (0.185.1; the mock-up targets 0.187) and in its own canvas, apart from the editor's. banodoco/planet stays as the mock-up it is; nothing is published from it. A separate package would add a release to coordinate for one consumer.
 - **What the page already has is reused, not rebuilt:** the sky's 1.8-second reveal, the 760-pixel point below which the hero's illustration is hidden, the reduced-motion rules and the stable loading text.
 - **An independent critique changed this plan** before it was accepted; what it found and what was done with each point is in [inputs.md](inputs.md#planning-evidence).
@@ -56,7 +57,9 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 
 **Real dependencies:** none on other plans. It changes astrid-app only. [Plan 53](../53-vision-aspirations/plan.md) changes the vision's text and the feed the page reads, not its layout; if both are in flight, this plan takes the feed as it finds it.
 
-**Unresolved:** D1. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**How the rest runs (from 23 November 2026):** the owner moved the remaining work to Google AI Studio. Every planet and page change is made in the planet lab, banodoco/planet, which holds astrid-app's Vision page files at their own paths and the engine from PL-1; packets of about a day are run in AI Studio by a Codex manager, each reviewed by an Astra subagent, with the owner looking once a day; the lab is then imported into astrid-app in four integration packets. The same outcome and completion cases apply; the PL tasks map onto the packets as listed in [ai-studio-run.md](ai-studio-run.md#plan-84-tasks-and-the-packets-that-deliver-them). The engine split (PL-9) now comes first, proved by a scene fingerprint test because AI Studio cannot take screenshots.
+
+**Unresolved:** none; D1 was decided on 22 November 2026. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 

@@ -159,3 +159,5 @@ The owner stopped the first run at about 22:38 UTC. The manager, its runner and 
 
 **To resume:** start a second run from the Run start line in [inputs.md](inputs.md), with the same routes and rules. Its first steps are to merge `plan-84/pl-1-entry-repair` and `plan-84/pl-2` into the plan branch (merge commits), re-run the four focused specs, finish PL-2, and then go on to PL-3 and PL-10.
 
+**Superseded on 23 November 2026:** the owner moved the remaining work to Google AI Studio, in the planet lab (banodoco/planet), with an import into astrid-app at the end ([owner decision](inputs.md#owner-decisions)). The working document, queue and roles are in [ai-studio-run.md](ai-studio-run.md). This file stays the record of what lands in astrid-app; the lab's packets are tracked on that board.
+
