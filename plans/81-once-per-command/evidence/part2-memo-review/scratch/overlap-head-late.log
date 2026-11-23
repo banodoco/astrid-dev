@@ -1,0 +1,6 @@
+inner prepublication callback sees owner active
+outer OK
+inner digest resumes, owner revoked
+inner prepublication callback sees owner revoked
+inner OK
+inner scalar lookups 30 index remains invalid True outer pair True True inner pair True True

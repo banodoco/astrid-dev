@@ -1,0 +1,4 @@
+installed invalid index during lookup 2
+restored the original index on lookup exit
+OK
+lookup 30 files ['.workflow.py.vibe.lock', 'workflow.py', 'workflow.vibe.json']

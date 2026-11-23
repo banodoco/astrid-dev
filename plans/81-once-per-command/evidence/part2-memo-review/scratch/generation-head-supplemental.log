@@ -1,0 +1,5 @@
+final victim recorded? False directories 0 witnesses 3 memo False
+mutation after ['read']
+final victim recorded? False directories 0 witnesses 3 memo False
+OK
+victim read in emit? True changed? True lookup 30 output True True

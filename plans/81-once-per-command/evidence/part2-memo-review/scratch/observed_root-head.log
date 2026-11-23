@@ -1,0 +1,5 @@
+middle answer read from B resolved root b
+end roots in file read set ['a', 'b'] root identity a changed flag False
+end roots in file read set ['a', 'b'] root identity a changed flag False
+OK
+output True True
