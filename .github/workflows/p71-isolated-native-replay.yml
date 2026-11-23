@@ -28,13 +28,16 @@ jobs:
           git fetch --no-tags origin 6d75abf9cb0d102a1fef494f78dd9184d4e45d1f
           git fetch --no-tags origin 70d5ac857e8066f8cacf98cda7b9d5d686a12f71
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          # Validate the unchanged evidence-only source commit, not this transient workflow.
+          git switch --detach 2a3bf7a66a888e20f0fc35c7e2dcc5a7bc1e30c1
+          test "$(git rev-parse HEAD)" = "2a3bf7a66a888e20f0fc35c7e2dcc5a7bc1e30c1"
           git diff --check ca97096ba6893108c90a932479e7473f679c724e HEAD
       - name: Native C1/C2 parser and source replay
         run: |
           set -euo pipefail
           export PYTHONDONTWRITEBYTECODE=1
           python3 plans/71-gap-definition-reconciliation/evidence/gd9_source_replay.py --self-test
-          python3 plans/71-gap-definition-reconciliation/evidence/gd9_source_replay.py --repo . --head "$GITHUB_SHA"
+          python3 plans/71-gap-definition-reconciliation/evidence/gd9_source_replay.py --repo . --head "2a3bf7a66a888e20f0fc35c7e2dcc5a7bc1e30c1"
       - name: Original repository tests and checks
         run: |
           set -euo pipefail
