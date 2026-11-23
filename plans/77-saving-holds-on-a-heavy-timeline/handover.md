@@ -57,6 +57,13 @@ models:
 - After a Runtime fix, regenerate the Agent's Runtime pins (`scripts/regenerate_runtime_pins.py` in astrid-agent) before rebuilding the stack.
 - Tag claims as verified or reported.
 
+
+### Local qualification before hosted CI
+
+Use the Runtime PR unit job’s selection on the candidate and comparison base. When that selection exceeds the lane machine’s available time, collect every static-tag, AST-pin, inventory and diagnostics test file with filename globs, and use a source search for AST and source assertions in files with other names. Keep the checkout, exact selections, failing test IDs and raw results for both trees. In Agent and App, use each PR’s own unit selection for the affected files and include the pin tests. Run the card’s focused and protected proof as well. Preserve every test and fixture when making a fix.
+
+The Runtime first-cut focused proof missed a duplicate canonical-mismatch refusal emitter that the existing static diagnostic test caught in all three hosted Python jobs. This local step covers such source contracts before dispatch. [Runtime landing PR](https://github.com/banodoco/astrid-runtime/pull/102)
+
 ## A round, step by step
 
 The [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round) is the rule; this is the order on the machine.
