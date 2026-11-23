@@ -55,6 +55,7 @@ On the fresh isolated install, a Runtime process first resolved an existing effe
 ## Limits
 
 - The Lead's 23 November gate defines a blocking finding as one that breaks the headline claim (a pack installed after startup used in a mixed commit), breaks or changes an existing base test, prints a falsehood, loses user data, or crosses a decided boundary. Other findings receive an issue each and a line under the plan's limits.
+- A stateful lookup callback can return different results on the two evaluations of a warm miss: [#1599](https://github.com/banodoco/astrid-dev/issues/1599).
 - A published registry can share the base process-global mutable kind registry with other callers: [#1588](https://github.com/banodoco/astrid-dev/issues/1588).
 - A pack can land after its root stamp is sampled and before a miss returns; a later lookup can see it: [#1584](https://github.com/banodoco/astrid-dev/issues/1584).
 - Animation and transition discovery after startup is outside this proof and plan scope: [#1564](https://github.com/banodoco/astrid-dev/issues/1564).
