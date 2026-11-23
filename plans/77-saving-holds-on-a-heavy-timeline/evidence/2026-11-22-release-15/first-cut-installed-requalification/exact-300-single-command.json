@@ -1,0 +1,26 @@
+{
+  "method": "Pinned one read-only filesystem descriptor during the third pair. Read SQLite only after ordinary idle-safe down and controller cleanup.",
+  "publication": "txn-17609c28c96f41f9a9365ff42c872dac",
+  "revision": "authoring-parent-revision-08c5776d80a1a8f657e70b64c6b1cad24ca4e7d6c4febe64c5e6b6d529ad3c70",
+  "clips": 300,
+  "occurrences": 10,
+  "sequence": 2508,
+  "command": "doc.patch",
+  "command_count": 1,
+  "logical_text_bytes": {
+    "history_records": 1783960,
+    "history_metadata": 103438,
+    "parent_payload": 183661,
+    "parent_manifest": 59509,
+    "idempotency_result": 563830,
+    "timeline_event_payloads": 721
+  },
+  "total_selected_text_bytes": 2695119,
+  "db_bytes_after_cold_before_no_save_reopen": 445300736,
+  "wal_bytes_at_same_sample": 4152,
+  "db_bytes_after_save_reopen_and_clean_shutdown": 448196608,
+  "physical_interval_delta_bytes": 2895872,
+  "physical_interval_scope": "Includes the no-save reopen, one edit, post-save reopen and ordinary shutdown; WAL allocation, checkpointing and other lifecycle writes can affect this delta.",
+  "excluded_from_logical_total": "row headers, indexes, smaller scalar fields and other dependent rows",
+  "final_db_sha256": "9e17a6549cee4b5b9ba52d75048ef3141253d634b90dd6d36e9ec9f96df31758"
+}
