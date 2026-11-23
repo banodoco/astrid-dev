@@ -455,9 +455,17 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
             "goal", "pillar:artistic-ambition/finished-artistic-work"
         )
         self.assertEqual(goal.returncode, 0, goal.stdout + goal.stderr)
-        self.assertIn("-> release:", goal.stdout)
-        self.assertIn("-> gap:AA-001", goal.stdout)
-        # Plan72 is an enabler; no fictional project-to-gap edge may appear.
+        # Pin the ACTUAL frozen authored path and role ordering. AA-001 is
+        # present in the graph, but this goal's release paths travel through
+        # F-003 and Release13, not AA-001 or enabler Plan72.
+        base = "goal:pillar:artistic-ambition/finished-artistic-work"
+        self.assertEqual(goal.stdout.splitlines(), [
+            base + " -> gap:F-003 (supporting) -> project:20 (primary) -> release:13",
+            base + " -> gap:F-003 (supporting) -> project:32 (supporting) -> release:13",
+            base + " -> gap:F-003 (supporting) -> project:34 (primary) -> release:13",
+        ])
+        # Plan72 is a gapless enabler; it must not acquire a fictitious
+        # addresses edge to manufacture a path to Release15.
         self.assertNotIn("project:72", goal.stdout)
 
         unknown_issue = invoke("issue", "999999999999")
