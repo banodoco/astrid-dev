@@ -42,3 +42,7 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - **Reset, do not repair.** If a failed render leaves the stack refusing work, run RN-0's reset procedure and continue. Do not fix recovery in the product here; add what you saw to [#1514](https://github.com/banodoco/astrid-dev/issues/1514).
 - **Estimates are provisional.** Re-estimate after RN-7's first finding and after the first whole-fixture attempt in RN-10.
 - **Routes:** N tasks go to the normal tier; X to the extra-hard tier with named helper subtasks for reading and running; S to the super-hard tier.
+
+### Decisions
+
+- 2026-11-23: Use the generated heavy fixture in place of the film for RN-0 and milestone renders: `evidence/SANITIZER.md` excludes all video and audio. The App `release/15/main` builder last changed at `3506a26b3e0be9b42477cf5190ff036c7c73d0a5`; the host was notified.
