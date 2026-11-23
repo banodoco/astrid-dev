@@ -69,8 +69,18 @@ In the [tasks template](../../../../templates/project/tasks.md), every task has 
 - **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
 - **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and dependency revisions, exact focused checks and authority.
+- **A deliberate base.** The default base is the release branch, `release/<NN>/main`. Question it before you accept it.
+  - **Find overlapping plans.** Check every other active plan in the same release whose branch hasn't landed: run `git merge-tree --write-tree --name-only release/<NN>/main release/<NN>/plan-<PP>` and compare what it touches with this plan's files. A plan overlaps when it changes the same functions, classes or contracts, or the producer pins (VibeComfy and Runtime pins, locks and recipes).
+  - **Choose a base for each overlapping plan,** record the choice in `inputs.md` with its reason, and add the plan to **Waiting on**:
+    - **Wait** for it to land first.
+    - **Stack:** cut this plan from its plan branch and land after it.
+    - **Build on the release branch** only if the overlap is disjoint, or the other plan's change is one this plan should replace.
+
+    Deferring an overlapping plan's items doesn't make the plans independent. Their contracts still meet when they merge.
 - **Tests only at load-bearing moments,** per the [run contract's table](../../run-contract.md#when-a-test-run-is-load-bearing).
 - **A test inventory and focused proofs.** `tasks.md` names the existing tests the plan affects (its test inventory) and, for each task, the exact test files that prove it. The manager's local baseline runs only these.
+- **Proofs run on inputs any session can rebuild.** A card's proof uses a generated fixture or a structure-only export (no media), never the owner's own project or media. When a real project surfaces a bug, record its shape: add a minimal reproduction to the fixture builder and file an issue, so the fix is proved and guarded on the fixture; a workaround made in the real project is the owner's to undo, not a card.
+- **A card's proof is evidence, not a review.** Tests, a measurement, a render or a read-back; never "an independent review". Reviews live only in the `R` row and any agreed `RS` stop, and a per-card high-judgment review follows the [run contract's per-card rule](../../run-contract.md#review-and-promotion-boundaries).
 - **A contract card lists what it makes untrue.** A card that changes a contract, a check's trigger or a message names every existing pinned test, fixture and oracle line the change invalidates, and says how each may change. A card whose proof is a `grep` or a list of pinned tests says "re-check against the code at dispatch", because an earlier card may have moved what it names.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
   - other repositories come from public git at pinned commits;
@@ -95,7 +105,7 @@ Default model for each route, using the newest available model of that family:
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
-**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. Check a pure sync by tree equality. A bounded-fix check runs the focused tests on both base and head. A bounded-fix check of more than about 500 lines of product code, or one that touches a shared contract, goes to the high-judgment role. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
+**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. Check a pure sync by tree equality. A bounded-fix check runs the focused tests on both base and head. A bounded-fix check goes to the high-judgment role only when its own tests cannot show it is right (see the per-card rule under [review and promotion boundaries](../../run-contract.md#review-and-promotion-boundaries)); size alone is not a reason. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
 
 *From [Routing and bindings](../../run-contract.md#routing-and-bindings); edit it there.*
 <!-- block:routing:end -->

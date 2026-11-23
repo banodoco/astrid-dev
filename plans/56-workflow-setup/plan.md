@@ -2,66 +2,49 @@
 
 **Project:** Workflow set-up
 
-**Goal:** One command gets everything a ComfyUI workflow needs, its models and its custom node packs, and anything it cannot find is reconciled in one simple step.
+**Goal:** Any ComfyUI workflow, on your own ComfyUI, a managed one or a rented machine, either runs or stops with a named next step; a pack Astrid has not reviewed installs after one informed yes, and the saved workflow remembers it.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Release 15 Lead (`session_011EzfW2ePdUMAHRAcAm3nur`)
 
-**Estimate:** 1–2
+**Estimate:** About 18.5 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8, and 6.5 from the UX review (LE-12 to LE-18 and consent hardening in LE-2), of which 3.75 (LE-12 to LE-15, LE-2 hardening) are needed for the SAM run to pass; a plain 90/10 without the loose-end tasks is about 6.
 
-**Waiting on:** [Release 13](../../releases/13.md) publishing, the model fingerprint look-up fix that follows it
+**Waiting on:** the owner's decisions D10–D12 ([inputs.md](inputs.md#owner-decisions)), which do not block starting; D4–D9 and Release 15 membership decided 23 November 2026
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): a workflow is only portable if the place it lands can be made ready for it without a person hunting for files.
+**Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): a workflow is only portable if the place it lands can be made ready for it without a person hunting for files. [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting): nothing runs another person's code without an informed yes.
 
 ## Outcome and scope
 
-A person or their agent points Astrid at any workflow, bundled or their own, and at a ComfyUI. Astrid answers in two steps.
+A person or their agent runs `astrid generate workflow FILE --as-entry NAME [--add URL[@REF]] [--add-model DEST=URL#sha256] [--consent code]` on any workflow and a target. Every handled state ends in a result with an issue and a fix that says who acts (`agent` or `human`) and gives either the exact command or a manual step with the command to run afterwards. A missing class is looked up once (ComfyUI-Manager, Comfy Registry, GitHub) and offered as a candidate, never installed from a guess. A pack off the reviewed list installs only after consent, with a plain warning of what its code can reach; `--add` pins the current commit; the entry remembers the approval so the next run needs no flag. On a rented or managed target nothing outside the approved refs is installed, and the target's own `doctor` check reads the target's lock, not the shipped one.
 
-1. **Plan.** Every model and every node pack Astrid can see the workflow needs, each marked *present*, *found* (with its source, size and where it will go) or *not found*. What it cannot determine yet is listed as unknown, not hidden. Nothing is installed or downloaded.
-2. **Apply.** After approval of that exact plan, Astrid installs the node packs and downloads the models, reporting each action as done, failed or pending. It is not all-or-nothing: what succeeded stays, and a second run continues from there.
-3. **Restart and continue, when node packs were installed.** A new node pack is not loaded until ComfyUI restarts, and some models can only be named once its nodes are loaded. Astrid stops at "restart needed", the person restarts their ComfyUI (Astrid restarts one it manages), and the same command continues. Anything newly discovered at that point is shown for approval again.
+**Not included (moved to [Plan 90](../90-workflow-setup-exact-plan/plan.md), the follow-up):** a plan digest and `--apply DIGEST`, `generate requirements`, a reusable per-user trust list, Runtime and App approvals (Plan 35), update and rollback plans, running a pack's `install.py` (never), first-use model hashing, locking pip's transitive resolution (stated as "resolved at install"), identifying files by content (issue 665), a ComfyUI on another machine.
 
-Anything *not found* is reconciled the same way for models and node packs:
-
-- **Offer what is already there.** A model under another name or folder; a node pack already installed.
-- **Look in what Astrid and VibeComfy already know.** Declared sources, the model registry and its aliases, the node-pack definitions and lock; for node packs, the ComfyUI-Manager list once WS-5 has proven that path against real data. A candidate is evidence, never applied without confirmation.
-- **Ask once.** The person or agent gives an address; Astrid records it and never asks again.
-
-### Included
-
-- One list of requirements from any workflow, for models and node packs together.
-- The plan and apply command, on a ComfyUI Astrid manages and on a person's own ComfyUI on the same machine.
-- Telling Astrid that a file the person already has is the model a workflow asks for, and giving a source for one it lacks, each recorded once ([issue 665](https://github.com/banodoco/astrid-dev/issues/665)). Identifying an unknown file from its contents and searching other sites are later steps of that issue, not this plan.
-- Reports that say what is true: an unknown node is called unknown, not a ComfyUI core node; a missing item names its source.
-- One path in the skills.
-
-### Not included
-
-Changing which models or node packs bundled workflows use. Replacing anything a person's ComfyUI already has: if a node pack's requirements would change a Python package that is already installed, or a pack folder already exists, Astrid refuses that item, says why, and leaves it to the person. A ComfyUI on another machine. Rolling back a person's Python environment. Rented-machine model caches. Speed of the generation itself ([Plan 55](../55-local-speed/plan.md)).
+**The rule, enforced by `test_setup_next_steps.py`:** every non-success result has at least one issue; every issue links to a fix with `who` and exactly one of `argv` or `instruction{step, then_argv}`; warnings never invent a repair. Argument errors, interrupts, missing-machine exits and infrastructure faults keep today's handling.
 
 ## Existing work and decision
 
-Most of the parts exist and are not joined up ([inputs.md](inputs.md#planning-evidence)). Models known to Astrid already have a plan-and-apply download for bundled entries; a managed ComfyUI already installs pinned node packs with their requirements; VibeComfy already has a resolver that reads the ComfyUI-Manager node list, which readiness does not call. VibeComfy also already has a combined report (`vibecomfy nodes reconcile`) and can install packs, reload and fetch models as part of a run. What is missing is one front door, coverage of a person's own workflow, a recorded answer for anything unknown, and safe behaviour on a person's own ComfyUI. The approach is one front door over those existing pieces, not a second mechanism.
+The parts exist: VibeComfy's resolver, lock, controlled installer and fetch receipts; Astrid's `fetch-models` digest, `align` consent and target checks, the readiness envelope and the engine's path from workflow refs to the target. The amendment joins them through one plan function, one approved-action record in the entry, a declarative dependency recipe and a refusal at the target. Evidence, alternatives and the critique are in inputs.md.
 
 ## Sequence and readiness
 
-WS-1 is a small correction and goes in the standing fixes lane straight after the fingerprint fix. WS-2 builds the one list on the existing requirements contract; WS-3 the command on it; WS-4 the reconcile step; WS-5 proves the ComfyUI-Manager path on real data before anything depends on it; WS-6 the proof. WS-3 is the first time Astrid installs code into a person's own ComfyUI; the owner decided how on 15 November 2026 (D1). Task details are in [tasks.md](tasks.md). Recording this plan authorizes no work.
+**Phase 0** (this lane's first cards, issue 1731): WS-0a–0e, WS-0g. **Phase 1:** the three contract cards first on day one (LE-1a, WS-7a, LE-2a), then WS-7b, LE-1b, LE-2b, a review stop (RS1), the rest of LE-3 to LE-18b, and one live run (WS-L, the owner's). **Phase 2:** WS-5. **Phase 3:** WS-6b, then R (up to two Codex Astra rounds). Critical path: WS-7a and LE-1a → LE-2b → RS1 → LE-13 → LE-11 → WS-6b → R; with three workers about 9 elapsed days, with one about 21 (inferred). [tasks.md](tasks.md) has the details and the real conflict hot spots. Recording this plan authorizes no work.
 
 ## Interfaces and handoff
 
-**Consumes:** the fingerprint look-up-and-record fix (astrid-agent `r13/cells-model-lookup`, identified at run start); the existing download plan (`astrid generate fetch-models`) and alignment (`astrid generate align`); VibeComfy's node-pack lock, installer and pack resolver.
+**Consumes:** Plan 32's requirements manifest; VibeComfy's lock, installer, resolver and fetch, at the commit pinned for [Release 15](../../releases/15.md); issue 722's download path.
 
-**Produces:** one requirements list other features can read (readiness, onboarding, the App); a record of confirmed sources and matches; the set-up command and its plan format.
+**Produces:**
+- `fixes[].who`, `fixes[].argv`, `fixes[].instruction` on the existing `{status, issues, fixes}` envelope (statuses unchanged; new states are issue codes);
+- `--consent code`, `--add URL[@REF]`, `--add-model`;
+- `custom_node_refs` recipe fields `requirements_txt` and `pip_no_deps` carried in `extra.nodes`;
+- an approval record in the entry, separate from the source refs and bound to identity plus recipe hash, so a later digest can wrap it without re-checking old approvals.
 
 ## Completion
 
-- From an empty model folder, the command makes each default workflow (image, edit, music, speech, sound effects, video) runnable on a person's own ComfyUI, with one approval where no node pack is needed and one more after the restart where one is; a further run of the plan reports everything present.
-- A bundled workflow that is refused today for an undeclared fingerprint is set up on a managed ComfyUI.
-- A person's own workflow that names a model Astrid has never seen: the plan marks it not found and asks once for a source or an existing file; after the answer, the next plan finds it without asking.
-- A model present under another name is offered, not downloaded again.
-- A workflow using a node pack outside Astrid's lock: the plan names the pack and its repository; apply installs it only after approval, pinned, and reports the restart.
-- Negative cases: a download that does not match its fingerprint fails and leaves no file at its destination; a node pack whose requirements would change any package already installed in a person's ComfyUI is refused with the reason and nothing is changed; a failure part-way reports what was done and what was not; nothing is installed without the approved plan.
-- Limits: only what Astrid can see a workflow needs is listed; a custom loader node Astrid does not understand may hide a model until its pack is loaded. Public sources only. A private or gated model still needs the person's address or credentials.
+- With SAM-Audio in no list, a dry run on a rented machine returns `blocked` with the SAM candidate (or the manual step), then `needs_consent` with the warning, then, after `--consent code`, installs exactly the approved ref; a second run is `ready` with no flag. Live: one SAM separation run on one rented machine.
+- A rented-machine dry run with a missing pack is never `ready`.
+- Negative cases: an unapproved ref is refused at the target with nothing cloned; two entries pinning different commits of one pack on one target are refused; a pack whose dependencies would change an installed package is refused; `install.py` is never executed; a registry 401 degrades to a candidate with a warning, not a crash.
+- Limits: the consent flag can be typed by an agent; approved code runs with the target's access; the plan does not meet exact-plan approval or resumable model reconciliation.

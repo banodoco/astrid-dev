@@ -163,6 +163,8 @@ The trusted verdict remains FAIL on four missing seeded App IDs, 850 observed ID
 
 ## Release 15 ceiling
 
+**Agent rows moved, 23 November 2026.** The Agent rows of this table, and the Agent packets moved to Release 15, are [Plan 91](../91-agent-main-green/tasks.md#taken-from-plan-39)'s. The Runtime and App rows stay here.
+
 K2/K3 produce and seal the per-ID list from [G1][g1] and [G2][g2]. Include each ID that failed on both measurements and falls outside A–D of the [Lead’s cut][cut]. Each entry identifies its repository, job, native ID and R15 owner row. The counts below size the measured families before that intersection. A G1 gap, a missing job or a matching total supplies no evidence of a matching failed ID. The tests keep running visibly red. Retire each entry when the ID passes. The sealed list may only shrink. Quarantine keeps its own age and count limits. Causal fingerprints are follow-up work (RS1 §3, RS1.8–.9, as decided).
 
 | Cause | Approximate IDs before sealing | Repository | R15 owner row |

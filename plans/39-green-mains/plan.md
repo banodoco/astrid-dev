@@ -2,7 +2,7 @@
 
 **Project:** All three mains green
 
-**Goal:** Every CI workflow on Agent, Runtime and App `main` is green and stays green: root causes fixed (never a loosened test), one strict-xfail quarantine rule with an owner and an expiry, a nightly report of new red, and releases that need every required check green on each pinned commit (through Plan 31's `release-contract`).
+**Goal:** Every CI workflow on Runtime and App `main` is green and stays green (the Agent's share is [Plan 91](../91-agent-main-green/plan.md) from 23 November 2026): root causes fixed (never a loosened test), one strict-xfail quarantine rule with an owner and an expiry, a nightly report of new red, and releases that need every required check green on each pinned commit (through Plan 31's `release-contract`).
 
 **Status:** active
 
@@ -10,13 +10,15 @@
 
 **Estimate:** 22–31 (8–11 elapsed): phase 1 6.5, phase 2 13–21, phase 3 3.5
 
-**Waiting on:** a manager; G1 redone on `release/14/main` ([Release 14 scope](#release-14-scope)); Plan 38 for the custody tests; Plan 31 RL-1b for K4, which is Release 15's
+**Waiting on:** a manager; G1 redone on `release/14/main` ([Release 14 scope](#release-14-scope)); Plan 38 for the custody tests; Plan 31 RL-1b for K4, which is Release 15's; Release 16 for the rest of phase 4, K4 and K5 (moved from Release 15 by the owner on 23 November 2026).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). A red check on `main` should mean a new regression. Today it means nothing, because every full CI workflow on Agent, Runtime and App `main` has been red for weeks.
 
 ## Outcome and scope
+
+**Split, 23 November 2026.** The Agent's share of this plan is now [Plan 91](../91-agent-main-green/plan.md) (Agent main green), at the owner's request ([D2 there](../91-agent-main-green/inputs.md#owner-decisions)). This plan keeps the Runtime, the App and the cross-repository pieces: the nightly report, the release rule in Plan 31's `release-contract` (K4, K5) and the release-record sections. The Agent rows below and in [tasks.md](tasks.md) are kept as history; the ones still open are Plan 91's, listed in [its tasks](../91-agent-main-green/tasks.md#taken-from-plan-39). Where the text below says three repositories, read the Runtime and the App for open work.
 
 Every CI workflow that runs on a push to `main`, in astrid-agent, astrid-runtime and astrid-app, is green, and it stays green:
 - **Green.** Each failing job is fixed at its root cause ([triage](inputs.md#root-cause-triage)), never by loosening an assertion to match a bug. A test changes only when the behaviour it checks changed on purpose, and the task card names the commit or contract that changed it.
@@ -25,7 +27,7 @@ Every CI workflow that runs on a push to `main`, in astrid-agent, astrid-runtime
 - **Structural (phase 4, from [Release 12](inputs.md#release-12-structural-evidence)).** The causes that kept the mains hard to read are removed too. Each App three-products test owns its seed, so the journey runs in parallel and in any order, and CI shuffles it. An expected failure names the step and error it expects. Every `main` and `int` run stores per-test results, so a candidate is compared with the published `main` without reruns, and a cancelled or truncated shard turns the run red. Once the mains are green, feature work lands on `main` through ordinary CI, so a release candidate is `main` plus a short, listed set of fixes; the mains are frozen from cut-off to publication, and the release record states both. Each Agent code and harness smell Release 12 found gets a fix and a guard for its class. Upgrade safety of installed state, found after Release 12 shipped (the Release 1 → 12 Hivemind incident), is [Plan 09 phase 2](../09-install-and-update-confidence/plan.md#phase-2-upgrade-safe-installed-state), not this plan.
 
 **Included:** the CI workflows that run on push to `main`:
-- Agent: `CI`, `Lanes`, `Chat service` and `Windows task host journey`;
+- Agent: `CI`, `Lanes`, `Chat service` and `Windows task host journey` (moved to [Plan 91](../91-agent-main-green/plan.md) on 23 November 2026);
 - Runtime: `CI`, plus `Nightly` on its schedule;
 - App: `Tests`, `Lanes` and `E2E`, plus `Direct Journey` on its schedule.
 
