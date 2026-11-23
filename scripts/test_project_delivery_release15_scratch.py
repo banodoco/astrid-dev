@@ -288,6 +288,40 @@ print(json.dumps({"errors": errors, "plans": [p["number"] for p in info["plans"]
         )
 
 
+    def test_original_traversal_fails_without_canonical_plan72_record(self):
+        # Negative control: the real original traversal must fail if the
+        # authored project 72 source is missing, even when the release brief
+        # still lists its membership. Modify ONLY our detached scratch tree.
+        plan = self.scratch / "plans/72-composable-project-delivery/plan.md"
+        original = plan.read_bytes()
+        test_id = (
+            "test_project_delivery.DeliveryCompositionTests."
+            "test_actual_repository_delivery_traversal"
+        )
+        plan.unlink()
+        try:
+            result = subprocess.run(
+                (sys.executable, "-m", "unittest", test_id),
+                cwd=self.scratch, capture_output=True, text=True,
+                env={
+                    **os.environ,
+                    "PYTHONPATH": str(self.scratch / "scripts"),
+                    "PYTHONDONTWRITEBYTECODE": "1",
+                },
+                check=False,
+            )
+            self.assertNotEqual(
+                result.returncode, 0,
+                "Missing authored Plan72 source improperly passed the original test",
+            )
+            self.assertIn("Plan 72 names unknown folder", result.stderr)
+        finally:
+            # Restore the exact canonical blob regardless of failure.
+            plan.write_bytes(original)
+        self.assertEqual(current_hash(plan.read_bytes()), RECORD_BLOBS[
+            "plans/72-composable-project-delivery/plan.md"
+        ])
+
     def test_original_real_repository_delivery_traversal_on_native_release(self):
         # Run the EXISTING, UNMODIFIED end-to-end oracle from the actual
         # patched frozen checkout, not the current source PR's source tree.
