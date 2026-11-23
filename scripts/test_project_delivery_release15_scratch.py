@@ -162,7 +162,7 @@ class FrozenRelease15RehearsalTests(unittest.TestCase):
             for repo, ref, role in CANONICAL_ROWS:
                 matches = [
                     row for row in canonical
-                    if row.startswith(f"| {repo} | \`{ref}\` | {role} |")
+                    if row.startswith(f"| {repo} | `{ref}` | {role} |")
                 ]
                 # Backticks are literal Markdown in the source; do not escape
                 # them in this Python f-string. A missing exact row is BLOCKED.
@@ -265,7 +265,7 @@ print(json.dumps({"errors": errors, "plans": [p["number"] for p in info["plans"]
         # Mutate only the disposable authored fixture, not a canonical file.
         no_plan = "\n".join(
             line for line in self.composed_release_brief.splitlines()
-            if "| astrid-dev | \`release/15/plan-72\` |" not in line
+            if "| astrid-dev | `release/15/plan-72` |" not in line
         ) + "\n"
         result = self._reader(no_plan)
         self.assertTrue(
@@ -274,7 +274,7 @@ print(json.dumps({"errors": errors, "plans": [p["number"] for p in info["plans"]
         )
         no_release = "\n".join(
             line for line in self.composed_release_brief.splitlines()
-            if "| astrid-dev | \`release/15/main\` |" not in line
+            if "| astrid-dev | `release/15/main` |" not in line
         ) + "\n"
         result = self._reader(no_release)
         self.assertTrue(
