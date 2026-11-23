@@ -2,7 +2,7 @@
 
 **Start with the [short tester guide](windows-tester-brief.md).** This appendix preserves the detailed Windows commands and measurements; it is **not** a second onboarding or issue-reporting process. Create one session issue before testing, collect qualitative feedback throughout, and file separate actionable problem issues as the guide says. Use the frozen Agent's skills for normal setup/generation; this file governs Release 15 source identity and explicit test cells. The currently served web editor is outside this Agent/Runtime qualification.
 
-**The Release Lead must provide and approve the exact tester build.** If none is available, record a blocker rather than quietly installing a published build or assembling your own. A fallback developer qualification is explicitly labelled in Part 2.
+**The Release Lead must provide and approve the exact tester build.** If none is available, record a blocker rather than quietly installing a published build or assembling your own. The setup skill owns detection, choices, consent, connecting ComfyUI and first use; **its published-release installer and preinstall helper do not apply to this test**. Read the setup and generation skills from the **full frozen Agent commit**, not a moving branch; links to `release/15/main` are for discovery only. A fallback developer qualification is explicitly labelled in Part 2.
 
 ## Ground rules
 
@@ -17,7 +17,7 @@
 
 - `report.md`: the GitHub issue URL, frozen Agent/Runtime/VibeComfy SHAs and manifest hash, plus notes as you go. For anything that fails or surprises you: the command, the exact error and the task ID. Also a plain list of **every file or folder this test adds outside `C:\astrid-test`;** the clean-up works from that list.
 - `log.txt`: every command you run and its full output, appended as you go.
-- `fixes.diff`: any change you made to Astrid.
+- `fixes.diff`: an optional patch from a separate checkout based on the frozen Release 15 source; never edits made to the installed tester build.
 - the diagnostics bundle and any images actually produced by A and B (part 6).
 
 Keep tokens out of everything in the report folder. Do not keep raw credentials in the logs.
@@ -30,7 +30,7 @@ Record: Windows and PowerShell versions; GPU, VRAM and driver (`nvidia-smi`); RA
 
 **The published manifest is not Release 15.** Use the Release Lead's frozen, green [tester build](../../../skills/shared/workstreams/astrid-dev-release/SKILL.md#tester-builds) in the normal case. Only maintainer-authorized diagnostics should construct a candidate manifest using the [documented local-source route](https://github.com/banodoco/astrid-agent/blob/release/15/main/docs/setup/local-source-install.md#developer-qualification-with-local-git-sources). No branch name or shortened SHA is a valid source pin.
 
-**Before changing an existing install:** record its doctor output and active version, request the person's explicit permission for an **unpublished in-place update**, and back up existing projects using Astrid's supported method. An installer with a custom program root still registers the Windows background service/scheduled task; **do not assume it is isolated** from an existing installation. If permission is refused, or this is a Pinokio installation without an approved migration, record SKIPPED on the test issue and stop. Never delete projects or uninstall to make the test pass.
+**Before changing an existing install:** use the [setup skill](https://github.com/banodoco/astrid-agent/blob/release/15/main/astrid/packs/setup/docs/SKILL.md#0-work-out-the-entry-route) at the frozen Agent SHA to detect the existing launcher and its ownership, record doctor output and active version, request explicit consent for an **unpublished in-place update**, and back up existing projects using Astrid's supported method. An installer with a custom program root still registers the Windows background service/scheduled task; **do not assume it is isolated** from an existing installation. If permission is refused, or this is a Pinokio-managed installation without a separately approved migration or isolation plan, record SKIPPED or BLOCKED on the session issue and stop. Never overwrite Pinokio-managed files. Never delete projects or uninstall to make the test pass.
 
 ### Route A — Lead-approved tester bundle (normal)
 
@@ -84,6 +84,7 @@ $m = Get-Content "$root\report\published-install-manifest.json" -Raw | ConvertFr
 if (-not $m.schema_version -or -not $m.tools -or -not $m.agent -or -not $m.runtime) {
     throw 'Unexpected installer manifest schema; stop and report'
 }
+if ($m.release -ne 15) { $m.release = 15 }  # Only on the Lead-authorized unpublished test manifest
 $m.agent.sha = $agentSha
 $m.agent | Add-Member -NotePropertyName repo -NotePropertyValue $agentRepo -Force
 $m.runtime.sha = $runtimeSha
@@ -98,7 +99,7 @@ $json = $m | ConvertTo-Json -Depth 60
 Get-FileHash "$root\serve\local-install-manifest.json" -Algorithm SHA256
 ~~~
 
-Verify the three full source pins and absolute local paths. Record the local manifest SHA-256 and the original published source pins. If validation fails, report and stop; never disable installer verification or change locked tool versions to make it proceed.
+Verify `release` is **15**, all three full source pins and absolute local paths. Record the local manifest SHA-256 and the original published source pins. If validation fails, report and stop; never disable installer verification or change locked tool versions to make it proceed.
 
 ### 2C. Run the supported installer with the candidate override
 
