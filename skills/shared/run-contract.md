@@ -23,6 +23,18 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 
 This table and the high-judgment role below it are the only place in the skills, docs and templates that defines model families; generated `block:routing` copies carry them where work is handed to a model; history records are exempt. `templates/run.yaml` and the Codex brief are fill-in copies of them. Elsewhere name the route, and a family only when the run used one other than the route's, never an exact model ID. When workers are on Codex, `T` work may run on the Codex taste family; Claude is recommended.
 
+### ChatGPT session modes
+
+When a task runs in a ChatGPT session (a fresh packet session in the [dispatch workstream](../roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), or a session an orchestrator starts), the session's mode follows the task's route. The owner set this on 23 November 2026:
+
+| Route | ChatGPT mode |
+| --- | --- |
+| `N` | High |
+| `X` | Extra High |
+| `S` | Pro |
+
+A packet takes the mode of its hardest card, and its file names it (`**Route:**`). `T` work follows the run's brief; this table sets nothing for it. A mode that is not offered on the account is resolved explicitly (the next mode up, or the owner), never silently substituted. Moving a card up a route moves its session up a mode, on the same evidence as [Cheapest model first](#cheapest-model-first).
+
 ### Cheapest model first
 
 Judge a task's difficulty before delegating it, start it on the cheapest model that can plausibly do it at that difficulty, and move up only on evidence. A task with no route tag is `N`. A release brief may set a different starting model for its run (for example, a mid-tier default for everything that is not plain fact-finding); follow the brief.
