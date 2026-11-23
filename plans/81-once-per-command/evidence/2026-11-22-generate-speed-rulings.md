@@ -4,7 +4,7 @@
 
 ## What was checked
 
-The planner's attribution spec (cards A-1 to A-6) and fixes spec (F-1 to F-5) were checked against astrid-agent `315b8b7a9` by an independent Codex Astra review at high effort. Verdicts: A-1 OK with changes, A-2 wrong, A-3 wrong, A-4 OK with changes, A-5 wrong, A-6 OK with changes; F-1 OK with changes, F-2 wrong, F-3 OK with changes, F-4 wrong, F-5 held. The review ran the real SDK facade with fakes and counted calls, hashed the two VibeComfy template pairs, and ran four unchanged focused tests (5 passed).
+The planner's attribution spec (cards A-1 to A-6) and fixes spec (F-1 to F-5) were checked against astrid-agent `315b8b7a9` by an independent Codex review at high effort. Verdicts: A-1 OK with changes, A-2 wrong, A-3 wrong, A-4 OK with changes, A-5 wrong, A-6 OK with changes; F-1 OK with changes, F-2 wrong, F-3 OK with changes, F-4 wrong, F-5 held. The review ran the real SDK facade with fakes and counted calls, hashed the two VibeComfy template pairs, and ran four unchanged focused tests (5 passed).
 
 ## What the work is and is not
 
