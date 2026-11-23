@@ -1,7 +1,8 @@
-// SV-3 measurement driver: one fresh browser profile per repetition, scenarios S0, cold, S1-S4.
-// Static-checked only in this package. Adapted from browser-sv2a-first-save.mjs (SV-2a) and the save
-// timing code of browser-two-save-profile.mjs. The trace witness, the trace verdict and the Runtime
-// sampler are not used here.
+// SV-3 measurement driver: one fresh browser profile per repetition.
+// Scenario order per repetition: S0 (page load), cold, S1, S2, S2o, S3, S3o, S4.
+// Adapted from browser-sv2a-first-save.mjs (geometry, public head) and browser-two-save-profile.mjs (the
+// prepare/arm/reset protocol and per-save timing). The trace witness, the trace verdict and the Runtime sampler are not used.
+// Static-checked only in this package.
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -29,11 +30,7 @@ assert.equal(runtimeSha, tuple.runtime);
 assert(Number.isSafeInteger(pid) && pid > 0);
 assert.match(start, /^\d+$/);
 assert.match(instance, /^[a-f0-9]+$/);
-await assertNoReceipt('browser-sv3-measure.json');
-
-async function assertNoReceipt(name) {
-  await assert.rejects(lstat(path.join(output, name)), {code: 'ENOENT'});
-}
+await assert.rejects(lstat(path.join(output, 'browser-sv3-measure.json')), {code: 'ENOENT'});
 
 const loadModule = location => import(pathToFileURL(location));
 const {chromium} = await loadModule(process.env.SAVE_LOOP_PLAYWRIGHT);
@@ -76,9 +73,8 @@ url.searchParams.set('project', project);
 url.searchParams.set('timeline', timeline);
 const runtimeHealthUrl = origin + '/api/runtime/v1/health';
 
-// Identity of the one live owner, checked from the copied data root's discovery record, the proxy health and
-// the owner's /proc start time. This replaces runtimeRootForData, which requires the data root to sit inside the
-// owned stack root and therefore rejects the work copy (see README, deviations).
+// Identity of the one live owner, from the copied data root's discovery record, the proxy health and the owner's
+// /proc start time. runtimeRootForData is not used: it requires the data root inside the owned stack root.
 async function runtimeIdentity() {
   const discovery = JSON.parse(await readFile(path.join(data, 'runtime/discovery.json'), 'utf8'));
   assert.equal(discovery.pid, pid, 'discovery pid changed');
@@ -90,7 +86,6 @@ async function runtimeIdentity() {
   assert(health.ok && !health.redirected, 'proxy health did not respond');
   const body = await health.json();
   assert(body.status === 'ok' && body.protocol === 'workspace.v1' && body.runtime_instance_id === instance);
-  return {pid, start, instance};
 }
 
 const ticks = Number(execFileSync('getconf', ['CLK_TCK'], {encoding: 'utf8'}).trim());
@@ -153,9 +148,9 @@ function refusalFields(text) {
   let json = null;
   try { json = JSON.parse(text); } catch { json = null; }
   const reason = json?.reason ?? json?.error?.reason ?? json?.error?.code ?? json?.code ?? json?.error ?? null;
+  const code = json?.code ?? json?.error?.code ?? null;
   return {reason: typeof reason === 'string' ? reason : (reason === null ? null : JSON.stringify(reason).slice(0, 200)),
-    body_code: typeof (json?.code ?? json?.error?.code) === 'string' ? (json?.code ?? json?.error?.code) : null,
-    excerpt: text.slice(0, 300)};
+    body_code: typeof code === 'string' ? code : null, excerpt: text.slice(0, 300)};
 }
 
 function observeRequests(page) {
@@ -193,25 +188,37 @@ function observeRequests(page) {
     settle: () => Promise.allSettled(bodies)};
 }
 
-// The geometry observer closes over these containers. Refill them from each verified head.
-// prepareSave(move, expected): expected is 0 before the first drag of the session and 1 after any earlier drag,
-// whose counts are then one requested, responded and succeeded. Counts and the pointer are reset here.
+// Arm and reset protocol, matching browser-two-save-profile.mjs (prepareSave) for every drag:
+// - prepareSave(move, expected): the first drag of the session needs an idle tape (not armed, no pointer). Every later
+//   drag needs the previous drag's arm and released pointer, and the previous counts (one requested, responded and
+//   succeeded). It consumes both: armed=false, pointer=null, counts reset. armFreeSpace then needs armed=false.
+// - prepareOverlapped(move): for a drag released while an earlier save may still be in flight, and after a failed drag.
+//   It consumes the previous arm and pointer and resets the counts (armFreeSpace needs requested===0). It does not
+//   check the earlier counts, so it is the path where the protocol is NOT established by a receipt.
 function initializeTape(install, args) {
   const span = {};
   const siblings = [];
   install({...args, freeSpace: {span, siblings}});
   const tape = window.__p77DispatchTrace;
   if (!tape) return;
-  tape.prepareSave = (move, expected) => {
-    const count = tape.counts['app:timeline_commit'];
-    if (!tape.fullWritable() || tape.omitted || tape.armed || count.requested !== expected ||
-        count.responded !== expected || count.succeeded !== expected || count.failed ||
-        (expected ? !Number.isFinite(tape.pointer?.up) : tape.pointer)) return false;
+  const consume = move => {
     Object.assign(span, move.span);
     siblings.splice(0, siblings.length, ...move.siblings);
+    tape.armed = false;
     tape.pointer = null;
     tape.counts['app:timeline_commit'] = {requested: 0, responded: 0, succeeded: 0, failed: 0};
     return true;
+  };
+  tape.prepareSave = (move, expected) => {
+    const count = tape.counts['app:timeline_commit'];
+    if (!tape.fullWritable() || tape.omitted || count.requested !== expected || count.responded !== expected ||
+        count.succeeded !== expected || count.failed ||
+        (expected ? !(tape.armed && Number.isFinite(tape.pointer?.up)) : (tape.armed || tape.pointer))) return false;
+    return consume(move);
+  };
+  tape.prepareOverlapped = move => {
+    if (!tape.fullWritable() || tape.omitted || !(tape.armed && Number.isFinite(tape.pointer?.up))) return false;
+    return consume(move);
   };
 }
 
@@ -235,28 +242,33 @@ function isScopedRead(row) {
     row.route === '/api/runtime/v1/projects/selection');
 }
 
-// One drag to free space, geometry-checked as in the SV-2a driver, then one Saved wait and one accepted head check.
-// Each drag is a full save cycle. The next drag is not started until this one is Saved (see README, deviations).
-async function dragOnce({page, head, index, cold, hasPrior, expectedCas, commitRequests, recorder, browserTimeOrigin,
-  refusals, drags}) {
-  const receipt = {index, cold, baseline: headSummary(head)};
-  const postsBefore = recorder.posts().length;
+// Predicted move for an overlapped drag: the clip's start after the previous, in-flight drag. Span and siblings
+// are unchanged, the target is unchanged. Whether the editor's rendered projection agrees is NOT established.
+function predictMove(move0, startSeconds) {
+  const span = {...move0.span, start_seconds: startSeconds, end_seconds: startSeconds + move0.span.duration_seconds};
+  return {...move0, span};
+}
+
+// One drag: prepare, plan, arm, press, move, release. Returns the release and the plan. Does not wait for Saved.
+async function gesture({page, move, plan0, prepareKind, record, cold, expectedCas, head, commitRequests}) {
   let phase = 'identity_before_drag';
   let diskWatch, diskCheck, diskStop;
   try {
     await runtimeIdentity();
-    assert.equal(await page.evaluate(() => performance.timeOrigin), browserTimeOrigin, 'Editor document changed');
+    assert.equal(await page.evaluate(() => performance.timeOrigin), record.browserTimeOrigin, 'Editor document changed');
     phase = 'exact_head_geometry';
-    const move = canonicalFreeSpace(head, clips, tracks);
     assert(!move.issue, move.issue);
-    assert.deepEqual(move.target, target);
     if (cold) assert.equal(move.span.start_seconds, expectedStartSeconds);
-    receipt.target = move.target;
-    receipt.canonical = {span: move.span, siblings: move.siblings};
+    record.target = move.target;
+    record.start_before_s = move.span.start_seconds;
     Object.assign(expectedCas, {headRevision: head.headRevision, publicationId: head.publicationId});
-    commitRequests.clear();
-    assert(await page.evaluate(({move, expected}) => window.__p77DispatchTrace.prepareSave(move, expected),
-      {move, expected: hasPrior ? 1 : 0}));
+    phase = 'prepare';
+    const prepared = prepareKind.kind === 'strict'
+      ? await page.evaluate(({move, expected}) => window.__p77DispatchTrace.prepareSave(move, expected),
+        {move, expected: prepareKind.expected})
+      : await page.evaluate(move => window.__p77DispatchTrace.prepareOverlapped(move), move);
+    record.prepare = prepared ? prepareKind.kind : 'refused_by_tape';
+    assert(prepared, 'tape refused the prepare step');
     const plan = await page.evaluate(async () => {
       const tape = window.__p77DispatchTrace;
       const preliminary = tape.planFreeSpace({scroll: true});
@@ -264,9 +276,12 @@ async function dragOnce({page, head, index, cold, hasPrior, expectedCas, commitR
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       return tape.planFreeSpace({scroll: false});
     });
-    receipt.geometry = plan;
+    record.geometry = plan;
     assert(!plan.issue, plan.issue);
     assert(plan.x1 > plan.x0 && plan.desired_start_seconds > move.span.start_seconds);
+    record.dx_px = plan.dx;
+    record.pixels_per_second = plan.pixels_per_second;
+    record.planned_start_s = plan.desired_start_seconds;
     phase = 'before_pointer_geometry';
     const {x0, x1, y} = plan;
     await page.mouse.move(x0, y);
@@ -281,20 +296,14 @@ async function dragOnce({page, head, index, cold, hasPrior, expectedCas, commitR
         Math.abs(observed.projection.desired_start_seconds - plan.desired_start_seconds) < 1e-6 &&
         freeSpacePointsMatch(observed.source, plan.source) && freeSpacePointsMatch(observed.destination, plan.destination));
     };
-    receipt.observed_before_down = await currentGeometry();
-    checkGeometry(receipt.observed_before_down);
+    checkGeometry(await currentGeometry());
     phase = 'disk_before_move';
-    receipt.disk_before = await diskFree();
-    assertDiskFree(receipt.disk_before);
-    receipt.load_1m = loadavg()[0];
+    assertDiskFree(await diskFree());
+    record.load_1m = loadavg()[0];
     phase = 'arm_single_pointer';
-    assert.equal(commitRequests.size, 0);
     assert(await page.evaluate(armFreeSpace, {x: x0, y, clipId: move.target.clip_id, trackId: move.target.track_id}));
     phase = 'final_pointer_guard';
-    receipt.observed_at_gesture = await currentGeometry();
-    checkGeometry(receipt.observed_at_gesture);
-    assert.equal(recorder.posts().length, postsBefore);
-    assert.equal(commitRequests.size, 0);
+    checkGeometry(await currentGeometry());
     assertDiskFree(await diskFree());
     await cpu();
     const watchDisk = async () => {
@@ -311,10 +320,9 @@ async function dragOnce({page, head, index, cold, hasPrior, expectedCas, commitR
       if (!diskCheck && !diskStop) diskCheck = watchDisk().finally(() => { diskCheck = null; });
     }, 500);
     phase = 'pointerdown';
-    receipt.pointerdown = clock();
     await page.mouse.down();
-    receipt.observed_down = await page.evaluate(() => window.__p77DispatchTrace.pointer?.freeSpaceDown ?? null);
-    assert(freeSpacePointsMatch(receipt.observed_down, plan.source));
+    const down = await page.evaluate(() => window.__p77DispatchTrace.pointer?.freeSpaceDown ?? null);
+    assert(freeSpacePointsMatch(down, plan.source));
     phase = 'pointermove_geometry';
     await page.mouse.move((x0 + x1) / 2, y, {steps: 4});
     await page.mouse.move(x1, y, {steps: 6});
@@ -323,7 +331,6 @@ async function dragOnce({page, head, index, cold, hasPrior, expectedCas, commitR
       return {pointer: tape.pointer, omitted: tape.omitted, path: tape.rows.filter(row =>
         row.phase === 'pointermove' && row.at >= tape.pointer?.down).map(row => row.geometry)};
     });
-    receipt.observed_drag = {omitted: moved.omitted, path_points: moved.path.length};
     assert(moved.pointer && !moved.pointer.cancelled && !moved.pointer.freeSpacePathInvalid &&
       !moved.omitted && moved.path.length > 0);
     let past = x0;
@@ -335,104 +342,93 @@ async function dragOnce({page, head, index, cold, hasPrior, expectedCas, commitR
     phase = 'pointerup_geometry';
     await page.mouse.up();
     const pointer = await page.evaluate(() => window.__p77DispatchTrace.pointer);
-    receipt.observed_up = pointer?.freeSpaceUp ?? null;
-    assert(Number.isFinite(pointer?.up) && freeSpacePointsMatch(receipt.observed_up, plan.destination));
-    receipt.release = {monotonic_ms: pointer.up, epoch_ms: browserTimeOrigin + pointer.up};
-
-    phase = 'save_settlement';
-    let settleFailure;
-    try {
-      await page.waitForFunction(() => {
-        const tape = window.__p77DispatchTrace;
-        const response = tape.rows.find(row => row.at >= tape.pointer.up && row.phase === 'fetch-response' &&
-          row.endpoint === 'timeline_commit' && row.status === 200);
-        return (response && tape.rows.some(row => row.at >= response.at && row.phase === 'badge' && row.state === 'saved')) ||
-          tape.readBadge().kind === 'refused';
-      }, null, {timeout: 90_000, polling: 100});
-    } catch (error) { settleFailure = error; }
-    const tape = await page.evaluate(() => {
-      const trace = window.__p77DispatchTrace;
-      return {rows: trace.rows, badge: trace.readBadge(), count: trace.counts['app:timeline_commit'], omitted: trace.omitted};
-    });
-    const scoped = tape.rows.filter(row => row.at >= pointer.up && row.endpoint === 'timeline_commit');
-    const requests = scoped.filter(row => row.phase === 'fetch-request');
-    const [request] = requests;
-    const response = scoped.find(row => row.phase === 'fetch-response' && row.request === request?.request);
-    const saved = response && tape.rows.find(row => row.at >= response.at && row.phase === 'badge' && row.state === 'saved');
-    const handoff = tape.rows.findLast(row => row.phase === 'handoff-ready' && row.at <= pointer.up);
-    await recorder.settle();
-    const postRow = recorder.posts().at(-1);
-    const refused = response?.status !== 200 || tape.badge?.kind === 'refused';
-    if (refused) {
-      refusals.push({index, cold, http_status: response?.status ?? null, reason: postRow?.body?.reason ?? null,
-        body_code: postRow?.body?.body_code ?? null, badge_kind: tape.badge?.kind ?? null, badge: tape.badge});
-    }
-    const posts = recorder.posts().length - postsBefore;
-    receipt.save = {
-      release_to_post_ms: request ? request.at - pointer.up : null,
-      post_to_200_ms: response && request ? response.at - request.at : null,
-      response_to_saved_ms: saved && response ? saved.at - response.at : null,
-      http_status: response?.status ?? null,
-      last_pre_release_handoff_ms: handoff ? handoff.at - pointer.up : null,
-      post_count_driver: requests.length,
-      post_count_network: posts,
-      badge: tape.badge,
-      commit_count: tape.count,
-    };
-    if (settleFailure) throw settleFailure;
-    assert(!tape.omitted && requests.length === 1 && response?.status === 200 && saved && tape.badge.state === 'saved');
-    assert.deepEqual(tape.count, {requested: 1, responded: 1, succeeded: 1, failed: 0});
-    assert.equal(posts, 1, 'one commit POST expected for this drag');
-
-    phase = 'accepted_public_head';
-    const after = await obtainPublicHead(page, 'accepted_public_proof', receipt);
-    receipt.public_after = headSummary(after);
-    const [commit] = commitRequests.values();
-    receipt.commit_wire = [...commitRequests.values()];
-    assert(commitRequests.size === 1 && commit.status === 200 &&
-      commit.outcome === 'accepted' && commit.exactCas && commit.exactAcceptedCas && commit.receipt);
-    assert(after.headRevision !== head.headRevision && after.publicationId !== head.publicationId);
-    verifyScopedHead(after, {revision_id: commit.receipt.revision, publication_id: commit.receipt.publication,
-      content_digest: commit.receipt.content_digest});
-    const afterClip = after.payload.config.clips.find(clip => clip.id === move.target.clip_id);
-    assert(afterClip?.track === move.target.track_id && afterClip.at > move.span.start_seconds &&
-      afterClip.at + move.span.duration_seconds < plan.visible_time_bounds_seconds[1] &&
-      Math.abs(afterClip.at - plan.desired_start_seconds) <= 2 / plan.pixels_per_second + 0.002);
-    assert(exactFreeSpaceDiff(head, after, {clip: move.target.clip_id, to_seconds: afterClip.at}));
-    receipt.accepted = headSummary(after);
-    receipt.accepted_start_s = afterClip.at;
-    receipt.start_before_s = move.span.start_seconds;
-    assert.equal(await page.evaluate(() => performance.timeOrigin), browserTimeOrigin, 'Editor document changed');
-    await cpu();
-    clearInterval(diskWatch);
-    await diskCheck;
-    assert(!diskStop);
-    phase = 'verified';
-    return {after, save: receipt.save};
+    assert(Number.isFinite(pointer?.up) && freeSpacePointsMatch(pointer.freeSpaceUp, plan.destination));
+    record.release_monotonic_ms = pointer.up;
+    record.up = pointer.up;
+    record.release_epoch_ms = record.browserTimeOrigin + pointer.up;
+    phase = 'released';
+    return {up: pointer.up, plan, move};
   } catch (error) {
-    receipt.error_phase = phase;
-    receipt.error_kind = error?.name ?? 'Error';
+    record.failed_phase = phase;
     throw error;
   } finally {
     clearInterval(diskWatch);
     await diskCheck;
-    if (diskStop) receipt.disk_stop = diskStop;
-    receipt.phase = phase;
-    drags.push(receipt);
+    if (diskStop) record.disk_stop = diskStop;
   }
+}
+
+// Waits, bounded, until the requests after `up` have responded and the badge is saved or refused. Returns the rows.
+async function settle(page, up, minRequests, timeoutMs) {
+  await page.waitForFunction(({up, minRequests}) => {
+    const tape = window.__p77DispatchTrace;
+    const rows = tape.rows.filter(row => row.at >= up && row.endpoint === 'timeline_commit');
+    const requests = rows.filter(row => row.phase === 'fetch-request').length;
+    const responses = rows.filter(row => row.phase === 'fetch-response').length;
+    const badge = tape.readBadge();
+    return requests >= minRequests && responses >= requests && (badge.state === 'saved' || badge.kind === 'refused');
+  }, {up, minRequests}, {timeout: timeoutMs, polling: 100});
+}
+
+// Attribution of the requests after the first release, in order. If the POST count differs from the drag count, the
+// requests are NOT attributed to drags: the editor may have coalesced edits, and only the counts are recorded.
+async function attribute(page, ups, recorder, postsStart) {
+  const observed = await page.evaluate(first => {
+    const tape = window.__p77DispatchTrace;
+    const rows = tape.rows.filter(row => row.at >= first);
+    return {
+      badge: tape.readBadge(), count: tape.counts['app:timeline_commit'], omitted: tape.omitted,
+      requests: rows.filter(row => row.phase === 'fetch-request' && row.endpoint === 'timeline_commit')
+        .map(row => ({at: row.at, request: row.request})),
+      responses: rows.filter(row => row.phase === 'fetch-response' && row.endpoint === 'timeline_commit')
+        .map(row => ({at: row.at, request: row.request, status: row.status})),
+      saved: rows.filter(row => row.phase === 'badge' && row.state === 'saved').map(row => row.at),
+      refusedBadge: rows.filter(row => row.phase === 'badge' && row.state !== 'saved').map(row => row.at),
+    };
+  }, ups[0]);
+  const posts = recorder.posts().slice(postsStart);
+  const mapped = observed.requests.length === ups.length;
+  const out = ups.map((up, k) => {
+    if (!mapped) return {mapped: false};
+    const request = observed.requests[k];
+    const response = observed.responses.find(row => row.request === request.request);
+    const saved = response ? observed.saved.find(at => at >= response.at) : undefined;
+    const post = posts[k];
+    return {mapped: true, request, response, saved,
+      post_status: post?.status ?? null, refusal_body: post?.body ?? null};
+  });
+  return {observed: {requests: observed.requests.length, responses: observed.responses.length,
+    badge: observed.badge, count: observed.count, omitted: observed.omitted}, posts: posts.length, attributed: out};
+}
+
+function timingFrom(up, attributed, browserTimeOrigin) {
+  if (!attributed.mapped) return {mapped: false};
+  const {request, response, saved} = attributed;
+  return {
+    mapped: true,
+    release_to_post_ms: request ? request.at - up : null,
+    post_to_200_ms: response && request ? response.at - request.at : null,
+    response_to_saved_ms: saved !== undefined && response ? saved - response.at : null,
+    http_status: response?.status ?? null,
+    release_to_saved_ms: (saved !== undefined && response && request) ? (request.at - up) + (response.at - request.at) + (saved - response.at) : null,
+    post_to_saved_ms: (saved !== undefined && response && request) ? (response.at - request.at) + (saved - response.at) : null,
+    release_epoch_ms: browserTimeOrigin + up,
+  };
 }
 
 const profile = await mkdtemp(path.join(browserParent, 'profile-'));
 const receipt = {mode, tuple, runtime_sha: runtimeSha, data_root: data, candidate: {pid, start, instance},
   disk_floor_bytes: Number(diskFloorBytes), node_time_origin: performance.timeOrigin, load_1m_start: loadavg()[0],
-  scenarios: [], drags: [], s0: null, refusals: []};
-// Scenario order is fixed: cold (one save), then S1 to S4. Each warm scenario ends with a 2 s settle.
+  scenarios: [], s0: null, refusals: [], non_2xx_runtime: [], failed_drags: 0};
+// Order per repetition. Overlapped scenarios release the next edit without waiting for Saved.
 const scenarios = [
-  {name: 'cold', warm: false, drags: 1, gap_ms: 0},
-  {name: 'S1', warm: true, drags: 1, gap_ms: 0},
-  {name: 'S2', warm: true, drags: 2, gap_ms: 200},
-  {name: 'S3', warm: true, drags: 10, gap_ms: 150},
-  {name: 'S4', warm: true, drags: 5, gap_ms: 0},
+  {name: 'cold', mode: 'sequential', warm: false, drags: 1, gap_ms: 0},
+  {name: 'S1', mode: 'sequential', warm: true, drags: 1, gap_ms: 0},
+  {name: 'S2', mode: 'sequential', warm: true, drags: 2, gap_ms: 200},
+  {name: 'S2o', mode: 'overlapped', warm: true, drags: 2, gap_ms: 150},
+  {name: 'S3', mode: 'sequential', warm: true, drags: 10, gap_ms: 150},
+  {name: 'S3o', mode: 'overlapped', warm: true, drags: 10, gap_ms: 150},
+  {name: 'S4', mode: 'sequential', warm: true, drags: 5, gap_ms: 0},
 ];
 let context, recorder;
 let phase = 'browser_launch';
@@ -448,8 +444,7 @@ try {
   const tapeConfig = {timelineKey, projectKey, clipId: target.clip_id, trackId: target.track_id,
     warmScope: pin, compiledFixture: {clips, tracks}};
   await page.addInitScript({content: `(${initializeTape})(${browserTape}, ${JSON.stringify(tapeConfig)});`});
-  // S0: the page load is the first browser action. It ends when the editor is writable and the verified-head
-  // route has answered.
+  // S0: page load is the first browser action. It ends when the editor is writable.
   phase = 'S0_page_load';
   const openingCpu = await cpu();
   receipt.navigation = clock();
@@ -493,30 +488,123 @@ try {
   receipt.original = headSummary(head);
 
   let sessionDrags = 0;
+  let lastOk = true;
   for (const scenario of scenarios) {
     phase = `scenario_${scenario.name}`;
-    const result = {name: scenario.name, warm: scenario.warm, drags: [], n_posts: 0, settle_ms: 2000};
+    const result = {name: scenario.name, mode: scenario.mode, warm: scenario.warm, drags: [], settle_ms: 2000};
     const postsBefore = recorder.posts().length;
-    for (let i = 0; i < scenario.drags; i += 1) {
-      const drags = [];
-      const outcome = await dragOnce({page, head, index: i, cold: scenario.name === 'cold' && i === 0,
-        hasPrior: sessionDrags > 0, expectedCas, commitRequests, recorder, browserTimeOrigin,
-        refusals: receipt.refusals, drags});
-      sessionDrags += 1;
-      head = outcome.after;
-      result.drags.push({...outcome.save, scenario: scenario.name, index: i});
-      receipt.drags.push(...drags);
-      if (i < scenario.drags - 1) await sleep(scenario.gap_ms);
+    const expectedCas = {headRevision: head.headRevision, publicationId: head.publicationId};
+    if (scenario.mode === 'sequential') {
+      for (let i = 0; i < scenario.drags; i += 1) {
+        const record = {index: i, mode: 'sequential', cold: scenario.name === 'cold' && i === 0, browserTimeOrigin,
+          failed: false, lastOk_before: lastOk};
+        const prepareKind = lastOk ? {kind: 'strict', expected: sessionDrags > 0 ? 1 : 0} : {kind: 'reset'};
+        const postsStart = recorder.posts().length;
+        let timing = {mapped: false};
+        try {
+          const move = canonicalFreeSpace(head, clips, tracks);
+          commitRequests.clear();
+          const g = await gesture({page, move, plan0: null, prepareKind, record, cold: record.cold, expectedCas, head,
+            commitRequests});
+          sessionDrags += 1;
+          await settle(page, g.up, 1, 90_000);
+          const tape = await attribute(page, [g.up], recorder, postsStart);
+          timing = timingFrom(g.up, tape.attributed[0], browserTimeOrigin);
+          record.attribution = {observed: tape.observed, posts: tape.posts};
+          if (!timing.mapped || timing.http_status !== 200) throw new Error(`commit not accepted (status ${timing.http_status ?? 'none'})`);
+          phase = 'accepted_public_head';
+          const after = await obtainPublicHead(page, 'accepted_public_proof', record);
+          const [commit] = commitRequests.values();
+          assert(commit && commit.status === 200 && commit.outcome === 'accepted' && commit.exactCas && commit.exactAcceptedCas && commit.receipt);
+          verifyScopedHead(after, {revision_id: commit.receipt.revision, publication_id: commit.receipt.publication,
+            content_digest: commit.receipt.content_digest});
+          assert(exactFreeSpaceDiff(head, after, {clip: move.target.clip_id,
+            to_seconds: after.payload.config.clips.find(clip => clip.id === move.target.clip_id).at}));
+          record.accepted_start_s = after.payload.config.clips.find(clip => clip.id === move.target.clip_id).at;
+          head = after;
+          lastOk = true;
+        } catch (error) {
+          record.failed = true;
+          record.failed_reason = String(error?.message ?? error).slice(0, 300);
+          record.error_kind = error?.name ?? 'Error';
+          lastOk = false;
+          sessionDrags += 1;
+          const post = recorder.posts()[postsStart];
+          if (post?.body) record.refusal = post.body;
+          if (post && post.status && post.status !== 200) record.refusal = {...(post.body ?? {}), http_status: post.status};
+          try {
+            const refreshed = await bounded(60_000, () => publicSnapshot(page, origin, fixture));
+            if (refreshed.headRevision !== head.headRevision) head = refreshed;
+          } catch { /* keep the last verified head */ }
+          receipt.failed_drags += 1;
+        }
+        Object.assign(record, timing);
+        record.post_count_network = recorder.posts().length - postsStart;
+        if (record.refusal || record.failed) receipt.refusals.push({scenario: scenario.name, index: i, ...(record.refusal ?? {}),
+          failed_reason: record.failed_reason ?? null});
+        result.drags.push(record);
+        if (i < scenario.drags - 1) await sleep(scenario.gap_ms);
+      }
+      await sleep(2000);
+    } else {
+      // Overlapped chain: each edit is released without waiting for Saved. Attribution and Saved are read afterwards.
+      const ups = [];
+      const chainPostsStart = recorder.posts().length;
+      const move0 = canonicalFreeSpace(head, clips, tracks);
+      assert(!move0.issue, move0.issue);
+      let predicted = move0.span.start_seconds;
+      for (let i = 0; i < scenario.drags; i += 1) {
+        const record = {index: i, mode: 'overlapped', cold: false, browserTimeOrigin, failed: false};
+        const prepareKind = {kind: 'overlapped'};
+        const move = predictMove(move0, predicted);
+        try {
+          const g = await gesture({page, move, plan0: null, prepareKind, record, cold: false, expectedCas, head,
+            commitRequests});
+          ups.push(g.up);
+          predicted = g.plan.desired_start_seconds;
+          sessionDrags += 1;
+        } catch (error) {
+          record.failed = true;
+          record.failed_reason = String(error?.message ?? error).slice(0, 300);
+          record.error_kind = error?.name ?? 'Error';
+          receipt.failed_drags += 1;
+        }
+        result.drags.push(record);
+        if (i < scenario.drags - 1) await sleep(scenario.gap_ms);
+      }
+      if (ups.length) {
+        phase = `settle_${scenario.name}`;
+        try { await settle(page, ups[0], 1, 180_000); }
+        catch (error) { receipt.overlap_settle_error = error?.name ?? 'Error'; }
+        await sleep(2000);
+        const tape = await attribute(page, ups, recorder, chainPostsStart);
+        result.posts_observed_by_tape = tape.observed.requests;
+        result.coalesced = tape.observed.requests !== ups.length;
+        let k = 0;
+        for (const record of result.drags) {
+          if (record.failed || record.up === undefined) continue;
+          const timing = timingFrom(ups[k], tape.attributed[k], browserTimeOrigin);
+          Object.assign(record, timing);
+          record.attribution_mapped = timing.mapped;
+          k += 1;
+        }
+        // Coalesced or dropped drags keep null timings (attribution_mapped false) and are only counted.
+        head =await bounded(120_000, () => publicSnapshot(page, origin, fixture));
+        result.accepted_after_chain = headSummary(head);
+      }
+      await sleep(2000);
+      lastOk = result.drags.every(record => !record.failed);
     }
-    await sleep(2000);
-    result.n_posts = recorder.posts().length - postsBefore;
-    assert.equal(result.n_posts, scenario.drags, `scenario ${scenario.name} commit POST count`);
+    result.posts_network = recorder.posts().length - postsBefore;
+    result.n_drags = result.drags.length;
+    result.n_failed = result.drags.filter(record => record.failed).length;
     receipt.scenarios.push(result);
   }
   phase = 'verified';
 } catch (error) {
   receipt.error_phase = phase;
   receipt.error_kind = error?.name ?? 'Error';
+  receipt.error_message = String(error?.message ?? error).slice(0, 300);
   process.exitCode = 1;
 } finally {
   receipt.phase = phase;
@@ -531,16 +619,10 @@ try {
   if (recorder) await recorder.settle();
   receipt.timeline_commit_posts = recorder?.posts().length ?? 0;
   receipt.non_2xx_runtime = (recorder?.rows() ?? []).filter(row => row.route?.startsWith('/api/runtime') &&
-    !(row.status >= 200 && row.status < 300) && row.status !== undefined)
+    row.status !== undefined && !(row.status >= 200 && row.status < 300))
     .map(row => ({method: row.method, route: row.route, status: row.status, body: row.body ?? null}));
   receipt.refusal_count = receipt.refusals.length + (receipt.s0?.refusal ? 1 : 0) +
     receipt.non_2xx_runtime.filter(row => row.status === 409 || row.body?.reason === 'head_busy').length;
   receipt.requests = recorder?.rows() ?? [];
-  const expectedPosts = scenarios.reduce((sum, item) => sum + item.drags, 0);
-  if (receipt.phase === 'verified' && (receipt.context_close_error || !receipt.profile_removed ||
-      receipt.timeline_commit_posts !== expectedPosts)) {
-    receipt.phase = 'cleanup_proof_failed';
-    process.exitCode = 1;
-  }
   await writeReceipt('browser-sv3-measure', receipt);
 }

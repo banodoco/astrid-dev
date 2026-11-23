@@ -282,8 +282,40 @@ def preview_after(out):
         raise ValueError("port 2400 or 17500 is still listening after stop")
 
 
+def audit_tree(tree, out):
+    """Link audit before the pristine copy. Fails on a symlink that resolves outside the tree, and on a regular file
+    whose hard links are not all inside the tree (its inode has more links than entries found inside)."""
+    tree = Path(tree)
+    root = os.path.realpath(tree)
+    findings, symlinks, inside_count, nlink, samples = [], 0, {}, {}, {}
+    for dirpath, dirnames, filenames in os.walk(tree, followlinks=False):
+        for name in dirnames + filenames:
+            path = os.path.join(dirpath, name)
+            info = os.lstat(path)
+            if stat.S_ISLNK(info.st_mode):
+                symlinks += 1
+                target = os.path.realpath(path)
+                if not (target == root or target.startswith(root + os.sep)):
+                    findings.append({"kind": "symlink_outside_tree", "path": os.path.relpath(path, tree),
+                                     "link_text": os.readlink(path), "resolves": target})
+            elif stat.S_ISREG(info.st_mode) and info.st_nlink > 1:
+                inside_count[info.st_ino] = inside_count.get(info.st_ino, 0) + 1
+                nlink[info.st_ino] = info.st_nlink
+                samples.setdefault(info.st_ino, os.path.relpath(path, tree))
+    for inode, links in nlink.items():
+        if inside_count[inode] != links:
+            findings.append({"kind": "hardlink_with_links_outside_tree", "path": samples[inode],
+                             "link_count": links, "links_inside_tree": inside_count[inode]})
+    write_json(Path(out), {"tree": str(tree), "symlinks": symlinks, "multi_link_files": len(nlink),
+                           "findings": findings, "ok": not findings})
+    if findings:
+        raise ValueError(f"link audit found {len(findings)} finding(s); see {out}")
+
+
 action, *raw = sys.argv[1:]
-if action == "archive":
+if action == "audit-tree":
+    audit_tree(*raw)
+elif action == "archive":
     mirror, commit, archive, out = raw
     verify_archive(Path(mirror), commit, Path(archive), Path(out))
 elif action == "inventory":

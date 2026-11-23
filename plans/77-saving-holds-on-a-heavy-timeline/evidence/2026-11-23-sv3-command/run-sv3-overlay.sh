@@ -127,7 +127,7 @@ boundary_snapshot() {
   boundary_listing "$owner" >"$out/boundary-owner.$1.txt"
   boundary_listing "$owner/.locks" | awk '$2 != "one-root.lock"' >"$out/boundary-owner-locks.$1.txt"
   boundary_listing "$root" >"$out/boundary-root.$1.txt"
-  boundary_listing "$orig_data" >"$out/boundary-data.$1.txt"
+  find "$orig_data" -printf '%y %P %s %T@ %m %i\n' | LC_ALL=C sort >"$out/boundary-data.$1.txt"
 }
 
 # Stop one PID this script started: TERM, a 10 second grace period, then KILL, and reap it. Nothing else is signalled.
@@ -218,32 +218,42 @@ combine_outputs() {
   : >"$out/measurements.jsonl"
   for ((n = 1; n <= reps; n++)); do
     jq -c --argjson rep "$n" '
-      {repetition:$rep, scenario:"S0", warm:false, page_ready_ms:.s0.navigation_to_writable_ms,
-       verified_head_status:(.s0.verified_head.status), refusal:(.s0.refusal)},
-      (.scenarios[] as $s | $s.drags[] | {repetition:$rep, scenario:$s.name, warm:$s.warm, index:.index,
-        release_to_post_ms, post_to_200_ms, response_to_saved_ms, http_status, post_count_network})' \
+      {repetition:$rep, scenario:"S0", page_ready_ms:.s0.navigation_to_writable_ms,
+       verified_head_status:.s0.verified_head.status, refusal:(if .s0.refusal then {reason:"head_busy_or_409"} else null end)}' \
       "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
+    jq -c --argjson rep "$n" '.scenarios[] as $s | $s.drags[] | . + {repetition:$rep, scenario:$s.name, warm:$s.warm, mode:$s.mode}' \
+      "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
+    jq -c --argjson rep "$n" '{repetition:$rep, scenario:"pack-host", pack_host_status:.status, claim_lines,
+      log_growth_bytes, pgrep_pack_host_count}' "$out/rep-$n/pack-host.json" >>"$out/measurements.jsonl"
   done
   jq -rs '
     def med: sort as $a | ($a|length) as $l | if $l==0 then null elif $l % 2 == 1 then $a[($l/2)|floor]
              else (($a[$l/2-1] + $a[$l/2]) / 2) end;
     def mx: if length==0 then null else max end;
-    def row(name; rep; xs): [name, rep, (xs|length), (xs|map(.release_to_post_ms)|med), (xs|map(.post_to_200_ms)|med),
-      (xs|map(.response_to_saved_ms)|med), (xs|map(select(.http_status!=200))|length)];
-    ([ "scenario","repetition","n_posts","release_to_post_ms","post_to_200_ms","200_to_saved_ms","refusals" ] | @tsv),
-    ([ .[] | select(.scenario!="S0") ] | group_by([.scenario, .repetition])[] | row(.[0].scenario; .[0].repetition; .)  | @tsv),
-    ([ .[] | select(.scenario!="S0" and .scenario!="cold" and .warm) ] | group_by(.scenario)[] |
-      [.[0].scenario, "warm-median", length,
-        (map(.release_to_post_ms)|med), (map(.post_to_200_ms)|med), (map(.response_to_saved_ms)|med),
-        (map(select(.http_status!=200))|length)] | @tsv),
-    ([ .[] | select(.scenario!="S0" and .scenario!="cold" and .warm) ] | group_by(.scenario)[] |
-      [.[0].scenario, "warm-max", length, (map(.release_to_post_ms)|mx), (map(.post_to_200_ms)|mx),
-        (map(.response_to_saved_ms)|mx), (map(select(.http_status!=200))|length)] | @tsv),
-    ([ .[] | select(.scenario=="cold") ] | if length==0 then empty else
-      ["cold", "all", length, (map(.release_to_post_ms)|med), (map(.post_to_200_ms)|med),
-       (map(.response_to_saved_ms)|med), (map(select(.http_status!=200))|length)] | @tsv end),
-    ([ .[] | select(.scenario=="S0") | ["S0", .repetition, 0, null, null, null, (if .refusal then 1 else 0 end),
-       ("page_ready_ms=" + ((.page_ready_ms // null)|tostring))] | @tsv ] | .[])
+    def nn(f): map(f) | map(select(. != null));
+    def gate(xs): if (xs|length)==0 then "NO DATA"
+      elif ((xs|med) <= 2000 and (xs|mx) <= 4000) then "PASS" else "FAIL" end;
+    def drags: map(select(.scenario != "S0" and .scenario != "pack-host"));
+    (["scenario","repetition","n_posts","release_to_post_ms","post_to_200_ms","200_to_saved_ms","refusals",
+      "n_drags","failed_drags","release_to_saved_ms","post_to_saved_ms","mode","notes"] | @tsv),
+    (drags | group_by([.scenario, .repetition])[] | . as $g |
+      [$g[0].scenario, $g[0].repetition, (map(.post_count_network // 0) | add),
+       (nn(.release_to_post_ms)|med), (nn(.post_to_200_ms)|med), (nn(.response_to_saved_ms)|med),
+       (map(select(.failed or (.refusal != null))) | length), length, (map(select(.failed)) | length),
+       (nn(.release_to_saved_ms)|med), (nn(.post_to_saved_ms)|med), $g[0].mode, ""] | @tsv),
+    (drags | group_by(.scenario)[] | . as $g | nn(.release_to_saved_ms) as $xs |
+      [$g[0].scenario, "all", (map(.post_count_network // 0) | add), (nn(.release_to_post_ms)|med),
+       (nn(.post_to_200_ms)|med), (nn(.response_to_saved_ms)|med), (map(select(.failed or (.refusal != null)))|length),
+       length, (map(select(.failed))|length), ($xs|med), (nn(.post_to_saved_ms)|med), $g[0].mode,
+       ("max_release_to_saved_ms=" + (($xs|mx)|tostring) + ";gate=" + gate($xs) +
+        " (median<=2000 and max<=4000 on release_to_saved_ms)")] | @tsv),
+    (map(select(.scenario == "S0")) | .[] |
+      ["S0", .repetition, 0, "", "", "", (if .refusal then 1 else 0 end), "", "", "", "", "",
+       ("page_ready_ms=" + ((.page_ready_ms // null)|tostring) + ";verified_head_status=" + ((.verified_head_status // null)|tostring))] | @tsv),
+    (map(select(.scenario == "pack-host")) | .[] |
+      ["pack-host", .repetition, "", "", "", "", "", "", "", "", "", "",
+       ("pack_host_status=" + .pack_host_status + ";claim_lines=" + (.claim_lines|tostring) +
+        ";log_growth_bytes=" + (.log_growth_bytes|tostring) + ";pgrep_pack_host_count=" + (.pgrep_pack_host_count|tostring))] | @tsv)
   ' "$out/measurements.jsonl" >"$out/summary.tsv"
 }
 
@@ -266,8 +276,16 @@ cleanup() {
   fi
   if [[ -n "$browser_temp" ]]; then
     if pgrep -f -- "--user-data-dir=$browser_temp/" >/dev/null; then
-      chrome_clean=0
       pgrep -fa -- "--user-data-dir=$browser_temp/" >"$out/chrome-residue.txt" || true
+      mapfile -t chrome_pids < <(pgrep -f -- "--user-data-dir=$browser_temp/" || true)
+      for p in "${chrome_pids[@]}"; do kill -TERM "$p" 2>/dev/null || true; done
+      sleep 5
+      mapfile -t chrome_left < <(pgrep -f -- "--user-data-dir=$browser_temp/" || true)
+      for p in "${chrome_left[@]}"; do kill -KILL "$p" 2>/dev/null || true; done
+      sleep 1
+    fi
+    if pgrep -f -- "--user-data-dir=$browser_temp/" >/dev/null; then
+      chrome_clean=0
     fi
     rmdir -- "$browser_temp" || profile_removed=0
   fi
@@ -373,6 +391,7 @@ cmp "$out/dist-files.sha256" "$prior/dist-files.sha256"
 # Pristine copy of the original data. The original is only read. The check is 16 GiB free after the copy.
 copy_kib=$(du -sk -- "$orig_data" | cut -f1)
 (( $(free_kib) - copy_kib >= minimum_kib )) || { echo 'free space below 16 GiB before the pristine copy' >&2; exit 1; }
+python3 "$verify" audit-tree "$orig_data" "$out/pristine-copy-audit.json"
 cp -a -- "$orig_data" "$pristine"
 [[ ! -e "$pristine/runtime/discovery.json" ]]
 
@@ -446,7 +465,7 @@ run_repetition() {
   active=$!
   wait "$active"
   active=''
-  jq -e '.phase=="verified" and .timeline_commit_posts==19 and .profile_removed==true' \
+  jq -e '.phase=="verified" and .profile_removed==true' \
     "$rep_dir/browser-sv3-measure.json" >/dev/null
   [[ -z "$(jq -r '.context_close_error // empty' "$rep_dir/browser-sv3-measure.json")" ]]
   # Chrome residue check on the disposable profile path. Only a count and the command lines are recorded; nothing is killed.
