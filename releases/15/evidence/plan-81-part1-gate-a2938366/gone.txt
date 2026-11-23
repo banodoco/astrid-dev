@@ -1,0 +1,2 @@
+FAILED	tests/core/generation/test_readiness_missing_models.py::test_defaults_says_not_ready_when_the_server_lists_none_of_the_files
+FAILED	tests/core/generation/test_readiness_missing_models.py::test_list_and_defaults_agree_when_files_are_missing
