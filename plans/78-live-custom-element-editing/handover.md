@@ -35,7 +35,7 @@ The second chat produced one new history row, seven clips retargeted to two admi
 
 ## Next, in order
 
-1. The host runs independent review round two on `b014177d`; repair and resolve blocking findings within the two-round cap. The frozen Plan 81 merge rehearsal on that head had no conflicts; its focused proof is running in `/root/codex/plan78/run/review81-tests.log`.
+1. The host runs independent review round two on `b014177d`; repair and resolve blocking findings within the two-round cap. The frozen Plan 81 merge rehearsal on that head had no conflicts; its named proof had 252 passed, four local baseline failures and two CI-lane deselections (`/root/codex/plan78/run/review81-tests.log`).
 2. When the Lead reports Plan 81 landed, merge `release/15/main` into the plan branch and rerun touched proof. Landing order is Plan 81, Plan 40, Plan 77, then Plan 78; merge Plan 77's first cut before the final live proof.
 3. The host repeats the final LE-4 proof as specified above. Tell the Lead before dispatching one final integrated-head Agent CI run; only one Agent CI run may run across the release at a time. Compare failure IDs against the Lead's hosted baseline and retake the headline measurement.
 4. The Lead decides the App manifest re-pin and Plan 78 App landing after the Agent side lands. Make `tasks.md` accurate, prepare landing PRs, and obtain the Lead's written gate decision through the host. Release publication remains the owner's decision.
