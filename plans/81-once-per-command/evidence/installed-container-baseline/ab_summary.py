@@ -129,7 +129,7 @@ def qualification(records, arms, load_max, legacy=False, require_attestation=Fal
             reasons.append(f"{group}: after/before median ratio must be <= 0.5")
     return {"passed": not reasons, "reasons": reasons}
 
-def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legacy_missing_collector_span=False, unqualified_legacy=False, require_attestation=False):
+def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legacy_missing_collector_span=False, unqualified_legacy=False, require_attestation=False, attestation=None):
     arms = list(ARMS)
     validate_records(records, arms, SAMPLES, legacy_missing_collector_span)
     summary = {"setting": SETTING, "when_utc": datetime.now(timezone.utc).isoformat(), "load_max": LOAD_MAX,
@@ -140,6 +140,10 @@ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legac
                "groups": {gr: group_summary(records, arms, gr) for gr in GROUPS}, "records": records,
                "stage_tables": {a: {gr: stage_table(records, a, gr) for gr in ("same", "changed")}
                                 for a in arms if ARMS[a].get("generate_extra")}}
+    if attestation is not None:
+        summary["attestation"] = attestation
+        if attestation == "off":
+            summary["interpretation"] += " Runtime source bytes and listener identity were not attested."
     if any(r.get("reconstructed") is True and r.get("collector_span_seconds") is None for r in records):
         summary["interpretation"] += " Some reconstructed records lack collector span data; it cannot be recovered from those records."
     if legacy_missing_collector_span:
@@ -151,6 +155,7 @@ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legac
 
 def print_summary(summary, SAMPLES):
     arms = list(summary["arms"]); print("\nSETTING:", summary["setting"])
+    if "attestation" in summary: print("Attestation:", summary["attestation"])
     print("Qualification:", "PASS" if summary["qualification"]["passed"] else "FAIL")
     for reason in summary["qualification"]["reasons"]: print("  ", reason)
     head = f"{'group':9s}" + "".join(f"{a + ' med s':>14s}" for a in arms) + "".join(f"{a + '/before':>14s}" for a in arms[1:]) + "   ok  load1 before-cmd"
@@ -200,10 +205,17 @@ def rebuild(d, legacy_missing_collector_span=False, legacy_arms=None, legacy_sam
     for a in arms:
         if any(r.get("arm") == a and "--timings" in r.get("args", []) for r in records):
             arm_config[a]["generate_extra"] = ["--timings"]
+    schema = marker.get("qualification_schema")
+    mode = marker.get("attestation")
+    if schema == 2 and mode not in (None, "on") or schema == 3 and mode != "off":
+        raise ValueError("invalid qualification schema and attestation mode")
+    if mode is not None and schema not in (2, 3):
+        raise ValueError("invalid qualification schema and attestation mode")
+    attestation = "on" if schema == 2 else "off" if schema == 3 else None
     return summarize(records, d, "rebuilt from complete records.jsonl", marker.get("load_max"), arm_config, samples,
                      legacy_missing_collector_span=legacy_missing_collector_span,
-                     unqualified_legacy=marker.get("qualification_schema") != 2,
-                     require_attestation=marker.get("qualification_schema") == 2)
+                     unqualified_legacy=schema not in (2, 3),
+                     require_attestation=schema == 2, attestation=attestation)
 
 if __name__ == "__main__":
     try:
@@ -219,7 +231,7 @@ if __name__ == "__main__":
         result = rebuild(options.directory, legacy_missing_collector_span=options.legacy_records,
                          legacy_arms=options.arms, legacy_samples=options.samples)
         marker = json.loads((Path(options.directory) / "records.jsonl").read_text().splitlines()[-1])
-        if marker.get("qualification_schema") in (1, 2) and not result["qualification"]["passed"]:
+        if marker.get("qualification_schema") in (1, 2, 3) and not result["qualification"]["passed"]:
             sys.exit("Qualification failed; summary and raw evidence retained")
     except (OSError, ValueError, TypeError, IndexError) as exc:
         sys.exit(f"Cannot rebuild summary: {exc}")
