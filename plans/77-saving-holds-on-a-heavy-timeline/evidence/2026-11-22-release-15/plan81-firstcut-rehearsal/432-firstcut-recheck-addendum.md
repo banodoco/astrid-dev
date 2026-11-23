@@ -4,6 +4,12 @@ Request one read-only installed recheck of the exact locally reviewed upstream s
 
 Start with [the signed 432 runbook](https://github.com/banodoco/astrid-dev/blob/7443fd20c1e02790611190e9bdebb22c1b74fec5/plans/77-saving-holds-on-a-heavy-timeline/evidence/2026-11-22-release-15/432-clip-readback-runbook.md). Keep the signed backup and proof restore unchanged. Use only a new installation, disposable working restore and first-cut receipts root. The last Round 5 adoption passed authenticated restore but refused during its final revision verification at 5m21s. The same copy passed an independent offline doctor in 4m46s. The narrower verified-head browser path needs healthy admission first. No second attempt or restart is implicit if the new adoption refuses.
 
+## Disk and other load
+
+The Lead observed 32 GiB free before the proposed run. Budget a **10 GiB additional peak**, leaving about **22 GiB free** at that estimate. This includes up to 5.5 GiB for the isolated installation and caches, 1.5 GiB for the scratch source mirrors, App dependencies and compiled output, about 2.7 GiB for up to three 917 MB-equivalent realm copies during restore, adoption and verification, and 0.3 GiB for logs, receipts and disposable profiles. The installer allowance comes from the local signed-stack setup, which added about 4–5 GiB before a complete heavy restore. The matching compiled App used 543 MiB of Node dependencies and 140 MiB of compiled bytes. The total is an estimate of new disk allocation. The existing fixture and proof are already included in the Lead’s observed free space.
+
+Measure free space immediately before install, after restore, and before browser. The existing runbook's 25 GiB preflights remain in force. The estimated peak is 17 GiB above the Lead's 5 GiB emergency floor, and may leave a later preflight below 25 GiB. Stop at the first unmet preflight and retain the partial receipts. Leave the source realm, signed backup, proof restore, installation and evidence on disk. Each fresh browser removes just its own disposable profile during normal cleanup. The Lead holds the machine free of other work from advance notice through the sample.
+
 ## Exact setup substitutions
 
 The Lead supplies the absolute paths of their existing clean product clones, the existing PR 370 tooling checkout and the known pinned Node and browser tools. The following is the first command block on the authorized Lead machine. It only creates disposable source worktrees and generates pins. It does not touch a realm or start a process.
