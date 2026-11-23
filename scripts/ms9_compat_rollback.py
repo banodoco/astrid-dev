@@ -430,7 +430,7 @@ with patch.object(Path, "symlink_to", fail_green):
 import errno
 from pathlib import Path
 from unittest.mock import patch
-from skill_installer import install_packages
+from skill_installer import install_packages, PartialInstallationError
 import sys
 
 roots = [Path(p) for p in sys.argv[1:]]
@@ -446,10 +446,16 @@ def fail_second(self, target, *args, **kwargs):
 with patch.object(Path, "symlink_to", fail_second):
     try:
         install_packages(Path.cwd().parent, roots)
-    except ValueError as exc:
+    except PartialInstallationError as exc:
         if "previous owned link was preserved" not in str(exc):
             raise
+        if not exc.completed_changes or not any(str(roots[0]) in action
+                                                 for action in exc.completed_changes):
+            raise AssertionError("missing first-root changes in progress receipt")
+        if exc.failed_link.parent != later:
+            raise AssertionError("failure receipt did not identify second root")
         print("EXPECTED_SECOND_CLIENT_FAILURE " + str(exc))
+        print("COMPLETED_CHANGES " + str(len(exc.completed_changes)))
     else:
         raise AssertionError("second client did not fail")
 """
@@ -461,6 +467,11 @@ with patch.object(Path, "symlink_to", fail_second):
             check(report, "actual multi-client failure injected",
                   "EXPECTED_SECOND_CLIENT_FAILURE" in multi_fault,
                   "second client retarget was refused with old link preserved")
+            check(report, "partial failure receipt names first and second roots",
+                  "partial skill installation" in multi_fault and
+                  str(roots[0]) in multi_fault and str(roots[1]) in multi_fault and
+                  "COMPLETED_CHANGES " in multi_fault,
+                  "actual installer provided completed actions and failed destination")
             one, two, three = [snapshot_links(root) for root in roots]
             check(report, "first destination is updated but legacy entrypoint not retired",
                   "astrid-dev-start" in one and "astrid-dev" in one

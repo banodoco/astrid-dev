@@ -1,5 +1,7 @@
 """Focused installation safety tests for generated skill packages."""
 import errno
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -7,6 +9,7 @@ from unittest.mock import patch
 
 from skill_builder import build_packages
 from skill_installer import install_packages, PartialInstallationError
+from astrid_dev import main as cli_main
 
 
 ROLE = """---
@@ -373,6 +376,35 @@ class InstallTests(unittest.TestCase):
                 install_packages(self.root, [self.dest])
         self.assertNotIsInstance(caught.exception, PartialInstallationError)
         self.assertEqual(original.resolve(), old.resolve())
+
+    def test_cli_reports_partial_changes_and_retry_instruction(self):
+        worker = self.root / "agent/roles/worker.md"
+        worker.write_text(ROLE.replace("# Leader", "# Worker"), encoding="utf-8")
+        build_packages(self.root)
+        original_symlink = Path.symlink_to
+
+        def reject_worker(self, target, *args, **kwargs):
+            if self.name == "astrid-dev-worker":
+                raise OSError(errno.EIO, "injected later CLI failure")
+            return original_symlink(self, target, *args, **kwargs)
+
+        output = StringIO()
+        with patch.object(Path, "symlink_to", reject_worker):
+            with redirect_stdout(output):
+                result = cli_main(
+                    ["skills", "install", "--destination", str(self.dest)],
+                    root=self.root)
+        self.assertEqual(result, 1)
+        self.assertIn("ERROR skills install: partial skill installation", output.getvalue())
+        self.assertIn("astrid-dev-leader", output.getvalue())
+        self.assertIn("astrid-dev-worker", output.getvalue())
+        self.assertIn("retry skills install", output.getvalue())
+        self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())
+        self.assertFalse((self.dest / "astrid-dev-worker").exists())
+        self.assertEqual(
+            cli_main(["skills", "install", "--destination", str(self.dest)], root=self.root),
+            0)
+        self.assertTrue((self.dest / "astrid-dev-worker/SKILL.md").is_file())
 
 if __name__ == "__main__":
     unittest.main()
