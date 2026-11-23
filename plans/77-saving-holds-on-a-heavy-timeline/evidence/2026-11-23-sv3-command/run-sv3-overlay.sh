@@ -396,7 +396,7 @@ run_repetition() {
   cp -- "$prior/fixture.json" "$rep_dir/fixture.json"
   jq --arg runtime "$sha" '.runtime=$runtime' "$prior/versions.json" >"$rep_dir/versions.json"
   cp -- "$prep/package.sha256" "$rep_dir/script-package.sha256"
-  rep_env=("${owned[@]}" ASTRID_RUNTIME_TIMELINE_DIAGNOSTICS=1
+  rep_env=("${owned[@]}"
     PYTHONPATH="$prep/overlay-guard:$archive" PYTHONDONTWRITEBYTECODE=1
     SV3_ARCHIVE="$archive" SV3_RUNTIME_SHA="$sha" SV3_SUPPORT_ROOT="$wsupport" SV3_REALM_ID="$realm"
     SV3_SOURCE_PROFILE="$src_profile" SV3_DAEMON_WITNESS="$rep_dir/candidate-daemon-module.json")

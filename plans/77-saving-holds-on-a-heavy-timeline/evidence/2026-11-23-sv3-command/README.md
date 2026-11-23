@@ -143,8 +143,7 @@ Dropped: process-group proofs, `group-live`, group members in `preview-after`, t
 the `pkill` of Chrome by profile path. In its place, a read-only count of Chrome processes on the profile path
 (`chrome-residue.txt`). That count fails the repetition if it is not zero, and nothing is killed.
 
-Kept as a process setting: `ASTRID_RUNTIME_TIMELINE_DIAGNOSTICS=1` (from SV-2a, not the trace). Whether it changes
-timings is not established.
+The SV-2a process setting `ASTRID_RUNTIME_TIMELINE_DIAGNOSTICS=1` is NOT set here, so the Runtime runs with production settings and no trace.
 
 ## Unverified assumptions (not confirmed by any receipt)
 
@@ -164,3 +163,9 @@ timings is not established.
 Python AST parse of `verify-overlay.py`, `overlay-direct.py` and `overlay-guard/sitecustomize.py`; the JSON parse of
 `approved-input.json`; `jq` compilation of the combiner filters; and a synthetic rebase self-test in the scratchpad.
 Nothing was run as a package, and no product process was started.
+
+## Review notes added by the lane host
+
+- `runtime/adopt-journal.json` is copied unchanged and still names the original realm paths (three occurrences). Whether the Runtime reads it at start is not established; if it does, the copy could touch the original realm directory, which the original-data boundary listing would show.
+- S2 (two edits) and S3 (ten edits) wait for Saved between drags, so they measure sequential saves, not overlapping edits. If the Runtime or editor should be measured with edits released while a save is in flight, say so and the gap/count logic changes; the POST count assertion in the script (19) then has to be dropped.
+- The signed backup and the original `direct-data` are only read; the original-data listing before/after is compared at cleanup.
