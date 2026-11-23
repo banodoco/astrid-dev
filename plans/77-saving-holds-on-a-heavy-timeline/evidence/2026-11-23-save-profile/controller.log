@@ -1,0 +1,13 @@
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/firstcut-requalification-pins/install-manifest-shallow.json: OK
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/firstcut-requalification-pins/versions.json: OK
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/firstcut-requalification-pins/reviewed-source.json: OK
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   44G   26G  64% /
+Round 7 candidate-two-save-profile-20261123-retry runner PID 6067 resume 0 at 2026-11-23T11:49:30Z
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   48G   22G  70% /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   49G   20G  71% /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   49G   20G  71% /
+Starting exact two-save browser profile at 2026-11-23T12:07:47Z
