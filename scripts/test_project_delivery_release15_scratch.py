@@ -288,6 +288,103 @@ print(json.dumps({"errors": errors, "plans": [p["number"] for p in info["plans"]
         )
 
 
+    def test_paired_frozen_and_selected_code_export_same_authored_feed(self):
+        # This is genuine CODE-version parity with identical authored inputs,
+        # not a comparison of two differently-authored historical snapshots.
+        # The baseline is another detached checkout of the pinned frozen
+        # release; both sides receive precisely the same three records and
+        # release brief. Never change source fixtures or copy the new parser
+        # into the frozen baseline to manufacture a passing comparison.
+        import hashlib
+        import json
+
+        def authored_inventory(root: Path) -> dict[str, str]:
+            return {
+                path.relative_to(root).as_posix(): hashlib.sha256(
+                    path.read_bytes()
+                ).hexdigest()
+                for path in root.rglob("*.md")
+                if ".git" not in path.relative_to(root).parts
+            }
+
+        script = """
+import json, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(root / "scripts"))
+from export_public_vision import build
+payload = build(root, "0" * 40)
+sys.stdout.buffer.write(
+    (json.dumps(payload, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
+)
+"""
+        def feed(root: Path) -> bytes:
+            result = subprocess.run(
+                (sys.executable, "-c", script, str(root)),
+                cwd=root, capture_output=True,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                check=False,
+            )
+            self.assertEqual(
+                result.returncode, 0,
+                f"public vision build on {root} failed:\n"
+                + result.stderr.decode(errors="replace"),
+            )
+            return result.stdout
+
+        with tempfile.TemporaryDirectory(prefix="p72-r15-paired-parity-") as temp:
+            baseline = Path(temp) / "frozen"
+            created = False
+            try:
+                git("worktree", "add", "--detach", str(baseline), RELEASE_BASE)
+                created = True
+                self.assertEqual(
+                    git("rev-parse", "HEAD", cwd=baseline).decode().strip(),
+                    RELEASE_BASE,
+                )
+                for relative, sha in RECORD_BLOBS.items():
+                    authored = (self.scratch / relative).read_bytes()
+                    self.assertEqual(current_hash(authored), sha)
+                    dest = baseline / relative
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    dest.write_bytes(authored)
+                (baseline / "releases/15.md").write_bytes(
+                    (self.scratch / "releases/15.md").read_bytes()
+                )
+
+                frozen_inputs = authored_inventory(baseline)
+                selected_inputs = authored_inventory(self.scratch)
+                self.assertEqual(
+                    frozen_inputs, selected_inputs,
+                    "Both code revisions must see identical authored Markdown",
+                )
+                frozen_bytes = feed(baseline)
+                selected_bytes = feed(self.scratch)
+                self.assertEqual(
+                    frozen_bytes, selected_bytes,
+                    "Selected Plan72 code changed the fixed-revision public "
+                    "feed with identical authored records; frozen="
+                    + hashlib.sha256(frozen_bytes).hexdigest()
+                    + " selected="
+                    + hashlib.sha256(selected_bytes).hexdigest(),
+                )
+                self.assertEqual(json.loads(frozen_bytes)["schemaVersion"], 1)
+                self.assertEqual(
+                    frozen_inputs, authored_inventory(baseline),
+                    "Baseline exporter mutated authored Markdown",
+                )
+                self.assertEqual(
+                    selected_inputs, authored_inventory(self.scratch),
+                    "Selected exporter mutated authored Markdown",
+                )
+                print(
+                    "P72 PAIRED FEED PARITY: bytes=" + str(len(frozen_bytes))
+                    + " sha256=" + hashlib.sha256(frozen_bytes).hexdigest()
+                    + " authored_files=" + str(len(frozen_inputs))
+                )
+            finally:
+                if created:
+                    git("worktree", "remove", "--force", str(baseline))
+
     def test_public_vision_feed_is_unchanged_by_real_traversal(self):
         # Same authored input, same fixed revision and same frozen exporter.
         # This establishes non-mutation; NOT cross-revision byte parity.
