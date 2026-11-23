@@ -72,8 +72,8 @@ Added 23 November 2026 at the owner's request. The Lead rewrites this section at
 
 On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ221kXBNRB4xQcG`), asked for Plan 56 to be set up for the [fresh ChatGPT packet workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md).
 
-- **Accountable agent** for Plan 56: the Release 15 Lead, `session_011EzfW2ePdUMAHRAcAm3nur`; there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
-- **Sessions in use (23 November 2026):** the Lead runs in `session_011EzfW2ePdUMAHRAcAm3nur` (the owner's brief and the Run start named `session_011EzfW1gtAhRQwk8pgJMzhG`; the role and the mailbox name `r15-lead` are unchanged). The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
+- **Accountable agent** for Plan 56: `session_011EzfW2ePdUMAHRAcAm3nur`, acting for the Release 15 Lead (`session_011EzfW1gtAhRQwk8pgJMzhG`); there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
+- **Sessions in use (23 November 2026):** the Release 15 Lead is `session_011EzfW1gtAhRQwk8pgJMzhG`. Plan 56's accountable agent, delegated by the owner, is `session_011EzfW2ePdUMAHRAcAm3nur`. On mailbox #1757 only, it posts under the name `r15-lead`, and the Orchestrator addresses it so. The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override, the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
 - **The Orchestrator** acts in the owner's ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace packet sessions and comment on the mailbox; it does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch, never dispatches hosted CI and never takes a second packet.
 - **Session mode follows the packet's Route:** N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
@@ -90,6 +90,8 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 6. **Proof runs where the network is.** ChatGPT packet sandboxes cannot reach `github.com`. Packet sessions publish through the connector and post `READY-PROOF <repo> <PR> <head> <selectors>`. The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
 7. **Hosted CI.** VibeComfy's `ci` runs no unit tests (astrid-dev #1768), so the Lead's local fast suite, compared by id, replaces it (baseline at `c0e910ca`: 758 passed, 9 failed, 9 skipped). Agent `ci.yml` does not trigger on `release/*/plan-*`; the Lead dispatches it on `release/15/plan-56` after each batch and compares it by id with `agent-ci-baseline-8807f820` (Lead, 23 November 2026).
 8. **Batch integration.** The Lead merges accepted VibeComfy PRs with `--no-ff`, tests the integrated tree, pushes that exact tree, and adds one cumulative Agent pin per batch (Lead, 23 November 2026).
+9. **Code-quality audit before every packet merge:** duplication across repos, silent fallbacks, broad `except`, hard-coded cases, test-only seams, dead or duplicate paths. A silent fallback, or a second code path left as an end state, is must-fix (mailbox a0bb99b6; follow-ups in astrid-dev #1772).
+10. **Agent CI capacity is release-wide:** at most two Agent `ci.yml` runs at once across all lanes. Check the running runs before dispatching (Release 15 Lead, 23 November 2026).
 
 ### Mailbox
 
@@ -97,7 +99,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7116279618 |
+| Plan 56 accountable agent (`r15-lead`) | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7116279618 |
 | Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
