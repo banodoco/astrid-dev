@@ -288,6 +288,53 @@ print(json.dumps({"errors": errors, "plans": [p["number"] for p in info["plans"]
         )
 
 
+    def test_public_vision_feed_is_unchanged_by_real_traversal(self):
+        # Same authored input, same fixed revision and same frozen exporter.
+        # This establishes non-mutation; NOT cross-revision byte parity.
+        exporter = self.scratch / "scripts/export_public_vision.py"
+        self.assertEqual(
+            current_hash(exporter.read_bytes()),
+            "672eb3a0eb6889df7dec3486eb55734d18eef282",
+        )
+        script = """
+import hashlib, json, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(root / "scripts"))
+from export_public_vision import build
+from project_delivery import load_delivery, deliveries_for_goal
+from relationships import RecordRef
+revision = "0" * 40
+before_page = build(root, revision)
+before = (json.dumps(before_page, ensure_ascii=False, indent=2) + "\\n").encode()
+graph = load_delivery(root)
+paths = deliveries_for_goal(
+    graph, RecordRef("goal", "pillar:artistic-ambition/finished-artistic-work")
+)
+if not paths:
+    raise AssertionError("no authored real goal-to-release traversal")
+after_page = build(root, revision)
+after = (json.dumps(after_page, ensure_ascii=False, indent=2) + "\\n").encode()
+if after != before:
+    raise AssertionError("real delivery traversal changed public vision feed bytes")
+if after_page["schemaVersion"] != 1:
+    raise AssertionError("public vision schema-v1 identity changed")
+print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
+      + " sha256=" + hashlib.sha256(before).hexdigest()
+      + " authored_paths=" + str(len(paths)))
+"""
+        result = subprocess.run(
+            (sys.executable, "-c", script, str(self.scratch)),
+            cwd=self.scratch, capture_output=True, text=True,
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+            check=False,
+        )
+        self.assertEqual(
+            result.returncode, 0,
+            "Pinned-source read-only feed stability:\n" + result.stdout
+            + result.stderr,
+        )
+        self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
+
     def test_original_traversal_fails_without_canonical_plan72_record(self):
         # Negative control: the real original traversal must fail if the
         # authored project 72 source is missing, even when the release brief
