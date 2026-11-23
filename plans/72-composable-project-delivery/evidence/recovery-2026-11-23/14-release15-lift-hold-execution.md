@@ -15,7 +15,7 @@ The Lead recorded in canonical `releases/15.md` is `session_011EzfW1gtAhRQwk8pgJ
 | **G5 — Plan72 authored-record owner + Release Lead** | Select the canonical Plan72 `plan.md`, `inputs.md`, `tasks.md` by verified blobs after owner decisions; record the actual Plan72 Included-plan and branch rows without manufacturing a cut or goal-gap link | **Prepared only**. Plan72 is a `Foundational enabler`, no `addresses` edge; frozen release tree lacks its pack and membership |
 | **G6 — Independent review stop on actually accepted integrated head** | Named source-capable high-judgment reviewer/effort/session, scope, exact head and a recorded **formal RS1** verdict; historical private review counters verified, no silent reset | **Not dispatched**. Existing one prospective RS1 stop and final R remain future gates |
 
-**Gate ordering:** G1–G5 must be resolved before the Lead authorizes a real Plan72 branch cut/source adoption. **G6 is *not* a prerequisite to creating that authorized plan branch:** it is the independent review stop on the *selected integrated pre-RS1 source*, before PD6/PD7 and other downstream work consume the contract. An off-release green does not satisfy any owner decision, and the supplementary architecture critique is not formal RS1.
+**Gate ordering:** Resolve **G1–G3**, and record the named writers, approved compatibility strategy and pinned source choices for **G4–G5**, before the Lead permits a real Plan72 branch cut. The **implementation** of G4–G5 belongs on that later *authorized plan branch*, not on this isolated recovery or the live release main. **G6 is *not* a prerequisite to cutting the authorized plan branch:** it follows qualification of the selected integrated pre-RS1 source and blocks PD6/PD7 and downstream consumption. An off-release green does not satisfy any owner decision, and the supplementary architecture critique is not formal RS1.
 
 **The Lead cannot infer G1–G6 from an off-release green CI run.** In particular, a `not yet cut` Branches row does not create a Git branch, a proposed scope PR does not accept scope, and a draft source PR cannot be treated as an authorized release landing.
 
@@ -50,6 +50,22 @@ The previous reader/CLI and feed validations pass, but the **full original repos
 | `ERROR markdown-links` | **15** | The three pinned canonical Plan72 record files cite **9 unique** linked source paths that do not exist in the frozen checkout: three shared workflow/contract skills and six historical evidence reports in `plans/72-composable-project-delivery/evidence/tests/astrid-dev/`. Every target is present on current canonical `main`; the Plan72 authored-record owner must select those dependencies at their exact source revisions (or justify source-owned link revisions), rather than removing broken links or skipping validation. |
 
 For pinned historic snapshots: `releases/14.md` frozen blob `3abb990ef613c5ba8a13fa5f60130a8d6b510f8a` vs canonical main `957772f4048623a628438c0d10f9f276fc900465`; `releases/16.md` frozen `cd4fe6d0cd8f2e3a8551a9174654b99f90b9bf08` vs main `af739bdeaddcbb33bdeb8836297867a10455b4a7`; `releases/17.md` frozen `6c873adba56286bb7c6f5024de7ad69372aee364` vs main `0adcbce2fe94a36541ed873e456855316fac3fc2`. **Do not wholesale copy the newer main release briefs**: their Included-plan sets also changed. Select only Lead-approved, historically correct branch-row repairs; no invented cuts/landing states.
+
+**Verified direct dependency source identities on canonical main (23 Nov 2026):** the 15 broken-link occurrences correspond to the following **nine distinct source files**, all absent on frozen Release15. These are **source selections proposed for the authored-record owner**, not permission to copy an unreviewed transitive closure.
+
+| Required path under repository root | Canonical main Git blob |
+| --- | --- |
+| `skills/shared/workstreams/astrid-dev-plan/SKILL.md` | `8dbe54a4342aadf9531409d7a320e887b6bded68` |
+| `skills/shared/workstreams/astrid-dev-release/SKILL.md` | `13e67ad00410464ca6a323adc0de9e4a1a192bd6` |
+| `skills/shared/run-contract.md` | `71a32afa24dd913568f0855b5bd0c39cb9f73589` |
+| `plans/72-composable-project-delivery/evidence/tests/astrid-dev/4b3e384/summary.md` | `d8f1a1a8bdc02b63e46ebdcf5ec75f36164f433e` |
+| `plans/72-composable-project-delivery/evidence/tests/astrid-dev/2bef3d9b/summary.md` | `a6368f05e613b37c6eef5c1cb167e17e40dfdcb8` |
+| `plans/72-composable-project-delivery/evidence/tests/astrid-dev/16eaf648/feed-parity.md` | `4090b378f32cf3293bb6477576015e78335481d0` |
+| `plans/72-composable-project-delivery/evidence/tests/astrid-dev/57703432/summary.md` | `0f7e4bb0f3fe56e0f06920bddd290056f33df80e` |
+| `plans/72-composable-project-delivery/evidence/tests/astrid-dev/915761c4/summary.md` | `02942215aff7c899869e5dc02fd1882409859fea` |
+| `plans/72-composable-project-delivery/evidence/tests/astrid-dev/915761c4/feed-parity.md` | `62a92a9c1875b4a20c3087d3033c165979c1a9bf` |
+
+The next authorized checkout must recheck each referenced file *and any transitive links/checker dependencies* before declaring the combined record set complete. Do not replace missing evidence with placeholders or weaken the old markdown-link checker.
 
 This diagnostic is **not** a release-green acceptance and is not a production regression in the Plan72 reader. It reveals that the current 09+authoring selection needs additional **shared authored data and documented link dependencies** before actual release qualification. Do not alter original `check` or golden assertions to turn the status green.
 
