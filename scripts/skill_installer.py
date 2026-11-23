@@ -22,9 +22,11 @@ class PartialInstallationError(ValueError):
     def __init__(self, completed_changes: list[str], failed_link: Path, cause: Exception):
         self.completed_changes = tuple(completed_changes)
         self.failed_link = failed_link
+        changed = "; ".join(completed_changes)
         super().__init__(
             f"partial skill installation: {len(completed_changes)} changes completed "
             f"before failure at {failed_link}: {cause}; "
+            f"completed links: {changed}; "
             "inspect the destinations and retry skills install"
         )
 
