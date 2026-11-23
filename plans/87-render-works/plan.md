@@ -4,13 +4,13 @@
 
 **Goal:** A heavy real timeline renders from first frame to last in one product render on a build of `release/15/main` with no local patches, and the file matches what the editor shows.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Orchestrator session `session_011EzfW1FXS3o7GFnNSB7cZS`, hosting one manager
 
 **Estimate:** Provisional, about 9 engineering days: 1 to port the sound fixes, 5 for the proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check. Re-estimate after the lease measurement and the first whole-fixture attempt.
 
-**Waiting on:** a claimed run. Decisions P1 to P3 are taken ([inputs.md](inputs.md#owner-decisions)).
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 

@@ -16,7 +16,7 @@
 
 **Review rounds:** One round at the end.
 
-**Run start:** Pending — waits on Plan 87's RN-6 and a claimed run. The owner asked for the plans and issues to be set up, not executed.
+**Run start:** Started 23 November 2026, cards TE-1 to TE-5, in Release 15 (owner, 23 November 2026: "include both of them into Release 15", aggressively). It runs beside Plan 87: TE-1 to TE-3's code and focused tests start at once; the render-backed proofs (TE-1's acceptance, TE-4, TE-5) wait for Plan 87's RN-6 on `release/15/plan-87`. **Accountable agent:** the hosting orchestrator, `session_011EzfVz6RTgoXjxNDgJP47L` (the Plans 78 and 40 session, relaunched with cleared context once Plan 78 lands), hosting one manager on route X; workers by card route (N Luna or Haiku, X Terra or Sonnet, S Sol or Opus for TE-3), reviews by Astra or Opus. It may, without asking: run Codex with full access (or Claude subagents while that account's Codex limit lasts); cut and push `release/15/plan-88` in astrid-agent from `release/15/main`; cherry-pick the named commits; open PRs; merge once the Release 15 Lead confirms the gate; dispatch hosted CI when the Lead gives the slot; send render requests to Plan 87's session. It needs the owner's go for publishing, anything paid, rented machines, live installs on her machine or her own media. **Coordination:** the Agent authoring and commit paths it touches are also touched by Plan 89 (`session_011EzfW2o5WfJcvHwr8fSDzC`); agree file-level order with that session directly. Proof and measurement before hosted CI. **Advisor:** the Release 15 Lead, `session_011EzfW1gtAhRQwk8pgJMzhG`. Check-ins hourly.
 
 ## Owner decisions
 
