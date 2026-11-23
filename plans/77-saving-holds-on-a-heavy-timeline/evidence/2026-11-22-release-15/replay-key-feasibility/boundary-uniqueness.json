@@ -1,0 +1,19 @@
+{
+  "source_db_sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d",
+  "scope": "exact synthetic accepted head from signed version 30",
+  "commands_by_side": {
+    "original": 12,
+    "landing": 12
+  },
+  "canonical_document_validations_per_replay": 48,
+  "canonical_document_distinct_exact_values": 13,
+  "canonical_document_boundary_vectors_identical": true,
+  "distinct_documents_by_side": {
+    "original": 13,
+    "landing": 13
+  },
+  "recorder_validations_per_replay": 2,
+  "recorder_distinct_values": 1,
+  "signed_history_prefix_rows_to_head": 30,
+  "signed_matching_ledger_rows_to_head": 30
+}
