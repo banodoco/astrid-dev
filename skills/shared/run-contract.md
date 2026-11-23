@@ -25,7 +25,7 @@ This table and the high-judgment role below it are the only place in the skills,
 
 ### ChatGPT session modes
 
-When a task runs in a ChatGPT session (a fresh packet session in the [dispatch workstream](../roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), or a session an orchestrator starts), the session's mode follows the task's route. The owner set this on 23 November 2026:
+When a task runs in a ChatGPT session (ChatGPT web sessions only: a fresh packet session in the [dispatch workstream](../roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), or a session an orchestrator starts in ChatGPT; a Codex manager or worker run by `codex exec` takes its model and effort from the run's bindings, not from this table), the session's mode follows the task's route. The owner set this on 23 November 2026:
 
 | Route | ChatGPT mode |
 | --- | --- |
