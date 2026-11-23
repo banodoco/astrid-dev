@@ -1,0 +1,9 @@
+{
+  "exit_code": 1,
+  "idle_safe_stop_verified": true,
+  "browser_temp_removed": true,
+  "preview_group_empty": true,
+  "no_leftover_chrome": true,
+  "boundaries_unchanged": true,
+  "trace_verdict_ok": true
+}
