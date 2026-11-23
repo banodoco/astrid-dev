@@ -1,0 +1,14 @@
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   39G   31G  56% /
+Cloning into bare repository '/root/codex/p77box/run5/stack/agent.git'...
+done.
+From /root/codex/p77box/firstcut-432-reviewed-pins/agent
+ * [new ref]             f19aed4c515df9bbaf85c4482bc4fed6aa243f9c -> run5-agent
+Cloning into bare repository '/root/codex/p77box/run5/stack/runtime.git'...
+From /home/user/astrid-runtime
+ * [new ref]         origin/release/15/fix-1491-verified-head -> run5-runtime
+agent f19aed4c515df9bbaf85c4482bc4fed6aa243f9c
+runtime 77c38d037f98f744bd8f41c15d95429c124a8003
+2026-11-23T05:09:20Z before_install free_kib=31742876 required_gib=25
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   39G   31G  57% /
