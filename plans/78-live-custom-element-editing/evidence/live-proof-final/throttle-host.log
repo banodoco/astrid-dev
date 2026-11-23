@@ -1,0 +1,5 @@
+6 text clips: discoveries=0, root_state_checks=1, elapsed_seconds=0.028740
+136 text clips: discoveries=0, root_state_checks=1, elapsed_seconds=0.020675
+stats per root: {PosixPath('/root/codex/plan78/wt78-final-merge-proof/astrid/packs'): 1, PosixPath('/root/codex/plan78/wt78-final-merge-proof.env/basetemp/1795442929398819180/test_six_and_136_text_clips_sh0/home/Astrid/packs'): 1}
+.
+1 passed in 6.93s

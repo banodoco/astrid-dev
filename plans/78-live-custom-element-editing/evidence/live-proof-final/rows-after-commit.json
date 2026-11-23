@@ -1,0 +1,22 @@
+[
+ {
+  "revision_id": "bootstrap-e97d75219f5442eca0afef6ab6f0b8cf",
+  "publication_id": "txn-079b601c98b44f95b78314797a0901a2"
+ },
+ {
+  "revision_id": "authoring-parent-revision-3892bc195787e7be0b08adcd34f6c504624a3d87ae67ce412624b5dc45f18d11",
+  "publication_id": "txn-29d33efbd096409698a80b410022f2f4"
+ },
+ {
+  "revision_id": "authoring-parent-revision-150a14cd28012f7e7a1ecca37a8f76fdfc41da22a4e8e09498a79456bee18b54",
+  "publication_id": "txn-198d22e77a5d43de96a00891f7357bf9"
+ },
+ {
+  "revision_id": "authoring-parent-revision-b030aa10fd3925e7b6ca86153612b29dd35b1615a76859892f9a383404c9b55d",
+  "publication_id": "txn-1957160531d742acafeaf7b76ea1ccc1"
+ },
+ {
+  "revision_id": "authoring-parent-revision-6c55dabb0eca3ceac3fa12354d883311817bbda7de9a44362f8b346a1ce425ad",
+  "publication_id": "txn-8e764a2d932340299d0b568793cbdf8d"
+ }
+]
