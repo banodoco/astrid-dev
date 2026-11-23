@@ -11,7 +11,8 @@ from pathlib import Path
 import re
 import subprocess
 
-SELF_PATHS = frozenset({"scripts/agent_reference_inventory.py", "scripts/test_agent_reference_inventory.py"})
+SELF_PATHS = frozenset({"scripts/agent_reference_inventory.py", "scripts/test_agent_reference_inventory.py",
+                        "scripts/ms9_cutover_preflight.py", "scripts/test_ms9_cutover_preflight.py"})
 TEXT_SUFFIXES = frozenset({".md", ".py", ".sh", ".yml", ".yaml", ".json", ".toml", ".txt", ".ini"})
 OLD_REFERENCE = re.compile(
     r"(?P<path>skills/(?:astrid-dev(?:/[A-Za-z0-9_./-]+)?(?![A-Za-z0-9_-])|"
