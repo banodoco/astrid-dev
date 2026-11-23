@@ -19,6 +19,14 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 | TE-5 The film's workarounds are converted back: eleven overlay clips become in-place swaps, and the pause after "two million" loses 15 frames with everything after it moved | X | TE-4 | The film project only, from the undo list in [overlay evidence](../87-render-works/evidence/overlay/FRICTION.md) and the plan in [tighten evidence](../87-render-works/evidence/tighten/FRICTION.md) | Read-back: overlays gone, originals carry the new media; every clip after the cut is exactly 15 frames earlier; a dry-run reflow moves nothing; the film renders whole | [ ] |
 | R One review round before the branch is offered to the Release 15 Lead | S | all | Read-only | Findings become rows `R.n` | [ ] |
 
+## Run decisions
+
+- 2026-11-23: Start from the existing `release/15/plan-88` at `0615e4e9`, as the Run start directs; TE-2 and TE-3 start from TE-1's cherry-pick and merge forward without rewriting history.
+- 2026-11-23: TE-1's donor candidate `93c02352e` also touches timing validation, omitted from the card's path list; host asked to confirm scope. Its donor SDK test fails on a session fixture missing `identity` on the current base; host asked for a permitted repair. Candidate with publisher coverage: `186c46904d` (18 passed, 1 failed; no live proof).
+- 2026-11-23: Independent code review found no authenticated pre-edit shot word identity in the current commit path; sent the host the required TE-3 refusal-only gate. Refusal proof remains in progress.
+- 2026-11-23: Baseline `0615e4e9`: commit-boundary test file 30 passed; both named timeline files are absent at base. TE-2 candidate `c71be97be` has three new provenance cases passing; donor boundary proof 38 passed. Independent review found a grown-bound provenance bypass; correction is in progress.
+- 2026-11-23: TE-4 and TE-5 live work waits for RN-6. Evidence identifies eleven overlay IDs but not all original-to-media mappings; host asked for the undo list. No pods or paid resources used.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
