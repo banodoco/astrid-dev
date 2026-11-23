@@ -522,6 +522,21 @@ On 23 November 2026 the isolated Runtime startup prototype `dff392a2` ran on a f
 | Managed offline inspection | 132.609 s | 130.311 s | Returned `verified_offline` with the realm check green. Ten pending samples were at or after 120 s. No listener. |
 | Native detached startup | 161.101 s | 158.733 s | Stayed pending past 135 s. The exact child passed native health and process-birth checks after launcher exit. No periodic sample observed health while pending. |
 
-The observer sampled its final native health check after exit and did not record that check’s timestamp. The 161.101 s figure measures launcher wall time. The managed operation completed before the 135 s evidence threshold. Its larger-workload repeat is open. There were zero browser profiles. The stack shut down idle-safe, closed all reserved ports and was removed. This is development evidence for the Runtime-only startup slice. The first-cut default-budget restart limitation remains in its release gate. [First-cut gate](evidence/2026-11-22-release-15/first-cut-gate.md)
+The observer sampled its final native health check after exit and did not record that check’s timestamp. The 161.101 s figure measures launcher wall time. The managed operation completed before the 135 s evidence threshold. The larger-workload repeat follows below. There were zero browser profiles. The stack shut down idle-safe, closed all reserved ports and was removed. This is development evidence for the Runtime-only startup slice. The first-cut default-budget restart limitation remains in its release gate. [First-cut gate](evidence/2026-11-22-release-15/first-cut-gate.md)
 
 Independent source review later cleared the Runtime-only `e27b5177` foundation. That head adds verified launcher-gap ordering and clearer native process custody, including unknown PID namespace and foreign UID refusal. Its exact paired result was 208 unchanged protected cases, one unchanged recorder-tamper integration and 20 new startup cases. The private startup slice is separate from the ordered first-cut landing.
+
+## Grown 300-clip startup development
+
+On 23 November 2026 a private stack ran local App `d6e9548a`, Agent `1b48956f` and Runtime `e27b5177`. The operator verified the signed 300-clip starting head, then settled six ordinary one-frame SDK moves on its disposable adopted copy. Each accepted edit matched an independent read of the public revision, publication and digest. The last edit restored the clip’s original position, with 300 clips throughout and six new accepted publications.
+
+The operator stopped the setup owner idle-safe and recorded the grown database hash. Both timed routes used that same data with default startup settings. The signed input kept its original database hash.
+
+| Route | Owner elapsed | Observed pending period | Completion |
+| --- | --- | --- | --- |
+| Directed managed offline inspection | 143.475 s | 141.119 s | Verified offline with no listener. The grown database hash stayed fixed. |
+| Direct native startup | 148.590 s | 146.227 s | The same child and Runtime instance were observed healthy at 148.615 s, just after launcher exit. |
+
+The final public read-back matched the grown head and its 300 clips. The stack shut down idle-safe and all reserved ports closed. The machine started with 27 GiB free, reached an observed low of 19.93 GiB during restore and adoption, and returned to about 26.2 GiB after cleanup. The operator removed its one owned stack and left zero browser profiles.
+
+This development result covers the two Runtime-owned timelines on `e27b5177`. The later launcher custody and configured-scope fixes and the Agent caller changes still require qualification. [Startup issue #1521](https://github.com/banodoco/astrid-dev/issues/1521)
