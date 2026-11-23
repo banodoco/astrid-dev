@@ -12,7 +12,7 @@ Paths under `/root/codex/le4/` are machine-local to the proof run.
 - App `e3dbad64d402724ac5a35fb6447f18e432c64b78`, with the motion-pack manifest patch applied to a disposable copy only; the App change was not landed for this proof.
 - Motion pack source `https://github.com/banodoco/poms_packs`, commit `2379ab54aca522019ff4f869cfdf9375bdb56dfc`, `pack-tree-v1` digest `75234c10217e67ec0f111a4cb6be4a6252e172a9cd382506498d07ce1d241029`.
 - The proof used a synthetic moderate timeline: 40 initial clips, three shots, approximately 149.8 seconds, no owner media. A separate heavy fixture had 136 clips, eight shots and approximately 479.8 seconds; it was used for timing exploration, not the final chat proof, because the moderate fixture provided a clear title window and a practical editor rehearsal. Fixture generator: `/root/codex/le4/fixture/` and `/root/codex/le4/run4/fixture/`.
-- The fresh isolated install's first pack listing contained `am-type` and `am-footage` before any manual pack add, demonstrating the manifest pin path. The installer completed in 104 s.
+- On earlier Agent `07e7cc03`, the fresh isolated install listed `am-type` and `am-footage` before a manual pack add, and completed in 104 s. Installer publication is now removed from the candidate; this observation does not prove that a fresh install of the current candidate includes the motion pack.
 
 ## Prompt sent to the editor's agent
 
@@ -57,6 +57,7 @@ On the fresh isolated install, a Runtime process first resolved an existing effe
 - The Lead's 23 November gate defines a blocking finding as one that breaks the headline claim (a pack installed after startup used in a mixed commit), breaks or changes an existing base test, prints a falsehood, loses user data, or crosses a decided boundary. Other findings receive an issue each and a line under the plan's limits.
 - Animation and transition discovery after startup is outside this proof and plan scope: [#1564](https://github.com/banodoco/astrid-dev/issues/1564).
 - The pack-add message can say refresh is pending after the host has acknowledged it; the Lead accepted this over-cautious direction: [#1566](https://github.com/banodoco/astrid-dev/issues/1566).
+- The base group transaction can delete a concurrently written file inside a newly installed or updated pack during swap-back: [#1578](https://github.com/banodoco/astrid-dev/issues/1578).
 - A transaction sync failure after swap-back can omit the retained generation's path from its error; on a truly fresh install that generation contains no user's prior workspace: [#1567](https://github.com/banodoco/astrid-dev/issues/1567).
 - The prompt asked for the changes “together as one edit, so they appear as one new history entry”. The proof shows the editor’s agent can deliver them as one commit when asked; it does not show that the skills alone lead an agent to choose one commit unprompted.
 
