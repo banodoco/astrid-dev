@@ -45,6 +45,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23: Native word vector `test_portable_native_captures[a]` and `[b]` also fail on the exact plan baseline `0615e4e9` (12 passed, 2 failed); treat them as pre-existing. TE-3 candidate `ce20c344` had 66 focused passes but four independent-review findings require repair.
 
+- 2026-11-23: TE-5 is parked until RN-6; backup `8523400fe` preserves media preparation (10 focused tests), imported fade coercion and a legacy declaration import with an exact retained transcript pin; shot word retime, real pack admission, the full builder and render remain unproved.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
