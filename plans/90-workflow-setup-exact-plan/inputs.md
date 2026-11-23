@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — this is the original scope of [Plan 56](../56-workflow-setup/plan.md), accepted 15 November 2026 (D1–D3) and extended on 23 November 2026 with the exact-plan approval the owner described in [issue 1731](https://github.com/banodoco/astrid-dev/issues/1731); Plan 56 took the 90/10 for Release 15 and this plan is its follow-up. Next: the owner confirms the follow-up and its release.
+**Scope decision:** Pending — this is the original scope of [Plan 56](../56-workflow-setup/plan.md), accepted 15 November 2026 (D1–D3) and extended on 23 November 2026 with the exact-plan approval the owner described in [issue 1731](https://github.com/banodoco/astrid-dev/issues/1731); Plan 56 took the 90/10 for Release 15 and this plan is its follow-up. The owner agreed the numbering on 23 November 2026; its release is open (D1).
 
 **Prior art:** Plan 56's [inputs](../56-workflow-setup/inputs.md#planning-evidence) (code readings of 15–16 and 23 November 2026, the lookup, version and consent findings). Plan 35 owns where user choices live; Plan 32 owns the manifest and F4.
 
