@@ -249,6 +249,58 @@ Not established:
 - The bursts' predicted start is not used. Each edit uses the live rect, so an optimistic display that is not yet updated can
   make two edits start at the same place.
 
+## Agent SDK overlay (optional, SV3_AGENT_SHA)
+
+Off unless `SV3_AGENT_SHA` is set. With it, the Runtime daemon loads two Agent SDK modules from a candidate, and nothing
+else changes. `SV3_AGENT_REF` must name a ref in `sv2a-prep/agent-candidate.git` that resolves to `SV3_AGENT_SHA`. The
+operator pushes that ref.
+
+What is overlaid: exactly `astrid/sdk/timeline/_commit_patch.py` and `astrid/sdk/timeline/_doc_patch.py`. The base is
+`b324d7c1e94713e7ae48d3d98a70db1214ef658f`. `agent-prepare` (in `verify-overlay.py`) refuses unless:
+
+- `git diff --name-only <base> <sha>`, minus `tests/`, is exactly those two paths;
+- the installed copy of each file has the same sha256 as the base blob (a clean transplant);
+- the candidate blobs are written read-only (mode 0400, directories 0500) under `$out/agent-overlay/`.
+
+It records the candidate tree, the diff list, and the sha256 of the installed, base and candidate files in
+`agent-overlay.json`. No venv file is written. The installed files are re-hashed after the run (`agent-finish`), and the
+program inventory is compared as before.
+
+How it loads: `overlay-guard/sitecustomize.py` installs a `sys.meta_path` finder at index 0, but only in the daemon
+(argv `-m runtime_protocol start`). It serves the two module names from `SV3_AGENT_OVERLAY_DIR`. Every other name
+returns `None`, so the normal machinery handles it. A missing file or a sha256 that differs from
+`SV3_AGENT_FILE_SHA256` raises `ImportError`, which fails the daemon closed. The witness then imports both modules and
+records their `__file__` and sha256, plus the other `astrid.sdk.timeline.*` modules and
+`astrid.sdk.timeline.commit`. `agent-preflight` checks each repetition: the two overlay modules must come from the overlay
+with the candidate hashes, and everything else must come from the installed site-packages. The result is
+`rep-N/agent-loaded.json`.
+
+Not established:
+
+- Whether the daemon really starts with the guard on `sys.path` and with `-I` (the isolated mode ignores `PYTHONPATH`). If it
+  does not, the finder is not installed and the witness fails. A run would show this.
+- Other processes (the pack host, chat, the CLI) still load the installed SDK. Only the Runtime daemon is overlaid.
+- Whether `astrid.sdk.timeline.commit` exists in this package. The receipt records what it found, or the import error.
+- The synthetic test of `agent-prepare` used a fake installed directory built from the base blobs. The real installed
+  directory was not read.
+
+## Commit timing lines
+
+The Runtime writes one `runtime.timeline_commit.timing <json>` log line per commit (`runtime_wall_ms`,
+`exclusive_timings_ms`, sizes). `rep-N/commit-timing-lines.jsonl` keeps each line of the repetition's log delta in order.
+`timing-match` pairs the Nth line with the Nth commit POST of the repetition (the POSTs are counted per drag, and a burst
+contributes its own POSTs). If the counts differ, nothing is paired and the timing columns stay empty for that
+repetition. A line that does not parse, or a missing key, leaves only its own save empty. `commit-timing-summary.json`
+records `posts`, `lines`, `lines_matched` and `mismatch`.
+
+In `summary.tsv`, the three timing columns are `runtime_wall_ms`, `exclusive_sum_ms` (the sum of the values of
+`exclusive_timings_ms`) and `exclusive_sum_over_post_to_200_pct`. The per-scenario-and-repetition rows carry the MEDIAN over
+the saves of that scenario. The per-save values are in `measurements.jsonl`. The burst rows carry the SUM over their POSTs,
+with no percentage, because a burst has no single post-to-200 time.
+
+Not established: that the lines are in POST order (the match assumes it); that one line corresponds to one POST, which the
+count check tests but does not prove.
+
 ## Static checks for this change
 
 `bash -n run-sv3-overlay.sh`; `node --check` on the driver, `arm-free-space.mjs` and `reused-trace-helpers.mjs`; the

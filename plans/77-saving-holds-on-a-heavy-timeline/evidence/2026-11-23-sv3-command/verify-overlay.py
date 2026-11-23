@@ -332,10 +332,169 @@ def audit_tree(tree, out):
     if findings:
         raise ValueError(f"link audit found {len(findings)} finding(s); see {out}")
 
+def timing_match(rep_dir):
+    """Pairs the Nth runtime.timeline_commit.timing line with the Nth commit POST of the repetition. If the counts differ,
+    nothing is paired and the values stay empty (recorded, not guessed). Absent keys give empty values, not a failure."""
+    rep = Path(rep_dir)
+    browser = read_json(rep / "browser-sv3-measure.json")
+    marker = "runtime.timeline_commit.timing "
+    lines = []
+    path = rep / "commit-timing-lines.jsonl"
+    if path.is_file():
+        for raw in path.read_text(encoding="utf-8").splitlines():
+            if marker in raw:
+                try:
+                    lines.append(json.loads(raw.split(marker, 1)[1]))
+                except ValueError:
+                    lines.append(None)
+    order = []
+    for scenario in browser["scenarios"]:
+        if scenario.get("mode") == "burst":
+            order.append((scenario["name"], None, (scenario.get("burst") or {}).get("n_posts") or 0, None))
+        else:
+            for drag in scenario["drags"]:
+                order.append((scenario["name"], drag["index"], drag.get("post_count_network") or 0, drag.get("post_to_200_ms")))
+    total = sum(item[2] for item in order)
+    matched = len(lines) == total
+    result = {"posts": total, "lines": len(lines), "lines_matched": len(lines) if matched else 0,
+              "mismatch": not matched, "per_drag": {}, "burst": {}}
+
+    def values(chunk, post_to_200):
+        if not chunk or any(item is None for item in chunk):
+            return {"runtime_wall_ms": None, "exclusive_sum_ms": None, "exclusive_sum_over_post_to_200_pct": None}
+        try:
+            wall = sum(float(item["runtime_wall_ms"]) for item in chunk)
+            exclusive = sum(float(value) for item in chunk for value in item["exclusive_timings_ms"].values())
+        except (KeyError, TypeError, ValueError, AttributeError):
+            return {"runtime_wall_ms": None, "exclusive_sum_ms": None, "exclusive_sum_over_post_to_200_pct": None}
+        pct = exclusive / post_to_200 * 100 if post_to_200 else None
+        return {"runtime_wall_ms": wall, "exclusive_sum_ms": exclusive, "exclusive_sum_over_post_to_200_pct": pct}
+
+    if matched:
+        cursor = 0
+        for name, index, posts, post_to_200 in order:
+            chunk = lines[cursor:cursor + posts]
+            cursor += posts
+            if index is None:
+                result["burst"][name] = values(chunk, None)
+            else:
+                result["per_drag"][f"{name}/{index}"] = values(chunk, post_to_200)
+    write_json(rep / "commit-timing-summary.json", result)
+
+
+AGENT_OVERLAY_MODULES = {
+    "astrid.sdk.timeline._commit_patch": "astrid/sdk/timeline/_commit_patch.py",
+    "astrid.sdk.timeline._doc_patch": "astrid/sdk/timeline/_doc_patch.py",
+}
+AGENT_OVERLAY_FILES = sorted(AGENT_OVERLAY_MODULES.values())
+
+
+def git_bytes(mirror, *args):
+    return subprocess.check_output(["git", "-C", str(mirror), *args])
+
+
+def agent_prepare(mirror, base, sha, overlay_dir, site, out):
+    """Exact two-file overlay. Refuses unless the non-test diff is exactly the two files, the installed files equal the
+    base blobs, and the candidate blobs are extracted read-only into the overlay directory. No venv write happens."""
+    mirror, overlay_dir, site, out = Path(mirror), Path(overlay_dir), Path(site), Path(out)
+    if git_bytes(mirror, "rev-parse", base + "^{commit}").decode().strip() != base:
+        raise ValueError("agent base SHA does not resolve to the approved commit")
+    if git_bytes(mirror, "rev-parse", sha + "^{commit}").decode().strip() != sha:
+        raise ValueError("agent candidate SHA does not resolve to the approved commit")
+    names = git_bytes(mirror, "diff", "--name-only", base, sha).decode().splitlines()
+    non_test = sorted(name for name in names if not name.startswith("tests/"))
+    if non_test != AGENT_OVERLAY_FILES:
+        raise ValueError(f"agent diff (non-test) is {non_test}, expected exactly {AGENT_OVERLAY_FILES}")
+    tree = git_bytes(mirror, "rev-parse", sha + "^{tree}").decode().strip()
+    overlay_dir.mkdir(mode=0o700, parents=True)
+    files = {}
+    for relative in AGENT_OVERLAY_FILES:
+        installed = (site / relative).read_bytes()
+        base_blob = git_bytes(mirror, "show", f"{base}:{relative}")
+        candidate = git_bytes(mirror, "show", f"{sha}:{relative}")
+        installed_sha, base_sha, candidate_sha = (hashlib.sha256(item).hexdigest() for item in (installed, base_blob, candidate))
+        if installed_sha != base_sha:
+            raise ValueError(f"installed {relative} differs from the base blob; the overlay would not be a clean transplant")
+        target = overlay_dir / relative
+        target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        with target.open("xb") as stream:
+            stream.write(candidate)
+        os.chmod(target, 0o400)
+        files[relative] = {"installed_before_sha256": installed_sha, "base_blob_sha256": base_sha,
+                           "candidate_sha256": candidate_sha, "candidate_bytes": len(candidate)}
+    for directory in sorted({overlay_dir, *[path.parent for path in overlay_dir.rglob("*") if path.is_dir()]}, reverse=True):
+        os.chmod(directory, 0o500)
+    sha_env = ";".join(f"{relative}={files[relative]['candidate_sha256']}" for relative in AGENT_OVERLAY_FILES)
+    write_json(out / "agent-overlay.json", {"agent_sha": sha, "agent_tree": tree, "agent_base": base,
+               "diff_non_test": non_test, "overlay_dir": str(overlay_dir), "site_packages": str(site),
+               "files": files, "sha_env": sha_env})
+
+
+def agent_preflight(rep_dir, top_out, site, overlay_dir):
+    """Checks what the Runtime daemon loaded: the two overlay modules from the overlay, the rest from site-packages."""
+    rep_dir, top_out = Path(rep_dir), Path(top_out)
+    site, overlay_dir = Path(site).resolve(), Path(overlay_dir).resolve()
+    top = read_json(top_out / "agent-overlay.json")
+    witness = read_json(rep_dir / "candidate-daemon-module.json")
+    agent = witness.get("agent_overlay")
+    if not agent or agent["overlay_dir"] != str(overlay_dir):
+        raise ValueError("daemon witness has no agent overlay record for this overlay directory")
+    failures = []
+    for name, relative in AGENT_OVERLAY_MODULES.items():
+        loaded = agent["modules"][name]
+        expected_file = str(overlay_dir / relative)
+        if loaded["file"] != expected_file:
+            failures.append(f"{name} loaded from {loaded['file']}")
+        if loaded["sha256"] != top["files"][relative]["candidate_sha256"]:
+            failures.append(f"{name} loaded with a different sha256")
+    for name, file in agent["other_timeline_modules"].items():
+        if not file.startswith(str(site) + os.sep) or file.startswith(str(overlay_dir) + os.sep):
+            failures.append(f"{name} loaded from {file}, not the installed package")
+    commit = agent.get("astrid.sdk.timeline.commit")
+    if isinstance(commit, str) and commit.startswith("/") and not commit.startswith(str(site) + os.sep):
+        failures.append(f"astrid.sdk.timeline.commit loaded from {commit}")
+    write_json(rep_dir / "agent-loaded.json", {"overlay_modules": agent["modules"],
+               "other_timeline_modules": agent["other_timeline_modules"],
+               "astrid.sdk.timeline.commit": commit, "failures": failures})
+    if failures:
+        raise ValueError("agent overlay preflight failed: " + "; ".join(failures))
+
+
+def agent_finish(top_out, site):
+    """After the run: re-hash the installed files (the venv must be unwritten) and merge the per-repetition loads."""
+    top_out, site = Path(top_out), Path(site)
+    receipt = read_json(top_out / "agent-overlay.json")
+    after = {relative: digest_file(site / relative) for relative in AGENT_OVERLAY_FILES}
+    unchanged = all(after[relative] == receipt["files"][relative]["installed_before_sha256"] for relative in AGENT_OVERLAY_FILES)
+    loaded = {}
+    for path in sorted(top_out.glob("rep-*/agent-loaded.json")):
+        loaded[path.parent.name] = read_json(path)
+    receipt["installed_after_sha256"] = after
+    receipt["installed_unchanged"] = unchanged
+    receipt["loaded_by_repetition"] = loaded
+    temporary = top_out / "agent-overlay.json.tmp"
+    with temporary.open("x", encoding="utf-8") as stream:
+        json.dump(receipt, stream, indent=2)
+        stream.write("\n")
+    os.replace(temporary, top_out / "agent-overlay.json")
+    if not unchanged:
+        raise ValueError("installed agent SDK files changed during the run")
+    if any(item["failures"] for item in loaded.values()):
+        raise ValueError("an agent overlay preflight recorded failures")
+
+
 
 action, *raw = sys.argv[1:]
 if action == "audit-tree":
     audit_tree(*raw)
+elif action == "agent-prepare":
+    agent_prepare(*raw)
+elif action == "agent-preflight":
+    agent_preflight(*raw)
+elif action == "agent-finish":
+    agent_finish(*raw)
+elif action == "timing-match":
+    timing_match(*raw)
 elif action == "archive":
     mirror, commit, archive, out = raw
     verify_archive(Path(mirror), commit, Path(archive), Path(out))

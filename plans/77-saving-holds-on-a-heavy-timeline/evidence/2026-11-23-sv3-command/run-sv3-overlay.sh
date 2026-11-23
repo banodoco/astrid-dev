@@ -94,6 +94,20 @@ flock -n 9
 [[ ! -e "$owner/.quick-operation-lock" && ! -L "$owner/.quick-operation-lock" ]]
 python3 "$verify" ports-closed
 [[ ! -e "$orig_support/discovery.json" && ! -L "$orig_support/discovery.json" ]]
+# Agent SDK overlay (optional). Off unless SV3_AGENT_SHA is set. Exactly two files, from the agent candidate mirror.
+agent_sha="${SV3_AGENT_SHA:-}"
+agent_base=b324d7c1e94713e7ae48d3d98a70db1214ef658f
+agent_mirror="$evidence/sv2a-prep/agent-candidate.git"
+site_packages="$program/versions/4b62ab1a6521/py/lib/python3.11/site-packages"
+agent_overlay="$out/agent-overlay"
+if [[ -n "$agent_sha" ]]; then
+  [[ "$agent_sha" =~ ^[a-f0-9]{40}$ ]]
+  agent_ref="${SV3_AGENT_REF:?SV3_AGENT_REF is required when SV3_AGENT_SHA is set}"
+  [[ "$agent_ref" =~ ^[A-Za-z0-9._/-]+$ && "$agent_ref" != -* ]]
+  [[ "$(git -C "$agent_mirror" rev-parse --verify --quiet "$agent_ref^{commit}")" == "$agent_sha" ]]
+  [[ "$(git -C "$agent_mirror" rev-parse --verify --quiet "$agent_base^{commit}")" == "$agent_base" ]]
+  [[ -d "$site_packages" && ! -L "$site_packages" ]]
+fi
 mkdir -m 700 "$out"
 mkdir -m 700 -p "$archive" "$launcher_cwd"
 if [[ "$profile_variant" == 1 ]]; then
@@ -238,9 +252,14 @@ combine_outputs() {
       {repetition:$rep, scenario:"S0", page_ready_ms:.s0.navigation_to_writable_ms,
        verified_head_status:.s0.verified_head.status, refusal:(if .s0.refusal then {reason:"head_busy_or_409"} else null end)}' \
       "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
-    jq -c --argjson rep "$n" '.scenarios[] as $s | $s.drags[] | . + {repetition:$rep, scenario:$s.name, warm:$s.warm, mode:$s.mode}' \
+    # Per-save timing fields come from commit-timing-summary.json (empty when the lines did not match the POSTs).
+    jq -c --argjson rep "$n" --slurpfile t "$out/rep-$n/commit-timing-summary.json" '
+      .scenarios[] as $s | $s.drags[] | . + {repetition:$rep, scenario:$s.name, warm:$s.warm, mode:$s.mode}
+      + ($t[0].per_drag[($s.name + "/" + (.index|tostring))] // {})' \
       "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
-    jq -c --argjson rep "$n" '.scenarios[] | select(.mode == "burst") | {repetition:$rep, scenario:.name, burst_summary:(.burst // null)}' \
+    jq -c --argjson rep "$n" --slurpfile t "$out/rep-$n/commit-timing-summary.json" '
+      .scenarios[] | select(.mode == "burst") | {repetition:$rep, scenario:.name,
+      burst_summary:((.burst // null) as $b | if $b == null then null else $b + ($t[0].burst[.name] // {}) end)}' \
       "$out/rep-$n/browser-sv3-measure.json" >>"$out/measurements.jsonl"
     jq -c --argjson rep "$n" '{repetition:$rep, scenario:"pack-host", pack_host_status:.status, claim_lines,
       log_growth_bytes, pgrep_pack_host_count}' "$out/rep-$n/pack-host.json" >>"$out/measurements.jsonl"
@@ -254,18 +273,21 @@ combine_outputs() {
       elif ((xs|med) <= 2000 and (xs|mx) <= 4000) then "PASS" else "FAIL" end;
     def drags: map(select(.scenario != "S0" and .scenario != "pack-host" and .burst_summary == null and .mode != "burst"));
     (["scenario","repetition","n_posts","release_to_post_ms","post_to_200_ms","200_to_saved_ms","refusals",
-      "n_drags","failed_drags","release_to_saved_ms","post_to_saved_ms","mode","notes"] | @tsv),
+     "n_drags","failed_drags","release_to_saved_ms","post_to_saved_ms","mode","notes",
+     "runtime_wall_ms","exclusive_sum_ms","exclusive_sum_over_post_to_200_pct"] | @tsv),
     (drags | group_by([.scenario, .repetition])[] | . as $g |
       [$g[0].scenario, $g[0].repetition, (map(.post_count_network // 0) | add),
        (nn(.release_to_post_ms)|med), (nn(.post_to_200_ms)|med), (nn(.response_to_saved_ms)|med),
        (map(select(.failed or (.refusal != null))) | length), length, (map(select(.failed)) | length),
-       (nn(.release_to_saved_ms)|med), (nn(.post_to_saved_ms)|med), $g[0].mode, ""] | @tsv),
+       (nn(.release_to_saved_ms)|med), (nn(.post_to_saved_ms)|med), $g[0].mode, "",
+       (nn(.runtime_wall_ms)|med), (nn(.exclusive_sum_ms)|med), (nn(.exclusive_sum_over_post_to_200_pct)|med)] | @tsv),
     (drags | group_by(.scenario)[] | . as $g | nn(.release_to_saved_ms) as $xs |
       [$g[0].scenario, "all", (map(.post_count_network // 0) | add), (nn(.release_to_post_ms)|med),
        (nn(.post_to_200_ms)|med), (nn(.response_to_saved_ms)|med), (map(select(.failed or (.refusal != null)))|length),
        length, (map(select(.failed))|length), ($xs|med), (nn(.post_to_saved_ms)|med), $g[0].mode,
        ("max_release_to_saved_ms=" + (($xs|mx)|tostring) + ";gate=" + gate($xs) +
-        " (median<=2000 and max<=4000 on release_to_saved_ms)")] | @tsv),
+        " (median<=2000 and max<=4000 on release_to_saved_ms)"),
+       (nn(.runtime_wall_ms)|med), (nn(.exclusive_sum_ms)|med), (nn(.exclusive_sum_over_post_to_200_pct)|med)] | @tsv),
     (map(select(.burst_summary != null)) | .[] | .burst_summary as $b |
       [.scenario, .repetition, ($b.n_posts // null), ($b.refusal_count // null), "", "", "",
        ($b.n_edits_made // null), ($b.failed_edits // null), ($b.last_release_to_saved_ms // null),
@@ -278,14 +300,17 @@ combine_outputs() {
         ";expected_start_s=" + (($b.expected_start_s // null)|tostring) +
         ";actual_start_s=" + (($b.actual_start_s // null)|tostring) +
         ";accepted_by_editor=" + (($b.accepted_by_editor_count // null)|tostring) +
-        ";no_post_after_settle=" + (($b.no_post_after_settle // null)|tostring))] | @tsv),
+        ";no_post_after_settle=" + (($b.no_post_after_settle // null)|tostring)),
+       ($b.runtime_wall_ms // null), ($b.exclusive_sum_ms // null), ""] | @tsv),
     (map(select(.scenario == "S0")) | .[] |
       ["S0", .repetition, 0, "", "", "", (if .refusal then 1 else 0 end), "", "", "", "", "",
-       ("page_ready_ms=" + ((.page_ready_ms // null)|tostring) + ";verified_head_status=" + ((.verified_head_status // null)|tostring))] | @tsv),
+       ("page_ready_ms=" + ((.page_ready_ms // null)|tostring) + ";verified_head_status=" + ((.verified_head_status // null)|tostring)),
+       "", "", ""] | @tsv),
     (map(select(.scenario == "pack-host")) | .[] |
       ["pack-host", .repetition, "", "", "", "", "", "", "", "", "", "",
        ("pack_host_status=" + .pack_host_status + ";claim_lines=" + (.claim_lines|tostring) +
-        ";log_growth_bytes=" + (.log_growth_bytes|tostring) + ";pgrep_pack_host_count=" + (.pgrep_pack_host_count|tostring))] | @tsv)
+        ";log_growth_bytes=" + (.log_growth_bytes|tostring) + ";pgrep_pack_host_count=" + (.pgrep_pack_host_count|tostring)),
+       "", "", ""] | @tsv)
   ' "$out/measurements.jsonl" >"$out/summary.tsv"
 }
 
@@ -324,6 +349,9 @@ cleanup() {
   if (( program_checked )); then
     python3 "$verify" inventory "$program" "$interpreter" "$out/program.after.sha256" || result=1
     cmp -s "$out/program.before.sha256" "$out/program.after.sha256" || result=1
+  fi
+  if [[ -n "$agent_sha" && -f "$out/agent-overlay.json" ]]; then
+    python3 "$verify" agent-finish "$out" "$site_packages" || result=1
   fi
   if [[ -n "$rep_dir" && -f "$rep_dir/candidate-daemon-module.json" ]]; then
     python3 "$verify" owner-exited "$rep_dir" || result=1
@@ -411,6 +439,9 @@ printf '%s\n%s\n' "$base_runtime" "$sha" >"$out/dependency-compared-shas.txt"
 git -C "$mirror" rev-parse "$sha^{tree}" >"$out/candidate-tree.txt"
 git -C "$mirror" archive --format=tar "$sha" | tar -xf - -C "$archive"
 python3 "$verify" archive "$mirror" "$sha" "$archive" "$out"
+if [[ -n "$agent_sha" ]]; then
+  python3 "$verify" agent-prepare "$agent_mirror" "$agent_base" "$agent_sha" "$agent_overlay" "$site_packages" "$out"
+fi
 python3 "$verify" inventory "$program" "$interpreter" "$out/program.before.sha256"
 program_checked=1
 boundary_snapshot before
@@ -452,6 +483,9 @@ run_repetition() {
     PYTHONPATH="$prep/overlay-guard:$archive" PYTHONDONTWRITEBYTECODE=1
     SV3_ARCHIVE="$archive" SV3_RUNTIME_SHA="$sha" SV3_SUPPORT_ROOT="$wsupport" SV3_REALM_ID="$realm"
     SV3_SOURCE_PROFILE="$src_profile" SV3_DAEMON_WITNESS="$rep_dir/candidate-daemon-module.json")
+  if [[ -n "$agent_sha" ]]; then
+    rep_env+=(SV3_AGENT_OVERLAY_DIR="$agent_overlay" SV3_AGENT_FILE_SHA256="$(jq -r .sha_env "$out/agent-overlay.json")")
+  fi
   rep_mark_pack=$(log_mark "$pack_log")
   rep_mark_runtime=$(log_mark "$runtime_log")
   rep_logs_captured=0
@@ -469,6 +503,9 @@ run_repetition() {
   jq -e --arg sha "$sha" '.ok==true and .runtime_sha==$sha' "$rep_dir/up.json" >/dev/null
   rep_published=1
   python3 "$verify" preflight "$wsupport" "$realm" "$archive" "$interpreter" "$rep_dir"
+  if [[ -n "$agent_sha" ]]; then
+    python3 "$verify" agent-preflight "$rep_dir" "$out" "$site_packages" "$agent_overlay"
+  fi
   instance=$(jq -er .instance "$rep_dir/browser-preflight.json")
   [[ -n "$instance" ]]
 
@@ -524,6 +561,8 @@ run_repetition() {
   python3 "$verify" ports-closed
   python3 "$verify" owner-exited "$rep_dir"
   log_delta "$runtime_log" "$rep_mark_runtime" "$rep_dir/runtime-log-delta.txt"
+  grep -F -- 'runtime.timeline_commit.timing' "$rep_dir/runtime-log-delta.txt" >"$rep_dir/commit-timing-lines.jsonl" || true
+  python3 "$verify" timing-match "$rep_dir"
   log_delta "$pack_log" "$rep_mark_pack" "$rep_dir/service-pack-host-delta.txt" || true
   pack_host_receipt "$rep_dir"
   rep_logs_captured=1
