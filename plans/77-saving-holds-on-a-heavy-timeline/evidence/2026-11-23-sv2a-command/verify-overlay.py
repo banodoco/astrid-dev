@@ -182,7 +182,8 @@ def owner_exited(out):
     witness = read_json(out / "candidate-daemon-module.json")
     process = Path(f"/proc/{witness['pid']}/stat")
     try:
-        start = process.read_text().rsplit(")", 1)[1].split()[19]
+        fields = process.read_text().rsplit(")", 1)[1].split()
+        start = fields[19] if fields[0] not in {"Z", "X"} else None
     except FileNotFoundError:
         start = None
     if start == witness["start"]:
@@ -236,16 +237,37 @@ def listener_pids(port):
     return sorted(owners)
 
 
+def stop_preview_listeners():
+    """Plain fallback: TERM, then KILL, whatever still listens on the preview ports 2400 and 17500."""
+    import signal
+    import time
+    for sig, tries in ((signal.SIGTERM, 100), (signal.SIGKILL, 50)):
+        pids = sorted(set(listener_pids(2400)) | set(listener_pids(17500)))
+        if not pids:
+            return
+        for pid in pids:
+            try:
+                os.kill(pid, sig)
+            except OSError:
+                pass
+        for _ in range(tries):
+            if not (listener_pids(2400) or listener_pids(17500)):
+                return
+            time.sleep(0.1)
+
+
 def preview_after(leader, out):
     # Plain record: what is still alive in the preview's group and on port 2400 after the stop. Only a live
     # listener on port 2400 fails the run; process-group ownership is not asserted.
     members = group_members(leader)
     listeners = listener_pids(2400)
+    proxy = listener_pids(17500)
     write_json(out / "preview-after.json", {"pgid": leader, "live_group_members": members,
                                             "port_2400_listener_pids": listeners,
-                                            "port_2400_closed": not listeners})
-    if listeners:
-        raise ValueError("port 2400 is still listening after stop")
+                                            "port_17500_listener_pids": proxy,
+                                            "ports_closed": not listeners and not proxy})
+    if listeners or proxy:
+        raise ValueError("port 2400 or 17500 is still listening after stop")
 
 
 def trace_verdict(trace, out):
@@ -331,6 +353,8 @@ elif action == "group-live":
     live = group_members(int(raw[0]))
     print(" ".join(str(item["pid"]) for item in live))
     sys.exit(1 if live else 0)
+elif action == "stop-preview-listeners":
+    stop_preview_listeners()
 elif action == "preview-after":
     preview_after(int(raw[0]), Path(raw[1]))
 elif action == "trace-verdict":

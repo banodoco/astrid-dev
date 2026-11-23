@@ -159,6 +159,7 @@ cleanup() {
   if [[ -n "$active" ]]; then stop_group "$active" || result=1; fi
   if [[ -n "$preview" ]]; then
     stop_group "$preview" || preview_clean=0
+    python3 "$verify" stop-preview-listeners || true
     python3 "$verify" preview-after "$preview" "$out" || preview_clean=0
   fi
   if (( launch_attempted )); then
