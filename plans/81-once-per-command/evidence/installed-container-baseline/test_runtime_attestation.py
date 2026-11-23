@@ -41,12 +41,13 @@ class ListenerEvidence(unittest.TestCase):
                 'runtime_protocol/messages/request.py': 'kind = "request"\n',
                 'astrid_runtime/__init__.py': '',
                 'astrid_runtime/cli.py': 'def main(): pass\n',
+                'packages/python/astrid_runtime_client/contract_metadata.py': 'version = 1\n',
             }
             for name, content in files.items():
                 path = repo / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(content)
-            subprocess.run(['git', '-C', str(repo), 'add', 'runtime_protocol', 'astrid_runtime'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'add', 'runtime_protocol', 'astrid_runtime', 'packages'], check=True)
             subprocess.run(['git', '-C', str(repo), '-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'fixture'], check=True)
             sha = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip()
             tree = Path(tmp) / 'tree'
@@ -54,12 +55,25 @@ class ListenerEvidence(unittest.TestCase):
             for package in ('runtime_protocol', 'astrid_runtime'):
                 shutil.copytree(repo / package, tree / package)
                 shutil.copytree(repo / package, tree / 'build/lib' / package)
+            nested = 'packages/python/astrid_runtime_client'
+            shutil.copytree(repo / nested, tree / nested)
+            shutil.copytree(repo / nested, tree / 'packages/python/build/lib/astrid_runtime_client')
             self.assertEqual(verify_runtime_tree(repo, sha, tree)['tracked_files'], len(files))
             copy = tree / 'build/lib/astrid_runtime/cli.py'
             copy.write_text('def main(): return 1\n')
             with self.assertRaisesRegex(ValueError, 'tree mismatch'):
                 verify_runtime_tree(repo, sha, tree)
             copy.write_text(files['astrid_runtime/cli.py'])
+            nested_copy = tree / 'packages/python/build/lib/astrid_runtime_client/contract_metadata.py'
+            nested_copy.write_text('version = 2\n')
+            with self.assertRaisesRegex(ValueError, 'tree mismatch'):
+                verify_runtime_tree(repo, sha, tree)
+            nested_copy.write_text(files['packages/python/astrid_runtime_client/contract_metadata.py'])
+            nested_extra = nested_copy.parent / 'extra.py'
+            nested_extra.write_text('bad = True\n')
+            with self.assertRaisesRegex(ValueError, 'untracked executable'):
+                verify_runtime_tree(repo, sha, tree)
+            nested_extra.unlink()
             (tree / 'build/lib/runtime_protocol/extra.py').write_text('bad = True\n')
             with self.assertRaisesRegex(ValueError, 'untracked executable'):
                 verify_runtime_tree(repo, sha, tree)

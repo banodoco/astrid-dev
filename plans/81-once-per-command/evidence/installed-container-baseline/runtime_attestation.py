@@ -72,12 +72,13 @@ def verify_runtime_tree(repo, sha, tree, prefix=""):
         expected = subprocess.run(['git', '-C', str(repo), 'cat-file', 'blob', oid],
                                   check=True, capture_output=True).stdout
         paths = [relative]
-        # Installer builds may leave copies of tracked source under build/lib.
-        # Only attest an existing copy against its exact pinned Git entry.
+        # A setuptools project at any source directory may leave build/lib
+        # copies. Each existing copy must match the exact pinned source entry.
         if not prefix:
-            copy = Path('build/lib') / relative
-            if (tree / copy).exists() or (tree / copy).is_symlink():
-                paths.append(str(copy))
+            for index in range(len(parts)):
+                copy = Path(*parts[:index], 'build', 'lib', *parts[index:])
+                if (tree / copy).exists() or (tree / copy).is_symlink():
+                    paths.append(str(copy))
         for candidate in paths:
             path = tree / candidate
             parent = tree
