@@ -16,6 +16,7 @@ The new `scripts/ms9_cutover_preflight.py` inspects an **exact PR-head SHA** in 
 | Mapped README, CONTRIBUTING, templates and contribution docs | Prepare exact rewrite only; do not activate until handoff | Document owner at cutover |
 | `scripts/astrid_dev.py sync` | **Retain where used for generated Markdown/vision views**; this is distinct from the historical `sync.sh` installer | Views/checks owner |
 | `sync.sh` (root script, installer documentation and old tests) | Retire only after installation destinations and replacement CLI have been qualified | MS-9 and installation owner |
+| Rollback after generated installation | The old `sync.sh` cannot automatically restore replaced generated links: disposable dry-run reports foreign-symlink conflicts. Require an owner-approved, preflighted installation-snapshot restoration strategy before D5. | MS-9 and installation owner |
 | `scripts/workstreams.py` role/shared indexes, `scripts/views.py` old generated references | Migrate the owning contracts and **preserve replacement regression oracles**; never globally replace paths in literals | MS-8/MS-9 check owner |
 | Active release briefs, packets and mailbox instructions | D5 decision by named Release Lead; no retrospective edits to active handoffs without owner custody | Release Lead |
 | Active and historic plans | Split current authority from historical receipts; preserve or revision-pin old claims | Plan owner |

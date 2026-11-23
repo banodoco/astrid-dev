@@ -48,6 +48,10 @@ def scope_for(path: str) -> str:
         return "plan-owner-review"
     if path.startswith("releases/"):
         return "release-lead-review"
+    # Disposable migration proof is test/evidence code, never a live consumer.
+    if path in {"scripts/ms9_compat_rollback.py", "scripts/ms10_extension_exercise.py",
+                "scripts/ms11_negative_matrix.py"}:
+        return "pinned-test-or-fixture"
     if path.startswith(("scripts/test_", "scripts/fixtures/", "env/tests/")):
         return "pinned-test-or-fixture"
     if path.startswith(("scripts/", ".github/", "env/", "templates/", "docs/", "vision/")) or path in (

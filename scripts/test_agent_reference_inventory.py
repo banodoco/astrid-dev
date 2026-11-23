@@ -63,6 +63,9 @@ class ReferenceInventoryTests(unittest.TestCase):
             "docs/handoffs/2026-11-10.md": "historical-evidence",
             "docs/ledger/entry.md": "historical-evidence",
             "scripts/test_workstreams.py": "pinned-test-or-fixture",
+            "scripts/ms9_compat_rollback.py": "pinned-test-or-fixture",
+            "scripts/ms10_extension_exercise.py": "pinned-test-or-fixture",
+            "scripts/ms11_negative_matrix.py": "pinned-test-or-fixture",
             ".github/workflows/docs.yml": "active-consumer",
         }
         for path, scope in expected.items():
