@@ -2,8 +2,8 @@
   "schema_version": 1,
   "release": 14,
   "agent": {
-    "sha": "868053db361e8355089d23c69b3a72fec60e7f3b",
-    "repo": "/root/codex/plan-81m/final-agent-candidate"
+    "sha": "705298cd7da2ba9c7378998b4fe5c0ee28438f81",
+    "repo": "/root/codex/plan-81m/run/final-agent-b5"
   },
   "runtime": {
     "sha": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
@@ -112,7 +112,7 @@
     }
   },
   "vibecomfy": {
-    "sha": "06ad021ffc84f4ae687b144873d3745c7297c43c"
+    "sha": "950023c8846233f0006aac100d26b76711c42515"
   },
   "lifecycle": {
     "repo": "https://github.com/banodoco/runpod-lifecycle.git",

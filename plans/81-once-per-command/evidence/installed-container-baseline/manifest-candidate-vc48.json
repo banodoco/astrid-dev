@@ -2,7 +2,8 @@
   "schema_version": 1,
   "release": 14,
   "agent": {
-    "sha": "13d328dc01638b96bf7e07308737ca380f8eaef8"
+    "sha": "b5c30e616e788308e9b6152adbc7064f2000db47",
+    "repo": "/root/codex/plan-81m/run/final-agent-b5"
   },
   "runtime": {
     "sha": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
