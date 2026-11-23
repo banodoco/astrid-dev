@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only Plan 71 C1/C2 source preflight; never touches HOLD or modifies Git."""
 import argparse
+import json
 import re
 import subprocess
 import sys
@@ -13,6 +14,7 @@ PREFIX = 'plans/71-gap-definition-reconciliation/evidence/'
 C2 = PREFIX + 'gd8-criterion-route-decisions-2026-11-22.md'
 WITNESS = PREFIX + 'gd9-c2-exact-wording-witness-matrix-2026-11-23.md'
 S5 = PREFIX + 'gd9-s5-criterion-proof-workpackets-2026-11-23.md'
+SEMANTIC_CORRECTIONS = PREFIX + 'gd9-c2-semantic-corrections-2026-11-23.json'
 ID = r'(?:AA|CA|CI|F|LS)-\d{3}-C\d{2}'
 GAPLINK = re.compile(r'\]\(\.\./\.\./vision/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)')
 PLANPATH = re.compile(r'^plans/\d{2}-[a-z0-9-]+/plan\.md$')
@@ -48,6 +50,41 @@ def raw_declaration_ids(text):
     return list(dict.fromkeys(RAW_GAP_ID.findall(gaps[0])))
 
 
+
+def corrected_c2_in_memory(text, data, frozen_reader):
+    """Fail closed against exact frozen source; never write or change historical C2."""
+    if data.get('frozen_source') != A or data.get('authority') != 'PROPOSED_AND_SOURCE_GROUNDED_NOT_OWNER_APPROVED':
+        raise AssertionError('wrong source pin or authority')
+    rules = data.get('corrections')
+    if not isinstance(rules, list) or not rules:
+        raise AssertionError('missing corrections')
+    output = text
+    seen = set()
+    for rule in rules:
+        rowid = rule['id']
+        old = rule['old']
+        replacement = rule['replacement']
+        if rowid in seen or not old.startswith(rowid + ' — ') or not replacement.startswith(rowid + ' — '):
+            raise AssertionError('duplicate row or invalid row identity')
+        seen.add(rowid)
+        source_rows = [line for line in text.splitlines() if line.startswith('| ' + rowid + ' — ')]
+        if len(source_rows) != 1 or old not in source_rows[0] or ('**' + rule['category'] + '**') not in source_rows[0]:
+            raise AssertionError('original row label/class mismatch: ' + rowid)
+        if output.count(old) != 1 or replacement == old:
+            raise AssertionError('non-unique or ineffective wording correction: ' + rowid)
+        gap = frozen_reader(rule['gap_path']).splitlines()
+        n = rule['gap_line']
+        if not isinstance(n, int) or n < 1 or n > len(gap) or rule['gap_exact'] not in gap[n - 1]:
+            raise AssertionError('frozen gap source mismatch: ' + rowid)
+        if 'plan_path' in rule:
+            plan = frozen_reader(rule['plan_path']).splitlines()
+            n = rule['plan_line']
+            if not isinstance(n, int) or n < 1 or n > len(plan) or rule['plan_exact'] not in plan[n - 1]:
+                raise AssertionError('plan-specific scope source mismatch: ' + rowid)
+        output = output.replace(old, replacement, 1)
+    return output
+
+
 def self_test():
     assert ids_in_plan('**Vision gaps:** [F-001](../../vision/gaps/F-001-example.md) (primary)') == ['F-001']
     assert ids_in_plan('**Vision gaps:** [F-008](../../vision/gaps/F-008-example.md) (primary), [F-001](../../vision/gaps/F-001-example.md) (supporting)') == ['F-008', 'F-001']
@@ -69,7 +106,28 @@ def self_test():
             pass
         else:
             raise AssertionError('malformed raw declaration accepted')
-    print('PASS parser self-test: 6 positive, 6 negative')
+    toy = {'frozen_source': A, 'authority': 'PROPOSED_AND_SOURCE_GROUNDED_NOT_OWNER_APPROVED',
+           'corrections': [{'id': 'CA-005-C03', 'old': 'CA-005-C03 — incorrect',
+                            'replacement': 'CA-005-C03 — corrected',
+                            'category': 'UNPLANNED', 'gap_path': 'gap', 'gap_line': 1,
+                            'gap_exact': 'supported'}]}
+    toy_text = '| CA-005-C03 — incorrect | **UNPLANNED** — no delivering plan |'
+    assert corrected_c2_in_memory(toy_text, toy, lambda p: 'supported') == toy_text.replace('incorrect', 'corrected')
+    for bad_text, bad_source, bad_data in (
+        ('', 'supported', toy),
+        (toy_text + '\n' + toy_text, 'supported', toy),
+        (toy_text.replace('UNPLANNED', 'PLAN_SCOPE'), 'supported', toy),
+        (toy_text, 'unrelated', toy),
+        (toy_text, 'supported', {**toy, 'frozen_source': '0' * 40}),
+    ):
+        try:
+            corrected_c2_in_memory(bad_text, bad_data, lambda p: bad_source)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('invalid semantic correction accepted')
+    print('PASS source parser/correction self-test: 7 positive, 11 negative')
+
 
 
 def audit(root, expected_head):
@@ -129,6 +187,15 @@ def audit(root, expected_head):
         for commit, plan, prefix in re.findall(r'/blob/([0-9a-f]{40})/(plans/\d{2}-[a-z0-9-]+/plan\.md)#L\d+\) `([0-9a-f]{12})`', refline):
             assert commit == A and git('rev-parse', f'{A}:{plan}').startswith(prefix), plan
     assert counts == {'PLAN_SCOPE': 47, 'SPECIFIC_EVIDENCE_MISSING': 15, 'UNPLANNED': 7}
+
+    errata = json.loads(read(head, SEMANTIC_CORRECTIONS))
+    assert errata['original_c2_blob'] == git('rev-parse', f'{head}:{C2}').strip(), 'original C2 SHA must stay byte-identical'
+    assert [x['id'] for x in errata['corrections']] == ['CA-005-C03', 'CI-003-C03'], 'unexpected semantic correction set'
+    proposed_c2 = corrected_c2_in_memory(text, errata, lambda path: read(A, path))
+    assert proposed_c2 != text and text.count('deduplicate') == 1
+    assert 'different projects from the same starting point' in proposed_c2
+    assert 'source text as action authority' in proposed_c2
+    print('PASS 2 C2 source-semantic corrections verified against frozen gap and plan, applied IN MEMORY ONLY')
 
     witness_rows = [s for s in read(head, WITNESS).splitlines() if re.match(r'^\| \[' + ID + r'\]', s)]
     assert len(witness_rows) == 69
