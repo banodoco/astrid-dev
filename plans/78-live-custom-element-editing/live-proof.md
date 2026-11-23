@@ -54,6 +54,8 @@ On the fresh isolated install, a Runtime process first resolved an existing effe
 
 ## Limits
 
+- The Lead's 23 November gate defines a blocking finding as one that breaks the headline claim (a pack installed after startup used in a mixed commit), breaks or changes an existing base test, prints a falsehood, loses user data, or crosses a decided boundary. Other findings receive an issue each and a line under the plan's limits.
+- Animation and transition discovery after startup is outside this proof and plan scope: [#1564](https://github.com/banodoco/astrid-dev/issues/1564).
 - The prompt asked for the changes “together as one edit, so they appear as one new history entry”. The proof shows the editor’s agent can deliver them as one commit when asked; it does not show that the skills alone lead an agent to choose one commit unprompted.
 
 - This is one synthetic fixture on one machine, not evidence about hosted or shared use. The final chat ran on the 40-clip fixture, not the 136-clip fixture.
