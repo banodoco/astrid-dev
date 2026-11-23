@@ -151,7 +151,7 @@ def audit(root, expected_head):
     assert changed and all(p.startswith(PREFIX) for p in changed), f'non-evidence changes: {changed}'
     assert not git('diff', '--check', A, head).strip(), 'git diff --check reported whitespace errors'
 
-    for name, ref, expected, expected_raw in (('A', A, (69, 60, 83), None), ('B', B, (77, 68, 92), 95), ('C', C, (80, 71, 96), 99)):
+    for name, ref, expected, expected_raw in (('A', A, (69, 60, 83), 85), ('B', B, (77, 68, 92), 95), ('C', C, (80, 71, 96), 99)):
         paths = [p for p in git('ls-tree', '-r', '--name-only', ref, '--', 'plans').splitlines() if PLANPATH.fullmatch(p)]
         linked, associations, raw = 0, 0, 0
         for path in paths:
@@ -166,7 +166,7 @@ def audit(root, expected_head):
             assert raw == expected_raw, f'{name} raw declaration reconstruction {raw} != {expected_raw}'
         print(f'PASS {name}: {got[0]} plans, {got[1]} linked, {got[2]} affirmative links' +
               (f', {raw} reconstructed raw declaration IDs' if expected_raw is not None else ''))
-    print('NOTE historical plans.json algorithm not recovered; B/C declaration-line reconstruction independently matches 95/99')
+    print('NOTE A/B/C unique raw declaration reconstruction = 85/95/99; original reviewer A had 83 AFFIRMATIVE, not raw; historical plans.json algorithm not recovered')
 
     text = read(head, C2)
     first = text.split('## Frozen source and historical-owner crosswalk')[0]
