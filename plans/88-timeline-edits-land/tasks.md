@@ -51,6 +51,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23: TE-1 metadata follow-up merged as `850cae55e`; verified image/video dimensions now become registry resolution and audio/video duration is retained. Candidate `b762f41a8`: new still-swap test failed before the change; focused native/swap command passed 94 (`bash ../astrid-dev/env/agent-pytest.sh -q -rA tests/editing_conformance/test_imported_media_metadata.py tests/timeline/test_occurrence_media_swap.py tests/editing_conformance/test_recipe_occurrence_media.py`), new local Runtime PNG import passed separately, and audio binding passed a focused check. Three integration cases excluded by the repository default were run explicitly and failed identically on base `cb14daac9` and candidate, so they are pre-existing; live stack read-back/render remains pending.
 
+- 2026-11-23 (Lead): Unpark TE-5’s film-shaped builder before TE-4 anchored work because the standard fixture lacks its required structures; use standard/large-shots for non-anchored swap, control and probes 5–9, and film-shaped for anchored swap, ripple and project-pack probe.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
