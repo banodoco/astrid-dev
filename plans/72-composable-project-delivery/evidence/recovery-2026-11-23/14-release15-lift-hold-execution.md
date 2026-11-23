@@ -69,6 +69,20 @@ The next authorized checkout must recheck each referenced file *and any transiti
 
 This diagnostic is **not** a release-green acceptance and is not a production regression in the Plan72 reader. It reveals that the current 09+authoring selection needs additional **shared authored data and documented link dependencies** before actual release qualification. Do not alter original `check` or golden assertions to turn the status green.
 
+### Subsequent native selection proof — historical rows solved, transitive source ownership still blocked
+
+The bounded [22-row historical-release patch](15-historical-release-row-selection.patch) is now available as **three additive, frozen-context Git hunks** for releases 14/16/17, **not** applied to real release refs. [Hosted CI 45274022639](https://github.com/banodoco/astrid-dev/actions/runs/45274022639) on exact test head `3a2925caf71f6b4081860d80812631a5cee5fc86` **COMPLETED SUCCESS**: **533/533 Python + 13/13 App**, generated views current. A new native `git apply --check`/apply on the disposable frozen worktree confirmed the *original* generic parser's **seven missing-plan-row errors before, zero after**. The patch copies source-pinned branch rows from newer canonical briefs, whose cut/state data must be owner-adjudicated before anyone uses the rows in a live historical release.
+
+The same hosted test also ran the *unaltered full repository checker* through three stages, without accepting a failed check as green:
+
+| Frozen scratch composition | Full-check exit | Actual diagnostics |
+| --- | ---: | ---: |
+| Plan72 source selection before older brief/link migration | **1** | **22** (7 release-document, 15 Plan72 links) |
+| Add 22 exact historical branch rows | **1** | **15** (Plan72 links only) |
+| Also add nine direct canonical files cited by Plan72's authored pack | **1** | **40** (new transitive links inside added skills and evidence docs) |
+
+The [exact transitive dependency record](16-source-closure-blockers.md) maps those **40 occurrences to 15 distinct absent targets**, all identified with canonical Git blobs. **No owner-approved, link-complete closure has been selected**; additional skill dependencies are likely. A broad transplant from newer main or a rewritten evidence link to sidestep the checker is **not** an approved repair. The next release writer must use an owner-approved source strategy and actually reach checker exit **0** on the real integrated head.
+
 ## 3. Future authorized handoff sequence — not commands to execute now
 
 **Step A — Lead/owner gates.** Before touching a release ref, complete G1–G5, identify one writer for each shared source, verify actual `release/15/main` and all relevant protection rules; confirm the exact scope, revision, branch cut and integration order. Record those decisions in the canonical Plan72 inputs, Release15 run board and brief, as appropriate. Do not overwrite or retarget older #1161/#1199/#1201/#1212 branches.
