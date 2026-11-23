@@ -12,6 +12,12 @@ The first cut adds scoped verified current-head reads, isolates expensive HTTP v
 
 The literal stock Runtime installed by the official path was [`3c28211f`](https://github.com/banodoco/astrid-runtime/commit/3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5), with the same tree as the release Runtime base. The repaired App comparison used generated local trial pins at App `ae3e0db03`, Agent `85278e6f`, and Runtime `8dfa96ac`. These are measured source and install identities. Final release identities are pending the ordered freeze.
 
+## First-cut scope after the 23 November reopen decision
+
+The measurements below describe the first cut **before the validation memo and prefix-read change**. The Release 15 Lead requires two changes in the first cut after the three-pair memo-miss attribution. Remember successful pure schema checks in a bounded process cache keyed by exact content and installed schema identity. Materialize the selected history and receipt prefix once for a stable isolated read while preserving the closure, authority and byte-custody checks. A new snapshot still needs its own proof.
+
+Requalify the resulting exact installed tuple. Record cold opening, restart, the legal save and at least three matched no-save reopen pairs for stock and the cut. Show per selected read how many schema checks actually ran, whether the memo hit and how often the prefix was materialized. Repeat the independent safety review and all four installed compatibility pairs. The earlier source and evidence remain the before-memo comparison. The landing order and written Lead confirmation still apply.
+
 ## Qualification checklist
 
 1. **Final frozen heads pending.** After Plans 81 and 40 land, bring each first-cut branch up to its own current `release/15/main`, regenerate any affected pins, and record the exact final source and base for each repository. Qualify that frozen set. [Release branches](../../../../releases/15.md#branches) [Lane status](../../../../releases/15/run.md)
