@@ -406,6 +406,91 @@ with patch.object(Path, "symlink_to", fail_green):
                       "roles/astrid-dev-manage/SKILL.md",
                       "shared/workstreams/astrid-dev-iterate/SKILL.md",
                   )), "old skill tree remains authoritative")
+
+            # A multi-destination install is deliberately not a transaction.
+            # Prove the actual CLI handles a second destination failure after
+            # the first is switched, then converges on retry without deleting
+            # an unrelated foreign entry in any of the three client roots.
+            roots = [scratch / "clients" / client / "skills"
+                     for client in ("claude", "codex", "agents")]
+            originals = {}
+            foreign_files = {}
+            for root in roots:
+                root.mkdir(parents=True)
+                marker = root / "unrelated-user-skill"
+                marker.write_text("UNRELATED-PRESERVE\n", encoding="utf-8")
+                foreign_files[root] = marker
+                legacy(f"legacy install {root.parent.name}", "--destination", str(root))
+                originals[root] = snapshot_links(root)
+            check(report, "all three roots begin at identical legacy link targets",
+                  all(originals[r] == legacy_links for r in roots),
+                  "15 original links in each of three disposable skill roots")
+
+            fault_code = """
+import errno
+from pathlib import Path
+from unittest.mock import patch
+from skill_installer import install_packages
+import sys
+
+roots = [Path(p) for p in sys.argv[1:]]
+later = roots[1]
+real = Path.symlink_to
+
+def fail_second(self, target, *args, **kwargs):
+    if (self.name == "package" and self.parent.parent == later
+            and Path(target).name == "astrid-dev-green"):
+        raise OSError(errno.EPERM, "injected second-client green failure")
+    return real(self, target, *args, **kwargs)
+
+with patch.object(Path, "symlink_to", fail_second):
+    try:
+        install_packages(Path.cwd().parent, roots)
+    except ValueError as exc:
+        if "previous owned link was preserved" not in str(exc):
+            raise
+        print("EXPECTED_SECOND_CLIENT_FAILURE " + str(exc))
+    else:
+        raise AssertionError("second client did not fail")
+"""
+            multi_fault = command(
+                report, "inject second destination retarget failure",
+                ["python3", "-c", fault_code, *(str(root) for root in roots)],
+                repo / "scripts", env,
+            )
+            check(report, "actual multi-client failure injected",
+                  "EXPECTED_SECOND_CLIENT_FAILURE" in multi_fault,
+                  "second client retarget was refused with old link preserved")
+            one, two, three = [snapshot_links(root) for root in roots]
+            check(report, "first destination is updated but legacy entrypoint not retired",
+                  "astrid-dev-start" in one and "astrid-dev" in one
+                  and "shared" in one and
+                  os.readlink(roots[0] / "astrid-dev-green") !=
+                  originals[roots[0]]["astrid-dev-green"],
+                  "first root has generated links while retirements are deferred")
+            check(report, "second destination keeps failed old skill and old entrypoint",
+                  two.get("astrid-dev-green") == originals[roots[1]]["astrid-dev-green"]
+                  and two.get("astrid-dev") == originals[roots[1]]["astrid-dev"],
+                  "second root retained failed original and old start")
+            check(report, "third destination untouched after second destination failure",
+                  three == originals[roots[2]], "third root has exactly its 15 old links")
+            generated("retry all three destinations", "install",
+                      *(item for root in roots for item in
+                        ("--destination", str(root))))
+            after_multi = [snapshot_links(root) for root in roots]
+            check(report, "three-client retry converges on exact generated link inventory",
+                  all(links == generated_links for links in after_multi),
+                  "all three roots now have exactly 14 expected generated symlinks")
+            check(report, "multi-client retry preserved every foreign entry",
+                  all(file.read_text(encoding="utf-8") == "UNRELATED-PRESERVE\n"
+                      for file in foreign_files.values()),
+                  "all three unrelated skill files byte-identical")
+            generated("repeat multi-client install is idempotent", "install",
+                      *(item for root in roots for item in
+                        ("--destination", str(root))))
+            check(report, "all multi-client links stable on repeat install",
+                  all(snapshot_links(root) == generated_links for root in roots),
+                  "three-root generated link targets unchanged")
         after = subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=no"],
                                         cwd=SOURCE, text=True)
         check(report, "original checkout tracked files unchanged",
