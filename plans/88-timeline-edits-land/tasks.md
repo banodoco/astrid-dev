@@ -31,6 +31,10 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - 2026-11-23: TE-2 candidate `9048fc12f` corrects the review's grown-bound provenance bypass; 44 focused tests pass and a separate bounded check accepted the correction. Integration waits on TE-1.
 - 2026-11-23: TE-1 remains blocked: its donor SDK test fixture lacks base-required session identity. The host proposed changing that new fixture but the run's direct no-fixture-edit instruction is stricter; clarification requested. No existing assertion or fixture was changed.
 
+- 23 Nov 2026: TE-1 independent review identified media type verification, selector/provenance and ordinary-edit grouping defects; candidate `4c6b9207d` addresses them with 31 focused tests passing, and the reviewer accepted the follow-up. Live swap, complete read-back and host gate remain; host owns integration of the host-authored fixture commit.
+- 23 Nov 2026: TE-3 authenticated identity probe passed for a unique pinned transcript/source/word; ambiguity refused. Refusal increment `f601acfba` passed 37 tests; full-rule work remains uncommitted and its initial no-op reflow proof fails on an inherited unrelated fixture mismatch. Latest placement and retained-transcript changes are untested.
+- 23 Nov 2026: Checkpoint requested for a revised run brief. TE-2 `9048fc12f` is pushed with 44 focused tests passing and reviewed correction; TE-1 and TE-3 branches are pushed, with uncommitted TE-3 work retained in its worktree. RN-6 remains outstanding. No tasks merged and no rented resources used.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
