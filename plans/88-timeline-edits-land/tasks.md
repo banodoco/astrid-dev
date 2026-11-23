@@ -47,6 +47,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23: TE-5 is parked until RN-6; backup `8523400fe` preserves media preparation (10 focused tests), imported fade coercion and a legacy declaration import with an exact retained transcript pin; shot word retime, real pack admission, the full builder and render remain unproved.
 
+- 2026-11-23: TE-3 merged as `cb14daac9`; on `6195c2c3b`, `bash ../astrid-dev/env/agent-pytest.sh -q -rA tests/editing_conformance/test_shot_word_retime_refusal.py tests/editing_conformance/test_commit_boundaries_d12.py tests/timeline/test_legacy_occurrence_timing_provenance.py` passed 76 tests, and 9 focused reflow golden tests passed; four final review regression cases failed before repair and passed after. Host authorized the bounded final repair without another review round; the live read-back and render remain pending RN-6, so TE-3 is not complete.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
