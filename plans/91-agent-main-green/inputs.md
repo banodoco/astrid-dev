@@ -37,7 +37,7 @@ Rejected:
 
 **Review rounds:** RS1 at most 1 round, after the safety net and the wiring, because the long tail's size decides the rest of the estimate. Final R at most 2 rounds. The owner confirms.
 
-**Run start:** Pending — no run is authorized. Next: once the owner places the plan in a release (D1) and says go, record the date, the tasks the run covers, the accountable manager session, what it may do without asking (merging its own workers' PRs into `release/<NN>/plan-87` after focused proof), and what still needs the owner's go (the required checks, quarantine entries beyond D9's cap, and landing in `release/<NN>/main`).
+**Run start:** Pending — no run is authorized. Next: once the owner places the plan in a release (D1) and says go, record the date, the tasks the run covers, the accountable manager session, what it may do without asking (merging its own workers' PRs into `release/<NN>/plan-91` after focused proof), and what still needs the owner's go (the required checks, quarantine entries beyond D9's cap, and landing in `release/<NN>/main`).
 
 ## Failure clusters, 22 November 2026
 
@@ -84,7 +84,7 @@ Grouped from the full logs of CI 45028846987 and Lanes 45028847122 at `c0ad6b54`
 
 - astrid-agent `main` at `c0ad6b54aadd21630d98bb5039613e37efe92a8f`, the published Release 14; measured above.
 - astrid-agent `release/14/plan-39` at `ab95803ce28fa51eec937b4074f5ec0f0439b98a`: the safety-net commits, taken by row (SF3a, GL, GL.1, GL.2, K0, K1a, K2/K3 Agent side), never merged whole.
-- Destination: `release/<NN>/plan-87` in astrid-agent, cut from `release/<NN>/main` (Release 15 if D1 is accepted), and in astrid-dev for this plan's records. AG-0 records the cut commits.
+- Destination: `release/<NN>/plan-91` in astrid-agent, cut from `release/<NN>/main` (Release 15 if D1 is accepted), and in astrid-dev for this plan's records. AG-0 records the cut commits.
 
 ## References
 
