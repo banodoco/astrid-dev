@@ -4,7 +4,7 @@
 
 A [loop plan](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md): four setup cards, then one standing loop card, then the review. **Routes** follow the [run contract](../../skills/shared/run-contract.md#routing-and-bindings): `N` and `X` run on Codex each bound in the run's `run.yaml` ([handover](handover.md#runyaml)). The advisor and the reviewer are roles with their own bindings, not routes: the advisor gives the strategy each round, the reviewer runs R. The loop card is run by the coordinator, who keeps the judgment and dispatches the fixes as N or X.
 
-**Plan 89 (owner decision, 23 Nov):** the Plan 75-lite cards SV-L1 to SV-L5 and the measure-and-fund loop are their own plan, [Plan 89 Heavy saves in seconds](../89-heavy-saves-in-seconds/plan.md), accountable agent this same session, branches `release/15/plan-89`; this run keeps SV-0 to SV-4 and its landing cards.
+**Plan 89 (owner decision, 23 Nov):** the Plan 75-lite cards SV-L1 to SV-L5 and the measure-and-fund loop are their own plan, Plan 89 Heavy saves in seconds (astrid-dev PR #1688), accountable agent this same session, branches `release/15/plan-89`; this run keeps SV-0 to SV-4 and its landing cards.
 
 **Task ids:** `SL-0` to `SL-9` and `R`. **Critical path:** SL-1 → SL-0 → SL-2 → SL-4 → R. SL-3 runs beside them and does not block round 1; SL-5 and the separate tooling task SL-6 are done. **Test inventory:** astrid-app `src/tools/video-editor/hooks/timelineLocalSaveHandoff.test.ts`, `src/tools/video-editor/data/external-drop-utils*` tests; astrid-agent `tests/editing_conformance/`; astrid-runtime `tests/test_v33_protected_acceptance.py`; the new `scripts/save-loop/` scripts, run live.
 
