@@ -6,6 +6,11 @@
 
 The consolidated [HOLD-to-integration execution packet](14-release15-lift-hold-execution.md) is the **single entrypoint** for pending owner decisions, protection requirements, the generic parser/branch-table and Plan72 authored-record owners, source selection, CI proof and future RS1/landing sequence. It includes the latest observed CLI / missing-AA-001 / Plan72-membership controls and distinguishes real Release13 delivery paths from Plan72's proposed Release15 enabler membership. This packet **does not lift HOLD**.
 
+## New tested migration receipts
+
+- [15 — historical release-row patch](15-historical-release-row-selection.patch): proposed three-file / 22-row additive selection, natively applied and checked in disposable Release14/16/17 records; **not authorized** to land without their record owners.
+- [16 — source-closure blockers](16-source-closure-blockers.md): original full checker 22 → 15 → 40 diagnostics as bounded source selections are added; 40 transitive links map to 15 pinned canonical files, with release source ownership still required. **Scratch checker remains RED.**
+
 ## Fixed identities
 
 | Purpose | Exact source |
