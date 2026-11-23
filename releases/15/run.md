@@ -40,6 +40,7 @@ Release 14 is published. Its last state is in `release/15/main` in all three rep
 ### Waiting on the owner
 
 - **The cut line and the headline.** The release is named for every platform and rented machines; what is running is speed and editing. The Lead recommends naming it for what will ship and moving Plans 63, 76, 18 and 39 to the next release.
+- **Plan 56: a standby Lead.** A Lead whose session stops is not covered for Release 15 yet; name a standby Lead session (the other model family) under `releases/15/lead/` ([how](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#standby-lead)), or accept that the owner restarts the Lead by hand.
 - **Starting the two new lanes:** Plan 84, and Plans 78 with 40.
 - **Plan 84's D1:** her statement that the mock-up is hers to publish, before it lands.
 - **Plan 81:** whether its new short check of the speed guard becomes a required check, when its orchestrator brings the measured duration.
@@ -89,6 +90,19 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
 Cadence and time limits are those of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md): the Orchestrator reads the mailbox and checks every open packet each hour; a Running packet with no commit or STATUS for 3 hours is resumed; one that will not load, does not reply 30 minutes after a resume, or is quiet for 6 hours is replaced from its branch head (never two writers on one branch); a Review unanswered for 4 hours is a REQUEST to the Lead and a note to the owner.
+
+### When a session goes quiet
+
+A branch, not a chat, shows health: look at the packet's branch and pull requests before judging a session. Work that has not moved is blocked by the work or by the environment (a session that cannot push, start or resume; a missing permission; CI capacity): fix an environment cause where it lives, or bring the owner the exact step, and never dispatch into the same wall again.
+
+| Who is quiet | At 2 hours | At 3 hours | At 6 hours |
+|---|---|---|---|
+| A packet session (no commit or STATUS) | The Orchestrator checks its branch and PRs and marks it "quiet" in its hourly STATUS with the last evidence; it takes no other action yet | The Orchestrator resumes the session and posts the resume on the mailbox | If the chat will not load after one reload, or gives no reply 30 minutes after the resume, or is still quiet: broken. If its branch moved in the last 30 minutes, wait. Otherwise the Orchestrator replaces it (`r15-<packet>-<n+1>`) from the branch head and last STATUS, naming that head in the first message; never two writers on one branch |
+| The Orchestrator (no STATUS on the mailbox) | The Lead checks that the Orchestrator's hourly reminder is still running and, if the session is reachable, nudges it; if not, the Lead tells the owner at once and names the manual step (open the session and say "continue") | The Lead tells the owner again, and starts no new packet itself | The Lead asks the owner to start a fresh Orchestrator from the board, which holds every session and state |
+| The Lead (no STATUS or DECISION; the Lead posts a heartbeat STATUS at least every 90 minutes) | The Orchestrator keeps its running packets going and starts nothing new that needs a Lead ruling; it tells the owner | The Orchestrator sends the owner the list of Review packets waiting and the exact REQUESTs outstanding | The owner hands the role to a standby Lead (none is named yet: see Waiting on the owner), which takes over under the same mailbox name `r15-lead` after ruling out a quiet Lead (no commit, push, PR or board edit in those hours) |
+| A Review (a submitted packet, unanswered by the Lead) | The Orchestrator tells the Lead it is waiting | At 4 hours: the Orchestrator sends a REQUEST and tells the owner | — |
+
+A message is not ACKed after two cycles: the sender sends it again. A silent mailbox is never fixed by starting a duplicate session.
 
 ### Orchestrator startup checks
 
