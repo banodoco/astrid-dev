@@ -1,0 +1,15 @@
+# Tasks — Heavy saves in seconds
+
+[Plan](plan.md) · [Inputs](inputs.md)
+
+**Task ids:** `SV-L1` to `SV-L5`, then loop cards `SV-L6` onward, and `R`. **Critical path:** Plan 77 SV-4 → SV-L1 → SV-L2 → first loop measurement → loop cards → R. **Test inventory (astrid-runtime, run unchanged):** the save run's inventory in [Plan 77's tasks](../77-saving-holds-on-a-heavy-timeline/tasks.md#save-run-fresh-run-23-november-2026), plus `tests/test_timeline_commit_execution.py` for the timing line; astrid-app `src/tools/video-editor/hooks/timelineLocalSaveHandoff.test.ts` for SV-L2. Re-check every path against the code at dispatch.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| SV-L1 Permanent stage spans and size fields on the commit timing line, on the save run's timing sink (Plan 75 FS-0) | N | Plan 77 SV-4 | `runtime_protocol/timeline_commit_execution.py` and the timing sink | One save's log line names every stage with ms and bytes; their sum is within 5% of POST-to-200 | [ ] |
+| SV-L2 Timing from the editor: gesture end, POST sent, 200, "Saved", as marks the harness reads (Plan 75 FS-1) | N | SV-L1 | astrid-app save session and harness | The four marks appear on a real save in the installed App | [ ] |
+| SV-L3 Copy and compare counters (`value_equal`, `deepcopy`, digests) equal at 3, 30 and 300 history entries (narrow Plan 75 CC-1) | N | Plan 77 SV-4 | a new Runtime test file | The test fails if any count grows with history | [ ] |
+| SV-L4 The burst test: 5 edits in 3 s and 10 in 5 s with real mouse drags, with independent checks of the final stored document and receipts; first settle why sequential saves in SV-3 run 4 showed "Saved" but failed the exact CAS or receipt assertion | N | SV-L2 | the save harness | Last edit to "Saved", commit count, and the stored document equal to the expected edits | [ ] |
+| SV-L5 Accepted history is immutable: SQLite `BEFORE UPDATE` and `BEFORE DELETE` triggers on accepted-history rows after inventorying every writer (restore, migration, retention), plus detection of an already corrupted store before it is trusted (Plan 75 CC-11; part of #1690) | X | — | the Runtime store schema and its migration | Update, delete and replacement refused; append and restore still work; a pre-corrupted fixture is detected | [ ] |
+| Loop: after SV-4 and each later card, measure installed (Plan 77 SV-3 shape); stop at median at most 2 s to "Saved" with none over 4 s; otherwise fund the largest measured residual as card `SV-L6` onward (Terra only for the subtle change) | N | SV-L1 | measurement only | Receipts and the stage table per run; [docs/speed.md](../../docs/speed.md) updated | [ ] |
+| R Independent review of SV-L5 and of each loop card that changes acceptance (at most 2 rounds) | Astra | the cards it reviews | read-only | Findings become rows `R<round>.<n>`; only accepting what should be refused, or losing a save, counts | [ ] |
