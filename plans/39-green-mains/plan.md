@@ -10,7 +10,7 @@
 
 **Estimate:** 22–31 (8–11 elapsed): phase 1 6.5, phase 2 13–21, phase 3 3.5
 
-**Waiting on:** a manager; G1 redone on `release/14/main` ([Release 14 scope](#release-14-scope)); Plan 38 for the custody tests; Plan 31 RL-1b for K4, which is Release 15's
+**Waiting on:** a manager; G1 redone on `release/14/main` ([Release 14 scope](#release-14-scope)); Plan 38 for the custody tests; Plan 31 RL-1b for K4, which is Release 15's; Release 16 for the rest of phase 4, K4 and K5 (moved from Release 15 by the owner on 23 November 2026).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
