@@ -484,3 +484,9 @@ The stock median reopen was 14.115 s. The before-memo candidate median was 34.96
 ### Startup deadline investigation
 
 The source inventory found separate deadlines on the native scan, its parent, the Agent CLI, the installer verification and the SDK caller. The local launcher waits for the CLI. The hosted editor can display a stopped Runtime while its probes continue. The Lead put deadline ownership and visible progress in the second cut. The first cut keeps the existing admission budget. Two stock harness starts stopped before navigation after a dependency cache and a trace helper checkout were removed. Both shut down safely. The repeat restored those inputs and verified the browser operator dependencies before starting. [Source inventory, ruling and stock recovery](evidence/2026-11-22-release-15/startup-timer-inventory/RESULT.md)
+
+### Repaired candidate setup
+
+The repaired source tuple restored and adopted the signed 300-clip sandbox. The first installation stopped before build and browser navigation at the operator's 25 GiB preflight with about 24.5 GiB available. Runtime shut down idle-safe and removed the owned root. The retry uses the same generated pins and the Lead-approved 20 GiB local preflight. The runner threshold was the only change. The stopped attempt supplies no browser or restart sample.
+
+The Lead is reviewing the separately written second-cut design for clean attestation and observable startup. Its source audit confirmed SQLite WAL and found no durable crash proof for sanctioned writes. [Second-cut design](evidence/2026-11-22-release-15/second-cut-design/DESIGN.md)
