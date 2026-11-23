@@ -1,0 +1,728 @@
+[
+  {
+    "stage": 0,
+    "group": "darwin native",
+    "job": 137237128682,
+    "name": "darwin native",
+    "conclusion": "failure",
+    "ids": 57,
+    "pytest": [
+      "13 failed, 44 passed, 32878 deselected, 2 warnings in 739.82s (0:12:19)"
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "windows-native-and-installer",
+    "job": 137237128715,
+    "name": "windows-native-and-installer",
+    "conclusion": "success",
+    "ids": 95,
+    "pytest": [
+      "15 passed in 9.18s",
+      "40 passed, 48 deselected in 95.32s (0:01:35)",
+      "40 passed in 48.69s",
+      "21 passed in 26.84s"
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "release wheel / Python 3.11",
+    "job": 137237128770,
+    "name": "release wheel / Python 3.11",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128783,
+    "name": "unit shard 7 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 6266,
+    "pytest": [
+      "= 223 failed, 5882 passed, 19 skipped, 26865 deselected, 2 warnings, 142 errors, 118 subtests passed in 4443.74s (1:14:03) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128796,
+    "name": "unit shard 1 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 5526,
+    "pytest": [
+      "= 47 failed, 5422 passed, 3 skipped, 27605 deselected, 60 warnings, 54 errors, 153 subtests passed in 5330.53s (1:28:50) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "fast checks",
+    "job": 137237128830,
+    "name": "fast checks",
+    "conclusion": "success",
+    "ids": 158,
+    "pytest": [
+      "157 passed, 1 deselected in 20.72s",
+      "1 passed in 0.35s"
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128837,
+    "name": "unit shard 8 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 3915,
+    "pytest": [
+      "============================== 1 passed in 0.01s ===============================",
+      "======================= 2 passed, 1 deselected in 0.01s ========================",
+      "======================= 1 passed, 1 deselected in 0.01s ========================",
+      "======================= 1 passed, 1 deselected in 0.01s ========================",
+      "============================== 1 passed in 0.01s ===============================",
+      "============================== 1 passed in 0.01s ===============================",
+      "= 77 failed, 3849 passed, 8 skipped, 29193 deselected, 2 warnings, 4 errors, 202 subtests passed in 1578.23s (0:26:18) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "boundary",
+    "job": 137237128868,
+    "name": "boundary",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128875,
+    "name": "unit shard 4 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2314,
+    "pytest": [
+      "= 32 failed, 2263 passed, 30817 deselected, 2 warnings, 19 errors in 5170.37s (1:26:10) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128876,
+    "name": "unit shard 3 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2046,
+    "pytest": [
+      "== 31 failed, 2015 passed, 31085 deselected, 2 warnings in 2146.20s (0:35:46) =="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128881,
+    "name": "unit shard 5 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2538,
+    "pytest": [
+      "= 28 failed, 2477 passed, 30593 deselected, 17 warnings, 33 errors in 1822.20s (0:30:22) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "release wheel / Python 3.12",
+    "job": 137237128909,
+    "name": "release wheel / Python 3.12",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128936,
+    "name": "unit shard 2 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 4123,
+    "pytest": [
+      "= 79 failed, 3974 passed, 19 skipped, 29008 deselected, 2 warnings, 51 errors, 26 subtests passed in 4208.95s (1:10:08) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137237128946,
+    "name": "unit shard 6 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 5517,
+    "pytest": [
+      "= 263 failed, 5254 passed, 6 skipped, 27616 deselected, 59 warnings, 25 errors, 92 subtests passed in 7137.08s (1:58:57) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "landing reference",
+    "job": 137237130396,
+    "name": "landing reference",
+    "conclusion": "skipped",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 0,
+    "group": "unit",
+    "job": 137289560615,
+    "name": "unit",
+    "conclusion": "failure",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 0,
+    "group": "installed wheel",
+    "job": 137237128483,
+    "name": "installed wheel",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": [
+      "3 passed, 56 deselected in 2.04s"
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "integration",
+    "job": 137237128560,
+    "name": "integration shard 2 / 4",
+    "conclusion": "failure",
+    "ids": 539,
+    "pytest": [
+      "= 120 failed, 131 passed, 33849 deselected, 2 warnings, 288 errors in 1456.08s (0:24:16) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "integration",
+    "job": 137237128592,
+    "name": "integration shard 4 / 4",
+    "conclusion": "failure",
+    "ids": 537,
+    "pytest": [
+      "= 93 failed, 418 passed, 33851 deselected, 2 warnings, 26 errors in 4782.78s (1:19:42) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "integration",
+    "job": 137237128641,
+    "name": "integration shard 3 / 4",
+    "conclusion": "failure",
+    "ids": 539,
+    "pytest": [
+      "= 123 failed, 294 passed, 1 skipped, 33849 deselected, 19 warnings, 121 errors in 8257.15s (2:17:37) ="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "integration",
+    "job": 137237128730,
+    "name": "integration shard 1 / 4",
+    "conclusion": "failure",
+    "ids": 539,
+    "pytest": [
+      "== 43 failed, 496 passed, 33849 deselected, 33 warnings in 1264.74s (0:21:04) =="
+    ]
+  },
+  {
+    "stage": 0,
+    "group": "opt-in",
+    "job": 137237128786,
+    "name": "opt-in",
+    "conclusion": "failure",
+    "ids": 31,
+    "pytest": [
+      "12 failed, 19 passed, 32905 deselected, 2 warnings in 192.88s (0:03:12)"
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "boundary",
+    "job": 137434090811,
+    "name": "boundary",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 1,
+    "group": "windows-native-and-installer",
+    "job": 137434091052,
+    "name": "windows-native-and-installer",
+    "conclusion": "success",
+    "ids": 95,
+    "pytest": [
+      "15 passed in 16.99s",
+      "40 passed, 48 deselected in 75.22s (0:01:15)",
+      "40 passed in 39.59s",
+      "21 passed in 24.11s"
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091053,
+    "name": "unit shard 6 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 5533,
+    "pytest": [
+      "= 259 failed, 5274 passed, 6 skipped, 27733 deselected, 59 warnings, 25 errors, 92 subtests passed in 6124.77s (1:42:04) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091071,
+    "name": "unit shard 1 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 5542,
+    "pytest": [
+      "= 47 failed, 5438 passed, 3 skipped, 27722 deselected, 60 warnings, 54 errors, 153 subtests passed in 5847.61s (1:37:27) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091085,
+    "name": "unit shard 7 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 6120,
+    "pytest": [
+      "= 226 failed, 5750 passed, 2 skipped, 27144 deselected, 2 warnings, 142 errors, 118 subtests passed in 4720.90s (1:18:40) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "release wheel / Python 3.11",
+    "job": 137434091089,
+    "name": "release wheel / Python 3.11",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091092,
+    "name": "unit shard 2 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 4146,
+    "pytest": [
+      "= 81 failed, 3995 passed, 19 skipped, 29118 deselected, 2 warnings, 51 errors, 26 subtests passed in 5277.95s (1:27:57) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091108,
+    "name": "unit shard 8 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 4130,
+    "pytest": [
+      "============================== 1 passed in 0.01s ===============================",
+      "======================= 2 passed, 1 deselected in 0.01s ========================",
+      "======================= 1 passed, 1 deselected in 0.01s ========================",
+      "======================= 1 passed, 1 deselected in 0.01s ========================",
+      "============================== 1 passed in 0.01s ===============================",
+      "============================== 1 passed in 0.01s ===============================",
+      "= 79 failed, 4045 passed, 25 skipped, 29111 deselected, 2 warnings, 4 errors, 202 subtests passed in 1951.33s (0:32:31) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091133,
+    "name": "unit shard 4 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2383,
+    "pytest": [
+      "= 32 failed, 2332 passed, 30881 deselected, 2 warnings, 19 errors in 4291.85s (1:11:31) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091145,
+    "name": "unit shard 3 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2054,
+    "pytest": [
+      "== 31 failed, 2023 passed, 31210 deselected, 2 warnings in 3703.65s (1:01:43) =="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "darwin native",
+    "job": 137434091160,
+    "name": "darwin native",
+    "conclusion": "failure",
+    "ids": 57,
+    "pytest": [
+      "14 failed, 43 passed, 33011 deselected, 2 warnings in 707.28s (0:11:47)"
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "release wheel / Python 3.12",
+    "job": 137434091161,
+    "name": "release wheel / Python 3.12",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 1,
+    "group": "fast checks",
+    "job": 137434091208,
+    "name": "fast checks",
+    "conclusion": "success",
+    "ids": 158,
+    "pytest": [
+      "157 passed, 1 deselected in 20.87s",
+      "1 passed in 0.37s"
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137434091218,
+    "name": "unit shard 5 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2466,
+    "pytest": [
+      "= 28 failed, 2405 passed, 30798 deselected, 17 warnings, 33 errors in 2229.54s (0:37:09) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "landing reference",
+    "job": 137434092179,
+    "name": "landing reference",
+    "conclusion": "skipped",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 1,
+    "group": "unit",
+    "job": 137465058864,
+    "name": "unit",
+    "conclusion": "failure",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 1,
+    "group": "integration",
+    "job": 137434101103,
+    "name": "integration shard 2 / 4",
+    "conclusion": "failure",
+    "ids": 544,
+    "pytest": [
+      "= 121 failed, 130 passed, 33992 deselected, 2 warnings, 293 errors in 1267.01s (0:21:07) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "integration",
+    "job": 137434101299,
+    "name": "integration shard 4 / 4",
+    "conclusion": "failure",
+    "ids": 541,
+    "pytest": [
+      "= 93 failed, 422 passed, 33995 deselected, 2 warnings, 26 errors in 4595.48s (1:16:35) ="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "integration",
+    "job": 137434101425,
+    "name": "integration shard 1 / 4",
+    "conclusion": "failure",
+    "ids": 544,
+    "pytest": [
+      "== 43 failed, 501 passed, 33992 deselected, 33 warnings in 1255.91s (0:20:55) =="
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "installed wheel",
+    "job": 137434101448,
+    "name": "installed wheel",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": [
+      "3 passed, 56 deselected in 2.34s"
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "opt-in",
+    "job": 137434101499,
+    "name": "opt-in",
+    "conclusion": "failure",
+    "ids": 31,
+    "pytest": [
+      "12 failed, 19 passed, 33038 deselected, 2 warnings in 140.89s (0:02:20)"
+    ]
+  },
+  {
+    "stage": 1,
+    "group": "integration",
+    "job": 137434101530,
+    "name": "integration shard 3 / 4",
+    "conclusion": "failure",
+    "ids": 544,
+    "pytest": [
+      "= 124 failed, 303 passed, 1 skipped, 33992 deselected, 20 warnings, 116 errors in 5790.67s (1:36:30) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "fast checks",
+    "job": 137468331688,
+    "name": "fast checks",
+    "conclusion": "success",
+    "ids": 158,
+    "pytest": [
+      "157 passed, 1 deselected in 25.15s",
+      "1 passed in 0.45s"
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468331944,
+    "name": "unit shard 7 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 6119,
+    "pytest": [
+      "= 226 failed, 5749 passed, 2 skipped, 27151 deselected, 2 warnings, 142 errors, 118 subtests passed in 6144.66s (1:42:24) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "release wheel / Python 3.11",
+    "job": 137468331982,
+    "name": "release wheel / Python 3.11",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468331992,
+    "name": "unit shard 8 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 4130,
+    "pytest": [
+      "============================== 1 passed in 0.01s ===============================",
+      "======================= 2 passed, 1 deselected in 0.01s ========================",
+      "======================= 1 passed, 1 deselected in 0.01s ========================",
+      "======================= 1 passed, 1 deselected in 0.01s ========================",
+      "============================== 1 passed in 0.01s ===============================",
+      "============================== 1 passed in 0.01s ===============================",
+      "= 79 failed, 4045 passed, 25 skipped, 29117 deselected, 2 warnings, 4 errors, 202 subtests passed in 2604.95s (0:43:24) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468332036,
+    "name": "unit shard 5 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2471,
+    "pytest": [
+      "= 28 failed, 2410 passed, 30799 deselected, 17 warnings, 33 errors in 1817.50s (0:30:17) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "darwin native",
+    "job": 137468332040,
+    "name": "darwin native",
+    "conclusion": "failure",
+    "ids": 57,
+    "pytest": [
+      "13 failed, 44 passed, 33017 deselected, 2 warnings in 667.90s (0:11:07)"
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "boundary",
+    "job": 137468332059,
+    "name": "boundary",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 2,
+    "group": "release wheel / Python 3.12",
+    "job": 137468332075,
+    "name": "release wheel / Python 3.12",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468332079,
+    "name": "unit shard 2 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 4150,
+    "pytest": [
+      "= 77 failed, 4003 passed, 19 skipped, 29120 deselected, 2 warnings, 51 errors, 26 subtests passed in 3686.30s (1:01:26) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468332083,
+    "name": "unit shard 6 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 5534,
+    "pytest": [
+      "= 259 failed, 5275 passed, 6 skipped, 27738 deselected, 59 warnings, 25 errors, 92 subtests passed in 7500.26s (2:05:00) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "windows-native-and-installer",
+    "job": 137468332090,
+    "name": "windows-native-and-installer",
+    "conclusion": "success",
+    "ids": 95,
+    "pytest": [
+      "15 passed in 9.33s",
+      "40 passed, 48 deselected in 95.48s (0:01:35)",
+      "40 passed in 52.02s",
+      "21 passed in 28.72s"
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468332116,
+    "name": "unit shard 1 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 5542,
+    "pytest": [
+      "= 47 failed, 5438 passed, 3 skipped, 27728 deselected, 60 warnings, 54 errors, 153 subtests passed in 4395.59s (1:13:15) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468332117,
+    "name": "unit shard 4 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2381,
+    "pytest": [
+      "= 32 failed, 2330 passed, 30889 deselected, 2 warnings, 19 errors in 4304.65s (1:11:44) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137468332217,
+    "name": "unit shard 3 / 8 (ubuntu-latest)",
+    "conclusion": "failure",
+    "ids": 2053,
+    "pytest": [
+      "== 31 failed, 2022 passed, 31217 deselected, 2 warnings in 2808.20s (0:46:48) =="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "landing reference",
+    "job": 137468333372,
+    "name": "landing reference",
+    "conclusion": "skipped",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 2,
+    "group": "unit",
+    "job": 137507843532,
+    "name": "unit",
+    "conclusion": "failure",
+    "ids": 0,
+    "pytest": []
+  },
+  {
+    "stage": 2,
+    "group": "installed wheel",
+    "job": 137468340492,
+    "name": "installed wheel",
+    "conclusion": "success",
+    "ids": 0,
+    "pytest": [
+      "3 passed, 56 deselected in 1.84s"
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "integration",
+    "job": 137468340718,
+    "name": "integration shard 2 / 4",
+    "conclusion": "failure",
+    "ids": 544,
+    "pytest": [
+      "= 120 failed, 131 passed, 33998 deselected, 2 warnings, 293 errors in 1664.01s (0:27:44) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "integration",
+    "job": 137468340834,
+    "name": "integration shard 4 / 4",
+    "conclusion": "failure",
+    "ids": 541,
+    "pytest": [
+      "= 93 failed, 422 passed, 34001 deselected, 2 warnings, 26 errors in 4663.08s (1:17:43) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "integration",
+    "job": 137468340835,
+    "name": "integration shard 1 / 4",
+    "conclusion": "failure",
+    "ids": 544,
+    "pytest": [
+      "== 44 failed, 500 passed, 33998 deselected, 33 warnings in 981.92s (0:16:21) ==="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "integration",
+    "job": 137468340847,
+    "name": "integration shard 3 / 4",
+    "conclusion": "failure",
+    "ids": 544,
+    "pytest": [
+      "= 123 failed, 304 passed, 1 skipped, 33998 deselected, 19 warnings, 116 errors in 7089.44s (1:58:09) ="
+    ]
+  },
+  {
+    "stage": 2,
+    "group": "opt-in",
+    "job": 137468340877,
+    "name": "opt-in",
+    "conclusion": "failure",
+    "ids": 31,
+    "pytest": [
+      "12 failed, 19 passed, 33044 deselected, 2 warnings in 212.24s (0:03:32)"
+    ]
+  }
+]
