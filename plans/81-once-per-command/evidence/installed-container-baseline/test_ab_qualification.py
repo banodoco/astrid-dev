@@ -6,14 +6,25 @@ from pathlib import Path
 
 from ab_summary import summarize
 
-ARMS = {"before": {}, "after": {}}
+ARMS = {"before": {}, "after": {}, "vc48": {}}
 
 
 def records(after=0.5):
     rows = []
     for group in ("same", "changed", "timeline"):
-        for arm in ARMS:
+        for arm in ("before", "after"):
             for index in ("warmup", 1, 2):
+                name = f"{group}-{arm}-{index}"
+                row = {"name": name, "group": group, "arm": arm, "ok": True,
+                       "exit_code": 0, "wall_seconds": 1.0 if arm == "before" else after,
+                       "load_before": [0.99, 0, 0], "load_after": [1.01, 0, 0]}
+                row["accepted_revision_id" if group == "timeline" else "kernel_task_id"] = name
+                if group == "timeline":
+                    row["timeline_status"] = "accepted"
+                rows.append(row)
+    for group in ("same", "changed", "timeline"):
+        for arm in ARMS:
+            for index in (("warmup", 1, 2, 3, 4, 5) if arm == "vc48" else (3, 4, 5)):
                 name = f"{group}-{arm}-{index}"
                 row = {"name": name, "group": group, "arm": arm, "ok": True,
                        "exit_code": 0, "wall_seconds": 1.0 if arm == "before" else after,
@@ -28,9 +39,37 @@ def records(after=0.5):
 class QualificationTests(unittest.TestCase):
     def summary(self, rows, threshold=1.0, **kwargs):
         with tempfile.TemporaryDirectory() as tmp:
-            result = summarize(rows, tmp, "test", threshold, ARMS, 2, quiet=True, **kwargs)
+            result = summarize(rows, tmp, "test", threshold, ARMS, 5, quiet=True, **kwargs)
             self.assertTrue((Path(tmp) / "summary-ab.json").exists())
             return result
+
+    def test_release_recipe_and_diagnostic_evidence(self):
+        for arms, samples in (({"before": {}, "after": {}}, 1),
+                              (ARMS, 1), ({"before": {}, "after": {}}, 5),
+                              (ARMS, 4), (ARMS, 6)):
+            with self.subTest(arms=arms, samples=samples), tempfile.TemporaryDirectory() as tmp:
+                rows = [r for r in records(after=0.4) if r["arm"] in arms and
+                        (r["name"].endswith("-warmup") or int(r["name"].rsplit("-", 1)[1]) <= samples)]
+                if samples == 6:
+                    for group in ("same", "changed", "timeline"):
+                        for arm in arms:
+                            row = next(r.copy() for r in rows if r["name"] == f"{group}-{arm}-5")
+                            row["name"] = f"{group}-{arm}-6"
+                            field = "accepted_revision_id" if group == "timeline" else "kernel_task_id"
+                            row[field] = row["name"]
+                            rows.append(row)
+                for row in rows:
+                    row["door_port"] = 17340
+                    identity = {"port": 17340, "address_hex": "0100007F", "socket_table": "tcp",
+                                "socket_inode": "42", "pid": 100, "start_ticks": 10, "exe": "fixture",
+                                "cwd": "fixture", "selected_version": "fixture", "manifest_shas": {},
+                                "scope": "fixture"}
+                    row["listener_before"] = row["listener_after"] = identity
+                result = summarize(rows, tmp, "diagnostic", 1.0, arms, samples, quiet=True,
+                                   require_attestation=True)
+                self.assertFalse(result["qualification"]["passed"])
+                self.assertEqual(result["records"], rows)
+                self.assertEqual(json.loads((Path(tmp) / "summary-ab.json").read_text())["records"], rows)
 
     def test_load_must_be_finite_and_below_the_actual_gate(self):
         for invalid in (1.0, 1.01, float("nan"), float("inf"), -1, True, None):

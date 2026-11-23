@@ -16,6 +16,9 @@ COMFY = os.environ["COMFY_URL"]; MEDIA = os.environ["MEDIA_PNG"]
 ARMS = json.loads(os.environ["ARMS_JSON"])   # {"before": {launcher, home, door_port, extra:[...]}, "after": {...}}
 LOAD_MAX = float(os.environ.get("LOAD_MAX", "1.0")); WAIT = float(os.environ.get("LOAD_WAIT_SECONDS", "600"))
 SAMPLES = int(os.environ.get("SAMPLES", "5"))
+ATTEST = os.environ.get("ASTRID_AB_ATTEST", "on")
+if ATTEST not in ("on", "off"):
+    sys.exit("ASTRID_AB_ATTEST must be on or off")
 SETTING = ("installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), "
            "shared 4-vCPU box, --no-wait (times Astrid up to 'task queued')")
 STAMP = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -73,7 +76,7 @@ def command(name, group, arm, args, extra=None, before_evidence=None):
     """Capture output and a durable record even when the process cannot complete."""
     started = datetime.now(timezone.utc).isoformat()
     stdout = stderr = ""; code = None; error = None
-    before, error = before_evidence if before_evidence is not None else listener_attestation(name, arm, "before")
+    before, error = before_evidence if before_evidence is not None else (listener_attestation(name, arm, "before") if ATTEST == "on" else (None, None))
     after = None; wall = 0.0
     if error is None:
         t0 = time.monotonic()
@@ -87,11 +90,12 @@ def command(name, group, arm, args, extra=None, before_evidence=None):
         except (OSError, ValueError, KeyError) as exc:
             error = f"{type(exc).__name__}: {exc}"
         wall = time.monotonic() - t0
-        after, attestation_error = listener_attestation(name, arm, "after")
-        if attestation_error:
-            error = f"{error}; {attestation_error}" if error else attestation_error
-        elif {k: v for k, v in before.items() if k != "scope"} != {k: v for k, v in after.items() if k != "scope"}:
-            error = f"{error}; listener identity changed during command" if error else "listener identity changed during command"
+        if ATTEST == "on":
+            after, attestation_error = listener_attestation(name, arm, "after")
+            if attestation_error:
+                error = f"{error}; {attestation_error}" if error else attestation_error
+            elif {k: v for k, v in before.items() if k != "scope"} != {k: v for k, v in after.items() if k != "scope"}:
+                error = f"{error}; listener identity changed during command" if error else "listener identity changed during command"
     durable_write(RAW / f"{name}.stdout", stdout)
     durable_write(RAW / f"{name}.stderr", stderr)
     parsed = None
@@ -135,7 +139,7 @@ def gated_run(name, group, arm, args):
                 try:
                     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
                     attempt += 1
-                    before_evidence = listener_attestation(name, arm, f"before-{attempt}")
+                    before_evidence = listener_attestation(name, arm, f"before-{attempt}") if ATTEST == "on" else (None, None)
                     lb = os.getloadavg()
                     if before_evidence[1] is not None or lb[0] < LOAD_MAX: break
                     fcntl.flock(lock, fcntl.LOCK_UN)
@@ -190,12 +194,13 @@ for group, make in groups:
 
 append_record({"records_complete": True, "count": len(records), "arms": list(ARMS), "samples": SAMPLES,
                "timing_receipt_schema": 1,
-               "qualification_schema": 2,
+               "qualification_schema": 2 if ATTEST == "on" else 3,
+               "attestation": ATTEST,
                "load_max": LOAD_MAX,
                "door_ports": {a: ARMS[a]["door_port"] for a in ARMS},
                "when_utc": datetime.now(timezone.utc).isoformat()})
 try:
-    summary = summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, require_attestation=True)
+    summary = summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, require_attestation=ATTEST == "on", attestation=ATTEST)
 except Exception as exc:   # the records are already on disk; never lose a run to the summary step
     print(f"SUMMARY FAILED ({type(exc).__name__}: {exc}); records are in {OUT / 'records.jsonl'}; rebuild with: python3 {Path(__file__).resolve().parent}/ab_summary.py {OUT}", file=sys.stderr)
     sys.exit(4)

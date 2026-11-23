@@ -12,8 +12,13 @@
 # Only candidate arms (after, vc48) run `generate` with --timings; the before build cannot. This difference affects comparisons.
 set -euo pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-: "${ASTRID_RUNTIME_SOURCE_REPO:?set ASTRID_RUNTIME_SOURCE_REPO to a local Runtime Git repository containing each manifest commit}"
-git -C "$ASTRID_RUNTIME_SOURCE_REPO" rev-parse --git-dir >/dev/null || { echo "FAIL: ASTRID_RUNTIME_SOURCE_REPO is not a Git repository" >&2; exit 1; }
+ASTRID_AB_ATTEST=${ASTRID_AB_ATTEST-on}
+case "$ASTRID_AB_ATTEST" in on|off) ;; *) echo "FAIL: ASTRID_AB_ATTEST must be on or off" >&2; exit 1;; esac
+export ASTRID_AB_ATTEST
+if [ "$ASTRID_AB_ATTEST" = on ]; then
+  : "${ASTRID_RUNTIME_SOURCE_REPO:?set ASTRID_RUNTIME_SOURCE_REPO to a local Runtime Git repository containing each manifest commit}"
+  git -C "$ASTRID_RUNTIME_SOURCE_REPO" rev-parse --git-dir >/dev/null || { echo "FAIL: ASTRID_RUNTIME_SOURCE_REPO is not a Git repository" >&2; exit 1; }
+fi
 source "$SCRIPT_DIR/runtime-readiness.sh"
 IB=${IB:-/root/codex/installed-baseline}
 case "$IB" in /*) ;; *) echo "IB must be an absolute path" >&2; exit 1;; esac
@@ -59,7 +64,9 @@ for k in ("agent", "runtime", "vibecomfy", "lifecycle"):
 PY
     [ $? -eq 0 ] || exit 1
     "$PROGRAM/run-astrid" --version > "$EVIDENCE_DIR/astrid-version-$arm.txt" 2>&1 || exit 1
-    python3 "$SCRIPT_DIR/runtime_attestation.py" --source "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" || exit 1
+    if [ "$ASTRID_AB_ATTEST" = on ]; then
+      python3 "$SCRIPT_DIR/runtime_attestation.py" --source "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" || exit 1
+    fi
   ) || exit 1
 done
 ( cd "$EVIDENCE_DIR"; sha256sum install.sh manifest-*.json installed-manifest-*.json > hashes.txt )
@@ -110,9 +117,11 @@ SAMPLER_START=$(python3 "$SCRIPT_DIR/process_ownership.py" capture "$SAMPLER" "$
 for arm in $ARMS; do   # start every Runtime (separate door ports); the first call after a teardown may fail once
   ( arm_env "$arm" && runtime_ready "$PROGRAM/run-astrid" "$arm" "$EVIDENCE_DIR/runtime-ready-$arm.log" ) || exit 1
 done
-for arm in $ARMS; do
-  ( arm_env "$arm" && python3 "$SCRIPT_DIR/runtime_attestation.py" "$DOOR" "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" "$EVIDENCE_DIR/runtime-listener-$arm.json" ) || exit 1
-done
+if [ "$ASTRID_AB_ATTEST" = on ]; then
+  for arm in $ARMS; do
+    ( arm_env "$arm" && python3 "$SCRIPT_DIR/runtime_attestation.py" "$DOOR" "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" "$EVIDENCE_DIR/runtime-listener-$arm.json" ) || exit 1
+  done
+fi
 cp "$SCRIPT_DIR/standin/media.png" "$EVIDENCE_DIR/media.png"
 
 if [ "$MODE" = prepare ]; then
@@ -121,15 +130,15 @@ if [ "$MODE" = prepare ]; then
     ( arm_env $arm; X=""
       if "$PROGRAM/run-astrid" generate image --help | grep -q -- '--timings'; then X="--timings"; echo "  $arm: generate image lists --timings: yes"; else echo "  $arm: generate image lists --timings: no"; fi
       P=prep-$arm-$STAMP
-      attest_prepare() { python3 "$SCRIPT_DIR/runtime_attestation.py" "$DOOR" "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" "$EVIDENCE_DIR/prepare-$arm-$1.json"; }
+      attest_prepare() { if [ "$ASTRID_AB_ATTEST" = on ]; then python3 "$SCRIPT_DIR/runtime_attestation.py" "$DOOR" "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" "$EVIDENCE_DIR/prepare-$arm-$1.json"; fi; }
       attest_prepare projects-before || exit 1
       "$PROGRAM/run-astrid" projects create "$P" --name "$P" --select --json >/dev/null || exit 1
       attest_prepare projects-after || exit 1
-      cmp -s "$EVIDENCE_DIR/prepare-$arm-projects-before.json" "$EVIDENCE_DIR/prepare-$arm-projects-after.json" || exit 1
+      if [ "$ASTRID_AB_ATTEST" = on ]; then cmp -s "$EVIDENCE_DIR/prepare-$arm-projects-before.json" "$EVIDENCE_DIR/prepare-$arm-projects-after.json" || exit 1; fi
       attest_prepare generate-before || exit 1
       "$PROGRAM/run-astrid" generate image "a red square" --mode t2i --placement "http://127.0.0.1:$PORT" --project $P --no-wait --json $X > "$EVIDENCE_DIR/prep-$arm.json" 2>/dev/null || exit 1
       attest_prepare generate-after || exit 1
-      cmp -s "$EVIDENCE_DIR/prepare-$arm-generate-before.json" "$EVIDENCE_DIR/prepare-$arm-generate-after.json" || exit 1
+      if [ "$ASTRID_AB_ATTEST" = on ]; then cmp -s "$EVIDENCE_DIR/prepare-$arm-generate-before.json" "$EVIDENCE_DIR/prepare-$arm-generate-after.json" || exit 1; fi
       python3 - "$EVIDENCE_DIR/prep-$arm.json" "$arm" <<'PY'
 import json, sys
 with open(sys.argv[1]) as f: d = json.load(f)
