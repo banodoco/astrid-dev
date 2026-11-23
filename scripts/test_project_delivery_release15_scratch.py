@@ -432,6 +432,83 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         )
         self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
 
+    def test_native_project_delivery_cli_on_composed_release(self):
+        # Exercise the actual user-facing read-only CLI from the temporary
+        # Release15 checkout rather than importing it from the source PR.
+        def invoke(*args):
+            return subprocess.run(
+                (sys.executable, "scripts/project_delivery.py", *args,
+                 "--root", str(self.scratch)),
+                cwd=self.scratch, text=True, capture_output=True,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                check=False,
+            )
+
+        validated = invoke("check")
+        self.assertEqual(
+            validated.returncode, 0, validated.stdout + validated.stderr
+        )
+        self.assertIn("Validated ", validated.stdout)
+        self.assertIn("typed relationships", validated.stdout)
+
+        goal = invoke(
+            "goal", "pillar:artistic-ambition/finished-artistic-work"
+        )
+        self.assertEqual(goal.returncode, 0, goal.stdout + goal.stderr)
+        self.assertIn("-> release:", goal.stdout)
+        self.assertIn("-> gap:AA-001", goal.stdout)
+        # Plan72 is an enabler; no fictional project-to-gap edge may appear.
+        self.assertNotIn("project:72", goal.stdout)
+
+        unknown_issue = invoke("issue", "999999999999")
+        self.assertEqual(
+            unknown_issue.returncode, 0,
+            unknown_issue.stdout + unknown_issue.stderr,
+        )
+        self.assertEqual(
+            unknown_issue.stdout, "",
+            "An issue absent from the frozen ledger is not shipped evidence",
+        )
+
+    def test_original_traversal_refuses_missing_canonical_gap_source(self):
+        # A genuine authored vision gap is required to construct the
+        # real source path, not simply a recognizable filename in a link.
+        gap = self.scratch / "vision/gaps/AA-001-sustained-creative-work.md"
+        canonical = gap.read_bytes()
+        self.assertEqual(
+            current_hash(canonical), "265a4fcfcf16a61b9fc0c1cde21db825e99ae0ab"
+        )
+        test_id = (
+            "test_project_delivery.DeliveryCompositionTests."
+            "test_actual_repository_delivery_traversal"
+        )
+        gap.unlink()
+        try:
+            result = subprocess.run(
+                (sys.executable, "-m", "unittest", test_id),
+                cwd=self.scratch, capture_output=True, text=True,
+                env={
+                    **os.environ,
+                    "PYTHONPATH": str(self.scratch / "scripts"),
+                    "PYTHONDONTWRITEBYTECODE": "1",
+                },
+                check=False,
+            )
+            self.assertNotEqual(
+                result.returncode, 0,
+                "Unresolved authored AA-001 was accepted as genuine source",
+            )
+            self.assertIn(
+                "AA-001", result.stderr,
+                "The failure must identify the missing authored gap",
+            )
+        finally:
+            gap.write_bytes(canonical)
+        self.assertEqual(
+            current_hash(gap.read_bytes()),
+            "265a4fcfcf16a61b9fc0c1cde21db825e99ae0ab",
+        )
+
     def test_original_traversal_fails_without_canonical_plan72_record(self):
         # Negative control: the real original traversal must fail if the
         # authored project 72 source is missing, even when the release brief
