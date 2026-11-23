@@ -25,7 +25,7 @@ On 22 November 2026 a session made about twenty edits to a film timeline of 621 
 1. Land the media-swap fix and the legacy-overrun fix on Release 15 with their missing tests.
 2. Replace the word-provenance exemption with the narrower rule both reviews asked for.
 3. Run an edit loop on a test timeline: make each kind of edit that failed, confirm it by read-back and by a render from Plan 87's stack, and fix what breaks if it belongs here.
-4. Convert the film's workarounds back: the overlay clips become in-place media swaps, and the skipped pause edit is made.
+4. Prove the film's two workarounds on a generated, rebuildable fixture: a `film-shaped` variant of the App's save-loop builder has the overlay state and word-anchored clips; the overlays convert back to in-place media swaps and a 15-frame cut after a word moves everything after it. The owner's real film is not touched.
 
 **Not in scope**
 
@@ -58,7 +58,7 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 1. TE-1 and TE-2: cherry-pick, add tests, confirm on the stack with one real swap.
 2. TE-3: the retime rule, behind decision T1.
 3. TE-4: the edit loop on the test timeline.
-4. TE-5: the film's workarounds converted back, as the last real use.
+4. TE-5: the film-shaped fixture variant, with the overlay conversion and the 15-frame cut proved on it, as the last proof and a permanent regression test.
 
 **Decisions:** none open. T1 and T2 were taken on 23 November 2026.
 
@@ -70,7 +70,7 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 
 ## Interfaces and handoff
 
-**Consumes:** Plan 87's branch and stack; the three donor commits; the heavy fixture from the App's save-loop builder (the same one Plan 87 renders); the film project with its overlay clips and their undo list ([overlay evidence](../87-render-works/evidence/overlay/FRICTION.md)).
+**Consumes:** Plan 87's branch and stack; the three donor commits; the heavy fixture from the App's save-loop builder (the same one Plan 87 renders); the film's friction evidence ([overlay evidence](../87-render-works/evidence/overlay/FRICTION.md)), which the film-shaped fixture variant reproduces on generated media.
 
 **Produces:** media replacement on shot-owned footage clips through one route; a retime rule that cannot leave a clip disagreeing with its word; a recorded edit loop with each edit's result.
 
@@ -81,6 +81,6 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 - On a build of the plan branch, the three must-pass edits land and read back exactly as intended, with a render showing each: media swap with a new still and a new video, the control re-point, and the ripple retime with narration.
 - An anchored clip moved alone is refused with the supported form named, and a dry-run reflow after the ripple moves no clip.
 - Each probe edit has a recorded result: landed, or blocked with the issue number. A blocked probe does not fail the plan.
-- The film's eleven overlay clips are gone, replaced by in-place swaps; the pause after "two million" is tightened; the film renders whole on Plan 87's stack.
+- On the film-shaped fixture: the overlay clips are gone, replaced by in-place swaps; a 15-frame cut after a word moves every later clip exactly 15 frames earlier; it renders whole on Plan 87's stack. The owner's real film is hers to clean up after the fixes ship.
 - If TE-3 can only be delivered as a refusal, the ripple edit and the pause tightening move to Plan 18 and this plan says so plainly; the rest still completes.
-- Limits: one generated fixture and one film; agents editing at the same time are probed, not covered.
+- Limits: two generated fixtures (standard and film-shaped); agents editing at the same time are probed, not covered.
