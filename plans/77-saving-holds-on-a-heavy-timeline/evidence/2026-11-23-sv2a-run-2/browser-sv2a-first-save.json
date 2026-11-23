@@ -1,0 +1,31 @@
+{
+  "mode": "candidate",
+  "tuple": {
+    "app": "148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715",
+    "agent": "5e301956dc49c8b9ba4d23a7ce96c6564bd74d2f",
+    "runtime": "5c70a11765ffee3d54652e66f998c3a0bd9493f0"
+  },
+  "runtime": {
+    "pid": 29540,
+    "start": "5271459"
+  },
+  "candidate": {
+    "runtime_sha": "5c70a11765ffee3d54652e66f998c3a0bd9493f0",
+    "pid": 29540,
+    "start": "5271459"
+  },
+  "disk_floor_bytes": 17179869184,
+  "node_time_origin": 1795445222112.267,
+  "load_1m_start": 0.99,
+  "saves": [],
+  "error_phase": "trace_witness",
+  "error_kind": "AssertionError",
+  "phase": "trace_witness",
+  "stopped": {
+    "monotonic_ms": 869.450126,
+    "epoch_ms": 1795445222981.7173
+  },
+  "profile_removed": true,
+  "timeline_commit_posts": 0,
+  "requests": []
+}
