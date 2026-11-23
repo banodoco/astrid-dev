@@ -36,7 +36,7 @@ Every save goes through the same Runtime route (`POST /v1/projects/{p}/timelines
 - **Next:** profile a warm save with #106 to see whether the verified result now survives between saves and where the remaining seconds go; then the validation step.
 - **Longer term:** a commit that costs the change, not the history: [Plan 75](../plans/75-fast-saving/plan.md) (one acceptor per timeline, 300 ms target) and history stored as summaries (#1561).
 
-**Several edits in a row:** the editor saves locally first and sends one commit at a time; edits made while a commit is in flight are gathered into the next one (measured: overlapped edits coalesce into one POST). So quick edits do not each pay a full commit: the wait is to the last "Saved", roughly the commit in flight plus one more (inferred from the overlapped runs, not yet timed for a burst of ten made faster than one commit).
+**Several edits in a row:** not yet measured. The editor saves locally first and sends one commit at a time, so edits made while a commit is in flight should be gathered into the next one rather than each paying a full commit; that is the design, not a measurement. An earlier report that overlapped drags coalesced into one commit was wrong (the drag tool accepted one drag at a time). The save run times bursts (5 edits in 3 s, 10 in 5 s: last edit to "Saved", commit count, document as expected) in its next run.
 
 ## Opening a heavy timeline
 
