@@ -49,16 +49,26 @@ def stage_table(records, arm, group):
     rows = [r["timings"] for r in records if r.get("group") == group and r.get("arm") == arm and not is_warmup(r)
             and r.get("ok") and isinstance(r.get("timings"), list)]
     names = {}
-    for t in rows:
-        for s in t:
-            if not isinstance(s, dict) or "stage" not in s: continue
-            sec = _duration(s.get("seconds"), "seconds", s["stage"])
-            # Leaf rows such as 'other command work' legitimately omit total_seconds.
-            tot = _duration(s["total_seconds"], "total_seconds", s["stage"]) if "total_seconds" in s else sec
-            names.setdefault((s["stage"], s.get("parent")), []).append((sec, tot))
-    return [{"stage": n, "parent": p, "occurrences_seen": len(v), "median_seconds": round(statistics.median(x[0] for x in v), 4),
-             "median_total_seconds": round(statistics.median(x[1] for x in v), 4)}
-            for (n, p), v in sorted(names.items(), key=lambda kv: -statistics.median(x[1] for x in kv[1]))]
+    for index, timings in enumerate(rows):
+        for stage in timings:
+            if not isinstance(stage, dict) or "stage" not in stage: continue
+            sec = _duration(stage.get("seconds"), "seconds", stage["stage"])
+            # Inclusive durations can overlap; retain them only as occurrence statistics.
+            total = _duration(stage["total_seconds"], "total_seconds", stage["stage"]) if "total_seconds" in stage else sec
+            names.setdefault((stage["stage"], stage.get("parent")), []).append((index, sec, total))
+    result = []
+    for (name, parent), occurrences in names.items():
+        command_seconds = [0.0] * len(rows)
+        command_counts = [0] * len(rows)
+        for index, seconds, _ in occurrences:
+            command_seconds[index] += seconds
+            command_counts[index] += 1
+        result.append({"stage": name, "parent": parent, "occurrences_seen": len(occurrences),
+                       "median_seconds": round(statistics.median(x[1] for x in occurrences), 4),
+                       "median_total_seconds": round(statistics.median(x[2] for x in occurrences), 4),
+                       "median_command_seconds": round(statistics.median(command_seconds), 4),
+                       "median_command_occurrences": statistics.median(command_counts)})
+    return sorted(result, key=lambda row: -row["median_command_seconds"])
 
 def validate_records(records, arms, samples, legacy_missing_collector_span=False):
     """Reject incomplete, duplicate, failed, or malformed command sets."""
@@ -86,9 +96,13 @@ def validate_records(records, arms, samples, legacy_missing_collector_span=False
     if seen != expected:
         raise ValueError(f"incomplete records: missing {sorted(expected - seen)}")
 
-def qualification(records, arms, load_max, legacy=False, require_attestation=False):
+def qualification(records, arms, samples, load_max, legacy=False, require_attestation=False):
     """Assess the fixed release gate without discarding descriptive evidence."""
     reasons = []
+    if len(arms) != 3 or set(arms) != {"before", "after", "vc48"}:
+        reasons.append("release qualification requires exactly before, after, and vc48 arms")
+    if samples != 5:
+        reasons.append("release qualification requires five measured samples per arm and group")
     if legacy or any(r.get("reconstructed") is True for r in records):
         reasons.append("historical or reconstructed evidence cannot establish the release gate")
     if (isinstance(load_max, bool) or not isinstance(load_max, (int, float))
@@ -133,7 +147,7 @@ def summarize(records, OUT, SETTING, LOAD_MAX, ARMS, SAMPLES, quiet=False, legac
     arms = list(ARMS)
     validate_records(records, arms, SAMPLES, legacy_missing_collector_span)
     summary = {"setting": SETTING, "when_utc": datetime.now(timezone.utc).isoformat(), "load_max": LOAD_MAX,
-               "qualification": qualification(records, arms, LOAD_MAX, legacy_missing_collector_span or unqualified_legacy, require_attestation),
+               "qualification": qualification(records, arms, SAMPLES, LOAD_MAX, legacy_missing_collector_span or unqualified_legacy, require_attestation),
                "arms": {a: {"launcher": v.get("launcher"), "door_port": v.get("door_port"), "generate_extra": v.get("generate_extra", [])} for a, v in ARMS.items()},
                "reconstructed": any(r.get("reconstructed") is True for r in records),
                "interpretation": "Fixed arm order and differing --timings instrumentation limit comparisons; median differences and shares do not establish causation.",
@@ -173,8 +187,8 @@ def print_summary(summary, SAMPLES):
                     "Differences do not establish causation (fixed order and differing instrumentation).")
     for arm, tabs in summary["stage_tables"].items():
         for gr, rows in tabs.items():
-            print(f"\n{arm} arm stages, {gr} (median of {SAMPLES}; top 12 by total seconds):")
-            for r in rows[:12]: print(f"  {r['median_total_seconds']:8.3f} s total  {r['median_seconds']:8.3f} s self  {r['stage']}  (in: {r['parent']})")
+            print(f"\n{arm} arm stages, {gr} (median of {SAMPLES} commands; top 12 by exclusive seconds per command):")
+            for r in rows[:12]: print(f"  {r['median_command_seconds']:8.3f} s exclusive/command  {r['median_command_occurrences']:g} occurrences/command  {r['median_seconds']:8.3f} s exclusive/occurrence  {r['stage']}  (in: {r['parent']})")
 
 def rebuild(d, legacy_missing_collector_span=False, legacy_arms=None, legacy_samples=None):
     if legacy_missing_collector_span and (legacy_arms is None or legacy_samples is None):
