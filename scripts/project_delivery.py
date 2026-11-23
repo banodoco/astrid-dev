@@ -49,6 +49,19 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
             f"directories: {root}")
     canonical_root = root.resolve()
 
+    # An empty symlinked source area may contain no files for the per-file
+    # containment check to examine; refuse escaped and dangling directories.
+    for source_name in ("vision", "vision/pillars", "vision/principles",
+                        "vision/gaps", "plans", "releases"):
+        source_area = root / source_name
+        if source_area.is_symlink():
+            if not source_area.is_dir():
+                raise RelationshipError(
+                    f"{source_name}: source directory symlink has no directory target")
+            if not source_area.resolve().is_relative_to(canonical_root):
+                raise RelationshipError(
+                    f"{source_name}: source directory resolves outside delivery root")
+
     def require_authored_source(path: Path) -> None:
         # Authored facts may be aliased within this tree but not loaded from
         # an external symlink destination masquerading as a canonical path.
