@@ -102,7 +102,7 @@ A run starts with one short message; the plan carries the rest. A long brief rep
 
    ```text
    You are accountable for Plan <PP>, <phase or tasks>: you answer for it finishing.
-   Follow the astrid-dev-manage skill. The plan is plans/<PP>-<name>/ on astrid-dev main at <sha>;
+   Follow the astrid-dev-manager skill. The plan is plans/<PP>-<name>/ on astrid-dev main at <sha>;
    start from the Run start line in inputs.md and the dispatch notes in tasks.md.
    It ships in Release <NN> (releases/<NN>.md; release manager: session <id>). Cut the plan branch
    `release/<NN>/plan-<PP>` from `release/<NN>/main` at <sha> and land work there. You may <what it may do without asking>.

@@ -14,7 +14,7 @@ The [Codex-in-Claude workstream](../../roles/orchestrator/codex-in-claude-cloud.
 2. **Sign in with the owner's ChatGPT account:** run `codex login --device-auth` and give the owner the link and code it prints. Don't ask for an OpenAI API key.
 3. **Check which model IDs this sign-in accepts:** run `codex exec -m <id> -s read-only --skip-git-repo-check 'Reply ok.'`. A ChatGPT sign-in refuses some IDs that exist elsewhere, and IDs can carry a minor version (such as `<family>-6.1-<tier>`), so check OpenAI's current Codex model list before concluding a tier is unavailable.
 4. **Check which IDs subagents accept,** which can differ from the main model's list: ask Codex to spawn a subagent with an unknown ID, and the error lists the IDs it accepts.
-5. **Install the astrid-dev skills for Codex:** `mkdir -p ~/.agents/skills && python3 <astrid-dev>/scripts/astrid_dev.py skills install --destination ~/.agents/skills`. Codex finds skills in `~/.agents/skills/` and in `.agents/skills/` under the directory it starts in. Re-copy them after astrid-dev's skills change. Leave `~/.codex` alone: it holds the sign-in.
+5. **Install the astrid-dev skills for Codex:** `mkdir -p ~/.agents/skills && python3 <astrid-dev>/scripts/astrid_dev.py skills install --destination ~/.agents/skills`. Codex finds skills in `~/.agents/skills/` and in `.agents/skills/` under the directory it starts in. Regenerate skill packages after canonical Markdown changes; installed links continue to point at the current generated packages. Leave `~/.codex` alone: it holds the sign-in.
 
 ## Use Codex for the workers under a Claude manager
 

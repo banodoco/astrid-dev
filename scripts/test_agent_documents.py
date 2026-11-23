@@ -151,6 +151,29 @@ class AgentDocumentTests(unittest.TestCase):
         problems = validate_documents(self.root)
         self.assertTrue(any("real directory" in issue for issue in problems), problems)
 
+    def test_real_repository_markdown_catalog(self):
+        root = Path(__file__).resolve().parents[1]
+        documents = discover_documents(root)
+        self.assertEqual(len(documents), 29)
+        expected = {
+            "astrid-dev-start", "astrid-dev-leader", "astrid-dev-orchestrator",
+            "astrid-dev-manager", "astrid-dev-worker", "astrid-dev-bugfix",
+            "astrid-dev-gap", "astrid-dev-gpu-validate", "astrid-dev-green",
+            "astrid-dev-improve", "astrid-dev-iterate", "astrid-dev-merge",
+            "astrid-dev-plan", "astrid-dev-release",
+        }
+        self.assertEqual({doc.skill_name for doc in documents if doc.skill}, expected)
+        self.assertEqual(validate_documents(root), [])
+
+    def test_staged_dispatch_names_canonical_manager_and_ci_checks_packages(self):
+        root = Path(__file__).resolve().parents[1]
+        orchestrator = (root / "agent/roles/orchestrator.md").read_text(encoding="utf-8")
+        self.assertIn("Follow the astrid-dev-manager skill.", orchestrator)
+        self.assertNotIn("Follow the astrid-dev-manage skill.", orchestrator)
+        workflow = (root / ".github/workflows/docs.yml").read_text(encoding="utf-8")
+        self.assertIn("python3 scripts/astrid_dev.py skills build", workflow)
+        self.assertIn("python3 scripts/astrid_dev.py skills check", workflow)
+
     def test_reject_source_symlink(self):
         original = self.write("shared/workstreams/plan.md", STREAM)
         link = self.root / "agent/shared/workstreams/other.md"
