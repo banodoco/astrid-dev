@@ -1,0 +1,2 @@
+tests/editing_conformance/test_native_word_anchor_vectors.py::test_portable_native_captures[a]
+tests/editing_conformance/test_native_word_anchor_vectors.py::test_portable_native_captures[b]
