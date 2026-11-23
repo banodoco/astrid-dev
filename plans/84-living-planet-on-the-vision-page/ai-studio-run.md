@@ -47,8 +47,9 @@ Briefs: [`packets/`](https://github.com/banodoco/planet/tree/main/packets) in th
 | ID | Outcome (short) | Depends on | State | Branch @ commit | Verdict |
 | --- | --- | --- | --- | --- | --- |
 | EX-00 | Prove the loop: import, test, build, push | — | Accepted | [`lab/EX-00` @ `883855c`](https://github.com/banodoco/planet/commit/883855cee9e94cfc93db2fcb723cb67cb935d0cf); merge `0539629c` | ACCEPT: independent checks passed |
-| RF-0 | Adjust rules and packet size to what AI Studio manages | EX-00 | | | |
-| EX-01 | Build the world without WebGL; scene fingerprint test | RF-0 | | | |
+| RF-0 | Adjust packet size to what AI Studio manages | EX-00 | Complete | [`lab/RF-0-briefs` @ `aeecdeb`](https://github.com/banodoco/planet/commit/aeecdebc48d7caaac12d323b0fc667692c97428e); merge `32f8dd63` | Add preview repair gate before EX-01 |
+| EX-00a | Preserve and gate the AI Studio preview repair | RF-0 | In progress | | Pending |
+| EX-01 | Build the world without WebGL; scene fingerprint test | EX-00a | Waiting | | |
 | EX-02 | Types, resource owner, world config modules | EX-01 | | | |
 | EX-03 | Terrain and terrain meshes | EX-02 | | | |
 | EX-04 | Mink visuals | EX-02 | | | |
@@ -79,7 +80,7 @@ Briefs: [`packets/`](https://github.com/banodoco/planet/tree/main/packets) in th
 | IN-03 | Production measurements; no planet code on Home | IN-01 | | | |
 | IN-04 | Owner's look on real devices; review; landing | IN-02, IN-03 | | | |
 
-**Estimate:** about 23 execution days plus reflection and the daily looks, and 4 integration days. RF-0 and RF-A restate it from what the first packets actually take.
+**RF-0 estimate:** 22 execution days (EX-01–EX-22), plus a short EX-00a preview repair and gate, reflections and daily looks, and 4 integration days after the owner's go. EX-00 calibrated delivery, not engine implementation time.
 
 ## How the import stays mechanical
 
@@ -140,6 +141,8 @@ Never push to the lab's main except by merging an accepted packet, never change 
 ```
 
 ## Standing rulings
+
+- On 23 November the owner asked AI Studio to remove the white fog over the planet. AI Studio changed `PublicAstridVision.css` in the session; preserve and review this separately from EX-00a. The owner has final say on its appearance.
 
 - The lab's engine invariants and file limits are in `LAB_RULES.md`; this board does not repeat them.
 - Proposal [astrid-dev#1631](https://github.com/banodoco/astrid-dev/pull/1631) is the source of the packet split; this board supersedes its satellite-lab and transfer-receipt mechanics.
