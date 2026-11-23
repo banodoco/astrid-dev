@@ -432,6 +432,150 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         )
         self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
 
+    def test_owner_gated_source_closure_rehearses_full_check(self):
+        # CONDITIONAL, scratch-only proof. Never update Release15/main or
+        # suggest the Lead has approved these historical branch records.
+        # Select only exact current-main Git blobs required by original errors,
+        # preserving the frozen briefs' original Included-plan sets.
+        import re
+
+        missing_sources = {
+            "skills/shared/workstreams/astrid-dev-plan/SKILL.md":
+                "8dbe54a4342aadf9531409d7a320e887b6bded68",
+            "skills/shared/workstreams/astrid-dev-release/SKILL.md":
+                "13e67ad00410464ca6a323adc0de9e4a1a192bd6",
+            "skills/shared/run-contract.md":
+                "71a32afa24dd913568f0855b5bd0c39cb9f73589",
+            "plans/72-composable-project-delivery/evidence/tests/astrid-dev/4b3e384/summary.md":
+                "d8f1a1a8bdc02b63e46ebdcf5ec75f36164f433e",
+            "plans/72-composable-project-delivery/evidence/tests/astrid-dev/2bef3d9b/summary.md":
+                "a6368f05e613b37c6eef5c1cb167e17e40dfdcb8",
+            "plans/72-composable-project-delivery/evidence/tests/astrid-dev/16eaf648/feed-parity.md":
+                "4090b378f32cf3293bb6477576015e78335481d0",
+            "plans/72-composable-project-delivery/evidence/tests/astrid-dev/57703432/summary.md":
+                "0f7e4bb0f3fe56e0f06920bddd290056f33df80e",
+            "plans/72-composable-project-delivery/evidence/tests/astrid-dev/915761c4/summary.md":
+                "02942215aff7c899869e5dc02fd1882409859fea",
+            "plans/72-composable-project-delivery/evidence/tests/astrid-dev/915761c4/feed-parity.md":
+                "62a92a9c1875b4a20c3087d3033c165979c1a9bf",
+        }
+        releases = {
+            "14": {
+                "frozen": "3abb990ef613c5ba8a13fa5f60130a8d6b510f8a",
+                "canonical": "957772f4048623a628438c0d10f9f276fc900465",
+                "missing_plans": ("52",),
+            },
+            "16": {
+                "frozen": "cd4fe6d0cd8f2e3a8551a9174654b99f90b9bf08",
+                "canonical": "0c15894349237d83c72720141389722478fca026",
+                "missing_plans": ("29", "30", "09", "38", "31"),
+            },
+            "17": {
+                "frozen": "6c873adba56286bb7c6f5024de7ad69372aee364",
+                "canonical": "0adcbce2fe94a36541ed873e456855316fac3fc2",
+                "missing_plans": ("19",),
+            },
+        }
+        originals = {}
+        new_files = []
+        def rows(text):
+            match = re.search(r"^## Branches\n(.+?)(?=^## |\Z)", text,
+                              re.M | re.S)
+            if not match:
+                raise AssertionError("Missing historical Branches section")
+            return [
+                line for line in match.group(1).splitlines()
+                if line.startswith("| ") and not line.startswith(
+                    ("| Repository", "| ---")
+                )
+            ]
+
+        try:
+            for number, info in releases.items():
+                path = self.scratch / "releases" / f"{number}.md"
+                original = path.read_bytes()
+                self.assertEqual(current_hash(original), info["frozen"])
+                originals[path] = original
+                old_text = original.decode("utf-8")
+                canonical = blob(info["canonical"]).decode("utf-8")
+                old_rows = rows(old_text)
+                selected = []
+                included = old_text.split("## Included plans\n", 1)[1].split(
+                    "\n## ", 1
+                )[0]
+                for plan in info["missing_plans"]:
+                    self.assertIn(f"- [Plan {int(plan)}]", included)
+                    matches = [line for line in rows(canonical)
+                               if f"| plan {plan} |" in line]
+                    self.assertTrue(matches, f"release {number}: no canonical {plan}")
+                    selected.extend(matches)
+                for repository in sorted(set(
+                    line.split("|")[1].strip() for line in selected
+                )):
+                    if not any(
+                        row.startswith(f"| {repository} | ")
+                        and " | release |" in row for row in old_rows
+                    ):
+                        release_rows = [
+                            line for line in rows(canonical)
+                            if line.startswith(f"| {repository} | ")
+                            and " | release |" in line
+                        ]
+                        self.assertEqual(len(release_rows), 1)
+                        selected.insert(0, release_rows[0])
+                self.assertEqual(len(selected), len(set(selected)))
+                self.assertFalse(any(line in old_rows for line in selected))
+                before, after = old_text.split("\n## Issues\n", 1)
+                before = before.rstrip("\n")
+                self.assertTrue(before.splitlines()[-1].startswith("|"))
+                path.write_text(
+                    before + "\n" + "\n".join(selected)
+                    + "\n\n## Issues\n" + after, encoding="utf-8"
+                )
+
+            for relative, sha in missing_sources.items():
+                dest = self.scratch / relative
+                self.assertFalse(
+                    dest.exists(), f"dependency unexpectedly already exists: {relative}"
+                )
+                contents = blob(sha)
+                self.assertEqual(current_hash(contents), sha)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                dest.write_bytes(contents)
+                new_files.append(dest)
+
+            result = subprocess.run(
+                (sys.executable, "scripts/astrid_dev.py", "check"),
+                cwd=self.scratch, text=True, capture_output=True,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                check=False,
+            )
+            errors = [line for line in result.stdout.splitlines()
+                      if line.startswith("ERROR ")]
+            for line in errors:
+                print("P72 CLOSURE CHECK ERROR: " + line)
+            print(
+                "P72 CLOSURE CANDIDATE: checker_exit="
+                + str(result.returncode) + " diagnostics=" + str(len(errors))
+                + " historical_rows=conditional deps="
+                + str(len(missing_sources))
+            )
+            self.assertEqual(
+                result.returncode, 0,
+                "Conditional historical-row and linked-source selection "
+                "still fails the original checker:\n"
+                + result.stdout + result.stderr,
+            )
+            self.assertEqual(errors, [])
+        finally:
+            for path, data in originals.items():
+                path.write_bytes(data)
+                self.assertEqual(path.read_bytes(), data)
+            for path in new_files:
+                path.unlink()
+            for path in new_files:
+                self.assertFalse(path.exists())
+
     def test_full_repository_checker_on_disposable_selected_release(self):
         # A release candidate must eventually pass its real repository check,
         # not only the relationship reader's check command. This intentionally
