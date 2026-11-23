@@ -1,7 +1,8 @@
 """Receipts and checks for the SV-3 Runtime source overlay on a copied data root.
 
 Operations: archive, inventory, prepare, preflight, postflight, owner-exited, ports-closed, stop-preview-listeners,
-preview-after. Process-group and trace proofs from SV-2a are not carried over.
+preview-after, reset-stage-timings, capture-stage-timings and timing-match. Process-group and trace proofs from SV-2a
+are not carried over.
 """
 import hashlib
 import json
@@ -11,6 +12,7 @@ import socket
 import stat
 import subprocess
 import sys
+from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
 
@@ -332,21 +334,93 @@ def audit_tree(tree, out):
     if findings:
         raise ValueError(f"link audit found {len(findings)} finding(s); see {out}")
 
+def capture_stage_timings(rep_dir, work_data, idle_safe_stop):
+    """Copy the per-copy Runtime's raw timing sink and rotations into the repetition receipt."""
+    rep, work = Path(rep_dir), Path(work_data)
+    receipt_path = rep / "timing-sink-capture.json"
+    if receipt_path.exists():
+        return read_json(receipt_path)
+    source = work / "logs/commit-stage-timings.jsonl"
+    target_dir = rep / "timing-sink"
+    names = [source.name + suffix for suffix in (".3", ".2", ".1", "")]
+    files = []
+    error = None
+    target_dir.mkdir(mode=0o700)
+    for name in names:
+        path = source.with_name(name)
+        if not path.exists() and not path.is_symlink():
+            continue
+        if path.is_symlink() or not path.is_file():
+            error = f"unsafe Runtime timing sink entry: {path}"
+            break
+        data = path.read_bytes()
+        output = target_dir / name
+        with output.open("xb") as stream:
+            stream.write(data)
+        files.append({"file": f"timing-sink/{name}", "source": str(path), "bytes": len(data),
+                      "lines": len(data.splitlines()), "sha256": hashlib.sha256(data).hexdigest()})
+    reset_receipt = read_json(rep / "timing-sink-reset.json") if (rep / "timing-sink-reset.json").is_file() else None
+    status = "error" if error else ("unscoped" if reset_receipt is None else ("captured" if files else "missing"))
+    idle_safe = idle_safe_stop is True or str(idle_safe_stop).lower() in {"1", "true", "yes"}
+    receipt = {"status": status, "runtime_work_data": str(work), "idle_safe_stop": idle_safe,
+               "captured_at_utc": datetime.now(timezone.utc).isoformat(),
+               "source_base": str(source), "files": files, "reset_receipt": reset_receipt,
+               "error": error}
+    write_json(receipt_path, receipt)
+    if error:
+        raise ValueError(error)
+    return receipt
+
+
+def reset_stage_timings(work_data, out, rep_dir):
+    """Remove only known timing sink files from the disposable work-copy before this repetition starts."""
+    work, output, rep = Path(work_data), Path(out).resolve(strict=True), Path(rep_dir)
+    if (work.is_symlink() or work.parent != output or not work.name.startswith("work-data-")
+            or work.resolve(strict=True) != work):
+        raise ValueError("timing sink reset is not scoped to a canonical repetition copy")
+    logs = work / "logs"
+    if logs.is_symlink() or (logs.exists() and (not logs.is_dir() or logs.resolve(strict=True) != logs)):
+        raise ValueError("copied Runtime logs directory is unsafe")
+    removed = []
+    names = ["commit-stage-timings.jsonl", "commit-stage-timings.jsonl.1",
+             "commit-stage-timings.jsonl.2", "commit-stage-timings.jsonl.3"]
+    if logs.exists():
+        for name in names:
+            path = logs / name
+            if not path.exists() and not path.is_symlink():
+                continue
+            if path.is_symlink() or not path.is_file() or path.resolve(strict=True) != path:
+                raise ValueError(f"unsafe copied Runtime timing sink entry: {path}")
+            path.unlink()
+            removed.append(name)
+    write_json(rep / "timing-sink-reset.json", {
+        "work_copy": str(work), "logs_directory": str(logs), "removed_known_files": removed,
+        "reset_at_utc": datetime.now(timezone.utc).isoformat(),
+        "scope": "only four known timing sink files inside the disposable work copy"})
+
+
 def timing_match(rep_dir):
-    """Pairs the Nth runtime.timeline_commit.timing line with the Nth commit POST of the repetition. If the counts differ,
-    nothing is paired and the values stay empty (recorded, not guessed). Absent keys give empty values, not a failure."""
+    """Pair raw sink JSONL records with commit POSTs and preserve each payload, including `covers` counters."""
     rep = Path(rep_dir)
     browser = read_json(rep / "browser-sv3-measure.json")
-    marker = "runtime.timeline_commit.timing "
+    capture = read_json(rep / "timing-sink-capture.json")
     lines = []
-    path = rep / "commit-timing-lines.jsonl"
-    if path.is_file():
-        for raw in path.read_text(encoding="utf-8").splitlines():
-            if marker in raw:
-                try:
-                    lines.append(json.loads(raw.split(marker, 1)[1]))
-                except ValueError:
-                    lines.append(None)
+    raw_lines = []
+    for item in capture.get("files", []):
+        path = rep / item["file"]
+        data = path.read_bytes()
+        if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]:
+            raise ValueError(f"captured Runtime timing sink changed: {path}")
+        for raw in data.decode("utf-8").splitlines():
+            raw_lines.append(raw)
+            try:
+                parsed = json.loads(raw)
+                lines.append(parsed if isinstance(parsed, dict) else None)
+            except ValueError:
+                lines.append(None)
+    with (rep / "commit-timing-lines.jsonl").open("x", encoding="utf-8") as stream:
+        for raw in raw_lines:
+            stream.write(raw + "\n")
     order = []
     for scenario in browser["scenarios"]:
         if scenario.get("mode") == "burst":
@@ -355,20 +429,29 @@ def timing_match(rep_dir):
             for drag in scenario["drags"]:
                 order.append((scenario["name"], drag["index"], drag.get("post_count_network") or 0, drag.get("post_to_200_ms")))
     total = sum(item[2] for item in order)
-    matched = len(lines) == total
-    result = {"posts": total, "lines": len(lines), "lines_matched": len(lines) if matched else 0,
+    malformed = sum(item is None for item in lines)
+    matched = capture.get("status") == "captured" and len(lines) == total and malformed == 0
+    result = {"sink_status": capture.get("status"), "sink_files": capture.get("files", []),
+              "posts": total, "lines": len(lines), "malformed_lines": malformed,
+              "lines_matched": len(lines) if matched else 0,
               "mismatch": not matched, "per_drag": {}, "burst": {}}
 
     def values(chunk, post_to_200):
         if not chunk or any(item is None for item in chunk):
-            return {"runtime_wall_ms": None, "exclusive_sum_ms": None, "exclusive_sum_over_post_to_200_pct": None}
+            return {"runtime_wall_ms": None, "exclusive_sum_ms": None,
+                    "exclusive_sum_over_post_to_200_pct": None,
+                    "covers": [item.get("covers") for item in chunk if item is not None]}
         try:
             wall = sum(float(item["runtime_wall_ms"]) for item in chunk)
             exclusive = sum(float(value) for item in chunk for value in item["exclusive_timings_ms"].values())
         except (KeyError, TypeError, ValueError, AttributeError):
-            return {"runtime_wall_ms": None, "exclusive_sum_ms": None, "exclusive_sum_over_post_to_200_pct": None}
+            return {"runtime_wall_ms": None, "exclusive_sum_ms": None,
+                    "exclusive_sum_over_post_to_200_pct": None,
+                    "covers": [item.get("covers") for item in chunk]}
         pct = exclusive / post_to_200 * 100 if post_to_200 else None
-        return {"runtime_wall_ms": wall, "exclusive_sum_ms": exclusive, "exclusive_sum_over_post_to_200_pct": pct}
+        return {"runtime_wall_ms": wall, "exclusive_sum_ms": exclusive,
+                "exclusive_sum_over_post_to_200_pct": pct,
+                "covers": [item.get("covers") for item in chunk]}
 
     if matched:
         cursor = 0
@@ -380,6 +463,69 @@ def timing_match(rep_dir):
             else:
                 result["per_drag"][f"{name}/{index}"] = values(chunk, post_to_200)
     write_json(rep / "commit-timing-summary.json", result)
+    if capture.get("status") != "captured":
+        raise ValueError(f"Runtime commit-stage timing sink is {capture.get('status')}; see timing-sink-capture.json")
+
+
+def timing_self_check(root):
+    """Off-stack synthetic proof of raw JSONL matching, per-run reset, and `covers` preservation."""
+    base = Path(root).resolve(strict=True)
+    work = base / "work-data-1"
+    logs = work / "logs"
+    logs.mkdir(parents=True)
+    for suffix in ("", ".1", ".2", ".3"):
+        (logs / f"commit-stage-timings.jsonl{suffix}").write_text('{"event":"historical"}\n')
+    (logs / "keep.log").write_text("untouched in copied data\n")
+    rep = base / "rep-1"
+    rep.mkdir()
+    reset_stage_timings(work, base, rep)
+    if any((logs / f"commit-stage-timings.jsonl{suffix}").exists() for suffix in ("", ".1", ".2", ".3")):
+        raise ValueError("self-check did not remove copied historical timing sink files")
+    if not (logs / "keep.log").is_file():
+        raise ValueError("self-check removed an unrelated copied log")
+    payloads = [
+        {"event": "timeline_commit_timing", "runtime_wall_ms": 12.5,
+         "exclusive_timings_ms": {"commit": 10.0}, "covers": {"calls": 7, "elapsed_ns": 81,
+                                                                       "value_equal_calls": 3}},
+        {"event": "timeline_commit_timing", "runtime_wall_ms": 20.0,
+         "exclusive_timings_ms": {"commit": 18.0}, "covers": {"calls": 9, "elapsed_ns": 95,
+                                                                       "value_equal_calls": 4}},
+    ]
+    sink = logs / "commit-stage-timings.jsonl"
+    raw = "".join(json.dumps(item, sort_keys=True, separators=(",", ":")) + "\n" for item in payloads)
+    sink.write_text(raw, encoding="utf-8")
+    capture_stage_timings(rep, work, True)
+    write_json(rep / "browser-sv3-measure.json", {"scenarios": [
+        {"name": "cold", "mode": "single", "drags": [{"index": 0, "post_count_network": 1,
+                                                                    "post_to_200_ms": 100.0}]},
+        {"name": "B1", "mode": "burst", "burst": {"n_posts": 1}},
+    ]})
+    timing_match(rep)
+    summary = read_json(rep / "commit-timing-summary.json")
+    copied = (rep / "commit-timing-lines.jsonl").read_text(encoding="utf-8")
+    if (summary["lines_matched"] != 2 or summary["per_drag"]["cold/0"]["covers"] != [payloads[0]["covers"]]
+            or summary["burst"]["B1"]["covers"] != [payloads[1]["covers"]] or copied != raw):
+        raise ValueError("raw timing JSONL or covers counters did not survive matching")
+
+    missing_work = base / "work-data-2"
+    missing_work.mkdir()
+    missing_rep = base / "rep-2"
+    missing_rep.mkdir()
+    reset_stage_timings(missing_work, base, missing_rep)
+    capture_stage_timings(missing_rep, missing_work, False)
+    write_json(missing_rep / "browser-sv3-measure.json", {"scenarios": []})
+    try:
+        timing_match(missing_rep)
+    except ValueError as error:
+        if "sink is missing" not in str(error):
+            raise
+    else:
+        raise ValueError("missing timing sink did not fail clearly")
+    missing = read_json(missing_rep / "commit-timing-summary.json")
+    if missing["sink_status"] != "missing" or not missing["mismatch"]:
+        raise ValueError("missing timing sink did not record its mismatch")
+    print(json.dumps({"raw_jsonl_matched": True, "covers_preserved": True,
+                      "historical_sink_cleared": True, "missing_sink_refused": True}))
 
 
 AGENT_PACKAGE = "astrid"
@@ -546,6 +692,12 @@ def agent_finish(top_out):
 action, *raw = sys.argv[1:]
 if action == "audit-tree":
     audit_tree(*raw)
+elif action == "reset-stage-timings":
+    reset_stage_timings(*raw)
+elif action == "capture-stage-timings":
+    capture_stage_timings(*raw)
+elif action == "timing-self-check":
+    timing_self_check(*raw)
 elif action == "agent-prepare":
     agent_prepare(*raw)
 elif action == "agent-preflight":

@@ -331,6 +331,13 @@ cleanup() {
     (( rep_down_ok )) || down_ok=0
     (( rep_down_ok )) && rep_running=0
   fi
+  if (( rep_copy_made )) && [[ -n "$rep_dir" && -n "$rep_work" \
+      && ! -e "$rep_dir/timing-sink-capture.json" ]]; then
+    python3 "$verify" capture-stage-timings "$rep_dir" "$rep_work" "$rep_down_ok" || result=1
+    if [[ -f "$rep_dir/browser-sv3-measure.json" ]]; then
+      python3 "$verify" timing-match "$rep_dir" || result=1
+    fi
+  fi
   if [[ -n "$browser_temp" ]]; then
     if pgrep -f -- "--user-data-dir=$browser_temp/" >/dev/null; then
       pgrep -fa -- "--user-data-dir=$browser_temp/" >"$out/chrome-residue.txt" || true
@@ -472,6 +479,8 @@ run_repetition() {
   (( $(free_kib) - copy_kib >= minimum_kib )) || { echo 'free space below 16 GiB before the work copy' >&2; return 1; }
   rep_copy_made=1
   cp -a -- "$pristine" "$rep_work"
+  # Clear only the known timing sink and rotations from this disposable copy so prior measurements cannot be counted.
+  python3 "$verify" reset-stage-timings "$rep_work" "$out" "$rep_dir"
   [[ ! -e "$wsupport/discovery.json" && ! -L "$wsupport/discovery.json" ]]
   mkdir -p -m 700 "$rep_work/chat"
   # Rebase the COPIED catalog and profile from the original data root (their data_root paths are absolute). See README.
@@ -562,9 +571,9 @@ run_repetition() {
   rep_running=0
   python3 "$verify" ports-closed
   python3 "$verify" owner-exited "$rep_dir"
-  log_delta "$runtime_log" "$rep_mark_runtime" "$rep_dir/runtime-log-delta.txt"
-  grep -F -- 'runtime.timeline_commit.timing' "$rep_dir/runtime-log-delta.txt" >"$rep_dir/commit-timing-lines.jsonl" || true
+  python3 "$verify" capture-stage-timings "$rep_dir" "$rep_work" "$rep_down_ok"
   python3 "$verify" timing-match "$rep_dir"
+  log_delta "$runtime_log" "$rep_mark_runtime" "$rep_dir/runtime-log-delta.txt"
   log_delta "$pack_log" "$rep_mark_pack" "$rep_dir/service-pack-host-delta.txt" || true
   pack_host_receipt "$rep_dir"
   rep_logs_captured=1

@@ -277,12 +277,22 @@ checked only; no candidate Runtime or Agent process has been started.
 
 ## Commit timing lines
 
-The Runtime writes one `runtime.timeline_commit.timing <json>` log line per commit (`runtime_wall_ms`,
-`exclusive_timings_ms`, sizes). `rep-N/commit-timing-lines.jsonl` keeps each line of the repetition's log delta in order.
-`timing-match` pairs the Nth line with the Nth commit POST of the repetition (the POSTs are counted per drag, and a burst
-contributes its own POSTs). If the counts differ, nothing is paired and the timing columns stay empty for that
-repetition. A line that does not parse, or a missing key, leaves only its own save empty. `commit-timing-summary.json`
-records `posts`, `lines`, `lines_matched` and `mismatch`.
+The selected Runtime writes raw JSON objects to `<work-data>/logs/commit-stage-timings.jsonl`; rotations `.1` through
+`.3` are also captured, oldest first. Before each repetition, the package removes only these four known sink files from
+the disposable work copy, after rejecting symlinks or non-regular files. This prevents historical lines copied from the
+retained data from being counted. It records that reset in `rep-N/timing-sink-reset.json`.
+
+After the daemon stops, before deleting the work copy, the package copies the sink and any rotations into
+`rep-N/timing-sink/`. The capture receipt records each path, size, line count and SHA-256, the stop status and timestamp.
+The EXIT cleanup takes the same snapshot after its stop attempt if the normal path did not reach capture; if the sink is
+missing, it records `status: missing`, writes a mismatch summary and fails clearly. If a stop attempt did not prove idle
+safe, the receipt records that and cleanup retains the work copy under the existing stop guard.
+
+`rep-N/commit-timing-lines.jsonl` preserves the raw JSON payload lines. `timing-match` parses those unprefixed objects,
+pairs the Nth line with the Nth commit POST (a burst contributes its POSTs), and reports missing/malformed/extra counts
+in `commit-timing-summary.json`. A count mismatch is recorded and leaves timing fields empty rather than guessing. Raw
+`covers` counters (`calls`, `elapsed_ns`, `value_equal_calls`) are retained in the line receipt and carried into each
+matched per-save/burst summary. `runtime_wall_ms`, `exclusive_timings_ms`, and sizes remain present in each raw object.
 
 In `summary.tsv`, the three timing columns are `runtime_wall_ms`, `exclusive_sum_ms` (the sum of the values of
 `exclusive_timings_ms`) and `exclusive_sum_over_post_to_200_pct`. The per-scenario-and-repetition rows carry the MEDIAN over
