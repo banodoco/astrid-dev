@@ -43,7 +43,9 @@ def hashes_via_links(directory: Path, names: dict[str, str]) -> dict[str, str]:
 
 
 def restore_legacy_links(directory: Path, checkout: Path, legacy: dict[str, str],
-                         generated: dict[str, str]) -> list[str]:
+                         generated: dict[str, str], *,
+                         expected_legacy_hashes: dict[str, str],
+                         expected_generated_hashes: dict[str, str]) -> list[str]:
     """Only for a disposable test root. Fail closed before touching any link.
 
     All generated names must still have exact raw targets observed after switch;
@@ -55,6 +57,12 @@ def restore_legacy_links(directory: Path, checkout: Path, legacy: dict[str, str]
         raise ValueError("restoration destination must be a real directory")
     if not legacy or not generated:
         raise ValueError("restoration snapshots must be nonempty")
+    # All original packages except reference-only "shared" have SKILL.md.
+    # Every generated package must have one. Do not infer missing hash entries.
+    if set(expected_legacy_hashes) != set(legacy) - {"shared"}:
+        raise ValueError("legacy manifest hash snapshot incomplete")
+    if set(expected_generated_hashes) != set(generated):
+        raise ValueError("generated manifest hash snapshot incomplete")
     directory, checkout = directory.resolve(), checkout.resolve()
     old_root, new_root = checkout / "skills", checkout / ".generated/skills"
     # A stale/incomplete generated-link snapshot must never permit partial
@@ -71,6 +79,13 @@ def restore_legacy_links(directory: Path, checkout: Path, legacy: dict[str, str]
         target = (directory / raw).resolve()
         if not target.is_relative_to(old_root) or not target.is_dir():
             raise ValueError(f"legacy target outside authored checkout: {name}")
+        if name in expected_legacy_hashes:
+            try:
+                current_hash = hashlib.sha256((target / "SKILL.md").read_bytes()).hexdigest()
+            except OSError as exc:
+                raise ValueError(f"legacy manifest missing before restoration: {name}") from exc
+            if current_hash != expected_legacy_hashes[name]:
+                raise ValueError(f"legacy manifest content changed: {name}")
     for name, raw in generated.items():
         if "/" in name or name in (".", ".."):
             raise ValueError(f"unsafe generated name {name!r}")
@@ -80,6 +95,12 @@ def restore_legacy_links(directory: Path, checkout: Path, legacy: dict[str, str]
         target = (directory / raw).resolve()
         if not target.is_relative_to(new_root) or not target.is_dir():
             raise ValueError(f"generated target outside owned checkout: {name}")
+        try:
+            current_hash = hashlib.sha256((target / "SKILL.md").read_bytes()).hexdigest()
+        except OSError as exc:
+            raise ValueError(f"generated manifest missing before restoration: {name}") from exc
+        if current_hash != expected_generated_hashes[name]:
+            raise ValueError(f"generated manifest content changed: {name}")
     for name in legacy:
         if name not in generated:
             dest = directory / name
@@ -194,6 +215,9 @@ def exercise(sha: str, output: Path) -> int:
             legacy("install historical packages", "--destination", str(dest))
             legacy_links = snapshot_links(dest)
             original_hashes = hashes_via_links(dest, legacy_links)
+            check(report, "legacy manifest snapshot complete",
+                  set(original_hashes) == set(legacy_links) - {"shared"},
+                  "all original package manifests recorded")
             check(report, "historical layout installed",
                   len(legacy_links) == 15 and "astrid-dev" in legacy_links
                   and "shared" in legacy_links and "astrid-dev-iterate" in legacy_links,
@@ -214,6 +238,10 @@ def exercise(sha: str, output: Path) -> int:
             generated("transition to generated packages", "install",
                       "--destination", str(dest))
             generated_links = snapshot_links(dest)
+            generated_hashes = hashes_via_links(dest, generated_links)
+            check(report, "generated manifest snapshot complete",
+                  set(generated_hashes) == set(generated_links),
+                  "all generated package manifests recorded")
             check(report, "generated destination contains expected packages",
                   len(generated_links) == 14 and "astrid-dev-start" in generated_links
                   and "astrid-dev-manager" in generated_links
@@ -246,7 +274,10 @@ def exercise(sha: str, output: Path) -> int:
             before_conflict = snapshot_links(dest)
             try:
                 try:
-                    restore_legacy_links(dest, repo, legacy_links, generated_links)
+                    restore_legacy_links(
+                        dest, repo, legacy_links, generated_links,
+                        expected_legacy_hashes=original_hashes,
+                        expected_generated_hashes=generated_hashes)
                 except ValueError as exc:
                     verify_collision = "restoration collision" in str(exc)
                 else:
@@ -258,7 +289,52 @@ def exercise(sha: str, output: Path) -> int:
             finally:
                 collision.unlink(missing_ok=True)
 
-            restore_actions = restore_legacy_links(dest, repo, legacy_links, generated_links)
+            # Reject mutated old or generated instructions while links are unchanged.
+            # Rollback source integrity is a PRE-mutation requirement.
+            old_manifest = repo / "skills/astrid-dev/SKILL.md"
+            old_original = old_manifest.read_bytes()
+            try:
+                old_manifest.write_bytes(old_original + b"\nMS9-OLD-DRIFT\n")
+                links_before = snapshot_links(dest)
+                try:
+                    restore_legacy_links(
+                        dest, repo, legacy_links, generated_links,
+                        expected_legacy_hashes=original_hashes,
+                        expected_generated_hashes=generated_hashes)
+                except ValueError as exc:
+                    old_refused = "legacy manifest content changed" in str(exc)
+                else:
+                    old_refused = False
+                check(report, "changed legacy manifest blocks rollback before mutation",
+                      old_refused and snapshot_links(dest) == links_before,
+                      "authored source hash mismatch refused without link changes")
+            finally:
+                old_manifest.write_bytes(old_original)
+
+            new_manifest = repo / ".generated/skills/astrid-dev-manager/SKILL.md"
+            new_original = new_manifest.read_bytes()
+            try:
+                new_manifest.write_bytes(new_original + b"\nMS9-NEW-DRIFT\n")
+                links_before = snapshot_links(dest)
+                try:
+                    restore_legacy_links(
+                        dest, repo, legacy_links, generated_links,
+                        expected_legacy_hashes=original_hashes,
+                        expected_generated_hashes=generated_hashes)
+                except ValueError as exc:
+                    new_refused = "generated manifest content changed" in str(exc)
+                else:
+                    new_refused = False
+                check(report, "changed generated manifest blocks rollback before mutation",
+                      new_refused and snapshot_links(dest) == links_before,
+                      "generated source hash mismatch refused without link changes")
+            finally:
+                new_manifest.write_bytes(new_original)
+
+            restore_actions = restore_legacy_links(
+                        dest, repo, legacy_links, generated_links,
+                        expected_legacy_hashes=original_hashes,
+                        expected_generated_hashes=generated_hashes)
             check(report, "all original legacy targets restored exactly",
                   snapshot_links(dest) == legacy_links,
                   {"restored": len(legacy_links), "actions": len(restore_actions)})

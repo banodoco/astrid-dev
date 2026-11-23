@@ -1,5 +1,6 @@
 """Disposable rollback policy tests; do not mutate real skill destinations."""
 import os
+import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -16,6 +17,16 @@ class RollbackPreparationTests(unittest.TestCase):
         self.new_root = self.repo / ".generated/skills/astrid-dev-manager"
         self.legacy_root.mkdir(parents=True)
         self.new_root.mkdir(parents=True)
+        (self.legacy_root / "SKILL.md").write_text("Legacy fixture\n", encoding="utf-8")
+        (self.new_root / "SKILL.md").write_text("Generated fixture\n", encoding="utf-8")
+        self.legacy_hashes = {
+            "astrid-dev": hashlib.sha256(
+                (self.legacy_root / "SKILL.md").read_bytes()).hexdigest()
+        }
+        self.generated_hashes = {
+            "astrid-dev-manager": hashlib.sha256(
+                (self.new_root / "SKILL.md").read_bytes()).hexdigest()
+        }
         self.destination = Path(self.temp.name) / "install"
         self.destination.mkdir()
         self.legacy = {"astrid-dev": str(self.legacy_root)}
@@ -23,11 +34,17 @@ class RollbackPreparationTests(unittest.TestCase):
         (self.destination / "astrid-dev-manager").symlink_to(
             self.new_root, target_is_directory=True)
 
+    def restore(self, destination, checkout, legacy, generated):
+        return restore_legacy_links(
+            destination, checkout, legacy, generated,
+            expected_legacy_hashes=self.legacy_hashes,
+            expected_generated_hashes=self.generated_hashes)
+
     def test_snapshot_and_round_trip_preserve_foreign_entry(self):
         foreign = self.destination / "other-person"
         foreign.write_text("untouched", encoding="utf-8")
         self.assertEqual(snapshot_links(self.destination), self.generated)
-        actions = restore_legacy_links(
+        actions = self.restore(
             self.destination, self.repo, self.legacy, self.generated)
         self.assertEqual(len(actions), 2)
         self.assertEqual(snapshot_links(self.destination), self.legacy)
@@ -38,7 +55,7 @@ class RollbackPreparationTests(unittest.TestCase):
         collision.write_text("foreign", encoding="utf-8")
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "restoration collision"):
-            restore_legacy_links(self.destination, self.repo, self.legacy, self.generated)
+            self.restore(self.destination, self.repo, self.legacy, self.generated)
         self.assertEqual(snapshot_links(self.destination), before)
         self.assertEqual(collision.read_text(encoding="utf-8"), "foreign")
 
@@ -50,7 +67,7 @@ class RollbackPreparationTests(unittest.TestCase):
         entry.symlink_to(foreign_dir, target_is_directory=True)
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "installed link changed"):
-            restore_legacy_links(self.destination, self.repo, self.legacy, self.generated)
+            self.restore(self.destination, self.repo, self.legacy, self.generated)
         self.assertEqual(snapshot_links(self.destination), before)
         self.assertFalse((self.destination / "astrid-dev").exists())
 
@@ -59,14 +76,14 @@ class RollbackPreparationTests(unittest.TestCase):
         Path(bad["astrid-dev"]).mkdir()
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "outside authored checkout"):
-            restore_legacy_links(self.destination, self.repo, bad, self.generated)
+            self.restore(self.destination, self.repo, bad, self.generated)
         self.assertEqual(snapshot_links(self.destination), before)
 
     def test_missing_legacy_target_does_not_erase_generated_links(self):
         self.legacy_root.rmdir()
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "outside authored checkout"):
-            restore_legacy_links(self.destination, self.repo, self.legacy, self.generated)
+            self.restore(self.destination, self.repo, self.legacy, self.generated)
         self.assertEqual(snapshot_links(self.destination), before)
 
 
@@ -77,7 +94,7 @@ class RollbackPreparationTests(unittest.TestCase):
             extra, target_is_directory=True)
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "unrecorded generated link"):
-            restore_legacy_links(
+            self.restore(
                 self.destination, self.repo, self.legacy, self.generated)
         self.assertEqual(snapshot_links(self.destination), before)
         self.assertFalse((self.destination / "astrid-dev").exists())
@@ -88,7 +105,7 @@ class RollbackPreparationTests(unittest.TestCase):
         (self.destination / "another-person").symlink_to(
             foreign, target_is_directory=True)
         before = os.readlink(self.destination / "another-person")
-        restore_legacy_links(self.destination, self.repo, self.legacy, self.generated)
+        self.restore(self.destination, self.repo, self.legacy, self.generated)
         self.assertEqual(snapshot_links(self.destination)["another-person"], before)
         self.assertTrue((self.destination / "astrid-dev").is_symlink())
 
@@ -97,7 +114,7 @@ class RollbackPreparationTests(unittest.TestCase):
         for old, new in (({}, self.generated), (self.legacy, {}), ({}, {})):
             with self.subTest(old=old, new=new):
                 with self.assertRaisesRegex(ValueError, "nonempty"):
-                    restore_legacy_links(self.destination, self.repo, old, new)
+                    self.restore(self.destination, self.repo, old, new)
                 self.assertEqual(snapshot_links(self.destination), before)
 
     def test_symlinked_destination_is_refused(self):
@@ -105,8 +122,50 @@ class RollbackPreparationTests(unittest.TestCase):
         alias.symlink_to(self.destination, target_is_directory=True)
         before = snapshot_links(self.destination)
         with self.assertRaisesRegex(ValueError, "real directory"):
-            restore_legacy_links(alias, self.repo, self.legacy, self.generated)
+            self.restore(alias, self.repo, self.legacy, self.generated)
         self.assertEqual(snapshot_links(self.destination), before)
+
+    def test_legacy_manifest_content_drift_refused_before_mutation(self):
+        (self.legacy_root / "SKILL.md").write_text("ALTERED\n", encoding="utf-8")
+        before = snapshot_links(self.destination)
+        with self.assertRaisesRegex(ValueError, "legacy manifest content changed"):
+            self.restore(self.destination, self.repo, self.legacy, self.generated)
+        self.assertEqual(snapshot_links(self.destination), before)
+
+    def test_generated_manifest_content_drift_refused_before_mutation(self):
+        (self.new_root / "SKILL.md").write_text("ALTERED\n", encoding="utf-8")
+        before = snapshot_links(self.destination)
+        with self.assertRaisesRegex(ValueError, "generated manifest content changed"):
+            self.restore(self.destination, self.repo, self.legacy, self.generated)
+        self.assertEqual(snapshot_links(self.destination), before)
+
+    def test_missing_legacy_manifest_refuses_before_mutation(self):
+        (self.legacy_root / "SKILL.md").unlink()
+        before = snapshot_links(self.destination)
+        with self.assertRaisesRegex(ValueError, "legacy manifest missing"):
+            self.restore(self.destination, self.repo, self.legacy, self.generated)
+        self.assertEqual(snapshot_links(self.destination), before)
+
+    def test_incomplete_content_hash_snapshots_fail_closed(self):
+        before = snapshot_links(self.destination)
+        for old_hashes, new_hashes in (
+            ({}, self.generated_hashes), (self.legacy_hashes, {}),
+        ):
+            with self.subTest(old_hashes=old_hashes, new_hashes=new_hashes):
+                with self.assertRaisesRegex(ValueError, "manifest hash snapshot incomplete"):
+                    restore_legacy_links(
+                        self.destination, self.repo, self.legacy, self.generated,
+                        expected_legacy_hashes=old_hashes,
+                        expected_generated_hashes=new_hashes)
+                self.assertEqual(snapshot_links(self.destination), before)
+
+    def test_shared_reference_only_legacy_folder_has_no_skill_manifest(self):
+        shared = self.repo / "skills/shared"
+        shared.mkdir(parents=True)
+        old = {**self.legacy, "shared": str(shared)}
+        self.restore(self.destination, self.repo, old, self.generated)
+        self.assertEqual(snapshot_links(self.destination), old)
+        self.assertFalse((self.destination / "shared/SKILL.md").exists())
 
 if __name__ == "__main__":
     unittest.main()
