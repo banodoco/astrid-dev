@@ -2,6 +2,14 @@
 
 Updated 23 November 2026. [Plan](plan.md) · [Tasks and proof](tasks.md) · [Authority and owner decisions](inputs.md). The hosting Orchestrator owns this run; address the Release 15 Lead through the host. The Lead controls landing after confirming its gate in writing; publication and paid resources remain with the owner.
 
+## Current state (23 November, final proof record)
+
+- Candidate: Agent `release/15/plan-78` head `64cecdae9f679537f4a6dc82e5102e53b6943ef7` (Plan 78 `c52a4ccf` with Plan 40's landing `8fdf6615` merged as `ef826edf`, and the timeline first cut `b324d7c1`). Runtime lock `737843e9cb92c565c266452dde540832ee2c745b`.
+- Hosted runs dispatched 23 November 14:55 UTC on that exact head: [CI](https://github.com/banodoco/astrid-agent/actions/runs/45199409761) and [Lanes](https://github.com/banodoco/astrid-agent/actions/runs/45199416493). Their by-test-id comparison with the baseline is **pending**.
+- Offline and SDK-path proof recorded: [live proof, final section](live-proof.md#final-proof-on-the-landing-candidate-23-november-2026); evidence in [evidence/live-proof-final](evidence/live-proof-final/README.md).
+- Not done, moved to release-freeze item RF.1 ([tasks](tasks.md)): the live online outcome checks, all negatives, the heavy 136-clip fixture, the 11.0 s still and the chat-agent step (`re-run when Codex returns`).
+- Remaining, in order: (1) the hosted CI comparison; (2) the Release Lead's gate confirmation in writing, through the host; (3) merge; (4) the App `packs` patch as a PR into astrid-app `release/15/main`, with `release` left at 15 and the guard run against published main quoted (D2 stays deferred to [#1525](https://github.com/banodoco/astrid-dev/issues/1525)); (5) the freeze item RF.1.
+
 ## Done
 
 - Agent `release/15/plan-78` is pushed at `ef826edf0f6cd9e2b6bf20abb7cae559d5d38a7f` after merging release main into reviewed head `c52a4ccf7bb6ce4ed1fd9496eaf91670b668f927`, with the F.2 symlink fix, bounded closure card and installer revert, based at `8807f820eb47d6018db723511e024a0a123fbe95`. LE-1 merged at `b491c3d4b50830292ff5af7720d1965aa5f70e6b`: one mixed commit and updated skills; 70 focused tests passed. A stale mixed request uses the existing atomic timeline guard and retry rules.
@@ -50,7 +58,7 @@ PORT=15273 VITE_ASTRID_DYNAMIC_PROXY_PORT=15274 ASTRID_APP_ACP_ENABLED=1 setsid 
 
 The launcher starts its proxy. Reopen the editor only after a restart, checking health and the saved project head first; a new page cannot establish that the original page stayed open. The original live no-restart pack probe is in `run4/report.md`, on its original Runtime process: receipt `txn-8e216465a7a14875a48b8428ef0f6765`.
 
-The second chat produced one new history row, seven clips retargeted to two admitted forks, and six titles at numeric times 10, 12, 14, 16, 18 and 20 seconds. History receipt `txn-1a909b6859274123bb4e3b592e9fb69b` points to head `authoring-parent-revision-539ca914f3ece4008c2c76179f5266a1405deaf53d5fa9961882433da8022bfc`. Prompt to history commit was 4 min 21.365 s; admission was reported within 3 min 55 s, exact time unknown. The earliest recorded after-edit DOM result was 5 min 43 s; the first after-still at 9 min 13 s is an upper bound, not first-render latency. `run8/report.md` records four same-page after-stills at 1.50, 3.50, 11.00 and 31.50 s; compare them with the before images and finalize the record with the host. The accepted receipt is in Runtime history; a separate accepted-response comparison was not captured. The four negative cases were recorded in `run2`, not repeated in this chat run. LE-4 remains open for the final-candidate repeat described above.
+The second chat produced one new history row, seven clips retargeted to two admitted forks, and six titles at numeric times 10, 12, 14, 16, 18 and 20 seconds. History receipt `txn-1a909b6859274123bb4e3b592e9fb69b` points to head `authoring-parent-revision-539ca914f3ece4008c2c76179f5266a1405deaf53d5fa9961882433da8022bfc`. Prompt to history commit was 4 min 21.365 s; admission was reported within 3 min 55 s, exact time unknown. The earliest recorded after-edit DOM result was 5 min 43 s; the first after-still at 9 min 13 s is an upper bound, not first-render latency. `run8/report.md` records four same-page after-stills at 1.50, 3.50, 11.00 and 31.50 s; compare them with the before images and finalize the record with the host. The accepted receipt is in Runtime history; a separate accepted-response comparison was not captured. The four negative cases were recorded in `run2`, not repeated in this chat run. LE-4 remained open for the final-candidate repeat described above; superseded on 23 November by the [final proof section](live-proof.md#final-proof-on-the-landing-candidate-23-november-2026), with its live part in RF.1.
 
 ## Round 3 rulings and current work (23 November)
 
@@ -67,6 +75,8 @@ The Lead initially narrowed the repairs to effect discovery and used a monotonic
 - R3.13: continuity attribution corrected in [PR 1560](https://github.com/banodoco/astrid-dev/pull/1560), merged; the gate and deferred discovery limit are in [PR 1565](https://github.com/banodoco/astrid-dev/pull/1565).
 
 ## Next, in order
+
+Superseded for LE-4 by "Current state" above; the steps below are kept as history.
 
 **Lead CI rule, 23 November:** After the Plan 78 landing merge into `release/15/main`, when its tree equals the gated head, cancel that merge’s push-triggered CI and Lanes runs; once the gate is confirmed, also cancel the landing PR’s own CI. Do not dispatch or cancel other runs under this rule.
 

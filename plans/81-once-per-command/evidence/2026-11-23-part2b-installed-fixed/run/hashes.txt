@@ -1,0 +1,3 @@
+c268a5fae7ff318414745cee7bfcec13b6d7a81434f7aaa10d218ffe28248fff  install.sh
+f83ce554a4c7e101bf8fbf89a5852dbc65dda45da621f0e91086eef4d7e0520f  manifest-after.json
+bf8d41d68620336ff624650127882baeeff7a7cd88baa389f2f89c55d351861a  installed-manifest-after.json
