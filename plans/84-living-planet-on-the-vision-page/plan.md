@@ -10,7 +10,7 @@
 
 **Estimate:** TBD after eight individually scoped scene briefs, four flight concepts and the two camera treatments are sized; the previous 18–28-day estimate only allowed for three scenes.
 
-**Waiting on:** A fresh run start, a nominated owner, verification of the shared sky/planet contract and visual approval of the first complete scene; documentation does not authorize product implementation.
+**Waiting on:** A fresh owner-authorized run start and a nominated accountable owner; ordinary visual feedback is shared without waiting, while spending, scope and release permissions remain explicit.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md); its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -57,9 +57,9 @@ The smallest sound approach is **one live vertical slice first**: real sphere + 
 | **LP-6 — Cinematic and flying-object portfolio** | Separately art-direct the entrance, exit and four flying concepts; then review the entire choreography for scale, silence, occlusion and motion | Sized per concept at art review |
 | **LP-7 — Final quality, performance and release** | Exact integrated screenshot/video proof, device/CI/accessibility results, independent review, owner look, release handoff | 2–3 d |
 
-**The two largest approval gates:** (1) LP-1: is the shared hour ↔ globe direction mathematically and interactively correct? (2) LP-3: is one complete little scene genuinely charming and visibly Astrid? It becomes the style grammar, and every later scene and flying object receives its own art verdict. Do not compensate for a failed early gate by adding more objects or effects. Timing/visual taste for polish is judged after page framing, so the intro does not dictate the camera composition.
+**The two largest internal quality gates:** (1) LP-1: is the shared hour ↔ globe direction mathematically and interactively correct? (2) LP-3: is one complete little scene genuinely charming and visibly Astrid? The manager/reviewer sets its style grammar, immediately sends the owner focused questions, and moves to the next work without waiting; each later scene and flying object receives its own creative verdict and human feedback prompt. Do not compensate for a failed early gate by adding more objects or effects. Timing/visual taste for polish is judged after page framing, so the intro does not dictate the camera composition.
 
-Use [tasks.md](tasks.md) for implementation boundaries, focused tests, asset provenance and exact go/no-go evidence. Release 15 membership is retained, but a fresh run must confirm the available release window and the correct current product branch before execution.
+Use [tasks.md](tasks.md) for implementation boundaries, focused tests, asset provenance, exact internal quality checks and the [non-blocking per-step feedback procedure](tasks.md#non-blocking-human-feedback-after-every-completed-step). After every technical or creative unit, share the result, ask 2–3 specific optional questions, then proceed with the next unblocked step. Release 15 membership is retained, but a fresh run must confirm the available release window and the correct current product branch before execution.
 
 ## Interfaces and handoff
 

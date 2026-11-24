@@ -67,11 +67,11 @@ The default visual strength comes from the sculpted form, lighting, coherent cha
 
 - LP-0/LP-1: baseline Vision captures; 360° gray-material and shaded planet turntable; four initial views at 00:00/06:00/12:00/18:00; right and left drag videos showing the *actual page* change from morning through dusk and back; vertical drag recording with a fixed sky and palette.
 - LP-2: front, side, rear and elevated sculptural mink views; three clear poses; natural-size on-page comparison against the pixel mascot.
-- LP-3: complete collaboration scene within the real Vision hero and 20–30 seconds of believable independent activity; owner/independent art judgment.
+- LP-3: complete collaboration scene within the real Vision hero and 20–30 seconds of believable independent activity; independent/manager art verdict and an owner-facing feedback request, not a blocking sign-off.
 - LP-4: an eight-view tour of the globe showing eight individually directed story areas, quiet geographic regions, scale variation and lighting at day and night.
 - LP-5: clock → planet (initial and replay), planet → clock (horizontal drag), vertical-only/no-time-change, “Live”/return to now, Home↔Vision, and reduced-motion/no-WebGL tests with five fixed viewports.
 - **LP-6 polish:** short recording of Home→Vision camera fly-in/arc, Vision→Home exit and interrupted/re-entered flow; night and day variants; per-object clips plus a combined composition showing the small flying objects passing in front of and behind appropriate geometry. Record and assert no hour change from either camera movement or flying objects.
-- LP-7: final production candidate at the same five viewports, loading/CLS, phone/laptop FPS, resource cleanup, focus/keyboard and touch-scroll proof; explicit owner approval.
+- LP-7: final production candidate at the same five viewports, loading/CLS, phone/laptop FPS, resource cleanup, focus/keyboard and touch-scroll proof; an owner-facing review prompt plus separate, explicit final release approval.
 
 ## Sign-off tests
 
