@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 10 engineering days if the reuse is kept on disk; it is re-stated by RA-1, which may choose a process that stays running instead and hand most of the work to Plan 55.
+**Estimate:** About 8 engineering days.
 
-**Waiting on:** Release 16 (the owner placed it there on 23 November 2026 as the command-speed lead); Plan 81 Part 2b landed (installed `generate` about 5.8 s, astrid-agent `045064b6`); its cards are re-cut from the [first-principles note](evidence/2026-11-23-generate-first-principles/README.md); the owner's decisions D1 to D3 in [inputs.md](inputs.md#owner-decisions).
+**Waiting on:** Release 15 (the owner's decision, 24 November 2026), the thin-client floor experiment, and D1 to D3 ([inputs.md](inputs.md#owner-decisions)).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -22,39 +22,30 @@ This is the second half of the under-a-second work, split from [Plan 81](../81-o
 
 **The budget:** from starting `astrid generate` to the Runtime having admitted the task, under 1 second at the median, on a warm local machine with an installed Astrid, for a repeated prompt and for a changed one. A workflow used for the first time, or one whose files or target changed, is built in full and is outside the budget.
 
-**Included:**
+**Included, in two layers** (owner's decision, 24 November 2026; [inputs.md](inputs.md#owner-decisions)):
 
-- **A decision first** (RA-1): where each reused result lives, on disk or in a process that stays running, and for each one what proves it is still current.
-- **The compiled workflow is reused,** and a new prompt or seed is filled in, not rebuilt.
-- **Entries, registries and pack discovery are reused** across commands.
-- **ComfyUI's node list,** if the baseline shows it is what keeps the command above a second.
+- **A general command layer,** for every backend and pack: a thin client handing the request to a warm resident host; caches for shipped packs under the install stamp; the pack-host identity held warm; lazy imports.
+- **One "prepare once, fill per request" contract per backend,** implemented for ComfyUI only: the compiled workflow is prepared once and a new prompt or seed is filled in. No Wan2GP work; the contract must not preclude another backend.
+- **ComfyUI's node list,** only if a real ComfyUI shows it keeps the command above a second.
 - **The one-second budget asserted** by Plan 81's test, and a third real baseline.
 
-**The rule for everything here:** a reused result is used only when it can be shown to be current; otherwise the command works it out as today and says so in its timings. The worst failure this plan must make impossible is Astrid admitting a different workflow under an earlier approval.
+**The rule for everything here:** a reused result is used only when it can be shown to be current; otherwise the command works it out as today and says so in its timings. The worst failure this plan must make impossible is Astrid admitting a different workflow under an earlier approval. **No check is removed:** each is kept every command, or cached with its stated invalidation ([why each check](evidence/2026-11-24-why-each-check/README.md)).
 
 **Not included:** the time from queued to a finished result; moving workflow building to after the task is queued; timeline commands, which Plan 81 and [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) cover.
 
 ## Existing work and decision
 
-**Where the time is after Plan 81** (installed build, CPU container, stand-in ComfyUI, same prompt, 22 November 2026; [evidence](../81-once-per-command/evidence/)): 5.4 s in all. Registry loading 1.09 s (pack discovery 0.48 s of it); candidate preparation 1.06 s (workflow build 0.73 s); Runtime connection 0.80 s (attaching the pack host 0.54 s); qualification 0.51 s; emission 0.41 s; and about 1.5 s outside the named stages, believed to be mostly start-up and imports. Nearly all of it is work the command before already did. The question for each is not whether it can be kept but what is the cheapest way to know it is still valid.
+Where the time goes, stage by stage, and what each cache needs to stay safe, is in the [first-principles note](evidence/2026-11-23-generate-first-principles/README.md): of about 5.8 s, about 0.3 s depends on the request; disk caches alone reach about 2.0 s *est.*, a thin client to the warm pack host about 1.3 s *est.*, and under 1 s is unproven. [Plan 55](../55-local-speed/plan.md)'s resident-session branch (`24c68a270`, VibeComfy `d8e61a50`) is the donor for the host and the prepared template, whose process-bound template RA-2 makes content-keyed. The research and critique are Plan 81's ([inputs.md](inputs.md#planning-evidence)).
 
-**The order, added 22 November 2026 at the owner's prompting** ("could we preload stuff once it's loaded once? ... why do we need to?"): first what cannot change within an install (RA-0); then what is provably the same by its contents (the compiled workflow, RA-2; a person's own packs, RA-3); then what only ComfyUI knows (RA-4); and, if RA-1 chooses it, the command as a thin client to the host that is already running. Each step pays for itself and makes the next safer.
-
-Two designs answer the same question. Caches on disk, keyed by content, keep the command line as it is and must prove freshness every time. A process that stays running holds the results in memory and knows when they change; that is [Plan 55](../55-local-speed/plan.md)'s resident session, already partly built on its branch and costly to land. Building both wastes one. So this plan starts with a decision made on Plan 81's measurements, not on the dated figures available on 22 November 2026.
-
-Plan 55's branch has the compiled-template work (astrid-agent `24c68a270`, VibeComfy `d8e61a50`), whose template is tied to one process and session. The research and the independent critique that shaped these tasks are Plan 81's ([inputs.md](inputs.md#planning-evidence)).
+**The Lead's recommendation (D1, pending the floor experiment):** the resident host and thin client first, with disk caches only for the first command after a restart.
 
 ## Sequence and readiness
 
-1. **RA-0,** two measurements and the pieces that cannot go stale: shipped packs kept under the install's stamp, and code a command does not use not loaded. It needs no decision between disk and a running process.
-2. **RA-1,** the decision note and its review.
-3. **RA-2, RA-3 and RA-4** as RA-1 decides, side by side.
-3. **RA-5,** the budget asserted and a real baseline.
-4. **R,** one review round.
+1. **General layer:** RA-0a (measure, largely answered by the floor experiment), RA-0b (shipped-pack caches, read-only install), RA-0c (object-info trust), RA-1 (thin client and resident host), RA-1b (lazy imports).
+2. **ComfyUI contract:** RA-2 (prepared template), RA-3 (own and project packs), RA-4 (node list, conditional).
+3. **RA-5,** the budget asserted; **R,** one final review.
 
-**Real dependencies:** Plan 81 landed, for its timings, its ceiling test and its baseline. If RA-1 chooses a resident process, RA-2 to RA-4 become Plan 55's and this plan keeps only RA-1 and RA-5.
-
-**Unresolved:** D1 to D3, and its release. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**Real dependencies:** Plan 81 landed; Release 15's pack-root seam (Plan 87 RN-4, PB-7b). **Unresolved:** D1 to D3. Recording this plan authorizes no implementation. Cards: [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
