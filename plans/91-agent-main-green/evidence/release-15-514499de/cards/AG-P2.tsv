@@ -1,0 +1,51 @@
+lane	cluster	outcome	job	id
+lanes	C106	FAILED	opt-in	tests/test_onboarding_parity.py::test_editorial_arrange_is_discoverable_via_discover
+lanes	C24	FAILED	opt-in	tests/test_onboarding_parity.py::test_capability_schema_is_json_serializable
+lanes	C24	FAILED	opt-in	tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_provenance
+lanes	C24	FAILED	opt-in	tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_safety_declaration
+lanes	C24	FAILED	opt-in	tests/test_onboarding_parity.py::test_editorial_arrange_is_inspectable_via_get_capability
+lanes	C24	FAILED	opt-in	tests/test_onboarding_parity.py::test_provenance_is_populated_on_editorial_arrange
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_authenticated_source_baseline_restores_exact_legacy_bytes[inverse]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_authenticated_source_baseline_restores_exact_legacy_bytes[restore]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_authenticated_source_baseline_restores_exact_legacy_bytes[step-inverse]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[aba]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[digest]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[equal-authored]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[foreign]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[forged-publication]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[forged-source]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[forged-step]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[membership]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[modified]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[new]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_invalid_or_unauthenticated_restoration_refuses_without_writes[order]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_inverse_preserves_unrelated_parent_move[False]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_inverse_preserves_unrelated_parent_move[True]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[alias]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[changed]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[documents]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[internal-owner]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[no-writes]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[ordinary-write]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[outside]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[shot-owner]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[target-remove]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[target]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_authenticated_legacy_restore.py::test_restoration_source_unit_keeps_exact_reference_and_write_guards[until-flag]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_fails_closed_without_head_proof[changed-head]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_fails_closed_without_head_proof[history-error]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_fails_closed_without_head_proof[missing-head]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_fails_closed_without_head_proof[missing-publication]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_preserves_exact_scope_digest_and_owner_guards[content_digest]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_preserves_exact_scope_digest_and_owner_guards[internal-owner]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_preserves_exact_scope_digest_and_owner_guards[project_id]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_preserves_exact_scope_digest_and_owner_guards[revision_id]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_preserves_exact_scope_digest_and_owner_guards[timeline_id]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_requires_exact_publication_history_entry[missing-entry]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_requires_exact_publication_history_entry[wrong-receipt]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_requires_exact_publication_history_entry[wrong-revision]
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_current_fetch_retains_authenticated_pair_and_canonical_source
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_explicit_historical_read_does_not_acquire_current_publication
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_explicit_wrong_publication_refuses
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_current_pair_reader.py::test_reset_reads_reused_revision_under_new_publication
+lanes	C4	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_m1_legacy_archive_read.py::test_explicit_held_baseline_then_current_word_bound_read_is_closure_exact

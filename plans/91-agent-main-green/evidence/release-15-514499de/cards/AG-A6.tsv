@@ -1,0 +1,23 @@
+lane	cluster	outcome	job	id
+ci	C10	FAILED	unit shard 2 _ 8 (ubuntu-latest)	tests/editing_conformance/test_authoring_item_observation_boundary.py::test_retained_source_copy_inverse_passes_the_same_runtime_validator[False]
+ci	C10	FAILED	unit shard 2 _ 8 (ubuntu-latest)	tests/editing_conformance/test_authoring_item_observation_boundary.py::test_retained_source_copy_inverse_passes_the_same_runtime_validator[True]
+ci	C10	FAILED	unit shard 2 _ 8 (ubuntu-latest)	tests/editing_conformance/test_authoring_undo_projection.py::test_final_stage_uses_authenticated_parent_after_retained_pin_removal[False]
+ci	C10	FAILED	unit shard 2 _ 8 (ubuntu-latest)	tests/editing_conformance/test_authoring_undo_projection.py::test_final_stage_uses_authenticated_parent_after_retained_pin_removal[True]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_authenticated_history_abi_preserves_original_fork_proofs[1-False]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_authenticated_history_abi_preserves_original_fork_proofs[absent-False]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_caller_annotations_and_recorder_schema_do_not_supply_history_abi
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[0]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[1.0]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[1]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[2.0]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[2]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[3]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[False]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[None]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[True]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[metadata10]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[metadata11]
+ci	C10	FAILED	unit shard 3 _ 8 (ubuntu-latest)	tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[metadata9]
+ci	C10	FAILED	unit shard 4 _ 8 (ubuntu-latest)	tests/editing_conformance/test_recipe_occurrence_fork.py::test_reload_undo_redo_exact_and_replay[1]
+ci	C10	FAILED	unit shard 4 _ 8 (ubuntu-latest)	tests/editing_conformance/test_recipe_occurrence_fork.py::test_reload_undo_redo_exact_and_replay[2]
+ci	C10	FAILED	unit shard 4 _ 8 (ubuntu-latest)	tests/editing_conformance/test_recipe_occurrence_fork.py::test_undo_refuses_aba_and_surviving_owner

@@ -36,16 +36,70 @@ def norm(text: str) -> str:
 
 
 def short_name(nodeid: str) -> str:
-    return nodeid.split("::")[-1]
+    return nodeid.split(" SUBFAILED(")[0].split("::")[-1]
+
+
+FINAL = re.compile(r"^=*\s*(\d+ (failed|passed|errors?|skipped|deselected)\b.*) in [\d.]+s\b")
+SUBFAILED = re.compile(r"^(\S+::\S+) SUBFAILED(\(.*?\))\s+\[\s*\d+%\]$")
+
+
+def split_nodeid(rest: str):
+    """Split "<nodeid> - <message>" where the nodeid may hold spaces inside its [parameters]."""
+    depth = 0
+    for index, char in enumerate(rest):
+        if char == "[":
+            depth += 1
+        elif char == "]":
+            depth = max(0, depth - 1)
+        elif depth == 0 and rest.startswith(" - ", index):
+            return rest[:index], rest[index + 3:]
+    return rest, ""
+
+
+def outer_summary(lines):
+    """FAILED/ERROR rows of the job's own pytest run, plus its failed subtests.
+
+    Only the last "short test summary info" section before the job's final result line is read, so pytest output that
+    a test prints from an inner run is not counted. A failed subtest is counted by pytest in "N failed" but has no
+    summary row, so it is taken from its progress line and keyed "<nodeid> SUBFAILED(<params>)".
+    """
+    finals = [i for i, line in enumerate(lines) if FINAL.match(line)]
+    if not finals:
+        return []
+    end = finals[-1]
+    starts = [i for i in range(end) if re.match(r"^=+ short test summary info =+$", lines[i])]
+    rows = []
+    if starts:
+        for line in lines[starts[-1] + 1:end]:
+            match = re.match(r"^(FAILED|ERROR) (.+)$", line)
+            if match and "::" in match.group(2):
+                nodeid, message = split_nodeid(match.group(2))
+                rows.append((match.group(1), nodeid.strip(), message.strip()))
+    seen = set()
+    for line in lines[:end]:
+        match = SUBFAILED.match(line)
+        if match:
+            nodeid = f"{match.group(1)} SUBFAILED{match.group(2)}"
+            if nodeid not in seen:
+                seen.add(nodeid)
+                rows.append(("FAILED", nodeid, ""))
+    return rows
+
+
+def summary_counts(lines):
+    """The (failed, errors) pytest printed on the job's final result line, or None."""
+    finals = [line for line in lines if FINAL.match(line)]
+    if not finals:
+        return None
+    text = finals[-1]
+    failed = re.search(r"(\d+) failed", text)
+    errors = re.search(r"(\d+) errors?", text)
+    return (int(failed.group(1)) if failed else 0, int(errors.group(1)) if errors else 0)
 
 
 def parse(log: Path, job: str):
     lines = [STAMP.sub("", raw.rstrip("\n")) for raw in log.read_text(errors="replace").splitlines()]
-    summary = []
-    for line in lines:
-        match = SUMMARY.match(line)
-        if match and "::" in match.group(2):
-            summary.append((match.group(1), match.group(2), (match.group(3) or "").strip()))
+    summary = outer_summary(lines)
     sections = {}
     current, body = None, []
 
@@ -120,7 +174,18 @@ def main(argv):
     records = []
     for name in argv[2:]:
         path = Path(name)
-        records.extend(parse(path, path.stem))
+        job = re.sub(r"^\d+_", "", path.stem)  # the archive numbers its files in no stable order
+        job_records = parse(path, job)
+        records.extend(job_records)
+        lines = [STAMP.sub("", raw) for raw in path.read_text(errors="replace").splitlines()]
+        counts = summary_counts(lines)
+        rows = collections.Counter(r["outcome"] for r in job_records)
+        if counts is None:
+            print(f"{job}: NO RESULT LINE (cancelled, timed out or truncated)")
+        else:
+            ok = (rows["FAILED"], rows["ERROR"]) == counts
+            print(f"{job}: summary {counts[0]} failed, {counts[1]} errors; rows {rows['FAILED']} FAILED, {rows['ERROR']} ERROR"
+                  f"{'' if ok else '  MISMATCH'}")
     groups = collections.defaultdict(list)
     for record in records:
         groups[key(record)].append(record)

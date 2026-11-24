@@ -1,0 +1,126 @@
+lane	cluster	outcome	job	id
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_m1_current_equivalent.py::test_new_ours_current_equivalent_preserves_m1_commit_journey[disjoint-rebase-undo]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_m1_current_equivalent.py::test_new_ours_current_equivalent_preserves_m1_commit_journey[touched-basis-conflict]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_checkout_current_equivalent.py::test_current_checkout_commands_file_preserves_opaque_unchanged_write_and_undo
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_checkout_current_equivalent.py::test_current_checkout_gate3_reload_undo_and_visualize_report_unavailable
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_checkout_current_equivalent.py::test_current_checkout_move_trim_lost_ack_restart_and_guarded_undo[disjoint-peer]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_checkout_current_equivalent.py::test_current_checkout_move_trim_lost_ack_restart_and_guarded_undo[touching-peer-conflict]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_anchor_inverse_rejects_forged_timing_and_matching_effects
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_equal_text_references_produce_distinct_canonical_revisions
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_equal_text_restore_recovers_the_selected_publications_binding
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_first_anchor_inverse_recovers_literal_timing_and_exact_absence
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_first_anchor_redo_rejects_corrupt_derived_history
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_first_use_retains_v1_before_producer_removes_words_and_exact_retry_after_restart
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_follow_rebases_original_choice_after_source_move_and_reorder[True]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_half_open_window_and_exact_rational_fps_are_validated_at_acceptance
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[duplicate-ids-invalid authored word reference]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[empty-ids-invalid authored word reference]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[malformed-id-invalid authored word reference]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-clip-source occurrence/clip is missing]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-occurrence-source occurrence/clip is missing]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-pin-exact transcript pin is missing]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-word-stable word is missing]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[nonfinite-offset-expected finite JSON]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[null-reference-invalid authored word reference]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[offset-precision-exceeds main Moment precision]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[outside-window-outside the half-open source window]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[unknown-field-invalid authored word anchor fields]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[unsupported-owner-word anchors require parent ownership]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[wrong-pin-exact transcript pin is missing]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_inputs_fail_closed_before_acceptance[foreign]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_inputs_fail_closed_before_acceptance[invented]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_inputs_fail_closed_before_acceptance[missing-word]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_inputs_fail_closed_before_acceptance[missing]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_invalid_inputs_fail_closed_before_acceptance[revoked]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_last_write_clear_undo_restore_and_restore_inverse
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_legacy_ambiguous_text_refuses_choose_occurrence["again" #2]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_legacy_ambiguous_text_refuses_choose_occurrence["again" in line #2]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_legacy_ambiguous_text_refuses_choose_occurrence["again"]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_legacy_unique_word_in_reused_cas_is_still_ambiguous_without_raw_clip[True]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_native_acceptance_refuses_review_source_counterexamples_before_writes[raw-source-window]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_native_acceptance_refuses_review_source_counterexamples_before_writes[short-occurrence]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_native_move_refuses_anchor_basis_until_explicit_clear
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_occurrence_window_is_rechecked_for_source_move_stale_replay_and_inverse
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_on_until_clear_preserves_other_reference_and_opaque_fields
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_phrase_records_all_consecutive_main_word_ids
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_reference_is_authoritative_and_kernel_never_searches_echo["stop" #99 +300f]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_reference_is_authoritative_and_kernel_never_searches_echo[None]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_reference_is_authoritative_and_kernel_never_searches_echo[obsolete display label]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_same_word_in_reused_cas_clips_retains_raw_source_through_undo[True]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_source_removal_and_changed_media_refuse_atomically
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_stale_anchor_refuses_when_intervening_window_excludes_selected_word
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_stale_choice_and_guarded_inverse_refuse_competing_target_writes
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_typed_second_offset_preserves_main_precision_at_rational_frame_boundary
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_undo_recovers_before_binding_even_when_text_writes_are_equal[True-False]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_undo_recovers_before_binding_even_when_text_writes_are_equal[True-True]
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_unique_legacy_word_compiles_without_persisting_a_reference
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_unrelated_legacy_timing_is_outside_native_anchor_slice
+lanes	C2	ERROR	integration shard 2 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_word_ending_at_occurrence_end_preserves_revision_only_restore_and_inverse[retained0]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_provider_resolves_exact_first_use_pin_and_refuses_unavailable_source[foreign-document]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_provider_resolves_exact_first_use_pin_and_refuses_unavailable_source[missing-version]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_provider_resolves_exact_first_use_pin_and_refuses_unavailable_source[wrong-digest]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_source_read_revocation_is_atomic_before_first_use_retention
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_first_parent_media_then_stable_same_echo_word_choices_reload_inverse_and_retry[False]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_first_parent_media_then_stable_same_echo_word_choices_reload_inverse_and_retry[True]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_clip_cache_inverse_keeps_only_owned_transcript_pins[introduced]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_clip_cache_inverse_keeps_only_owned_transcript_pins[opaque]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_clip_cache_inverse_keeps_only_owned_transcript_pins[preexisting]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_clip_cache_inverse_keeps_only_owned_transcript_pins[surviving]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_inverse_retains_surviving_opaque_transcript_pin[retained0-parent]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_inverse_retains_surviving_opaque_transcript_pin[retained1-shot]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_grouped_inverse_retains_surviving_opaque_transcript_pin[retained2-occurrence]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_equal_text_references_produce_distinct_canonical_revisions
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_equal_text_restore_recovers_the_selected_publications_binding
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_follow_rebases_original_choice_after_source_move_and_reorder[True]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_half_open_window_and_exact_rational_fps_are_validated_at_acceptance
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[duplicate-ids-invalid authored word reference]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[empty-ids-invalid authored word reference]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[malformed-id-invalid authored word reference]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-clip-source occurrence/clip is missing]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-occurrence-source occurrence/clip is missing]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-pin-exact transcript pin is missing]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[missing-word-stable word is missing]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[nonfinite-offset-expected finite JSON]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[null-reference-invalid authored word reference]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[offset-precision-exceeds main Moment precision]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[outside-window-outside the half-open source window]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[unknown-field-invalid authored word anchor fields]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[unsupported-owner-spike requires parent word anchor owner]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_authored_reference_never_falls_back_to_valid_echo[wrong-pin-exact transcript pin is missing]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_inputs_fail_closed_before_acceptance[foreign]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_inputs_fail_closed_before_acceptance[invented]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_inputs_fail_closed_before_acceptance[missing-word]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_inputs_fail_closed_before_acceptance[missing]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_invalid_inputs_fail_closed_before_acceptance[revoked]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_last_write_clear_undo_restore_and_restore_inverse
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_legacy_ambiguous_text_refuses_choose_occurrence["again" #2]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_legacy_ambiguous_text_refuses_choose_occurrence["again" in line #2]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_legacy_ambiguous_text_refuses_choose_occurrence["again"]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_legacy_unique_word_in_reused_cas_is_still_ambiguous_without_raw_clip[True]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_on_until_clear_preserves_other_reference_and_opaque_fields
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_phrase_records_all_consecutive_main_word_ids
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_raw_canonical_bundle_compiles_in_fresh_process_without_history
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_reference_is_authoritative_and_kernel_never_searches_echo["stop" #99 +300f]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_reference_is_authoritative_and_kernel_never_searches_echo[None]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_reference_is_authoritative_and_kernel_never_searches_echo[obsolete display label]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_same_word_in_reused_cas_clips_retains_raw_source_through_undo[True]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_stale_anchor_refuses_when_intervening_window_excludes_selected_word
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_stale_choice_and_guarded_inverse_refuse_competing_target_writes
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_typed_second_offset_preserves_main_precision_at_rational_frame_boundary
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_undo_recovers_before_binding_even_when_text_writes_are_equal[True-False]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_undo_recovers_before_binding_even_when_text_writes_are_equal[True-True]
+lanes	C2	ERROR	integration shard 3 _ 4	tests/editing_conformance/test_word_binding_recipe.py::test_unique_legacy_word_compiles_without_persisting_a_reference
+lanes	C2	ERROR	integration shard 4 _ 4	tests/test_bootmanifest2_admission.py::test_busy_rejected_attachment_preserves_r12_resident_reader
+lanes	C2	ERROR	integration shard 4 _ 4	tests/test_bootmanifest2_rollback.py::test_real_rollback_activates_r12_own_composition[False]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/test_bootmanifest2_rollback.py::test_real_rollback_activates_r12_own_composition[True]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-claim]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-create]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-heartbeat]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-none]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-nonzero]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-output]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_and_reconciliation_preserve_existing_data[6d53a19070faf63fc15ae1f81417722edc2c8a5f-timeout]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_creation_error_remains_primary_and_retry_reconciles[6d53a19070faf63fc15ae1f81417722edc2c8a5f]
+lanes	C2	ERROR	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_creation.py::test_release_rolls_back_partial_settlement[6d53a19070faf63fc15ae1f81417722edc2c8a5f]
+lanes	C2	FAILED	integration shard 3 _ 4	tests/integrations/test_runpod_cpu_path.py::test_cpu_runpod_http_journey
+lanes	C2	FAILED	integration shard 4 _ 4	tests/upgrade/test_busy_fixture_release.py::test_release_fails_closed_and_preserves_unrelated_work[6d53a19070faf63fc15ae1f81417722edc2c8a5f]
