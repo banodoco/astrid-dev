@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 13–25 (about 2–3 weeks elapsed): the safety net and measurement 2–3, CI wiring 1–3, known behaviour changes 2–4, the long tail 8–15 after RS1 re-estimates it, then three green nights
+**Estimate:** 70–90 (about 5–6 weeks elapsed with five workers): Phase 1 (the gate and the large causes) 20–24, Phase 2 (the middle) 26–32, Phase 3 (the long tail) 20–30, Phase 4 (green runs and review) 3–5
 
-**Waiting on:** the owner's go and a release (D1, recommended: Release 15); a manager
+**Waiting on:** the owner's go, a place in Release 15 (D1) and a manager; owner decisions D8 and D10–D15 for the cards that name them; Plan 77 for the failing test files it also edits, and Plan 88 for two ([base choice](inputs.md#source-identities))
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -20,73 +20,96 @@
 
 The Agent's share of [Plan 39](../39-green-mains/plan.md), split off as its own project on 23 November 2026 so that one repository can reach green without waiting on the other two ([why](inputs.md#planning-evidence)). Plan 39 keeps the Runtime, the App and the shared cross-repository pieces.
 
-Every Agent workflow that runs on a push to `main` is green and stays green:
-- **Green.** Each failing test is fixed at its root cause, never by loosening an assertion to match a bug. A test changes only when the behaviour it checks changed on purpose, and the task card names the commit or contract that changed it. Plan 39's anti-hiding rules ([inputs](../39-green-mains/inputs.md#where-changing-a-test-would-hide-a-bug)) apply unchanged.
-- **Cannot get worse first.** Before any burn-down, the Agent's current failing IDs are sealed as a ceiling that may only fall, and every pull request into the release branch is compared with it by test ID. New, lost or reintroduced red fails the pull request.
-- **Kept green.** The owner turns on the Agent's merge-tier required checks. The Agent's existing quarantine rule (strict xfail with an issue, an owner and an expiry, at most ten per repository; Plan 39's D3 and D9) is the only way a known failure may be tolerated.
+Every Agent workflow is green on `release/15/main`, and on `main` once Release 15 is published, and it stays green:
+- **Cannot get worse, first.** Before any fix lands, the Agent's current failing tests are sealed as a ceiling that may only fall, keyed by job and test ID, the integration and opt-in lanes included. Every batch the plan merges, and every completed `release/15/main` run, is compared with it. New, lost or reintroduced red fails the comparison.
+- **Green by cause.** Each failing test is fixed at its root cause, under one set of [triage rules](tasks.md#triage-rules): name the kind (env, stale test, retired, product bug, flaky, unknown), fix it the way that kind allows, prove it by ID on hosted CI. Never a loosened assertion, a stub input, a widened deadline, a skip or a growing baseline. Plan 39's anti-hiding rules ([inputs](../39-green-mains/inputs.md#where-changing-a-test-would-hide-a-bug)) apply unchanged.
+- **Kept green.** The owner turns on the Agent's required checks: on pull requests, the jobs that run there; for the release, the full comparison. The quarantine rule (strict xfail with an issue, an owner and an expiry, at most ten; Plan 39's D3 and D9) is the only way a known failure may be tolerated. Product bugs too large for this plan stay visibly red on the ceiling, each with an issue and the owner's acceptance (D6).
 
-**Measured on 22 November 2026** (Agent `main` at `c0ad6b54`, the published Release 14; runs listed in [inputs](inputs.md#planning-evidence)):
+**Measured on `release/15/main` at `b324d7c1`**, the latest head with a complete CI and Lanes run (23 November 2026; [evidence](evidence/README.md)):
 
-| Workflow | State | Failing |
+| Workflow | State | Failing (distinct job and test ID) |
 | --- | --- | --- |
-| `Chat service` | green | — |
-| `Windows task host journey` | green | — |
-| `Windows runtime retention` | green | — |
-| `CI` | red | All eight `unit` shards: 786 failed and 328 errors, in about 1,081 test IDs across 321 files, of about 32,000 tests. `darwin native` was cancelled, so its state is unknown. `fast checks`, `boundary`, `windows-native-and-installer` and both release wheels are green. |
-| `Lanes` | red | All four `integration` shards: 345 failed and 435 errors. `opt-in`: 12 failed. `installed wheel` is green. |
+| `Chat service`, `Windows task host journey`, `Windows runtime retention` | green | — |
+| `CI` | red | All eight `unit` shards and `darwin native`: 1,087, in 274 files, of about 33,000 tests. `fast checks`, `boundary`, `windows-native-and-installer` and both release wheels are green. |
+| `Lanes` | red | The four `integration` shards and `opt-in`: 787, in 129 files. `installed wheel` is green. |
 
-Eight causes account for 453 of the unit failures; one refusal accounts for 249 of the integration failures ([clusters](inputs.md#failure-clusters-22-november-2026)).
+The triage puts the 1,874 in about 150 distinct causes ([how](inputs.md#planning-evidence)). Ten Wave A cards hold about 1,000 of them; 22 Wave B cards hold about 470; Wave C holds the rest, 405 in 233 files.
 
-**Included:** the Agent workflows on push to `main` and to `release/<NN>/main`:
-- `CI`: `fast checks`, the eight `unit` shards and the aggregate `unit`, `darwin native`, `windows-native-and-installer`, `release` (3.11, 3.12), `boundary`;
+**Included:** the Agent workflows on push to `main` and to `release/15/main`:
+- `CI`: `fast checks`, the eight `unit` shards and the aggregate `unit`, `darwin native`, `windows-native-and-installer`, `release wheel` (3.11, 3.12), `boundary`;
 - `Lanes`: `integration` 1–4, `opt-in`, `installed wheel`;
-- `Chat service`, `Windows task host journey` and `Windows runtime retention`, which are green today and must stay green.
+- `Chat service`, `Windows task host journey` and `Windows runtime retention`, which are green and must stay green.
 
-It also includes the Agent side of Plan 39's per-ID ceiling (K2/K3), gates and stored results, carried from `release/14/plan-39`, and the Agent rows of Plan 39's [Release 15 ceiling](../39-green-mains/tasks.md#release-15-ceiling).
+It also includes:
+- the comparison and the hosted card runs that make the gate work (AG-1);
+- the Agent rows of Plan 39's [Release 15 ceiling](../39-green-mains/tasks.md#release-15-ceiling);
+- the worker environment's Runtime install, so workers can reproduce what CI runs;
+- the small product fixes the triage finds, where each takes a day or less.
 
 **Not included:**
-- the Runtime and the App, which stay in Plan 39;
-- the cross-repository pieces that stay in Plan 39: the nightly report (`scripts/ci_red_report.py`), the release rule in Plan 31's `release-contract` (K4, K5) and the release-record sections from phase 4. This plan consumes them if they exist and does not need them to finish;
-- the behaviour of the custody and host-spawn tests [Plan 38](../38-one-process-identity/plan.md) owns. This plan repairs their imports so they run, and their residual failures follow [D3](inputs.md#owner-decisions);
+- the Runtime and the App, which stay in Plan 39. The Runtime changes this plan may need (the frame-rate schema under D8, and refusals raised in the Runtime) go as Runtime pull requests named on their card;
+- the cross-repository pieces that stay in Plan 39: the nightly report (`scripts/ci_red_report.py`), the release rule in Plan 31's `release-contract` (K4, K5) and the release-record sections;
+- porting Plan 39's K2/K3 comparator, which never passed on an unchanged tree. AG-1 reuses `env/baseline-diff.py` instead;
+- the behaviour of the custody and host-spawn tests [Plan 38](../38-one-process-identity/plan.md) owns. AG-A1 makes them run, and their residual failures follow [D3](inputs.md#owner-decisions);
 - the Agent's `journey.yml` release receipts, GPU and live lanes ([Plan 34](../34-real-gpu-proof/plan.md));
-- product features. A real product bug found here gets its own fix task; a large one goes to an issue and is quarantined under the rule.
+- product bugs that take more than a day, which go to issues under D6, and product features.
 
 ## Existing work and decision
 
-The approach, the anti-hiding rules and most of the machinery come from Plan 39, which was reviewed on 9 November and ran in Release 14. Release 14 built the Agent's safety net on `release/14/plan-39`: per-test stored results (SF3a), gates that fail only when findings rise (GL, K0), a structure ceiling that may only fall (GL.2), the skip-policy guard (K1a) and the per-ID comparator (K2/K3, Agent [#433](https://github.com/banodoco/astrid-agent/pull/433)). That branch was not merged whole, and the comparator stayed advisory until it passes once on an unchanged tree ([Release 14 ruling 10](../../releases/14/run.md)). This plan lands that net first, then fixes by cause. Measurements, alternatives and the split decision are in [inputs.md](inputs.md#planning-evidence).
+The approach and the anti-hiding rules come from Plan 39, which was reviewed on 9 November and ran in Release 14. Release 15 already compares each lane's unit results with a [hosted baseline](../../releases/15/evidence/agent-ci-baseline-8807f820/README.md), by hand, and names the groups that move between runs. This plan builds on both:
+- it extends that baseline to the integration and opt-in lanes;
+- it makes the comparison a check, using the existing `env/baseline-diff.py`;
+- it adds hosted card runs, so a card proves itself in minutes;
+- it burns the baseline down by cause, with the long tail carded from the evidence by script.
+
+The measurement, the triage, the alternatives and the independent critique are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-1. **Measure and seal** (AG-0, AG-1, AG-2). Re-measure on the head of `release/<NN>/main` when the plan branch is cut; land the safety net; seal the ceiling; turn on the merge-tier required checks. From here the Agent cannot get worse, which protects every other plan in the same release.
-2. **CI wiring** (AG-3, AG-4, AG-5). The inputs the tests ask for and CI never provides. About 320 unit IDs, and possibly the 249 integration refusals.
-3. **Known behaviour changes** (AG-6, AG-7, AG-8). The copy-only upgrade boundary, the custody imports and the timeline fork binding schema, each with an existing Plan 39 row or packet.
-4. **Review stop RS1.** Re-measure, cluster what is left, and re-estimate the long tail. If more than 60 distinct causes remain, the manager splits AG-9 into cards before going on.
-5. **The long tail** (AG-9), one worker per cause, in parallel.
-6. **Three green nights** (AG-10), then the final review R.
+Four phases; Phase 1 carries most of the value. Up to **five worker sessions run at once**, kept full from one [dispatch queue](tasks.md#dispatch-order).
+
+1. **The gate and the large causes** (AG-0 to AG-2, Wave A, RS1).
+   - AG-0 cuts the plan branch, re-measures, and finds what cancels runs on `release/15/main`.
+   - AG-1 adds the hosted card runs and the comparison.
+   - Ten cards fix the causes that hold about 1,000 IDs. They start the moment the branch is cut, beside the gate, and land once it works.
+   - RS1 reviews the gate, the clip-data decision (D13) and the frame-rate contract (D8), then regenerates Wave C and re-estimates.
+2. **The middle** (Wave B): 22 cards, one per cause, each with a kind, scope and proof.
+3. **The long tail** (Wave C): one card per test file, generated from the evidence by `make_wave_c.py` and regenerated at RS1, batched by area.
+4. **Green and kept green** (AG-10, R): three green dispatched runs on one frozen plan head on three nights, one on `release/15/main` after landing, then at most two review rounds.
 
 **Constraints:**
-- CI time, not workers, sets the pace: unit shards take 27–96 minutes and integration shards 13–98, and jobs queue. Prove each card with its focused tests and the stored results, merge in batches, and run the full workflows once per batch ([Release 14 ruling 13](../../releases/14/run.md)).
-- Other plans change the Agent in the same release (in Release 15: Plans 40, 69, 77, 78, 81). The ceiling from AG-1 is what stops them adding red while this plan burns it down, which is why it comes first.
+- **Proof needs hosted CI.** A pull request into `release/15/main` runs only fast checks, unit shard 1 and boundary; pushes to plan branches start nothing; Lanes has no pull-request trigger; and the worker environment differs from CI (Python 3.13, shallow fetches, no Node, Remotion, Pinokio or ComfyUI). So env cards prove on hosted card runs, and the gate runs on the manager's dispatched batch runs ([How work is proved](tasks.md#how-work-is-proved)).
+- **CI time sets the pace,** not workers: a full run takes up to about 2.5 hours. The manager merges up to five cards per batch.
+- **Most `release/15/main` heads have no complete run:** 21 of the last 28 CI and Lanes runs there were cancelled after starting. The workflows don't cancel runs on that branch, so something else does. AG-0 finds out, and AG-10 doesn't depend on that branch's push runs.
+- **Overlapping plans.** Plan 77 edits failing test files, the Runtime pins and `ci.yml`; Plan 88 edits two failing test files. Those cards follow the [base choice](inputs.md#source-identities). The frame-rate schema is vendored from the Runtime, so D8's schema option needs a Runtime PR and a pin bump after Plan 77's.
 - Recording this plan does not authorize implementation. Details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
 - **Consumes:**
-  - Agent `release/<NN>/main` at the head recorded in AG-0, and the Runtime, VibeComfy, RunPod lifecycle and ComfyUI pins that commit names;
-  - the Agent commits on `release/14/plan-39` (`ab95803ce28fa51eec937b4074f5ec0f0439b98a`) that carry the safety net, picked by row, not merged whole;
-  - Plan 39's sealed-ceiling format and `ci/required-checks.json` schema, so the two plans write one file.
+  - Agent `release/15/main` at the head AG-0 records, and the Runtime, VibeComfy, RunPod lifecycle and ComfyUI pins that commit names;
+  - the Release 15 hosted baseline (`releases/15/evidence/agent-ci-baseline-8807f820/`) and its rule for groups that move between runs;
+  - astrid-dev `env/baseline-diff.py` and the [shared worker environment](../../env/README.md), through astrid-agent's copies in `scripts/worker-env/`;
+  - for reference only, `release/14/plan-39` at `2ef74155a1a984101408b19b4e1e4fd274f3178e` (its head on 24 November), where Release 14's gate work lives.
 - **Produces:**
-  - green Agent workflows on `release/<NN>/main`, and on `main` once that release is published;
-  - the Agent's sealed per-ID ceiling, falling to zero, and its entries in `ci/required-checks.json`;
-  - the Agent merge-tier check list for the owner's branch protection;
-  - per-cause fix PRs in astrid-agent, each linked from its task row.
+  - green Agent workflows on `release/15/main`, and on `main` once Release 15 is published;
+  - `ci/agent-ceiling.tsv` in astrid-agent, keyed by job and test ID and falling to empty, and the comparison that enforces it;
+  - `workflow_dispatch` inputs (`tests`, `repeat`) on `ci.yml` and `lanes.yml`, which any plan can use to prove a change on hosted runners in minutes;
+  - astrid-dev `ci/required-checks.json`, with the Agent's entries, in a schema Plan 39 can extend;
+  - a re-runnable measurement (`evidence/cluster_failures.py`, `evidence/make_wave_c.py`) that turns a run's logs into causes and cards;
+  - per-cause fix PRs in astrid-agent, each linked from its task row; issues for the product bugs left on the ceiling.
 
 ## Completion
 
-- Every workflow listed in [Outcome and scope](#outcome-and-scope) has a green run on the final head of `release/<NN>/main` on three consecutive nights, with any quarantine entries listed and within age, and the merge-tier required checks are on.
-- The ceiling is empty, or holds only entries the owner accepted under D3, each with an issue, an owner and an expiry.
+- Every workflow listed in [Outcome and scope](#outcome-and-scope) is green in three full runs on one frozen head of `release/15/plan-91`, on three different nights, and in one run on `release/15/main` after the plan branch lands. Any quarantine entries are listed and within age, and the required checks are on.
+- The ceiling is empty, or holds only entries the owner accepted under D3 and D6, each with an issue and an owner.
 - **Negative cases:**
-  - a pull request that turns one passing Agent test red fails the per-ID comparison;
+  - a batch that turns one passing Agent test red, in any job, fails the comparison;
+  - a batch that loses a test ID fails it;
   - an expired quarantine entry, or a strict xfail that starts passing, turns the Agent red;
-  - a shard that is cancelled or truncated turns the run red rather than counting as passing.
-- **Limits:** GitHub-hosted runners only. GPU, live and Pinokio lanes are out of scope. Branch protection is the owner's setting; the plan can only list and check it. `main` turns green when its release is published, because work lands through the release branch.
+  - a shard that is cancelled or truncated fails the comparison rather than counting as passing.
+- **Limits:**
+  - GitHub-hosted runners only; GPU, live and Pinokio-machine lanes are out of scope;
+  - jobs that don't run on pull requests can only be required at the release tier;
+  - branch protection is the owner's setting, and the plan can only list and check it;
+  - `main` turns green when Release 15 is published, because work lands through the release branch.
