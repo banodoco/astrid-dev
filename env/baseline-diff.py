@@ -11,8 +11,16 @@ Buckets for each test the candidate ran:
   preexisting  failed on the candidate and on every baseline it ran on. Goes to its own project.
   fixed        passed on the candidate; failed on a baseline and passed on none.
   missing      passed on a baseline; not run on the candidate (deleted, skipped or uncollected).
+               Reported always; blocks only with --fail-on-missing.
 An XFAIL counts as passing, because the test met its expectation; a strict XPASS is reported FAILED by pytest.
-Exit 0: no regressions. Exit 1: regressions. Exit 2: bad input.
+What is read from a log: if it holds a "short test summary info" section, only the last one before the job's final
+result line (so pytest output that a test prints from an inner run is not counted), plus the failed subtests, which
+pytest counts in "N failed" but gives no summary row; each is read from its SUBFAILED(...) progress line and keyed
+"<nodeid> SUBFAILED(<params>)". A failed subtest with no entry on a baseline takes its parent test's status there.
+A log with such a section but no final result line is truncated: bad input. A log with no such section (bare
+PASSED/FAILED lines) is read line by line. GitHub's timestamp prefix is ignored.
+Exit 0: no regressions (and, with --fail-on-missing, nothing missing). Exit 1: regressions, or missing with
+--fail-on-missing. Exit 2: bad input.
 """
 import argparse
 import re
@@ -20,7 +28,15 @@ import sys
 from pathlib import Path
 
 _LINE = re.compile(r"^(PASSED|FAILED|ERROR|XFAIL|XPASS) (.+)$")
+_STAMP = re.compile(r"^\d{4}-\d\d-\d\dT[\d:.]+Z ?")
+_FINAL = re.compile(r"^=*\s*((?:\d+ (?:failed|passed|errors?|skipped|deselected|xfailed|xpassed)\b|no tests ran\b).*) in [\d.]+s\b")
+_SUMMARY = re.compile(r"^=+ short test summary info =+$")
+_SUBFAILED = re.compile(r"^(\S+::\S+) SUBFAILED(\(.*?\))\s+\[\s*\d+%\]$")
 PASS, FAIL = "passed", "failed"
+
+
+class TruncatedLog(ValueError):
+    """A log with a short test summary section but no final result line after it."""
 
 
 def _node_id(rest):
@@ -43,15 +59,34 @@ def _node_id(rest):
     return rest if space < 0 else rest[:space]
 
 
+def _result_lines(path):
+    """(status, node id) for the lines of one log that count: the job's own last summary section, else every line."""
+    lines = [_STAMP.sub("", raw).strip() for raw in Path(path).read_text(errors="replace").splitlines()]
+    starts = [i for i, line in enumerate(lines) if _SUMMARY.match(line)]
+    scope, subfailed_end = lines, len(lines)
+    if starts:
+        finals = [i for i, line in enumerate(lines) if _FINAL.match(line) and i > starts[-1]]
+        if not finals:
+            raise TruncatedLog(f"{path}: a short test summary section but no final result line after it "
+                               "(cancelled, timed out or truncated job)")
+        scope, subfailed_end = lines[starts[-1] + 1:finals[-1]], finals[-1]
+    for line in scope:
+        m = _LINE.match(line)
+        if m:
+            yield m.group(1), _node_id(m.group(2))
+    seen = set()
+    for line in lines[:subfailed_end]:
+        m = _SUBFAILED.match(line)
+        if m and line not in seen:
+            seen.add(line)
+            yield "FAILED", f"{m.group(1)} SUBFAILED{m.group(2)}"
+
+
 def parse(paths):
     """Map node id to passed/failed across the given -rA logs; a failure anywhere wins."""
     out = {}
     for path in paths:
-        for line in Path(path).read_text(errors="replace").splitlines():
-            m = _LINE.match(line.strip())
-            if not m:
-                continue
-            status, node = m.group(1), _node_id(m.group(2))
+        for status, node in _result_lines(path):
             result = FAIL if status in ("FAILED", "ERROR") else PASS
             if out.get(node) != FAIL:
                 out[node] = result
@@ -63,6 +98,9 @@ def sort_results(baselines, candidate):
     buckets = {k: [] for k in ("regression", "no-baseline", "preexisting", "fixed", "missing")}
     for node, status in candidate.items():
         seen = [b[node] for b in baselines.values() if node in b]
+        if not seen and " SUBFAILED(" in node:  # a subtest that fails is only new if its parent test was not failing
+            parent = node.split(" SUBFAILED(")[0]
+            seen = [b[parent] for b in baselines.values() if parent in b]
         if status == FAIL:
             if PASS in seen:
                 buckets["regression"].append(node)
@@ -88,6 +126,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--baseline", action="append", required=True, metavar="LABEL=LOG[,LOG]")
     ap.add_argument("--candidate", required=True, metavar="LOG[,LOG]")
+    ap.add_argument("--fail-on-missing", action="store_true",
+                    help="exit 1 when any test that passed on a baseline did not run on the candidate")
     ap.add_argument("--out", help="directory for summary.md and one <bucket>.txt per bucket (one id per line)")
     a = ap.parse_args(argv)
     baselines, counts = {}, {}
@@ -99,7 +139,7 @@ def main(argv=None):
             baselines[label] = parse(logs.split(","))
             counts[label] = len(baselines[label])
         candidate = parse(a.candidate.split(","))
-    except OSError as e:
+    except (OSError, TruncatedLog) as e:
         print(f"baseline-diff: {e}", file=sys.stderr)
         return 2
     counts["candidate"] = len(candidate)
@@ -117,7 +157,10 @@ def main(argv=None):
     sys.stdout.write(text)
     for node in buckets["regression"]:
         print(f"REGRESSION {node}")
-    return 1 if buckets["regression"] else 0
+    if a.fail_on_missing:
+        for node in buckets["missing"]:
+            print(f"MISSING {node}")
+    return 1 if buckets["regression"] or (a.fail_on_missing and buckets["missing"]) else 0
 
 
 if __name__ == "__main__":

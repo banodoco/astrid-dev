@@ -65,6 +65,68 @@ class BaselineDiffTests(unittest.TestCase):
         code, _ = self._run("1 passed in 0.1s\n", "PASSED tests/a.py::test_ok\n")
         self.assertEqual(code, 2)
 
+JOB = """\
+2026-11-24T08:00:00.1Z tests/a.py::test_ok PASSED [ 50%]
+2026-11-24T08:00:01.1Z tests/a.py::test_sub SUBFAILED(i=2) [ 90%]
+2026-11-24T08:00:02.1Z =========== short test summary info ===========
+2026-11-24T08:00:03.1Z PASSED tests/a.py::test_ok
+2026-11-24T08:00:03.2Z PASSED tests/a.py::test_sub
+2026-11-24T08:00:03.3Z FAILED tests/a.py::test_param[a b - c] - AssertionError: x
+2026-11-24T08:00:04.1Z = 2 failed, 2 passed in 3.00s =
+"""
+INNER = """\
+=========== short test summary info ===========
+FAILED test_case.py::test_inner - printed by a test that runs pytest
+= 1 failed in 0.1s =
+=========== short test summary info ===========
+PASSED tests/a.py::test_ok
+FAILED tests/a.py::test_real - boom
+= 1 failed, 1 passed in 9.00s =
+"""
+
+
+class SummarySectionTests(unittest.TestCase):
+    def _parse(self, text):
+        with tempfile.TemporaryDirectory() as t:
+            log = Path(t, "j.log")
+            log.write_text(text)
+            return bd.parse([str(log)])
+
+    def test_failed_subtests_are_counted_and_timestamps_ignored(self):
+        got = self._parse(JOB)
+        self.assertEqual(got["tests/a.py::test_sub SUBFAILED(i=2)"], "failed")
+        self.assertEqual(got["tests/a.py::test_param[a b - c]"], "failed")
+        self.assertEqual(got["tests/a.py::test_ok"], "passed")
+
+    def test_inner_pytest_output_is_not_read(self):
+        got = self._parse(INNER)
+        self.assertEqual(got, {"tests/a.py::test_ok": "passed", "tests/a.py::test_real": "failed"})
+
+    def test_truncated_log_is_bad_input(self):
+        code, _ = BaselineDiffTests._run(self, "PASSED tests/a.py::test_ok\n",
+                                         "=== short test summary info ===\nPASSED tests/a.py::test_ok\n")
+        self.assertEqual(code, 2)
+
+    def test_new_failing_subtest_of_a_passing_test_is_a_regression(self):
+        code, f = BaselineDiffTests._run(self, "PASSED tests/a.py::test_sub\n", JOB)
+        self.assertEqual(code, 1)
+        self.assertIn("tests/a.py::test_sub SUBFAILED(i=2)", f["regression"])
+
+
+class FailOnMissingTests(unittest.TestCase):
+    def test_missing_only_blocks_with_the_flag(self):
+        run = BaselineDiffTests._run
+        base, cand = "PASSED tests/a.py::test_ok\nPASSED tests/a.py::test_gone\n", "PASSED tests/a.py::test_ok\n"
+        code, f = run(self, base, cand)
+        self.assertEqual((code, f["missing"]), (0, ["tests/a.py::test_gone"]))
+        code, f = run(self, base, cand, "--fail-on-missing")
+        self.assertEqual((code, f["missing"]), (1, ["tests/a.py::test_gone"]))
+
+    def test_nothing_missing_passes_with_the_flag(self):
+        code, _ = BaselineDiffTests._run(self, "PASSED tests/a.py::test_ok\n", "PASSED tests/a.py::test_ok\n",
+                                         "--fail-on-missing")
+        self.assertEqual(code, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
