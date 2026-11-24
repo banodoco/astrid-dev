@@ -16,7 +16,7 @@
 
 **Review rounds:** Recommended: one round at the end (R). Pending — the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: record the date, tasks, accountable session and limits when the owner starts one.
+**Run start:** 24 November 2026 — the owner's go and D2 (yes), in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG), by [packet dispatch](../../releases/15/run.md#plan-82-dispatch). Accountable agent: the Plan 82 orchestrator, Claude session `session_011EzfW1e1nGMfuKEg7z7nKN` (the board names `session_011EzfW2WTdpQCgiHoGm3afZ`; the Lead is asked which is meant), mailbox [#1824](https://github.com/banodoco/astrid-dev/issues/1824). Tasks: RA-6, RA-0a, RA-0b, RA-1b, RA-2, R. Limits: no publishing, nothing paid, nothing on her machine or media, no change to an existing test's assertion; the landing gate into `release/15/main` is the Release 15 Lead's. Plan branches `release/15/plan-82` cut 24 November 2026 at astrid-agent `514499de`, astrid-runtime `24e2c929`, VibeComfy `c0e910ca`; Plan 81 is landed in all three (Agent `045064b6` is its landing merge).
 
 ## Owner decisions
 
