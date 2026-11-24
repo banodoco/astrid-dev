@@ -1,21 +1,32 @@
-# Plan 84 — versioned visual assets
+# Living Planet — complete visual reference inventory
 
-The images here are reference assets, **not approved product art or generated geometry**. They come from the owner's [planet lab](https://github.com/banodoco/planet) and should be read with the [production art direction](../art-direction.md).
+**Read this after [the active art specification](../art-direction.md) and [creative units](../creative-units.md).** These are all the eleven relevant versioned visual references currently gathered for the project. They are design evidence, **not** interchangeable production instructions or existing 3D source assets.
 
-| Local asset | Source | Purpose |
-| --- | --- | --- |
-| [current-vision-hero.png](current-vision-hero.png) | [lab screenshot](https://github.com/banodoco/planet/blob/main/reference/aistudio-screenshots/01_Current_Vision_Hero_a0a59988.png) | Original page composition and website language |
-| [current-planet-baseline.png](current-planet-baseline.png) | [lab screenshot](https://github.com/banodoco/planet/blob/main/reference/aistudio-screenshots/03_Existing_3D_Planet_f168c4a8.png) | Original globe before-state; curvature to preserve, flat materials to improve |
-| [current-pillars.png](current-pillars.png) | [lab screenshot](https://github.com/banodoco/planet/blob/main/reference/aistudio-screenshots/02_Current_Pillar_Cards_0606e64e.png) | Foundations/pillars layout reference |
-| [astrid-mink-provisional.webp](astrid-mink-provisional.webp) | [lab pixel mascot](https://github.com/banodoco/planet/blob/main/public/astrid-mink-provisional.webp) | Shape, colours and personality to carry into 3D |
-| [astrid-juggler-mink-poses.png](astrid-juggler-mink-poses.png) | [lab pose sheet](https://github.com/banodoco/planet/blob/main/public/astrid-juggler-mink-poses.png) | Simple sprite identity, not a billboard requirement |
-| [globe-composition.svg](globe-composition.svg) | Art-direction schematic authored for this plan | Regions, object hierarchy, quiet terrain — not a final render |
-| [reference-homepage-original.jpg](reference-homepage-original.jpg) | Owner's original 23 Nov chat screenshot (optimized 1,200px copy) | **Reference:** homepage layout, soft cloud pixels, restrained buttons, serif/cream/orange aesthetic |
-| [reference-vision-original.jpg](reference-vision-original.jpg) | Owner's original 23 Nov chat screenshot (optimized 1,200px copy) | **Reference:** starting globe scale, page copy, visual tension between current site and low-poly world |
-| [concept-01-island-anti-target.jpg](concept-01-island-anti-target.jpg) | First image generation from the design conversation | **Anti-target:** attractive materials but a floating-island silhouette rather than a planet |
-| [concept-02-overpopulated-anti-target.jpg](concept-02-overpopulated-anti-target.jpg) | Second image generation from the design conversation | **Anti-target:** over-dense, oversized landmark props and generic cartoony minks; retains good light/physicality ideas |
-| [concept-03-sphere-direction.jpg](concept-03-sphere-direction.jpg) | Later image generation from the design conversation | **Partial direction:** better full-globe silhouette and scene rhythm, but still too front-facing/large in places |
+## Current design anchors
 
-**The five chat images above are versioned review previews.** Each was downscaled to 1,200 pixels wide as a compact JPEG for the Git repository; original-resolution PNGs remain available in the owner's design conversation. The [production brief](../art-direction.md), not any single generated still, is the precise art authority. A front-facing floating island, oversize fantasy props and generic smooth cartoon minks **are explicit anti-targets**. Preserve the full sphere instead.
+| Asset | Use |
+| --- | --- |
+| [reference-vision-original.jpg](reference-vision-original.jpg) | Owner-supplied Vision screenshot: visual scale, editorial hierarchy, warm page and sphere placement |
+| [reference-homepage-original.jpg](reference-homepage-original.jpg) | Owner-supplied homepage screenshot: pixely clouds, mascot identity, peach/cream/orange language |
+| [current-vision-hero.png](current-vision-hero.png) | Captured website hero layout and composition, not a final sphere render |
+| [current-pillars.png](current-pillars.png) | Existing site's cards, typography, spacing and surfaces |
+| [current-planet-baseline.png](current-planet-baseline.png) | Useful sphere geometry/camera evidence from the existing planet study, **not** its art target |
+| [astrid-mink-provisional.webp](astrid-mink-provisional.webp) | Pixel-mink silhouette, colours, cream underside and distinctive features |
+| [astrid-juggler-mink-poses.png](astrid-juggler-mink-poses.png) | Pixel-mink pose vocabulary; its flat planes are not the required 3D geometry |
+| [concept-03-sphere-direction.jpg](concept-03-sphere-direction.jpg) | Exploratory full-sphere 3D direction; use only what supports current art requirements |
+| [globe-composition.svg](globe-composition.svg) | Conceptual placement hierarchy with quiet terrain; **not** an exact placement map |
 
-The copied lab files retain their original content/sha and credited source paths. The existing provenance and redistribution requirements in [inputs.md](../inputs.md) remain in force for production assets; external cultural inspirations must be transformed into original Astrid details, not copied third-party art.
+## Earlier visual experiments — comparison only
+
+The following two images are present **so an art reviewer can recognize and avoid specific visual drift**, not as concepts to reproduce:
+
+| Asset | Why it is not the target |
+| --- | --- |
+| [explorations/concept-01-island-anti-target.jpg](explorations/concept-01-island-anti-target.jpg) | The miniature looks like a flat-topped diorama/floating island, not a whole globe |
+| [explorations/concept-02-overpopulated-anti-target.jpg](explorations/concept-02-overpopulated-anti-target.jpg) | Attractive illumination, but too many oversized props and too much generic animated-film styling |
+
+## Source completeness and precedence
+
+For the original longer narrative, character and animation exploration, the project retains a [full creative-source transcript](../references/2026-11-24-production-brief-source.md). **It is a source record, not a second task list.** It contains exploratory choices that later evolved. In case of difference, follow **[plan.md](../plan.md), [art-direction.md](../art-direction.md), [creative-units.md](../creative-units.md) and [tasks.md](../tasks.md)** in that order. The current product requirement is a real-time rotatable 3D globe controlled by the existing site sky, with eight individually directed scene concepts and four potential aerial elements.
+
+**Provenance:** the three lab screenshots and two pixel-mink images were copied from [banodoco/planet](https://github.com/banodoco/planet). The owner-provided site screenshots and three exploratory stills were optimized as compact JPGs for repo use; full-resolution source material remains in the design conversation. The SVG is an authored planning schematic. None of these assets grants rights to use third-party visual material; keep finished 3D model, texture, and animation source/licence information in the implementation evidence.

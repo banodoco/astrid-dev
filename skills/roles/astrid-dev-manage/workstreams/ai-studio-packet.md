@@ -7,12 +7,12 @@ description: Drive one planet-lab packet through a fresh Google AI Studio sessio
 ## Workstream contract
 
 **Outcome:** One lab packet executed by a fresh AI Studio session and pushed to its own `lab/<id>` branch with a result note, ready for the reflection gate.
-**When to use:** When an operator (normally a Codex agent with browser control of the owner's AI Studio account) is given a Ready packet from a lab run board such as Plan 84's.
+**When to use:** When an operator (normally a Codex agent with browser control of the owner's AI Studio account) is given a Ready packet from a lab run board for the specified active lab run.
 **Inputs:** The run board, the packet brief and `LAB_RULES.md` at the lab's `main` head, the owner's latest instructions, the AI Studio workspace linked to the lab repository.
 **Procedure:** Check the packet is Ready, open a fresh AI Studio session on `main`, paste the start prompt, supervise to the result note, push `lab/<id>`, then report to the owner.
 **Completion:** The branch exists at a recorded commit with `packets/<id>.result.md`, and the owner has a short report (or a blocker) naming the packet, branch, commit and AI Studio's own check output.
 
-Use for a lab repository built to be developed in Google AI Studio and imported into an Astrid product repository at the end, as in [Plan 84's lab run](../../../../plans/84-living-planet-on-the-vision-page/ai-studio-run.md). **You are the operator, not the engineer.** AI Studio writes the code; you give it the packet, keep it inside the packet, and move its work to GitHub. You do not review it: a fresh Astra reviewer does ([Astra reflection](astra-reflection.md)), and a packet is merged into the lab's `main` only on that reviewer's accept verdict. When you are also the run's manager, you commission that reviewer and do the merge.
+Use for a lab repository built to be developed in Google AI Studio and imported into an Astrid product repository at the end, where a project explicitly selects this route and provides a current run board. **You are the operator, not the engineer.** AI Studio writes the code; you give it the packet, keep it inside the packet, and move its work to GitHub. You do not review it: a fresh Astra reviewer does ([Astra reflection](astra-reflection.md)), and a packet is merged into the lab's `main` only on that reviewer's accept verdict. When you are also the run's manager, you commission that reviewer and do the merge.
 
 ## Run one packet
 
