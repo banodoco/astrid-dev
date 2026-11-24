@@ -1,0 +1,8 @@
+lane	cluster	outcome	job	id
+ci	C33	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_generation_verified_preparation_gr03.py::test_complete_frozen_recipe_matches_members_and_detached_approval
+ci	C33	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_generation_verified_preparation_gr03.py::test_opaque_target_model_alias_is_rejected
+ci	C33	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_generation_verified_preparation_gr03.py::test_randomness_is_resolved_before_binding_and_no_files_are_reopened_after_freeze
+ci	C33	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_generation_verified_preparation_gr03.py::test_target_model_missing_from_actual_root_fails_closed
+ci	C37	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_p1_case_corpus.py::test_real_canonical_documents_execute_the_recorded_edits[nested-closure-trim]
+ci	C37	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_p1_case_corpus.py::test_same_field_edit_is_a_real_refusal_case
+ci	C37	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_commit_provider.py::test_provider_accepts_trim_after_move_and_undoes_only_trim

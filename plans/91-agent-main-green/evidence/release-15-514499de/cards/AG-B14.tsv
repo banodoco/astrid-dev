@@ -1,0 +1,35 @@
+lane	cluster	outcome	job	id
+ci	C416	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_capture_method_imports_and_runs_without_renderer_or_runtime
+ci	C90	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_projection_is_detached_json_deterministic_without_io[False]
+ci	C90	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_projection_is_detached_json_deterministic_without_io[True]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[child]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[duplicate]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[new_shot]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[parent]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[remove]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[sdk_bundle]
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_saved_entire_expansion_golden
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_saved_projection_config_registry_and_full_pins_golden
+lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_saved_canonical_images_preserve_authored_fields_pins_order_and_read_rows
+lanes	C18	FAILED	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_pristine_init_first_birth_reload_undo_and_missing_word_source[image]
+lanes	C18	FAILED	integration shard 3 _ 4	tests/editing_conformance/test_next_command_cohort_runtime.py::test_pristine_init_first_birth_reload_undo_and_missing_word_source[video]
+lanes	C18	FAILED	integration shard 3 _ 4	tests/editing_conformance/test_next_ordinary_union_runtime.py::test_born_occurrence_text_order_clear_grouped_inverse_and_redo[]
+lanes	C18	FAILED	integration shard 3 _ 4	tests/editing_conformance/test_next_ordinary_union_runtime.py::test_born_occurrence_text_order_clear_grouped_inverse_and_redo[new occurrence text\r\n]
+lanes	C18	FAILED	integration shard 3 _ 4	tests/editing_conformance/test_occurrence_fork_source_baseline.py::test_current_runtime_retained_fork_then_emitter
+lanes	C18	FAILED	integration shard 3 _ 4	tests/editing_conformance/test_s3_reviewed_cohort_runtime.py::test_init_occurrence_media_parent_swap_word_grouped_inverse_reload_restart
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_cas_and_unclaimed_inputs_stay_uncertified[False]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_cas_and_unclaimed_inputs_stay_uncertified[True]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_forged_capture_refuses_before_any_writes[config]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_forged_capture_refuses_before_any_writes[expansion]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_forged_capture_refuses_before_any_writes[missing-media]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_forged_capture_refuses_before_any_writes[registry]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_replacement_refuses_before_label[config]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_replacement_refuses_before_label[metadata]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_replacement_refuses_before_label[prepared]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_replacement_refuses_before_label[ref]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_replacement_refuses_before_label[registry]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_replacement_refuses_before_label[source]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_retained_source_reaches_exact_final_root_inside_normal_lifetime[False]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_retained_source_reaches_exact_final_root_inside_normal_lifetime[True]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_runtime_capture_ref_reaches_existing_host_source[False]
+lanes	C7	ERROR	integration shard 3 _ 4	tests/packs/rendering/test_live_source_label_native.py::test_runtime_capture_ref_reaches_existing_host_source[True]
