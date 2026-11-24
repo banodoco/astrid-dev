@@ -157,6 +157,8 @@ function refusalFields(text) {
 function observeRequests(page) {
   const events = new Map();
   const bodies = [];
+  let resolveVerifiedHeadRefusal;
+  const verifiedHeadRefusal = new Promise(resolve => { resolveVerifiedHeadRefusal = resolve; });
   page.on('request', request => {
     const target = new URL(request.url());
     if (target.origin !== origin) return;
@@ -171,9 +173,13 @@ function observeRequests(page) {
     const status = response.status();
     Object.assign(event, {status, headers: clock()});
     if (!(status >= 200 && status < 300) && event.route.startsWith('/api/runtime')) {
-      bodies.push(response.text()
+      const body = response.text()
         .then(text => Object.assign(event, {body: refusalFields(text)}))
-        .catch(error => Object.assign(event, {body: {unreadable: error?.name ?? 'Error'}})));
+        .catch(error => Object.assign(event, {body: {unreadable: error?.name ?? 'Error'}}));
+      bodies.push(body);
+      if (event.method === 'GET' && event.route === verifiedHeadRoute && status === 409) {
+        body.then(() => resolveVerifiedHeadRefusal(event));
+      }
     }
   });
   page.on('requestfinished', request => {
@@ -186,7 +192,7 @@ function observeRequests(page) {
   });
   const rows = () => [...events.values()];
   return {rows, posts: () => rows().filter(row => row.method === 'POST' && row.route === commitRoute),
-    settle: () => Promise.allSettled(bodies)};
+    settle: () => Promise.allSettled(bodies), verifiedHeadRefusal};
 }
 
 // Arm and reset protocol, matching browser-two-save-profile.mjs (prepareSave) for every drag:
@@ -591,12 +597,17 @@ try {
   receipt.navigation = clock();
   await page.goto(url.href, {waitUntil: 'commit', timeout: 120_000});
   const navMs = performance.now() - receipt.navigation.monotonic_ms;
-  const writable = await page.waitForFunction(() => {
+  const writableWait = page.waitForFunction(() => {
     const tape = window.__p77DispatchTrace;
     if (!tape?.fullWritable()) return false;
     tape.watchBadge();
     return {monotonic_ms: performance.now(), time_origin: performance.timeOrigin};
-  }, null, {timeout: Math.max(1, 900_000 - Math.ceil(navMs))});
+  }, null, {timeout: Math.max(1, 120_000 - Math.ceil(navMs))});
+  const writable = await Promise.race([writableWait, recorder.verifiedHeadRefusal.then(event => {
+    receipt.s0 = {refusal: true, verified_head: {route: event.route, status: event.status, body: event.body ?? null},
+      refused_ms: event.headers.epoch_ms - receipt.navigation.epoch_ms};
+    throw new Error('S0 verified-head returned HTTP 409; stopping before scenario saves');
+  })]);
   const writableValue = await writable.jsonValue();
   await recorder.settle();
   const openingRows = recorder.rows();
@@ -771,8 +782,10 @@ try {
   receipt.non_2xx_runtime = (recorder?.rows() ?? []).filter(row => row.route?.startsWith('/api/runtime') &&
     row.status !== undefined && !(row.status >= 200 && row.status < 300))
     .map(row => ({method: row.method, route: row.route, status: row.status, body: row.body ?? null}));
-  receipt.refusal_count = receipt.refusals.length + (receipt.s0?.refusal ? 1 : 0) +
-    receipt.non_2xx_runtime.filter(row => row.status === 409 || row.body?.reason === 'head_busy').length;
+  const s0Refusal = Boolean(receipt.s0?.refusal);
+  receipt.refusal_count = receipt.refusals.length + (s0Refusal ? 1 : 0) +
+    receipt.non_2xx_runtime.filter(row => (row.status === 409 || row.body?.reason === 'head_busy') &&
+      !(s0Refusal && row.method === 'GET' && row.route === verifiedHeadRoute)).length;
   receipt.requests = recorder?.rows() ?? [];
   await writeReceipt('browser-sv3-measure', receipt);
 }

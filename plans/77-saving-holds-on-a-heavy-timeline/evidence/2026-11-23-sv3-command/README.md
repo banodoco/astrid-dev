@@ -85,9 +85,10 @@ Not established:
 
 Order (normal mode): S0, cold, S1, S2, S3, S4, B5, B10, then the Agent step. Profile mode: S0, cold, W1, W2, W3, B5, B10, then the Agent step. One fresh headless profile, one browser session.
 
-- **S0.** Page load is the first browser action. It ends when the editor is writable. Recorded: navigation to writable
-  in ms, and the status and body of `GET .../verified-head` (route family `timeline.verified_head.v1`, path
-  `getTimelineVerifiedHead` in `client.ts`). A refusal is HTTP 409 or reason `head_busy`.
+- **S0.** Page load is the first browser action. It ends when the editor is writable, with a 120 s deadline. Recorded:
+  navigation to writable in ms, and the status and body of `GET .../verified-head` (route family
+  `timeline.verified_head.v1`, path `getTimelineVerifiedHead` in `client.ts`). An HTTP 409 is recorded immediately and
+  fails the attempt before any save scenario starts.
 - **cold.** One sequential drag, checked against the expected start `191.3667`.
 - **S1** one sequential drag. **S2** two sequential drags, with 200 ms from Saved to the next drag. **S3** ten
   sequential drags, with 150 ms from Saved. **S4** five sequential drags, each waited to Saved.
@@ -98,8 +99,9 @@ Order (normal mode): S0, cold, S1, S2, S3, S4, B5, B10, then the Agent step. Pro
 
 Each drag records: `release_to_post_ms`, `post_to_200_ms`, `response_to_saved_ms`, `release_to_saved_ms`
 (the sum of the first three), `post_to_saved_ms`, `http_status`, `refusal` (reason, body code and badge), the network
-POST count, and `failed` with the failed phase and reason. A refusal or non-2xx response does NOT abort the
-repetition. The driver records it and continues with the next drag. A sequential drag after a failure uses the
+POST count, and `failed` with the failed phase and reason. An HTTP 409 from the S0 verified-head request is recorded as
+the first refusal and stops the browser attempt before any scenario save. Other refusals or non-2xx responses during
+save scenarios are recorded and the driver continues with the next drag. A sequential drag after a failure uses the
 reset path (`prepareOverlapped`) and keeps the last verified head. Every non-2xx response on an `/api/runtime` route is
 kept in `non_2xx_runtime`. The POST counts are recorded, not asserted.
 
@@ -284,12 +286,11 @@ Not established:
 - The synthetic test of `agent-prepare` used a fake installed directory built from the base blobs. The real installed
   directory was not read.
 
-SV-4 retains the proven two-file Agent overlay exactly: only `_commit_patch.py` and `_doc_patch.py` are candidate files;
-all other Agent modules remain installed and unchanged. Runtime is supplied as the exact full archive for candidate
-commit `55806c16a316754ec974a741db353463371fd2c5`, based on retained commit
-`77c38d037f98f744bd8f41c15d95429c124a8003`. That candidate changes the six authorized Runtime modules to blob set
-`9f75` (per the separately recorded source audit). The archive mechanism preserves all other Runtime files from the
-retained candidate tree; this package does not introduce a selective six-file Runtime overlay.
+SV-4 retains the proven two-file Agent overlay exactly at candidate `096a`: only `_commit_patch.py` and `_doc_patch.py`
+are candidate files; all other Agent modules remain installed and unchanged. Runtime is supplied as the exact full
+archive for candidate commit `eb4e8644e3549c88d5d836cd5738ca75e76d311a` (tree `01a93de2...`), based on retained
+commit `77c38d037f98f744bd8f41c15d95429c124a8003`. The candidate includes SV-2g and the timing sink; the archive
+mechanism preserves all other Runtime files from the retained candidate tree.
 
 ## Runtime timing sink
 
