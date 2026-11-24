@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-Draft task outline; all rows unchecked. Refresh exact source symbols, test selectors, reviewed owner decisions, permissions and integration base at dispatch. This proposal grants no execution authority.
+**Cancelled; history only, dispatch nothing.** The template work is [Plan 95](../95-composable-agentic-workspaces/tasks.md)'s OT-11 and OT-12. Draft task outline; all rows unchecked. Refresh exact source symbols, test selectors, reviewed owner decisions, permissions and integration base at dispatch. This proposal grants no execution authority.
 
 **Task ids:** PT-1–PT-7, RS1, R. **Critical path:** PT-1 → RS1 → PT-2 → PT-3/PT-4 → PT-5 → PT-6/PT-7 → R. **Test inventory:** scripts/test_pack_shape.py, test_document_structure.py, test_records.py, test_checks.py, test_golden.py, test_check_project_planning.py, test_check_completion.py, final Plan 73 agent-document/link tests; exact inventory at PT-1.
 
