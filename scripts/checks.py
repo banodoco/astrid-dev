@@ -465,6 +465,16 @@ class Check:
             raise ValueError("check must be callable")
 
 
+def _project_delivery(context: Context) -> list[str]:
+    from project_delivery import load_delivery
+
+    try:
+        load_delivery(context.root)
+    except (ValueError, OSError) as exc:
+        return [str(exc)]
+    return []
+
+
 REGISTRY: tuple[Check, ...] = (
     Check('plan-catalog', 'always', 'Parse the plan catalog', _catalog),
     Check('unique-project-numbers', 'always', 'Require unique project numbers', _unique_project_numbers),
@@ -483,6 +493,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('link-anchors', 'always', 'Validate links to headings in skills, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
     Check('workstream-structure', 'always', 'Validate common workstream contracts and skill or document packaging', _workstream_structure),
+    Check('project-delivery', 'always', 'Validate authored project-delivery relationships', _project_delivery),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
