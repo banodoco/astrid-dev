@@ -8,7 +8,9 @@
 
 **Prior art:** the [floor experiment](../82-reuse-across-commands/evidence/2026-11-24-thin-client-floor/README.md), [why each check](../82-reuse-across-commands/evidence/2026-11-24-why-each-check/README.md), Plan 81's [critique](../81-once-per-command/evidence/critique.txt) and [Plan 55](../55-local-speed/plan.md)'s resident-session branch.
 
-**Challenge:** Pending — GS-1's review.
+**Approach:** A resident host that holds discovery results and prepared templates, and a thin client that sends the request to it, falling back to today's full path when the host is missing or a different version. The [floor experiment](../82-reuse-across-commands/evidence/2026-11-24-thin-client-floor/README.md) measured 0.32 s this way. Rejected: disk caches as the main path, which stay near 2 s; they are [Plan 82](../82-reuse-across-commands/plan.md), kept to speed the first command after a restart.
+
+**Challenge:** Reviewed — Astra's independent critique of the [first-principles note](../82-reuse-across-commands/evidence/2026-11-23-generate-first-principles/README.md#independent-critique-astra-read-only-from-the-first-draft) and the Lead's risk analysis of 24 November 2026, recorded in [plan.md](plan.md); GS-1 also gets its own high-judgment review before it lands.
 
 **Proof and limits:** [plan.md](plan.md#completion); timings come from a container and a stand-in ComfyUI.
 
