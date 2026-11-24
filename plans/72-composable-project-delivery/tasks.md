@@ -1,5 +1,7 @@
 # Tasks — Composable project-delivery relationships
 
+**Paused handoff (24 Nov 2026):** The owner paused this project. The latest preserved recovery candidate is draft [PR #1624](https://github.com/banodoco/astrid-dev/pull/1624) at `13bb989e80c60c69e7b7af91e80efbd67cc028a8`, stacked on [#1212](https://github.com/banodoco/astrid-dev/pull/1212); it is not integrated into Release 15. Disposable source tests and fixed-revision feed parity are recorded in the PR. A combined repository check exposed missing historical branch rows and linked source dependencies; consult exact-head evidence rather than assuming release integration is green. Release HOLD, Lead custody and protection, formal RS1 and final review remain unresolved. Prior private checkout and unpushed work are unverified. This note does not mark a task complete or authorize resumption.
+
 [Plan](plan.md) · [Inputs](inputs.md)
 
 **Implementation still gated:** apart from the owner-authorized read-only PD-0 baseline, these cards become executable when the scope is greenlit, a run is recorded in [inputs.md](inputs.md), and current source IDs and the sole writer for each shared surface are verified. Paths include their own tests. **Routes** N/X/S follow the [shared run contract](../../skills/shared/run-contract.md); N helpers may gather evidence for X/S work, but not make review decisions. No cross-repository code changes are authorized.

@@ -1,5 +1,7 @@
 # Tasks — Gap definition and reconciliation
 
+**Paused handoff (24 Nov 2026):** The owner paused this project. The latest preserved recovery candidate is draft [PR #1625](https://github.com/banodoco/astrid-dev/pull/1625) at `69d51ef3a857933c34bccf32f78da48af70a68e7`, carrying the earlier [#1444](https://github.com/banodoco/astrid-dev/pull/1444) proposal; do not merge both overlapping candidates. C1/C2 source replay and repository tests passed on exact source `2a3bf7a66a888e20f0fc35c7e2dcc5a7bc1e30c1` ([run 45266399705](https://github.com/banodoco/astrid-dev/actions/runs/45266399705)). Original RS2 remains REWORK, one use consumed; holdout is consumed. Independent semantic assessment, proof, migration and final review remain open. Prior private checkout and unpushed work are unverified. This note does not mark a task complete or authorize resumption.
+
 [Plan](plan.md) · [Inputs](inputs.md)
 
 **Task IDs:** GD-1–GD-14, plus RS1, RS2 and R. **Current scope:** only Phases 1–5. Phases 6–7 are deferred descriptions below, not executable rows. **Critical path:** GD-1 → GD-2 and GD-3 → GD-4 → RS1 → GD-5 → GD-6 → GD-7 → GD-8 → RS2 → GD-9 → GD-10 → GD-11/GD-12/GD-13 → R → GD-14. The phase gates protect against using an untested definition or migrating an unapproved taxonomy; GD-2 and GD-3 may run in parallel after GD-1. GD-11 and GD-12 may run in parallel only when source owners allow it; GD-13 follows both to validate the complete migration.
