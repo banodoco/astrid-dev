@@ -13,6 +13,7 @@ Use the production's **individual scene or flying object** as the unit of artist
 Every SC card has, before detailed production: a one-paragraph emotional purpose, an approximate place/latitude and accessible time-of-day views on the globe, a quick silhouette/graybox, character and prop scale relative to the planet, one distinctive activity or deliberately chosen still moment, what it should *not* copy, and an intentional relationship to nearby empty terrain.
 
 Every completed SC card includes:
+- A **reference-versus-current-result review sheet**: the established Astrid mink/style benchmark or previously accepted scene, the new candidate at comparable scale/angle, and one full Vision hero crop. Show the actual images inline to the owner when possible; simply naming a reference file does not count.
 - An actual Vision-hero-size screenshot at **390×844 and 1440×900**, with relevant typography and cloud layers; also daylight and night views.
 - A short **8–20-second** clip showing its defining motion and rest, or an accepted intentionally static beat. The founding workshop vertical slice is longer, **20–30 seconds**, because it establishes the shared animation grammar.
 - Curvature, correct terrain contact, materials, occlusion, coherent lighting and mascot identity. No oversized objects, excessive constant motion or competing focal points.
@@ -39,7 +40,7 @@ The meaning of these scenes is more important than prop count. Translate all cul
 
 ## Four airborne creative units
 
-Each FL concept has **its own** silhouette, scale, route and altitude, motion cadence, visibility frequency, plausible occlusion around the planet, day/night lighting, and short signed-off proof clip. Like scenes, a flight can be accepted, revised or omitted; the owner decides whether the full set belongs in the finished composition.
+Each FL concept has **its own** silhouette, scale, route and altitude, motion cadence, visibility frequency, plausible occlusion around the planet, day/night lighting, and short signed-off proof clip. The flight review includes its original approved silhouette/trajectory graybox **beside** the current movement and its normal-size appearance on the Vision page. Like scenes, a flight can be accepted, revised or omitted; the owner decides whether the full set belongs in the finished composition.
 
 | Flying unit | Creative direction and distinction |
 | --- | --- |
