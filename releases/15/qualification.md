@@ -25,7 +25,7 @@ The Qualifier finds, measures, records and reports. **It never decides that a fa
 
 ### Tier 3 — not a Release 15 bar
 
-Fully green suites ([Plan 39](../../plans/39-green-mains/plan.md) and [Plan 91](../../plans/91-failures-caught-on-every-pull-request/plan.md), Release 16).
+Fully green suites ([Plan 39](../../plans/39-green-mains/plan.md) and [Plan 91](../../plans/91-agent-main-green/plan.md), Release 16).
 
 ## Release 14 reference (what "new failure" is measured against)
 
