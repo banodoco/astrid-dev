@@ -46,3 +46,7 @@ Observed, not execution pins: astrid-dev `main` at `0b1c9fd0e3bd063caa4b412e8bf3
 - [Planet authoring study](https://github.com/banodoco/planet).
 - [Astrid app Vision checks](https://github.com/banodoco/astrid-app/blob/release/15/main/.github/workflows/public-vision.yml).
 - [Release 15](../../releases/15.md), [run contract](../../skills/shared/run-contract.md), and [project-format rules](../../docs/project-format.md).
+
+## Full source-context inventory (24 November 2026)
+
+The project includes the [active visual specification](art-direction.md), [eight scene and four aerial briefs](creative-units.md), [complete reference-image inventory](assets/README.md) and an [archival copy of the longer original production brief](references/2026-11-24-production-brief-source.md). The source brief preserves art/rigging/story inspiration but does **not** override current scope, interaction rules, status or task priorities. The original images in the design conversation have compact repo copies; none are approved final assets or runnable 3D geometry.
