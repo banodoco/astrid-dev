@@ -12,7 +12,7 @@ The historical planning entries below describe what was known at their dates; th
 
 ## Planning evidence
 
-**Scope decision:** Accepted — on 24 November 2026 the owner accepted the plan's scope as written, delivered by the existing candidate stack and finished by the completion-run cards, on the astrid-dev-only route ([D6](#owner-decisions)).
+**Scope decision:** Accepted — on 24 November 2026 the owner accepted the plan's scope as written, delivered by the existing candidate stack and finished by the completion-run cards, on the astrid-dev-only route ([D6](./inputs.md#owner-decisions); stack head `13bb989e80c60c69e7b7af91e80efbd67cc028a8`).
 
 **Earlier scope record:** Pending — scope proposal [#1064](https://github.com/banodoco/astrid-dev/pull/1064) and Release 15 placement [#1071](https://github.com/banodoco/astrid-dev/pull/1071) merged; independent critique findings and recorded acceptance remain outstanding. The owner authorized clean-break whole-plan continuation and planning-record corrections without waiving formal review or release gates. Next: receive the supervisor-dispatched supplementary #1161 architecture critique, record its findings/provenance, and resolve the scope decision before an implementation merge; it is not formal RS1.
 
@@ -20,7 +20,7 @@ The historical planning entries below describe what was known at their dates; th
 
 **Approach:** Proposed — keep current files and domain rules as canonical, add only a standard-library typed-reference/link foundation and one concrete delivery composition, and consolidate repeated relationship interpretation after proving behavior. Alternatives: (a) do nothing, leaving scattered interpretations and no reusable traversal; (b) extend only each existing domain parser, cheapest now but still without a shared cross-domain representation; (c) build a universal pipeline engine, graph store or YAML DSL, rejected as speculation with no second real execution consumer; (d) fold everything into `records.py`, rejected provisionally because parsing and cross-domain relationship semantics have different responsibilities. The independent critique must challenge whether the new module and separate composition file each earn their existence.
 
-**Challenge:** Folded into the final review — per [D6](#owner-decisions), the never-executed RS1 round and the architecture critique are covered by the final review R on the integrated candidate.
+**Challenge:** Not needed — as a separate stop: by the owner's [D6](./inputs.md#owner-decisions) of 24 November, the architecture critique and the unspent RS1 round are covered by the final review R on the integrated candidate. A supplementary critique of #1161 was already returned (draft #1219).
 
 **Earlier challenge record:** Pending — this changes shared checks and exported interpretation, so the [plan workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) requires independent high-judgment critique before scope greenlight. The supervisor dispatched a **separate read-only supplementary architecture critique** on [#1161](https://github.com/banodoco/astrid-dev/pull/1161) exact `16eaf64899f2dde82c7cb79ad92b88928afbd374` and will return source-cited findings and provenance; this manager must not duplicate it. Next: assess findings about reuse, identity/provenance, cardinality, goal aliases, release/issue authority, negative controls, regression cost and deletions, recording accepted cuts. This supplementary critique is **not** formal RS1 or Release 15 authorization.
 
