@@ -296,3 +296,22 @@ Cap: at most **four** packets in Running or Review at once. P82-01 goes alone fi
 | [R15-P82-07](packets/R15-P82-07.md) | RA-0b part 2 (X): shipped discovery and registry caches | Blocked on P82-06 and RN-4 | — | astrid-agent `p82/RA-0b-cache`; PB-7c's two refusals against a warm cache first; high-judgment review |
 
 Stays in the orchestrator's lane: RA-0a (the measurements, including the real import profile P82-02 starts from), every installed timing, and R (the final high-judgment review).
+
+## Qualification dispatch
+
+Added 24 November 2026 by the Release 15 Qualifier (`r15-qualifier`, `session_011EzfW1Lc24EARJQsmbgNfo`) under the Lead's instruction. The bar is [qualification.md](qualification.md). Mailbox: [astrid-dev #1834](https://github.com/banodoco/astrid-dev/issues/1834), run `r15-qual-dispatch`. Manager: `r15-qual-manager-1`, which starts one fresh ChatGPT session per packet (`r15-Q-NN-<n>`); the Qualifier is the packet workstream's Lead for this queue, and the Release 15 Lead keeps the gate into `release/15/main`.
+
+### Rules for qualification packets
+
+1. **Issue packets only** ([rolling queue](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#rolling-queue)): a failing test id or an exact repro that a sandbox with no network can target, a fix of about 3 hours or less, one contract, no owning lane. A failure in a plan's own code goes to that plan's orchestrator.
+2. **Never packet work:** anything needing an installed build, a GPU, a render, a real timing or hosted CI to reproduce.
+3. **Each packet carries** its exact selectors, the failing ids, the tests that must pass unchanged, and "no existing assertion changes".
+4. **PR destination:** `p15q/<packet id>` → `release/15/q-<topic>` (a topic branch the Qualifier cuts from `release/15/main`), then `release/15/q-<topic>` → `release/15/main` through the Lead's gate.
+5. **Proof:** a packet posts `READY-PROOF <repo> <PR> <head> <selectors>`; the Qualifier answers within 45 minutes, proofs run in parallel. Packet sessions never merge, never edit `tasks.md`, never dispatch hosted CI.
+6. **Cap:** at most **three** packets in Running or Review at once. None starts before the Lead's DECISION answers the manager's startup STATUS and the Qualifier posts its own.
+
+### Dispatch queue (qualification)
+
+| Packet brief | Source failure | Handoff | Session | Next action / evidence |
+| --- | --- | --- | --- | --- |
+| — | No packet yet. First candidates: none found; the Release 14 Runtime and App reference sets are in [evidence/ci-baseline-r14](evidence/ci-baseline-r14/README.md). | — | — | The Qualifier writes a packet when a whole-run comparison on a landed head names a failing id with a no-network repro and no owning lane. |
