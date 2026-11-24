@@ -12,7 +12,7 @@ Enter through [astrid-dev](../../astrid-dev/SKILL.md). The **Lead is the release
 1. **Own the release outcome.** Choose priorities, resolve cross-plan questions and keep the next work ready, within accepted scope.
 2. **Keep responsibility clear.** Each plan run names one accountable agent: a plan manager or, under [fresh-packet dispatch](workstreams/multi-manager-release.md), **you**, with each ChatGPT session owning only its packet.
 3. **Judge results.** Accept a submission or name its rework; landed work shows in `tasks.md`, not a second checklist.
-4. **Keep progress legible.** Maintain the existing release brief, run board and decisions; tell the owner what moved, what is blocked and which decisions need them.
+4. **Keep progress legible.** Maintain the existing release brief, run board and decisions, and use the run contract's [boards and check-ins](../../shared/run-contract.md#coordination-boards-and-check-ins) with every role; tell the owner what moved, what is blocked and which decisions need them.
 5. **Own release integration.** Follow [Release](../../shared/workstreams/astrid-dev-release/SKILL.md) for landing order, branch health, qualification and a separate owner's go to publish.
 6. **Tell an environment block from slow work.** At each check-in, compare every plan and packet with the last. Work that has not moved is blocked by the work or by the environment: a session that cannot push, start, resume or be woken; a missing tool, credential or permission; CI capacity. Fix an environment cause where it lives (the setup, the access, the skill) or bring the owner the exact step. Never dispatch into the same wall again.
 

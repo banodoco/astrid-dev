@@ -97,6 +97,15 @@ Keep only the recovery state needed to resume: goal, ready tasks/dependencies, c
 
 When work proceeds without the owner (for example, a contributor or agent helping while the owner is offline or out of quota), keep a decisions ledger from the [template](templates/decisions-ledger.md). Record any proposed change to the written plan, an in-scope best guess where it is silent, any stop-and-ask decision awaiting authority (such as a conflict where both sides change one statement), the trajectory inferred, and improvements not built. Include evidence, the candidate SHA when one exists, and how to revert. A provisional proposal is never permission to execute work outside the accepted scope or bypass a stop. This is the concrete need the paragraph above asks for: it lets the owner accept, change or revert each call later, without rereading the run. A ledger entry is never authorization: stop-and-ask boundaries remain stops, and anything that lands still needs the owner's go.
 
+## Coordination: boards and check-ins
+
+One board per project, shared by every role on it (Lead, orchestrator, manager, packet sessions), so the history is where the owner can read it.
+
+- **Find your board by its title.** It is the open astrid-dev issue titled `board: release <N> plan <P>`, or `board: release <N> <name>` for other runs, and `board: release <N>` for the release Lead. Search issue titles for it. If it doesn't exist, create it, with the header block and name table in its first post ([format](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox)). Never open a second board for the same project.
+- **Your name follows the board.** It is `r<N>-p<P>-orchestrator`, `r<N>-p<P>-manager-<n>` or `r<N>-<packet>-<n>`, and `r<N>-release-lead` for the Lead. Your first post on the board gives your session id.
+- **Every hour.** Read your board and the release board to the last page. Post one STATUS on your board, `to:` the role you report to, who answers there. `send_message` is only a one-line doorbell for something that can't wait an hour.
+- **Your own check-in.** At start-up, create your own hourly scheduled task (at a minute other than :30) and check that it fires. Never disable another session's task. A Claude cloud session also keeps a keep-awake loop: a background `sleep` of about 110 minutes, restarted each hour.
+
 ## Checks and failure repair
 
 Locally, run only explicitly scoped, feature-focused test runs; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. The full relevant suite runs on hosted CI, only at the moments the [table below](#when-a-test-run-is-load-bearing) names ([how](workstreams/astrid-dev-green/SKILL.md#using-github-actions)). Pure planning and research do not execute product checks unless specifically requested. Editing planning documents or check code still requires the appropriate local documentation validators and focused unit tests before submitting a PR; that validation is not permission to execute product tests. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.
