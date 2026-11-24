@@ -14,8 +14,9 @@ Buckets for each test the candidate ran:
   missing      passed on a baseline; not run on the candidate (deleted, skipped or uncollected).
                Reported always; blocks only with --fail-on-missing (or --strict).
 An XFAIL counts as passing, because the test met its expectation; a strict XPASS is reported FAILED by pytest.
-What is read from a log: if it holds a "short test summary info" section, only the last one before the job's final
-result line (so pytest output that a test prints from an inner run is not counted), plus the failed subtests, which
+What is read from a log: if it holds a "short test summary info" section, the last one before each of the log's own
+runs' final result lines (sequential runs, such as a GitHub job's several pytest steps or a repeat loop, are each read;
+pytest output that a test prints from an inner run is not counted), plus the failed subtests, which
 pytest counts in "N failed" but gives no summary row; each is read from its SUBFAILED(...) progress line and keyed
 "<nodeid> SUBFAILED(<params>)". A failed subtest with no entry on a baseline takes its parent test's status there.
 A log with such a section but no final result line is truncated: bad input. A log with no such section (bare
@@ -62,27 +63,86 @@ def _node_id(rest):
     return rest.split(" - ", 1)[0].strip()
 
 
+_HEADER = re.compile(r"^=+ test session starts =+$")
+_STEP = re.compile(r"^##\[group\]Run ")
+_SELECTION = re.compile(r"^===== selection \d+ of \d+: ")
+_CANCELLED = re.compile(r"^##\[error\]The operation was cancell?ed\.")
+
+
+def _top_level_runs(lines):
+    """The log's own pytest runs as [(start, summary_start or None, end)], and problems.
+
+    A log can hold several sequential runs (a GitHub job's several pytest steps, a repeat loop, two runs pasted
+    together), and a test can print an inner run's output inside the outer one. A GitHub job log is cut at each
+    "##[group]Run" step line and each "===== selection i of n" repeat line, and each piece's run is its last final
+    result line with the last summary section before it (inner output comes before the outer summary). A plain log
+    pairs each "test session starts" line with a final result line like a bracket: a top-level pair is a run, a pair
+    inside another is an inner run. A plain log with no session header (pytest -q) is one run. A run that starts and
+    never ends, or GitHub's cancel line, is a problem.
+    """
+    runs, problems = [], []
+    if any(_CANCELLED.match(line) for line in lines):
+        problems.append("the job was cancelled or timed out")
+    if any(_STEP.match(line) for line in lines):
+        bounds = [i for i, line in enumerate(lines) if _STEP.match(line) or _SELECTION.match(line)]
+        for a, b in zip([0] + bounds, bounds + [len(lines)]):
+            finals = [i for i in range(a, b) if _FINAL.match(lines[i])]
+            if not finals:
+                if any(_HEADER.match(lines[i]) or _SUMMARY.match(lines[i]) for i in range(a, b)):
+                    problems.append(f"a pytest run from line {a + 1} has no final result line")
+                continue
+            starts = [i for i in range(a, finals[-1]) if _SUMMARY.match(lines[i])]
+            runs.append((a, starts[-1] if starts else None, finals[-1]))
+        return runs, problems
+    if not any(_HEADER.match(line) for line in lines):
+        finals = [i for i, line in enumerate(lines) if _FINAL.match(line)]
+        starts = [i for i, line in enumerate(lines) if _SUMMARY.match(line)]
+        if finals:
+            before = [i for i in starts if i < finals[-1]]
+            runs.append((0, before[-1] if before else None, finals[-1]))
+        if starts and (not finals or starts[-1] > finals[-1]):
+            problems.append("a short test summary section has no final result line after it")
+        return runs, problems
+    stack = []
+    for i, line in enumerate(lines):
+        if _HEADER.match(line):
+            stack.append(i)
+        elif _FINAL.match(line) and stack:
+            begin = stack.pop()
+            if not stack:
+                starts = [k for k in range(begin, i) if _SUMMARY.match(lines[k])]
+                runs.append((begin, starts[-1] if starts else None, i))
+    if stack:
+        problems.append(f"a pytest session from line {stack[0] + 1} has no final result line")
+    return runs, problems
+
+
 def _result_lines(path):
-    """(status, node id) for the lines of one log that count: the job's own last summary section, else every line."""
+    """(status, node id) for the lines of one log that count: each of the log's own runs' summary sections and failed
+    subtests (see _top_level_runs), or every line of a log with no summary section at all (bare PASSED/FAILED lines)."""
     lines = [_STAMP.sub("", raw).strip() for raw in Path(path).read_text(errors="replace").splitlines()]
-    starts = [i for i, line in enumerate(lines) if _SUMMARY.match(line)]
-    scope, subfailed_end = lines, len(lines)
-    if starts:
-        finals = [i for i, line in enumerate(lines) if _FINAL.match(line) and i > starts[-1]]
-        if not finals:
-            raise TruncatedLog(f"{path}: a short test summary section but no final result line after it "
-                               "(cancelled, timed out or truncated job)")
-        scope, subfailed_end = lines[starts[-1] + 1:finals[-1]], finals[-1]
-    for line in scope:
-        m = _LINE.match(line)
-        if m:
-            yield m.group(1), _node_id(m.group(2))
-    seen = set()
-    for line in lines[:subfailed_end]:
-        m = _SUBFAILED.match(line)
-        if m and line not in seen:
-            seen.add(line)
-            yield "FAILED", f"{m.group(1)} SUBFAILED{m.group(2)}"
+    if not any(_SUMMARY.match(line) or _HEADER.match(line) or _STEP.match(line) for line in lines):
+        for line in lines:
+            m = _LINE.match(line)
+            if m:
+                yield m.group(1), _node_id(m.group(2))
+        return
+    runs, problems = _top_level_runs(lines)
+    if problems or not runs:
+        raise TruncatedLog(f"{path}: " + ("; ".join(problems) or "no final result line")
+                           + " (cancelled, timed out or truncated job)")
+    for begin, summary, end in runs:
+        if summary is not None:
+            for line in lines[summary + 1:end]:
+                m = _LINE.match(line)
+                if m:
+                    yield m.group(1), _node_id(m.group(2))
+        seen = set()
+        for line in lines[begin:end]:
+            m = _SUBFAILED.match(line)
+            if m and line not in seen:
+                seen.add(line)
+                yield "FAILED", f"{m.group(1)} SUBFAILED{m.group(2)}"
 
 
 def parse(paths):

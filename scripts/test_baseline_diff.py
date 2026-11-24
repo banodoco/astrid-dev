@@ -165,3 +165,44 @@ class StrictGateTests(unittest.TestCase):
         self.assertEqual(bd._node_id("tests/ui.spec.ts::chromium › opens the editor"),
                          "tests/ui.spec.ts::chromium › opens the editor")
         self.assertEqual(bd._node_id("tests/a.py::test_ok"), "tests/a.py::test_ok")
+
+
+class SequentialRunTests(unittest.TestCase):
+    """A log with several sequential pytest runs has every run read (the Release 16 Lead's probe)."""
+
+    HEAD = "============================= test session starts ==============================\n"
+    SUM = "=========================== short test summary info ============================\n"
+
+    def _parse(self, text):
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t, "x.log")
+            p.write_text(text)
+            return bd.parse([str(p)])
+
+    def test_the_first_runs_failure_still_counts(self):
+        log = (self.HEAD + self.SUM + "PASSED tests/a.py::one\nFAILED tests/a.py::two - boom\n= 1 failed, 1 passed in 0.1s =\n"
+               + self.HEAD + self.SUM + "PASSED tests/b.py::three\n= 1 passed in 0.1s =\n")
+        self.assertEqual(self._parse(log), {"tests/a.py::one": "passed", "tests/a.py::two": "failed",
+                                            "tests/b.py::three": "passed"})
+
+    def test_github_steps_and_repeats_are_each_read(self):
+        log = ("##[group]Run python -m pytest -q\n" + self.SUM + "FAILED tests/a.py::two - boom\n= 1 failed in 0.1s =\n"
+               "##[group]Run set +e\n===== selection 1 of 2: tests='x' =====\n" + self.SUM
+               + "FAILED tests/b.py::three - flaky\n= 1 failed in 0.1s =\n"
+               "===== selection 2 of 2: tests='x' =====\n" + self.SUM + "PASSED tests/b.py::three\n= 1 passed in 0.1s =\n")
+        self.assertEqual(self._parse(log), {"tests/a.py::two": "failed", "tests/b.py::three": "failed"})
+
+    def test_an_inner_session_inside_the_outer_one_is_not_a_run(self):
+        inner = self.HEAD + self.SUM + "FAILED tests/inner.py::printed - x\n= 1 failed in 0.01s =\n"
+        log = self.HEAD + inner + self.SUM + "PASSED tests/a.py::one\n= 1 passed in 0.2s =\n"
+        self.assertEqual(self._parse(log), {"tests/a.py::one": "passed"})
+
+    def test_unmatched_sessions_or_a_cancel_line_are_truncated(self):
+        for log in (self.HEAD + self.SUM + "PASSED tests/a.py::one\n= 1 passed in 0.1s =\n" + self.HEAD + "PASSED x\n",
+                    "##[group]Run pytest\n" + self.SUM + "PASSED tests/a.py::one\n= 1 passed in 0.1s =\n"
+                    "##[error]The operation was canceled.\n"):
+            with tempfile.TemporaryDirectory() as t:
+                p = Path(t, "x.log")
+                p.write_text(log)
+                with self.assertRaises(bd.TruncatedLog):
+                    bd.parse([str(p)])
