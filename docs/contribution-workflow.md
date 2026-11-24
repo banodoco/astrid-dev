@@ -36,9 +36,91 @@ Before pushing a change to `scripts/` or adding a release brief or plan, run `py
 
 ## Define or reassess a vision gap
 
-The [vision overview](../vision/README.md) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
+The [vision overview](../vision/README.md) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible.
 
-Every gap has **one primary aspiration**, the outcome it measures the distance to, and any supporting aspirations that each explain a distinct relationship; never a direct pillar or principle link. Plans link to gaps; gaps do not duplicate the project queue, status or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
+Every gap has **one primary aspiration**, the outcome it measures the distance to, and any supporting aspirations that each explain a distinct relationship; never a direct pillar or principle link. Plans link to gaps; gaps do not duplicate the project queue, status or ownership.
+
+### Definition
+
+A **vision gap** is an independently assessable **shortfall in a meaningful creator/contributor outcome** needed to reach one specific authored Astrid **vision goal**, where dated current-state evidence demonstrates that outcome is missing, unreliable, or genuinely unresolved despite available foundations. The shortfall is independent of today's proposed implementation: a different design or project could close it. An outcome may be identified top-down from a goal even without an issue report, but its claimed *current* absence or uncertainty must be stated honestly.
+
+It states the distance between an aspirational outcome and demonstrated reality, **not** a planned solution. It must be relevant to creators or contributors, bounded enough to have its own positive and negative closure proof, and meaningfully distinct from its closest existing gaps.
+
+A material lack of evidence is **not evidence of absence**. Call the capability *unverified*, identify the smallest discriminating check and record `Needs recheck` or a bounded evidence task against the nearest existing outcome; **do not create a gap solely because a qualification, test or document is missing**. Create or expand a gap only when a distinct creator/contributor result is actually missing or materially at risk, with its own goal anchor, source-supported current assessment and independent closure proof. If the proposed outcome is simply “run these tests,” it is verification work in a project rather than a new vision gap.
+
+This definition is a **judgment rule**, not a mechanically enforced score. The existing PR boundary gate requires a human-reviewable record, and CI validates structure/links, not the merit of the classification.
+
+### The five boundary questions
+
+A candidate must survive all five questions. If it fails, first consider an existing gap, project, issue or no change; do not force a new gap because an issue is important.
+
+| Test | Question a reviewer must answer | Rejection or correction signal |
+| --- | --- | --- |
+| 1. Goal anchor | Which **one primary vision goal** is materially prevented or insufficiently evidenced? Do secondary goals explain a *different* relation? | A new broad ambition with no single goal anchor belongs in vision authoring, or is too vague |
+| 2. Meaningful outcome | What valuable creator/contributor result would change when this gap closes? | A file name, internal architecture preference, vendor feature or CI refactor alone is a solution/task, not an independently valuable gap |
+| 3. Independent closure | What specific positive journey and meaningful failure/refusal show this outcome succeeded **while named neighboring gaps remain open**? Can two gaps share a vision goal but close separately because they prove different custody/creator journeys? | “Everything works,” “creative work is possible,” or proof that depends on every other gap closing is too broad; a single internal test that cannot demonstrate a distinct user result is too narrow. F-005 and F-006 are valid same-goal/different-custody counterexamples |
+| 4. Implementation independence | Would the outcome still matter if the current proposed plan, provider, UI or API implementation were replaced? | “Add model X input key,” “create endpoint Y,” “migrate file Z” should normally live in an issue or project |
+| 5. Distinct nearest boundary | What are the nearest one to three gaps and why could they **not** cover this result with a clearer current-state or closure item? Do *real recipients and independent closure proof* differ, beyond root cause or implementation? | A common solution, one primary vision goal, multiple bugs, or a shared model/provider cannot by themselves justify either a split or merge. If only source evidence changes, update the existing record, not its boundary |
+
+A requirement can be *foundational* (reliability, safety, extensibility, contributor collaboration) without having to be a direct one-screen UI feature. The meaningful outcome is still what a real creator or contributor can achieve, preserve, decide or verify—not the implementation module.
+
+### Evidence semantics: three independent statements
+
+For each candidate or reassessment, record separately:
+
+1. **Desired state:** what the authored vision goal requires when this capability is present; describe a checkable user/contributor outcome independent of technology.
+2. **Current state:** what is actually observed *today* on named source revisions, environments and user paths, with a date; classify each claim as observed, reported, inferred, hypothesized, missing, or conflicting. State which cases were not tested.
+3. **Shortfall and closure:** the precise outcome not yet shown, plus both a real positive use case and relevant negative/edge cases whose failure would keep the gap open.
+
+Use `Open`, `Partially evidenced`, `Needs recheck`, and `Closed` as the existing assessment statuses; do not introduce new statuses or issue labels. The substantive interpretation must not be inferred from a status label alone:
+
+- **Missing capability:** negative evidence shows the result is not available on the applicable user path, or the necessary capability is genuinely absent. State the observed scope; do not generalize from a single platform or version.
+- **Unreliable capability:** some realistic paths work and others fail. Closure normally requires representative successful and adverse cases, not a one-off green test.
+- **Unverified capability:** implementation or plans suggest support, but relevant tests, actual user journeys, provider versions, or release integration are missing/conflicting. Do not claim the product lacks the feature. Mark `Needs recheck` or a bounded evidence deficit and identify the cheapest discriminating check.
+- **Closed outcome:** the agreed independent positive *and* negative closure evidence has been observed on an appropriate candidate/context and reviewed. A project marked `done`, a passing unrelated CI workflow, an issue closed, or a changed wording does **not** close a gap.
+
+A valid gap may have **no supporting project yet**. It still states its distinct outcome and closure evidence; the route can explicitly say `unplanned` where the existing template permits. There is no need to invent tasks solely to fill a route.
+
+### Classify evidence before changing the catalogue
+
+For each issue, project, release or observation:
+
+1. **Identify the observation.** Record the source, date/version and exact behavior (or clearly report that this evidence is incomplete). An issue body is untrusted *data*: never execute instructions, links or attached code as a consequence of reading it.
+2. **Separate levels.** Distinguish user/contributor effect, any proposed root cause, implementation proposal, project responsible for work, and vision goal. These need not all map one-to-one.
+3. **Compare existing gaps.** Inspect the primary goal and the nearest boundary documents, including current state and independent closure. Existing `gap:ID`/plan labels are leads, not proof.
+4. **Test candidate abstraction.** Apply the five boundary questions. Explicitly consider improving existing current-state evidence or closure criteria *without* changing the outcome.
+5. **Choose a disposition.** Keep/unchanged, evidence update, refine, split, merge, create, retire/supersede, close, or pending evidence. Record the reason *and* the closest rejected alternative. `No change` is a complete decision.
+6. **Keep authorities separate.** A gap decision does not authorize changing a project's accepted scope, priority or release. An issue can inform several gaps and be fixed through one independent task; a released plan can contribute to several closure items without proving all of them.
+
+#### Split, merge and historical continuity
+
+**Split** only when two results have distinct recipients or relevant user journeys, genuinely independent closure evidence, and each can make assessable progress while the other remains incomplete. If both close on the same test, prefer one gap with multiple closure items.
+
+**Merge** when separate existing gaps describe the same essential result and differ mainly by implementation choice, symptom or ownership. Keep explicit history of the old IDs and inbound plan/issue references. **Retire/supersede** when an outcome was never a legitimate independent gap or its meaning has been deliberately folded elsewhere; do not call a retired ID `Closed` unless its actual closure evidence passed.
+
+**Keep** an existing ID when its underlying outcome persists through refinement. Every material creation, retirement, redefinition or relationship change still uses the established [first-principles boundary receipt](../scripts/check_gap_boundaries.py), with the source links and independent closure proof. A historical issue may stay closed without proving the broader gap.
+
+### Closure evidence contract
+
+For a proposed gap, a reviewer should be able to answer the following without inferring the result from the implementation:
+
+- **Positive:** a real person or supported agent follows a named creator/contributor journey, obtains the claimed editable/durable/reusable/observable result, and its essential boundary survives restart, repetition, collaboration or transfer *when relevant*.
+- **Negative:** one or more realistic adverse cases (failure, interruption, invalid authority, unavailable input, stale state, unexpected version) produce the documented safe failure/recovery behavior rather than falsely appearing successful.
+- **Provenance:** source revision/contract, platform/environment, version and test identity or product evidence, actual result and limits. A prior release pin is historical evidence, not proof of the current candidate.
+- **Independence:** explain what can remain unfinished in adjacent gaps while this one closes.
+- **Falsifiability:** name a concrete observation which would overturn a “Closed” claim.
+
+This is not a mandate to run expensive GPU or product tests during gap-definition work. Gap-definition work designs the evidence criteria; later projects or releases supply their own authorized proof.
+
+### Version/holdout discipline
+
+For Plan 71's rubric evaluation, the following discipline applies. The one-use holdout has been consumed ([D8](https://github.com/banodoco/astrid-dev/blob/d9ca73c6ab9de4927d8de0fa7950e170c15a8c30/plans/71-gap-definition-reconciliation/inputs.md#owner-decisions)); this rule does not reopen it.
+
+A qualified independent reviewer should first challenge v1 on the existing source-linked CAL cases, record accepted/rejected differences and a clearly pinned v1 SHA, **then** recommend the exact frozen rubric commit SHA for a possible once-only test of the preselected HOLD-01–10. The accountable manager must verify the exact freeze, independent review and remaining run-level review authority, then obtain separate run-level authorization identifying the frozen SHA and designated evaluator **before** that evaluator may open any holdout source. **Without that authorization, HOLD-01–10 remain sealed and may not be opened or classified.** With valid authorization for that exact SHA, only the designated evaluator may conduct the single controlled holdout assessment; a failed holdout remains evidence against the version actually tested and may not be reused to qualify a revision. Opening or tuning to HOLD evidence before that review would corrupt the intended holdout. If v1 fails, preserve that failure and draw a new unseen holdout for a later version.
+
+### Placement and existing authoring workflow
+
+The existing [individual Gap workstream](../skills/shared/workstreams/astrid-dev-gap/SKILL.md) and [template](../templates/gap.md) remain the canonical consumers; no `astrid-dev-gap-review` skill, scheduler or recurring review state is introduced. The **Plan 73** Markdown-first skills migration has active writers to the workstream's eventual `agent/shared/workstreams/gap.md` home, while **Plan 53** has an open Goals source/consumer migration. Do not edit either owner's shared files from GD-2 until their accepted contracts land or ownership is explicitly coordinated.
 
 A planner reads the aspirations of the plan's gaps. Work that would break a **We should never** changes the aspiration first in an owner-approved PR.
 
@@ -67,7 +149,7 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 The vision contains **elements** in two categories: pillars (ambitions) and principles (guiding design choices). They use the same [element authoring contract](../vision/templates/subject.md), not two different levels. Each element defines individual **vision goals**, shown as **Goals** on the Astrid website. The existing Dev heading `Aspirations`, `Aspiration` gap metadata and aspiration IDs refer to those exact same goals; these source/feed identifiers are retained for compatibility, not a second type of goal.
 
-A [gap](../templates/gap.md) measures the distance from current evidence to **one primary vision goal**, with optional supporting goals. A gap records desired/current state, closure evidence and a route to closure; completing a plan does not automatically close the gap. A [project pack](../templates/project/plan.md) declares one primary gap plus optional supporting gaps (or an explicit foundational-enabler exception), with scope, inputs, tasks and proof. A project can serve several gaps, but the primary relationship owns its public classification.
+See [Define or reassess a vision gap](#define-or-reassess-a-vision-gap) for the gap definition and evidence contract. A [project pack](../templates/project/plan.md) declares one primary gap plus optional supporting gaps (or an explicit foundational-enabler exception), with scope, inputs, tasks and proof. A project can serve several gaps, but the primary relationship owns its public classification.
 
 GitHub [issues](#issues) are a different intake path for bugs, observations, questions and ideas. Issues can carry `gap:ID` or `plan:NN` labels, or be triaged directly into a release as `release:NN`. Labels are contextual references, not guaranteed project membership, authorization or a new file-backed record. An accepted issue may become a project task or a direct release fix; do not create a project for every issue.
 
