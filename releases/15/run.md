@@ -169,11 +169,11 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Running | `r15-P56-09-1` (Extra High) | LE-10 then LE-8; target_schema after #591; LE-14 after P56-10; LE-17 after RS1. Extra High |
 | [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | On hold until the fresh RS1 passes (RS1 failed 11:00Z, 3150d425). Extra High |
 | [R15-P56-11](packets/R15-P56-11.md) Renderer, wording, skill proof | LE-18b, LE-11, WS-6b | Blocked | — | After every other packet. Extra High |
-| [R15-P56-12](packets/R15-P56-12.md) Restore checkout (F1) | RS1.2, RS1.4 | Ready | — | Extra High. Base: `p56/landing-s1` in each repo. |
-| [R15-P56-13](packets/R15-P56-13.md) Lock trust (F2) | RS1.3, RS1.5, RS1.11 | Ready | — | Extra High. Merges after P56-12. |
-| [R15-P56-14](packets/R15-P56-14.md) Selection keeps the authored recipe (F3) | RS1.6 | Ready | — | Extra High. |
-| [R15-P56-15](packets/R15-P56-15.md) Pip boundary (F4) | RS1.7, RS1.8, RS1.9, RS1.1 if it fits | Ready | — | Pro. |
-| [R15-P56-16](packets/R15-P56-16.md) Publish only after approvals (F5) | RS1.10 | Ready | — | Extra High; Agent and VibeComfy. |
+| R15-P56-12 Restore checkout (F1) | RS1.2, RS1.4 | Ready | — | Extra High. Base: `p56/landing-s1` in each repo. |
+| R15-P56-13 Lock trust (F2) | RS1.3, RS1.5, RS1.11 | Ready | — | Extra High. Merges after P56-12. |
+| R15-P56-14 Selection keeps the authored recipe (F3) | RS1.6 | Ready | — | Extra High. |
+| R15-P56-15 Pip boundary (F4) | RS1.7, RS1.8, RS1.9, RS1.1 if it fits | Ready | — | Pro. |
+| R15-P56-16 Publish only after approvals (F5) | RS1.10 | Ready | — | Extra High; Agent and VibeComfy. |
 | Conflicts (one task branch at a time writes each) | — | — | — | `cli.py:_workflow_command`: P56-02 (WS-0d, WS-0a), 06, 07, 08, 10; P56-07 goes first of 06, 07, 08 and 10 (critical path) and starts once P56-02's WS-0a has merged. `entries.py:target_schema`: P56-02 (WS-0g), 06 (LE-1b), 08, 09. VibeComfy `_install.py` in the order P56-03, 05, 07, 10, then P56-09's LE-14. `managed_preparation.py:native_failure_diagnostic`: P56-04 (LE-6), then P56-09 (LE-14). P56-01 and P56-04 share `comfyui_engine.py` and `managed_preparation.py` in different functions and may run together (ruling 1). |
 | RS1 and R | Review stops | Lead | — | Codex Astra, commissioned by the Lead: RS1 after P56-07; R after P56-11 (up to two rounds) |
 
