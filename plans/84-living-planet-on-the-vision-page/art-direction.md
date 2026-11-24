@@ -23,15 +23,9 @@ The pixel mink remains the icon used in the interface. Its **3D counterpart** is
 
 Pixel-art belongs in selected **surface and information layers**: the mink's crisp authored markings, small signs, node connections, sparkles and website clouds. It should not make the planet a coarse low-resolution screenshot. Compare clean-shaded geometry with pixel accents on and off to ensure the art remains excellent without any post-processing trick.
 
-## The little scenes
+## The scene portfolio
 
-**A. A shared making place.** Two or three small orange minks cooperate at a workshop table, in a studio clearing or beside a little mechanical object. One holds something while another adjusts it. Use one short intentional cycle (or a composed pose in a still). The characters should look as though their work started before the visitor arrived.
-
-**B. A place to pause.** A tiny elder/meditator sits on a rock or under a tree, with a still silhouette and perhaps a subtle breathing or leaf animation. This is a gentle cultural nod interpreted in Astrid's own geometry and palette.
-
-**C. A cozy creative workstation.** A small figure sits at a lamplit desk with a monitor and a tiny node-chain or pixel sparkle. It alludes to the creative tool community, including ComfyUI, without reproducing any specific character, artwork, mascot or logo.
-
-The globe can also have a bridge, a water feature, a windmill, workshop building or lone tree as a recognisable landmark **only if it improves composition**. These scenes need not be visible simultaneously. A visitor can intuit other places continue around the far side. Space between them is as important as the props.
+Eight scenes should be art-directed separately as detailed in [creative-units.md](creative-units.md), with each having its own emotional beat, graybox, on-page day/night stills and brief motion proof. The initial workshop collaboration scene locks the style; the other seven are tea, running game, solitary rose, mystery, astronomy, meditation and cozy creator. All use one sculptural palette and mascot identity while remaining distinct. Place them around the whole sphere with generous quiet land, not all in a dense front-facing village.
 
 ## Colour and light
 
@@ -65,7 +59,7 @@ Normal ambient activity is subtle: minks occasionally gesture, build, sit, or lo
 
 **Exit:** Leaving Vision has a complementary camera pull-back/arc or thoughtful dissolve back toward Home. Keep navigation immediate; the animation must tolerate browser Back, a second click, interrupted loading, and re-entry. On re-entry the saved/shared sky hour remains authoritative; exiting must not reset the sky. For reduced motion, no fly-through is required: use a stable still or gentle instant/crossfade state.
 
-**Flying objects:** add a *small* number of distinctive moving things—perhaps tiny birds, one paper-plane-like craft, a small floating balloon or occasional orange pixel sparks—around the globe as the final art polish. Keep size and speed subordinate to the main characters. Give them authored 3D arcs/orbits with convincing foreground/background occlusion, appropriate daylight/night shading and independent timelines. Their orbital movement is **not** a time dial and cannot alter sky hours. Suspend costly motion offscreen and under reduced motion, and offer a calm fallback.
+**Flying objects:** four candidate aerial creative units—bird flock, tiny glider, balloon traveller, one original oddity—are described in [creative-units.md](creative-units.md). Each receives independent silhouette, choreography, lighting, occlusion and art review. The global airspace pass selects activity so the four do not crowd the scene. Their movement is **never** a time dial; no sky-hour writes or unwanted planet yaw.
 
 The default visual strength comes from the sculpted form, lighting, coherent characters and narrative geography. Do not use a global pixelation filter, fur-heavy realism, oversized floating objects, or extra animations as a substitute for that.
 
@@ -74,11 +68,11 @@ The default visual strength comes from the sculpted form, lighting, coherent cha
 - LP-0/LP-1: baseline Vision captures; 360° gray-material and shaded planet turntable; four initial views at 00:00/06:00/12:00/18:00; right and left drag videos showing the *actual page* change from morning through dusk and back; vertical drag recording with a fixed sky and palette.
 - LP-2: front, side, rear and elevated sculptural mink views; three clear poses; natural-size on-page comparison against the pixel mascot.
 - LP-3: complete collaboration scene within the real Vision hero and 20–30 seconds of believable independent activity; owner/independent art judgment.
-- LP-4: an eight-view tour of the globe showing three story areas, quiet geographic regions, scale variation and lighting at day and night.
+- LP-4: an eight-view tour of the globe showing eight individually directed story areas, quiet geographic regions, scale variation and lighting at day and night.
 - LP-5: clock → planet (initial and replay), planet → clock (horizontal drag), vertical-only/no-time-change, “Live”/return to now, Home↔Vision, and reduced-motion/no-WebGL tests with five fixed viewports.
-- **LP-6 polish:** short recording of Home→Vision camera fly-in/arc, Vision→Home exit and interrupted/re-entered flow; night and day variants; a controlled close-up showing the small flying objects passing in front of and behind appropriate geometry. Record and assert no hour change from either camera movement or flying objects.
+- **LP-6 polish:** short recording of Home→Vision camera fly-in/arc, Vision→Home exit and interrupted/re-entered flow; night and day variants; per-object clips plus a combined composition showing the small flying objects passing in front of and behind appropriate geometry. Record and assert no hour change from either camera movement or flying objects.
 - LP-7: final production candidate at the same five viewports, loading/CLS, phone/laptop FPS, resource cleanup, focus/keyboard and touch-scroll proof; explicit owner approval.
 
 ## Sign-off tests
 
-A good result looks like an original Astrid world at the real display size, not just a good Blender beauty shot. It must be clearly spherical and fully rotatable in real time, follow the site's local-time sky on entry, scrub that same clock with horizontal dragging only, use coherent perspective, scale, light and material, feature believable sculptural minks, contain the three discoverable scenes, carry an authored entry/exit plus restrained flying accents, and preserve the page's editorial readability. **More props, more polygons and more texture are not substitutes for this.**
+A good result looks like an original Astrid world at the real display size, not just a good Blender beauty shot. It must be clearly spherical and fully rotatable in real time, follow the site's local-time sky on entry, scrub that same clock with horizontal dragging only, use coherent perspective, scale, light and material, feature believable sculptural minks, contain the eight individually reviewed scene concepts with quiet terrain, carry an authored entry/exit plus restrained flying accents, and preserve the page's editorial readability. **More props, more polygons and more texture are not substitutes for this.**
