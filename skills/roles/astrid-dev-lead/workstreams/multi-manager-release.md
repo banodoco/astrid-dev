@@ -75,7 +75,7 @@ The sub-agent works on the packet's branch, adding each failing-before case, in 
 
 ## Rolling queue
 
-When the work is not known up front (a release qualifier finding failures as it goes), the queue grows as findings arrive and the manager polls it hourly. The finder cuts an **issue packet** from the packet template, with its Repro, only when all hold:
+When the work is not known up front (a [release qualifier](../../../shared/workstreams/astrid-dev-release/qualification.md) finding failures as it goes), the queue grows as findings arrive and the manager polls it hourly. The finder cuts an **issue packet** from the packet template, with its Repro, only when all hold:
 - a failing test or exact repro that a sandbox with no network can target;
 - a bounded fix of about 3 hours or less;
 - a cause no plan owns.
