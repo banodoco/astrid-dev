@@ -19,7 +19,7 @@
 
 **Proof and limits:** The acceptance cases are in [plan.md](plan.md#completion) and evidence gates in [tasks.md](tasks.md). Visual quality is judged by the owner on the actual page and five device sizes, not an arbitrary model score. Benchmarks for speed are proposed until LP-0 records named device profiles and a production baseline. Still/video delivery will not receive spurious runtime-FPS claims.
 
-**Review rounds:** Propose one independent critique of the prototype at LP-3 and one final review, with targeted rework. The owner may change the review budget at run start. The two gates are not permission for unbounded taste iteration.
+**Review rounds:** One independent simplification review at RS0 before build, one art/experience critique after the LP-3 vertical slice, and one final integrated review; use targeted fixes and avoid open-ended polish. The owner can adjust the budget at run start.
 
 **Run start:** **Not yet authorized for product implementation.** Owner's instruction authorizes this project rewrite and its planning PR. A fresh owner start message must name one accountable delivery owner, working repository/branch, budget and approvals; prior sessions and task boards do not grant execution authority.
 

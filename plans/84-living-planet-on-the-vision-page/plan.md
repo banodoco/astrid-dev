@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned — one accountable delivery owner is appointed at run start.
 
-**Estimate:** 12–19 engineering days for the seven delivery gates (first-principles estimate; calibrate after the first complete scene). Visual review and release waits are additional.
+**Estimate:** 12–20 engineering days for the seven delivery gates (first-principles estimate; calibrate after the first complete scene). Visual review and release waits are additional.
 
 **Waiting on:** A fresh run start, a nominated delivery owner, a rendering approach chosen from the first prototype's evidence, and visual approval at the first complete-scene gate. No implementation starts from this plan alone.
 
