@@ -4,7 +4,7 @@
 
 **Task ids:** `AG-<n>` for the gate and the end, `AG-P1` and `AG-P2` (the prune pass), `AG-A<n>` (Wave A, the large causes), `AG-B<n>` (Wave B, the middle) and `AG-C<n>` (Wave C, the long tail, generated in [wave-c-cards.md](evidence/release-15-b324d7c1/wave-c-cards.md)). Plan 39 row ids are kept in brackets.
 
-**Base:** `release/15/main`. The plan branch is `release/15/plan-91` in astrid-agent, cut at AG-0. Cards whose files an unlanded Release 15 plan also edits follow the [base choice](inputs.md#source-identities).
+**Base:** `release/15/main` until `release/16/main` is cut, merged forward as it moves; the plan lands in `release/16/main` (D1, moved to Release 16 by the owner on 24 November 2026). The plan branch is `release/16/plan-91` in astrid-agent, cut at `514499de`; `release/15/plan-91`, cut first at the same commit, is superseded and unused. Cards whose files an unlanded plan also edits follow the [base choice](inputs.md#source-identities).
 
 **Critical path:** AG-0 → AG-1, AG-P1 and AG-P2 → Wave A lands → RS1 (AG-1, AG-A8, AG-A9) → Wave C regenerated → Wave C lands → AG-10 → R. Every Wave A and B card starts as soon as AG-0 has cut the branch. A and B cards land once AG-1's gate works; Wave C is dispatched once RS1 has regenerated its list.
 
@@ -14,11 +14,11 @@
 
 ## How work is proved
 
-CI on a pull request into `release/15/main` runs only fast checks, unit shard 1 and boundary (`ci.yml:9-13`). Pushes to a plan branch start nothing, and Lanes has no pull-request trigger. Proof therefore runs in three places:
+CI on a pull request into a `release/*/main` branch runs only fast checks, unit shard 1 and boundary (`ci.yml:9-13`). Pushes to a plan branch start nothing, and Lanes has no pull-request trigger. Proof therefore runs in three places:
 
 1. **The worker's checkout** for code-only cards: `bash scripts/worker-env/agent-setup.sh` once, then `bash scripts/worker-env/agent-pytest.sh -q -rA <files>`, by literal path from the astrid-agent root ([shared worker environment](../../env/README.md)). It runs Python 3.13 and fetches at depth 1; CI uses 3.11.
 2. **A hosted card run** for anything that depends on CI's inputs (Node, esbuild, Remotion, ComfyUI, Pinokio, historical git objects) and for every flaky trial. AG-1 adds `workflow_dispatch` inputs to both workflows: `tests` (the files or IDs to run), `repeat` (run them *n* times) and the ref. A card run takes minutes. Cards AG-A1 to AG-A3, AG-B13, AG-B18, AG-B20 and AG-B22 prove here.
-3. **The batch run.** After merging up to five cards, the manager dispatches both full workflows on `release/15/plan-91` and compares the results with the ceiling by (job, id). This is the gate. The same comparison runs on every completed `release/15/main` run.
+3. **The batch run.** After merging up to five cards, the manager dispatches both full workflows on `release/16/plan-91` and compares the results with the ceiling by (job, id). This is the gate. The same comparison runs on every completed `release/15/main` run.
 
 **The ceiling is a ratchet only the manager edits.** Cards never touch it. After a green batch comparison, the manager removes every ID that passed and commits the new ceiling. An ID leaves the ceiling only after passing in a batch run on hosted CI.
 
@@ -112,7 +112,7 @@ Each row is one cause found by triage. The kind is the triage's first reading; r
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
-| AG-10 Three green full runs of every Agent workflow on one frozen head of `release/15/plan-91` (merged up with `release/15/main`), dispatched by the manager on three different nights. Then one green run on `release/15/main` after the plan branch lands. The ceiling is empty, or holds only D3 and D6 entries the owner accepted (D15). | N | all A, B and C cards | read-only | Four run links, each green, recorded here | [ ] |
+| AG-10 Three green full runs of every Agent workflow on one frozen head of `release/16/plan-91` (merged up with its base), dispatched by the manager on three different nights. Then one green run on `release/16/main` after the plan branch lands. The ceiling is empty, or holds only D3 and D6 entries the owner accepted (D15). | N | all A, B and C cards | read-only | Four run links, each green, recorded here | [ ] |
 | R Review rounds (at most 2, agreed with the owner), by the high-judgment review role | S | all other tasks | read-only | Rounds per the [run contract](../../skills/shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 
 ## Dispatch order
@@ -126,13 +126,14 @@ Five slots. The manager fills a free slot with the first card in this order whos
 
 **Workflow edits merge in this order:** AG-1, AG-A1, AG-A2, AG-B13, AG-B18, AG-B20. Each edits a different step or `env:` block of `ci.yml` or `lanes.yml`, so they can be written at the same time.
 
-**Landing:** a card's PR goes into `release/15/plan-91` after its focused proof. The manager merges up to five, runs the batch comparison, ratchets the ceiling, and reverts any card whose batch result shows a new failure. The plan branch lands in `release/15/main` with the owner's go: once after RS1 (Phase 1's result), and at the end.
+**Landing:** a card's PR goes into `release/16/plan-91` after its focused proof. The manager merges up to five, runs the batch comparison, ratchets the ceiling, and reverts any card whose batch result shows a new failure. The plan branch lands in `release/16/main` with the Release 16 Lead's gate: once after RS1 (Phase 1's result), and at the end.
 
 ## Run decisions
 
 One line each, by the Plan 91 orchestrator (`r15-p91-orchestrator`), from 24 November 2026.
 
-- **Packets:** one per card, `releases/15/packets/R15-P91-<nn>.md`, in the dispatch order: 01 AG-P1, 02 AG-P2, 03 AG-A8, 04 AG-A9, 05 AG-A7, 06 AG-A1, 07 AG-A2, 08 AG-A10, 09 AG-A6, 10 AG-A3, 11 AG-A5, then Wave B in index order, 12 AG-B1 to 30 AG-B22. AG-0, AG-1, AG-2, RS1, R, AG-10, every hosted run and the ceiling stay in the orchestrator's lane. Wave C packets follow RS1's regenerated list.
+- **Release 16 (24 November 2026):** the owner moved Plan 91 to Release 16 in the Release 15 Lead's session. The plan branch is `release/16/plan-91` (cut at `514499de`); packets are `releases/16/packets/R16-P91-<nn>.md`, the dispatch section is in `releases/16/run.md`, and the Lead is the Release 16 Lead. The mailbox keeps its names (`r15-p91-dispatch`, `r15-p91-orchestrator`). Release 15's two-Agent-run limit binds until Release 15 is published, and its landing gates take a slot first.
+- **Packets:** one per card, `releases/16/packets/R16-P91-<nn>.md`, in the dispatch order: 01 AG-P1, 02 AG-P2, 03 AG-A8, 04 AG-A9, 05 AG-A7, 06 AG-A1, 07 AG-A2, 08 AG-A10, 09 AG-A6, 10 AG-A3, 11 AG-A5, then Wave B in index order, 12 AG-B1 to 30 AG-B22. AG-0, AG-1, AG-2, RS1, R, AG-10, every hosted run and the ceiling stay in the orchestrator's lane. Wave C packets follow RS1's regenerated list.
 - **Card IDs** come from AG-0's `evidence/release-15-514499de/cards/<card>.tsv` (written by `make_wave_c.py`); the cluster numbers in the task rows above are `b324d7c1`'s. AG-A8's list is a first reading by refusal message, split from AG-A7's clusters.
 - **The ceiling and the comparison key by job family** (`unit`, `darwin native`, `integration`, `opt-in`, and single jobs by name), not by shard: tests move between shard numbers across runs ([AG-0](evidence/release-15-514499de/README.md#two-findings-for-ag-1)).
 - **Base choice re-checked at `514499de`:** Plan 88 has landed. Plan 77's failing test files are already identical on the base, so no card stacks on Plan 77 today; only `ci.yml` still differs, so the workflow cards re-check their merge at proof. New overlaps found: Plan 87 changes `tests/core/rendering/test_remotion_registry_context_key.py` (AG-A2's proof), `tests/packs/rendering/test_render_export_task_adapter.py` (AG-B22), `astrid/packs/rendering/pack.yaml` (AG-B9) and `astrid/core/execution/generic_host.py` (AG-B11); Plan 56 changes `generic_host.py`, `astrid/core/generation/managed_preparation.py` (AG-B19) and `tests/core/generation/test_workflow_input_a01.py` (AG-B17's file). The packets name them; the orchestrator agrees the order with those lanes.

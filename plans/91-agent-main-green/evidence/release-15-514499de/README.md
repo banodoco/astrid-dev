@@ -6,7 +6,7 @@ Taken 24 November 2026 by the Plan 91 orchestrator (`session_011EzfW1yUojAfWkGca
 
 ## The cut
 
-astrid-agent `release/15/plan-91` was cut at `514499debc902643a03aee3f0ed68b710c5d3ead`, the `release/15/main` head of the day ("Merge pull request #612 from banodoco/release/15/plan-88"). Plan 88 has landed, so its two failing test files no longer stack ([base choice](../../inputs.md#source-identities)); Plan 77 still does.
+astrid-agent `release/15/plan-91` was cut at `514499debc902643a03aee3f0ed68b710c5d3ead`, the `release/15/main` head of the day ("Merge pull request #612 from banodoco/release/15/plan-88"). Plan 88 has landed, so its two failing test files no longer stack ([base choice](../../inputs.md#source-identities)); Plan 77 still does. Later the same day the owner moved Plan 91 to Release 16 (D1), and the plan branch became `release/16/plan-91`, cut at the same commit; `release/15/plan-91` is superseded.
 
 ## Runs read
 
