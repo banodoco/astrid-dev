@@ -6,11 +6,13 @@
 
 **This table is the only dispatch list.** Everything under [the original task records](#original-task-records-history) is history; dispatch nothing from it. Each card names the original rows it closes; tick those rows in the same progress PR. Rulings: [D6](inputs.md#owner-decisions), which moves the plan to the astrid-dev-only route and folds RS1 into R. Run start and authority: [inputs.md](inputs.md#planning-evidence).
 
-**Branches.** PDC-1 creates `project/72-composable-project-delivery` from current `main`. For each card, cut `p72/<card id in lower case>` from the project branch's current head and open its PR into the project branch; the manager merges its own task PRs once their checks pass. Merge, never rebase or squash. Never push to `main`: progress goes to `main` only as small `tasks.md`-only progress PRs ([Manage](../../skills/roles/astrid-dev-manage/workstreams/whole-project.md#progress-is-always-current)). When merging `main` into a project or task branch, resolve any conflict in `plans/72-composable-project-delivery/*.md` by taking `main`'s side. No release branch, release brief or Release Lead is involved.
+**Branches.** PDC-1 creates `project/72-composable-project-delivery` from current `main`. For each card, cut `p72/<card id in lower case>` from the project branch's current head and open its PR into the project branch; the orchestrator merges a task PR once it has run the proof and accepted the review. Merge, never rebase or squash. Never push to `main`: progress goes to `main` only as small `tasks.md`-only progress PRs ([Manage](../../skills/roles/astrid-dev-manage/workstreams/whole-project.md#progress-is-always-current)). When merging `main` into a project or task branch, resolve any conflict in `plans/72-composable-project-delivery/*.md` by taking `main`'s side. No release branch, release brief or Release Lead is involved.
 
 **Checks every card runs**, from the repository root: `python3 scripts/astrid_dev.py check` and `python3 -m unittest discover -s scripts -p "test_*.py"`. Baseline, 24 November: the whole #1624 stack trial-merged into `main` `83ab5c0ec2842023f9227451fbb0d71adfee428c` merged without conflict; check exit 0; 556/556 tests passed. Hosted `documentation`, `vision-consumer-contract` (the App consumer) and `review-intake` run on every PR.
 
 **Critical path:** PDC-1 → PDC-3 → PDC-4 → PDC-5 → R → SC → PDC-7. PDC-2 runs alongside PDC-3. About 2–3 engineering days.
+
+**Who does each card.** Packets go to fresh ChatGPT sessions through the manager `p72-manager-1`: PDC-3 → [P72-01](packets/P72-01.md) (Extra High); PDC-4 → [P72-02](packets/P72-02.md) (Extra High); SC → [P72-SC](packets/P72-SC.md) (GPT-6.2 Astra High, read-only). Everything else, PDC-1, PDC-2, PDC-5, R and PDC-7, plus every proof, is the orchestrator's lane. Authority, rulings, queue and board: [run.md](run.md).
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |

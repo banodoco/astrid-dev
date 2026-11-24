@@ -6,7 +6,7 @@
 
 **Status:** active
 
-**Owner:** Plan 72 completion-run manager (one whole-project manager session, named in the Run start in inputs.md; owner-authorized 24 November 2026)
+**Owner:** The orchestrator, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d` (accountable), with ChatGPT manager `p72-manager-1` dispatching fresh packet sessions; owner-authorized 24 November 2026
 
 **Estimate:** About 2–3 engineering days remain for the completion run; the candidate code exists and passes on current `main`.
 

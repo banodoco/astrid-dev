@@ -6,11 +6,13 @@
 
 **This table is the only dispatch list.** The rows under [the original task table](#original-task-table-history) are history; dispatch nothing from them. Each card below names the original rows it closes; tick those rows in the same progress PR. Rulings: [D8](inputs.md#owner-decisions). Run start and authority: [inputs.md](inputs.md#planning-evidence).
 
-**Branches.** The project branch is `project/71-gap-definition-reconciliation` (head `ca97096ba6893108c90a932479e7473f679c724e` on 24 November). For each card, cut `p71/<card id in lower case>` from the project branch's current head and open its PR into the project branch; the manager merges its own task PRs once their checks pass. Merge, never rebase or squash. Never push to `main`: progress goes to `main` only as small `tasks.md`-only progress PRs ([Manage](../../skills/roles/astrid-dev-manage/workstreams/whole-project.md#progress-is-always-current)). When merging `main` into a project or task branch, resolve any conflict in `plans/71-gap-definition-reconciliation/*.md` by taking `main`'s side, since `main` holds the only progress record.
+**Branches.** The project branch is `project/71-gap-definition-reconciliation` (head `ca97096ba6893108c90a932479e7473f679c724e` on 24 November). For each card, cut `p71/<card id in lower case>` from the project branch's current head and open its PR into the project branch; the orchestrator merges a task PR once it has run the proof and accepted the review. Merge, never rebase or squash. Never push to `main`: progress goes to `main` only as small `tasks.md`-only progress PRs ([Manage](../../skills/roles/astrid-dev-manage/workstreams/whole-project.md#progress-is-always-current)). When merging `main` into a project or task branch, resolve any conflict in `plans/71-gap-definition-reconciliation/*.md` by taking `main`'s side, since `main` holds the only progress record.
 
 **Checks every card runs**, from the repository root: `python3 scripts/astrid_dev.py check` and `python3 -m unittest discover -s scripts -p "test_*.py"`. Baseline, 24 November: #1625 trial-merged into `main` `83ab5c0ec2842023f9227451fbb0d71adfee428c` merged without conflict; check exit 0; 473/473 tests passed. Hosted `documentation`, `vision-consumer-contract` and `review-intake` run on every PR.
 
 **Critical path:** GDC-1 → GDC-2 → R → SC → GDC-7. GDC-3 runs alongside GDC-2. About 1–2 engineering days.
+
+**Who does each card.** Packets go to fresh ChatGPT sessions through the manager `p71-manager-1`: GDC-2 → [P71-01](packets/P71-01.md) (Extra High); SC → [P71-SC](packets/P71-SC.md) (GPT-6.2 Astra High, read-only). Everything else, GDC-1, GDC-3, R and GDC-7, plus every proof, is the orchestrator's lane. Authority, rulings, queue and board: [run.md](run.md).
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
