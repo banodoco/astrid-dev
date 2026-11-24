@@ -100,7 +100,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Plan 56 accountable agent (`r15-lead`) | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7116279618 |
+| Plan 56 accountable agent (`r15-lead`) | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7123844708 |
 | Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
@@ -140,14 +140,14 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Done | `r15-P56-01-1` (ChatGPT Pro) | Merged 23 November 2026: Agent #570 (`c3d8ee2d`), VibeComfy #187. Pro |
-| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Running | `r15-P56-02-1` (Extra High) | WS-0d VibeComfy half merged (#190); Agent #581 open; WS-0a next. Extra High |
-| [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Running | `r15-P56-03-1` (High) | WS-0c VibeComfy half merged (#188); Agent #573, #574 open; WS-0e fail-closed guard approved. High |
-| [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Running | `r15-P56-04-1` (Extra High) | LE-4 (#189), WS-5 (#191) and LE-6's VibeComfy half (#192) merged; Agent #577 open. Extra High |
-| [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Ready | — | Dependencies met (WS-7a, WS-0c merged); start first. Pro |
-| [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Blocked | — | After P56-01, 02, 03. Extra High |
-| [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Blocked | — | After P56-01 and 05; then the Lead's RS1. Pro |
+| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Running | `r15-P56-02-1` (Extra High) | WS-0a/b/d and LE-15 complete; WS-0g #591 in rework (VibeComfySaveTranscript false block). Extra High |
+| [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Done | `r15-P56-03-1` (High) | Merged 24 Nov 2026: WS-0c (#188, #193, #573), WS-0e (#574). High |
+| [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Done | `r15-P56-04-1` (Extra High) | Merged 24 Nov 2026: LE-4 (#189 + #199 speed fix), WS-5 (#191), LE-6 (#192, #197, #577). Extra High |
+| [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Done | — | Merged 24 Nov 2026: WS-7b (#196). Pro |
+| [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Running | `r15-P56-06-1` (Extra High) | LE-3 and LE-12 VibeComfy halves merged (#200, #201); Agent halves after #599; LE-1b after WS-0g. Extra High |
+| [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Running | `r15-P56-07-1` (Pro) | LE-2b VibeComfy #198 merged; Agent #599 in rework; RS1 (Codex Astra, brief evidence/rs1-brief.md) follows its merge. Pro |
 | [R15-P56-08](packets/R15-P56-08.md) Lookup suggestions, several packs, models | LE-5, LE-16, LE-9 | Blocked | — | After P56-04 and 06. High |
-| [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Blocked | — | After P56-04, 07 and RS1; its LE-14 after P56-10. Extra High |
+| [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Running | `r15-P56-09-1` (Extra High) | LE-10 then LE-8; target_schema after #591; LE-14 after P56-10; LE-17 after RS1. Extra High |
 | [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | After P56-05, 06, 07 and RS1. Extra High |
 | [R15-P56-11](packets/R15-P56-11.md) Renderer, wording, skill proof | LE-18b, LE-11, WS-6b | Blocked | — | After every other packet. Extra High |
 | Conflicts (one task branch at a time writes each) | — | — | — | `cli.py:_workflow_command`: P56-02 (WS-0d, WS-0a), 06, 07, 08, 10; P56-07 goes first of 06, 07, 08 and 10 (critical path) and starts once P56-02's WS-0a has merged. `entries.py:target_schema`: P56-02 (WS-0g), 06 (LE-1b), 08, 09. VibeComfy `_install.py` in the order P56-03, 05, 07, 10, then P56-09's LE-14. `managed_preparation.py:native_failure_diagnostic`: P56-04 (LE-6), then P56-09 (LE-14). P56-01 and P56-04 share `comfyui_engine.py` and `managed_preparation.py` in different functions and may run together (ruling 1). |
