@@ -130,3 +130,38 @@ class FailOnMissingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StrictGateTests(unittest.TestCase):
+    """The gate blocks on a new failing test (no-baseline) and on a lost one (missing), not only on regressions."""
+
+    def _code(self, base, cand, *extra):
+        with tempfile.TemporaryDirectory() as t:
+            b, c = Path(t, "b.log"), Path(t, "c.log")
+            b.write_text(base)
+            c.write_text(cand)
+            return bd.main(["--baseline", f"base={b}", "--candidate", str(c), *extra])
+
+    def test_a_new_failing_test_blocks_only_when_asked(self):
+        base = "PASSED tests/a.py::test_ok\n"
+        cand = "PASSED tests/a.py::test_ok\nFAILED tests/a.py::test_added - boom\n"
+        self.assertEqual(self._code(base, cand), 0)
+        self.assertEqual(self._code(base, cand, "--fail-on-no-baseline"), 1)
+        self.assertEqual(self._code(base, cand, "--strict"), 1)
+
+    def test_strict_blocks_a_lost_test(self):
+        base = "PASSED tests/a.py::test_ok\nPASSED tests/a.py::test_gone\n"
+        cand = "PASSED tests/a.py::test_ok\n"
+        self.assertEqual(self._code(base, cand), 0)
+        self.assertEqual(self._code(base, cand, "--strict"), 1)
+
+    def test_an_unchanged_run_passes_strict(self):
+        base = "PASSED tests/a.py::test_ok\nFAILED tests/a.py::test_red - x\n"
+        self.assertEqual(self._code(base, base, "--strict"), 0)
+
+    def test_an_id_with_spaces_outside_brackets_is_kept_whole(self):
+        self.assertEqual(bd._node_id("tests/ui.spec.ts::chromium › opens the editor - Error: x"),
+                         "tests/ui.spec.ts::chromium › opens the editor")
+        self.assertEqual(bd._node_id("tests/ui.spec.ts::chromium › opens the editor"),
+                         "tests/ui.spec.ts::chromium › opens the editor")
+        self.assertEqual(bd._node_id("tests/a.py::test_ok"), "tests/a.py::test_ok")

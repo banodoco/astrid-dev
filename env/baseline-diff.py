@@ -8,10 +8,11 @@ Input: pytest output run with -rA (PYTEST_ADDOPTS=-rA), one or more log files pe
 Buckets for each test the candidate ran:
   regression   failed on the candidate; ran and passed on at least one baseline. Blocks.
   no-baseline  failed on the candidate; ran on no baseline. Fix it if the run added the test.
+               Reported always; blocks only with --fail-on-no-baseline (or --strict).
   preexisting  failed on the candidate and on every baseline it ran on. Goes to its own project.
   fixed        passed on the candidate; failed on a baseline and passed on none.
   missing      passed on a baseline; not run on the candidate (deleted, skipped or uncollected).
-               Reported always; blocks only with --fail-on-missing.
+               Reported always; blocks only with --fail-on-missing (or --strict).
 An XFAIL counts as passing, because the test met its expectation; a strict XPASS is reported FAILED by pytest.
 What is read from a log: if it holds a "short test summary info" section, only the last one before the job's final
 result line (so pytest output that a test prints from an inner run is not counted), plus the failed subtests, which
@@ -19,8 +20,8 @@ pytest counts in "N failed" but gives no summary row; each is read from its SUBF
 "<nodeid> SUBFAILED(<params>)". A failed subtest with no entry on a baseline takes its parent test's status there.
 A log with such a section but no final result line is truncated: bad input. A log with no such section (bare
 PASSED/FAILED lines) is read line by line. GitHub's timestamp prefix is ignored.
-Exit 0: no regressions (and, with --fail-on-missing, nothing missing). Exit 1: regressions, or missing with
---fail-on-missing. Exit 2: bad input.
+Exit 0: nothing that blocks. Exit 1: regressions; also missing with --fail-on-missing, and no-baseline with
+--fail-on-no-baseline (--strict sets both, which is what a gate uses). Exit 2: bad input.
 """
 import argparse
 import re
@@ -56,7 +57,9 @@ def _node_id(rest):
                 if depth == 0:
                     return rest[: i + 1]
         return rest.strip()
-    return rest if space < 0 else rest[:space]
+    # No [parameters]: the id runs to the " - " before a message, or to the end (an id may hold spaces, as
+    # Playwright's do; a pytest id without brackets never does).
+    return rest.split(" - ", 1)[0].strip()
 
 
 def _result_lines(path):
@@ -128,6 +131,9 @@ def main(argv=None):
     ap.add_argument("--candidate", required=True, metavar="LOG[,LOG]")
     ap.add_argument("--fail-on-missing", action="store_true",
                     help="exit 1 when any test that passed on a baseline did not run on the candidate")
+    ap.add_argument("--fail-on-no-baseline", action="store_true",
+                    help="exit 1 when a test fails on the candidate and ran on no baseline (a new failing test)")
+    ap.add_argument("--strict", action="store_true", help="both --fail-on-missing and --fail-on-no-baseline")
     ap.add_argument("--out", help="directory for summary.md and one <bucket>.txt per bucket (one id per line)")
     a = ap.parse_args(argv)
     baselines, counts = {}, {}
@@ -157,10 +163,16 @@ def main(argv=None):
     sys.stdout.write(text)
     for node in buckets["regression"]:
         print(f"REGRESSION {node}")
-    if a.fail_on_missing:
+    fail_missing = a.fail_on_missing or a.strict
+    fail_new = a.fail_on_no_baseline or a.strict
+    if fail_missing:
         for node in buckets["missing"]:
             print(f"MISSING {node}")
-    return 1 if buckets["regression"] or (a.fail_on_missing and buckets["missing"]) else 0
+    if fail_new:
+        for node in buckets["no-baseline"]:
+            print(f"NO-BASELINE {node}")
+    blocked = buckets["regression"] or (fail_missing and buckets["missing"]) or (fail_new and buckets["no-baseline"])
+    return 1 if blocked else 0
 
 
 if __name__ == "__main__":
