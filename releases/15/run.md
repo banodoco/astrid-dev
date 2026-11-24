@@ -211,7 +211,13 @@ The orchestrator writes the packets at its next break point and lists them here.
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| — | — | — | — | The orchestrator writes the first packets |
+| [R15-P87-01](packets/R15-P87-01.md) | RN-11 (X): CI render check | Ready (first, alone) | — | Continues `p87/rn11-contract` in astrid-agent; pack-element cases wait for RN-4 |
+| [R15-P87-02](packets/R15-P87-02.md) | RN-9 (S): custody retry | Ready (second, after P87-01's early STATUS) | — | Continues `p87/rn9-custody`; high-judgment review (S) |
+| [R15-P87-03](packets/R15-P87-03.md) | RN-5 (X): one pinned pack revision | Blocked on RN-4 (orchestrator's lane) | — | Continues the three `p87/rn5-*` branches; `READY-PIN` for the pin |
+| [R15-P87-04](packets/R15-P87-04.md) | RN-8 (S): lease through a long render | Blocked on the orchestrator's long-render measurement (`READY-MEASURE`) | — | RN-7 logs are on the plan branch; high-judgment review (S) |
+| [R15-P87-05](packets/R15-P87-05.md) | RN-14 (X): motion pack on a fresh install | Blocked on RN-5's pin; sized first | — | Over one day moves to Release 16 |
+
+Stays in the orchestrator's lane: RN-1 to RN-3 (draft astrid-agent#567, awaiting RN-2's real own-object render), RN-4 (`p87/rn4-roots-clean`, review and installed proof), RN-6 and RN-7 (merged), RN-10, RN-12, RN-13 and every real render.
 
 ### Dispatch queue (Plan 89)
 
