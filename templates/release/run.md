@@ -19,6 +19,10 @@ Every project's board is the astrid-dev issue titled `board: release NN ...` ([r
 | **<when>** | **Freeze** the candidate; final frozen CI head | release manager | — |
 | **<when>** | **Publish**, with the owner's go | release manager | — |
 
+### Qualification
+
+The Qualifier's bar and coverage map are `releases/NN/qualification.md` ([workstream](../../skills/shared/workstreams/astrid-dev-release/qualification.md)).
+
 ### Issue list
 
 - Brief: `releases/NN.md` → Issues; last pulled: <date or not yet>.
