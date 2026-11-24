@@ -2,7 +2,7 @@
 
 **Project:** Heavy saves in seconds
 
-**Goal:** On a heavy timeline (the 300-clip fixture), an ordinary edit reaches "Saved" in about 2 s at the median with none over 4 s, from the editor and from Agent commits alike, and the save path is measured stage by stage so a regression shows in a log line.
+**Goal:** On a heavy timeline (the 300-clip fixture), an ordinary edit reaches "Saved" in about 2 s at the median with none over 4 s (the Release 15 target is the fastest the loop cards reach, about 3 to 3.5 s, with the 2 s gate in Release 16 with Plan 75; see the target section below), from the editor and from Agent commits alike, and the save path is measured stage by stage so a regression shows in a log line.
 
 **Status:** active
 
@@ -33,6 +33,15 @@ After Plan 77's SV-4 lands on the save branch: SV-L1 and SV-L2 first (every late
 ## Interfaces and handoff
 
 Consumes astrid-runtime, astrid-agent and astrid-app `release/15/main` plus the save run's `release/15/plan-77-save` heads, from which `release/15/plan-89` is cut. Produces: stage spans and size fields on the commit timing line, editor timing marks, a copy and compare counter test at 3, 30 and 300 history entries, a burst test, immutable accepted history, and installed measurements in [docs/speed.md](../../docs/speed.md). Landing follows the Release 15 run board: Runtime, then one generator-only Agent pin commit and the full hosted run, then the App pin.
+
+## Release 15 target and stop rule (restated 24 November 2026)
+
+The installed measurement of the save-run candidate (Plan 77 SV-4, evidence in [Plan 77's SV-3 and SV-4 runs](https://github.com/banodoco/astrid-dev/pull/1685); SV-L2 marks, folder `evidence/2026-11-24-sv-l2-run`) put a warm 300-clip save at a **6.15 s median, 6.85 s worst, gesture end to "Saved"**: client side about 1.5 s (1.08 s before the POST, which includes the 500 ms save debounce; 0.44 s from the response to the Saved badge) and Runtime about 4.6 s (`provider_commit` 2.33 s, `port_store_accept` 1.54 s, reconciliation 0.40 s, handler 0.28 s). It was about 22 s the day before. Removing the remaining repeated work (validating and copying the unchanged clips, the Agent payload) can plausibly reach about 3 to 3.5 s; reaching 2 s needs one-edit acceptance that is O(change), which is [Plan 75](../75-fast-saving/plan.md)'s structural work.
+
+- **Release 15 target:** land SV-L10, SV-L11 and SV-L12 (and SV-L13 if it earns its place), ordered by measured saving per day, and report the measured warm median, gesture end to "Saved", as the release's number (about 3 to 3.5 s expected).
+- **Stop rule:** stop when the next card's projected saving is under about 0.3 s, or when the freeze arrives.
+- **Moves to Release 16 with Plan 75:** the 2 s median gate (O(change) one-edit acceptance), the watermark SV-L9b and full burst coalescing (SV-L7).
+- **Unchanged:** the 500 ms debounce stays; it keeps bursts from multiplying commits.
 
 ## Completion
 
