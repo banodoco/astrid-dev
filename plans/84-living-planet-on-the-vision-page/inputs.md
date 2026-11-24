@@ -2,6 +2,16 @@
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
+## Owner art-direction replacement — 24 November 2026
+
+The owner explicitly requested that the existing Living Planet plan in astrid-dev be **replaced, not duplicated**, using the [Astrid Living Planet Production Brief](https://chatgpt.com/space/page_359a067954848191999741256c51181e) and relevant assets. The full source text is stored as [art-direction.md](art-direction.md), with [image references and provenance](assets/README.md). The accepted plan number, existing task statuses, Release 15 ownership and run are preserved.
+
+**Changed artistic target:** the mock-up remains useful implementation and composition prior art, but its flat-looking geometry, dark materials, scattered props and pasted-sprite feeling are not a passing finish. New gates demand real spherical depth, carefully scaled low-poly diorama objects, quiet spaces between recognizable stories, 3D mink anatomy with retained pixel markings, clean lighting, and activities that retain state. In addition to the five source scenes, occasional collaborative/meditating/Comfy-inspired Easter eggs may be used where they fit scale and density.
+
+**Rotation interpretation:** in the later design discussion the owner preferred a composed stationary planet for the first view, with the ability to rotate later. Thus *auto*-rotation is not a visual prerequisite. Do not eliminate the existing Plan 84 sky-hour synchronisation on actual drag turns, and keep reduced motion still. This interpretation is explicitly called out because the source production brief recommends testing slow ambient rotation.
+
+**Handoff:** the AI Studio manager incorporates the accepted art criteria into future lab packet briefs and the next RF assessment, without unmarking completed historic PL work or asserting new tests have passed. Re-estimate art-heavy work at RF rather than silently retaining the former mock-up scope.
+
 ## Planning evidence
 
 **Scope decision:** Accepted — The owner asked for this plan on 22 November 2026 in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG), pointing at [banodoco/planet](https://github.com/banodoco/planet): "I basically want to add like a project for both building this and adding it to ... the vision page, you know, so it should be in the top, the right corner, replacing it"; "there should be like a new ... container ... that captures both the principles and the pillars ... and that basically the planet then goes behind, and it should be behind that but transparent"; "we have basically built this out already, but obviously the plan should encapsulate building it"; "make sure that it kind of like works really nicely, make sure that it performs well ... looks nice on all the different devices, has like a nice kind of intro animation, and a few other like little details"; "this should be part of release 15 as well". Later the same day, after seeing the plan: "when we spin the planet, that should actually change ... in the homepage, if you click the thing ... the planet, whatever changes based on the current time, and we basically should plug this into it. So if you spin the planet, it should also change the background, which is based on the time of day". That is PL-10.

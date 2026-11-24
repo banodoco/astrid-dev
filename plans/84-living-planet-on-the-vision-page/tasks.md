@@ -2,6 +2,23 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+## 24 November visual acceptance overlay (owner revision)
+
+[Full owner production brief](art-direction.md) · [Versioned art assets](assets/README.md)
+
+This **adds mandatory proof to existing PL tasks**; it does not reset their completed/blocked status or invent successful runs.
+
+| Existing work | New evidence needed | AI Studio mapping |
+| --- | --- | --- |
+| PL-1 / PL-9: engine and form | Gray material rotating sphere, coherent far side, correct curvature and local gravity, clean model silhouette | EX-01–EX-04; RF-A |
+| PL-2 / PL-3: integrated layout | Planet remains a full sphere with breathing room, cream/peach/pixel-cloud layering, readable title and Foundations at five sizes | EX-18–EX-20 |
+| PL-7: residents and stories | Complete 3D mink front, back, side, elevated; tea, circling, rose, mystery, telescope; believable props, pauses, continuity and one cross-scene link | EX-04–EX-11; RF-B |
+| PL-7: material direction | Clean render and optional pixel treatment both work; small props, warm light, anchored shadows, textured but not photoreal terrain; varied density with open land | EX-03–EX-11; RF-B |
+| PL-4 / PL-5: interaction | Stationary authored opening; optional drag explores the entire inhabited sphere without restarting scenes, sky-hour sync retained; still/reduced-motion and speed proofs | EX-12–EX-16, IN-03 |
+| PL-6 / PL-8 / R: final proof | Fixed screenshots; full rotation; 30 seconds of natural routines; interrupt/resume evidence; owner sign-off; prior tests unchanged | IN-02–IN-04 |
+
+Keep the project task ledger below intact. Require the AI Studio manager's RF art-direction assessment before accepting further appearance-defining packets. Generated reference stills are concept illustrations, not test results.
+
 **Task ids:** `PL-0` to `PL-10`, `R` (PL-10 was added after the others and sits with the layout tasks). **Critical path:** PL-0, PL-1, PL-2, PL-6, PL-7, PL-8, R. **Test inventory:** in astrid-app, the `vision-content` job in `.github/workflows/public-vision.yml` (near 64–109; its path filter, near 4–58, does not yet include the planet's files), `tests/e2e/public-astrid-vision-captures.spec.ts` (near 25–53; it writes pictures at two sizes and compares them with nothing), `tests/e2e/public-astrid-vision-entry.spec.ts` (near 97–99 it pins the headline's geometry, near 418 it reads the sky canvas's pixels), the phone layout and dialog test (`mobile-catalogs`, near 51–74), the test that pins both section links (`sigils-nav`, near 294–300) and `polish.spec.ts` (near 233–258, contrast over plain paper), and the sky's own tests in `src/pages/Home/` (`publicAstridSkySession.test.ts`, `PublicAstridSky.scheduling.test.tsx`, `publicAstridSkyRenderer.test.ts`). Paths and line numbers were read on astrid-app `release/15/main` on 22 November 2026 and are re-checked at dispatch.
 
 **How this plan runs.** The manager judges by eye. Every task that changes what a visitor sees returns pictures at the five sizes in [plan.md](plan.md#completion), before and after, taken with the planet in a fixed pose and with the viewport, pixel density, content feed, sky hour and drawing backend pinned (the sky hour is now also the planet's), so two pictures can be compared, plus a short recording where motion is the point. A browser for this is available in the cloud session. The manager accepts, or sends it back with what is wrong, and writes its judgment beside the pictures. A worker does not decide that something looks good enough.

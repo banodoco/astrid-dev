@@ -2,7 +2,7 @@
 
 **Project:** A living planet on the vision page
 
-**Goal:** The public vision page opens on a living 3D planet in place of the hero's pixel-art mink; the planet continues behind one translucent panel, Foundations, that holds the Pillars and the Principles; and it arrives with an authored intro, runs smoothly, and looks right on every device.
+**Goal:** The public vision page opens on a convincing, fully spherical, inhabited Astrid planet, with small expressive 3D pixel-identity minks and discoverable stories; it replaces the hero's juggling mink, continues behind the Foundations panel, and arrives with an authored intro, accessible fallbacks and measured performance on every device.
 
 **Status:** active
 
@@ -18,7 +18,7 @@
 
 ## Outcome and scope
 
-The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, served at `/vision`) has a hero with a pixel-art mink juggling at the right, then a Pillars section of cards ("What we're building"), then a Principles section. The owner has built a mock-up, [banodoco/planet](https://github.com/banodoco/planet), in which a low-poly planet with articulated orange mink sits at the top right of the hero and runs on behind the section below, and the pillar cards turn the planet to the place each one stands for.
+The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, served at `/vision`) has a hero with a pixel-art mink juggling at the right, then a Pillars section of cards ("What we're building"), then a Principles section. The owner built the [banodoco/planet](https://github.com/banodoco/planet) mock-up as the **engineering baseline**. Its engine and overall hero composition are reused, but its appearance is not the approved art target: the owner-selected [production brief](art-direction.md) and [assets](assets/README.md) now govern the look and inhabitants. Pillar cards retain their existing click behavior.
 
 **What a visitor gets:**
 
@@ -31,11 +31,24 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 
 **How it is judged.** This is taste work with engineering under it. The manager is the tastemaker and judge: it farms small tasks out to workers, looks at what comes back in screenshots and short recordings at fixed sizes, and sends it back until it is right. The owner looks at a preview before it lands; her look is the final judgment.
 
-**Not included:** changing what the vision, pillars or principles say (that text comes from astrid-dev's `vision/` folder and is not touched); changing what a pillar card does when chosen (it opens its goals, gaps and projects, as now; the mock-up's cards turn the planet instead, and whether the planet also turns toward a pillar on hover or focus is a taste detail, not a requirement); a new navigation entry for the panel (it is named Foundations, but both section headings and both links stay as they are); the Home page; new scenes, creatures or places on the planet beyond what the mock-up has; sound; any use of the mock-up's unused AI-studio scaffolding.
+**Not included:** changing what the vision, pillars or principles say (that text comes from astrid-dev's `vision/` folder and is not touched); changing what a pillar card does when chosen (it opens its goals, gaps and projects, as now; the mock-up's cards turn the planet instead, and whether the planet also turns toward a pillar on hover or focus is a taste detail, not a requirement); a new navigation entry for the panel (it is named Foundations, but both section headings and both links stay as they are); the Home page; sound; any use of the mock-up's unused AI-studio scaffolding.
+
+## Art direction — owner replacement, 24 November 2026
+
+The [complete production brief](art-direction.md) **replaces the original mock-up as the visual target**, while this existing plan, Release 15 routing, accepted technical decisions, task history and AI Studio run remain authoritative for delivery. See [locally checked-in visual references](assets/README.md). The art direction is not a request to build a new plan or publish code from the lab.
+
+- **A planet, not a flat-topped island:** preserve a complete spherical silhouette; geometry, terrain, water, paths, props and characters follow its curvature and the far side is actually inhabited. Use a three-quarter resting pose with no mandatory automatic spin.
+- **A tactile diorama at planetary scale:** sculpted low-poly/softly rounded surface, warm key light plus fill, anchored contact shadows and mild material texture. Vary prop sizes with just a few large landmarks, clustered scenes and broad quieter areas. Reject overpopulated front-facing fantasy villages and giant props.
+- **Pixel mink and 3D mink are one character:** a volumetric elongated orange body, slender neck, small ears, short legs, simple face, cream underside and dark tail tip; rigged and recognizable from all directions. Apply selective authored pixel markings, not a whole-frame downsample or realistic fur.
+- **Living stories with continuity:** the tea pair, running trio, solitary rose keeper, mystery-box investigator and telescope note-taker are five required scenes. Give them calm intervals, prop ownership, varied pace and coherent interrupted/resumed behavior. Roughly 12–16 residents on the *whole globe* is an initial composition, not a quota.
+- **Subtle cultural references:** a collaborative maker area, a meditating elder and a cozy node-based creator desk can be discovered as small vignettes, but must not displace required scenes or visually reproduce proprietary character designs.
+- **The site remains Astrid:** cream/peach page, pixel clouds, orange iconography, serif headline, clean HTML text and legible Foundations overlay. Pixel elements can drift in front of the globe, but do not render the whole sphere as voxels.
+
+The same world must pass a gray-material 3D inspection and clean-render vs pixel-styled comparisons **before** detailed decor is approved. The [15 acceptance criteria in the production brief](art-direction.md#acceptance-criteria) add to the existing performance, accessibility and release gates. Visual acceptance requires fixed-setup desktop/phone captures, character front/side/back/elevated renders, full-globe inspection, a 30-second behavior recording and explicit owner judgment; generated concept art is not proof.
 
 ## Existing work and decision
 
-- **The mock-up is the design reference and the donor of the engine:** banodoco/planet at `037293de`. One function, `initPlanetEngine(canvas, callbacks)`, in one 8,996-line file, drives a single three.js scene with 22 named places; four story cards turn the planet to four of them. It builds to 979 kB of JavaScript (266 kB compressed). What it does and does not yet do is in [evidence/research-planet-mock-up.txt](evidence/research-planet-mock-up.txt).
+- **The mock-up is an engineering baseline and donor of the engine, not the final visual target:** banodoco/planet at `037293de`. One function, `initPlanetEngine(canvas, callbacks)`, in one 8,996-line file, drives a single three.js scene with 22 named places; four story cards turn the planet to four of them. It builds to 979 kB of JavaScript (266 kB compressed). What it does and does not yet do is in [evidence/research-planet-mock-up.txt](evidence/research-planet-mock-up.txt).
 - **The page already has a home, tests and a way of working:** the App's `vision-content` checks include screenshot captures of the hero, the Pillars and the Principles, mobile layout checks and a reduced-motion path; three.js is already one of the App's dependencies. See [evidence/research-vision-page-and-manager-route.txt](evidence/research-vision-page-and-manager-route.txt).
 - **Decision (23 November 2026): the rest is built in the planet lab and imported.** banodoco/planet becomes the lab, no longer read only; see [inputs.md](inputs.md#owner-decisions). The engine still lands in the App as decided below; nothing is published from the lab.
 - **Decision: the engine moves into the App.** It is brought into astrid-app beside the page and loaded only when the page needs it, on the App's own version of three.js (0.185.1; the mock-up targets 0.187) and in its own canvas, apart from the editor's. banodoco/planet stays as the mock-up it is; nothing is published from it. A separate package would add a release to coordinate for one consumer.
@@ -63,7 +76,7 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 
 ## Interfaces and handoff
 
-**Consumes:** the mock-up's engine and look; the page's existing content feed, unchanged. **Produces:** one planet component in astrid-app that a page mounts into a container; the reworked hero and the combined panel; a still poster image of the planet; tests and budgets that hold the result. **Compatibility:** no change to the content feed, to astrid-dev's `vision/` folder or to any other page; the page's address and its navigation stay as they are.
+**Consumes:** the mock-up's engine, the [owner production brief](art-direction.md), the [visual assets](assets/README.md), and the page's existing content feed, unchanged. **Produces:** one planet component in astrid-app that a page mounts into a container; the reworked hero and the combined panel; a still poster image of the planet; tests and budgets that hold the result. **Compatibility:** no change to the content feed, to astrid-dev's `vision/` folder or to any other page; the page's address and its navigation stay as they are.
 
 ## Completion
 
