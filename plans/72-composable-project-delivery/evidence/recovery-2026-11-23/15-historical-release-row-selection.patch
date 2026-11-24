@@ -1,0 +1,49 @@
+diff --git a/releases/14.md b/releases/14.md
+--- a/releases/14.md
++++ b/releases/14.md
+@@ -49,5 +49,10 @@
+ | astrid-runtime | `release/14/scene-by-reference` | fix #720 | 6855dfa8df65cf8ae4c002b57134d6505493c17c | open |
+ | astrid-app | `release/14/ci-triggers` | fix #739 | de7dd1e668aa6dcf3cbce013c701fa7c76615f99 | merged |
+ | astrid-app | `release/14/save-rejections` | fix #720 | ba20e7da3ff5e547bca486dee1d7e5e8d396827f | merged |
++| astrid-dev | `release/14/main` | release | f49111e279742f23d99fe70ef40b6be46a3de9c6 | published |
++| astrid-dev | `release/14/plan-52` | plan 52 | f49111e279742f23d99fe70ef40b6be46a3de9c6 | open |
++| astrid-agent | `release/14/plan-52` | plan 52 | fc391dea696ec5799db222799a34f9de6a69659b | open |
++| astrid-app | `release/14/plan-52` | plan 52 | 0b6ef16152dc3fa11246ccc2007da630c66d1a1a | open |
++| astrid-runtime | `release/14/plan-52` | plan 52 | 2537fed24385ec1c24f48a812e09af4bb63fb794 | open |
+ 
+ ## Issues
+diff --git a/releases/16.md b/releases/16.md
+--- a/releases/16.md
++++ b/releases/16.md
+@@ -39,5 +39,20 @@
+ | astrid-agent | `release/16/main` | release | not yet cut | open |
+ | astrid-runtime | `release/16/main` | release | not yet cut | open |
+ | astrid-app | `release/16/main` | release | not yet cut | open |
++| astrid-dev | `release/16/main` | release | not yet cut | open |
++| astrid-agent | `release/16/plan-29` | plan 29 | not yet cut | open |
++| astrid-runtime | `release/16/plan-29` | plan 29 | not yet cut | open |
++| astrid-app | `release/16/plan-29` | plan 29 | not yet cut | open |
++| astrid-agent | `release/16/plan-30` | plan 30 | not yet cut | open |
++| astrid-runtime | `release/16/plan-30` | plan 30 | not yet cut | open |
++| astrid-app | `release/16/plan-30` | plan 30 | not yet cut | open |
++| astrid-agent | `release/16/plan-09` | plan 09 | not yet cut | open |
++| astrid-runtime | `release/16/plan-09` | plan 09 | not yet cut | open |
++| astrid-app | `release/16/plan-09` | plan 09 | not yet cut | open |
++| astrid-dev | `release/16/plan-38` | plan 38 | not yet cut | open |
++| astrid-agent | `release/16/plan-38` | plan 38 | not yet cut | open |
++| astrid-runtime | `release/16/plan-38` | plan 38 | not yet cut | open |
++| astrid-dev | `release/16/plan-31` | plan 31 | not yet cut | open |
++| astrid-app | `release/16/plan-31` | plan 31 | not yet cut | open |
+ 
+ ## Issues
+diff --git a/releases/17.md b/releases/17.md
+--- a/releases/17.md
++++ b/releases/17.md
+@@ -34,5 +34,7 @@
+ | astrid-agent | `release/17/main` | release | not yet cut | open |
+ | astrid-runtime | `release/17/main` | release | not yet cut | open |
+ | astrid-app | `release/17/main` | release | not yet cut | open |
++| astrid-dev | `release/17/main` | release | not yet cut | open |
++| astrid-dev | `release/17/plan-19` | plan 19 | not yet cut | open |
+ 
+ ## Issues

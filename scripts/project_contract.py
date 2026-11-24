@@ -7,6 +7,9 @@ PLAN_FOLDER = re.compile(r"\d{2,}-[a-z0-9-]+")
 GAP_LINK = re.compile(r"\]\(\.\./\.\./vision/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
 VISION_GAPS = re.compile(r"^\*\*Vision gaps:\*\*\s*(.+)$", re.M)
 VISION_ROLE = re.compile(r"^\*\*Vision role:\*\*\s*(.+)$", re.M)
+VISION_ENABLER_ROLE = re.compile(
+    r"^(?:Foundational|Communication) enabler(?:\s*[—–:]\s*\S.*)?$"
+)
 
 
 def project_number(plan_path: str | Path) -> str:
@@ -17,18 +20,37 @@ def project_number(plan_path: str | Path) -> str:
     return folder.split("-", 1)[0]
 
 
-def plan_gap_ids(plan_text: str) -> list[str]:
-    """The one interpretation used by validation, completion and publishing."""
+def plan_gap_links(plan_text: str) -> list[tuple[str, str, str]]:
+    """Parse canonical project-gap declarations as (ID, role, relative href).
+
+    Own the roles and exact source link once, so derived readers do not
+    separately infer role, target path, or declaration ordering.
+    """
     gaps, roles = VISION_GAPS.findall(plan_text), VISION_ROLE.findall(plan_text)
     if len(gaps) + len(roles) != 1:
         raise ValueError("expected exactly one Vision gaps or Vision role declaration")
     if roles:
+        role = roles[0].strip()
+        # A gapless plan must explicitly declare a supported enabler kind;
+        # an arbitrary placeholder must not masquerade as delivery evidence.
+        if not VISION_ENABLER_ROLE.fullmatch(role):
+            raise ValueError(
+                f"unsupported Vision role {role!r}; expected explicit "
+                "Foundational enabler or Communication enabler")
         return []
     ids = GAP_LINK.findall(gaps[0])
     if not ids:
         raise ValueError("Vision gaps declaration needs a gap document link")
     if len(ids) != len(set(ids)):
         raise ValueError("duplicate gap IDs in plan declaration")
+    # Refuse an authored link with both roles; preserve the accepted ordering.
+    gap_matches = list(GAP_LINK.finditer(gaps[0]))
+    for i, match in enumerate(gap_matches):
+        next_start = (gap_matches[i + 1].start()
+                      if i + 1 < len(gap_matches) else len(gaps[0]))
+        role_text = gaps[0][match.end():next_start]
+        if "(primary)" in role_text and "(supporting)" in role_text:
+            raise ValueError(f"gap {ids[i]} has contradictory primary/supporting roles")
     # The first linked gap is the one project owns. Other gaps may inform
     # dependencies, but the public vision renders this project only once.
     primary_count = len(re.findall(r"\(primary\)", gaps[0]))
@@ -41,4 +63,11 @@ def plan_gap_ids(plan_text: str) -> list[str]:
         raise ValueError("primary gap must follow the first gap link")
     if len(second_link) > 1 and first_primary.start() > second_link[1].start():
         raise ValueError("primary gap must be the first linked gap")
-    return ids
+    return [(gap_id, "primary" if i == 0 else "supporting",
+             match.group(0)[2:-1])
+            for i, (gap_id, match) in enumerate(zip(ids, gap_matches))]
+
+
+def plan_gap_ids(plan_text: str) -> list[str]:
+    """The canonical ID projection used by validation and public publishing."""
+    return [gap_id for gap_id, _, _ in plan_gap_links(plan_text)]
