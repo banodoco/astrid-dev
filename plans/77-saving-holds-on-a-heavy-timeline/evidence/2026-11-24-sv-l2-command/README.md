@@ -59,3 +59,18 @@ Before any saves, the browser must open the timeline, become writable within 120
 The run uses the existing S0, cold/warm save and B5/B10 scenarios, the two-file Agent overlay, one fresh browser profile and owned stack, a 120-second writable deadline, an 18 GiB start floor and a 16 GiB stop floor. Cleanup stops only processes owned by this run, requires idle-safe shutdown, verifies ports and original-data boundary, removes copied data, and writes hashes. It does not replace or consume the retained head.
 
 This is a MEASURE command: the package SHA-256 and full package contents are in this committed directory (`package.sha256` and its referenced files). The command is intended for one box attempt; raw receipts and their hashes return through the host lane.
+
+## Package coverage
+
+`run-sv3-overlay.sh` compares the sorted manifest paths with every regular file in this package directory, excluding only `package.sha256` (the manifest) and `package-digest.txt` (the digest of that manifest). It then verifies the manifest hashes before doing any work. The package files that are executed or imported are:
+
+- `run-sv3-overlay.sh` — entry point.
+- `verify-overlay.py` — executed by the shell for boundary checks, preparation, and receipts.
+- `overlay-direct.py` — executed as the Runtime CLI wrapper.
+- `overlay-guard/sitecustomize.py` — imported by the Runtime Python during startup; witnesses daemon imports and checks overlay selection.
+- `browser-sv3-measure.mjs` — browser measurement driver.
+- `arm-free-space.mjs` — imported by the browser driver.
+- `profile-save-hook.mjs` — imported by the browser driver.
+- `reused-trace-helpers.mjs` — imported by the browser driver for pinned browser and fixture helpers.
+
+`approved-input.json` is read as fixed configuration, and `README.md` documents the command; both are hashed as package files. The App, Runtime, Agent, browser tooling checkout, and installed interpreter are external inputs whose identities are checked and recorded by the package.

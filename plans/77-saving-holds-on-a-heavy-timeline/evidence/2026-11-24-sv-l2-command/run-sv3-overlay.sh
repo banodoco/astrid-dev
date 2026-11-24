@@ -16,6 +16,10 @@ ref="${SV3_RUNTIME_REF:?git ref in the candidate mirror that must resolve to the
 [[ $# == 2 && "$sha" =~ ^[a-f0-9]{40}$ && "$approved_package" =~ ^[a-f0-9]{64}$ ]]
 [[ "$ref" =~ ^[A-Za-z0-9._/-]+$ && "$ref" != -* ]]
 [[ "${SV3_TRACE:-0}" == 0 ]] || { echo 'SV3_TRACE=1 is not supported by this package. Nothing was started.' >&2; exit 2; }
+# Every regular package input except the manifest itself and its derived digest must be covered.
+diff -u \
+  <(cd "$prep" && find . -type f ! -path './.git/*' ! -name package.sha256 ! -name package-digest.txt -printf '%P\n' | LC_ALL=C sort) \
+  <(cd "$prep" && awk 'NF == 2 {sub(/^\.\//, "", $2); print $2}' package.sha256 | LC_ALL=C sort)
 [[ "$(sha256sum "$prep/package.sha256" | cut -d' ' -f1)" == "$approved_package" ]]
 (cd "$prep" && sha256sum -c package.sha256)
 [[ "$(jq -er .runtime_fixed_by_argument "$prep/approved-input.json")" == true ]]
