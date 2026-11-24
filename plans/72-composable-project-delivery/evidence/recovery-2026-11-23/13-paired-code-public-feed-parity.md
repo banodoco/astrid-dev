@@ -4,7 +4,7 @@
 
 ## Exact test identity and method
 
-The native test [`scripts/test_project_delivery_release15_scratch.py`](../../../../scripts/test_project_delivery_release15_scratch.py), blob `adc85205bb2ded4dfa177eb0dd6558af5a5c0a66`, gained one `test_paired_frozen_and_selected_code_export_same_authored_feed` method at code head `9e9466738bf9261ba8eaa4a3708a83263891fed9`. This extends, rather than replaces, the earlier unchanged original real-repository traversal, missing-Plan72-authored-source negative, and same-code before/after traversal tests.
+The native test [`scripts/test_project_delivery_release15_scratch.py`](https://github.com/banodoco/astrid-dev/blob/c29908e587b59dc1ba8fc3891cce7ee94480412d/scripts/test_project_delivery_release15_scratch.py), blob `adc85205bb2ded4dfa177eb0dd6558af5a5c0a66`, gained one `test_paired_frozen_and_selected_code_export_same_authored_feed` method at code head `9e9466738bf9261ba8eaa4a3708a83263891fed9`. This extends, rather than replaces, the earlier unchanged original real-repository traversal, missing-Plan72-authored-source negative, and same-code before/after traversal tests.
 
 The test constructs **two detached temporary Git worktrees**:
 
