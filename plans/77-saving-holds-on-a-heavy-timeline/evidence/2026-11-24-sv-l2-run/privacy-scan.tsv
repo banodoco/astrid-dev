@@ -1,0 +1,7 @@
+pattern	file
+email	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv-l2-app-7705ebd4-runtime-eb4e8644e3549c88d5d836cd5738ca75e76d311a/program.before.sha256
+email	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv-l2-app-7705ebd4-runtime-eb4e8644e3549c88d5d836cd5738ca75e76d311a/program.after.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv-l2-app-7705ebd4-runtime-eb4e8644e3549c88d5d836cd5738ca75e76d311a/archive-files.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv-l2-app-7705ebd4-runtime-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/browser-sv3-measure.json
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv-l2-app-7705ebd4-runtime-eb4e8644e3549c88d5d836cd5738ca75e76d311a/program.before.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv-l2-app-7705ebd4-runtime-eb4e8644e3549c88d5d836cd5738ca75e76d311a/program.after.sha256
