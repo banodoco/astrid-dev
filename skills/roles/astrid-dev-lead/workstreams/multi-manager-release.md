@@ -28,7 +28,7 @@ Use when the Lead prepares accepted plan work for an Orchestrator to assign to *
 
 2. **Prepare one queue.** List each packet in `releases/<N>/run.md` with its handoff state, session and next action. `tasks.md` stays the record of progress.
 3. **Own plan-level completion.** For plans assigned through this workstream, record the **Lead as the accountable agent** on its `inputs.md` Run start, with the owner's authorization; there is **no separate plan manager**. You review and land accepted task PRs, keep `tasks.md` current on `main`, and do the plan manager's [Release](../../../shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs) steps: merging `release/<N>/main` into plan branches, and landing them. Review stops (RS1, R) are yours: commission an independent reviewer, not a packet.
-4. **Prepare the boards.** Reuse the release's existing boards, or create them ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)) and list them in the `run.md` Boards table; no packet issues, no labels.
+4. **Prepare the boards.** Reuse the release's existing boards, or create them ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)) by their titles; no packet issues, no labels.
 5. **Hand off to the owner.** Provide queue and mailbox links, ready/blocked packets, any missing authorization and the Orchestrator launch message, filled in from the [run board template](../../../../templates/release/run.md#orchestrator-launch-message). The board's startup checks verify access, session creation, resume, the hour and the mailbox; describe any manual steps.
 
 ## At each Lead check-in

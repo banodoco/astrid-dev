@@ -14,16 +14,7 @@ Two lanes are running, a third has its brief, and a fourth is proposed. [Release
 
 ### Boards
 
-Rules: [coordination](../../skills/shared/run-contract.md#coordination-boards-and-check-ins). Every role posts its hourly STATUS on its plan's board, and reads that board and the Lead board each hour. The per-plan name tables are under each dispatch below.
-
-| Board | Issue |
-|---|---|
-| Lead (release-wide) | [astrid-dev #1836](https://github.com/banodoco/astrid-dev/issues/1836) |
-| Plan 56 | [#1757](https://github.com/banodoco/astrid-dev/issues/1757) |
-| Plan 87 | [#1776](https://github.com/banodoco/astrid-dev/issues/1776) |
-| Plan 89 | [#1777](https://github.com/banodoco/astrid-dev/issues/1777) |
-| Plan 82 | [#1824](https://github.com/banodoco/astrid-dev/issues/1824) |
-| Qualification | [#1834](https://github.com/banodoco/astrid-dev/issues/1834) |
+Every project's board is the astrid-dev issue titled `board: release 15 ...` ([rules](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)); [list them](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22board%3A+release+15%22).
 
 ### Timeline to publish
 

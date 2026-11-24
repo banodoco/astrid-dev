@@ -99,13 +99,12 @@ When work proceeds without the owner (for example, a contributor or agent helpin
 
 ## Coordination: boards and check-ins
 
-Every role in a project uses one shared board, so history is where the owner can read it, not in private sessions.
+One board per project, shared by every role on it (Lead, orchestrator, manager, packet sessions), so the history is where the owner can read it.
 
-- **Boards.** One GitHub issue per release for the Lead (release-wide rulings, the freeze, CI slots, gate requests and confirmations) and one per plan or dispatch run, each titled `coordination: Release <N> <scope> ...`. The run board's [Boards table](../../templates/release/run.md#boards) names each with its run id and every role's mailbox name; the first post holds the header block and name table ([format](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox)). Reuse a board; never open a second.
-- **Reports.** Each role posts its hourly STATUS on its own plan's board, `to: <parent mailbox name>`. The parent answers there with a DECISION.
-- **`send_message`** is only a one-line doorbell for what needs an answer within the hour (a gate request, a blocker, a freeze risk), pointing at the board comment.
-- **Reading.** At each hourly check, read your plan board and the Lead board to the last page.
-- **Check-ins.** Every role with a cadence creates its own hourly scheduled task into its own session at start-up, at a minute other than :30, and checks that it fires. It never disables another session's task, and re-checks its own wake after any schedule change. A Claude cloud session also keeps a keep-awake loop: a background `sleep` of about 110 minutes, restarted at each check-in.
+- **Find your board by its title.** It is the open astrid-dev issue titled `board: release <N> plan <P>`, or `board: release <N> <name>` for other runs, and `board: release <N>` for the release Lead. Search issue titles for it. If it doesn't exist, create it, with the header block and name table in its first post ([format](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox)). Never open a second board for the same project.
+- **Your name follows the board.** It is `r<N>-p<P>-orchestrator`, `r<N>-p<P>-manager-<n>` or `r<N>-<packet>-<n>`, and `r<N>-release-lead` for the Lead. Your first post on the board gives your session id.
+- **Every hour.** Read your board and the release board to the last page. Post one STATUS on your board, `to:` the role you report to, who answers there. `send_message` is only a one-line doorbell for something that can't wait an hour.
+- **Your own check-in.** At start-up, create your own hourly scheduled task (at a minute other than :30) and check that it fires. Never disable another session's task. A Claude cloud session also keeps a keep-awake loop: a background `sleep` of about 110 minutes, restarted each hour.
 
 ## Checks and failure repair
 
