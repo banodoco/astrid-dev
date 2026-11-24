@@ -14,6 +14,16 @@ description: Dispatch and supervise Lead-approved packets in fresh ChatGPT sessi
 
 Use when the [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [packet queue](../../astrid-dev-lead/workstreams/multi-manager-release.md) and the owner has authorized this Orchestrator. The general [Orchestrate role](../SKILL.md) still applies.
 
+**The session's mode is set by the packet's Route, every time:**
+
+| Packet Route | ChatGPT mode |
+| --- | --- |
+| `N`, normal | High |
+| `X`, very hard | Extra High |
+| `S`, super hard | Pro |
+
+Never run every packet in one mode, and never pick a mode by feel. If a mode isn't offered, say so in STATUS and ask the Lead; don't substitute one silently. A packet moved to a harder route moves to that route's mode ([run contract](../../../shared/run-contract.md#chatgpt-session-modes)).
+
 **One packet, one fresh ChatGPT session.** The packet session implements and submits; **you** keep sessions moving; **the Lead** reviews and integrates.
 
 ## Start

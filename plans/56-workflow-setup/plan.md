@@ -6,11 +6,11 @@
 
 **Status:** active
 
-**Owner:** Release 15 Lead (`session_011EzfW2ePdUMAHRAcAm3nur`)
+**Owner:** Release 15 Lead (`session_011EzfW1gtAhRQwk8pgJMzhG`); accountable agent `session_011EzfW2ePdUMAHRAcAm3nur`
 
 **Estimate:** About 18.5 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8, and 6.5 from the UX review (LE-12 to LE-18 and consent hardening in LE-2), of which 3.75 (LE-12 to LE-15, LE-2 hardening) are needed for the SAM run to pass; a plain 90/10 without the loose-end tasks is about 6.
 
-**Waiting on:** the owner's decisions D10–D12 ([inputs.md](inputs.md#owner-decisions)), which do not block starting; D4–D9 and Release 15 membership decided 23 November 2026
+**Waiting on:** nothing from the owner until the live SAM run (WS-L) after R; D10–D12 decided 24 November 2026 under her delegation
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

@@ -76,6 +76,8 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 
 **Handoff:** the branch, the loop log, and evidence comments on the issues owned by Plans 69, 76 and 77.
 
+**Landing rule (Release 15 Lead, 24 November 2026):** Plan 88 lands on its read-back proofs on a real stack (swap, ripple, reflow moves no clip, overlay conversion or its safe refusal, and the loop rows that need no render) and on the gate CI of its final head with a by-id comparison. Every render requirement below becomes a **release-freeze check**, run once Plan 87's core is on `release/15/main`; the landing does not wait for it. A render obtained earlier by overlaying Plan 87's branches is extra evidence, not the gate.
+
 ## Completion
 
 - On a build of the plan branch, the three must-pass edits land and read back exactly as intended, with a render showing each: media swap with a new still and a new video, the control re-point, and the ripple retime with narration.

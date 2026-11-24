@@ -72,13 +72,13 @@ Added 23 November 2026 at the owner's request. The Lead rewrites this section at
 
 On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ221kXBNRB4xQcG`), asked for Plan 56 to be set up for the [fresh ChatGPT packet workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md).
 
-- **Accountable agent** for Plan 56: the Release 15 Lead, `session_011EzfW2ePdUMAHRAcAm3nur`; there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
-- **Sessions in use (23 November 2026):** the Lead runs in `session_011EzfW2ePdUMAHRAcAm3nur` (the owner's brief and the Run start named `session_011EzfW1gtAhRQwk8pgJMzhG`; the role and the mailbox name `r15-lead` are unchanged). The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
+- **Accountable agent** for Plan 56: `session_011EzfW2ePdUMAHRAcAm3nur`, acting for the Release 15 Lead (`session_011EzfW1gtAhRQwk8pgJMzhG`); there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
+- **Sessions in use (23 November 2026):** the Release 15 Lead is `session_011EzfW1gtAhRQwk8pgJMzhG`. Plan 56's accountable agent, delegated by the owner, is `session_011EzfW2ePdUMAHRAcAm3nur`. On mailbox #1757 only, it posts under the name `r15-lead`, and the Orchestrator addresses it so. The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override, the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
 - **The Orchestrator** acts in the owner's ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace packet sessions and comment on the mailbox; it does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch, never dispatches hosted CI and never takes a second packet.
 - **Session mode follows the packet's Route:** N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
 - **Bases:** astrid-agent `release/15/plan-56` from `release/15/main` (`045064b6`); VibeComfy `release/15/plan-56` from `c0e910ca`, the commit the Agent pins, which contains VibeComfy `release/15/main` (`48b5fa9e`), so both branches carry the current `release/15/main`. When `release/15/main` moves, the Lead merges it into `release/15/plan-56`; a packet never does.
-- **Needs the owner:** the live SAM run (WS-L, after R), publishing, anything paid or touching her install or media, and decisions D10–D12 before landing (build to the recommendations meanwhile).
+- **Needs the owner:** the live SAM run (WS-L, after R), publishing, and anything paid or touching her machine, install or media. On 24 November 2026 she delegated every other Plan 56 blocker, owner decisions included, to Plan 56's accountable agent, which records each one on the mailbox.
 
 ### Standing rulings (Plan 56)
 
@@ -86,6 +86,13 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 2. **Cross-repo packets never move a pin:** they post `READY-PIN <VibeComfy head>` and the Lead adds the pin commit.
 3. **RS1 and R are commissioned by the Lead,** each by Codex Astra.
 4. **The Plan 56 bases include `release/15/main` of both repositories** (the owner, 23 November 2026, through the Orchestrator); the Lead records each base's head and ancestry in `releases/15.md` Branches.
+5. **A packet's dependants wait only for the cards they depend on,** not for the whole packet (Lead, 23 November 2026).
+6. **Proof runs where the network is.** ChatGPT packet sandboxes cannot reach `github.com`. Packet sessions publish through the connector and post `READY-PROOF <repo> <PR> <head> <selectors>`. The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
+7. **Hosted CI.** VibeComfy's `ci` runs no unit tests (astrid-dev #1768), so the Lead's local fast suite, compared by id, replaces it (baseline at `c0e910ca`: 758 passed, 9 failed, 9 skipped). Agent `ci.yml` does not trigger on `release/*/plan-*`; the Lead dispatches it on `release/15/plan-56` after each batch and compares it by id with `agent-ci-baseline-8807f820` (Lead, 23 November 2026).
+8. **Batch integration.** The Lead merges accepted VibeComfy PRs with `--no-ff`, tests the integrated tree, pushes that exact tree, and adds one cumulative Agent pin per batch (Lead, 23 November 2026).
+9. **Code-quality audit before every packet merge:** duplication across repos, silent fallbacks, broad `except`, hard-coded cases, test-only seams, dead or duplicate paths. A silent fallback, or a second code path left as an end state, is must-fix (mailbox a0bb99b6; follow-ups in astrid-dev #1772).
+10. **Agent CI capacity is release-wide:** at most two Agent `ci.yml` runs at once across all lanes. Check the running runs before dispatching (Release 15 Lead, 23 November 2026).
+11. **Owner decisions are delegated (24 November 2026)** to Plan 56's accountable agent, except the reserved items under Authority. An assertion change that implements an accepted plan outcome is decided by that agent and recorded with its reason (mailbox 9c75f07b).
 
 ### Mailbox
 
@@ -93,7 +100,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7114881197 |
+| Plan 56 accountable agent (`r15-lead`) | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7116279618 |
 | Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
@@ -132,11 +139,11 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Running | `r15-P56-01-1` (ChatGPT Pro) | Dispatched 23 November 2026 21:44 UTC; waiting for its first STATUS (branch pushed, draft PR open, mailbox comment). Pro |
-| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Ready | — | Extra High |
-| [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Ready | — | High |
-| [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Ready | — | Extra High |
-| [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Blocked | — | After P56-01 and P56-03. Pro |
+| [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Done | `r15-P56-01-1` (ChatGPT Pro) | Merged 23 November 2026: Agent #570 (`c3d8ee2d`), VibeComfy #187. Pro |
+| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Running | `r15-P56-02-1` (Extra High) | WS-0d VibeComfy half merged (#190); Agent #581 open; WS-0a next. Extra High |
+| [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Running | `r15-P56-03-1` (High) | WS-0c VibeComfy half merged (#188); Agent #573, #574 open; WS-0e fail-closed guard approved. High |
+| [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Running | `r15-P56-04-1` (Extra High) | LE-4 (#189), WS-5 (#191) and LE-6's VibeComfy half (#192) merged; Agent #577 open. Extra High |
+| [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Ready | — | Dependencies met (WS-7a, WS-0c merged); start first. Pro |
 | [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Blocked | — | After P56-01, 02, 03. Extra High |
 | [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Blocked | — | After P56-01 and 05; then the Lead's RS1. Pro |
 | [R15-P56-08](packets/R15-P56-08.md) Lookup suggestions, several packs, models | LE-5, LE-16, LE-9 | Blocked | — | After P56-04 and 06. High |
@@ -159,3 +166,71 @@ First do the Orchestrator startup checks and post one STATUS with each result; d
 You may start, resume, stop and replace packet sessions and comment on the mailbox. Never dispatch hosted CI: relay a packet's READY-CI to the Lead. You may not merge, edit the repository or approve anything. Send anything reserved to the owner to the Lead.
 If a check fails, say which manual step the owner must do instead of promising automation.
 ```
+
+## Plans 87 and 89 dispatch
+
+Added 23 November 2026 at the owner's request. It works like [Plan 56 dispatch](#plan-56-dispatch) above, with these names:
+
+- **Orchestrator:** each plan's Claude lane session. It takes the Lead's part of the [packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md) for its own plan: it writes packets, reviews them, merges them into its plan branch, runs the live proofs and requests the landing gate.
+- **Manager:** a separate session that starts and minds a fresh ChatGPT session for each packet. It takes the Orchestrator's part of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), with its plan's orchestrator as "the Lead".
+- **Release 15 Lead:** above both, in `session_011EzfW1gtAhRQwk8pgJMzhG`, posting as `r15-release-lead`. Packets live in [packets/](packets/), and each plan's `tasks.md` stays the record of progress.
+
+### Authority
+
+On 23 November 2026, in the Release 15 Lead's session (`session_011EzfW1gtAhRQwk8pgJMzhG`), the owner asked for Plans 87 and 89 to farm their remaining tasks out this way, and for Plan 88 to finish as it runs now.
+
+- **Release 15 Lead.** It may post on both mailboxes to the orchestrator, the manager or a packet session. A DECISION from `r15-release-lead` binds all of them and overrides an orchestrator's, within this Authority and the owner's reserved items. A comment still grants nothing beyond this section. Its own gate covers only the landing into `release/15/main`; otherwise it steers and rules.
+- **Orchestrators.** For Plan 87, `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-orchestrator`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-orchestrator`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
+- **Managers.** `r15-p87-manager-1` and `r15-p89-manager-1`, one per plan, each started by the owner the same way as Plan 56's Orchestrator and acting in her ChatGPT account at her request. A manager may start, resume, stop and replace its own plan's packet sessions and comment on its mailbox. It does not edit the repository, merge, approve or dispatch hosted CI. It reports to its plan's orchestrator and follows the Release 15 Lead's DECISIONs.
+- **Packet sessions** may push to the branches their packet's PR destination names, open pull requests there and comment on their plan's mailbox. They never merge, never edit `tasks.md`, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro.
+- **What stays in the lane:** real renders, installed save measurements, fixture builds and anything else that needs an installed stack. A packet's proof is its focused tests. Its acceptance proof is the lane's (Plan 56 ruling 6: packet sandboxes cannot reach `github.com`).
+- **Needs the owner:** publishing, anything paid, her install or media, and changing an existing test's assertion.
+
+### Standing rulings (Plans 87 and 89)
+
+1. Plan 56 rulings 1 (functions, not files, conflict), 2 (packets never move a pin; post `READY-PIN`), 5 (dependants wait only for their own cards) and 6 (proof runs where the network is; post `READY-PROOF <repo> <PR> <head> <selectors>`) apply as written.
+2. The orchestrator runs reviews itself on the run contract's routes (high-judgment for S cards, integrity or contract changes, or code already judged unsound; one final round otherwise). It never commissions a packet to review.
+3. The release-wide rulings in [the lane orchestrator workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md) bind the orchestrators: free CI slots, the by-id comparison with each gate request, pin witnesses, fixtures shrink, cross-lane findings go lane to lane.
+4. Cap: at most **four** packets in Running or Review per plan; the orchestrator may lower it. The first packet goes alone, until its early STATUS shows a session can push, open a draft PR and comment.
+5. Packet sessions run in a normal ChatGPT Chat, not Work (owner, 24 November 2026); the Route sets the mode (N High, X Extra High, S Pro). One writer per branch: replace a stopped session only after its branch has been still for 30 minutes.
+6. A test's forging step (direct writes that craft a corrupt or legacy state in setup) may change to a shared helper when a new integrity rule refuses it, if every assertion line stays byte-identical, the helper restores the rule in the same transaction and a test proves it is back (Release 15 Lead, 24 November 2026, for Plan 89's SV-L5).
+
+### Mailboxes
+
+| Plan | Mailbox | Run | Orchestrator | Manager |
+|---|---|---|---|---|
+| 87 | [astrid-dev #1776](https://github.com/banodoco/astrid-dev/issues/1776) | `r15-p87-dispatch` | `r15-p87-orchestrator` | `r15-p87-manager-1` |
+| 89 | [astrid-dev #1777](https://github.com/banodoco/astrid-dev/issues/1777) | `r15-p89-dispatch` | `r15-p89-orchestrator` | `r15-p89-manager-1` |
+
+Cadence, quiet sessions and replacement follow [Plan 56's table](#when-a-session-goes-quiet), with "Lead" read as the plan's orchestrator. The orchestrator posts a heartbeat STATUS on its mailbox at least every 90 minutes.
+
+### Manager startup checks
+
+These are [Plan 56's checks](#orchestrator-startup-checks) 1, 3, 4, 5, 7, 8 and 9, run against the plan's own mailbox. Check 2 becomes: `release/15/plan-<P>` exists in each repository the plan's packets name, and no `p<P>/*` branch exists that the board does not list. Check 6 becomes: a packet session can push a `p<P>/<task id>` branch, open a draft PR and comment on the mailbox, in each repository the packets name (Plan 87: astrid-agent, astrid-runtime, astrid-app; Plan 89: astrid-runtime, astrid-agent, astrid-app). The manager posts one STATUS with each result and dispatches nothing until its orchestrator's DECISION answers it.
+
+### Dispatch queue (Plan 87)
+
+The orchestrator writes the packets at its next break point and lists them here. Candidates from [tasks](../../plans/87-render-works/tasks.md): RN-5 (pin and revision report, X), RN-8 and RN-9 (S, Pro), RN-11 (CI render check, X), RN-14 (D2, the motion pack on a fresh install, X). RN-10, RN-12 and RN-13 are renders, so they stay in the lane.
+
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| [R15-P87-01](packets/R15-P87-01.md) | RN-11 (X): CI render check | Ready (first, alone) | — | Continues `p87/rn11-contract` in astrid-agent; pack-element cases wait for RN-4 |
+| [R15-P87-02](packets/R15-P87-02.md) | RN-9 (S): custody retry | Ready (second, after P87-01's early STATUS) | — | Continues `p87/rn9-custody`; high-judgment review (S) |
+| [R15-P87-03](packets/R15-P87-03.md) | RN-5 (X): one pinned pack revision | Blocked on RN-4 (orchestrator's lane) | — | Continues the three `p87/rn5-*` branches; `READY-PIN` for the pin |
+| [R15-P87-04](packets/R15-P87-04.md) | RN-8 (S): lease through a long render | Blocked on the orchestrator's long-render measurement (`READY-MEASURE`) | — | RN-7 logs are on the plan branch; high-judgment review (S) |
+| [R15-P87-05](packets/R15-P87-05.md) | RN-14 (X): motion pack on a fresh install | Blocked on RN-5's pin; sized first | — | Over one day moves to Release 16 |
+
+Stays in the orchestrator's lane: RN-1 to RN-3 (draft astrid-agent#567, awaiting RN-2's real own-object render), RN-4 (`p87/rn4-roots-clean`, review and installed proof), RN-6 and RN-7 (merged), RN-10, RN-12, RN-13 and every real render.
+
+### Dispatch queue (Plan 89)
+
+The orchestrator writes the packets at its next break point and lists them here. Candidates from [tasks](../../plans/89-heavy-saves-in-seconds/tasks.md): SV-L2 (editor timing marks), SV-L3 (copy counters), SV-L5 (immutable accepted history, X), SV-L7 (burst coalescing, once sized), SV-L8 (commit schema validation). Installed measurements stay in the lane.
+
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| R15-P89-01 (withdrawn) | SV-L2 (N): editor timing marks | Done as astrid-app [#377](https://github.com/banodoco/astrid-app/pull/377), in the orchestrator's lane | — | Head `7705ebd4`; the lane runs the focused tests and proves the four marks on an installed drag save |
+| [R15-P89-02](packets/R15-P89-02.md) | SV-L5 (X): accepted history immutable | Ready (first, alone) | — | astrid-runtime `p89/SV-L5`; integrity change, high-judgment review |
+| [R15-P89-03](packets/R15-P89-03.md) | SV-L8 (N): attribute the 1.7 s of schema validation | Ready (second, after P89-02's early STATUS) | — | Investigation note only; an implementation packet follows on the orchestrator's DECISION |
+| [R15-P89-04](packets/R15-P89-04.md) | SV-L3 (N): history-growth counters | Blocked on SV-L6 (Runtime draft #113 merging) | — | Priority after SV-4; evidence: [Plan 88's history-growth lines](../../plans/89-heavy-saves-in-seconds/evidence/2026-11-24-p88-history-growth/README.md) |
+
+Stays in the orchestrator's lane: SV-L1 (merged), SV-L4 (burst test, a measurement), SV-L6 (Runtime covers index, X; the Codex manager's draft #113), SV-L7 (burst coalescing: sized at 4 to 6 App days, awaiting the Release 15 Lead's go), and every installed measurement.
