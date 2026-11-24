@@ -1,0 +1,16 @@
+lane	cluster	outcome	job	id
+ci	C127	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_native_checkout.py::test_attached_add_track_queues_existing_track_create_capture
+ci	C128	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_native_checkout.py::test_parent_track_create_publish_retries_original_request_after_lost_ack
+ci	C129	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit_v2.py::test_preview_refusal_saves_edit_without_commit_or_key_reservation
+ci	C130	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit_v2.py::test_saved_fixed_list_conflict_suggests_retry
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[doc.patch-preview-declared-reads-function]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[doc.patch-preview-declared-reads-label]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[doc.patch-preview-omitted-reads-function]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[doc.patch-preview-omitted-reads-label]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[native-preview-declared-reads-function]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[native-preview-declared-reads-label]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[native-preview-omitted-reads-function]
+ci	C16	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_open_commit.py::test_command_reaches_current_provider_with_full_v2_request_and_frozen_retry[native-preview-omitted-reads-label]
+ci	C38	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_native_checkout.py::test_parent_track_create_publish_uses_the_existing_captured_outbox[row0]
+ci	C38	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_native_checkout.py::test_parent_track_create_publish_uses_the_existing_captured_outbox[row1]
+ci	C38	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_native_checkout.py::test_parent_track_create_publish_uses_the_existing_captured_outbox[row2]

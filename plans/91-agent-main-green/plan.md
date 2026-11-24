@@ -6,11 +6,11 @@
 
 **Status:** queued
 
-**Owner:** Unassigned
+**Owner:** Orchestrator session `session_011EzfW1yUojAfWkGcaZNRph` (`r15-p91-orchestrator`), with one manager for its packets
 
 **Estimate:** 55–72 (about 4–5 weeks elapsed with five workers): Phase 1 (the gate, the prune pass and the large causes) 23–27, Phase 2 (the middle) 17–22, Phase 3 (the long tail) 12–20, Phase 4 (green runs and review) 3–5
 
-**Waiting on:** the owner's written confirmation of D1 and D3–D15 (agreed in conversation on 24 November; D12 decided), then a place in the Release 15 brief and a manager; Plan 77 for the failing test files it also edits, and Plan 88 for two ([base choice](inputs.md#source-identities))
+**Waiting on:** the Release 15 Lead to add Plan 91 to the brief and the run board (Status turns active with the brief line; the run itself started 24 November); AG-0 (cut and re-measure); Plan 77 for the failing test files it also edits ([base choice](inputs.md#source-identities)). Plan 88 landed in `release/15/main` (`514499de`), so its two files no longer stack
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

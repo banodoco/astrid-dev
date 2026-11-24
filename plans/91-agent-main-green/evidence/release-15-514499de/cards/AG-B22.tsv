@@ -1,0 +1,3 @@
+lane	cluster	outcome	job	id
+lanes	C105	FAILED	integration shard 1 _ 4	tests/core/generation/test_engine_custody.py::test_two_full_h3_runtime_runs_reuse_owned_native_service[outer]
+lanes	C98	FAILED	integration shard 3 _ 4	tests/packs/rendering/test_render_export_task_adapter.py::test_forced_caption_uses_server_owned_executable_routing_and_isolation
