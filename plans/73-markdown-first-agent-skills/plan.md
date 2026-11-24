@@ -4,13 +4,13 @@
 
 **Goal:** Astrid contributors and their agents can write each role and workstream once as an ordinary Markdown document, opt it into skill discovery with `skill: true`, and reliably use its generated skill without maintaining a separate authoring layout.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** ChatGPT Manager — Plan 73
 
 **Estimate:** 8–12 engineering days, provisional until the reference-packaging probe and current baseline.
 
-**Waiting on:** First package-contract review RS1 before migration, then final independent review R and required CI before main integration.
+**Waiting on:** Explicit owner authorization to resume; unresolved RS1 BLOCK and D5 cutover, active-consumer migration, genuinely independent MS-10/client discovery, integrated MS-11, independent final R, and owner GO before main integration.
 
 **Run route:** astrid-dev-only
 
