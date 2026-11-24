@@ -111,6 +111,8 @@ A contributor whose PR is deferred is told which release it is considered for, o
 
 ## Rehearse the freeze
 
+A [Qualifier](qualification.md) runs this from the day the freeze date is set, and the frozen run after it.
+
 The freeze is where a release loses days, because every gap in the evidence is found one at a time against a deadline. Rehearse it at the cut line instead, on the release branch's current head, and fix what it finds while lanes are still open:
 
 - **The comparison.** Run the publication comparator against the served release's runs exactly as the freeze will, and have a fresh reviewer try to make it pass something it should fail: a failed job hidden behind an accepted test, a dropped test ID, an accepted entry that was green on the served release, an older attempt, a report not bound to its run. A comparator nobody has attacked is not evidence.
@@ -128,6 +130,8 @@ The candidate is the head commit of `release/<NN>/main` in each repository, froz
 **Freeze in dependency order, once.** The repositories pin each other: the Agent locks the Runtime and pins VibeComfy, and the App's manifest, vendor locks and generated tool catalog name the Agent and Runtime. A change at the bottom therefore moves everything above it, even when it is only a test. So settle the producers first (Runtime, then VibeComfy, then the Agent, with every lock, pin and generated file regenerated and its own `--check` passing), make one Agent cut, and re-pin the App once onto that cut. Batch late producer changes into that single cut rather than re-pinning the App for each.
 
 ## State the claim and select evidence
+
+The [qualification workstream](qualification.md) holds the tiered bar and the coverage map that select this evidence.
 
 Before checking, state the release claim and map each required claim to its exact candidate-bound evidence. Run only authorized, focused checks for affected behavior and the prescribed review. Never run broad suites locally, and never run opt-in suites or broad RC matrices; the one full comparison runs on CI. The historical release gates do not authorize running them. If a required claim has no lawful focused evidence available, mark that claim and the candidate **unqualified**; do not fabricate a pass, silently reduce the claim, or imply that an input feature candidate automatically qualifies the integrated Runtime/Agent/App tuple.
 
