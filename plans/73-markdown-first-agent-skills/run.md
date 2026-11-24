@@ -2,9 +2,9 @@
 
 The live state of Plan 73's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (21:30 UTC, Tue 24 Nov)
+## Now (22:30 UTC, Tue 24 Nov)
 
-Set up, not started. The orchestrator starts with the lane's integration card once the owner merges the setup PR; packets become Ready as their dependencies merge.
+The integration card has landed: the project branch is at `4584a138162eb6ea2b7e21af5c64ab2536b2fcbe`. Ready: P73-01, P73-02, P73-03. The first packet goes alone until its early STATUS proves a packet session can push, open a draft PR and comment.
 
 ## Authority
 
@@ -67,9 +67,9 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
-| [P73-01](packets/P73-01.md) Milestone probes become tests; builder constants | MSC-2 | Blocked on MSC-1 (orchestrator's lane) | — | Extra High. First packet, alone |
-| [P73-02](packets/P73-02.md) Forward-port `main`'s `skills/` changes, half A | MSC-3 | Blocked on MSC-1 | — | Extra High. Second, after P73-01's early STATUS |
-| [P73-03](packets/P73-03.md) Forward-port, half B, new homes and run-contract sections | MSC-3 | Blocked on MSC-1 | — | Extra High. In parallel with P73-02 |
+| [P73-01](packets/P73-01.md) Milestone probes become tests; builder constants | MSC-2 | Ready (project head `4584a138`) | — | Extra High. First packet, alone |
+| [P73-02](packets/P73-02.md) Forward-port `main`'s `skills/` changes, half A | MSC-3 | Ready (project head `4584a138`) | — | Extra High. Second, after P73-01's early STATUS |
+| [P73-03](packets/P73-03.md) Forward-port, half B, new homes and run-contract sections | MSC-3 | Ready (project head `4584a138`) | — | Extra High. In parallel with P73-02 |
 | [P73-04](packets/P73-04.md) Rule-preservation audit, roles and role workstreams | MSC-4 | Blocked on P73-02 and P73-03 merging | — | Extra High. — |
 | [P73-05](packets/P73-05.md) Rule-preservation audit, shared documents | MSC-4 | Blocked on P73-02 and P73-03 merging | — | Extra High. In parallel with P73-04 |
 | [P73-06](packets/P73-06.md) Active consumers and the authoring guide | MSC-5 | Blocked on P73-03 merging | — | Extra High. Sweep with a count the orchestrator supplies |

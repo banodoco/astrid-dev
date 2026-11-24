@@ -2,9 +2,9 @@
 
 The live state of Plan 72's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (21:30 UTC, Tue 24 Nov)
+## Now (22:30 UTC, Tue 24 Nov)
 
-Set up, not started. The orchestrator starts with the lane's integration card once the owner merges the setup PR; packets become Ready as their dependencies merge.
+The integration card has landed: the project branch is at `c29908e587b59dc1ba8fc3891cce7ee94480412d`. Ready: P72-01. The first packet goes alone until its early STATUS proves a packet session can push, open a draft PR and comment.
 
 ## Authority
 
@@ -67,7 +67,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
-| [P72-01](packets/P72-01.md) Delivery integrity as a registered check | PDC-3 | Blocked on PDC-1 (orchestrator's lane) | — | Extra High. First packet, alone |
+| [P72-01](packets/P72-01.md) Delivery integrity as a registered check | PDC-3 | Ready (project head `c29908e5`) | — | Extra High. First packet, alone |
 | [P72-02](packets/P72-02.md) Duplicate interpretation and the extension guide | PDC-4 | Blocked on P72-01 merging | — | Extra High. Investigation STATUS first |
 | [P72-SC](packets/P72-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | GPT-6.2 Astra, High. Started only on the orchestrator's REQUEST |
 
