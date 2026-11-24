@@ -79,7 +79,7 @@ This applies to **every** critical design question: always supply the specific r
 | **VG-STYLE** — after LP-1 and LP-2 | The *planet and 3D mink visual language*: real sphere, sculptural proportions, light, pixel integration | SC-01 final scene art and style-dependent character production | Independent sky/drag tests, performance work, exploratory grayboxes |
 | **VG-STORY** — after LP-3 and RS1 | The *first finished collaboration scene*: interaction charm, movement/contact, animation grammar and emotional tone | SC-02–SC-08 final creative production and the LP-4 global art pass | Independent technical infrastructure, scene briefs and rough reference research |
 | **VG-WORLD** — after LP-4 | The *complete planet*: eight scenes across a real globe with quiet space, suitable morning/dusk/night compositions | Final visual presentation decisions in LP-5 and downstream cinematic commitment | Nonvisual LP-5 integration tests, fallbacks, measurement infrastructure |
-| **VG-MOTION** — after CAM-IN | The *cinematic language*: entry arc and pace, framing, ease, first flight rhythm | CAM-OUT final choreography and LP-6 polished composition | Independent FL-01–FL-04 modelling, localized flight experiments and technical performance checks |
+| **VG-MOTION** — after CAM-IN and the four FL motion clips | The *cinematic and airspace language*: approach/arc/pacing, actual flight scale and what to keep or omit | CAM-OUT final choreography and LP-6 polished composition | Independent technical performance, accessibility/fallbacks and unrelated tasks |
 
 Do not invent extra owner gates for every routine creative task. If an individual object unexpectedly threatens the site's identity or has irreversible scope/rights implications, the Lead may identify a new load-bearing decision **with a written reason**, ask the owner, and continue other tasks. Final release/publication approval remains separate and explicitly required after R.
 
@@ -110,6 +110,8 @@ Do not invent extra owner gates for every routine creative task. If an individua
   TR: Sabahtan geceye geçiş okunabilirliği ve doğru atmosferi koruyor mu?
 
 **VG-MOTION — entry and flight language**
+
+**Evidence before asking:** show the original website's hero framing alongside the candidate camera animation, and actual short clips for each of FL-01–FL-04 at normal website size. If any candidate is only a storyboard, label it unproved and defer that specific creative selection rather than asking the human to judge nonexistent motion.
 - EN: Does the fly-in/arc feel slick and deliberate, or too dramatic or slow?  
   TR: Yaklaşma ve kavisli kamera hareketi akıcı ve bilinçli mi, yoksa fazla gösterişli ya da yavaş mı?
 - EN: Does the motion end in the right time-selected planet view without a visual jump?  
