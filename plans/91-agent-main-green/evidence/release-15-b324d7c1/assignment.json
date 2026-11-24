@@ -1,0 +1,273 @@
+{
+ "note": "Which card owns each cluster (ci = ci-clusters.md, lanes = lanes-clusters.md) and, through files, every failing ID in a test file the card's scope already covers. Unlisted IDs are Wave C, carded per test file in wave-c-cards.md. Regenerate with ../make_wave_c.py.",
+ "AG-P1": {
+  "ci": [
+   6,
+   11,
+   30
+  ],
+  "files": [
+   "tests/scripts/test_pod_bootstrap.py",
+   "tests/packs/timeline/test_cli_status_publish.py",
+   "tests/test_live_capability_discovery_fix.py",
+   "tests/test_canonical_aliases.py"
+  ]
+ },
+ "AG-P2": {
+  "lanes": [
+   4,
+   20
+  ],
+  "files": [
+   "tests/editing_conformance/test_authenticated_legacy_restore.py",
+   "tests/editing_conformance/test_current_pair_reader.py",
+   "tests/sdk/test_timeline_checkout_history_runtime.py",
+   "tests/test_onboarding_parity.py"
+  ]
+ },
+ "AG-A1": {
+  "ci": [
+   1,
+   2,
+   5
+  ]
+ },
+ "AG-A2": {
+  "ci": [
+   4,
+   7,
+   10,
+   14,
+   21,
+   69,
+   80,
+   83
+  ],
+  "lanes": [
+   26,
+   43
+  ]
+ },
+ "AG-A3": {
+  "ci": [
+   8,
+   12,
+   13,
+   35,
+   36,
+   37,
+   43,
+   46,
+   57
+  ]
+ },
+ "AG-A5": {
+  "ci": [
+   3,
+   88,
+   90
+  ]
+ },
+ "AG-A6": {
+  "ci": [
+   9
+  ]
+ },
+ "AG-A7": {
+  "lanes": [
+   1,
+   11
+  ],
+  "ci": [
+   52
+  ]
+ },
+ "AG-A9": {
+  "lanes": [
+   2
+  ]
+ },
+ "AG-A10": {
+  "lanes": [
+   3
+  ]
+ },
+ "AG-B1": {
+  "ci": [
+   16,
+   17,
+   23,
+   28,
+   34,
+   53,
+   55,
+   56
+  ],
+  "files": [
+   "tests/packs/test_pack_discovery*.py",
+   "tests/packs/test_pack_quarantine.py",
+   "tests/core/generation/test_discovery_scope.py"
+  ]
+ },
+ "AG-B2": {
+  "ci": [
+   18,
+   19,
+   20,
+   38,
+   60
+  ],
+  "files": [
+   "tests/scripts/test_pod_jobs.py",
+   "tests/scripts/test_pod_held_budget.py",
+   "tests/scripts/test_pod_session.py"
+  ]
+ },
+ "AG-B4": {
+  "ci": [
+   24,
+   58,
+   92
+  ]
+ },
+ "AG-B5": {
+  "ci": [
+   22,
+   31,
+   32,
+   42,
+   47,
+   51,
+   84,
+   85
+  ],
+  "lanes": [
+   30,
+   42
+  ]
+ },
+ "AG-B7": {
+  "ci": [
+   15,
+   48
+  ],
+  "files": [
+   "tests/sdk/test_timeline_open_commit*.py",
+   "tests/sdk/test_timeline_native_checkout.py"
+  ]
+ },
+ "AG-B9": {
+  "ci": [
+   26,
+   44
+  ]
+ },
+ "AG-B10": {
+  "ci": [
+   25,
+   29,
+   65,
+   66
+  ]
+ },
+ "AG-B11": {
+  "ci": [
+   40,
+   41
+  ],
+  "lanes": [
+   21
+  ],
+  "files": [
+   "tests/core/execution/test_generic_host_child_bridge_d18.py"
+  ]
+ },
+ "AG-B12": {
+  "lanes": [
+   5
+  ]
+ },
+ "AG-B13": {
+  "lanes": [
+   6,
+   9,
+   41
+  ],
+  "files": [
+   "tests/test_installer_pinokio_*.py",
+   "tests/test_pinokio_switch_integration.py",
+   "tests/test_pinokio_platform_adapter.py"
+  ]
+ },
+ "AG-B14": {
+  "lanes": [
+   7,
+   13,
+   22
+  ],
+  "files": [
+   "tests/sdk/test_timeline_capture_projection.py"
+  ]
+ },
+ "AG-B15": {
+  "lanes": [
+   8,
+   16,
+   46
+  ],
+  "files": [
+   "tests/integrations/test_generation_runtime_composition.py"
+  ]
+ },
+ "AG-B16": {
+  "lanes": [
+   10
+  ],
+  "files": [
+   "tests/core/test_timeline_element_publication_runtime.py"
+  ]
+ },
+ "AG-B17": {
+  "lanes": [
+   12
+  ]
+ },
+ "AG-B18": {
+  "lanes": [
+   14
+  ],
+  "files": [
+   "tests/packs/runpod/test_worker_staging.py"
+  ]
+ },
+ "AG-B19": {
+  "lanes": [
+   17,
+   23,
+   31
+  ],
+  "files": [
+   "tests/integrations/test_managed_host_preparation.py"
+  ]
+ },
+ "AG-B20": {
+  "lanes": [
+   18,
+   19,
+   24
+  ]
+ },
+ "AG-B21": {
+  "ci": [
+   27,
+   39
+  ]
+ },
+ "AG-B22": {
+  "files": [
+   "tests/core/generation/test_readiness_missing_models.py",
+   "tests/core/generation/test_engine_custody.py",
+   "tests/packs/rendering/test_render_export_task_adapter.py"
+  ]
+ }
+}
