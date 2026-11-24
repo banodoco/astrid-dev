@@ -2231,4 +2231,4 @@ The three target test files, installer activation code, and Pinokio adapter are 
 - Installer local rollback passed in prior candidate run `44442946712` and in the base; the latest log reports no runtime discovery with startup detail withheld. The startup cause remains unknown.
 - Pinokio has the exact listener-owner failure documented in Plan 39 AT19, including its occurrence before the secret assertions. The prior candidate run `44442946712` reported the same failure. The current log does not establish whether the runner condition documented in AT19 is present, and does not establish secret disclosure.
 
-See `plans/39-green-mains/tasks.md`, AT12 and AT19. These historical matches narrow the investigation but do not prove the causes of the present failures.
+See `plans/39-green-mains/evidence/release-14-record/tasks.md`, AT12 and AT19. These historical matches narrow the investigation but do not prove the causes of the present failures.
