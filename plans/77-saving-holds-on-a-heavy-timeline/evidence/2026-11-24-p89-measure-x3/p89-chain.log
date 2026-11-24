@@ -1,0 +1,6 @@
+REP1 data kept from the 3-rep launch
+REP2 start free_kib=19503844
+REP2 exit 1
+REP3 start free_kib=19355800
+REP3 exit 1
+CHAIN_DONE
