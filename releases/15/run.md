@@ -159,12 +159,12 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Done | `r15-P56-01-1` (ChatGPT Pro) | Merged 23 November 2026: Agent #570 (`c3d8ee2d`), VibeComfy #187. Pro |
-| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Done | `r15-P56-02-1` (Extra High) | WS-0a/b/d and LE-15 complete; WS-0g #591 in rework (VibeComfySaveTranscript false block). Extra High |
+| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Done | `r15-P56-02-1` (Extra High) | WS-0a/b/d, LE-15 and WS-0g complete (Agent #591 merged). Extra High |
 | [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Done | `r15-P56-03-1` (High) | Merged 24 Nov 2026: WS-0c (#188, #193, #573), WS-0e (#574). High |
 | [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Done | `r15-P56-04-1` (Extra High) | Merged 24 Nov 2026: LE-4 (#189 + #199 speed fix), WS-5 (#191), LE-6 (#192, #197, #577). Extra High |
 | [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Done | — | Merged 24 Nov 2026: WS-7b (#196). Pro |
 | [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Running | `r15-P56-06-1` (Extra High) | LE-3 and LE-12 VibeComfy halves merged (#200, #201); Agent halves after #599; LE-1b after WS-0g. Extra High |
-| [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Done | `r15-P56-07-1` (Pro) | LE-2b VibeComfy #198 merged; Agent #599 in rework; RS1 (Codex Astra, brief evidence/rs1-brief.md) follows its merge. Pro |
+| [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Done | `r15-P56-07-1` (Pro) | LE-2b complete: VibeComfy #198 and Agent #599 merged (3956bc41); LE-2b fix #621 merged (7fa92be1). RS1 FAIL 3150d425; fixes in P56-12 to -16. Pro |
 | [R15-P56-08](packets/R15-P56-08.md) Lookup suggestions, several packs, models | LE-5, LE-16, LE-9 | Blocked | — | After P56-04 and 06. High |
 | [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Running | `r15-P56-09-1` (Extra High) | LE-10 then LE-8; target_schema after #591; LE-14 after P56-10; LE-17 after RS1. Extra High |
 | [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | On hold until the fresh RS1 passes (RS1 failed 11:00Z, 3150d425). Extra High |
