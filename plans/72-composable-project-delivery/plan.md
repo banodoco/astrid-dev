@@ -4,13 +4,15 @@
 
 **Goal:** An agent can trace Astrid's existing project-delivery records through one validated relationship model and reuse them for a second read-only path, without duplicating sources or changing current outputs.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** The orchestrator, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d` (accountable), with ChatGPT manager `p72-manager-1` dispatching fresh packet sessions; owner-authorized 24 November 2026
 
-**Estimate:** About 7–10 engineering days, provisional until an independent architecture critique and current-source baseline.
+**Estimate:** About 2–3 engineering days remain for the completion run; the candidate code exists and passes on current `main`.
 
-**Waiting on:** scope PR acceptance; independent design critique; named owner, release placement and explicit run start.
+**Waiting on:** nothing to start: the completion run's cards are in [tasks.md](tasks.md#completion-run-owner-go-24-november-2026). Then the final review R, the owner's project-wide sense check and the owner's go to merge the project branch into `main`. On 24 November the owner moved this plan from Release 16 to the astrid-dev-only route ([D6](inputs.md#owner-decisions)).
+
+**Run route:** astrid-dev-only
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md), [Plan workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above own the catalog facts; priority stays in [priority.md](../priority.md). [Inputs](inputs.md) · [Tasks](tasks.md).
 
@@ -43,7 +45,7 @@ The development workspace already describes a path from vision elements and thei
 
 This is **an extension, not a replacement, of [Plan 48](../48-one-record-model/plan.md)**: it delivered shared record readers in [records.py](../../scripts/records.py), the [check registry](../../scripts/checks.py), declared [views](../../scripts/views.py), generated catalog and extension guide. It expressly did not build the proposed universal evidence envelope. Current domain owners include [vision_subject.py](../../scripts/vision_subject.py) for authored goal IDs, [gap_relationships.py](../../scripts/gap_relationships.py) for primary/supporting goal references, [project_contract.py](../../scripts/project_contract.py) for project-to-gap links, and [records.py](../../scripts/records.py) for release brief and issue-list parsing. The [public exporter](../../scripts/export_public_vision.py) consumes these contracts today.
 
-The missing piece is **a small shared way to represent and traverse links across these readers**, not another place to store them. Competing approaches and source identities are in [inputs.md](inputs.md). The requester chose this intermediate outcome on 20 November 2026; final scope acceptance, independent critique and implementation authorization are still pending via the review PR. This plan has not been run.
+The missing piece is **a small shared way to represent and traverse links across these readers**, not another place to store them. Competing approaches and source identities are in [inputs.md](inputs.md). The requester chose this intermediate outcome on 20 November 2026; the scope proposal [#1064](https://github.com/banodoco/astrid-dev/pull/1064) and Release 15 placement [#1071](https://github.com/banodoco/astrid-dev/pull/1071) merged. Candidate code and evidence exist, but independent critique, authorized run custody, release integration and acceptance remain open. See [inputs](inputs.md) and [tasks](tasks.md).
 
 ## Sequence and readiness
 

@@ -13,7 +13,7 @@ description: Implement, debug, or repair one scoped Astrid change and return an 
 **Procedure:** Trace the behavior, make the smallest complete repair, qualify original tests and return source and evidence to the manager.
 **Completion:** The candidate is linked to exact revisions and focused results, with all remaining uncertainty or downstream failures visible.
 
-Read the [shared run contract](../../run-contract.md), the assigned brief (an issue, bug report or existing project task), and the working repository's instructions. **An issue or small fix needs no new project pack.** This is the single implementation/debug/focused-test repair loop. Work only within the accepted outcome, paths, dependencies, frozen source identity, route, and authority. Do not create another worker workflow.
+Read the [shared run contract](../../run-contract.md), the assigned brief (an issue, bug report or existing project task), and the working repository's instructions. **An issue or small fix needs no new project pack.** This is the single implementation/debug/focused-test repair loop. Work only within the accepted outcome, paths, dependencies, frozen source identity, route, and authority. Do not create another worker workflow. In a [loop plan](../../../roles/astrid-dev-manage/workstreams/live-loop.md) each round's fix is an ordinary run of this loop, with the live scenario that failed as its red test.
 
 ## Map and change the behavior
 

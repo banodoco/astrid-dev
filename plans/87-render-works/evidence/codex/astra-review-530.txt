@@ -1,0 +1,28 @@
+Saved to ASTRA-530.md (source: `~/review/ASTRA-530.md`).
+
+Reviewed through `0f6aea928`, which now contains item 5. New uncommitted `validation.py`/boundary-test changes are excluded. No tests run, worktree writes, or GitHub posts. **Item 3 prevents recommending the complete stack for general merge.**
+
+1. **Registry projection — sound.** `assets.py:66–98` removes only own-object routes with matching immutable identity/digest. Foreign locators remain for rejection. `managed_timeline.py:648–699` discards thumbnail metadata without fetching it, rejects remaining locators—including unused entries—and verifies project admission. Authored registries remain unchanged. No bypass found.
+
+2. **Occurrence media replacement — sound.** `media_swap.py:84–107` guards media kind, immutable identity and occupied aliases, then captures patches plus explicit admission. Runtime re-verifies media; preview metadata is not publication authority. `native_occurrence_media_commands.py:145–165` permits absent legacy catalog pins while checking present pins and digest mirrors. Lines 293–302 preserve the observed clip and change its asset. No authored-field loss found; preserving a word declaration does not authenticate its timing. Separate semantic steps remain one publication: rejection leaves the timeline unchanged, but separately imported objects can remain in the project.
+
+3. **Timing exemption — sound for tonight only, conditional on an independent anchor-alignment audit.** `_commit_timing_validation.py:143–144` excludes all four interval fields; line 467 accepts either signature. Nothing proves narration moved equally. A clip declaring a word at 10s can move to 9.5s with unchanged narration and pass ordinary bounds checks.
+
+   `_timing_evaluators.py:545–548` suppresses the declaration during validation; `reflow.py:394` and `438–455` resolve it again and can move the clip back. Editor numeric timing displays the shifted result. Transcript sync uses source-local words; stale shot-text checks compare binding heads. Neither detects this disagreement.
+
+   A genuinely new clip/declaration lacks the matching baseline key/value and remains refused. Added tests cover that, but use an unresolvable word and miss the resolvable-word snap-back scenario.
+
+   The real repair needs occurrence-owned authenticated target/source identities, transcript version/digest and word IDs, including source-window/speed mapping, then interval derivation or verification. Legacy declarations need explicit migration; remove/restrict the unconditional child-unresolved rule at line 309. This exemption is compatible as a temporary migration policy, but becomes a trap if retained indefinitely. Tonight’s complete ripple must be checked against resolved words; unchanged declaration strings alone are insufficient. That audit was not established here.
+
+4. **Context diagnostics — sound.** `remotion_runtime.py:1234–1240,1273–1283` reports bounded field names while preserving exact matching. No guard weakened.
+
+5. **Launch projection — sound.** `generic_host.py:2194` now uses the worker dependency helper; line 18563 supplies effective pack roots. Source workers use those same inputs at `10272–10275` and `11146–11150`. Installed mode retains approved dependencies and strips source selectors. Launch probes qualify these environments into artifact variants; consumers still require exact context and closure agreement. This explains both measured source-stack fields. It does **not** establish the older installed #1253 cause or fix lease failures.
+
+**Must fix before merge:**
+
+- Constrain/replace item 3; add a resolvable-word move→reflow regression.
+- Add production launch/worker parity coverage for source and installed profiles, selected Runtime, personal roots and deliberate path tampering. Current tests reconstruct expected paths rather than exercising the actual worker boundary.
+
+**Nice to have:** admission-failure rollback coverage; correct “remove clips” recovery advice because unused bad registry entries still fail.
+
+No film-specific constants or weakened existing tests found. The material guard relaxation is item 3.

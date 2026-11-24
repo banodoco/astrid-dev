@@ -1,0 +1,3 @@
+after first staging write [['.workflow.py.pyz1hy19.py', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0]]
+WorkflowBundleError workflow bundle changed before publication: <tmp>/out/workflow.py; reload it or choose an explicit --out destination
+final [['.workflow.py.vibe.lock', '0o600', 0]] private staging [] existing bytes preserved True

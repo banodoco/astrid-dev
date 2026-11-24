@@ -1,0 +1,11 @@
+lane	cluster	outcome	job	id
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/execution/test_m1_13_pack_provenance.py::test_production_cli_runtime_capture_composition[final-read-write-legacy-executor]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/execution/test_m1_13_pack_provenance.py::test_production_cli_runtime_capture_composition[final-read-write-selected-action]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/execution/test_m1_13_pack_provenance.py::test_production_cli_runtime_capture_composition[matching-legacy-executor]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/execution/test_m1_13_pack_provenance.py::test_production_cli_runtime_capture_composition[matching-selected-action]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/execution/test_m1_13_pack_provenance.py::test_production_cli_runtime_capture_composition[modified-legacy-executor]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/execution/test_m1_13_pack_provenance.py::test_production_cli_runtime_capture_composition[modified-selected-action]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/generation/test_generate_target_journey.py::test_public_image_command_registers_view_bytes_and_canonical_receipt[catalog]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/generation/test_generate_target_journey.py::test_public_image_command_registers_view_bytes_and_canonical_receipt[saved]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/generation/test_workflow_input_a01.py::test_workflow_inputs_cross_real_runtime_and_preserve_exact_source[False]
+lanes	C12	FAILED	integration shard 1 _ 4	tests/core/generation/test_workflow_input_a01.py::test_workflow_inputs_cross_real_runtime_and_preserve_exact_source[True]

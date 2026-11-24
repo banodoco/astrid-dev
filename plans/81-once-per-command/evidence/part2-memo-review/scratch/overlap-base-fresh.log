@@ -1,0 +1,6 @@
+invalid index installed permanently after first index read of inner lookup 30
+inner leaves final scalar, owner absent
+outer OK
+inner resumes, owner absent
+inner ObjectInfoCacheCorruptError object_info index must be an object: <tmp>/cache/index.json next action: vibecomfy schemas refresh
+inner scalar lookups 30 index remains invalid True outer pair True True inner pair False False

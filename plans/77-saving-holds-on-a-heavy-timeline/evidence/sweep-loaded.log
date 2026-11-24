@@ -1,0 +1,43 @@
+["clip-2@chrome","clip-1@type","vo-N19-0@vo","r5-roomtone-06@vo","r5-roomtone-08@vo","r5-roomtone-14@vo","r5-roomtone-30@vo","music-song@music","music-song:b@music"]
+TARGET clip-2
+{"name":"[loaded] move clip-2 same track (drag +120px)","badge":"saved","ms":19560,"posts":[{"u":"runtime/v1/projects/<owner-project>/timelines/01M7Q868C4FPPG1PAYX9A4JT27/commit","s":200,"b":"{\"data\": {\"accepted_revision_id\": \"authoring-parent-revision-c7c291ca4961ec5b1c9501ca738daf2eadde2fb2eed997c5b069f04429b58e0d\", \"base_publication_id\": \"txn-d551cd2ad6ef40d29b61c851c2bb0a74\", \"base_revision_id\": \"authoring-parent-revision-83e3b298fdb9"}],"toast":[]}
+{"name":"[loaded] move clip-2 same track (drag +120px) -> UNDO","badge":"saved","ms":31323,"posts":[{"u":"runtime/v1/projects/<owner-project>/timelines/01M7Q868C4FPPG1PAYX9A4JT27/commit","s":200,"b":"{\"data\": {\"accepted_revision_id\": \"authoring-parent-revision-83e3b298fdb9264cde4963af74c2cffa45b5253eaeb2e05bfa8e104663070dfe\", \"base_publication_id\": \"txn-e7fd724779b240f482deb12e3b001393\", \"base_revision_id\": \"authoring-parent-revision-c7c291ca4961"}],"toast":[]}
+{"name":"[loaded] move clip-2 cross-track to Fx (drag)","badge":"saved","ms":3623,"posts":[],"toast":[]}
+{"name":"[loaded] move clip-2 onto shot track Picture (drag)","badge":"not saved","ms":11832,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] keyboard move clip-2 track ArrowDown","badge":"not saved","ms":10948,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] keyboard nudge clip-2 Alt+Right","badge":"not saved","ms":7418,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] trim clip-2 right edge (drag -40px)","badge":"not saved","ms":18187,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] trim clip-2 left edge (drag +30px)","badge":"not saved","ms":7767,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] split clip-2 at playhead ('s')","badge":"not saved","ms":6778,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] mute clip-2 ('m')","badge":"not saved","ms":12364,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] delete clip-2 (Delete key)","badge":"not saved","ms":13886,"posts":[],"toast":["Local edits preceded the original verified read; draft retained\nTry again\nDiscard","Not saved"]}
+ROWERR inspector: set a numeric field on clip-2 locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('input[type=number]').first()[22m
+
+{"name":"[loaded] move audio music-song (drag +60px)","badge":"not saved","ms":42255,"posts":[],"toast":["The save has not been confirmed. Your changes are kept.\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] trim audio music-song right edge (-30px)","badge":"not saved","ms":39110,"posts":[],"toast":["The save has not been confirmed. Your changes are kept.\nTry again\nDiscard","Not saved"]}
+{"name":"[loaded] mute audio music-song (m)","badge":"not saved","ms":56498,"posts":[],"toast":["The save has not been confirmed. Your changes are kept.\nTry again\nDiscard","Not saved"]}
+ROWERR mute audio music-song (m) browserType.connectOverCDP: connect ECONNREFUSED 127.0.0.1:9540
+Call log:
+[2m  - <ws preparing> retrieving websocket url from http://127.0.0.1:9540[22m
+
+ROWERR delete audio music-song page.evaluate: Target page, context or browser has been closed
+ROWERR move audio clip to Sfx track (drag) page.evaluate: Target page, context or browser has been closed
+ROWERR add video track (+ Video) locator.click: Target page, context or browser has been closed
+ROWERR rename track Fx label page.evaluate: Target page, context or browser has been closed
+ROWERR reorder track (drag Sprite handle down) page.evaluate: Target page, context or browser has been closed
+ROWERR remove empty track Plate (x button) page.evaluate: Target page, context or browser has been closed
+ROWERR shot move: drag Picture shot 2 left mouse.move: Target page, context or browser has been closed
+ROWERR shot trim: drag boundary right edge of shot 1 (-40px) mouse.move: Target page, context or browser has been closed
+ROWERR shot select + delete mouse.click: Target page, context or browser has been closed
+ROWERR redo path: nudge, undo, redo page.evaluate: Target page, context or browser has been closed
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Target page, context or browser has been closed
+    at rowY (~/Developer/astrid-release-src/r14-sweep/lib.mjs:42:29)
+    at ~/Developer/astrid-release-src/r14-sweep/sweep.mjs:57:17
+
+Node.js v20.19.4

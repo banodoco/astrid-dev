@@ -1,0 +1,83 @@
+{
+  "discovery": {
+    "active_realm": "0d6fd08f-8754-489c-8af9-276dcde43762",
+    "advertised_at": 1795364774.3998766,
+    "capability_digest": "",
+    "coordinator_epoch": "1e8a332ac276414b85c1c0bba8ecb1f2",
+    "credential_file": "/root/codex/p77box/stack/data/credentials/astrid.json",
+    "door_endpoint": "http://127.0.0.1:17501",
+    "door_origin": "https://astrid.haus",
+    "endpoint": "http://127.0.0.1:42683",
+    "identity": {
+      "managed_by": null,
+      "release": 13
+    },
+    "pid": 1600,
+    "process_birth_id": "proc-start-ticks:154352;boot:faef980d-65dd-4ae0-bc58-fdaee8072985;pidns:4026531836",
+    "protocol_version": "workspace.v1",
+    "realm_root": "/root/codex/p77box/stack/data/runtime/realms/0d6fd08f-8754-489c-8af9-276dcde43762",
+    "runtime_instance_id": "1e8a332ac276414b85c1c0bba8ecb1f2",
+    "schema_version": "workspace-schema-v1",
+    "version": 1,
+    "worker_actor": "astrid-pack-host",
+    "worker_credential_file": "/root/codex/p77box/stack/data/runtime/credentials/astrid-pack-host.token",
+    "worker_credential_pending": false,
+    "worker_scopes": [
+      "handshake",
+      "worker:register",
+      "worker:execute",
+      "projects:read",
+      "tasks:read",
+      "objects:read",
+      "objects:write"
+    ]
+  },
+  "health": {
+    "identity": {
+      "managed_by": null,
+      "release": 13
+    },
+    "protocol": "workspace.v1",
+    "runtime_epoch": 1,
+    "runtime_instance_id": "1e8a332ac276414b85c1c0bba8ecb1f2",
+    "runtime_session_id": "6393d3507d4b4a69bfb9eab34ccb5f87",
+    "schema_digest": "sha256:2c6a76e17b4441398ab91e3e9d6283a719fd5b08807447db9dbf2ecc5e1339a2",
+    "services": [
+      {
+        "last_exit": null,
+        "name": "pack-host",
+        "reason": null,
+        "restart_count": 0,
+        "state": "running"
+      },
+      {
+        "last_exit": null,
+        "name": "chat",
+        "reason": null,
+        "restart_count": 0,
+        "state": "running"
+      }
+    ],
+    "status": "ok"
+  },
+  "support": {
+    "catalog_path": "/root/codex/p77box/stack/data/runtime/catalog.json",
+    "catalog_present": true,
+    "discovery_path": "/root/codex/p77box/stack/data/runtime/discovery.json",
+    "discovery_present": true,
+    "healthy": true,
+    "issues": [],
+    "pid_alive": true,
+    "process_control": "strict",
+    "process_signalling": {
+      "group_signalling": "killpg",
+      "ok": true,
+      "pidfd": "available",
+      "platform": "linux",
+      "process_control": "strict",
+      "process_group_kill": "allowed",
+      "signalling": "pidfd"
+    },
+    "realm_id": "0d6fd08f-8754-489c-8af9-276dcde43762"
+  }
+}

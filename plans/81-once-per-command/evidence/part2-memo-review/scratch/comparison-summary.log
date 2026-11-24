@@ -1,0 +1,13 @@
+templates ordinary equal rows 53 of 53 members 106 scalar lookups 42546 refusals 0 0
+templates -cold equal rows 53 of 53 members 106 scalar lookups 42546 refusals 0 0
+static 50 50 fully equal 50
+permission 4 4 fully equal 4
+identity 16 16 fully equal 14
+sweep 360 360 fully equal 266
+Counter({((False, False), (False, False), True, True): 206, ((False, False), (False, False), False, False): 87, ((True, True), (True, True), True, True): 60, ((True, True), (False, False), False, True): 7})
+base witness bytes 988 sha256 b466df9d82f2becb50b41c0bdd8caa6806ff5c00f62a4899cc77705cffa5fe00
+base tests 7 failed, 345 passed, 6 warnings in 159.62s (0:02:39)
+base 194 6 failed, 188 passed, 6 warnings in 70.40s (0:01:10)
+head witness bytes 988 sha256 b466df9d82f2becb50b41c0bdd8caa6806ff5c00f62a4899cc77705cffa5fe00
+head tests 7 failed, 381 passed, 6 warnings in 160.80s (0:02:40)
+head 194 6 failed, 188 passed, 6 warnings in 73.25s (0:01:13)

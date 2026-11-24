@@ -1,0 +1,14 @@
+Saved the report (source: `~/astra20/REPORT.md`), complete timestamp table (source: `~/astra20/timeline.tsv`), and notes (source: `~/astra20/NOTES.md`).
+
+**Verified: two distinct failure mechanisms are present.**
+
+- **A/C stopped renewing.** C’s last durable heartbeat acknowledgement was **21:48:59.345 CET**, setting expiry to **21:58:59.340**—exactly matching its reported failure. Why renewals stopped remains **unknown**.
+- **B did not lose its lease.** Its last acknowledgement was **21:09:32.202**, extending authority until **21:19:32.196**. Custody failed three seconds later, while drawing frame 4,638/5,897. The “20 minutes” arithmetic is incidental.
+- **F also failed despite its 7200-second lease**, at **22:04:18.799**. B/F share a native `pid_for_task` capture failure while the descendant remained observed LIVE. That failure substage is excluded from the existing bounded retry. PID 10078’s executable remains **unknown**.
+- **No general post-render heartbeat gap exists.** D renewed through encoding and completion. Cleanup, output ingestion, session release, and publication can nevertheless fail after producer progress reaches 100%.
+
+**Verified:** a later, externally launched 50–100-second render completed at **22:17:19.904**. **Inferred:** that success does not establish that either defect is fixed; the long lease only masks renewal stoppage.
+
+The report identifies source lines, recovery limitations, fix directions, and one discriminating experiment per mechanism. It distinguishes Runtime receipt commits from proof that replies reached the host.
+
+**Scope deviation:** one Luna agent mistakenly wrote its draft under `r6/work/astra20/`. I copied it into the authorized folder and left the stray untouched. No live source changes, tests, restarts, or debugging were performed by this investigation.

@@ -1,0 +1,73 @@
+{
+  "trials": [
+    {
+      "route": "W",
+      "mode": "plain",
+      "wall_seconds": 2.1
+    },
+    {
+      "route": "W",
+      "mode": "timings",
+      "wall_seconds": 2.1,
+      "stdout": "stage-1.json"
+    },
+    {
+      "route": "W",
+      "mode": "importtime",
+      "wall_seconds": 2.1,
+      "stderr": "import-1.log"
+    },
+    {
+      "route": "W",
+      "mode": "cprofile",
+      "wall_seconds": 3.1,
+      "profile": "profile-1.prof"
+    },
+    {
+      "route": "W",
+      "mode": "plain",
+      "wall_seconds": 2.2
+    },
+    {
+      "route": "W",
+      "mode": "timings",
+      "wall_seconds": 2.2,
+      "stdout": "stage-2.json"
+    },
+    {
+      "route": "W",
+      "mode": "importtime",
+      "wall_seconds": 2.2,
+      "stderr": "import-2.log"
+    },
+    {
+      "route": "W",
+      "mode": "cprofile",
+      "wall_seconds": 3.2,
+      "profile": "profile-2.prof"
+    },
+    {
+      "route": "W",
+      "mode": "plain",
+      "wall_seconds": 2.3
+    },
+    {
+      "route": "W",
+      "mode": "timings",
+      "wall_seconds": 2.3,
+      "stdout": "stage-3.json"
+    },
+    {
+      "route": "W",
+      "mode": "importtime",
+      "wall_seconds": 2.3,
+      "stderr": "import-3.log"
+    },
+    {
+      "route": "W",
+      "mode": "cprofile",
+      "wall_seconds": 3.3,
+      "profile": "profile-3.prof"
+    }
+  ]
+}

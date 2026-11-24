@@ -1,0 +1,53 @@
+[
+  {
+    "arm": "before",
+    "pointer": "/root/codex/plan-81m/run/fresh-stage/program/current",
+    "selected": "e2beb0c56b16",
+    "pins": {
+      "agent": "c0ad6b54aadd21630d98bb5039613e37efe92a8f",
+      "runtime": "5120462d67479dc4719406d0d34440edb616ace1",
+      "vibecomfy": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c",
+      "lifecycle": "9f88ef7640bc664f697112d966ecefa123d44340"
+    },
+    "omp": {
+      "source": "@oh-my-pi/pi-coding-agent@18.12.6"
+    },
+    "installed_sha256": "c46dca5bae5cf67c3434426ede9eb4ade4cc0a19cf155baa4fcaf97b76c0c11b",
+    "requested_sha256": "43e2130d32a5f8adcbaa212c7d6dc7ff7ae016c91e8c32c6ee535101cab8a7d6",
+    "differing_top_keys": []
+  },
+  {
+    "arm": "after",
+    "pointer": "/root/codex/plan-81m/run/fresh-stage/program-after/current",
+    "selected": "21ef58466622",
+    "pins": {
+      "agent": "705298cd7da2ba9c7378998b4fe5c0ee28438f81",
+      "runtime": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
+      "vibecomfy": "950023c8846233f0006aac100d26b76711c42515",
+      "lifecycle": "9f88ef7640bc664f697112d966ecefa123d44340"
+    },
+    "omp": {
+      "source": "@oh-my-pi/pi-coding-agent@18.12.6"
+    },
+    "installed_sha256": "486dc0e7ccd8f3b29ddda7e53356ebc50ba768f347e3a3ba5a609abe3ea3c2cc",
+    "requested_sha256": "360555d4fae137e4efdba61f565bfde58403ae4f1975369b9017bd31fd970746",
+    "differing_top_keys": []
+  },
+  {
+    "arm": "vc48",
+    "pointer": "/root/codex/plan-81m/run/fresh-stage/program-vc48/current",
+    "selected": "891af6e79ddf",
+    "pins": {
+      "agent": "b5c30e616e788308e9b6152adbc7064f2000db47",
+      "runtime": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
+      "vibecomfy": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c",
+      "lifecycle": "9f88ef7640bc664f697112d966ecefa123d44340"
+    },
+    "omp": {
+      "source": "@oh-my-pi/pi-coding-agent@18.12.6"
+    },
+    "installed_sha256": "a068b24a09b1fa647310f3484b6738c25e531a92c0155eb7dbc5c454ad58f612",
+    "requested_sha256": "2628f346eb6f6407dbbf35135e996830433a240cfc2c3fe9954621e22ff31270",
+    "differing_top_keys": []
+  }
+]

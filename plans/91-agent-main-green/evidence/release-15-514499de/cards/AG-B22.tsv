@@ -1,0 +1,5 @@
+lane	cluster	outcome	job	id
+ci	C93	FAILED	darwin native	tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream
+ci	C93	FAILED	darwin native	tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke
+lanes	C105	FAILED	integration shard 1 _ 4	tests/core/generation/test_engine_custody.py::test_two_full_h3_runtime_runs_reuse_owned_native_service[outer]
+lanes	C98	FAILED	integration shard 3 _ 4	tests/packs/rendering/test_render_export_task_adapter.py::test_forced_caption_uses_server_owned_executable_routing_and_isolation

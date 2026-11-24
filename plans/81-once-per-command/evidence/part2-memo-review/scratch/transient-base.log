@@ -1,0 +1,4 @@
+installed invalid index during lookup 2
+restored the original index on lookup exit
+ObjectInfoCacheCorruptError object_info index must be an object: <tmp>/cache/index.json next action: vibecomfy schemas refresh
+lookup 2 files []

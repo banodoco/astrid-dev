@@ -4,13 +4,13 @@
 
 **Goal:** On your own computer with the model already loaded, a generation comes back in the time the model takes: Astrid adds under a tenth of a second for a caller that is already connected.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
 **Estimate:** 2–3
 
-**Waiting on:** LS-3, the design ([R14-P55-01](../../releases/14/packets/R14-P55-01.md)); owner approval for paid GPU work, a Windows tester, re-pins and product-main merges
+**Waiting on:** Release 15. On 22 November 2026 the owner moved the under-a-second work into separate plans: [Plan 81](../81-once-per-command/plan.md) starts from this plan’s meter, and [Plan 82](../82-reuse-across-commands/plan.md) follows it. This plan’s resident-session redesign remains deferred.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -118,6 +118,8 @@ Task details are in [tasks.md](tasks.md). The owner's 15 November 2026 run autho
 **Produces:** a VibeComfy template interface (compile once, fill per job) and a held ComfyUI connection; a Runtime hand-off for local jobs; a resident worker in the pack host; a thin command-line client; a standing budget test that fails a pull request which adds a process start, a wait or a forced disk write to the warm local path. Plan 54 can reuse the worker and the template for rented machines.
 
 ## Completion
+
+On 21 November the owner moved the absolute D1 targets to Release 15. Release 14 reports D1 and keeps the mechanism and no-regression proofs. [Owner decision, 21 Nov](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7060974510)
 
 - The standing budget test passes on Linux and Windows against a stand-in ComfyUI: on the second job with the same key, no process is started, nothing sleeps or polls, the workflow is not compiled, each output byte is hashed once, and the number of forced disk writes before the reply is within the budget LS-3 sets. It also asserts a valid output and a job record.
 - Live, on a GPU machine with a warm model: the targets in D1 are met for the default image workflow and reported for the default video workflow, on Linux and on Windows.

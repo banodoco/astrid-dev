@@ -1,0 +1,51 @@
+{
+  "source": "Original 03:21 local S18 authenticated-title scratch-fixture trial, read-only SQLite and outbox extraction. Original test unchanged.",
+  "agent": "479ec8acae2f829928d58fc4b38f5e7832bd6c8e",
+  "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+  "files_sha256": {
+    "realm/realm.sqlite3": "4f717d78b89c2f938988cee3eea289c1f27fe84e9643596931329a47a9960fa5",
+    "gate3-outbox.json": "438445f9291f1881d176fc421b2b1ca041c5041e2fc5f9bd0888e1df2809cb43",
+    "local-authenticated-title.log": "22fc1ffba47fa4441bcfffdada264a7e2456d4be4ee314a995fde325f3a846d5"
+  },
+  "idempotency_key": "native-checkout-gate3",
+  "command_input": {
+    "on": 1.0
+  },
+  "quantization": {
+    "key": "move.quantization",
+    "kind": "time-map",
+    "pin": {
+      "denominator": 1001,
+      "numerator": 30000,
+      "rounding": "half-toward-positive-infinity"
+    },
+    "policy": "exact"
+  },
+  "authenticated_write": {
+    "after": {
+      "state": "present",
+      "value": 1.001
+    },
+    "before": {
+      "state": "present",
+      "value": 0
+    },
+    "path": [
+      "at"
+    ],
+    "ref": "parent/clip:music-bed"
+  },
+  "accepted_revision_id": "authoring-parent-revision-0a00651e449cbad46a5b2755dc443536abb0602e0a249c4167ae8eabc7982b96",
+  "stored_clip_at": 1.001,
+  "reopened_outbox_base": {
+    "revision_id": "authoring-parent-revision-0a00651e449cbad46a5b2755dc443536abb0602e0a249c4167ae8eabc7982b96",
+    "publication_id": "txn-ee6295c40f4c49689cf52684dae469f9"
+  },
+  "observed_test_output": [
+    "E           AssertionError: assert 1.001 == 1"
+  ],
+  "unreached": [
+    "Undo",
+    "visualize"
+  ]
+}

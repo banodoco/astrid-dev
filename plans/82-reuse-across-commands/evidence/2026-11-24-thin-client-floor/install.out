@@ -1,0 +1,13 @@
+Getting Astrid ready. The first time takes a few minutes.
+Using your workspace at /root/plan82-floor/ib/data.
+Downloading Release 15
+Creating your workspace
+Starting Release 15
+Checking Release 15 started
+Open https://astrid.haus
+Connect this computer at https://astrid.haus/?connect=1
+Add ~/.local/bin to your PATH to run astrid from anywhere: export PATH="$HOME/.local/bin:$PATH"
+Your choice: start at sign-in is off. To turn it on, rerun the install line with --autostart on.
+Your choice: Astrid skills are off. To turn them on, rerun the install line with --skills on.
+Astrid installed: Release 15 (build a09ea669).
+Next: run `astrid generate scan` to find your ComfyUI.

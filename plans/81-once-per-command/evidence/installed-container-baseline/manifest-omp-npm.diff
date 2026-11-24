@@ -1,0 +1,7 @@
+44,47c44
+<       "source": {
+<         "repo": "https://github.com/banodoco/oh-my-pi",
+<         "sha": "78f0e0960f471c2c62b943272a48c33366f239fe"
+<       }
+---
+>       "source": "@oh-my-pi/pi-coding-agent@18.12.6"

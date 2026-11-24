@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "sha256": "97ad111b717dc966e2a6a787cae76a80a71353abdde690fb30d217bd7afd74e1",
+      "size_bytes": 263146,
+      "source": "observed.json"
+    },
+    {
+      "sha256": "808935a4a2ee86856a616b9ad5e19163a32f2f72cb69bb31183b5baa14aee45d",
+      "size_bytes": 267177,
+      "source": "warm.json"
+    },
+    {
+      "sha256": "1bb0f7eab05d004560b00908edca792587dff8410a94fbea0a264be30d17c26a",
+      "size_bytes": 326,
+      "source": "c/cleanup.json"
+    },
+    {
+      "sha256": "b51f68a48d1f96a1a753b44355898d076832d9d1c9ce2534fe6de834e97ec406",
+      "size_bytes": 331,
+      "source": "operator-c/restore-bytes.json"
+    },
+    {
+      "sha256": "bd1f0760463c3b92f4c863cbc86f6667eeab2b709ed594929dde4094be7d8e10",
+      "size_bytes": 163,
+      "source": "operator-c/reused-stock-dist-list.sha256"
+    },
+    {
+      "sha256": "b322603ce5512f54189af5ac1a0e3dd1662758e6993d9af9504ebe0b164e30ca",
+      "size_bytes": 253,
+      "source": "operator-c/installed-runtime-sources.sha256"
+    },
+    {
+      "sha256": "e5011dc28f3b86b6c02908f7f4067193519a823d3f0d04ad832b395067d56b9a",
+      "size_bytes": 2464,
+      "source": "runtime-comparison-page.md"
+    }
+  ]
+}

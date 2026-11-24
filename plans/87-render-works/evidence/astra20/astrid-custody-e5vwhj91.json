@@ -1,0 +1,291 @@
+{
+  "source": "~/astrid-release/release-14-r6-fixes/tmp/astrid-custody-e5vwhj91/observed-containment.json",
+  "coverage": "retained_observed_set_and_final_owned_group_checks",
+  "capture_failures": [
+    {
+      "admitted": false,
+      "birth_id": "ps-lstart:Sun Nov 22 21:05:40 2026",
+      "capture_failure": {
+        "count": null,
+        "kern_return": 5,
+        "port_acquired": false,
+        "substage": "task_name_for_pid"
+      },
+      "census_round": 0,
+      "census_sha256": "sha256:7f3d58718694b691a8edf99da336cdad60a2cce95a5b4e569da9413ed9336313",
+      "observation_sequence": 41250,
+      "observations": {
+        "ordering": [
+          "pre_capture",
+          "capture_failure",
+          "post_failure_native_observation",
+          "evidence_persist"
+        ],
+        "post": {
+          "outcome": "ABSENT"
+        },
+        "pre": {
+          "identity": {
+            "birth_id": "ps-lstart:Sun Nov 22 21:05:40 2026",
+            "parent_pid": 7970,
+            "pid": 9778,
+            "uid": 501
+          },
+          "native": {
+            "parent_pid": 7970,
+            "pgid": 7194,
+            "pid": 9778,
+            "start_sec": 1795377940,
+            "start_usec": 186714,
+            "status": 2,
+            "uid": 501
+          },
+          "outcome": "LIVE"
+        }
+      },
+      "observer": {
+        "birth_id": "ps-lstart:Sun Nov 22 20:48:18 2026",
+        "pid": 6299,
+        "uid": 501
+      },
+      "pid": 9778,
+      "root": {
+        "birth_id": "ps-lstart:Sun Nov 22 20:50:59 2026",
+        "pid": 7194
+      },
+      "ancestry": [
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 21:05:40 2026",
+          "parent_pid": 7970,
+          "pgid": 7194,
+          "pid": 9778,
+          "start_sec": 1795377940,
+          "start_usec": 186714,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:52:48 2026",
+          "parent_pid": 7407,
+          "pgid": 7194,
+          "pid": 7970,
+          "start_sec": 1795377168,
+          "start_usec": 762069,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:51:38 2026",
+          "parent_pid": 7194,
+          "pgid": 7194,
+          "pid": 7407,
+          "start_sec": 1795377098,
+          "start_usec": 319652,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:50:59 2026",
+          "parent_pid": 6299,
+          "pgid": 7194,
+          "pid": 7194,
+          "start_sec": 1795377059,
+          "start_usec": 758259,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:48:18 2026",
+          "parent_pid": 5933,
+          "pgid": 6299,
+          "pid": 6299,
+          "start_sec": 1795376898,
+          "start_usec": 364960,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:47:16 2026",
+          "parent_pid": 1,
+          "pgid": 5933,
+          "pid": 5933,
+          "start_sec": 1795376836,
+          "start_usec": 754233,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 12:27:24 2026",
+          "parent_pid": 0,
+          "pgid": 1,
+          "pid": 1,
+          "start_sec": 1795346844,
+          "start_usec": 461957,
+          "status": 2,
+          "uid": 0
+        },
+        {
+          "birth_id": "",
+          "parent_pid": 0,
+          "pgid": 0,
+          "pid": 0,
+          "start_sec": 1795346844,
+          "start_usec": 202727,
+          "status": 2,
+          "uid": 0
+        }
+      ]
+    },
+    {
+      "admitted": false,
+      "birth_id": "ps-lstart:Sun Nov 22 21:09:34 2026",
+      "capture_failure": {
+        "count": null,
+        "kern_return": 5,
+        "port_acquired": true,
+        "port_release_succeeded": true,
+        "substage": "pid_for_task"
+      },
+      "census_round": 0,
+      "census_sha256": "sha256:8d6f40189a31ecd3949e7d42826f79b04f292d1188178ee34082fe518becbac0",
+      "observation_sequence": 47739,
+      "observations": {
+        "ordering": [
+          "pre_capture",
+          "capture_failure",
+          "post_failure_native_observation",
+          "evidence_persist"
+        ],
+        "post": {
+          "identity": {
+            "birth_id": "ps-lstart:Sun Nov 22 21:09:34 2026",
+            "parent_pid": 7970,
+            "pid": 10078,
+            "uid": 501
+          },
+          "native": {
+            "parent_pid": 7970,
+            "pgid": 7194,
+            "pid": 10078,
+            "start_sec": 1795378174,
+            "start_usec": 704762,
+            "status": 2,
+            "uid": 501
+          },
+          "outcome": "LIVE"
+        },
+        "pre": {
+          "identity": {
+            "birth_id": "ps-lstart:Sun Nov 22 21:09:34 2026",
+            "parent_pid": 7970,
+            "pid": 10078,
+            "uid": 501
+          },
+          "native": {
+            "parent_pid": 7970,
+            "pgid": 7194,
+            "pid": 10078,
+            "start_sec": 1795378174,
+            "start_usec": 704762,
+            "status": 2,
+            "uid": 501
+          },
+          "outcome": "LIVE"
+        }
+      },
+      "observer": {
+        "birth_id": "ps-lstart:Sun Nov 22 20:48:18 2026",
+        "pid": 6299,
+        "uid": 501
+      },
+      "pid": 10078,
+      "root": {
+        "birth_id": "ps-lstart:Sun Nov 22 20:50:59 2026",
+        "pid": 7194
+      },
+      "ancestry": [
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 21:09:34 2026",
+          "parent_pid": 7970,
+          "pgid": 7194,
+          "pid": 10078,
+          "start_sec": 1795378174,
+          "start_usec": 704762,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:52:48 2026",
+          "parent_pid": 7407,
+          "pgid": 7194,
+          "pid": 7970,
+          "start_sec": 1795377168,
+          "start_usec": 762069,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:51:38 2026",
+          "parent_pid": 7194,
+          "pgid": 7194,
+          "pid": 7407,
+          "start_sec": 1795377098,
+          "start_usec": 319652,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:50:59 2026",
+          "parent_pid": 6299,
+          "pgid": 7194,
+          "pid": 7194,
+          "start_sec": 1795377059,
+          "start_usec": 758259,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:48:18 2026",
+          "parent_pid": 5933,
+          "pgid": 6299,
+          "pid": 6299,
+          "start_sec": 1795376898,
+          "start_usec": 364960,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 20:47:16 2026",
+          "parent_pid": 1,
+          "pgid": 5933,
+          "pid": 5933,
+          "start_sec": 1795376836,
+          "start_usec": 754233,
+          "status": 2,
+          "uid": 501
+        },
+        {
+          "birth_id": "ps-lstart:Sun Nov 22 12:27:24 2026",
+          "parent_pid": 0,
+          "pgid": 1,
+          "pid": 1,
+          "start_sec": 1795346844,
+          "start_usec": 461957,
+          "status": 2,
+          "uid": 0
+        },
+        {
+          "birth_id": "",
+          "parent_pid": 0,
+          "pgid": 0,
+          "pid": 0,
+          "start_sec": 1795346844,
+          "start_usec": 202727,
+          "status": 2,
+          "uid": 0
+        }
+      ]
+    }
+  ],
+  "unadmitted_count": 27
+}

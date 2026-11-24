@@ -1,0 +1,261 @@
+{
+ "samples": 5,
+ "load_max": 1.0,
+ "arms": {
+  "A": {
+   "walls": [
+    5.5986,
+    6.3825,
+    6.0705,
+    5.8021,
+    5.405
+   ],
+   "median_wall": 5.8021,
+   "exits": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "task_states": [
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded"
+   ],
+   "median_stage_self_seconds": {
+    "pack discovery": 2.4007,
+    "workflow build": 0.6209,
+    "workflow emission": 0.4516,
+    "other command work": 0.4275,
+    "pack host attachment": 0.4016,
+    "approval compile": 0.3321,
+    "Runtime launcher connection": 0.197,
+    "pack host source identity": 0.1701,
+    "interpreter start": 0.1363,
+    "model registry": 0.0837,
+    "capability registries": 0.0519,
+    "Runtime connection": 0.0427,
+    "Remote admission preflight": 0.0267,
+    "pack host readiness": 0.0266,
+    "Workspace admission preflight": 0.0264,
+    "object import": 0.0248,
+    "Runtime POST /v1/projects/floor/objects": 0.0247,
+    "SDK admission preflight": 0.0215,
+    "Runtime GET /v1/app-state/user/generation": 0.009,
+    "Runtime GET /v1/capabilities": 0.0082,
+    "Runtime POST /v1/tasks": 0.0076,
+    "invocation": 0.0075,
+    "Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7": 0.0071,
+    "gateway imports": 0.0065,
+    "entry discovery": 0.006,
+    "argument parsing": 0.0046,
+    "Runtime GET /v1/health": 0.004,
+    "dispatch": 0.0039,
+    "target node list": 0.0039,
+    "Runtime POST /v1/handshake": 0.0026,
+    "candidate qualification": 0.0026,
+    "target check": 0.0022,
+    "Runtime GET /v1/projects/floor": 0.0022,
+    "task creation": 0.0021,
+    "capability lookup": 0.0011,
+    "input reads": 0.001,
+    "command dispatch": 0.0009,
+    "source retention": 0.0009,
+    "Runtime acquisition lock": 0.0003,
+    "bundle materialisation": 0.0002,
+    "pack host lifecycle lock": 0.0001,
+    "candidate preparation": 0.0001,
+    "in-process Runtime acquisition lock": 0.0,
+    "Runtime GET /v1/objects/sha256%3A9583bad2d9eba7922e14ee53a37c6378380dd3593a379268cf79b4cff5831905": 0,
+    "Runtime GET /v1/objects/sha256%3A6e8a42939830b427f18e48cd3a412d69df32ca88605fa4f5f56f19d394e662b0": 0,
+    "Runtime GET /v1/objects/sha256%3A07e1930388bf8df3ae012cb2127f0aafce1328b5e35cc2f64a76207f5ccaa54a": 0,
+    "Runtime GET /v1/objects/sha256%3Ab5d3404deb42e3c759108686ffb860a9f6446fc50249bd05235e15b3ad98b8c5": 0,
+    "Runtime GET /v1/objects/sha256%3A1dbb590c7061e55732b547aac45504183516d796415b58532dcb611db27dbb6b": 0,
+    "Runtime GET /v1/objects/sha256%3A2c31fb1097d980f5b8c2cbf7d3f63e8314c12228261057b70edffd971ec811a2": 0,
+    "Runtime GET /v1/objects/sha256%3A64b2a3621a0884923322d7d080e7ac11c021dc74956ae0484e545e5ae95ce5a8": 0,
+    "Runtime GET /v1/objects/sha256%3A2de09d1d4fe32ca3000def88c467876e1efa211fb8bb09fdb815316221f6c9ca": 0,
+    "Runtime GET /v1/objects/sha256%3A59b072b6171db178c50f10e3d5cbf2e0b41a5e92eee6586ff3e7e71c3b050573": 0,
+    "Runtime GET /v1/objects/sha256%3A2c083d13409e128910299278277daa3a8647e72c35b3c3a67d9a06ba9a31732a": 0
+   }
+  },
+  "Cnaive": {
+   "walls": [
+    0.0308,
+    0.034,
+    0.0359,
+    0.0402,
+    0.0408
+   ],
+   "median_wall": 0.0359,
+   "exits": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "task_states": [
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded"
+   ],
+   "median_server": 0.0228,
+   "median_steps": {
+    "substitute": 0.0,
+    "object POSTs x2": 0.015,
+    "task body": 0.0002,
+    "POST /v1/tasks": 0.0087
+   }
+  },
+  "Creal": {
+   "walls": [
+    0.3409,
+    0.4076,
+    0.3867,
+    0.3589,
+    0.9018
+   ],
+   "median_wall": 0.3867,
+   "exits": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "task_states": [
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded"
+   ],
+   "median_server": 0.3752,
+   "median_steps": {
+    "node-list fetch": 0.0019,
+    "Runtime liveness (GET health)": 0.0039,
+    "slot checks (resolve_entry_inputs)": 0.0001,
+    "copy + slot fill/check": 0.0014,
+    "render (emit_bundle)": 0.2928,
+    "object POSTs x3": 0.0207,
+    "approval digests (invocation preflight)": 0.0312,
+    "capability lookup (GET capabilities)": 0.0101,
+    "task body": 0.0002,
+    "POST /v1/tasks": 0.0068
+   }
+  },
+  "W": {
+   "walls": [
+    4.3328,
+    4.3785,
+    4.5006,
+    4.1366,
+    4.2606
+   ],
+   "median_wall": 4.3328,
+   "exits": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "task_states": [
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded",
+    "succeeded"
+   ],
+   "median_server": 4.3194,
+   "median_steps": {
+    "console.main": 4.3193
+   },
+   "median_stage_self_seconds": {
+    "pack discovery": 2.3938,
+    "workflow build": 0.5073,
+    "other command work": 0.3213,
+    "pack host attachment": 0.2135,
+    "workflow emission": 0.2074,
+    "Runtime launcher connection": 0.2019,
+    "pack host source identity": 0.1546,
+    "model registry": 0.0524,
+    "capability registries": 0.044,
+    "Remote admission preflight": 0.0256,
+    "pack host readiness": 0.0232,
+    "approval compile": 0.0231,
+    "Workspace admission preflight": 0.0228,
+    "Runtime POST /v1/projects/floor/objects": 0.0221,
+    "SDK admission preflight": 0.0204,
+    "Runtime GET /v1/capabilities": 0.0106,
+    "Runtime GET /v1/app-state/user/generation": 0.0086,
+    "Runtime POST /v1/tasks": 0.0076,
+    "Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7": 0.007,
+    "argument parsing": 0.0051,
+    "entry discovery": 0.0051,
+    "dispatch": 0.0049,
+    "Runtime GET /v1/health": 0.0039,
+    "invocation": 0.0031,
+    "candidate qualification": 0.0029,
+    "target node list": 0.0025,
+    "Runtime POST /v1/handshake": 0.0024,
+    "Runtime GET /v1/projects/floor": 0.0024,
+    "Runtime connection": 0.0023,
+    "target check": 0.0021,
+    "task creation": 0.0021,
+    "object import": 0.0016,
+    "capability lookup": 0.001,
+    "source retention": 0.0009,
+    "Runtime acquisition lock": 0.0003,
+    "bundle materialisation": 0.0002,
+    "command dispatch": 0.0001,
+    "candidate preparation": 0.0001,
+    "gateway imports": 0.0,
+    "input reads": 0.0,
+    "in-process Runtime acquisition lock": 0.0,
+    "pack host lifecycle lock": 0.0,
+    "Runtime GET /v1/objects/sha256%3Aa34aecf04137496dff7b2dbc1924f0801b472402fc0203121ec42817e5e2b7ab": 0,
+    "Runtime GET /v1/objects/sha256%3Ad624165bcf5073c09f5adb1e2b55e825db53c1c83606ac801759f35324108bd7": 0,
+    "Runtime GET /v1/objects/sha256%3Abd1065886e666f2697693ad8eaff58420a55c7a1b37b16ae36e16b24be3dcec2": 0,
+    "Runtime GET /v1/objects/sha256%3A47aa2f6f308e0cba457d500b61cf4639527dcefc9ad307a2ca808f6d175814cb": 0,
+    "Runtime GET /v1/objects/sha256%3A704ec93cbb9c2063cf4f9f1ed7f8e5b20b3a82068bdbd00d13d92f1108c44a99": 0,
+    "Runtime GET /v1/objects/sha256%3Adfde20c364687be6060ba35a89cacfa6852a534fce22120acdec88f6fc31f52a": 0,
+    "Runtime GET /v1/objects/sha256%3A45a17a5994450319fd23a53690465eb0b7f1f9822a26a1c0a094b0b84b1b58d6": 0,
+    "Runtime GET /v1/objects/sha256%3A1c35cd6a0d4f6e392815698ef714c2b1d2276fb5008acdc360ce48a82ab76453": 0,
+    "Runtime GET /v1/objects/sha256%3Adf0d1a9bfcfb7f1f0a6f67f06e9dcf5c6ebec2660e251c19422012039378668a": 0,
+    "Runtime GET /v1/objects/sha256%3A8ade19becaf5a84a7f0302b97cfbeb9fec4f54d4fe6d0af350ad0650f4b54b68": 0
+   }
+  },
+  "Cping": {
+   "walls": [
+    0.0141,
+    0.0129,
+    0.011,
+    0.0163,
+    0.0108
+   ],
+   "median_wall": 0.0129,
+   "exits": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "task_states": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "median_server": 0.0001,
+   "median_steps": {}
+  }
+ }
+}

@@ -1,0 +1,2 @@
+UTC 2026-11-22T16:28:12Z
+Builder creates and checks its own one-clip timing control within the one seed; evidence will be captured in seed log and manifest. No separate control run.

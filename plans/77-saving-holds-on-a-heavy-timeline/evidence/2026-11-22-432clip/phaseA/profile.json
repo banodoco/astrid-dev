@@ -1,0 +1,9 @@
+{
+  "runtime_profile": {
+    "raw": "/root/codex/p77box/run/receipts/phaseA/profile.json.py-spy.raw",
+    "samples": 27616,
+    "errors": 2550,
+    "rate_hz": 100,
+    "nonblocking": true
+  }
+}

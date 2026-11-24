@@ -1,0 +1,15 @@
+diff --git a/home/user/p81b/astrid-dev/plans/81-once-per-command/evidence/installed-container-baseline/ab_run.py b/harness/ab_run.py
+index cb570dd..578881d 100755
+--- a/home/user/p81b/astrid-dev/plans/81-once-per-command/evidence/installed-container-baseline/ab_run.py
++++ b/harness/ab_run.py
+@@ -182,9 +182,7 @@ for arm in ARMS:   # setup, not timed
+                        ("timelines", ["timelines", "create", "--project", p, "--slug", p, "--name", p, "--json"])):
+         untimed(f"setup-{arm}-{name}", arm, args)
+ 
+-groups = [("same", lambda arm, k: gen_args(arm, "a red square on a plain background")),
+-          ("changed", lambda arm, k: gen_args(arm, f"a blue square on a plain background, variation {k}")),
+-          ("timeline", tl_args)]
++groups = [("same", lambda arm, k: gen_args(arm, "a red square on a plain background"))]
+ order = list(ARMS)  # one round per sample, in this order: before, after, vc48
+ for group, make in groups:
+     print(f"[{group}] warm-up, then {SAMPLES} alternating rounds", flush=True)

@@ -6,6 +6,8 @@
 
 ### Now
 
+On 21 November the owner moved the absolute D1 targets to Release 15. Release 14 reports D1 and keeps the mechanism and no-regression proofs. [Owner decision, 21 Nov](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7060974510)
+
 - Accountable manager: `chatgpt-workspace-6ee41b0f0cca/root`; same run `2026-11-15-local-speed`. Original ignored configuration and unfinished child worktree were unavailable during recovery and have not been recreated.
 - Starting tuple remains published Release 13: Agent `9814193a73f606719e81883a8be197d27dd361d4`, VibeComfy `dba38f8644c46f652376f2cd5112ea161e40f09b`, Runtime `6855dfa8df65cf8ae4c002b57134d6505493c17c`.
 - Plan branches are **`release/14/plan-55`**, not `int/55-local-speed`: Agent `cb1a590e0008dde7e3fc2d3fbf341ef98401b32a` ([integration #358](https://github.com/banodoco/astrid-agent/pull/358)), VibeComfy `7fde33e2523281f840121b93a8a865a7f5d847de` ([#172](https://github.com/banodoco/VibeComfy/pull/172)), dev `ff7fb6727350748bc6dcb9a01ade94ee10825387` ([#753](https://github.com/banodoco/astrid-dev/pull/753)). Product integration targets `release/14/main`; no product-main promotion is authorized.

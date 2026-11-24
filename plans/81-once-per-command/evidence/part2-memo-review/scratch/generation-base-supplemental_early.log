@@ -1,0 +1,3 @@
+mutation after ['read']
+SchemaProviderError schema provider lookup failed: object_info generation artifact 'provenance.json' failed its hash check next action: vibecomfy schemas refresh
+victim read in emit? True changed? True lookup 6 output False False

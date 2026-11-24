@@ -1,0 +1,31 @@
+## BLOCKING
+
+**Subsecond generation is plausible for a cache hit on a ready installation. The plan has insufficient evidence to promise it for an ordinary new prompt.** After US-3/4/5, I would budget **several hundred milliseconds before live target I/O and admission** on a hit. The 171 ms help launch gives a startup proxy. I measured another **128 ms median** over five warm runs of the two source digests that precede even a healthy pack-host attach. A changed binding can still incur the reported **3.44 s** emission. The likeliest remaining overrun on a warm attached target is live `/object_info` model/schema resolution. Host readiness returns immediately for a matching ready process. G’s 15.6 s measured an unreachable-target refusal. [Research A:3–10](/home/user/astrid-dev/plans/81-under-a-second-to-start/evidence/research-A.txt:3) · [Host digests](/home/user/astrid-agent/astrid/sdk/host_bootstrap.py:2169) · [Ready return](/home/user/astrid-agent/astrid/sdk/host_bootstrap.py:2058) · [Live model resolution](/home/user/astrid-agent/astrid/core/generation/backends/comfy_target.py:721) · [Research G:54](/home/user/astrid-dev/plans/81-under-a-second-to-start/evidence/research-G.txt:54)
+
+**Most valuable missing item:** require an early installed, real-ComfyUI admission measurement with fresh CLI processes, distinct task receipts, and both repeated and changed prompts. Time host attachment and target capture separately. **20 engineering days is plausible for the implementation effort; 17–24 is too narrow for a commitment to both budgets** until that measurement and RS1 establish what reuse buys.
+
+**RS1’s four freshness proofs differ.** Worst case, Astrid admits a different executable graph under an earlier approval.
+
+- **Source identity:** cheap for installed release identity. Editable checkouts require byte-sensitive observation and a second observation for races. [Installed identity](/home/user/wt/runtime-r15/runtime_protocol/startup_identity.py:17) · [Checkout capture](/home/user/wt/runtime-r15/runtime_protocol/source_identity.py:220)
+- **Pack discovery:** mutable roots require walking and hashing names, types and contents. D3’s release stamp proves pack bytes only under an explicit immutability guarantee. [Fingerprint](/home/user/astrid-agent/astrid/core/pack/discovery.py:77)
+- **Entries/registries:** reuse within a verified snapshot is cheap. Cross-command proof includes templates, coverage, catalog YAML and discovered contributions. A new duplicate can invalidate yesterday’s unique match. [Entries](/home/user/astrid-agent/astrid/core/generation/entries.py:118) · [Ambiguity](/home/user/astrid-agent/astrid/core/generation/entries.py:232) · [Registry](/home/user/astrid-agent/astrid/core/model_catalog/registry.py:119)
+- **Workflow:** the donor checks PID and session authority. An attached URL supplies no cheap inventory generation. Recheck live schema and bind each request’s prompt, seed and output identity. [Plan 55 `vibecomfy/prepared.py:594`](https://github.com/banodoco/VibeComfy/blob/d8e61a50/vibecomfy/prepared.py#L594) · [Fresh seeds](/home/user/astrid-agent/astrid/core/generation/entries.py:894) · [Schema capture](/home/user/astrid-agent/astrid/core/generation/backends/comfy_target.py:243)
+
+## SHOULD-FIX
+
+The named test pins resolve. My dispatch judgments are:
+
+- **US-1 — Split, X.** Dispatch client spans now. Runtime finishes its log event after sending the reply. Specify correlation and missing-log behavior before promising it in CLI JSON. [Server](/home/user/wt/runtime-r15/runtime_protocol/server.py:1661)
+- **US-2 — Revise, X.** Gate whole-command medians from fresh processes. Fast checks run on Ubuntu; Windows skips PRs. The daemon fixture uses a checkout. [CI](/home/user/astrid-agent/.github/workflows/ci.yml:25) · [Fast checks](/home/user/astrid-agent/.github/workflows/ci.yml:68) · [Fixture](/home/user/astrid-agent/tests/conftest.py:166)
+- **US-3 — Split, X.** Source optimization is dispatchable after RS1/D2. Installed hashing bypass already ships; proving 150 ms needs the host path too. Pin existing race tests. [Race tests](/home/user/wt/runtime-r15/tests/test_source_startup_identity.py:310)
+- **US-4 — Revise, X.** Cover caller-side default enumeration. Main already filters named lookups and tests restored-mtime edits and duplicate backends. [Default candidates](/home/user/astrid-agent/astrid/sdk/generation.py:1697) · [Existing pins](/home/user/astrid-agent/tests/core/generation/test_discovery_scope.py:93)
+- **US-5 — Split, S.** Separate duplicate emission from persistent templates. Double emission is workflow-route-specific. Prove changed-prompt and seedless parity across processes. [Approval branches](/home/user/astrid-agent/astrid/sdk/generation.py:1921) · [Submission](/home/user/astrid-agent/astrid/sdk/generation.py:2052)
+- **US-6 — Nearly ready, X.** After Plan 77, pin both conflicting and disjoint concurrent edits. Blanket changed-head refusal breaks valid merges. [Disjoint-edit test](/home/user/astrid-agent/tests/sdk/test_timeline_commit_wording_runtime.py:138)
+- **US-7 — Ready after D4/US-6, X.** Pin existing twenty-add, one-receipt coverage; add CLI partial-import reporting. **Cut this first:** batching cannot improve the single-edit budget. [Existing proof](/home/user/astrid-agent/tests/sdk/test_timeline_editing_acceptance_runtime.py:234)
+- **US-8 — Split, X minimum.** Thread locks need thread contention tests. Server waits need client-visible attribution; outbox `fsync` remains unbounded. Preserve unknown outcomes. [Commit lock](/home/user/wt/runtime-r15/runtime_protocol/timeline_commit_execution.py:477) · [Outbox](/home/user/astrid-agent/astrid/sdk/timeline/outbox.py:45)
+
+## NOTE
+
+Plan 77 also changes generation input inspection and sets the workspace timeout to 300 s (`plan-77:astrid/sdk/workspace_client.py:41`). Main already contains the historical copy fix. Research B explicitly describes worker timings downstream of admission. [Copy fix](/home/user/astrid-agent/astrid/sdk/timeline/_commit_timing_validation.py:185) · [Research B](/home/user/astrid-dev/plans/81-under-a-second-to-start/evidence/research-B.txt:34)
+
+I checked code and refs read-only. I did not run tests, CI, an installed CLI, or live ComfyUI. No research-F file was present.

@@ -1,0 +1,1 @@
+UTC 2026-11-22T16:24:19Z: restart after machine restart; previous last sample 2026-11-22T15:51:05Z; gap until new probe sample; command setsid nohup bash run/probe.sh; PID 1006; exit 0. No seed.started present.

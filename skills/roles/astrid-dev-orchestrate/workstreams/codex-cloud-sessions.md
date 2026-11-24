@@ -14,7 +14,7 @@ description: Coordinate separate Codex Cloud sessions through the shared GitHub 
 
 Choose this when the orchestrator and plan managers work in **different Codex Cloud chats**. For the actual mailbox commands, session registration, authentication limits, acknowledgments, polling and recovery use the existing [Codex Cloud guide](codex-cloud/README.md); its scripts remain in that directory.
 
-1. Start from an accepted plan and its authorized `Run start`; name **one accountable plan manager**. Agree on one shared mailbox issue and durable per-session identities and cursors. Reuse an existing mailbox rather than create a second issue.
+1. Start from an accepted plan and its authorized `Run start`; name **one accountable plan manager**. Use the plan's board ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)) and agree durable per-session identities and cursors.
 2. Give each session the plan/task links, exact proof, branches, limits and its manager/advisor roles. Follow [Manage](../../astrid-dev-manage/SKILL.md) inside the accountable manager session.
 3. Follow the agreed check-in cadence to reconcile GitHub evidence and recover stalled sessions; a GitHub comment or timer alone **cannot wake** an idle Codex Cloud chat. Do not promise unattended progress without a verified resume mechanism.
 

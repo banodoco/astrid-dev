@@ -1,0 +1,1229 @@
+.........................FFFFFFFFFFFFFFFFF.                              [100%]
+=================================== FAILURES ===================================
+_ test_same_authority_reuses_full_scan_only_with_builtin_scanner[False-checkout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd2591d0>
+layout = 'checkout', explicit_scanner = False
+
+    @pytest.mark.parametrize("layout", ["checkout", "site-packages"])
+    @pytest.mark.parametrize("explicit_scanner", [False, True])
+    def test_same_authority_reuses_full_scan_only_with_builtin_scanner(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, layout: str, explicit_scanner: bool,
+    ) -> None:
+        project = tmp_path / layout
+        packs = project / "astrid/packs"
+        _write_pack(packs, "zeta")
+        _write_pack(packs, "local")
+        _write_pack(packs, "alpha", duplicate=True)
+        _write_pack(packs, "hidden", visibility="hidden")
+        managed = _write_pack(tmp_path / "managed", "alpha")
+        extra = _write_pack(tmp_path / "extra", "alpha")
+        env = _write_pack(tmp_path / "env", "alpha")
+        inventory = SimpleNamespace(identity="inventory-control", sources=(SimpleNamespace(
+            pack_root=managed, pack_id="alpha", revision="a" * 40,
+            manifest_sha256="b" * 64, tree_sha256="c" * 64,
+        ),))
+        monkeypatch.setattr(source_setup, "active_source_inventory", lambda: inventory)
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        monkeypatch.setenv("ASTRID_PACKS_PATH", str(env))
+        extra_roots = (str(extra), str(managed))
+        with mock.patch.object(loader, "scan_packs", wraps=loader.scan_packs) as scans:
+>           expected = discover_pack_metadata(
+                project_root=project, extra_pack_roots=extra_roots,
+                discover_packs_fn=_two_call_scanner,
+            )
+
+tests/packs/test_pack_discovery_single_scan.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.13/contextlib.py:85: in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+project_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0/checkout')
+extra_pack_roots = ('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0/extra/alpha', '/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0/managed/alpha')
+discover_packs_fn = <function _two_call_scanner at 0x7fbbcc473240>
+include_hidden = False
+personal_packs_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0/home/Astrid/packs')
+
+    @stage("pack discovery")
+    def discover_pack_metadata(
+        *,
+        project_root: str | Path = REPO_ROOT,
+        extra_pack_roots: tuple[str, ...] = (),
+        discover_packs_fn: DiscoverPacksFn | None = None,
+        include_hidden: bool = False,
+        personal_packs_root: str | Path | None = None,
+    ) -> tuple[DiscoveredPack, ...]:
+        """Return discovered packs in layered priority order.
+    
+        Layers, in order: source-tree packs (excluding ``local``), the project's
+        ``astrid/packs/local`` pack when it has an authored manifest, validated
+        managed roots, the personal collection, explicit extra pack roots, and
+        ``ASTRID_PACKS_PATH`` roots. ``local`` is never admitted from any other root.
+    
+        *discover_packs_fn* overrides the source/local/extra layer scanner; callers
+        pass their own module-level ``discover_packs`` so the historical per-registry
+        test seam (``mock.patch("astrid.core.<x>.registry.discover_packs")``) keeps
+        working. Defaults to :func:`astrid.core.pack.discover_packs`.
+        """
+        scan = discover_packs_fn if discover_packs_fn is not None else discover_packs
+        # Bind the personal collection once at the runtime discovery boundary.
+        # Every layer classification, compatibility pass, loader scan, and cache
+        # identity below must use this exact root.
+        if personal_packs_root is None:
+            from astrid.core.pack.personal import resolve_personal_packs_root
+    
+            personal_packs_root = resolve_personal_packs_root()
+        selected_personal_root = (
+            Path(personal_packs_root).expanduser().resolve(strict=False)
+            if personal_packs_root is not None else None
+        )
+    
+        discovered: list[DiscoveredPack] = []
+        scanned_external_roots: set[Path] = set()
+        pack_names: dict[str, tuple[Path, str | None]] = {}
+    
+        def _register_pack_name(path: Path, pack_id: str | None = None) -> tuple[Path, str | None] | None:
+            """Record names before filtering, retaining ids for collision policy."""
+            previous = pack_names.get(path.name)
+            if previous is None:
+                pack_names[path.name] = (path, pack_id)
+            elif previous[0].resolve() == path.resolve():
+                if pack_id is not None:
+                    pack_names[path.name] = (path, pack_id)
+                return None
+            elif pack_id is not None and previous[1] is not None and pack_id != previous[1]:
+                raise PackValidationError(
+                    f"duplicate pack directory name {path.name!r} across {previous[0]} and {path}"
+                )
+            return previous
+    
+        def _add(pack: PackDefinition, source_kind: str, *, source_record: Any | None = None) -> None:
+            if pack.id == "personal":
+                if selected_personal_root is not None and pack.root.resolve() == (selected_personal_root / "personal").resolve():
+                    source_kind = "personal"
+            metadata: dict[str, Any] = {}
+            if source_record is not None:
+                metadata = {
+                    "source_revision": source_record.revision,
+                    "source_manifest_sha256": source_record.manifest_sha256,
+                    "source_tree_sha256": source_record.tree_sha256,
+                    "source_inventory_identity": managed_inventory.identity,
+                }
+            discovered.append(
+                DiscoveredPack(
+                    pack=pack,
+                    source_kind=source_kind,
+                    priority_index=len(discovered),
+                    **metadata,
+                )
+            )
+    
+        _LOGGER = logging.getLogger(__name__)
+    
+        # The managed source state can identify its roots without opening their
+        # manifests. Reserve all such directory names (and the regular discovery
+        # roots) before active_source_inventory verifies any selected checkout.
+        try:
+            from astrid.core.pack.source_setup import active_sources
+    
+            provisional_managed_sources = active_sources(verify=False)
+        except ImportError:
+            provisional_managed_sources = ()
+        cache = _active_discovery_cache()
+        fingerprint = None
+        managed_inventory = None
+        inventory_error = None
+        try:
+            from astrid.core.pack.source_setup import active_source_inventory
+            managed_inventory = active_source_inventory()
+        except ImportError:
+            pass
+        except Exception as exc:
+            # Preserve name-collision precedence when verification fails.
+            inventory_error = exc
+        if cache is not None and managed_inventory is not None:
+            fingerprint = _discovery_fingerprint(
+                project_root, extra_pack_roots, managed_inventory, scan,
+                include_hidden=include_hidden, personal_packs_root=selected_personal_root,
+            )
+            if fingerprint is not None:
+                cached = cache.read(fingerprint)
+                if cached is not _CACHE_MISS:
+                    return cached
+    
+        # Explicit extras are caller ordered and can precede bundled roots. The
+        # admission result is identical regardless of which selected root is seen
+        # first, because no manifest is consulted during this pass.
+        provisional_roots: list[str | Path] = [*extra_pack_roots, loader.packs_root()]
+        provisional_roots.extend(source.pack_root for source in provisional_managed_sources)
+        if scan is _default_discover_packs:
+            provisional_roots.append(Path.home() / "Astrid" / "packs")
+        if selected_personal_root is not None:
+            provisional_roots.append(selected_personal_root)
+        provisional_roots.extend(root for root in os.environ.get(ASTRID_PACKS_PATH_ENV, "").split(os.pathsep) if root)
+        provisional_paths: dict[str, Path] = {}
+        provisional_scanned: set[Path] = set()
+        canonical_core = Path(loader.packs_root()).expanduser().resolve()
+        for raw_root in provisional_roots:
+            root = Path(raw_root).expanduser()
+            if not root.is_absolute():
+                root = Path(project_root) / root
+            root = root.resolve()
+            if root in provisional_scanned or not root.is_dir():
+                continue
+            provisional_scanned.add(root)
+            try:
+                children = (root,) if (root / "pack.yaml").is_file() else tuple(root.iterdir())
+            except OSError as exc:
+                _LOGGER.warning("skipping unreadable ownership root %s: %s", root, exc)
+                continue
+            for child in children:
+                if not child.is_dir() or child.name == "__pycache__":
+                    continue
+                previous = provisional_paths.get(child.name)
+                if previous is None or previous.resolve() == child.resolve():
+                    provisional_paths[child.name] = child
+                    continue
+                if previous.resolve().parent == canonical_core or child.resolve().parent == canonical_core:
+                    raise PackValidationError(
+                        f"duplicate pack id {child.name!r}: pack {child.name!r} conflicts with a core pack "
+                        f"across {previous} and {child}"
+                    )
+                if child.name == "personal" and selected_personal_root is not None:
+                    canonical_personal = (selected_personal_root / "personal").resolve()
+                    if previous.resolve() != canonical_personal or child.resolve() != canonical_personal:
+                        raise PackValidationError(
+                            "pack id 'personal' is reserved for the canonical personal root"
+                        )
+>               raise PackValidationError(
+                    f"duplicate pack id/directory name {child.name!r} across {previous} and {child}"
+                )
+E               astrid.core.pack._common.PackValidationError: duplicate pack id/directory name 'alpha' across /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0/extra/alpha and /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful0/managed/alpha
+
+astrid/core/pack/discovery.py:621: PackValidationError
+_ test_same_authority_reuses_full_scan_only_with_builtin_scanner[False-site-packages] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc51be00>
+layout = 'site-packages', explicit_scanner = False
+
+    @pytest.mark.parametrize("layout", ["checkout", "site-packages"])
+    @pytest.mark.parametrize("explicit_scanner", [False, True])
+    def test_same_authority_reuses_full_scan_only_with_builtin_scanner(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, layout: str, explicit_scanner: bool,
+    ) -> None:
+        project = tmp_path / layout
+        packs = project / "astrid/packs"
+        _write_pack(packs, "zeta")
+        _write_pack(packs, "local")
+        _write_pack(packs, "alpha", duplicate=True)
+        _write_pack(packs, "hidden", visibility="hidden")
+        managed = _write_pack(tmp_path / "managed", "alpha")
+        extra = _write_pack(tmp_path / "extra", "alpha")
+        env = _write_pack(tmp_path / "env", "alpha")
+        inventory = SimpleNamespace(identity="inventory-control", sources=(SimpleNamespace(
+            pack_root=managed, pack_id="alpha", revision="a" * 40,
+            manifest_sha256="b" * 64, tree_sha256="c" * 64,
+        ),))
+        monkeypatch.setattr(source_setup, "active_source_inventory", lambda: inventory)
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        monkeypatch.setenv("ASTRID_PACKS_PATH", str(env))
+        extra_roots = (str(extra), str(managed))
+        with mock.patch.object(loader, "scan_packs", wraps=loader.scan_packs) as scans:
+>           expected = discover_pack_metadata(
+                project_root=project, extra_pack_roots=extra_roots,
+                discover_packs_fn=_two_call_scanner,
+            )
+
+tests/packs/test_pack_discovery_single_scan.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.13/contextlib.py:85: in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+project_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1/site-packages')
+extra_pack_roots = ('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1/extra/alpha', '/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1/managed/alpha')
+discover_packs_fn = <function _two_call_scanner at 0x7fbbcc473240>
+include_hidden = False
+personal_packs_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1/home/Astrid/packs')
+
+    @stage("pack discovery")
+    def discover_pack_metadata(
+        *,
+        project_root: str | Path = REPO_ROOT,
+        extra_pack_roots: tuple[str, ...] = (),
+        discover_packs_fn: DiscoverPacksFn | None = None,
+        include_hidden: bool = False,
+        personal_packs_root: str | Path | None = None,
+    ) -> tuple[DiscoveredPack, ...]:
+        """Return discovered packs in layered priority order.
+    
+        Layers, in order: source-tree packs (excluding ``local``), the project's
+        ``astrid/packs/local`` pack when it has an authored manifest, validated
+        managed roots, the personal collection, explicit extra pack roots, and
+        ``ASTRID_PACKS_PATH`` roots. ``local`` is never admitted from any other root.
+    
+        *discover_packs_fn* overrides the source/local/extra layer scanner; callers
+        pass their own module-level ``discover_packs`` so the historical per-registry
+        test seam (``mock.patch("astrid.core.<x>.registry.discover_packs")``) keeps
+        working. Defaults to :func:`astrid.core.pack.discover_packs`.
+        """
+        scan = discover_packs_fn if discover_packs_fn is not None else discover_packs
+        # Bind the personal collection once at the runtime discovery boundary.
+        # Every layer classification, compatibility pass, loader scan, and cache
+        # identity below must use this exact root.
+        if personal_packs_root is None:
+            from astrid.core.pack.personal import resolve_personal_packs_root
+    
+            personal_packs_root = resolve_personal_packs_root()
+        selected_personal_root = (
+            Path(personal_packs_root).expanduser().resolve(strict=False)
+            if personal_packs_root is not None else None
+        )
+    
+        discovered: list[DiscoveredPack] = []
+        scanned_external_roots: set[Path] = set()
+        pack_names: dict[str, tuple[Path, str | None]] = {}
+    
+        def _register_pack_name(path: Path, pack_id: str | None = None) -> tuple[Path, str | None] | None:
+            """Record names before filtering, retaining ids for collision policy."""
+            previous = pack_names.get(path.name)
+            if previous is None:
+                pack_names[path.name] = (path, pack_id)
+            elif previous[0].resolve() == path.resolve():
+                if pack_id is not None:
+                    pack_names[path.name] = (path, pack_id)
+                return None
+            elif pack_id is not None and previous[1] is not None and pack_id != previous[1]:
+                raise PackValidationError(
+                    f"duplicate pack directory name {path.name!r} across {previous[0]} and {path}"
+                )
+            return previous
+    
+        def _add(pack: PackDefinition, source_kind: str, *, source_record: Any | None = None) -> None:
+            if pack.id == "personal":
+                if selected_personal_root is not None and pack.root.resolve() == (selected_personal_root / "personal").resolve():
+                    source_kind = "personal"
+            metadata: dict[str, Any] = {}
+            if source_record is not None:
+                metadata = {
+                    "source_revision": source_record.revision,
+                    "source_manifest_sha256": source_record.manifest_sha256,
+                    "source_tree_sha256": source_record.tree_sha256,
+                    "source_inventory_identity": managed_inventory.identity,
+                }
+            discovered.append(
+                DiscoveredPack(
+                    pack=pack,
+                    source_kind=source_kind,
+                    priority_index=len(discovered),
+                    **metadata,
+                )
+            )
+    
+        _LOGGER = logging.getLogger(__name__)
+    
+        # The managed source state can identify its roots without opening their
+        # manifests. Reserve all such directory names (and the regular discovery
+        # roots) before active_source_inventory verifies any selected checkout.
+        try:
+            from astrid.core.pack.source_setup import active_sources
+    
+            provisional_managed_sources = active_sources(verify=False)
+        except ImportError:
+            provisional_managed_sources = ()
+        cache = _active_discovery_cache()
+        fingerprint = None
+        managed_inventory = None
+        inventory_error = None
+        try:
+            from astrid.core.pack.source_setup import active_source_inventory
+            managed_inventory = active_source_inventory()
+        except ImportError:
+            pass
+        except Exception as exc:
+            # Preserve name-collision precedence when verification fails.
+            inventory_error = exc
+        if cache is not None and managed_inventory is not None:
+            fingerprint = _discovery_fingerprint(
+                project_root, extra_pack_roots, managed_inventory, scan,
+                include_hidden=include_hidden, personal_packs_root=selected_personal_root,
+            )
+            if fingerprint is not None:
+                cached = cache.read(fingerprint)
+                if cached is not _CACHE_MISS:
+                    return cached
+    
+        # Explicit extras are caller ordered and can precede bundled roots. The
+        # admission result is identical regardless of which selected root is seen
+        # first, because no manifest is consulted during this pass.
+        provisional_roots: list[str | Path] = [*extra_pack_roots, loader.packs_root()]
+        provisional_roots.extend(source.pack_root for source in provisional_managed_sources)
+        if scan is _default_discover_packs:
+            provisional_roots.append(Path.home() / "Astrid" / "packs")
+        if selected_personal_root is not None:
+            provisional_roots.append(selected_personal_root)
+        provisional_roots.extend(root for root in os.environ.get(ASTRID_PACKS_PATH_ENV, "").split(os.pathsep) if root)
+        provisional_paths: dict[str, Path] = {}
+        provisional_scanned: set[Path] = set()
+        canonical_core = Path(loader.packs_root()).expanduser().resolve()
+        for raw_root in provisional_roots:
+            root = Path(raw_root).expanduser()
+            if not root.is_absolute():
+                root = Path(project_root) / root
+            root = root.resolve()
+            if root in provisional_scanned or not root.is_dir():
+                continue
+            provisional_scanned.add(root)
+            try:
+                children = (root,) if (root / "pack.yaml").is_file() else tuple(root.iterdir())
+            except OSError as exc:
+                _LOGGER.warning("skipping unreadable ownership root %s: %s", root, exc)
+                continue
+            for child in children:
+                if not child.is_dir() or child.name == "__pycache__":
+                    continue
+                previous = provisional_paths.get(child.name)
+                if previous is None or previous.resolve() == child.resolve():
+                    provisional_paths[child.name] = child
+                    continue
+                if previous.resolve().parent == canonical_core or child.resolve().parent == canonical_core:
+                    raise PackValidationError(
+                        f"duplicate pack id {child.name!r}: pack {child.name!r} conflicts with a core pack "
+                        f"across {previous} and {child}"
+                    )
+                if child.name == "personal" and selected_personal_root is not None:
+                    canonical_personal = (selected_personal_root / "personal").resolve()
+                    if previous.resolve() != canonical_personal or child.resolve() != canonical_personal:
+                        raise PackValidationError(
+                            "pack id 'personal' is reserved for the canonical personal root"
+                        )
+>               raise PackValidationError(
+                    f"duplicate pack id/directory name {child.name!r} across {previous} and {child}"
+                )
+E               astrid.core.pack._common.PackValidationError: duplicate pack id/directory name 'alpha' across /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1/extra/alpha and /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful1/managed/alpha
+
+astrid/core/pack/discovery.py:621: PackValidationError
+_ test_same_authority_reuses_full_scan_only_with_builtin_scanner[True-checkout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd903d90>
+layout = 'checkout', explicit_scanner = True
+
+    @pytest.mark.parametrize("layout", ["checkout", "site-packages"])
+    @pytest.mark.parametrize("explicit_scanner", [False, True])
+    def test_same_authority_reuses_full_scan_only_with_builtin_scanner(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, layout: str, explicit_scanner: bool,
+    ) -> None:
+        project = tmp_path / layout
+        packs = project / "astrid/packs"
+        _write_pack(packs, "zeta")
+        _write_pack(packs, "local")
+        _write_pack(packs, "alpha", duplicate=True)
+        _write_pack(packs, "hidden", visibility="hidden")
+        managed = _write_pack(tmp_path / "managed", "alpha")
+        extra = _write_pack(tmp_path / "extra", "alpha")
+        env = _write_pack(tmp_path / "env", "alpha")
+        inventory = SimpleNamespace(identity="inventory-control", sources=(SimpleNamespace(
+            pack_root=managed, pack_id="alpha", revision="a" * 40,
+            manifest_sha256="b" * 64, tree_sha256="c" * 64,
+        ),))
+        monkeypatch.setattr(source_setup, "active_source_inventory", lambda: inventory)
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        monkeypatch.setenv("ASTRID_PACKS_PATH", str(env))
+        extra_roots = (str(extra), str(managed))
+        with mock.patch.object(loader, "scan_packs", wraps=loader.scan_packs) as scans:
+>           expected = discover_pack_metadata(
+                project_root=project, extra_pack_roots=extra_roots,
+                discover_packs_fn=_two_call_scanner,
+            )
+
+tests/packs/test_pack_discovery_single_scan.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.13/contextlib.py:85: in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+project_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2/checkout')
+extra_pack_roots = ('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2/extra/alpha', '/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2/managed/alpha')
+discover_packs_fn = <function _two_call_scanner at 0x7fbbcc473240>
+include_hidden = False
+personal_packs_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2/home/Astrid/packs')
+
+    @stage("pack discovery")
+    def discover_pack_metadata(
+        *,
+        project_root: str | Path = REPO_ROOT,
+        extra_pack_roots: tuple[str, ...] = (),
+        discover_packs_fn: DiscoverPacksFn | None = None,
+        include_hidden: bool = False,
+        personal_packs_root: str | Path | None = None,
+    ) -> tuple[DiscoveredPack, ...]:
+        """Return discovered packs in layered priority order.
+    
+        Layers, in order: source-tree packs (excluding ``local``), the project's
+        ``astrid/packs/local`` pack when it has an authored manifest, validated
+        managed roots, the personal collection, explicit extra pack roots, and
+        ``ASTRID_PACKS_PATH`` roots. ``local`` is never admitted from any other root.
+    
+        *discover_packs_fn* overrides the source/local/extra layer scanner; callers
+        pass their own module-level ``discover_packs`` so the historical per-registry
+        test seam (``mock.patch("astrid.core.<x>.registry.discover_packs")``) keeps
+        working. Defaults to :func:`astrid.core.pack.discover_packs`.
+        """
+        scan = discover_packs_fn if discover_packs_fn is not None else discover_packs
+        # Bind the personal collection once at the runtime discovery boundary.
+        # Every layer classification, compatibility pass, loader scan, and cache
+        # identity below must use this exact root.
+        if personal_packs_root is None:
+            from astrid.core.pack.personal import resolve_personal_packs_root
+    
+            personal_packs_root = resolve_personal_packs_root()
+        selected_personal_root = (
+            Path(personal_packs_root).expanduser().resolve(strict=False)
+            if personal_packs_root is not None else None
+        )
+    
+        discovered: list[DiscoveredPack] = []
+        scanned_external_roots: set[Path] = set()
+        pack_names: dict[str, tuple[Path, str | None]] = {}
+    
+        def _register_pack_name(path: Path, pack_id: str | None = None) -> tuple[Path, str | None] | None:
+            """Record names before filtering, retaining ids for collision policy."""
+            previous = pack_names.get(path.name)
+            if previous is None:
+                pack_names[path.name] = (path, pack_id)
+            elif previous[0].resolve() == path.resolve():
+                if pack_id is not None:
+                    pack_names[path.name] = (path, pack_id)
+                return None
+            elif pack_id is not None and previous[1] is not None and pack_id != previous[1]:
+                raise PackValidationError(
+                    f"duplicate pack directory name {path.name!r} across {previous[0]} and {path}"
+                )
+            return previous
+    
+        def _add(pack: PackDefinition, source_kind: str, *, source_record: Any | None = None) -> None:
+            if pack.id == "personal":
+                if selected_personal_root is not None and pack.root.resolve() == (selected_personal_root / "personal").resolve():
+                    source_kind = "personal"
+            metadata: dict[str, Any] = {}
+            if source_record is not None:
+                metadata = {
+                    "source_revision": source_record.revision,
+                    "source_manifest_sha256": source_record.manifest_sha256,
+                    "source_tree_sha256": source_record.tree_sha256,
+                    "source_inventory_identity": managed_inventory.identity,
+                }
+            discovered.append(
+                DiscoveredPack(
+                    pack=pack,
+                    source_kind=source_kind,
+                    priority_index=len(discovered),
+                    **metadata,
+                )
+            )
+    
+        _LOGGER = logging.getLogger(__name__)
+    
+        # The managed source state can identify its roots without opening their
+        # manifests. Reserve all such directory names (and the regular discovery
+        # roots) before active_source_inventory verifies any selected checkout.
+        try:
+            from astrid.core.pack.source_setup import active_sources
+    
+            provisional_managed_sources = active_sources(verify=False)
+        except ImportError:
+            provisional_managed_sources = ()
+        cache = _active_discovery_cache()
+        fingerprint = None
+        managed_inventory = None
+        inventory_error = None
+        try:
+            from astrid.core.pack.source_setup import active_source_inventory
+            managed_inventory = active_source_inventory()
+        except ImportError:
+            pass
+        except Exception as exc:
+            # Preserve name-collision precedence when verification fails.
+            inventory_error = exc
+        if cache is not None and managed_inventory is not None:
+            fingerprint = _discovery_fingerprint(
+                project_root, extra_pack_roots, managed_inventory, scan,
+                include_hidden=include_hidden, personal_packs_root=selected_personal_root,
+            )
+            if fingerprint is not None:
+                cached = cache.read(fingerprint)
+                if cached is not _CACHE_MISS:
+                    return cached
+    
+        # Explicit extras are caller ordered and can precede bundled roots. The
+        # admission result is identical regardless of which selected root is seen
+        # first, because no manifest is consulted during this pass.
+        provisional_roots: list[str | Path] = [*extra_pack_roots, loader.packs_root()]
+        provisional_roots.extend(source.pack_root for source in provisional_managed_sources)
+        if scan is _default_discover_packs:
+            provisional_roots.append(Path.home() / "Astrid" / "packs")
+        if selected_personal_root is not None:
+            provisional_roots.append(selected_personal_root)
+        provisional_roots.extend(root for root in os.environ.get(ASTRID_PACKS_PATH_ENV, "").split(os.pathsep) if root)
+        provisional_paths: dict[str, Path] = {}
+        provisional_scanned: set[Path] = set()
+        canonical_core = Path(loader.packs_root()).expanduser().resolve()
+        for raw_root in provisional_roots:
+            root = Path(raw_root).expanduser()
+            if not root.is_absolute():
+                root = Path(project_root) / root
+            root = root.resolve()
+            if root in provisional_scanned or not root.is_dir():
+                continue
+            provisional_scanned.add(root)
+            try:
+                children = (root,) if (root / "pack.yaml").is_file() else tuple(root.iterdir())
+            except OSError as exc:
+                _LOGGER.warning("skipping unreadable ownership root %s: %s", root, exc)
+                continue
+            for child in children:
+                if not child.is_dir() or child.name == "__pycache__":
+                    continue
+                previous = provisional_paths.get(child.name)
+                if previous is None or previous.resolve() == child.resolve():
+                    provisional_paths[child.name] = child
+                    continue
+                if previous.resolve().parent == canonical_core or child.resolve().parent == canonical_core:
+                    raise PackValidationError(
+                        f"duplicate pack id {child.name!r}: pack {child.name!r} conflicts with a core pack "
+                        f"across {previous} and {child}"
+                    )
+                if child.name == "personal" and selected_personal_root is not None:
+                    canonical_personal = (selected_personal_root / "personal").resolve()
+                    if previous.resolve() != canonical_personal or child.resolve() != canonical_personal:
+                        raise PackValidationError(
+                            "pack id 'personal' is reserved for the canonical personal root"
+                        )
+>               raise PackValidationError(
+                    f"duplicate pack id/directory name {child.name!r} across {previous} and {child}"
+                )
+E               astrid.core.pack._common.PackValidationError: duplicate pack id/directory name 'alpha' across /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2/extra/alpha and /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful2/managed/alpha
+
+astrid/core/pack/discovery.py:621: PackValidationError
+_ test_same_authority_reuses_full_scan_only_with_builtin_scanner[True-site-packages] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd287000>
+layout = 'site-packages', explicit_scanner = True
+
+    @pytest.mark.parametrize("layout", ["checkout", "site-packages"])
+    @pytest.mark.parametrize("explicit_scanner", [False, True])
+    def test_same_authority_reuses_full_scan_only_with_builtin_scanner(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, layout: str, explicit_scanner: bool,
+    ) -> None:
+        project = tmp_path / layout
+        packs = project / "astrid/packs"
+        _write_pack(packs, "zeta")
+        _write_pack(packs, "local")
+        _write_pack(packs, "alpha", duplicate=True)
+        _write_pack(packs, "hidden", visibility="hidden")
+        managed = _write_pack(tmp_path / "managed", "alpha")
+        extra = _write_pack(tmp_path / "extra", "alpha")
+        env = _write_pack(tmp_path / "env", "alpha")
+        inventory = SimpleNamespace(identity="inventory-control", sources=(SimpleNamespace(
+            pack_root=managed, pack_id="alpha", revision="a" * 40,
+            manifest_sha256="b" * 64, tree_sha256="c" * 64,
+        ),))
+        monkeypatch.setattr(source_setup, "active_source_inventory", lambda: inventory)
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        monkeypatch.setenv("ASTRID_PACKS_PATH", str(env))
+        extra_roots = (str(extra), str(managed))
+        with mock.patch.object(loader, "scan_packs", wraps=loader.scan_packs) as scans:
+>           expected = discover_pack_metadata(
+                project_root=project, extra_pack_roots=extra_roots,
+                discover_packs_fn=_two_call_scanner,
+            )
+
+tests/packs/test_pack_discovery_single_scan.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.13/contextlib.py:85: in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+project_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3/site-packages')
+extra_pack_roots = ('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3/extra/alpha', '/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3/managed/alpha')
+discover_packs_fn = <function _two_call_scanner at 0x7fbbcc473240>
+include_hidden = False
+personal_packs_root = PosixPath('/tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3/home/Astrid/packs')
+
+    @stage("pack discovery")
+    def discover_pack_metadata(
+        *,
+        project_root: str | Path = REPO_ROOT,
+        extra_pack_roots: tuple[str, ...] = (),
+        discover_packs_fn: DiscoverPacksFn | None = None,
+        include_hidden: bool = False,
+        personal_packs_root: str | Path | None = None,
+    ) -> tuple[DiscoveredPack, ...]:
+        """Return discovered packs in layered priority order.
+    
+        Layers, in order: source-tree packs (excluding ``local``), the project's
+        ``astrid/packs/local`` pack when it has an authored manifest, validated
+        managed roots, the personal collection, explicit extra pack roots, and
+        ``ASTRID_PACKS_PATH`` roots. ``local`` is never admitted from any other root.
+    
+        *discover_packs_fn* overrides the source/local/extra layer scanner; callers
+        pass their own module-level ``discover_packs`` so the historical per-registry
+        test seam (``mock.patch("astrid.core.<x>.registry.discover_packs")``) keeps
+        working. Defaults to :func:`astrid.core.pack.discover_packs`.
+        """
+        scan = discover_packs_fn if discover_packs_fn is not None else discover_packs
+        # Bind the personal collection once at the runtime discovery boundary.
+        # Every layer classification, compatibility pass, loader scan, and cache
+        # identity below must use this exact root.
+        if personal_packs_root is None:
+            from astrid.core.pack.personal import resolve_personal_packs_root
+    
+            personal_packs_root = resolve_personal_packs_root()
+        selected_personal_root = (
+            Path(personal_packs_root).expanduser().resolve(strict=False)
+            if personal_packs_root is not None else None
+        )
+    
+        discovered: list[DiscoveredPack] = []
+        scanned_external_roots: set[Path] = set()
+        pack_names: dict[str, tuple[Path, str | None]] = {}
+    
+        def _register_pack_name(path: Path, pack_id: str | None = None) -> tuple[Path, str | None] | None:
+            """Record names before filtering, retaining ids for collision policy."""
+            previous = pack_names.get(path.name)
+            if previous is None:
+                pack_names[path.name] = (path, pack_id)
+            elif previous[0].resolve() == path.resolve():
+                if pack_id is not None:
+                    pack_names[path.name] = (path, pack_id)
+                return None
+            elif pack_id is not None and previous[1] is not None and pack_id != previous[1]:
+                raise PackValidationError(
+                    f"duplicate pack directory name {path.name!r} across {previous[0]} and {path}"
+                )
+            return previous
+    
+        def _add(pack: PackDefinition, source_kind: str, *, source_record: Any | None = None) -> None:
+            if pack.id == "personal":
+                if selected_personal_root is not None and pack.root.resolve() == (selected_personal_root / "personal").resolve():
+                    source_kind = "personal"
+            metadata: dict[str, Any] = {}
+            if source_record is not None:
+                metadata = {
+                    "source_revision": source_record.revision,
+                    "source_manifest_sha256": source_record.manifest_sha256,
+                    "source_tree_sha256": source_record.tree_sha256,
+                    "source_inventory_identity": managed_inventory.identity,
+                }
+            discovered.append(
+                DiscoveredPack(
+                    pack=pack,
+                    source_kind=source_kind,
+                    priority_index=len(discovered),
+                    **metadata,
+                )
+            )
+    
+        _LOGGER = logging.getLogger(__name__)
+    
+        # The managed source state can identify its roots without opening their
+        # manifests. Reserve all such directory names (and the regular discovery
+        # roots) before active_source_inventory verifies any selected checkout.
+        try:
+            from astrid.core.pack.source_setup import active_sources
+    
+            provisional_managed_sources = active_sources(verify=False)
+        except ImportError:
+            provisional_managed_sources = ()
+        cache = _active_discovery_cache()
+        fingerprint = None
+        managed_inventory = None
+        inventory_error = None
+        try:
+            from astrid.core.pack.source_setup import active_source_inventory
+            managed_inventory = active_source_inventory()
+        except ImportError:
+            pass
+        except Exception as exc:
+            # Preserve name-collision precedence when verification fails.
+            inventory_error = exc
+        if cache is not None and managed_inventory is not None:
+            fingerprint = _discovery_fingerprint(
+                project_root, extra_pack_roots, managed_inventory, scan,
+                include_hidden=include_hidden, personal_packs_root=selected_personal_root,
+            )
+            if fingerprint is not None:
+                cached = cache.read(fingerprint)
+                if cached is not _CACHE_MISS:
+                    return cached
+    
+        # Explicit extras are caller ordered and can precede bundled roots. The
+        # admission result is identical regardless of which selected root is seen
+        # first, because no manifest is consulted during this pass.
+        provisional_roots: list[str | Path] = [*extra_pack_roots, loader.packs_root()]
+        provisional_roots.extend(source.pack_root for source in provisional_managed_sources)
+        if scan is _default_discover_packs:
+            provisional_roots.append(Path.home() / "Astrid" / "packs")
+        if selected_personal_root is not None:
+            provisional_roots.append(selected_personal_root)
+        provisional_roots.extend(root for root in os.environ.get(ASTRID_PACKS_PATH_ENV, "").split(os.pathsep) if root)
+        provisional_paths: dict[str, Path] = {}
+        provisional_scanned: set[Path] = set()
+        canonical_core = Path(loader.packs_root()).expanduser().resolve()
+        for raw_root in provisional_roots:
+            root = Path(raw_root).expanduser()
+            if not root.is_absolute():
+                root = Path(project_root) / root
+            root = root.resolve()
+            if root in provisional_scanned or not root.is_dir():
+                continue
+            provisional_scanned.add(root)
+            try:
+                children = (root,) if (root / "pack.yaml").is_file() else tuple(root.iterdir())
+            except OSError as exc:
+                _LOGGER.warning("skipping unreadable ownership root %s: %s", root, exc)
+                continue
+            for child in children:
+                if not child.is_dir() or child.name == "__pycache__":
+                    continue
+                previous = provisional_paths.get(child.name)
+                if previous is None or previous.resolve() == child.resolve():
+                    provisional_paths[child.name] = child
+                    continue
+                if previous.resolve().parent == canonical_core or child.resolve().parent == canonical_core:
+                    raise PackValidationError(
+                        f"duplicate pack id {child.name!r}: pack {child.name!r} conflicts with a core pack "
+                        f"across {previous} and {child}"
+                    )
+                if child.name == "personal" and selected_personal_root is not None:
+                    canonical_personal = (selected_personal_root / "personal").resolve()
+                    if previous.resolve() != canonical_personal or child.resolve() != canonical_personal:
+                        raise PackValidationError(
+                            "pack id 'personal' is reserved for the canonical personal root"
+                        )
+>               raise PackValidationError(
+                    f"duplicate pack id/directory name {child.name!r} across {previous} and {child}"
+                )
+E               astrid.core.pack._common.PackValidationError: duplicate pack id/directory name 'alpha' across /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3/extra/alpha and /tmp/pytest-of-root/pytest-47/test_same_authority_reuses_ful3/managed/alpha
+
+astrid/core/pack/discovery.py:621: PackValidationError
+_____ test_different_roots_keep_project_scan_and_do_not_leak_source_local ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_different_roots_keep_proj0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc51b380>
+
+    def test_different_roots_keep_project_scan_and_do_not_leak_source_local(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        source = tmp_path / "installed/astrid/packs"
+        _write_pack(source, "alpha")
+        _write_pack(source, "local", description="source local must not leak")
+        project = tmp_path / "project"
+        project_packs = project / "astrid/packs"
+        local = _write_pack(project_packs, "local", description="project local")
+        _write_pack(project_packs, "stray")
+        monkeypatch.setattr(loader, "packs_root", lambda: source)
+        with mock.patch.object(loader, "scan_packs", wraps=loader.scan_packs) as scans:
+            rows = discover_pack_metadata(project_root=project)
+>           assert scans.call_args_list == [mock.call(None, include_hidden=False, strict=True),
+                                           mock.call(project_packs, include_hidden=False, strict=True)]
+E           AssertionError: assert [call(PosixPa...strict=False)] == [call(None, i... strict=True)]
+E             
+E             At index 0 diff: call(PosixPath('/tmp/pytest-of-root/pytest-47/test_different_roots_keep_proj0/installed/astrid/packs'), strict=False, include_hidden=False, _validate=False, personal_packs_root=PosixPath('/tmp/pytest-of-root/pytest-47/test_different_roots_keep_proj0/home/Astrid/packs')) != call(None, include_hidden=False, strict=True)
+E             Use -v to get more diff
+
+tests/packs/test_pack_discovery_single_scan.py:129: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_different_roots_keep_proj0/project/astrid/packs/local)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'stray': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_different_roots_keep_proj0/project/astrid/packs/stray)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'alpha': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_different_roots_keep_proj0/installed/astrid/packs/alpha)
+_ test_injected_scanner_keeps_argument_specific_authority_even_with_equal_roots _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_injected_scanner_keeps_ar0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc1edc50>
+
+    def test_injected_scanner_keeps_argument_specific_authority_even_with_equal_roots(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        project = tmp_path / "project"
+        packs = project / "astrid/packs"
+        local_root = _write_pack(packs, "local")
+        local = loader.load_pack_manifest(local_root / "pack.yaml")
+        alpha_root = _write_pack(packs, "alpha")
+        alpha = loader.load_pack_manifest(alpha_root / "pack.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        scanner = mock.Mock(side_effect=[(alpha, local), ()])
+        rows = discover_pack_metadata(project_root=project, discover_packs_fn=scanner)
+        assert scanner.call_args_list == [mock.call(), mock.call(packs)]
+>       assert [r.id for r in rows] == ["alpha"]
+E       AssertionError: assert ['hivemind', 'alpha'] == ['alpha']
+E         
+E         At index 0 diff: 'hivemind' != 'alpha'
+E         Left contains one more item: 'alpha'
+E         Use -v to get more diff
+
+tests/packs/test_pack_discovery_single_scan.py:152: AssertionError
+_______________ test_local_eligibility_is_observational[absent] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_local_eligibility_is_obse0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd903bd0>
+local_kind = 'absent'
+
+    @pytest.mark.parametrize("local_kind", ["absent", "manifestless", "hidden"])
+    def test_local_eligibility_is_observational(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, local_kind: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        _write_pack(packs, "alpha")
+        if local_kind == "hidden":
+            _write_pack(packs, "local", visibility="hidden")
+        elif local_kind == "manifestless":
+            (packs / "local").mkdir()
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        rows = discover_pack_metadata(project_root=tmp_path)
+        assert rows == discover_pack_metadata(project_root=tmp_path, discover_packs_fn=_two_call_scanner)
+>       assert [r.id for r in rows] == ["alpha"]
+E       AssertionError: assert ['hivemind'] == ['alpha']
+E         
+E         At index 0 diff: 'hivemind' != 'alpha'
+E         Use -v to get more diff
+
+tests/packs/test_pack_discovery_single_scan.py:168: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'alpha': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_local_eligibility_is_obse0/astrid/packs/alpha)
+____________ test_local_eligibility_is_observational[manifestless] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_local_eligibility_is_obse1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc51aa50>
+local_kind = 'manifestless'
+
+    @pytest.mark.parametrize("local_kind", ["absent", "manifestless", "hidden"])
+    def test_local_eligibility_is_observational(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, local_kind: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        _write_pack(packs, "alpha")
+        if local_kind == "hidden":
+            _write_pack(packs, "local", visibility="hidden")
+        elif local_kind == "manifestless":
+            (packs / "local").mkdir()
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        rows = discover_pack_metadata(project_root=tmp_path)
+        assert rows == discover_pack_metadata(project_root=tmp_path, discover_packs_fn=_two_call_scanner)
+>       assert [r.id for r in rows] == ["alpha"]
+E       AssertionError: assert ['hivemind'] == ['alpha']
+E         
+E         At index 0 diff: 'hivemind' != 'alpha'
+E         Use -v to get more diff
+
+tests/packs/test_pack_discovery_single_scan.py:168: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'alpha': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_local_eligibility_is_obse1/astrid/packs/alpha)
+_______________ test_local_eligibility_is_observational[hidden] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_local_eligibility_is_obse2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd287e70>
+local_kind = 'hidden'
+
+    @pytest.mark.parametrize("local_kind", ["absent", "manifestless", "hidden"])
+    def test_local_eligibility_is_observational(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, local_kind: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        _write_pack(packs, "alpha")
+        if local_kind == "hidden":
+            _write_pack(packs, "local", visibility="hidden")
+        elif local_kind == "manifestless":
+            (packs / "local").mkdir()
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        rows = discover_pack_metadata(project_root=tmp_path)
+        assert rows == discover_pack_metadata(project_root=tmp_path, discover_packs_fn=_two_call_scanner)
+>       assert [r.id for r in rows] == ["alpha"]
+E       AssertionError: assert ['hivemind'] == ['alpha']
+E         
+E         At index 0 diff: 'hivemind' != 'alpha'
+E         Use -v to get more diff
+
+tests/packs/test_pack_discovery_single_scan.py:168: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'alpha': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_local_eligibility_is_obse2/astrid/packs/alpha)
+______ test_scan_reuse_preserves_strict_manifest_and_path_guards[source] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd286eb0>
+invalid = 'source'
+
+    @pytest.mark.parametrize("invalid", ["source", "local", "hidden", "alternate", "path", "symlink"])
+    def test_scan_reuse_preserves_strict_manifest_and_path_guards(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, invalid: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local")
+        broken = _write_pack(packs, "broken")
+        if invalid in {"source", "local", "hidden"}:
+            root = local if invalid == "local" else broken
+            (root / "pack.yaml").write_text(
+                "schema_version: 999\nvisibility: hidden\n", encoding="utf-8",
+            )
+        elif invalid == "alternate":
+            (local / "pack.yml").write_text("{}\n", encoding="utf-8")
+        elif invalid == "path":
+            _write_pack(packs, "escape", documentation={"kind": "agents", "path": "../local/a.yaml"})
+        else:
+            (local / "linked.yaml").symlink_to(broken / "a.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+>       with pytest.raises(PackValidationError) as expected:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PackValidationError
+
+tests/packs/test_pack_discovery_single_scan.py:192: Failed
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'broken': Pack manifest schema is not supported. Use a supported pack schema version.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri0/astrid/packs/broken)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri0/astrid/packs/local)
+_______ test_scan_reuse_preserves_strict_manifest_and_path_guards[local] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc31a3c0>
+invalid = 'local'
+
+    @pytest.mark.parametrize("invalid", ["source", "local", "hidden", "alternate", "path", "symlink"])
+    def test_scan_reuse_preserves_strict_manifest_and_path_guards(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, invalid: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local")
+        broken = _write_pack(packs, "broken")
+        if invalid in {"source", "local", "hidden"}:
+            root = local if invalid == "local" else broken
+            (root / "pack.yaml").write_text(
+                "schema_version: 999\nvisibility: hidden\n", encoding="utf-8",
+            )
+        elif invalid == "alternate":
+            (local / "pack.yml").write_text("{}\n", encoding="utf-8")
+        elif invalid == "path":
+            _write_pack(packs, "escape", documentation={"kind": "agents", "path": "../local/a.yaml"})
+        else:
+            (local / "linked.yaml").symlink_to(broken / "a.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+>       with pytest.raises(PackValidationError) as expected:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PackValidationError
+
+tests/packs/test_pack_discovery_single_scan.py:192: Failed
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest schema is not supported. Use a supported pack schema version.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri1/astrid/packs/local)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'broken': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri1/astrid/packs/broken)
+______ test_scan_reuse_preserves_strict_manifest_and_path_guards[hidden] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc3ccde0>
+invalid = 'hidden'
+
+    @pytest.mark.parametrize("invalid", ["source", "local", "hidden", "alternate", "path", "symlink"])
+    def test_scan_reuse_preserves_strict_manifest_and_path_guards(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, invalid: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local")
+        broken = _write_pack(packs, "broken")
+        if invalid in {"source", "local", "hidden"}:
+            root = local if invalid == "local" else broken
+            (root / "pack.yaml").write_text(
+                "schema_version: 999\nvisibility: hidden\n", encoding="utf-8",
+            )
+        elif invalid == "alternate":
+            (local / "pack.yml").write_text("{}\n", encoding="utf-8")
+        elif invalid == "path":
+            _write_pack(packs, "escape", documentation={"kind": "agents", "path": "../local/a.yaml"})
+        else:
+            (local / "linked.yaml").symlink_to(broken / "a.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+>       with pytest.raises(PackValidationError) as expected:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PackValidationError
+
+tests/packs/test_pack_discovery_single_scan.py:192: Failed
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'broken': Pack manifest schema is not supported. Use a supported pack schema version.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri2/astrid/packs/broken)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri2/astrid/packs/local)
+_____ test_scan_reuse_preserves_strict_manifest_and_path_guards[alternate] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd1ba200>
+invalid = 'alternate'
+
+    @pytest.mark.parametrize("invalid", ["source", "local", "hidden", "alternate", "path", "symlink"])
+    def test_scan_reuse_preserves_strict_manifest_and_path_guards(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, invalid: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local")
+        broken = _write_pack(packs, "broken")
+        if invalid in {"source", "local", "hidden"}:
+            root = local if invalid == "local" else broken
+            (root / "pack.yaml").write_text(
+                "schema_version: 999\nvisibility: hidden\n", encoding="utf-8",
+            )
+        elif invalid == "alternate":
+            (local / "pack.yml").write_text("{}\n", encoding="utf-8")
+        elif invalid == "path":
+            _write_pack(packs, "escape", documentation={"kind": "agents", "path": "../local/a.yaml"})
+        else:
+            (local / "linked.yaml").symlink_to(broken / "a.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+>       with pytest.raises(PackValidationError) as expected:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PackValidationError
+
+tests/packs/test_pack_discovery_single_scan.py:192: Failed
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri3/astrid/packs/local)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'broken': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri3/astrid/packs/broken)
+_______ test_scan_reuse_preserves_strict_manifest_and_path_guards[path] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcc2b5780>
+invalid = 'path'
+
+    @pytest.mark.parametrize("invalid", ["source", "local", "hidden", "alternate", "path", "symlink"])
+    def test_scan_reuse_preserves_strict_manifest_and_path_guards(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, invalid: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local")
+        broken = _write_pack(packs, "broken")
+        if invalid in {"source", "local", "hidden"}:
+            root = local if invalid == "local" else broken
+            (root / "pack.yaml").write_text(
+                "schema_version: 999\nvisibility: hidden\n", encoding="utf-8",
+            )
+        elif invalid == "alternate":
+            (local / "pack.yml").write_text("{}\n", encoding="utf-8")
+        elif invalid == "path":
+            _write_pack(packs, "escape", documentation={"kind": "agents", "path": "../local/a.yaml"})
+        else:
+            (local / "linked.yaml").symlink_to(broken / "a.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+>       with pytest.raises(PackValidationError) as expected:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PackValidationError
+
+tests/packs/test_pack_discovery_single_scan.py:192: Failed
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'escape': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri4/astrid/packs/escape)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'broken': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri4/astrid/packs/broken)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri4/astrid/packs/local)
+______ test_scan_reuse_preserves_strict_manifest_and_path_guards[symlink] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd1ab620>
+invalid = 'symlink'
+
+    @pytest.mark.parametrize("invalid", ["source", "local", "hidden", "alternate", "path", "symlink"])
+    def test_scan_reuse_preserves_strict_manifest_and_path_guards(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, invalid: str,
+    ) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local")
+        broken = _write_pack(packs, "broken")
+        if invalid in {"source", "local", "hidden"}:
+            root = local if invalid == "local" else broken
+            (root / "pack.yaml").write_text(
+                "schema_version: 999\nvisibility: hidden\n", encoding="utf-8",
+            )
+        elif invalid == "alternate":
+            (local / "pack.yml").write_text("{}\n", encoding="utf-8")
+        elif invalid == "path":
+            _write_pack(packs, "escape", documentation={"kind": "agents", "path": "../local/a.yaml"})
+        else:
+            (local / "linked.yaml").symlink_to(broken / "a.yaml")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+>       with pytest.raises(PackValidationError) as expected:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PackValidationError
+
+tests/packs/test_pack_discovery_single_scan.py:192: Failed
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri5/astrid/packs/local)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'broken': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_scan_reuse_preserves_stri5/astrid/packs/broken)
+___________________ test_managed_identity_guard_is_unchanged ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_managed_identity_guard_is0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd1aa970>
+
+    def test_managed_identity_guard_is_unchanged(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        packs = tmp_path / "astrid/packs"
+        _write_pack(packs, "local")
+        managed = _write_pack(tmp_path / "managed", "alpha")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        monkeypatch.setattr(source_setup, "active_source_inventory", lambda: SimpleNamespace(
+            identity="inventory", sources=(SimpleNamespace(pack_root=managed, pack_id="wrong"),),
+        ))
+        rows = discover_pack_metadata(project_root=tmp_path)
+        assert rows == discover_pack_metadata(project_root=tmp_path, discover_packs_fn=_two_call_scanner)
+>       assert [(r.id, r.source_kind) for r in rows] == [("local", "local")]
+E       AssertionError: assert [('hivemind', 'source')] == [('local', 'local')]
+E         
+E         At index 0 diff: ('hivemind', 'source') != ('local', 'local')
+E         Use -v to get more diff
+
+tests/packs/test_pack_discovery_single_scan.py:209: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.discovery:discovery.py:776 skipping managed pack /tmp/pytest-of-root/pytest-47/test_managed_identity_guard_is0/managed/alpha/pack.yaml: manifest failed to load: staged pack id 'alpha' does not match 'wrong'
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_managed_identity_guard_is0/astrid/packs/local)
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'alpha': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_managed_identity_guard_is0/managed/alpha)
+WARNING  astrid.core.pack.discovery:discovery.py:776 skipping managed pack /tmp/pytest-of-root/pytest-47/test_managed_identity_guard_is0/managed/alpha/pack.yaml: manifest failed to load: staged pack id 'alpha' does not match 'wrong'
+_________________ test_discovery_observes_edits_on_every_call __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-47/test_discovery_observes_edits_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbbcd271240>
+
+    def test_discovery_observes_edits_on_every_call(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        packs = tmp_path / "astrid/packs"
+        local = _write_pack(packs, "local", description="before")
+        monkeypatch.setattr(loader, "packs_root", lambda: packs)
+        with mock.patch.object(loader, "scan_packs", wraps=loader.scan_packs) as scans:
+            before = discover_pack_metadata(project_root=tmp_path)
+            path = local / "pack.yaml"
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            manifest["description"] = "after"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            after = discover_pack_metadata(project_root=tmp_path)
+            assert scans.call_count == 2
+>       assert before[0].pack.description == "before"
+E       AssertionError: assert 'Hivemind v2 ...gest_youtube.' == 'before'
+E         
+E         - before
+E         + Hivemind v2 — unified corpus protocol.  Read the knowledge corpus through a searchable unified feed, refresh Discord attachment URLs, and contribute resources/distillations through a locked edge-function write path.  Seven self-contained, stdlib-only executors: search, get_item, refresh_media, contribute, ingest_article, ingest_workflow, ingest_youtube.
+
+tests/packs/test_pack_discovery_single_scan.py:224: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  astrid.core.pack.loader:loader.py:90 quarantined optional pack 'local': Pack manifest needs an explicit schema upgrade. Migrate to v3 and add it again.; capabilities are unavailable until it is fixed (run the pack validator: python3 -m astrid.core.pack.cli validate /tmp/pytest-of-root/pytest-47/test_discovery_observes_edits_0/astrid/packs/local)
+=========================== short test summary info ============================
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_same_authority_reuses_full_scan_only_with_builtin_scanner[False-checkout]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_same_authority_reuses_full_scan_only_with_builtin_scanner[False-site-packages]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_same_authority_reuses_full_scan_only_with_builtin_scanner[True-checkout]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_same_authority_reuses_full_scan_only_with_builtin_scanner[True-site-packages]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_different_roots_keep_project_scan_and_do_not_leak_source_local
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_injected_scanner_keeps_argument_specific_authority_even_with_equal_roots
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_local_eligibility_is_observational[absent]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_local_eligibility_is_observational[manifestless]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_local_eligibility_is_observational[hidden]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_scan_reuse_preserves_strict_manifest_and_path_guards[source]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_scan_reuse_preserves_strict_manifest_and_path_guards[local]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_scan_reuse_preserves_strict_manifest_and_path_guards[hidden]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_scan_reuse_preserves_strict_manifest_and_path_guards[alternate]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_scan_reuse_preserves_strict_manifest_and_path_guards[path]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_scan_reuse_preserves_strict_manifest_and_path_guards[symlink]
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_managed_identity_guard_is_unchanged
+FAILED tests/packs/test_pack_discovery_single_scan.py::test_discovery_observes_edits_on_every_call
+17 failed, 26 passed in 22.98s

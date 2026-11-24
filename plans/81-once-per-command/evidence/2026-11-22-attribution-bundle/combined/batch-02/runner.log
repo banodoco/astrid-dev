@@ -1,0 +1,24 @@
+W-timings-warmup ok
+W-timings-1 ok
+W-timings-2 ok
+W-timings-3 ok
+W-timings-4 ok
+W-timings-5 ok
+Traceback (most recent call last):
+  File "/root/codex/plan-81m/attribution-evidence/plans/81-once-per-command/evidence/attribution/launcher_runner.py", line 156, in <module>
+    if __name__=='__main__': main()
+                             ~~~~^^
+  File "/root/codex/plan-81m/attribution-evidence/plans/81-once-per-command/evidence/attribution/launcher_runner.py", line 119, in main
+    before=len(ack); start=time.monotonic_ns(); proc=subprocess.run(launch,env=cli_env,capture_output=True,timeout=240); end=time.monotonic_ns()
+                                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 1223, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 2155, in _communicate
+    ready = selector.select(timeout)
+  File "/usr/local/lib/python3.13/selectors.py", line 398, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt

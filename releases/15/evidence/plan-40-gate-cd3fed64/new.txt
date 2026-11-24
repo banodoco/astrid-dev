@@ -1,0 +1,4 @@
+FAILED	darwin: tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream
+FAILED	darwin: tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke
+FAILED	tests/core/generation/test_readiness_missing_models.py::test_defaults_is_ready_once_the_files_are_listed
+FAILED	tests/core/generation/test_readiness_missing_models.py::test_the_download_plan_and_readiness_agree[True]

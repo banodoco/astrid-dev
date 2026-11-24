@@ -1,0 +1,7 @@
+Using Python 3.13.18 environment at: attribution-evidence.env
+Resolved 1 package in 122ms
+Downloading py-spy (2.8MiB)
+ Downloaded py-spy
+Prepared 1 package in 57ms
+Installed 1 package in 1ms
+ + py-spy==0.4.4

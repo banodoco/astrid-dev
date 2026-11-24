@@ -1,0 +1,11 @@
+{
+  "start_utc": "2026-11-22T18:58:54.103854+00:00",
+  "end_utc": "2026-11-22T19:00:06.696201+00:00",
+  "elapsed_seconds": 72.592347,
+  "ready": false,
+  "reason": "up exited 1: Managed Astrid selection is missing or inconsistent; no Runtime was stopped. No Runtime discovery or PID was published. Monitor stopped early because the single start attempt had definitively failed.",
+  "up_exit": 1,
+  "runtime_pid": null,
+  "cpu_curve": "unavailable: no Runtime PID",
+  "dumps": "not taken: no Runtime PID"
+}

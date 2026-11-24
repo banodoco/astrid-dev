@@ -1,0 +1,15 @@
+{
+  "idle": {
+    "active_tasks": [],
+    "blockers": [],
+    "claimed_or_stale_bindings": [],
+    "headline": null,
+    "message": null,
+    "safe": true,
+    "task_count": 0,
+    "unreconciled_attempts": [],
+    "unreleased_reservations": []
+  },
+  "realm_id": "0d6fd08f-8754-489c-8af9-276dcde43762",
+  "status": "stopped"
+}

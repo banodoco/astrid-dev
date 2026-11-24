@@ -1,0 +1,28 @@
+READ — Structure: [src/planetEngine.ts:3](/home/user/planet/src/planetEngine.ts:3) exports `LandmarkId`, `PlanetEngineAPI`, and `initPlanetEngine(canvas, callbacks)`. [src/App.tsx:121](/home/user/planet/src/App.tsx:121) initializes it on mount, calls its controls, and disposes it on unmount. The canvas is React-created and fills its parent; the engine sizes it from that parent on window resize ([App.tsx:263](/home/user/planet/src/App.tsx:263), [planetEngine.ts:8363](/home/user/planet/src/planetEngine.ts:8363)).
+
+READ — Metadata describes “five continuous narrative scenes,” but the implementation has one main Three.js scene with 22 named landmarks and many local scene controllers, plus a separate turnaround group and post-processing scene ([metadata.json:3](/home/user/planet/metadata.json:3), [planetEngine.ts:47](/home/user/planet/src/planetEngine.ts:47), [planetEngine.ts:2588](/home/user/planet/src/planetEngine.ts:2588)). Four story cards rotate the planet toward corresponding landmarks; they do not switch Three.js scenes ([App.tsx:26](/home/user/planet/src/App.tsx:26), [planetEngine.ts:8942](/home/user/planet/src/planetEngine.ts:8942)).
+
+READ — The page has a sticky header, Vision hero, Pillars, Principles and Help footer. The hero’s absolute canvas stage extends 520px below it; transparent content sits above it, with selective pointer-event pass-through. Cards themselves have opaque backgrounds ([App.tsx:207](/home/user/planet/src/App.tsx:207), [App.tsx:256](/home/user/planet/src/App.tsx:256), [App.tsx:335](/home/user/planet/src/App.tsx:335)). [AstridPixelArt.tsx:100](/home/user/planet/src/components/AstridPixelArt.tsx:100) supplies decorative sky, logo and card illustrations.
+
+READ — Scaffolding: `@google/genai`, `express`, `dotenv`, `lucide-react` and `motion` have no source imports; Tailwind is used ([package.json:14](/home/user/planet/package.json:14), [src/index.css:1](/home/user/planet/src/index.css:1)). Remove or reassess the unused API/OAuth example, capability metadata, six unreferenced AI Studio screenshots, generic `react-example` name, and Vite’s AI Studio asset-copy/HMR configuration. The current Vite config has no `define` entries ([.env.example:1](/home/user/planet/.env.example:1), [vite.config.ts:7](/home/user/planet/vite.config.ts:7)).
+
+READ — Performance: procedural detail-5 icosahedron terrain and numerous individually constructed meshes/materials drive draw calls; exact runtime counts are unmeasured ([planetEngine.ts:1210](/home/user/planet/src/planetEngine.ts:1210)). Hardware rendering uses DPR capped at 2, antialiasing and 2048px shadows; software GL disables these and throttles rendering. Optional pixelation adds a render-target pass ([planetEngine.ts:6686](/home/user/planet/src/planetEngine.ts:6686), [planetEngine.ts:8144](/home/user/planet/src/planetEngine.ts:8144)). The RAF loop skips updates when the tab is hidden but keeps scheduling; no offscreen observer or frame-budget system is present. Disposal omits scene-wide geometry, material and texture cleanup ([planetEngine.ts:8390](/home/user/planet/src/planetEngine.ts:8390), [planetEngine.ts:8980](/home/user/planet/src/planetEngine.ts:8980)). Three is imported as a namespace.
+
+MEASURED — In a `/tmp` copy, ordinary `npm install` failed on an esbuild peer conflict. `npm install --legacy-peer-deps` and `npx vite build` succeeded: JS 979.03 kB, gzip 266.22 kB; CSS 21.97 kB, gzip 5.71 kB. These are bundle sizes, not runtime performance.
+
+READ — Intro and devices: an SVG placeholder fades after the first rendered frame; there is no authored planet entrance ([App.tsx:264](/home/user/planet/src/App.tsx:264), [planetEngine.ts:8857](/home/user/planet/src/planetEngine.ts:8857)). Small-screen layout and camera adjustments exist; touch dragging uses `touch-none`. Reduced motion slows animation rather than stopping it. Context loss/restoration is handled; failed WebGL leaves the placeholder. Cards and controls are buttons, but canvas interactions lack keyboard equivalents and toggle states lack ARIA state.
+
+INFERRED — Integration: wrap `initPlanetEngine` in a reusable React component or container-owning adapter. Scope Tailwind/global styles and supply the fonts ([index.html:13](/home/user/planet/index.html:13)). Alpha is already enabled; verify transparent clearing, configure panel/canvas pointer routing, and add scroll-linked camera control for the host.
+
+INFERRED — Ranked shipping risks:
+
+1. Unmeasured GPU load and draw calls.
+2. Large initial JavaScript bundle.
+3. Repeated-mount GPU resource leaks.
+4. Reduced-motion behavior.
+5. Pointer-only world interactions.
+6. Touch scrolling blocked over the canvas.
+7. Narrow-screen navigation, heading and fixed controls may collide.
+8. No meaningful WebGL failure announcement.
+9. Static placeholder-to-world transition lacks an entrance.
+10. Dependency installation conflict and scaffold cleanup.

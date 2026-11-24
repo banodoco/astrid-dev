@@ -1,0 +1,7 @@
+{"cmd": "/root/plan82-floor/ib/program/versions/938250cdfe79/py/bin/python -I -S -c pass", "median": 0.0109, "samples": [0.0109, 0.0115, 0.0126, 0.0115, 0.0094, 0.0092, 0.0097]}
+{"cmd": "/root/plan82-floor/ib/program/versions/938250cdfe79/py/bin/python -I -c pass", "median": 0.0167, "samples": [0.019, 0.0167, 0.0193, 0.0185, 0.0155, 0.0164, 0.0142]}
+{"cmd": "/root/plan82-floor/ib/program/versions/938250cdfe79/py/bin/python -X utf8 -I -c pass", "median": 0.0144, "samples": [0.0161, 0.0143, 0.0145, 0.0144, 0.0141, 0.0157, 0.0143]}
+{"cmd": "sh -c :", "median": 0.0015, "samples": [0.0014, 0.0016, 0.0017, 0.0015, 0.0014, 0.0015, 0.0014]}
+{"cmd": "/root/plan82-floor/ib/program/run-astrid --version", "median": 0.1299, "samples": [0.1239, 0.1516, 0.1299, 0.1224, 0.1326]}
+{"cmd": "or/ib/program/versions/938250cdfe79/py/bin/python -X utf8 -I -m astrid.omp_agent --version", "median": 0.0986, "samples": [0.1065, 0.0979, 0.0859, 0.1276, 0.0986]}
+{"cmd": "/938250cdfe79/py/bin/python -I -S /root/plan82-floor/scripts/thin_client.py validation x 1", "median": 0.0108, "samples": [0.0108, 0.0122, 0.0111, 0.0101, 0.0093, 0.0114, 0.0104]}

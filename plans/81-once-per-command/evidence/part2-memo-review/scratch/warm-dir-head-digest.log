@@ -1,0 +1,6 @@
+final recorded guard directory? False memo enabled? False
+changed after 1 real directory guard calls
+final recorded guard directory? False memo enabled? False
+OK
+directory still symlink? True lookups 30 files ['.workflow.py.vibe.lock', 'workflow.py', 'workflow.vibe.json']
+fresh generation admission: ObjectInfoCacheCorruptError object_info cache marker points to missing generation 'v1' next action: vibecomfy schemas refresh

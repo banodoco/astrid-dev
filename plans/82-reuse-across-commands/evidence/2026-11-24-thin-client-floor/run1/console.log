@@ -1,0 +1,35 @@
+A-warmup       5.574 s exit 0 load 0.15 task 3d4ded6d succeeded server 0.000
+Cnaive-warmup   0.032 s exit 0 load 0.34 task 6a6cfefd succeeded server 0.019
+Creal-warmup   0.319 s exit 0 load 0.44 task a06f114e succeeded server 0.307
+W-warmup       4.589 s exit 0 load 0.53 task cd8302c8 succeeded server 4.576
+Cping-warmup   0.015 s exit 0 load 0.63 task None None server 0.000
+A-1            5.599 s exit 0 load 0.63 task 87d3c1c9 succeeded server 0.000
+Cnaive-1       0.031 s exit 0 load 0.69 task a9748f4b succeeded server 0.020
+Creal-1        0.341 s exit 0 load 0.66 task 337cb185 succeeded server 0.328
+W-1            4.333 s exit 0 load 0.64 task a8b5be40 succeeded server 4.319
+Cping-1        0.014 s exit 0 load 0.72 task None None server 0.000
+A-2            6.383 s exit 0 load 0.72 task 522fe268 succeeded server 0.000
+Cnaive-2       0.034 s exit 0 load 0.78 task 8659524c succeeded server 0.022
+Creal-2        0.408 s exit 0 load 0.82 task 02120b9a succeeded server 0.394
+W-2            4.378 s exit 0 load 0.85 task 8767f791 succeeded server 4.363
+Cping-2        0.013 s exit 0 load 0.88 task None None server 0.000
+A-3            6.070 s exit 0 load 0.88 task cdc94305 succeeded server 0.000
+Cnaive-3       0.036 s exit 0 load 0.91 task e7c0f518 succeeded server 0.023
+Creal-3        0.387 s exit 0 load 0.92 task 756d1cda succeeded server 0.375
+W-3            4.501 s exit 0 load 0.94 task 7d172421 succeeded server 4.484
+Cping-3        0.011 s exit 0 load 0.95 task None None server 0.000
+A-4            5.802 s exit 0 load 0.95 task 07c8bb5f succeeded server 0.000
+Cnaive-4       0.040 s exit 0 load 0.96 task 1ecbce90 succeeded server 0.028
+Creal-4        0.359 s exit 0 load 0.96 task f8ca916e succeeded server 0.346
+W-4            4.137 s exit 0 load 0.96 task b789c973 succeeded server 4.125
+Cping-4        0.016 s exit 0 load 0.97 task None None server 0.000
+A-5            5.405 s exit 0 load 0.97 task 8dfd8903 succeeded server 0.000
+Cnaive-5       0.041 s exit 0 load 0.97 task 7757f3e2 succeeded server 0.026
+Creal-5        0.902 s exit 0 load 0.98 task 84a23a4d succeeded server 0.886
+W-5            4.261 s exit 0 load 0.96 task 34ea992b succeeded server 4.243
+Cping-5        0.011 s exit 0 load 0.89 task None None server 0.000
+A       median 5.802 s  samples [5.5986, 6.3825, 6.0705, 5.8021, 5.405]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+Cnaive  median 0.036 s  samples [0.0308, 0.034, 0.0359, 0.0402, 0.0408]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+Creal   median 0.387 s  samples [0.3409, 0.4076, 0.3867, 0.3589, 0.9018]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+W       median 4.333 s  samples [4.3328, 4.3785, 4.5006, 4.1366, 4.2606]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+Cping   median 0.013 s  samples [0.0141, 0.0129, 0.011, 0.0163, 0.0108]  states [None, None, None, None, None]

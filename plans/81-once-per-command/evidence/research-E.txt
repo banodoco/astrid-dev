@@ -1,0 +1,29 @@
+**Read-only inventory.** Code findings are **READ** from the files at the cited lines; repository identity checks are **MEASURED**. The checkouts do not match the stated branch: `astrid-agent` is on `claude/optimistic-albattani-rdadu8`, and `runtime-r15` is detached at `1758a6d`. I did not switch branches or edit files.
+
+| File:line | What it waits for | Timeout or interval value (or NONE) | Path | What the user sees if it expires |
+|---|---|---:|---|---|
+| `astrid/sdk/autobootstrap.py:47,458` | In-process acquisition `RLock` | NONE | Client setup | No expiry message; caller can remain blocked. |
+| `astrid/sdk/autobootstrap.py:171-223` | Other processes holding the Runtime acquisition file lock; polls every 50 ms | Default 135 s (120 s admission + 15 s overhead); configurable | Client setup | “neutral runtime acquisition lock timed out” and reconfigure action. |
+| `astrid/sdk/autobootstrap.py:341-362,382-401` | Runtime launcher subprocess; one bounded retry after timeout | Default 135 s per invocation; up to two attempts | Client setup | “neutral runtime {action} timed out” and reconfigure action. |
+| `astrid/sdk/client.py:569-595`; `astrid/runtime_cli.py:129-148` | Runtime CLI workspace inspection and status subprocesses | 5 s each | Client setup | “the Astrid Runtime CLI timed out after …” |
+| `astrid/sdk/host_bootstrap.py:2236` | Other processes holding the generic host lifecycle lock | NONE | Client setup | No expiry message; caller can remain blocked. |
+| `astrid/sdk/host_bootstrap.py:2023-2033,2071-2078` | Runtime-supervised host readiness; polls every 0.5 s | 300 s total | Client setup | Says task host is still starting and reports no ready record after 300 s. |
+| `astrid/sdk/host_bootstrap.py:49-50,2094-2104,2483-2519,2538-2554` | Host startup progress/readiness; polls every 50 ms and probes progress every 1 s | 300 s without progress, reset by progress; no total cap | Client setup | Says host is hung, reports the phase, and points to its log. |
+| `astrid/sdk/host_bootstrap.py:1562,1600-1626` | Parked-host activation socket and readiness handshake | 20 s default | Client setup | Reports activation/readiness failure; readiness error says parked host did not become ready. |
+| `astrid_runtime_client/generated.py:643-648,667-671`; `astrid/sdk/workspace_client.py:46-56,314-326` | Each Runtime HTTP request, including generate admission and timeline create/edit operations | 30 s default, per request | Generate / timelines | Timeout message names the Runtime operation and says whether it may have been applied. |
+| `astrid/packs/timeline/cli.py:103-120`; `astrid/sdk/remote.py:500-520,527-548` | Timeline create’s sequential shell creation, reads, and initial commit | Multiple HTTP waits; 30 s each; no overall deadline | Timelines | Operation-specific HTTP timeout; a later timeout can follow earlier successful steps. |
+| `astrid/sdk/timeline/outbox.py:22-40`; `astrid/sdk/timeline/sync.py:912-919,1040-1048,1232+` | Other processes holding the timeline outbox lock | NONE | Timelines | No expiry message; caller can remain blocked. |
+| `astrid/sdk/timeline/outbox.py:45-56` | Outbox file and directory `fsync` during persistence | NONE | Timelines | No time-based expiry; OS errors can fail the command. |
+| `astrid/sdk/timeline/sync.py:1109-1112,1214-1226` | Commit request and handling of an ambiguous response | 30 s HTTP timeout | Timelines | Timeout reports the operation; ambiguity is retained as commit outcome unknown. |
+| `runtime_protocol/store.py:2861`; `runtime_protocol/service.py:3137-3138,3217-3219` | Shared store mutex during task admission and timeline authorization/provider lookup | NONE | Runtime handler | No lock-expiry message; the client request may time out first. |
+| `runtime_protocol/timeline_commit_execution.py:461-483` | Matching timeline commits serialized by idempotency key | NONE | Runtime handler | No wait-specific expiry response. |
+| `runtime_protocol/store.py:1521-1529,1542`; `store.py:1224` | SQLite connection and write-lock waits (`BEGIN IMMEDIATE`) | 10 s busy timeout | Runtime handler | On failure, generally “internal runtime error” with request ID; commit lookup may report “Timeline commit outcome unavailable; retry the exact request” (`timeline_commit_execution.py:439-445,490-499`). |
+| `runtime_protocol/timeline_commit_store.py:408-420,626-646` | Commit connection reconfiguration and acceptance transaction | 10 s SQLite busy timeout | Runtime handler | No wait-specific message; see SQLite failure behavior above. |
+| `runtime_protocol/store.py:1140-1163` | Runtime realm admission file lock during store startup | NONE | Client setup | Startup can remain blocked without a wait-specific message. |
+| `runtime_protocol/cas.py:55-82,159-171` | CAS staging/publication writes and file/directory `fsync` | NONE | Runtime handler | No time-based expiry; OS errors generally become “internal runtime error” with request ID. |
+
+**No-timeout waits:** The in-process acquisition lock, host lifecycle lock, timeline outbox lock, Runtime store mutex, per-key commit lock, realm admission lock, and the listed `fsync` operations have no code timeout. **READ:** cited rows.
+
+**Timeouts of 30 s or more:** Launcher subprocess (default 135 s per try), supervised host readiness (300 s), host startup idle deadline (300 s without progress), and each Runtime HTTP request (30 s). SQLite waits are 10 s. **READ:** cited rows.
+
+**Wait-specific messages:** Launcher and host startup errors name Runtime acquisition or host readiness/progress. HTTP timeout messages name the Runtime operation, and timeline commit can report an unknown outcome with an exact-retry instruction. Lock and `fsync` waits have no message identifying what is being waited for. **READ:** cited rows.

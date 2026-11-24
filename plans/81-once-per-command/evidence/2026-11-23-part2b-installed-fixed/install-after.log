@@ -1,0 +1,15 @@
+Getting Astrid ready. The first time takes a few minutes.
+Using your workspace at /home/user/p81b/box/part2b-fixed/installs/data-after.
+Downloading Release 14
+Creating your workspace
+Starting Release 14
+Checking Release 14 started
+Open https://astrid.haus
+Connect this computer at https://astrid.haus/?connect=1
+Add ~/.local/bin to your PATH to run astrid from anywhere: export PATH="$HOME/.local/bin:$PATH"
+
+Your choice: start at sign-in is off. To turn it on, rerun the install line with --autostart on.
+Your choice: Astrid skills are off. To turn them on, rerun the install line with --skills on.
+
+Astrid installed: Release 14 (build f2dd1434).
+Next: run `astrid generate scan` to find your ComfyUI.

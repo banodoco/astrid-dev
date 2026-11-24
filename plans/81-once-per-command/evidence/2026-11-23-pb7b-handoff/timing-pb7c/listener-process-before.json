@@ -1,0 +1,26 @@
+[
+  {
+    "arm": "before",
+    "port": 18232,
+    "address": "0100007F",
+    "table": "tcp",
+    "socket_inode": "419215",
+    "pid": 7363,
+    "ppid": 1,
+    "start_ticks": 2163382,
+    "exe": "/home/user/p81b/box/pb7-merged/installs/pb7c/A/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/bin/python3.11",
+    "cwd": "/home/user/p81b/box/pb7-merged/installs/pb7c/A/program/versions/4ba8e3232497"
+  },
+  {
+    "arm": "after",
+    "port": 18233,
+    "address": "0100007F",
+    "table": "tcp",
+    "socket_inode": "423552",
+    "pid": 13343,
+    "ppid": 1,
+    "start_ticks": 2174124,
+    "exe": "/home/user/p81b/box/pb7-merged/installs/pb7c/B/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/bin/python3.11",
+    "cwd": "/home/user/p81b/box/pb7-merged/installs/pb7c/B/program/versions/d824229b00f7"
+  }
+]

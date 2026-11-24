@@ -1,0 +1,26 @@
+{
+  "loadavg": [
+    0.09765625,
+    0.24609375,
+    0.3505859375
+  ],
+  "disk": {
+    "total": 270553174016,
+    "used": 44724617216,
+    "free": 29156995072
+  },
+  "ports": {
+    "standin": {
+      "port": 18188,
+      "state": "not-listening"
+    },
+    "A": {
+      "port": 18220,
+      "state": "listening"
+    },
+    "B": {
+      "port": 18221,
+      "state": "listening"
+    }
+  }
+}

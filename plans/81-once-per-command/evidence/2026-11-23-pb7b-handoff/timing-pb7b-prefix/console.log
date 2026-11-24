@@ -1,0 +1,54 @@
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared CPU box, --no-wait (times Astrid up to task admission); both arms use --timings and identical sitecustomize SHA instrumentation
+[same] warm-up, then 5 alternating rounds
+  same-before-warmup              8.333 s  exit 0  load 0.35 -> 0.45
+  same-after-warmup               7.389 s  exit 0  load 0.45 -> 0.57
+  same-before-1                   6.196 s  exit 0  load 0.57 -> 1.17
+  same-after-1                    5.060 s  exit 0  load 0.92 -> 0.93
+  same-before-2                   5.811 s  exit 0  load 0.93 -> 1.02
+  same-after-2                    4.726 s  exit 0  load 0.99 -> 0.99
+  same-before-3                   6.260 s  exit 0  load 0.99 -> 1.07
+  same-after-3                    4.796 s  exit 0  load 1.00 -> 1.00
+  same-before-4                   6.396 s  exit 0  load 1.00 -> 1.40
+  same-after-4                    5.028 s  exit 0  load 0.94 -> 0.94
+  same-before-5                   6.940 s  exit 0  load 0.94 -> 1.03
+  same-after-5                    4.934 s  exit 0  load 0.93 -> 0.93
+QUALIFICATION FAILED: same: PB-7 timing gate requires median saving of at least 1.5 seconds
+
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared CPU box, --no-wait (times Astrid up to task admission); both arms use --timings and identical sitecustomize SHA instrumentation
+Attestation: off
+Qualification: FAIL
+   same: PB-7 timing gate requires median saving of at least 1.5 seconds
+group      before med s   after med s  after/before   ok  load1 before-cmd
+same               6.26         4.9340.788 (-21.2%)   5/5  0.57-1.00
+
+before arm stages, same (median of 5 commands; top 12 by exclusive seconds per command):
+     1.155 s exclusive/command  2 occurrences/command     0.507 s exclusive/occurrence  pack discovery  (in: model registry)
+     0.751 s exclusive/command  1 occurrences/command     0.751 s exclusive/occurrence  workflow build  (in: candidate preparation)
+     0.599 s exclusive/command  6 occurrences/command     0.097 s exclusive/occurrence  pack discovery  (in: candidate qualification)
+     0.543 s exclusive/command  1 occurrences/command     0.543 s exclusive/occurrence  workflow emission  (in: bundle materialisation)
+     0.477 s exclusive/command  1 occurrences/command     0.477 s exclusive/occurrence  other command work  (in: None)
+     0.449 s exclusive/command  1 occurrences/command     0.449 s exclusive/occurrence  pack host attachment  (in: Runtime connection)
+     0.348 s exclusive/command  2 occurrences/command     0.166 s exclusive/occurrence  approval compile  (in: candidate preparation)
+     0.310 s exclusive/command  4 occurrences/command     0.096 s exclusive/occurrence  pack discovery  (in: None)
+     0.219 s exclusive/command  2 occurrences/command     0.102 s exclusive/occurrence  pack discovery  (in: capability registries)
+     0.197 s exclusive/command  1 occurrences/command     0.197 s exclusive/occurrence  Runtime launcher connection  (in: Runtime connection)
+     0.174 s exclusive/command  1 occurrences/command     0.174 s exclusive/occurrence  pack host source identity  (in: pack host attachment)
+     0.143 s exclusive/command  1 occurrences/command     0.143 s exclusive/occurrence  interpreter start  (in: None)
+
+before arm stages, changed (median of 5 commands; top 12 by exclusive seconds per command):
+
+after arm stages, same (median of 5 commands; top 12 by exclusive seconds per command):
+     0.936 s exclusive/command  2 occurrences/command     0.451 s exclusive/occurrence  pack discovery  (in: model registry)
+     0.719 s exclusive/command  1 occurrences/command     0.719 s exclusive/occurrence  workflow build  (in: candidate preparation)
+     0.534 s exclusive/command  1 occurrences/command     0.534 s exclusive/occurrence  workflow emission  (in: bundle materialisation)
+     0.501 s exclusive/command  1 occurrences/command     0.501 s exclusive/occurrence  other command work  (in: None)
+     0.426 s exclusive/command  1 occurrences/command     0.426 s exclusive/occurrence  pack host attachment  (in: Runtime connection)
+     0.318 s exclusive/command  2 occurrences/command     0.146 s exclusive/occurrence  approval compile  (in: candidate preparation)
+     0.197 s exclusive/command  1 occurrences/command     0.197 s exclusive/occurrence  Runtime launcher connection  (in: Runtime connection)
+     0.177 s exclusive/command  1 occurrences/command     0.177 s exclusive/occurrence  pack host source identity  (in: pack host attachment)
+     0.128 s exclusive/command  1 occurrences/command     0.128 s exclusive/occurrence  interpreter start  (in: None)
+     0.082 s exclusive/command  6 occurrences/command     0.014 s exclusive/occurrence  pack discovery  (in: candidate qualification)
+     0.069 s exclusive/command  1 occurrences/command     0.069 s exclusive/occurrence  model registry  (in: None)
+     0.055 s exclusive/command  4 occurrences/command     0.014 s exclusive/occurrence  pack discovery  (in: None)
+
+after arm stages, changed (median of 5 commands; top 12 by exclusive seconds per command):

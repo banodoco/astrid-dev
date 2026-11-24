@@ -1,0 +1,11 @@
+{
+  "closed_ports": [
+    2400,
+    17500,
+    17501
+  ],
+  "new_profiles_remaining": 0,
+  "removed_owned_stack": "",
+  "retained_stopped_stack": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack",
+  "exit_code": 0
+}

@@ -1,0 +1,175 @@
+{
+  "status": "installed compatibility passed; matching private bootstrap refusal remains tracked separately",
+  "fixture": {
+    "realm": "e1cf01bc-d968-4990-ad29-e34067f26b36",
+    "revision": "authoring-parent-revision-dd1c094a8258b00ec766d94ffa3764f576358f7c752462c19e6462bada77e472",
+    "publication": "txn-c9f2040755384848a8672383b03998c1",
+    "content_digest": "sha256:913a6db2a5d921cf992d57898b0de5c41d1ebef739f157a3e2c4c9832b5aed43",
+    "head_count": 1,
+    "clips": 10,
+    "occurrences": 0
+  },
+  "candidate_sources": {
+    "app": "846ce8cafdf8ca2e58a101a18242c9e50358f89c",
+    "agent": "b7f0e96a4934ddb4c123eab791a6e18efb8f79ac",
+    "runtime": "77c38d037f98f744bd8f41c15d95429c124a8003"
+  },
+  "candidate_installed_tuple": {
+    "app": "148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715",
+    "agent": "5e301956dc49c8b9ba4d23a7ce96c6564bd74d2f",
+    "runtime": "77c38d037f98f744bd8f41c15d95429c124a8003"
+  },
+  "arms": {
+    "stock": {
+      "runtime": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5",
+      "primary_app": {
+        "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+        "route": "verified history",
+        "scoped_writes": 0
+      },
+      "mixed_app": {
+        "app": "148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715",
+        "route": "verified history",
+        "scoped_writes": 0
+      },
+      "sdk_source_overlays": {
+        "stock": {
+          "source": "8807f820eb47d6018db723511e024a0a123fbe95",
+          "method": "list_timeline_commits",
+          "packaging_claim": "source overlay only; independent packaging/install behavior not validated"
+        },
+        "current": {
+          "source": "b7f0e96a4934ddb4c123eab791a6e18efb8f79ac",
+          "method": "list_timeline_commits",
+          "packaging_claim": "source overlay only; independent packaging/install behavior not validated"
+        }
+      },
+      "idle_safe": true,
+      "private_bootstrap_safety_exit": 1
+    },
+    "candidate": {
+      "runtime": "77c38d037f98f744bd8f41c15d95429c124a8003",
+      "primary_app": {
+        "app": "148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715",
+        "route": "verified-head",
+        "scoped_writes": 0
+      },
+      "mixed_app": {
+        "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+        "route": "verified history",
+        "scoped_writes": 0
+      },
+      "sdk_source_overlays": {
+        "stock": {
+          "source": "8807f820eb47d6018db723511e024a0a123fbe95",
+          "method": "list_timeline_commits",
+          "packaging_claim": "source overlay only; independent packaging/install behavior not validated"
+        },
+        "current": {
+          "source": "b7f0e96a4934ddb4c123eab791a6e18efb8f79ac",
+          "method": "get_project_timeline_verified_head",
+          "packaging_claim": "source overlay only; independent packaging/install behavior not validated"
+        }
+      },
+      "idle_safe": true,
+      "private_bootstrap_safety_exit": 1,
+      "stale_review": {
+        "timelineId": "save-loop-heavy-08c387af",
+        "scope": {
+          "realmId": "e1cf01bc-d968-4990-ad29-e34067f26b36",
+          "actorId": "astrid-2d32f7480e6e0af11aa240ff",
+          "projectId": "fe30ed1bcf754ae682919a0f21fb95a6",
+          "timelineId": "save-loop-heavy-08c387af"
+        },
+        "reviewedA": {
+          "revisionId": "authoring-parent-revision-dd1c094a8258b00ec766d94ffa3764f576358f7c752462c19e6462bada77e472",
+          "publicationId": "txn-c9f2040755384848a8672383b03998c1"
+        },
+        "runtimeWrittenB": {
+          "revisionId": "authoring-parent-revision-e52f22b74c1bdbf8d4a3e36444dfbae93437fea43c3142b5d73da54de06db67e",
+          "publicationId": "txn-f42508c2a8ad4b94a24e3e0c23a85f2d"
+        },
+        "refused": {
+          "name": "Error",
+          "kind": "stale_review_refusal"
+        },
+        "controlledWriteRestorePostCount": 1,
+        "restorePostCountBefore": 1,
+        "restorePostCountAfter": 1,
+        "finalPublicPair": {
+          "revisionId": "authoring-parent-revision-e52f22b74c1bdbf8d4a3e36444dfbae93437fea43c3142b5d73da54de06db67e",
+          "publicationId": "txn-f42508c2a8ad4b94a24e3e0c23a85f2d"
+        }
+      }
+    }
+  },
+  "matching_bootstrap_refusal": "timeline.init requires the pristine empty bootstrap",
+  "matching_bootstrap_request_counts": [
+    {
+      "scenario": "init",
+      "requests": [
+        {
+          "key": "scenario_init:POST:timeline_create:201",
+          "count": 1
+        },
+        {
+          "key": "scenario_init:GET:history:200",
+          "count": 1
+        },
+        {
+          "key": "scenario_init:GET:composition_history:200",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "scenario": "recover",
+      "requests": [
+        {
+          "key": "scenario_recover_interrupted:POST:timeline_create:201",
+          "count": 1
+        },
+        {
+          "key": "scenario_recover_interrupted:GET:history:probe_abort",
+          "count": 1
+        },
+        {
+          "key": "scenario_recover_interrupted:GET:timeline_metadata:200",
+          "count": 1
+        },
+        {
+          "key": "scenario_recover_completed:GET:history:200",
+          "count": 1
+        },
+        {
+          "key": "scenario_recover_completed:GET:composition_history:200",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "local_source_receipt_hashes": {
+    "stock-firstcut-compat/cleanup.json": "2a2b243a40af56925bb92769dac46216bd3ce307611cc799347f913e8d2b7d13",
+    "stock-firstcut-compat/direct-down.json": "b83ebb097dd155a66a893aef6710001284eaa01cba6e93c0a92caf0629c0726e",
+    "stock-firstcut-compat/installed-app-safety-launcher.json": "1e6f8dd9007958c12da8cb46fa51a091ba2e050a54e8d2a2a259cb5b60b70227",
+    "stock-firstcut-compat/versions.json": "d4e80b3ff93ae7b97d1075fd42466e31ba87307ee36bdf78c9460ed7cf2a8c93",
+    "stock-firstcut-compat/stock-firstcut-compat-opening.json": "a96e55c4ed11c4a7d37d635f8cc3c72d9b17e9c4520b4187c815d71580f3c390",
+    "stock-firstcut-compat/mixed-editor.json": "57cef5f7a5c299e76332efbb7848e9d64501ff54437d49f286a8eb87aa070122",
+    "stock-firstcut-compat/stock-firstcut-compat-bridge.json": "9ef5c66c21556601ec9264fbffc5b4858df9ae67780fd4bdb1185b216bb8e293",
+    "stock-firstcut-compat/sdk-pair-status.json": "174d3ca1842f310dd6e8576690a7c070bec40328d56a6dbfbc9f70abbf69925f",
+    "stock-firstcut-compat/sdk-stock.json": "7e10eca81e323f963dbf40cca10bb4708f1fbbfaa8f34fde5f15feb02052c726",
+    "stock-firstcut-compat/sdk-current.json": "118afd572678388723c5f1518178eb6646b36ab1426ef9fe6872b3c1db6dcdd5",
+    "stock-firstcut-compat/installed-app-safety.json": "c0e391557b293491e54d3c823f72faeee799a7ebe534d8757b0aa12ce3469551",
+    "candidate-firstcut-compat/cleanup.json": "afd0dcdb305371177713e9ffa46718ffc5a1e97ffc99c544097434ab0381f19f",
+    "candidate-firstcut-compat/direct-down.json": "b83ebb097dd155a66a893aef6710001284eaa01cba6e93c0a92caf0629c0726e",
+    "candidate-firstcut-compat/installed-app-safety-launcher.json": "13a471e7ec53440a6c10e414485db5947e436344da67c9ea6b9972c1ca46e462",
+    "candidate-firstcut-compat/versions.json": "fc713fd2421f8814fb1f16d9cf46bc1875cbc1e4777dcdefd48d2896a24e1c19",
+    "candidate-firstcut-compat/candidate-firstcut-compat-opening.json": "98bd6ce4b544ada2e074b41ddf9f460460d52ab2fef8241cf7a034bdd7a35422",
+    "candidate-firstcut-compat/mixed-editor.json": "8461c809c18e4dbcb8558086774369442c10679d484bb0e09e5b3b9d0cf78fc9",
+    "candidate-firstcut-compat/candidate-firstcut-compat-bridge.json": "f6879fbd16ac5e83fe94b4e7fc02db02db70a166324ecaf09c97da5c0693cd19",
+    "candidate-firstcut-compat/sdk-pair-status.json": "598957e1c404f7d8212115d4790debe4ed3ac60cd707ae2d97bdc07e6c117ffe",
+    "candidate-firstcut-compat/sdk-stock.json": "89d5c534de864418e2cf4ed3cfb04164273ba82181d894c6db83575803bf2c9a",
+    "candidate-firstcut-compat/sdk-current.json": "3a08820de588c86d201dcc701dca4569006d3aaf2b5832203fe1b9245f35e57b",
+    "candidate-firstcut-compat/installed-app-safety.json": "126aa784f6452840434672cc0a2cd35d007c2c18bac71af6b06d8a284a415dae"
+  }
+}

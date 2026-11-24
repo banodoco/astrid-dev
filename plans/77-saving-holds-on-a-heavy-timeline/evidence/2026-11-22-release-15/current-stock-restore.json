@@ -1,0 +1,7 @@
+{
+  "restored_bytes_match": true,
+  "backup_schema": 33,
+  "restored_schema": 33,
+  "backup_database_sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d",
+  "restored_database_sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d"
+}
