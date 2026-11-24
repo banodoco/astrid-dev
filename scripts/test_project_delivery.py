@@ -256,6 +256,27 @@ class DeliveryCompositionTests(unittest.TestCase):
             with self.subTest(expected=expected):
                 self.assertIn(expected, message)
 
+    def test_gap_with_two_distinct_primaries_names_source_and_identity(self):
+        relative = "vision/gaps/CA-001-finish-work.md"
+        gap = (self.root / relative).read_text(encoding="utf-8")
+        supporting = gap.replace(
+            "(primary) · **Assessment:**",
+            "(primary) · [Keep edits](../pillars/shared.md#keep-edits) (supporting)"
+            " · **Assessment:**")
+        self.write(relative, supporting)
+        graph = load_delivery(self.root)
+        self.assertEqual(
+            {edge.target.id: edge.role for edge in
+             graph.outgoing(RecordRef("gap", "CA-001"), "measures")},
+            {"pillar:shared/finish-work": "primary", "pillar:shared/keep-edits": "supporting"})
+        self.write(relative, supporting.replace("(supporting)", "(primary)"))
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in (relative, "gap:CA-001", "exactly one primary", "found 2"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
     def test_plan_without_primary_names_source_and_identity(self):
         self.write("plans/72-demo/plan.md",
                    PLAN.replace("(primary)", "(supporting)"))
