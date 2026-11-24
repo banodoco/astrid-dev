@@ -99,12 +99,14 @@ When work proceeds without the owner (for example, a contributor or agent helpin
 
 ## Coordination: boards and check-ins
 
-One board per project, shared by every role on it (Lead, orchestrator, manager, packet sessions), so the history is where the owner can read it.
-
-- **Find your board by its title.** It is the open astrid-dev issue titled `board: release <N> plan <P>`, or `board: release <N> <name>` for other runs, and `board: release <N>` for the release Lead. Search issue titles for it. If it doesn't exist, create it, with the header block and name table in its first post ([format](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox)). Never open a second board for the same project.
-- **Your name follows the board.** It is `r<N>-p<P>-orchestrator`, `r<N>-p<P>-manager-<n>` or `r<N>-<packet>-<n>`, and `r<N>-release-lead` for the Lead. Your first post on the board gives your session id.
-- **Every hour.** Read your board and the release board to the last page. Post one STATUS on your board, `to:` the role you report to, who answers there. `send_message` is only a one-line doorbell for something that can't wait an hour.
-- **Your own check-in.** At start-up, create your own hourly scheduled task (at a minute other than :30) and check that it fires. Never disable another session's task. A Claude cloud session also keeps a keep-awake loop: a background `sleep` of about 110 minutes, restarted each hour.
+1. **Boards.** One astrid-dev issue per plan or run, titled `board: release <N> plan <P>` (or `<name>`), and one per release Lead, titled `board: release <N> lead`. Find one with `gh api "search/issues?q=repo:banodoco/astrid-dev+is:issue+is:open+in:title+%22board:+release+<N>%22"` (REST; `gh issue list` fails in Claude sessions), or create it with the header block ([format](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox)).
+2. **Where to post.** Your own updates go on your own board. A message about a plan goes on that plan's board. A Lead-to-Lead or release-wide message goes on the Lead's board. Reply where the message was posted.
+3. **Chain.** The Lead addresses orchestrators. An orchestrator addresses its manager. A manager relays to packet sessions. Peer orchestrators may post on each other's boards about shared code.
+4. **One home per ruling.** Release-wide rulings live in the release's `run.md` "Standing rulings"; plan rulings live in that plan's section. A board DECISION states the ruling and links its home.
+5. **Hourly update.** Leads, orchestrators and managers post one STATUS an hour on their own board, in 10 lines or fewer ("no change" is one line). It lists what was acted on since the last update, which replaces standalone ACKs. Packets post only milestones: early STATUS, READY-*, BLOCKED and DONE. Post each message once, to one addressee.
+6. **Read by cursor.** Read your board with `inbox.py --after <cursor>` ([usage](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/inbox.py)), putting the cursor in your STATUS. Read your parent's board for messages addressed to you. Re-read `run.md` Standing rulings only when it has a newer commit.
+7. **Waking and urgency.** Every Claude role and every manager creates its own hourly scheduled task at start-up, at a minute other than :30, checks that it fires, and never disables another session's task. A Claude cloud session also keeps a keep-awake loop. `send_message` is a Claude-to-Claude doorbell for what can't wait an hour. ChatGPT sessions post BLOCKED instead.
+8. **Liveness.** A parent checks each child's last post and branch movement. Nudge at 2 hours; tell the owner at 3 hours. See who is where: `python3 scripts/boards.py roster <N>`.
 
 ## Checks and failure repair
 

@@ -85,7 +85,7 @@ A failure in a plan's own code goes back to that plan's lane; cross-lane finding
 ## Standby Lead
 
 When the Lead's own session may stop without warning (a usage allowance, a lost container), the owner can keep a **standby Lead** in another session, on the high-judgment role of the other family.
-- **Heartbeat.** The Lead posts a `STATUS` on the mailbox at least every 90 minutes, even when nothing moved, with a marker the standby can recognise (for example its tool's footer).
+- **Heartbeat.** The Lead posts its hourly `STATUS` ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)), even when nothing moved, with a marker the standby can recognise (for example its tool's footer).
 - **Wait.** The standby checks the mailbox every hour and posts nothing while the newest Lead message is less than 3 hours old.
 - **Take over.** After 3 hours of silence, the standby first rules out a quiet Lead: no Lead commit, branch push, pull request or board edit in those 3 hours. Then it posts one takeover message, keeps the same mailbox name, and runs the Lead's check-ins under the same Authority.
 - **One Lead.** Once a takeover message exists, the earlier Lead stands down if it returns, and does nothing until the owner hands the role back.
