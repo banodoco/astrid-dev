@@ -1,0 +1,313 @@
+Cloning into '/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.AjAt0e/package-repo'...
+HEAD is now at 9667048e Tighten SV-4 S0 refusal handling
+approved-input.json: OK
+run-sv3-overlay.sh: OK
+verify-overlay.py: OK
+overlay-direct.py: OK
+overlay-guard/sitecustomize.py: OK
+browser-sv3-measure.mjs: OK
+arm-free-space.mjs: OK
+reused-trace-helpers.mjs: OK
+profile-save-hook.mjs: OK
+From https://github.com/banodoco/astrid-runtime
+ * branch            p89/measure-combined -> FETCH_HEAD
+From https://github.com/banodoco/astrid-agent
+ * branch                p77/sv4-agent-capture -> FETCH_HEAD
+PACKAGE=9667048eb3f6b0e5decb4735a92d7c60ce5fd289
+PACKAGE_SHA256=9a012700e773c31a9827d4245e7dea31dfea6064d0567c8ee95f97231dea1a3c
+RUNTIME=eb4e8644e3549c88d5d836cd5738ca75e76d311a
+AGENT=096a2fb3536192785fabd33e6673ba8ab4ef5ead
+RECEIPTS=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a
+approved-input.json: OK
+run-sv3-overlay.sh: OK
+verify-overlay.py: OK
+overlay-direct.py: OK
+overlay-guard/sitecustomize.py: OK
+browser-sv3-measure.mjs: OK
+arm-free-space.mjs: OK
+reused-trace-helpers.mjs: OK
+profile-save-hook.mjs: OK
+{"runtime_sha": "eb4e8644e3549c88d5d836cd5738ca75e76d311a", "pid": 31824, "start": "157187", "interpreter": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python", "archive": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a", "modules": {"runtime_protocol": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/runtime_protocol/__init__.py", "astrid_runtime": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/astrid_runtime/__init__.py", "timeline_commit_execution": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/runtime_protocol/timeline_commit_execution.py", "timeline_commit_store": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/runtime_protocol/timeline_commit_store.py"}, "agent_overlay": {"overlay_dir": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/agent-overlay", "modules": {"astrid.sdk.timeline._commit_patch": {"file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/agent-overlay/astrid/sdk/timeline/_commit_patch.py", "sha256": "2bcde680d52c45321a1efc3e0ed1500226de0c40ebe227d3fea0335fcde82956"}, "astrid.sdk.timeline._doc_patch": {"file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/agent-overlay/astrid/sdk/timeline/_doc_patch.py", "sha256": "f063ebcdbbc9f3657a1275ff79a2981f9ddbbcdce0ad78acd280db6a9b5a1720"}}, "other_timeline_modules": {"astrid.sdk.timeline._command_state": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/sdk/timeline/_command_state.py", "astrid.sdk.timeline._common": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/sdk/timeline/_common.py"}, "astrid.sdk.timeline.commit": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/sdk/timeline/commit.py"}, "epoch_ns": 1795488031935201927, "endpoint": "http://127.0.0.1:39253", "instance": "b200680d138242469c690db6b0ce4620", "realm_id": "201c0486-58d8-4d23-b05d-9220c1762120", "realm_root": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/runtime/realms/201c0486-58d8-4d23-b05d-9220c1762120", "module_proofs": {"runtime_protocol": {"file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/runtime_protocol/__init__.py", "sha256": "4e4064e1d9b80c6637576490150f44f3c710fabc520af1e640abf2493dcbb0d2"}, "astrid_runtime": {"file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/astrid_runtime/__init__.py", "sha256": "b0d1a06374c421bd85ef6bfc308e6b2ef3b2c0472266a2a85e4894138a9bcbe3"}, "timeline_commit_execution": {"file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/runtime_protocol/timeline_commit_execution.py", "sha256": "9e790575f25eb2963bd83d2b2839a6f98843b8f26aade93c928f5a185b020330"}, "timeline_commit_store": {"file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a/runtime_protocol/timeline_commit_store.py", "sha256": "d516f29e4193797de74dbf54385553892f9cae97c15d554c9f6d2e06e766b5c1"}}, "published_runtime_checkout": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a"}
+SV4_RUN_EXIT=0
+DRIVER_LOG=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.AjAt0e/driver.log
+RECEIPTS=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/boundary.json
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/cleanup.json
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/measurements.jsonl
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/commit-timing-lines.jsonl
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/commit-timing-summary.json
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/daemon-startup.stderr
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/timing-sink-capture.json
+/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/summary.tsv
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/summary.tsv
+scenario	repetition	n_posts	release_to_post_ms	post_to_200_ms	200_to_saved_ms	refusals	n_drags	failed_drags	release_to_saved_ms	post_to_saved_ms	mode	notes	runtime_wall_ms	exclusive_sum_ms	exclusive_sum_over_post_to_200_pct
+W1	1	1	1669.4000000001397	6336.800000000047	582.0999999998603	0	1	0	8588.300000000047	6918.899999999907	sequential		6333.0	6333.0	99.94003282413763
+W2	1	1	1375.8999999999069	5815	336.80000000004657	0	1	0	7527.699999999953	6151.800000000047	sequential		5806.0	5806.0	99.84522785898538
+W3	1	1	1218.5999999998603	6020.5	1003.2000000001863	0	1	0	8242.300000000047	7023.700000000186	sequential		6017.0	6017.0	99.94186529358026
+cold	1	1	2179.100000000093	12806.399999999907	722.1000000000931	0	1	0	15707.600000000093	13528.5	sequential		12792.0	12792.0	99.88755622188978
+W1	all	1	1669.4000000001397	6336.800000000047	582.0999999998603	0	1	0	8588.300000000047	6918.899999999907	sequential	max_release_to_saved_ms=8588.300000000047;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	6333.0	6333.0	99.94003282413763
+W2	all	1	1375.8999999999069	5815	336.80000000004657	0	1	0	7527.699999999953	6151.800000000047	sequential	max_release_to_saved_ms=7527.699999999953;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	5806.0	5806.0	99.84522785898538
+W3	all	1	1218.5999999998603	6020.5	1003.2000000001863	0	1	0	8242.300000000047	7023.700000000186	sequential	max_release_to_saved_ms=8242.300000000047;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	6017.0	6017.0	99.94186529358026
+cold	all	1	2179.100000000093	12806.399999999907	722.1000000000931	0	1	0	15707.600000000093	13528.5	sequential	max_release_to_saved_ms=15707.600000000093;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	12792.0	12792.0	99.88755622188978
+B5	1	5	0				5	0	28387.90000000014	33338.200000000186	burst	n_edits_made=5;n_posts=5;refusals=0;last_release_to_saved_ms=28387.90000000014;first_release_to_saved_ms=33338.200000000186;final_state_matches=true;expected_start_s=210.010439797562;actual_start_s=210.0333;accepted_by_editor=5;no_post_after_settle=true	27367.0	27367.0	
+B10	1	10	0				10	0	60801.40000000014	76552	burst	n_edits_made=10;n_posts=10;refusals=0;last_release_to_saved_ms=60801.40000000014;first_release_to_saved_ms=76552;final_state_matches=null;expected_start_s=230.8457794718317;actual_start_s=230.9;accepted_by_editor=10;no_post_after_settle=true	56378.0	56378.0	
+S0	1	0				0						page_ready_ms=9869.487060546875;verified_head_status=200			
+pack-host	1											pack_host_status=pack host running;claim_lines=0;log_growth_bytes=2838;pgrep_pack_host_count=0			
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/measurements.jsonl
+{"repetition":1,"scenario":"S0","page_ready_ms":9869.487060546875,"verified_head_status":200,"refusal":null}
+{"index":0,"mode":"sequential","cold":true,"browserTimeOrigin":1795488172918.2,"failed":false,"lastOk_before":true,"target":{"clip_id":"fixture-video-0190","track_id":"V6"},"start_before_s":191.3667,"prepare":"strict","geometry":{"x0":507,"y":1238,"x1":573,"dx":66,"pixels_per_second":32.00008187310956,"desired_start_seconds":193.42919472303575,"desired_end_seconds":197.42919472303575,"visible_time_bounds_seconds":[182.4370332285247,207.96821790610346],"clip_rect":{"x":442.734375,"y":1223.84375,"width":128,"height":28,"top":1223.84375,"right":570.734375,"bottom":1251.84375,"left":442.734375},"canvas_rect":{"x":13,"y":1003.84375,"width":1002,"height":483.15625,"top":1003.84375,"right":1015,"bottom":1487,"left":13},"visible_bounds":{"left":157,"right":974,"top":1219.84375,"bottom":1255.84375},"source":{"x":507,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-5825,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2639,"bottom":1255.84375,"left":-5825},"hit_row_rect":{"x":-5825,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2639,"bottom":1255.84375,"left":-5825},"scroll_left":5838,"scroll_top":0,"viewport":{"width":1700,"height":1500}},"destination":{"x":573,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-5825,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2639,"bottom":1255.84375,"left":-5825},"hit_row_rect":{"x":-5825,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2639,"bottom":1255.84375,"left":-5825},"scroll_left":5838,"scroll_top":0,"viewport":{"width":1700,"height":1500}}},"dx_px":66,"pixels_per_second":32.00008187310956,"planned_start_s":193.42919472303575,"load_1m":2.2,"profiler":"profile-cold-profile.json","profile_attached":true,"release_monotonic_ms":11379.59999999986,"up":11379.59999999986,"release_epoch_ms":1795488184297.8,"profile":{"attached":true,"complete":true,"evidence":"profile-cold-profile.json"},"attribution":{"observed":{"requests":1,"responses":1,"badge":{"state":"saved"},"count":{"requested":1,"responded":1,"succeeded":1,"failed":0},"omitted":0},"posts":1},"accepted_public_proof":{"start":{"monotonic_ms":27907.529454,"epoch_ms":1795488200197.3574},"end":{"monotonic_ms":28321.277475,"epoch_ms":1795488200611.1055}},"accepted_start_s":193.4333,"mapped":true,"release_to_post_ms":2179.100000000093,"post_to_200_ms":12806.399999999907,"response_to_saved_ms":722.1000000000931,"http_status":200,"release_to_saved_ms":15707.600000000093,"post_to_saved_ms":13528.5,"post_count_network":1,"repetition":1,"scenario":"cold","warm":false,"runtime_wall_ms":12792.0,"exclusive_sum_ms":12792.0,"exclusive_sum_over_post_to_200_pct":99.88755622188978,"covers":[{"calls":8664,"elapsed_ns":210673710,"value_equal_calls":101599}]}
+{"index":0,"mode":"sequential","cold":false,"browserTimeOrigin":1795488172918.2,"failed":false,"lastOk_before":true,"target":{"clip_id":"fixture-video-0190","track_id":"V6"},"start_before_s":193.4333,"prepare":"strict","geometry":{"x0":507,"y":1238,"x1":573,"dx":66,"pixels_per_second":32.000048751950075,"desired_start_seconds":195.49579685778926,"desired_end_seconds":199.49579685778926,"visible_time_bounds_seconds":[184.49971891496608,210.0309300182058],"clip_rect":{"x":442.859375,"y":1223.84375,"width":128,"height":28,"top":1223.84375,"right":570.859375,"bottom":1251.84375,"left":442.859375},"canvas_rect":{"x":13,"y":1003.84375,"width":1002,"height":483.15625,"top":1003.84375,"right":1015,"bottom":1487,"left":13},"visible_bounds":{"left":157,"right":974,"top":1219.84375,"bottom":1255.84375},"source":{"x":507,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-5891,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2573,"bottom":1255.84375,"left":-5891},"hit_row_rect":{"x":-5891,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2573,"bottom":1255.84375,"left":-5891},"scroll_left":5904,"scroll_top":0,"viewport":{"width":1700,"height":1500}},"destination":{"x":573,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-5891,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2573,"bottom":1255.84375,"left":-5891},"hit_row_rect":{"x":-5891,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2573,"bottom":1255.84375,"left":-5891},"scroll_left":5904,"scroll_top":0,"viewport":{"width":1700,"height":1500}}},"dx_px":66,"pixels_per_second":32.000048751950075,"planned_start_s":195.49579685778926,"load_1m":2.15,"profiler":"profile-w1-profile.json","profile_attached":true,"release_monotonic_ms":30317.59999999986,"up":30317.59999999986,"release_epoch_ms":1795488203235.8,"profile":{"attached":true,"complete":true,"evidence":"profile-w1-profile.json"},"attribution":{"observed":{"requests":1,"responses":1,"badge":{"state":"saved"},"count":{"requested":1,"responded":1,"succeeded":1,"failed":0},"omitted":0},"posts":1},"accepted_public_proof":{"start":{"monotonic_ms":39645.840532,"epoch_ms":1795488211935.6685},"end":{"monotonic_ms":40232.46198,"epoch_ms":1795488212522.2898}},"accepted_start_s":195.5,"mapped":true,"release_to_post_ms":1669.4000000001397,"post_to_200_ms":6336.800000000047,"response_to_saved_ms":582.0999999998603,"http_status":200,"release_to_saved_ms":8588.300000000047,"post_to_saved_ms":6918.899999999907,"post_count_network":1,"repetition":1,"scenario":"W1","warm":true,"runtime_wall_ms":6333.0,"exclusive_sum_ms":6333.0,"exclusive_sum_over_post_to_200_pct":99.94003282413763,"covers":[{"calls":6001,"elapsed_ns":138278913,"value_equal_calls":70415}]}
+{"index":0,"mode":"sequential","cold":false,"browserTimeOrigin":1795488172918.2,"failed":false,"lastOk_before":true,"target":{"clip_id":"fixture-video-0190","track_id":"V6"},"start_before_s":195.5,"prepare":"strict","geometry":{"x0":506,"y":1238,"x1":572,"dx":66,"pixels_per_second":32.00008026066193,"desired_start_seconds":197.5624948269625,"desired_end_seconds":201.5624948269625,"visible_time_bounds_seconds":[186.59328199686485,212.12446796093093],"clip_rect":{"x":442,"y":1223.84375,"width":128,"height":28,"top":1223.84375,"right":570,"bottom":1251.84375,"left":442},"canvas_rect":{"x":13,"y":1003.84375,"width":1002,"height":483.15625,"top":1003.84375,"right":1015,"bottom":1487,"left":13},"visible_bounds":{"left":157,"right":974,"top":1219.84375,"bottom":1255.84375},"source":{"x":506,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-5958,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2506,"bottom":1255.84375,"left":-5958},"hit_row_rect":{"x":-5958,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2506,"bottom":1255.84375,"left":-5958},"scroll_left":5971,"scroll_top":0,"viewport":{"width":1700,"height":1500}},"destination":{"x":572,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-5958,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2506,"bottom":1255.84375,"left":-5958},"hit_row_rect":{"x":-5958,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2506,"bottom":1255.84375,"left":-5958},"scroll_left":5971,"scroll_top":0,"viewport":{"width":1700,"height":1500}}},"dx_px":66,"pixels_per_second":32.00008026066193,"planned_start_s":197.5624948269625,"load_1m":2.54,"profiler":"profile-w2-profile.json","profile_attached":true,"release_monotonic_ms":42199.19999999995,"up":42199.19999999995,"release_epoch_ms":1795488215117.4,"profile":{"attached":true,"complete":true,"evidence":"profile-w2-profile.json"},"attribution":{"observed":{"requests":1,"responses":1,"badge":{"state":"saved"},"count":{"requested":1,"responded":1,"succeeded":1,"failed":0},"omitted":0},"posts":1},"accepted_public_proof":{"start":{"monotonic_ms":50471.179361,"epoch_ms":1795488222761.0073},"end":{"monotonic_ms":51050.67254,"epoch_ms":1795488223340.5005}},"accepted_start_s":197.5667,"mapped":true,"release_to_post_ms":1375.8999999999069,"post_to_200_ms":5815,"response_to_saved_ms":336.80000000004657,"http_status":200,"release_to_saved_ms":7527.699999999953,"post_to_saved_ms":6151.800000000047,"post_count_network":1,"repetition":1,"scenario":"W2","warm":true,"runtime_wall_ms":5806.0,"exclusive_sum_ms":5806.0,"exclusive_sum_over_post_to_200_pct":99.84522785898538,"covers":[{"calls":6001,"elapsed_ns":120063054,"value_equal_calls":70415}]}
+{"index":0,"mode":"sequential","cold":false,"browserTimeOrigin":1795488172918.2,"failed":false,"lastOk_before":true,"target":{"clip_id":"fixture-video-0190","track_id":"V6"},"start_before_s":197.5667,"prepare":"strict","geometry":{"x0":506,"y":1238,"x1":573,"dx":67,"pixels_per_second":32.00003156286049,"desired_start_seconds":199.66044793485395,"desired_end_seconds":203.66044793485395,"visible_time_bounds_seconds":[188.6560639210929,214.1872887386402],"clip_rect":{"x":442.125,"y":1223.84375,"width":128,"height":28,"top":1223.84375,"right":570.125,"bottom":1251.84375,"left":442.125},"canvas_rect":{"x":13,"y":1003.84375,"width":1002,"height":483.15625,"top":1003.84375,"right":1015,"bottom":1487,"left":13},"visible_bounds":{"left":157,"right":974,"top":1219.84375,"bottom":1255.84375},"source":{"x":506,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-6024,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2440,"bottom":1255.84375,"left":-6024},"hit_row_rect":{"x":-6024,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2440,"bottom":1255.84375,"left":-6024},"scroll_left":6037,"scroll_top":0,"viewport":{"width":1700,"height":1500}},"destination":{"x":573,"y":1238,"in_source_row":true,"hit_row":"V6","source_row":{"x":-6024,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2440,"bottom":1255.84375,"left":-6024},"hit_row_rect":{"x":-6024,"y":1219.84375,"width":8464,"height":36,"top":1219.84375,"right":2440,"bottom":1255.84375,"left":-6024},"scroll_left":6037,"scroll_top":0,"viewport":{"width":1700,"height":1500}}},"dx_px":67,"pixels_per_second":32.00003156286049,"planned_start_s":199.66044793485395,"load_1m":2.75,"profiler":"profile-w3-profile.json","profile_attached":true,"release_monotonic_ms":53220.5,"up":53220.5,"release_epoch_ms":1795488226138.7,"profile":{"attached":true,"complete":true,"evidence":"profile-w3-profile.json"},"attribution":{"observed":{"requests":1,"responses":1,"badge":{"state":"saved"},"count":{"requested":1,"responded":1,"succeeded":1,"failed":0},"omitted":0},"posts":1},"accepted_public_proof":{"start":{"monotonic_ms":62337.663675,"epoch_ms":1795488234627.4915},"end":{"monotonic_ms":62891.998123,"epoch_ms":1795488235181.826}},"accepted_start_s":199.6667,"mapped":true,"release_to_post_ms":1218.5999999998603,"post_to_200_ms":6020.5,"response_to_saved_ms":1003.2000000001863,"http_status":200,"release_to_saved_ms":8242.300000000047,"post_to_saved_ms":7023.700000000186,"post_count_network":1,"repetition":1,"scenario":"W3","warm":true,"runtime_wall_ms":6017.0,"exclusive_sum_ms":6017.0,"exclusive_sum_over_post_to_200_pct":99.94186529358026,"covers":[{"calls":6001,"elapsed_ns":264679945,"value_equal_calls":70415}]}
+{"index":0,"mode":"burst","scheduled_offset_ms":0,"failed":false,"before":{"left":442.328125,"right":570.328125,"top":1223.84375,"bottom":1251.84375,"doc_left":6546.328125},"x0":506,"dx_px":67,"release_page_ms":64845.09999999986,"accepted_by_editor":true,"repetition":1,"scenario":"B5","warm":true}
+{"index":1,"mode":"burst","scheduled_offset_ms":600,"failed":false,"before":{"left":442.53125,"right":570.53125,"top":1223.84375,"bottom":1251.84375,"doc_left":6613.53125},"x0":507,"dx_px":66,"release_page_ms":66126.5,"accepted_by_editor":true,"repetition":1,"scenario":"B5","warm":true}
+{"index":2,"mode":"burst","scheduled_offset_ms":1200,"failed":false,"before":{"left":442.65625,"right":570.65625,"top":1223.84375,"bottom":1251.84375,"doc_left":6679.65625},"x0":507,"dx_px":66,"release_page_ms":67291.19999999995,"accepted_by_editor":true,"repetition":1,"scenario":"B5","warm":true}
+{"index":3,"mode":"burst","scheduled_offset_ms":1800,"failed":false,"before":{"left":442.796875,"right":570.796875,"top":1223.84375,"bottom":1251.84375,"doc_left":6745.796875},"x0":507,"dx_px":66,"release_page_ms":68600.69999999995,"accepted_by_editor":true,"repetition":1,"scenario":"B5","warm":true}
+{"index":4,"mode":"burst","scheduled_offset_ms":2400,"failed":false,"before":{"left":442.921875,"right":570.921875,"top":1223.84375,"bottom":1251.84375,"doc_left":6811.921875},"x0":507,"dx_px":66,"release_page_ms":69795.3999999999,"accepted_by_editor":true,"repetition":1,"scenario":"B5","warm":true}
+{"index":0,"mode":"burst","scheduled_offset_ms":0,"failed":false,"before":{"left":442.0625,"right":570.0625,"top":1223.84375,"bottom":1251.84375,"doc_left":6878.0625},"x0":506,"dx_px":67,"release_page_ms":101281.5,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":1,"mode":"burst","scheduled_offset_ms":500,"failed":false,"before":{"left":442.265625,"right":570.265625,"top":1223.84375,"bottom":1251.84375,"doc_left":6945.265625},"x0":506,"dx_px":67,"release_page_ms":103267.80000000005,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":2,"mode":"burst","scheduled_offset_ms":1000,"failed":false,"before":{"left":442.453125,"right":570.453125,"top":1223.84375,"bottom":1251.84375,"doc_left":7012.453125},"x0":506,"dx_px":67,"release_page_ms":104552.59999999986,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":3,"mode":"burst","scheduled_offset_ms":1500,"failed":false,"before":{"left":442.65625,"right":570.65625,"top":1223.84375,"bottom":1251.84375,"doc_left":7079.65625},"x0":507,"dx_px":66,"release_page_ms":105740.69999999995,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":4,"mode":"burst","scheduled_offset_ms":2000,"failed":false,"before":{"left":442.796875,"right":570.796875,"top":1223.84375,"bottom":1251.84375,"doc_left":7145.796875},"x0":507,"dx_px":66,"release_page_ms":107197.30000000005,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":5,"mode":"burst","scheduled_offset_ms":2500,"failed":false,"before":{"left":442.921875,"right":570.921875,"top":1223.84375,"bottom":1251.84375,"doc_left":7211.921875},"x0":507,"dx_px":66,"release_page_ms":108604,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":6,"mode":"burst","scheduled_offset_ms":3000,"failed":false,"before":{"left":442.0625,"right":570.0625,"top":1223.84375,"bottom":1251.84375,"doc_left":7278.0625},"x0":506,"dx_px":67,"release_page_ms":110653.80000000005,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":7,"mode":"burst","scheduled_offset_ms":3500,"failed":false,"before":{"left":442.265625,"right":570.265625,"top":1223.84375,"bottom":1251.84375,"doc_left":7345.265625},"x0":506,"dx_px":67,"release_page_ms":113353.5,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":8,"mode":"burst","scheduled_offset_ms":4000,"failed":false,"before":{"left":442.453125,"right":570.453125,"top":1223.84375,"bottom":1251.84375,"doc_left":7412.453125},"x0":506,"dx_px":67,"release_page_ms":115478.3999999999,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"index":9,"mode":"burst","scheduled_offset_ms":4500,"failed":false,"before":{"left":442.65625,"right":570.65625,"top":1223.84375,"bottom":1251.84375,"doc_left":7479.65625},"x0":507,"dx_px":66,"release_page_ms":117032.09999999986,"accepted_by_editor":true,"repetition":1,"scenario":"B10","warm":true}
+{"repetition":1,"scenario":"B5","burst_summary":{"scenario":"B5","n_edits_requested":5,"n_edits_made":5,"failed_edits":0,"n_posts":5,"posts_at_saved":5,"no_post_after_settle":true,"statuses":[200,200,200,200,200],"refusals":[],"refusal_count":0,"accepted_by_editor_count":5,"last_release_to_saved_ms":28387.90000000014,"first_release_to_saved_ms":33338.200000000186,"settle_error":null,"badge_state":"saved","start_before_s":199.6667,"expected_start_s":210.010439797562,"actual_start_s":210.0333,"final_state_matches":true,"edits_in_document":5,"pixels_per_second_used":32.00003156286049,"tape_bypassed":true,"runtime_wall_ms":27367.0,"exclusive_sum_ms":27367.0,"exclusive_sum_over_post_to_200_pct":null,"covers":[{"calls":6001,"elapsed_ns":102524526,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":108647435,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":102123055,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":107191003,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":113798797,"value_equal_calls":70415}]}}
+{"repetition":1,"scenario":"B10","burst_summary":{"scenario":"B10","n_edits_requested":10,"n_edits_made":10,"failed_edits":0,"n_posts":10,"posts_at_saved":10,"no_post_after_settle":true,"statuses":[200,200,200,200,200,200,200,200,200,200],"refusals":[],"refusal_count":0,"accepted_by_editor_count":10,"last_release_to_saved_ms":60801.40000000014,"first_release_to_saved_ms":76552,"settle_error":null,"badge_state":"saved","start_before_s":210.0333,"expected_start_s":230.8457794718317,"actual_start_s":230.9,"final_state_matches":false,"edits_in_document":10,"pixels_per_second_used":32.00003156286049,"tape_bypassed":true,"runtime_wall_ms":56378.0,"exclusive_sum_ms":56378.0,"exclusive_sum_over_post_to_200_pct":null,"covers":[{"calls":6001,"elapsed_ns":116334679,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":115932540,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":122701596,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":109832274,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":118367931,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":106466391,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":112820114,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":120361001,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":121298300,"value_equal_calls":70415},{"calls":6001,"elapsed_ns":120418487,"value_equal_calls":70415}]}}
+{"repetition":1,"scenario":"pack-host","pack_host_status":"pack host running","claim_lines":0,"log_growth_bytes":2838,"pgrep_pack_host_count":0}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/cleanup.json
+{
+  "exit_code": 0,
+  "idle_safe_stop_verified": true,
+  "browser_temp_removed": true,
+  "preview_ports_closed": true,
+  "no_leftover_chrome": true,
+  "boundaries_unchanged": true
+}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/boundary.json
+{
+  "signed_backup_path": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/bundles/large/backup",
+  "boundaries_unchanged": true,
+  "differing": "",
+  "one_root_lock": {
+    "opened_for_write_by_exec": true,
+    "size_and_mtime_before": "0 1795486510",
+    "size_and_mtime_after": "0 1795488027"
+  }
+}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/timing-sink-capture.json
+{
+  "status": "captured",
+  "runtime_work_data": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1",
+  "idle_safe_stop": true,
+  "captured_at_utc": "2026-11-24T02:46:00.744271+00:00",
+  "source_base": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+  "files": [
+    {
+      "file": "timing-sink/commit-stage-timings.jsonl",
+      "source": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+      "bytes": 24103,
+      "lines": 19,
+      "sha256": "115b165897462ba714a3c5544627d3b9da46ecf0414c878b91d586ea1c5fdd03"
+    }
+  ],
+  "reset_receipt": {
+    "work_copy": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1",
+    "logs_directory": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs",
+    "removed_known_files": [],
+    "reset_at_utc": "2026-11-24T02:40:30.874976+00:00",
+    "scope": "only four known timing sink files inside the disposable work copy"
+  },
+  "error": null
+}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/commit-timing-summary.json
+{
+  "sink_status": "captured",
+  "sink_files": [
+    {
+      "file": "timing-sink/commit-stage-timings.jsonl",
+      "source": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+      "bytes": 24103,
+      "lines": 19,
+      "sha256": "115b165897462ba714a3c5544627d3b9da46ecf0414c878b91d586ea1c5fdd03"
+    }
+  ],
+  "posts": 19,
+  "lines": 19,
+  "malformed_lines": 0,
+  "lines_matched": 19,
+  "mismatch": false,
+  "per_drag": {
+    "cold/0": {
+      "runtime_wall_ms": 12792.0,
+      "exclusive_sum_ms": 12792.0,
+      "exclusive_sum_over_post_to_200_pct": 99.88755622188978,
+      "covers": [
+        {
+          "calls": 8664,
+          "elapsed_ns": 210673710,
+          "value_equal_calls": 101599
+        }
+      ]
+    },
+    "W1/0": {
+      "runtime_wall_ms": 6333.0,
+      "exclusive_sum_ms": 6333.0,
+      "exclusive_sum_over_post_to_200_pct": 99.94003282413763,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 138278913,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "W2/0": {
+      "runtime_wall_ms": 5806.0,
+      "exclusive_sum_ms": 5806.0,
+      "exclusive_sum_over_post_to_200_pct": 99.84522785898538,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 120063054,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "W3/0": {
+      "runtime_wall_ms": 6017.0,
+      "exclusive_sum_ms": 6017.0,
+      "exclusive_sum_over_post_to_200_pct": 99.94186529358026,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 264679945,
+          "value_equal_calls": 70415
+        }
+      ]
+    }
+  },
+  "burst": {
+    "B5": {
+      "runtime_wall_ms": 27367.0,
+      "exclusive_sum_ms": 27367.0,
+      "exclusive_sum_over_post_to_200_pct": null,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 102524526,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 108647435,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 102123055,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 107191003,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 113798797,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "B10": {
+      "runtime_wall_ms": 56378.0,
+      "exclusive_sum_ms": 56378.0,
+      "exclusive_sum_over_post_to_200_pct": null,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 116334679,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 115932540,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 122701596,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 109832274,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 118367931,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 106466391,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 112820114,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 120361001,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 121298300,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 120418487,
+          "value_equal_calls": 70415
+        }
+      ]
+    }
+  }
+}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/commit-timing-lines.jsonl
+{"covers":{"calls":8664,"elapsed_ns":210673710,"value_equal_calls":101599},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":448,"handler":555,"initial_replay_lookup":17,"port_store_accept":2108,"provider_commit":9648,"unattributed":0,"wire_response":16},"outcome":"accepted","request_id":"9e5b1452c06dee8d6e1ddd897b2ee3ab","runtime_wall_ms":12792,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":12322,"start_ms":12322},"durable_reconciliation":{"duration_ms":448,"end_ms":12770,"start_ms":12322},"handler":{"duration_ms":12792,"end_ms":12792,"start_ms":0},"initial_replay_lookup":{"duration_ms":17,"end_ms":566,"start_ms":549},"port_store_accept":{"duration_ms":2108,"end_ms":12269,"start_ms":10161},"provider_commit":{"duration_ms":11756,"end_ms":12322,"start_ms":566},"service_admission":{"duration_ms":0,"end_ms":515,"start_ms":515},"total":{"duration_ms":12792,"end_ms":12792,"start_ms":0},"wire_response":{"duration_ms":16,"end_ms":12792,"start_ms":12776}},"timings_ms":{"close":0,"durable_reconciliation":448,"handler":12792,"initial_replay_lookup":17,"port_store_accept":2108,"provider_commit":11756,"service_admission":0,"total":12792,"wire_response":16}}
+{"covers":{"calls":6001,"elapsed_ns":138278913,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":525,"handler":400,"initial_replay_lookup":7,"port_store_accept":2235,"provider_commit":3146,"unattributed":0,"wire_response":20},"outcome":"accepted","request_id":"4a742db0d28f26d5a91527f03baed03a","runtime_wall_ms":6333,"sizes_bytes":{"request_body":207552,"request_json":207552,"response_body":1216462},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5781,"start_ms":5781},"durable_reconciliation":{"duration_ms":525,"end_ms":6306,"start_ms":5781},"handler":{"duration_ms":6333,"end_ms":6333,"start_ms":0},"initial_replay_lookup":{"duration_ms":7,"end_ms":400,"start_ms":393},"port_store_accept":{"duration_ms":2235,"end_ms":5735,"start_ms":3500},"provider_commit":{"duration_ms":5381,"end_ms":5781,"start_ms":400},"service_admission":{"duration_ms":0,"end_ms":363,"start_ms":363},"total":{"duration_ms":6333,"end_ms":6333,"start_ms":0},"wire_response":{"duration_ms":21,"end_ms":6333,"start_ms":6313}},"timings_ms":{"close":0,"durable_reconciliation":525,"handler":6333,"initial_replay_lookup":7,"port_store_accept":2235,"provider_commit":5381,"service_admission":0,"total":6333,"wire_response":21}}
+{"covers":{"calls":6001,"elapsed_ns":120063054,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":442,"handler":385,"initial_replay_lookup":6,"port_store_accept":1912,"provider_commit":3041,"unattributed":0,"wire_response":20},"outcome":"accepted","request_id":"4c1a17c170f3930dca5f0c0e845fbb28","runtime_wall_ms":5806,"sizes_bytes":{"request_body":207546,"request_json":207546,"response_body":1216444},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5335,"start_ms":5335},"durable_reconciliation":{"duration_ms":442,"end_ms":5777,"start_ms":5335},"handler":{"duration_ms":5806,"end_ms":5806,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":382,"start_ms":376},"port_store_accept":{"duration_ms":1912,"end_ms":5286,"start_ms":3374},"provider_commit":{"duration_ms":4953,"end_ms":5335,"start_ms":382},"service_admission":{"duration_ms":0,"end_ms":334,"start_ms":334},"total":{"duration_ms":5806,"end_ms":5806,"start_ms":0},"wire_response":{"duration_ms":20,"end_ms":5806,"start_ms":5786}},"timings_ms":{"close":0,"durable_reconciliation":442,"handler":5806,"initial_replay_lookup":6,"port_store_accept":1912,"provider_commit":4953,"service_admission":0,"total":5806,"wire_response":20}}
+{"covers":{"calls":6001,"elapsed_ns":264679945,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":561,"handler":352,"initial_replay_lookup":7,"port_store_accept":2143,"provider_commit":2932,"unattributed":0,"wire_response":22},"outcome":"accepted","request_id":"341c088ee61d890254f26848bd7c222d","runtime_wall_ms":6017,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5427,"start_ms":5427},"durable_reconciliation":{"duration_ms":561,"end_ms":5987,"start_ms":5427},"handler":{"duration_ms":6017,"end_ms":6017,"start_ms":0},"initial_replay_lookup":{"duration_ms":7,"end_ms":352,"start_ms":344},"port_store_accept":{"duration_ms":2143,"end_ms":5383,"start_ms":3240},"provider_commit":{"duration_ms":5075,"end_ms":5427,"start_ms":352},"service_admission":{"duration_ms":0,"end_ms":301,"start_ms":301},"total":{"duration_ms":6017,"end_ms":6017,"start_ms":0},"wire_response":{"duration_ms":22,"end_ms":6017,"start_ms":5995}},"timings_ms":{"close":0,"durable_reconciliation":561,"handler":6017,"initial_replay_lookup":7,"port_store_accept":2143,"provider_commit":5075,"service_admission":0,"total":6017,"wire_response":22}}
+{"covers":{"calls":6001,"elapsed_ns":102524526,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":455,"handler":296,"initial_replay_lookup":11,"port_store_accept":1764,"provider_commit":2673,"unattributed":0,"wire_response":17},"outcome":"accepted","request_id":"f08990fa3e8f6e44ed6ef1540749081f","runtime_wall_ms":5216,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4737,"start_ms":4737},"durable_reconciliation":{"duration_ms":455,"end_ms":5192,"start_ms":4737},"handler":{"duration_ms":5216,"end_ms":5216,"start_ms":0},"initial_replay_lookup":{"duration_ms":11,"end_ms":300,"start_ms":289},"port_store_accept":{"duration_ms":1764,"end_ms":4699,"start_ms":2935},"provider_commit":{"duration_ms":4437,"end_ms":4737,"start_ms":300},"service_admission":{"duration_ms":0,"end_ms":248,"start_ms":248},"total":{"duration_ms":5216,"end_ms":5216,"start_ms":0},"wire_response":{"duration_ms":17,"end_ms":5216,"start_ms":5200}},"timings_ms":{"close":0,"durable_reconciliation":455,"handler":5216,"initial_replay_lookup":11,"port_store_accept":1764,"provider_commit":4437,"service_admission":0,"total":5216,"wire_response":17}}
+{"covers":{"calls":6001,"elapsed_ns":108647435,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":480,"handler":274,"initial_replay_lookup":8,"port_store_accept":1861,"provider_commit":2977,"unattributed":0,"wire_response":19},"outcome":"accepted","request_id":"ab859b08b4f42da81692caeabf5b7e55","runtime_wall_ms":5619,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5112,"start_ms":5112},"durable_reconciliation":{"duration_ms":480,"end_ms":5592,"start_ms":5112},"handler":{"duration_ms":5619,"end_ms":5619,"start_ms":0},"initial_replay_lookup":{"duration_ms":8,"end_ms":274,"start_ms":266},"port_store_accept":{"duration_ms":1861,"end_ms":5046,"start_ms":3185},"provider_commit":{"duration_ms":4838,"end_ms":5112,"start_ms":274},"service_admission":{"duration_ms":0,"end_ms":237,"start_ms":237},"total":{"duration_ms":5619,"end_ms":5619,"start_ms":0},"wire_response":{"duration_ms":19,"end_ms":5619,"start_ms":5600}},"timings_ms":{"close":0,"durable_reconciliation":480,"handler":5619,"initial_replay_lookup":8,"port_store_accept":1861,"provider_commit":4838,"service_admission":0,"total":5619,"wire_response":19}}
+{"covers":{"calls":6001,"elapsed_ns":102123055,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":369,"handler":282,"initial_replay_lookup":6,"port_store_accept":1842,"provider_commit":2929,"unattributed":0,"wire_response":18},"outcome":"accepted","request_id":"45241134c9c3db59f5eae2827fe50b99","runtime_wall_ms":5446,"sizes_bytes":{"request_body":207552,"request_json":207552,"response_body":1216462},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5050,"start_ms":5050},"durable_reconciliation":{"duration_ms":369,"end_ms":5420,"start_ms":5050},"handler":{"duration_ms":5446,"end_ms":5446,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":279,"start_ms":273},"port_store_accept":{"duration_ms":1842,"end_ms":5012,"start_ms":3171},"provider_commit":{"duration_ms":4771,"end_ms":5050,"start_ms":279},"service_admission":{"duration_ms":0,"end_ms":244,"start_ms":244},"total":{"duration_ms":5446,"end_ms":5446,"start_ms":0},"wire_response":{"duration_ms":19,"end_ms":5446,"start_ms":5428}},"timings_ms":{"close":0,"durable_reconciliation":369,"handler":5446,"initial_replay_lookup":6,"port_store_accept":1842,"provider_commit":4771,"service_admission":0,"total":5446,"wire_response":19}}
+{"covers":{"calls":6001,"elapsed_ns":107191003,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":503,"handler":280,"initial_replay_lookup":6,"port_store_accept":1848,"provider_commit":2775,"unattributed":0,"wire_response":19},"outcome":"accepted","request_id":"50e379e66d8f5535e1c8a98206d8d03e","runtime_wall_ms":5431,"sizes_bytes":{"request_body":207546,"request_json":207546,"response_body":1216444},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4902,"start_ms":4902},"durable_reconciliation":{"duration_ms":503,"end_ms":5405,"start_ms":4902},"handler":{"duration_ms":5431,"end_ms":5431,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":278,"start_ms":272},"port_store_accept":{"duration_ms":1848,"end_ms":4861,"start_ms":3012},"provider_commit":{"duration_ms":4624,"end_ms":4902,"start_ms":278},"service_admission":{"duration_ms":0,"end_ms":243,"start_ms":243},"total":{"duration_ms":5431,"end_ms":5431,"start_ms":0},"wire_response":{"duration_ms":19,"end_ms":5431,"start_ms":5412}},"timings_ms":{"close":0,"durable_reconciliation":503,"handler":5431,"initial_replay_lookup":6,"port_store_accept":1848,"provider_commit":4624,"service_admission":0,"total":5431,"wire_response":19}}
+{"covers":{"calls":6001,"elapsed_ns":113798797,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":639,"handler":366,"initial_replay_lookup":6,"port_store_accept":1701,"provider_commit":2909,"unattributed":0,"wire_response":34},"outcome":"accepted","request_id":"44ee3a2424494239decea192560b35e0","runtime_wall_ms":5655,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4973,"start_ms":4973},"durable_reconciliation":{"duration_ms":639,"end_ms":5612,"start_ms":4973},"handler":{"duration_ms":5655,"end_ms":5655,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":363,"start_ms":357},"port_store_accept":{"duration_ms":1701,"end_ms":4905,"start_ms":3204},"provider_commit":{"duration_ms":4610,"end_ms":4973,"start_ms":363},"service_admission":{"duration_ms":0,"end_ms":327,"start_ms":327},"total":{"duration_ms":5655,"end_ms":5655,"start_ms":0},"wire_response":{"duration_ms":34,"end_ms":5655,"start_ms":5622}},"timings_ms":{"close":0,"durable_reconciliation":639,"handler":5655,"initial_replay_lookup":6,"port_store_accept":1701,"provider_commit":4610,"service_admission":0,"total":5655,"wire_response":34}}
+{"covers":{"calls":6001,"elapsed_ns":116334679,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":441,"handler":308,"initial_replay_lookup":6,"port_store_accept":1902,"provider_commit":3010,"unattributed":0,"wire_response":26},"outcome":"accepted","request_id":"2649070c24584c44e8089de19d5ba154","runtime_wall_ms":5693,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5214,"start_ms":5214},"durable_reconciliation":{"duration_ms":441,"end_ms":5655,"start_ms":5214},"handler":{"duration_ms":5693,"end_ms":5693,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":303,"start_ms":296},"port_store_accept":{"duration_ms":1902,"end_ms":5161,"start_ms":3259},"provider_commit":{"duration_ms":4911,"end_ms":5214,"start_ms":303},"service_admission":{"duration_ms":0,"end_ms":265,"start_ms":265},"total":{"duration_ms":5693,"end_ms":5693,"start_ms":0},"wire_response":{"duration_ms":26,"end_ms":5693,"start_ms":5666}},"timings_ms":{"close":0,"durable_reconciliation":441,"handler":5693,"initial_replay_lookup":6,"port_store_accept":1902,"provider_commit":4911,"service_admission":0,"total":5693,"wire_response":26}}
+{"covers":{"calls":6001,"elapsed_ns":115932540,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":649,"handler":298,"initial_replay_lookup":7,"port_store_accept":1786,"provider_commit":2721,"unattributed":0,"wire_response":24},"outcome":"accepted","request_id":"49f1b230fde5afcca825a70132b78475","runtime_wall_ms":5485,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4804,"start_ms":4804},"durable_reconciliation":{"duration_ms":649,"end_ms":5453,"start_ms":4804},"handler":{"duration_ms":5485,"end_ms":5485,"start_ms":0},"initial_replay_lookup":{"duration_ms":7,"end_ms":296,"start_ms":289},"port_store_accept":{"duration_ms":1786,"end_ms":4759,"start_ms":2973},"provider_commit":{"duration_ms":4507,"end_ms":4804,"start_ms":296},"service_admission":{"duration_ms":0,"end_ms":257,"start_ms":257},"total":{"duration_ms":5485,"end_ms":5485,"start_ms":0},"wire_response":{"duration_ms":24,"end_ms":5485,"start_ms":5461}},"timings_ms":{"close":0,"durable_reconciliation":649,"handler":5485,"initial_replay_lookup":7,"port_store_accept":1786,"provider_commit":4507,"service_admission":0,"total":5485,"wire_response":24}}
+{"covers":{"calls":6001,"elapsed_ns":122701596,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":522,"handler":404,"initial_replay_lookup":12,"port_store_accept":1919,"provider_commit":2889,"service_admission":8,"unattributed":0,"wire_response":22},"outcome":"accepted","request_id":"2f2cf2305f631a157f8f7da461bbf423","runtime_wall_ms":5776,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5222,"start_ms":5222},"durable_reconciliation":{"duration_ms":523,"end_ms":5745,"start_ms":5222},"handler":{"duration_ms":5776,"end_ms":5776,"start_ms":0},"initial_replay_lookup":{"duration_ms":12,"end_ms":414,"start_ms":403},"port_store_accept":{"duration_ms":1919,"end_ms":5161,"start_ms":3242},"provider_commit":{"duration_ms":4808,"end_ms":5222,"start_ms":414},"service_admission":{"duration_ms":8,"end_ms":347,"start_ms":339},"total":{"duration_ms":5776,"end_ms":5776,"start_ms":0},"wire_response":{"duration_ms":22,"end_ms":5776,"start_ms":5754}},"timings_ms":{"close":0,"durable_reconciliation":523,"handler":5776,"initial_replay_lookup":12,"port_store_accept":1919,"provider_commit":4808,"service_admission":8,"total":5776,"wire_response":22}}
+{"covers":{"calls":6001,"elapsed_ns":109832274,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":604,"handler":303,"initial_replay_lookup":8,"port_store_accept":1725,"provider_commit":3237,"unattributed":0,"wire_response":19},"outcome":"accepted","request_id":"b97d9f46e49e8bf69877b4ed9e40f923","runtime_wall_ms":5896,"sizes_bytes":{"request_body":207552,"request_json":207552,"response_body":1216462},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5265,"start_ms":5265},"durable_reconciliation":{"duration_ms":604,"end_ms":5869,"start_ms":5265},"handler":{"duration_ms":5896,"end_ms":5896,"start_ms":0},"initial_replay_lookup":{"duration_ms":8,"end_ms":303,"start_ms":295},"port_store_accept":{"duration_ms":1725,"end_ms":5226,"start_ms":3500},"provider_commit":{"duration_ms":4962,"end_ms":5265,"start_ms":303},"service_admission":{"duration_ms":0,"end_ms":260,"start_ms":260},"total":{"duration_ms":5896,"end_ms":5896,"start_ms":0},"wire_response":{"duration_ms":19,"end_ms":5896,"start_ms":5877}},"timings_ms":{"close":0,"durable_reconciliation":604,"handler":5896,"initial_replay_lookup":8,"port_store_accept":1725,"provider_commit":4962,"service_admission":0,"total":5896,"wire_response":19}}
+{"covers":{"calls":6001,"elapsed_ns":118367931,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":526,"handler":342,"initial_replay_lookup":6,"port_store_accept":1798,"provider_commit":2601,"unattributed":0,"wire_response":20},"outcome":"accepted","request_id":"b0014e9a089749c1021323630a8afee2","runtime_wall_ms":5293,"sizes_bytes":{"request_body":207546,"request_json":207546,"response_body":1216444},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4738,"start_ms":4738},"durable_reconciliation":{"duration_ms":526,"end_ms":5265,"start_ms":4738},"handler":{"duration_ms":5293,"end_ms":5293,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":339,"start_ms":333},"port_store_accept":{"duration_ms":1798,"end_ms":4675,"start_ms":2877},"provider_commit":{"duration_ms":4399,"end_ms":4738,"start_ms":339},"service_admission":{"duration_ms":0,"end_ms":299,"start_ms":299},"total":{"duration_ms":5293,"end_ms":5293,"start_ms":0},"wire_response":{"duration_ms":20,"end_ms":5293,"start_ms":5273}},"timings_ms":{"close":0,"durable_reconciliation":526,"handler":5293,"initial_replay_lookup":6,"port_store_accept":1798,"provider_commit":4399,"service_admission":0,"total":5293,"wire_response":20}}
+{"covers":{"calls":6001,"elapsed_ns":106466391,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":372,"handler":281,"initial_replay_lookup":16,"port_store_accept":1793,"provider_commit":2587,"unattributed":0,"wire_response":19},"outcome":"accepted","request_id":"2f61133143c7cee8ca29c3f33e135803","runtime_wall_ms":5068,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4668,"start_ms":4668},"durable_reconciliation":{"duration_ms":372,"end_ms":5040,"start_ms":4668},"handler":{"duration_ms":5068,"end_ms":5068,"start_ms":0},"initial_replay_lookup":{"duration_ms":16,"end_ms":289,"start_ms":272},"port_store_accept":{"duration_ms":1792,"end_ms":4627,"start_ms":2834},"provider_commit":{"duration_ms":4379,"end_ms":4668,"start_ms":289},"service_admission":{"duration_ms":0,"end_ms":241,"start_ms":241},"total":{"duration_ms":5068,"end_ms":5068,"start_ms":0},"wire_response":{"duration_ms":19,"end_ms":5068,"start_ms":5049}},"timings_ms":{"close":0,"durable_reconciliation":372,"handler":5068,"initial_replay_lookup":16,"port_store_accept":1792,"provider_commit":4379,"service_admission":0,"total":5068,"wire_response":19}}
+{"covers":{"calls":6001,"elapsed_ns":112820114,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":583,"handler":355,"initial_replay_lookup":10,"port_store_accept":1734,"provider_commit":3042,"service_admission":2,"unattributed":0,"wire_response":19},"outcome":"accepted","request_id":"5b89c61ae29e99d503cc249cbea83b6d","runtime_wall_ms":5745,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5135,"start_ms":5135},"durable_reconciliation":{"duration_ms":582,"end_ms":5718,"start_ms":5135},"handler":{"duration_ms":5745,"end_ms":5745,"start_ms":0},"initial_replay_lookup":{"duration_ms":10,"end_ms":359,"start_ms":349},"port_store_accept":{"duration_ms":1734,"end_ms":5095,"start_ms":3361},"provider_commit":{"duration_ms":4776,"end_ms":5135,"start_ms":359},"service_admission":{"duration_ms":2,"end_ms":293,"start_ms":291},"total":{"duration_ms":5745,"end_ms":5745,"start_ms":0},"wire_response":{"duration_ms":19,"end_ms":5745,"start_ms":5726}},"timings_ms":{"close":0,"durable_reconciliation":582,"handler":5745,"initial_replay_lookup":10,"port_store_accept":1734,"provider_commit":4776,"service_admission":2,"total":5745,"wire_response":19}}
+{"covers":{"calls":6001,"elapsed_ns":120361001,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":786,"handler":282,"initial_replay_lookup":6,"port_store_accept":1535,"provider_commit":2541,"unattributed":0,"wire_response":26},"outcome":"accepted","request_id":"b988a3ae613ceb54bfd68f097951f2e3","runtime_wall_ms":5176,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":4353,"start_ms":4353},"durable_reconciliation":{"duration_ms":786,"end_ms":5139,"start_ms":4353},"handler":{"duration_ms":5176,"end_ms":5176,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":277,"start_ms":271},"port_store_accept":{"duration_ms":1534,"end_ms":4312,"start_ms":2778},"provider_commit":{"duration_ms":4075,"end_ms":4353,"start_ms":277},"service_admission":{"duration_ms":0,"end_ms":242,"start_ms":242},"total":{"duration_ms":5176,"end_ms":5176,"start_ms":0},"wire_response":{"duration_ms":26,"end_ms":5176,"start_ms":5150}},"timings_ms":{"close":0,"durable_reconciliation":786,"handler":5176,"initial_replay_lookup":6,"port_store_accept":1534,"provider_commit":4075,"service_admission":0,"total":5176,"wire_response":26}}
+{"covers":{"calls":6001,"elapsed_ns":121298300,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":424,"handler":332,"initial_replay_lookup":15,"port_store_accept":2186,"provider_commit":2663,"service_admission":16,"unattributed":0,"wire_response":22},"outcome":"accepted","request_id":"38424385eeff2a45554bd4f7354edc4e","runtime_wall_ms":5658,"sizes_bytes":{"request_body":207558,"request_json":207558,"response_body":1216486},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5202,"start_ms":5202},"durable_reconciliation":{"duration_ms":424,"end_ms":5625,"start_ms":5202},"handler":{"duration_ms":5658,"end_ms":5658,"start_ms":0},"initial_replay_lookup":{"duration_ms":15,"end_ms":353,"start_ms":338},"port_store_accept":{"duration_ms":2186,"end_ms":5145,"start_ms":2959},"provider_commit":{"duration_ms":4849,"end_ms":5202,"start_ms":353},"service_admission":{"duration_ms":17,"end_ms":302,"start_ms":285},"total":{"duration_ms":5658,"end_ms":5658,"start_ms":0},"wire_response":{"duration_ms":22,"end_ms":5658,"start_ms":5636}},"timings_ms":{"close":0,"durable_reconciliation":424,"handler":5658,"initial_replay_lookup":15,"port_store_accept":2186,"provider_commit":4849,"service_admission":17,"total":5658,"wire_response":22}}
+{"covers":{"calls":6001,"elapsed_ns":120418487,"value_equal_calls":70415},"event":"timeline_commit_timing","exclusive_timings_ms":{"durable_reconciliation":797,"handler":365,"initial_replay_lookup":7,"port_store_accept":2159,"provider_commit":3239,"unattributed":0,"wire_response":21},"outcome":"accepted","request_id":"3e2a29b0dacef2f67922424426ba193a","runtime_wall_ms":6588,"sizes_bytes":{"request_body":207552,"request_json":207552,"response_body":1216462},"stage_spans_ms":{"close":{"duration_ms":0,"end_ms":5761,"start_ms":5761},"durable_reconciliation":{"duration_ms":797,"end_ms":6558,"start_ms":5761},"handler":{"duration_ms":6588,"end_ms":6588,"start_ms":0},"initial_replay_lookup":{"duration_ms":6,"end_ms":363,"start_ms":356},"port_store_accept":{"duration_ms":2159,"end_ms":5664,"start_ms":3505},"provider_commit":{"duration_ms":5398,"end_ms":5761,"start_ms":363},"service_admission":{"duration_ms":0,"end_ms":322,"start_ms":322},"total":{"duration_ms":6588,"end_ms":6588,"start_ms":0},"wire_response":{"duration_ms":21,"end_ms":6588,"start_ms":6567}},"timings_ms":{"close":0,"durable_reconciliation":797,"handler":6588,"initial_replay_lookup":6,"port_store_accept":2159,"provider_commit":5398,"service_admission":0,"total":6588,"wire_response":21}}
+
+RECEIPT /home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-1/daemon-startup.stderr
+SV4P_SCRIPT_EXIT 0

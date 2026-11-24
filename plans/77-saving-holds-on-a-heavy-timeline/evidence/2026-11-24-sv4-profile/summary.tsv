@@ -1,0 +1,13 @@
+scenario	repetition	n_posts	release_to_post_ms	post_to_200_ms	200_to_saved_ms	refusals	n_drags	failed_drags	release_to_saved_ms	post_to_saved_ms	mode	notes	runtime_wall_ms	exclusive_sum_ms	exclusive_sum_over_post_to_200_pct
+W1	1	1	1669.4000000001397	6336.800000000047	582.0999999998603	0	1	0	8588.300000000047	6918.899999999907	sequential		6333.0	6333.0	99.94003282413763
+W2	1	1	1375.8999999999069	5815	336.80000000004657	0	1	0	7527.699999999953	6151.800000000047	sequential		5806.0	5806.0	99.84522785898538
+W3	1	1	1218.5999999998603	6020.5	1003.2000000001863	0	1	0	8242.300000000047	7023.700000000186	sequential		6017.0	6017.0	99.94186529358026
+cold	1	1	2179.100000000093	12806.399999999907	722.1000000000931	0	1	0	15707.600000000093	13528.5	sequential		12792.0	12792.0	99.88755622188978
+W1	all	1	1669.4000000001397	6336.800000000047	582.0999999998603	0	1	0	8588.300000000047	6918.899999999907	sequential	max_release_to_saved_ms=8588.300000000047;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	6333.0	6333.0	99.94003282413763
+W2	all	1	1375.8999999999069	5815	336.80000000004657	0	1	0	7527.699999999953	6151.800000000047	sequential	max_release_to_saved_ms=7527.699999999953;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	5806.0	5806.0	99.84522785898538
+W3	all	1	1218.5999999998603	6020.5	1003.2000000001863	0	1	0	8242.300000000047	7023.700000000186	sequential	max_release_to_saved_ms=8242.300000000047;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	6017.0	6017.0	99.94186529358026
+cold	all	1	2179.100000000093	12806.399999999907	722.1000000000931	0	1	0	15707.600000000093	13528.5	sequential	max_release_to_saved_ms=15707.600000000093;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)	12792.0	12792.0	99.88755622188978
+B5	1	5	0				5	0	28387.90000000014	33338.200000000186	burst	n_edits_made=5;n_posts=5;refusals=0;last_release_to_saved_ms=28387.90000000014;first_release_to_saved_ms=33338.200000000186;final_state_matches=true;expected_start_s=210.010439797562;actual_start_s=210.0333;accepted_by_editor=5;no_post_after_settle=true	27367.0	27367.0	
+B10	1	10	0				10	0	60801.40000000014	76552	burst	n_edits_made=10;n_posts=10;refusals=0;last_release_to_saved_ms=60801.40000000014;first_release_to_saved_ms=76552;final_state_matches=null;expected_start_s=230.8457794718317;actual_start_s=230.9;accepted_by_editor=10;no_post_after_settle=true	56378.0	56378.0	
+S0	1	0				0						page_ready_ms=9869.487060546875;verified_head_status=200			
+pack-host	1											pack_host_status=pack host running;claim_lines=0;log_growth_bytes=2838;pgrep_pack_host_count=0			

@@ -1,0 +1,7 @@
+{
+  "work_copy": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1",
+  "logs_directory": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs",
+  "removed_known_files": [],
+  "reset_at_utc": "2026-11-24T02:40:30.874976+00:00",
+  "scope": "only four known timing sink files inside the disposable work copy"
+}

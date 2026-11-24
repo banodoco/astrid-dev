@@ -1,0 +1,158 @@
+{
+  "sink_status": "captured",
+  "sink_files": [
+    {
+      "file": "timing-sink/commit-stage-timings.jsonl",
+      "source": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+      "bytes": 24103,
+      "lines": 19,
+      "sha256": "115b165897462ba714a3c5544627d3b9da46ecf0414c878b91d586ea1c5fdd03"
+    }
+  ],
+  "posts": 19,
+  "lines": 19,
+  "malformed_lines": 0,
+  "lines_matched": 19,
+  "mismatch": false,
+  "per_drag": {
+    "cold/0": {
+      "runtime_wall_ms": 12792.0,
+      "exclusive_sum_ms": 12792.0,
+      "exclusive_sum_over_post_to_200_pct": 99.88755622188978,
+      "covers": [
+        {
+          "calls": 8664,
+          "elapsed_ns": 210673710,
+          "value_equal_calls": 101599
+        }
+      ]
+    },
+    "W1/0": {
+      "runtime_wall_ms": 6333.0,
+      "exclusive_sum_ms": 6333.0,
+      "exclusive_sum_over_post_to_200_pct": 99.94003282413763,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 138278913,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "W2/0": {
+      "runtime_wall_ms": 5806.0,
+      "exclusive_sum_ms": 5806.0,
+      "exclusive_sum_over_post_to_200_pct": 99.84522785898538,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 120063054,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "W3/0": {
+      "runtime_wall_ms": 6017.0,
+      "exclusive_sum_ms": 6017.0,
+      "exclusive_sum_over_post_to_200_pct": 99.94186529358026,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 264679945,
+          "value_equal_calls": 70415
+        }
+      ]
+    }
+  },
+  "burst": {
+    "B5": {
+      "runtime_wall_ms": 27367.0,
+      "exclusive_sum_ms": 27367.0,
+      "exclusive_sum_over_post_to_200_pct": null,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 102524526,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 108647435,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 102123055,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 107191003,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 113798797,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "B10": {
+      "runtime_wall_ms": 56378.0,
+      "exclusive_sum_ms": 56378.0,
+      "exclusive_sum_over_post_to_200_pct": null,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 116334679,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 115932540,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 122701596,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 109832274,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 118367931,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 106466391,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 112820114,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 120361001,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 121298300,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 120418487,
+          "value_equal_calls": 70415
+        }
+      ]
+    }
+  }
+}

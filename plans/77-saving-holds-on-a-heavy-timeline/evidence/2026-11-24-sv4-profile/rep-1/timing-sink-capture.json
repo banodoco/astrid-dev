@@ -1,0 +1,24 @@
+{
+  "status": "captured",
+  "runtime_work_data": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1",
+  "idle_safe_stop": true,
+  "captured_at_utc": "2026-11-24T02:46:00.744271+00:00",
+  "source_base": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+  "files": [
+    {
+      "file": "timing-sink/commit-stage-timings.jsonl",
+      "source": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+      "bytes": 24103,
+      "lines": 19,
+      "sha256": "115b165897462ba714a3c5544627d3b9da46ecf0414c878b91d586ea1c5fdd03"
+    }
+  ],
+  "reset_receipt": {
+    "work_copy": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1",
+    "logs_directory": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs",
+    "removed_known_files": [],
+    "reset_at_utc": "2026-11-24T02:40:30.874976+00:00",
+    "scope": "only four known timing sink files inside the disposable work copy"
+  },
+  "error": null
+}
