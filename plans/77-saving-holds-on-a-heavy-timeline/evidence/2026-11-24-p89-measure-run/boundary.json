@@ -1,0 +1,10 @@
+{
+  "signed_backup_path": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/bundles/large/backup",
+  "boundaries_unchanged": true,
+  "differing": "",
+  "one_root_lock": {
+    "opened_for_write_by_exec": true,
+    "size_and_mtime_before": "0 1795497463",
+    "size_and_mtime_after": "0 1795527983"
+  }
+}
