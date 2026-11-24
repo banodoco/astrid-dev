@@ -13,3 +13,5 @@ no-longer-failing	integration shard 2 _ 4	tests/editing_conformance/test_native_
 no-longer-failing	integration shard 3 _ 4	tests/integrations/test_command_count_capture.py::test_fresh_process_command_counts
 newly-failing	integration shard 1 _ 4	tests/core/execution/test_generic_host_child_bridge_d18.py::test_host_bridge_outer_send_diagnostic_preserves_revoke_close[False]
 newly-failing	integration shard 3 _ 4	tests/editing_conformance/test_native_word_anchor.py::test_provider_resolves_exact_first_use_pin_and_refuses_unavailable_source[missing-version]
+newly-failing	darwin native	tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream
+newly-failing	darwin native	tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke
