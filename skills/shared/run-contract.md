@@ -120,6 +120,8 @@ Carry proof forward only when its relevant inputs and product/dependency/generat
 
 **Never edit, skip, loosen, xfail or delete a test, a fixture, an oracle line or a check to get a pass,** in the file or on the command line. If a card would make one untrue and does not list it, the worker stops and reports the exact lines. The manager rules in the same turn and records the before and after in the card's row, and only then may the line change. A pinned test that pins a defect goes to the review or the contract's author, not to the worker.
 
+**Exception, allowed and listed in the PR:** a mechanical test-setup change that keeps every assertion's meaning byte-identical: symbolic SHAs for literals, a permissions helper, setup writes through a shared helper (Release 15 [ruling 6](../../releases/15/run.md#standing-rulings-plans-87-and-89), the forging-step helper). Only a change to an assertion's meaning is BLOCKED; it goes to the orchestrator, who may approve under the Lead's delegation.
+
 ### When a test run is load-bearing
 
 Run tests at the moments where the result changes a decision, and at no others. A run is load-bearing when someone is about to rely on it:
