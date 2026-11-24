@@ -21,6 +21,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 ## Run decisions
 
+- 24 Nov 2026 (Lead): adapt the existing element-publication fake only if it enforces the real revision/publication mismatch error, preserves existing assertions, and adds one mismatch refusal test.
+
 - 2026-11-23: Start from the existing `release/15/plan-88` at `0615e4e9`, as the Run start directs; TE-2 and TE-3 start from TE-1's cherry-pick and merge forward without rewriting history.
 - 2026-11-23: TE-1's donor candidate `93c02352e` also touches timing validation, omitted from the card's path list; host asked to confirm scope. Its donor SDK test fails on a session fixture missing `identity` on the current base; host asked for a permitted repair. Candidate with publisher coverage: `186c46904d` (18 passed, 1 failed; no live proof).
 - 2026-11-23: Independent code review found no authenticated pre-edit shot word identity in the current commit path; sent the host the required TE-3 refusal-only gate. Refusal proof remains in progress.
