@@ -39,7 +39,7 @@ Cold first save (not in the warm figures): gesture-end to post-sent 1.50 s, post
 ## Not established
 
 - Anything inside the two unmarked stretches (above).
-- One repetition: the 0.9 s of the pre-POST path between runs can vary by 0.3 s (the earlier runs' medians 1.25 to 1.30 s against 1.18 s here).
+- One repetition: the gesture-end to POST-sent median was 1.25 to 1.30 s in the earlier runs and is 1.18 s here; with one run the stage medians carry that much spread.
 - Whether the lower B10 is real.
 
 `analyze-marks.py` produces `results-marks.txt` from `rep-1/browser-sv3-measure.json` (which holds the raw `astrid.save.*` entries after each of the 19 saves).
