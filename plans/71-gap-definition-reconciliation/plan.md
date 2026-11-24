@@ -6,11 +6,11 @@
 
 **Status:** active
 
-**Owner:** Plan 71 whole-project manager (ChatGPT, owner-authorized 20 November 2026)
+**Owner:** Plan 71 completion-run manager (one whole-project manager session, named in the Run start in inputs.md; owner-authorized 24 November 2026)
 
-**Estimate:** Provisionally 10–16 engineering days for Phases 1–5, subject to the evidence census and scope review; Phases 6–7 are deferred and unestimated.
+**Estimate:** About 1–2 engineering days remain for the completion run (originally 10–16 for Phases 1–5); Phases 6–7 are deferred and unestimated.
 
-**Waiting on:** independent planning critique and the agreed RS1/RS2/R review gates; owner's separate acceptance of the calibrated definition (GD-5) and later migration (GD-9); coordination with Plan 53 and Goals-schema changes. Phases 6–7 remain deferred.
+**Waiting on:** nothing to start: the completion run's cards are in [tasks.md](tasks.md#completion-run-owner-go-24-november-2026). Then the final review R, the owner's project-wide sense check and the owner's go to merge the project branch into `main`. Phases 6–7 remain deferred.
 
 **Run route:** astrid-dev-only
 

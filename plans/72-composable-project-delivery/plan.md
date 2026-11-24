@@ -4,13 +4,15 @@
 
 **Goal:** An agent can trace Astrid's existing project-delivery records through one validated relationship model and reuse them for a second read-only path, without duplicating sources or changing current outputs.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 72 completion-run manager (one whole-project manager session, named in the Run start in inputs.md; owner-authorized 24 November 2026)
 
-**Estimate:** About 7–10 engineering days, provisional until an independent architecture critique and current-source baseline.
+**Estimate:** About 2–3 engineering days remain for the completion run; the candidate code exists and passes on current `main`.
 
-**Waiting on:** **Release 16** (the owner moved it from Release 15 on 24 November 2026; its branch becomes `release/16/plan-72`); then supervisor-dispatched supplementary design critique findings; formal RS1 reviewer binding; accepted Release 16 Lead and integration custody.
+**Waiting on:** nothing to start: the completion run's cards are in [tasks.md](tasks.md#completion-run-owner-go-24-november-2026). Then the final review R, the owner's project-wide sense check and the owner's go to merge the project branch into `main`. On 24 November the owner moved this plan from Release 16 to the astrid-dev-only route ([D6](inputs.md#owner-decisions)).
+
+**Run route:** astrid-dev-only
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md), [Plan workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above own the catalog facts; priority stays in [priority.md](../priority.md). [Inputs](inputs.md) · [Tasks](tasks.md).
 

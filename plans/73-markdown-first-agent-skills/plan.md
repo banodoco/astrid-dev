@@ -6,11 +6,11 @@
 
 **Status:** active
 
-**Owner:** ChatGPT Manager — Plan 73
+**Owner:** Plan 73 completion-run manager (one whole-project manager session, named in the Run start in inputs.md; owner-authorized 24 November 2026)
 
-**Estimate:** 8–12 engineering days, provisional until the reference-packaging probe and current baseline.
+**Estimate:** About 4–6 engineering days remain for the completion run (originally 8–12); builder, installer and migrated documents exist and pass on current `main`.
 
-**Waiting on:** First package-contract review RS1 before migration, then final independent review R and required CI before main integration.
+**Waiting on:** nothing to start: the completion run's cards are in [tasks.md](tasks.md#completion-run-owner-go-24-november-2026). Then the final review R, the owner's project-wide sense check, and the owner's go for the cutover time and the merge into `main`.
 
 **Run route:** astrid-dev-only
 
