@@ -1,7 +1,7 @@
 lane	cluster	outcome	job	id
-ci	C416	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_capture_method_imports_and_runs_without_renderer_or_runtime
-ci	C90	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_projection_is_detached_json_deterministic_without_io[False]
-ci	C90	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_projection_is_detached_json_deterministic_without_io[True]
+ci	C420	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_capture_method_imports_and_runs_without_renderer_or_runtime
+ci	C91	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_projection_is_detached_json_deterministic_without_io[False]
+ci	C91	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/sdk/test_timeline_capture_projection.py::test_projection_is_detached_json_deterministic_without_io[True]
 lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[child]
 lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[duplicate]
 lanes	C13	ERROR	integration shard 4 _ 4	tests/sdk/test_timeline_capture_projection.py::test_real_candidate_matches_sdk_opener_exactly[new_shot]

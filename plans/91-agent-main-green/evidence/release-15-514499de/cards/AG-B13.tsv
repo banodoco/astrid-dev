@@ -1,9 +1,9 @@
 lane	cluster	outcome	job	id
-ci	C179	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_reset_removed_pinokio_root_releases_pointer_for_terminal_install
-ci	C180	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_second_pinokio_root_is_allowed_after_first_root_is_deleted
-ci	C181	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_pinokio_install_saves_explicit_skill_policy
-ci	C182	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_root_marker_retains_pinokio_manager_for_update_and_uninstall[mode1]
-ci	C183	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_pinokio_doctor_without_root_follows_per_user_pointer
+ci	C183	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_reset_removed_pinokio_root_releases_pointer_for_terminal_install
+ci	C184	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_second_pinokio_root_is_allowed_after_first_root_is_deleted
+ci	C185	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_pinokio_install_saves_explicit_skill_policy
+ci	C186	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_root_marker_retains_pinokio_manager_for_update_and_uninstall[mode1]
+ci	C187	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_pinokio_lifecycle.py::test_pinokio_doctor_without_root_follows_per_user_pointer
 lanes	C42	FAILED	integration shard 4 _ 4	tests/test_installer_pinokio_integration.py::test_pinokio_session_binds_real_runtime_to_pending_launch_intent[app]
 lanes	C42	FAILED	integration shard 4 _ 4	tests/test_installer_pinokio_integration.py::test_pinokio_session_binds_real_runtime_to_pending_launch_intent[migration]
 lanes	C6	FAILED	integration shard 4 _ 4	tests/test_installer_pinokio_stopped_update.py::test_canonical_stop_then_fresh_update_cli_uses_retained_c1_authority[add-local-two-stop-build]

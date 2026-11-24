@@ -69,7 +69,7 @@ ci	C3	FAILED	unit shard 8 _ 8 (ubuntu-latest)	tests/test_local_install.py::test_
 ci	C3	FAILED	unit shard 8 _ 8 (ubuntu-latest)	tests/test_local_install.py::test_update_rolls_back_each_failure_boundary[stop]
 ci	C3	FAILED	unit shard 8 _ 8 (ubuntu-latest)	tests/test_local_install.py::test_update_rolls_back_each_failure_boundary[upgrade]
 ci	C3	FAILED	unit shard 8 _ 8 (ubuntu-latest)	tests/test_local_install.py::test_update_rolls_back_each_failure_boundary[verify-new]
-ci	C60	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_release0_rollback.py::test_pre_stop_interruption_recovers_and_starts_authentic_release0_runtime
-ci	C60	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_release0_rollback.py::test_rollback_selects_and_starts_authentic_release0_runtime
-ci	C62	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_shim.py::test_verified_lifecycle_records_shim_and_prints_final_hint[darwin-update]
-ci	C62	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_shim.py::test_verified_lifecycle_records_shim_and_prints_final_hint[linux-update]
+ci	C61	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_release0_rollback.py::test_pre_stop_interruption_recovers_and_starts_authentic_release0_runtime
+ci	C61	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_release0_rollback.py::test_rollback_selects_and_starts_authentic_release0_runtime
+ci	C63	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_shim.py::test_verified_lifecycle_records_shim_and_prints_final_hint[darwin-update]
+ci	C63	FAILED	unit shard 7 _ 8 (ubuntu-latest)	tests/test_installer_shim.py::test_verified_lifecycle_records_shim_and_prints_final_hint[linux-update]
