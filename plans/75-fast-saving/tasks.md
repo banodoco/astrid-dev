@@ -98,6 +98,7 @@ Set out by the Release 15 Lead on 23 November 2026, after [Plan 89](../89-heavy-
 | Card | Route | Days | Depends on | Why this route |
 | --- | --- | ---: | --- | --- |
 | Plan 63 CC-7 the long-lived corpus | N | 3 | — | mechanical generator and manifest |
+| Heavy fixture at the owner's profile size (a 2.6 MB document) | N | 2 | CC-7 | added by the Release 15 Lead's decision r15-lead-p88-0007 (astrid-dev#1849): Release 15's `scripts/save-loop` fixture is a documented floor of 850 bytes per requested clip, so 616 clips make about 0.58 MB against the owner's profiled 2.6 MB (`profile_document_bytes_met: false`); parity needs heavier clips (transcripts or words, like the real timeline) while the Qualifier's numbers stay comparable with Plan 89's 6.23 s |
 | Plan 63 CC-15 one record shape per effect kind | N | 1.5 | — | narrowing accepted shapes, tests say what is right |
 | Plan 63 CC-13 every edit kind through the real route, one harness | X | 3.5 | CC-7 | one harness across Agent and Runtime |
 | Plan 63 CC-14 close what CC-13 shows red | N | 2 | CC-13 | bounded fixes against named failures |
