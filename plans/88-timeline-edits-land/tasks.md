@@ -89,6 +89,10 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 - 2026-11-24: App fixture option merged as `cf18f89e`; the default retains repeated-word declarations and the opt-in omits exactly two while retaining clips and transcript. Focused JS checks and embedded Runtime builds passed, including the 23-clip variant. Owned-stack ripple and reflow are still pending.
 - 2026-11-24: Standard-fixture save stopped after 360 logged accepted clips with an unknown next-batch outcome; evidence is preserved for Plans 77/89 (`run/standard-fixture/EVIDENCE.md`). A different timeline's public read remained healthy; no render or completed standard fixture is claimed.
 
+
+- 2026-11-24: Agent CI compatibility repair merged as `50125423`; 14 base-passing regressions now pass, independent focused checks passed 72 tests and Ruff was 2007/2008. All remaining named-file failures and errors match base by ID; the integration lane was run explicitly. Hosted CI is owned by the host.
+- 2026-11-24: App narration-extent fixture repair merged as `0c6bda56` after the pre-ripple control reproduced the same occurrence shrink independently of TE-3. Independent proof passed 25 JS tests and three disposable embedded Runtime checks. The fresh owned-stack 23-clip ripple published as `txn-79cadb5cbf9f45e48356f729f173955d`; its verified read-back matched preview and receipt, with seven later clips 15 frames earlier and 16 unchanged. Public reflow dry-run was accepted with all 23 clip spans unchanged, no declaration rewrites, one separately recorded occurrence correction (191267 to 700 ms), and the 100 ms historical overrun preserved. Agent service `97d1258d`, client SDK overlay `50125423`, App builder `0c6bda56`, Runtime `24e2c929`; this is not unmodified installed-launcher proof. Render remains open.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
@@ -131,4 +135,6 @@ One line per decision taken by the orchestrator during the run.
 
 - 24 Nov 2026 (host): Preserve the unresolved standard-save timeline and outbox for Plans 77/89; use a fresh film-shaped fixture for the remaining read-back proof and do not restart the owned Runtime to recover that batch.
 - 24 Nov 2026 (host): The repeated-word reflow refusal proves fail-closed behavior; an opt-in fixture without those declarations is required for the separate accepted public no-clip-movement reflow proof.
+
+- 24 Nov 2026 (host): The pre-ripple control reproduced the same reflow occurrence shrink, so fix the generated narration/transcript extent and report the existing sizing behavior to Plans 18/77; do not change TE-3 for it.
 - 24 Nov 2026 (Lead): landing is decoupled from Plan 87's renders (its RN-1..4 are about 6 working days away). Plan 88 lands on the read-back proofs on the real stack (swap, ripple, reflow moves no clip, overlay conversion or its safe refusal, and the TE-4 rows that need no render) plus the gate CI on the final head with a by-id comparison. TE-4's render rows, and every render clause in TE-1, TE-3 and TE-5, become a release-freeze check run once Plan 87's core is on `release/15/main`; the landing does not wait for them. A render obtained cheaply by overlaying Plan 87's branches earlier is extra evidence, not the gate.
