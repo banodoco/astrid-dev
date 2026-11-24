@@ -275,16 +275,16 @@ The packet and dispatch rules from Plans 56, 87 and 89 are in the [Lead's packet
 
 The orchestrator writes the packets after its startup baseline, lists them here and answers the manager's startup STATUS with a DECISION. Candidates from [tasks](../../plans/82-reuse-across-commands/tasks.md): RA-6 (X), RA-1b (X), RA-0b (X), RA-2 split in up to three (S). RA-0a and R stay in the lane.
 
-Cap: at most **four** packets in Running or Review at once. P82-01 goes alone first, then P82-02 after its early STATUS shows a session can push, open a draft PR and comment. Cache packets emit counters through `cache_event` (astrid-agent #617, merged on `release/15/plan-82` at `69c34457`).
+Cap: at most **four** packets in Running or Review at once. P82-01 goes alone first; P82-02, P82-03 (design STATUS only) and P82-06 follow once its early STATUS shows a session can push, open a draft PR and comment. **Staged landing (Release 15 Lead, 24 November 2026):** stage 1 is RA-6, RA-1b and RA-0b (none depends on RA-2); stage 2 is RA-2a/b/c and R, in Release 15 only if it makes the freeze, else Release 16. Cache packets emit counters through `cache_event` (astrid-agent #617, merged on `release/15/plan-82` at `69c34457`).
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R15-P82-01](packets/R15-P82-01.md) | RA-6 (X): receipt and companion checked against the admitted bytes | Ready (first, alone) | — | astrid-agent `p82/RA-6`; design STATUS first; high-judgment review (integrity). Host-side check (worker, before `_approve_live`; Lead ruling 24 November 2026): it also stops a direct POST, proved by a test; a Runtime validator seam is Release 16 |
 | [R15-P82-02](packets/R15-P82-02.md) | RA-1b (X): lazy imports | Ready (second, after P82-01's early STATUS) | — | astrid-agent `p82/RA-1b`; the lane's import profile is its first STATUS |
-| [R15-P82-03](packets/R15-P82-03.md) | RA-2 part 1 (S): prepared-template contract and key | Blocked on P82-01 | — | astrid-agent and VibeComfy `p82/RA-2a`; design STATUS first; high-judgment review |
+| [R15-P82-03](packets/R15-P82-03.md) | RA-2 part 1 (S): prepared-template contract and key | Ready for the design STATUS only (after P82-01's early STATUS); code Blocked on P82-01 merged | — | astrid-agent and VibeComfy `p82/RA-2a`; design STATUS first; high-judgment review; the Lead allowed the design alongside RA-6 |
 | [R15-P82-04](packets/R15-P82-04.md) | RA-2 part 2 (S): approval compile split | Blocked on P82-03 | — | VibeComfy and astrid-agent `p82/RA-2b`; same functions as P82-03 (`workflow_bundle.py`, `local_server_engine.py`), so after it; high-judgment review |
 | [R15-P82-05](packets/R15-P82-05.md) | RA-2 part 3 (S): the 53-template differential | Blocked on P82-03 and P82-04 | — | VibeComfy `p82/RA-2c`; the four mutation checks are the proof |
-| [R15-P82-06](packets/R15-P82-06.md) | RA-0b part 1 (X): install stamp, read-only installed files | Blocked on P82-01 and RA-0a | — | astrid-agent `p82/RA-0b-stamp`; installer only |
+| [R15-P82-06](packets/R15-P82-06.md) | RA-0b part 1 (X): install stamp, read-only installed files | Ready (after P82-01's early STATUS; RA-0a is recorded) | — | astrid-agent `p82/RA-0b-stamp`; installer only, no conflict with P82-01; stage 1 of the staged landing |
 | [R15-P82-07](packets/R15-P82-07.md) | RA-0b part 2 (X): shipped discovery and registry caches | Blocked on P82-06 and RN-4 | — | astrid-agent `p82/RA-0b-cache`; PB-7c's two refusals against a warm cache first; high-judgment review |
 
 Stays in the orchestrator's lane: RA-0a (the measurements, including the real import profile P82-02 starts from), every installed timing, and R (the final high-judgment review).
