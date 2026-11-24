@@ -192,6 +192,8 @@ On 23 November 2026, in the Release 15 Lead's session (`session_011EzfW1gtAhRQwk
 2. The orchestrator runs reviews itself on the run contract's routes (high-judgment for S cards, integrity or contract changes, or code already judged unsound; one final round otherwise). It never commissions a packet to review.
 3. The release-wide rulings in [the lane orchestrator workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md) bind the orchestrators: free CI slots, the by-id comparison with each gate request, pin witnesses, fixtures shrink, cross-lane findings go lane to lane.
 4. Cap: at most **four** packets in Running or Review per plan; the orchestrator may lower it. The first packet goes alone, until its early STATUS shows a session can push, open a draft PR and comment.
+5. Packet sessions run in a normal ChatGPT Chat, not Work (owner, 24 November 2026); the Route sets the mode (N High, X Extra High, S Pro). One writer per branch: replace a stopped session only after its branch has been still for 30 minutes.
+6. A test's forging step (direct writes that craft a corrupt or legacy state in setup) may change to a shared helper when a new integrity rule refuses it, if every assertion line stays byte-identical, the helper restores the rule in the same transaction and a test proves it is back (Release 15 Lead, 24 November 2026, for Plan 89's SV-L5).
 
 ### Mailboxes
 
