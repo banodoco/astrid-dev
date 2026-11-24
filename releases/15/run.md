@@ -219,9 +219,9 @@ The orchestrator writes the packets at its next break point and lists them here.
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R15-P89-01](packets/R15-P89-01.md) | SV-L2 (N): editor timing marks | Ready (first, alone) | — | astrid-app `p89/SV-L2` → `release/15/plan-89`; the lane proves the marks on a real save |
-| [R15-P89-02](packets/R15-P89-02.md) | SV-L5 (X): accepted history immutable | Ready (second, after P89-01's early STATUS) | — | astrid-runtime `p89/SV-L5`; integrity change, high-judgment review |
-| [R15-P89-03](packets/R15-P89-03.md) | SV-L8 (N): attribute the 1.7 s of schema validation | Ready (third) | — | Investigation note only; an implementation packet follows on the orchestrator's DECISION |
+| R15-P89-01 (withdrawn) | SV-L2 (N): editor timing marks | Done as astrid-app [#377](https://github.com/banodoco/astrid-app/pull/377), in the orchestrator's lane | — | Head `7705ebd4`; the lane runs the focused tests and proves the four marks on an installed drag save |
+| [R15-P89-02](packets/R15-P89-02.md) | SV-L5 (X): accepted history immutable | Ready (first, alone) | — | astrid-runtime `p89/SV-L5`; integrity change, high-judgment review |
+| [R15-P89-03](packets/R15-P89-03.md) | SV-L8 (N): attribute the 1.7 s of schema validation | Ready (second, after P89-02's early STATUS) | — | Investigation note only; an implementation packet follows on the orchestrator's DECISION |
 | [R15-P89-04](packets/R15-P89-04.md) | SV-L3 (N): history-growth counters | Blocked on SV-L6 (Runtime draft #113 merging) | — | Priority after SV-4; evidence: [Plan 88's history-growth lines](../../plans/89-heavy-saves-in-seconds/evidence/2026-11-24-p88-history-growth/README.md) |
 
 Stays in the orchestrator's lane: SV-L1 (merged), SV-L4 (burst test, a measurement), SV-L6 (Runtime covers index, X; the Codex manager's draft #113), SV-L7 (burst coalescing: sized at 4 to 6 App days, awaiting the Release 15 Lead's go), and every installed measurement.
