@@ -4,13 +4,13 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted in part.
+**Scope decision:** Accepted — in part, by the owner in this plan's session (https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV):
 - **The split.** On 23 November 2026 the owner asked for the Agent's share to become its own project ([Plan 91](../91-agent-main-green/plan.md), its D2).
 - **The release and base.** On 24 November, in this plan's session (https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV), she set both: "This should be for release 16, but we should build on top of release 15, obviously. And we should be mindful about rebasing that" ([D11](#owner-decisions)). The same day she moved Plan 91 to Release 16.
 - **The Lead.** Also on 24 November, she named this session Lead for Plans 91 and 39 until a Release 16 Lead is named.
 - **Still open.** She asked whether this should be one project or two. The recommendation, two, is [D13](#owner-decisions).
 
-**Prior art:**
+**Prior art:** the [Release 14 record](./evidence/release-14-record/plan.md) and its [audit](./evidence/release-15-measure/audit.md):
 - **The Release 14 record.** Its plan, tasks, inputs and handover are in [evidence/release-14-record](evidence/release-14-record/plan.md), unchanged except their relative links.
 - **The audit.** [audit.md](evidence/release-15-measure/audit.md) checks every Runtime and App row against the code on `release/15/main`. Of 56 rows, 11 are done, 39 open, 2 stale and 4 unclear.
 - **What the record gets wrong.** K2 and K3 are ticked, but no comparator exists in either repository. The App has no per-test results. The Runtime's quarantine cap is 20, against the plan's 10. The Release 14 plan-branch commits were never merged.
@@ -53,7 +53,7 @@ The comparison runs in the orchestrator's lane through one gate tool, with no ga
 - **Vendoring the Runtime's OpenAPI** into the App's `runtime.lock.json`, which Plan 77 is changing.
 - **Porting `release/14/plan-39`'s ceiling scripts:** they were never merged.
 
-**Challenge:** Reviewed. An independent high-judgment critic checked the plan and tasks against the code ([critique.md](evidence/critique.md)), and two ambiguity passes checked every row. All of the critique's findings were accepted, except one:
+**Challenge:** Reviewed — an independent high-judgment critic checked the plan and tasks against the code ([critique.md](./evidence/critique.md)), and two ambiguity passes checked every row. All of the critique's findings were accepted, except one:
 - **1.1, deleted tests:** the baseline now stores the passing inventory as well as the failures.
 - **1.10, the 19 quarantined Runtime IDs:** GM-Q owns them, and the prune rules apply.
 - **1.2, App pull requests:** the workflows they start are listed, and Direct Journey is a proof route.
