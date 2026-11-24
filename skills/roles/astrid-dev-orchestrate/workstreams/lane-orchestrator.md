@@ -30,3 +30,5 @@ Written from Release 15's lanes (23 November 2026); the [process ledger](../../.
 - **Coordinate overlaps directly.** When the `Run start` line names another lane touching the same code or fixture, agree the order with that session yourself; bring the Lead only a conflict you cannot settle.
 - **Keep the container awake.** An idle container is reclaimed between check-ins and every process in it dies: keep a background `sleep` loop of about 110 minutes running and restart it at each check-in.
 - **Merge your own records and plan branch.** `tasks.md`-only progress PRs, evidence PRs of your own plan, and merges into your own `release/<N>/plan-<PP>` branch are yours (and your manager's) to merge on green; only a merge into `release/<N>/main` waits for the Lead's written gate confirmation.
+- **Never disable a scheduled task that is not yours,** and re-check your own hourly wake after any change to the schedule: disabling an old task silently ended one orchestrator's wake.
+- **Never cancel `release/*/main` push runs by hand to free a CI slot:** it removes the gate references the comparisons use. Wait, or ask the Lead to raise the slot count.
