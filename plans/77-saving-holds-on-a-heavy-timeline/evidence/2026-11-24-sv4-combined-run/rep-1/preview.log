@@ -1,0 +1,8 @@
+workspace.v1 runtime healthy at http://127.0.0.1:37583; Astrid App will use preview output /home/user/codex-run/wt/astrid-app-p77-r7-firstcut-requalification-install/dist on port 2400
+Runtime discovery proxy listening on 127.0.0.1:17500
+
+> vite_react_shadcn_ts@0.0.0 preview
+> vite preview --config config/vite/vite.config.ts --host 127.0.0.1 --strictPort --outDir /home/user/codex-run/wt/astrid-app-p77-r7-firstcut-requalification-install/dist
+
+  ➜  Local:   http://127.0.0.1:2400/
+Local App: http://127.0.0.1:2400/tools/video-editor

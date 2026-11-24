@@ -1,0 +1,14 @@
+{
+  "capability_digest": "",
+  "lock_digest": "",
+  "profile": "astrid",
+  "protocol_version": "workspace.v1",
+  "runtime_checkout": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/source/eb4e8644e3549c88d5d836cd5738ca75e76d311a",
+  "runtime_command": [],
+  "runtime_environment": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py",
+  "schema_version": "workspace-schema-v1",
+  "service_declaration": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/rep-3/services.json",
+  "source_checkout": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages",
+  "source_digest": "9fed4af4e710cbb6bbbbebcb3fab9bd13788169ced871094c2c7d21c3bb1df51",
+  "worker_profile": null
+}
