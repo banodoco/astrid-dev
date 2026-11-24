@@ -1,6 +1,6 @@
 # Wave C cards
 
-405 failing IDs that no Wave A or B card owns, in 233 test files. One card per row: the IDs in that file, fixed by cause under the [triage rules](../../tasks.md#triage-rules). A file with more than one cause splits into one card per cause. The manager gives a worker several rows from one area at a time, up to about ten IDs.
+393 failing IDs that no Wave A or B card owns, in 232 test files. One card per row: the IDs in that file, fixed by cause under the [triage rules](../../tasks.md#triage-rules). A file with more than one cause splits into one card per cause. The manager gives a worker several rows from one area at a time, up to about ten IDs.
 
 | Card | IDs | Test file | Clusters |
 | --- | ---: | --- | --- |
@@ -129,114 +129,113 @@
 | AG-C123 | 1 | `tests/integrations/test_e2_publication_contract_roundtrip.py` | lanes:C80 |
 | AG-C124 | 1 | `tests/integrations/test_pinned_source_cpu.py` | lanes:C89 |
 | AG-C125 | 1 | `tests/integrations/test_pod_owned_preparation.py` | lanes:C90 |
-| AG-C126 | 12 | `tests/scripts/test_pod_bootstrap.py` | ci:C153, ci:C154, ci:C155, ci:C156, ci:C157, ci:C158, ci:C159, ci:C160, ci:C161, ci:C162, ci:C163, ci:C164 |
-| AG-C127 | 6 | `tests/scripts/test_claim_runpod_5090_backup.py` | ci:C59, ci:C144, ci:C145, ci:C146, ci:C147 |
-| AG-C128 | 3 | `tests/scripts/test_gpu_sanity.py` | ci:C149, ci:C150, ci:C151 |
-| AG-C129 | 1 | `tests/scripts/test_cuda_default_sites.py` | ci:C148 |
-| AG-C130 | 1 | `tests/scripts/test_pod_action_source.py` | ci:C152 |
-| AG-C131 | 1 | `tests/scripts/test_pod_h3_install.py` | ci:C165 |
-| AG-C132 | 3 | `tests/editing_conformance/test_commit_runtime_identity.py` | lanes:C28 |
-| AG-C133 | 3 | `tests/editing_conformance/test_gate1_fresh_word_transcript_frontends.py` | lanes:C29 |
-| AG-C134 | 2 | `tests/editing_conformance/test_native_word_anchor_vectors.py` | ci:C67 |
-| AG-C135 | 2 | `tests/editing_conformance/test_commit_runtime_first_clip.py` | lanes:C36 |
-| AG-C136 | 2 | `tests/editing_conformance/test_commit_runtime_occurrence_create.py` | lanes:C37 |
-| AG-C137 | 1 | `tests/editing_conformance/test_fork_abi1_binding_set.py` | ci:C203 |
-| AG-C138 | 1 | `tests/editing_conformance/test_producer_insertion.py` | ci:C204 |
-| AG-C139 | 1 | `tests/editing_conformance/test_recipe_m2_clip_trim.py` | ci:C205 |
-| AG-C140 | 1 | `tests/editing_conformance/test_compile_contracts.py` | ci:C366 |
-| AG-C141 | 1 | `tests/editing_conformance/test_commit_runtime_numeric_params.py` | lanes:C51 |
-| AG-C142 | 1 | `tests/editing_conformance/test_commit_runtime_source_copy.py` | lanes:C52 |
-| AG-C143 | 1 | `tests/editing_conformance/test_occurrence_shared_d20.py` | lanes:C74 |
-| AG-C144 | 1 | `tests/editing_conformance/test_occurrence_shared_historical.py` | lanes:C75 |
-| AG-C145 | 1 | `tests/editing_conformance/test_prepared_video_birth.py` | lanes:C76 |
-| AG-C146 | 3 | `tests/stage1/test_zero_shim_execution_pack_deletion.py` | ci:C388, ci:C389, ci:C390 |
-| AG-C147 | 2 | `tests/stage1/test_runtime_lifecycle_reproducer.py` | ci:C94 |
-| AG-C148 | 2 | `tests/stage1/test_capability_parity_gate_luna.py` | ci:C384, lanes:C60 |
-| AG-C149 | 1 | `tests/stage1/test_generic_host_process_bootstrap_luna.py` | ci:C385 |
-| AG-C150 | 1 | `tests/stage1/test_pack_api_surface.py` | ci:C386 |
-| AG-C151 | 1 | `tests/stage1/test_vendored_workspace_client_parity_luna.py` | ci:C387 |
-| AG-C152 | 1 | `tests/stage1/test_media_handoff_render_boundary.py` | lanes:C61 |
-| AG-C153 | 1 | `tests/stage1/test_runtime_client_cutover.py` | lanes:C62 |
-| AG-C154 | 3 | `tests/v10/test_docs_cli_alignment.py` | ci:C310, ci:C311, ci:C312 |
-| AG-C155 | 2 | `tests/v10/test_pack_write_path_lint.py` | ci:C78 |
-| AG-C156 | 1 | `tests/v10/test_authority_lint.py` | ci:C309 |
-| AG-C157 | 1 | `tests/v10/test_domain_cli_projects_timelines.py` | ci:C313 |
-| AG-C158 | 1 | `tests/v10/test_release_reproducibility.py` | ci:C314 |
-| AG-C159 | 1 | `tests/v10/test_timelines_create.py` | lanes:C72 |
-| AG-C160 | 1 | `tests/timeline/test_authoring_bundle.py` | ci:C303 |
-| AG-C161 | 1 | `tests/timeline/test_effects_catalog.py` | ci:C304 |
-| AG-C162 | 1 | `tests/timeline/test_html_canvas_effect.py` | ci:C305 |
-| AG-C163 | 1 | `tests/timeline/test_shot_composition_projection.py` | ci:C306 |
-| AG-C164 | 1 | `tests/timeline/test_shot_layering_projection.py` | ci:C307 |
-| AG-C165 | 1 | `tests/timeline/test_timeline_elements_catalog.py` | ci:C308 |
-| AG-C166 | 1 | `tests/timeline/test_authoring_media.py` | lanes:C69 |
-| AG-C167 | 5 | `tests/test_generic_host.py` | ci:C49, ci:C411, ci:C412 |
-| AG-C168 | 2 | `tests/reshape/test_compare_baselines.py` | ci:C140, ci:C141 |
-| AG-C169 | 1 | `tests/reshape/test_check_doc_references.py` | ci:C139 |
-| AG-C170 | 1 | `tests/reshape/test_repo_hygiene.py` | ci:C142 |
-| AG-C171 | 1 | `tests/reshape/test_timeline_installed_skills.py` | ci:C143 |
-| AG-C172 | 3 | `tests/test_installed_generation_journey.py` | ci:C50 |
-| AG-C173 | 3 | `tests/test_skills_sync_registry.py` | ci:C77, ci:C292 |
-| AG-C174 | 3 | `tests/test_omp_agent.py` | ci:C275, ci:C276, ci:C277 |
-| AG-C175 | 3 | `tests/test_provider_route_grant.py` | ci:C281, ci:C436, ci:C437 |
-| AG-C176 | 3 | `tests/test_skills_developer.py` | ci:C285, ci:C286, ci:C287 |
-| AG-C177 | 3 | `tests/test_third_party_integration.py` | ci:C296, ci:C297, ci:C298 |
-| AG-C178 | 3 | `tests/test_timeline_editing_helpers.py` | ci:C299, ci:C300, ci:C301 |
-| AG-C179 | 3 | `tests/test_failure_mode_executor.py` | ci:C408, ci:C409, ci:C410 |
-| AG-C180 | 3 | `tests/test_installer_installed_schema.py` | ci:C419, ci:C420, ci:C421 |
-| AG-C181 | 2 | `tests/test_setup_skill_branches.py` | ci:C73 |
-| AG-C182 | 2 | `tests/test_local_install.py` | ci:C74 |
-| AG-C183 | 2 | `tests/test_skills_cli.py` | ci:C76 |
-| AG-C184 | 2 | `tests/test_diagnostics_callers.py` | ci:C82 |
-| AG-C185 | 2 | `tests/test_installer_autostart.py` | ci:C86 |
-| AG-C186 | 2 | `tests/test_installer_launcher_repair.py` | ci:C87 |
-| AG-C187 | 2 | `tests/test_installer_service_repair_integration.py` | ci:C89 |
-| AG-C188 | 2 | `tests/test_installer_shim.py` | ci:C91 |
-| AG-C189 | 2 | `tests/test_journey_diagnostic_checkpoint.py` | ci:C271, ci:C273 |
-| AG-C190 | 2 | `tests/test_skills_selected_composition.py` | ci:C290, ci:C291 |
-| AG-C191 | 2 | `tests/test_structure_contracts.py` | ci:C294, ci:C295 |
-| AG-C192 | 2 | `tests/test_ci_journey.py` | ci:C398, ci:C399 |
-| AG-C193 | 2 | `tests/test_creator_entry_declarations.py` | ci:C403, ci:C404 |
-| AG-C194 | 2 | `tests/test_installer_lifecycle.py` | ci:C424, lanes:C63 |
-| AG-C195 | 1 | `tests/upgrade/test_c1_product_gaps.py` | lanes:C70 |
-| AG-C196 | 1 | `tests/upgrade/test_upgrade_release.py` | lanes:C71 |
-| AG-C197 | 1 | `tests/journeys/test_cross_client.py` | lanes:C95 |
-| AG-C198 | 1 | `tests/journeys/test_journey_plumbing.py` | lanes:C96 |
-| AG-C199 | 1 | `test_case.py` | ci:C45 |
-| AG-C200 | 1 | `tests/test_journey_windows_acl_capture.py` | ci:C272 |
-| AG-C201 | 1 | `tests/test_n1_permission_boundary_guard.py` | ci:C274 |
-| AG-C202 | 1 | `tests/test_onboarding_one_home.py` | ci:C278 |
-| AG-C203 | 1 | `tests/test_pipeline_dispatch_aliases.py` | ci:C279 |
-| AG-C204 | 1 | `tests/test_platform_matrix.py` | ci:C280 |
-| AG-C205 | 1 | `tests/test_public_boundary.py` | ci:C282 |
-| AG-C206 | 1 | `tests/test_recoverability_conformance.py` | ci:C283 |
-| AG-C207 | 1 | `tests/test_sdk_public_surface.py` | ci:C284 |
-| AG-C208 | 1 | `tests/test_skills_installed_composition.py` | ci:C288 |
-| AG-C209 | 1 | `tests/test_skills_package_data.py` | ci:C289 |
-| AG-C210 | 1 | `tests/test_skip_policy.py` | ci:C293 |
-| AG-C211 | 1 | `tests/test_update_from_field_states.py` | ci:C302 |
-| AG-C212 | 1 | `tests/test_boundary_handoff.py` | ci:C391 |
-| AG-C213 | 1 | `tests/test_boundary_registration.py` | ci:C392 |
-| AG-C214 | 1 | `tests/test_canonical_entrypoint.py` | ci:C397 |
-| AG-C215 | 1 | `tests/test_core_pack_boundary_guard.py` | ci:C400 |
-| AG-C216 | 1 | `tests/test_core_provider_neutrality.py` | ci:C401 |
-| AG-C217 | 1 | `tests/test_core_util_surface.py` | ci:C402 |
-| AG-C218 | 1 | `tests/test_env_vars_conformance.py` | ci:C405 |
-| AG-C219 | 1 | `tests/test_external_app_contract.py` | ci:C406 |
-| AG-C220 | 1 | `tests/test_external_pack_contract.py` | ci:C407 |
-| AG-C221 | 1 | `tests/test_generic_host_result_json.py` | ci:C413 |
-| AG-C222 | 1 | `tests/test_gpu_journey_receipts.py` | ci:C414 |
-| AG-C223 | 1 | `tests/test_installer_acl.py` | ci:C415 |
-| AG-C224 | 1 | `tests/test_installer_app_update.py` | ci:C416 |
-| AG-C225 | 1 | `tests/test_installer_bootstrap_imports.py` | ci:C417 |
-| AG-C226 | 1 | `tests/test_installer_busy_fence.py` | ci:C418 |
-| AG-C227 | 1 | `tests/test_installer_launchd_cache_window.py` | ci:C422 |
-| AG-C228 | 1 | `tests/test_installer_launchd_stop_handoff.py` | ci:C423 |
-| AG-C229 | 1 | `tests/test_installer_local_update.py` | ci:C425 |
-| AG-C230 | 1 | `tests/test_installer_r0_entry.py` | ci:C431 |
-| AG-C231 | 1 | `tests/test_installer_update_legacy_record.py` | ci:C432 |
-| AG-C232 | 1 | `tests/test_installer_real_product_root.py` | lanes:C68 |
-| AG-C233 | 1 | `tests/installed/test_installed_generation_package.py` | lanes:C77 |
+| AG-C126 | 3 | `tests/editing_conformance/test_commit_runtime_identity.py` | lanes:C28 |
+| AG-C127 | 3 | `tests/editing_conformance/test_gate1_fresh_word_transcript_frontends.py` | lanes:C29 |
+| AG-C128 | 2 | `tests/editing_conformance/test_native_word_anchor_vectors.py` | ci:C67 |
+| AG-C129 | 2 | `tests/editing_conformance/test_commit_runtime_first_clip.py` | lanes:C36 |
+| AG-C130 | 2 | `tests/editing_conformance/test_commit_runtime_occurrence_create.py` | lanes:C37 |
+| AG-C131 | 1 | `tests/editing_conformance/test_fork_abi1_binding_set.py` | ci:C203 |
+| AG-C132 | 1 | `tests/editing_conformance/test_producer_insertion.py` | ci:C204 |
+| AG-C133 | 1 | `tests/editing_conformance/test_recipe_m2_clip_trim.py` | ci:C205 |
+| AG-C134 | 1 | `tests/editing_conformance/test_compile_contracts.py` | ci:C366 |
+| AG-C135 | 1 | `tests/editing_conformance/test_commit_runtime_numeric_params.py` | lanes:C51 |
+| AG-C136 | 1 | `tests/editing_conformance/test_commit_runtime_source_copy.py` | lanes:C52 |
+| AG-C137 | 1 | `tests/editing_conformance/test_occurrence_shared_d20.py` | lanes:C74 |
+| AG-C138 | 1 | `tests/editing_conformance/test_occurrence_shared_historical.py` | lanes:C75 |
+| AG-C139 | 1 | `tests/editing_conformance/test_prepared_video_birth.py` | lanes:C76 |
+| AG-C140 | 6 | `tests/scripts/test_claim_runpod_5090_backup.py` | ci:C59, ci:C144, ci:C145, ci:C146, ci:C147 |
+| AG-C141 | 3 | `tests/scripts/test_gpu_sanity.py` | ci:C149, ci:C150, ci:C151 |
+| AG-C142 | 1 | `tests/scripts/test_cuda_default_sites.py` | ci:C148 |
+| AG-C143 | 1 | `tests/scripts/test_pod_action_source.py` | ci:C152 |
+| AG-C144 | 1 | `tests/scripts/test_pod_h3_install.py` | ci:C165 |
+| AG-C145 | 3 | `tests/stage1/test_zero_shim_execution_pack_deletion.py` | ci:C388, ci:C389, ci:C390 |
+| AG-C146 | 2 | `tests/stage1/test_runtime_lifecycle_reproducer.py` | ci:C94 |
+| AG-C147 | 2 | `tests/stage1/test_capability_parity_gate_luna.py` | ci:C384, lanes:C60 |
+| AG-C148 | 1 | `tests/stage1/test_generic_host_process_bootstrap_luna.py` | ci:C385 |
+| AG-C149 | 1 | `tests/stage1/test_pack_api_surface.py` | ci:C386 |
+| AG-C150 | 1 | `tests/stage1/test_vendored_workspace_client_parity_luna.py` | ci:C387 |
+| AG-C151 | 1 | `tests/stage1/test_media_handoff_render_boundary.py` | lanes:C61 |
+| AG-C152 | 1 | `tests/stage1/test_runtime_client_cutover.py` | lanes:C62 |
+| AG-C153 | 3 | `tests/v10/test_docs_cli_alignment.py` | ci:C310, ci:C311, ci:C312 |
+| AG-C154 | 2 | `tests/v10/test_pack_write_path_lint.py` | ci:C78 |
+| AG-C155 | 1 | `tests/v10/test_authority_lint.py` | ci:C309 |
+| AG-C156 | 1 | `tests/v10/test_domain_cli_projects_timelines.py` | ci:C313 |
+| AG-C157 | 1 | `tests/v10/test_release_reproducibility.py` | ci:C314 |
+| AG-C158 | 1 | `tests/v10/test_timelines_create.py` | lanes:C72 |
+| AG-C159 | 1 | `tests/timeline/test_authoring_bundle.py` | ci:C303 |
+| AG-C160 | 1 | `tests/timeline/test_effects_catalog.py` | ci:C304 |
+| AG-C161 | 1 | `tests/timeline/test_html_canvas_effect.py` | ci:C305 |
+| AG-C162 | 1 | `tests/timeline/test_shot_composition_projection.py` | ci:C306 |
+| AG-C163 | 1 | `tests/timeline/test_shot_layering_projection.py` | ci:C307 |
+| AG-C164 | 1 | `tests/timeline/test_timeline_elements_catalog.py` | ci:C308 |
+| AG-C165 | 1 | `tests/timeline/test_authoring_media.py` | lanes:C69 |
+| AG-C166 | 5 | `tests/test_generic_host.py` | ci:C49, ci:C411, ci:C412 |
+| AG-C167 | 2 | `tests/reshape/test_compare_baselines.py` | ci:C140, ci:C141 |
+| AG-C168 | 1 | `tests/reshape/test_check_doc_references.py` | ci:C139 |
+| AG-C169 | 1 | `tests/reshape/test_repo_hygiene.py` | ci:C142 |
+| AG-C170 | 1 | `tests/reshape/test_timeline_installed_skills.py` | ci:C143 |
+| AG-C171 | 3 | `tests/test_installed_generation_journey.py` | ci:C50 |
+| AG-C172 | 3 | `tests/test_skills_sync_registry.py` | ci:C77, ci:C292 |
+| AG-C173 | 3 | `tests/test_omp_agent.py` | ci:C275, ci:C276, ci:C277 |
+| AG-C174 | 3 | `tests/test_provider_route_grant.py` | ci:C281, ci:C436, ci:C437 |
+| AG-C175 | 3 | `tests/test_skills_developer.py` | ci:C285, ci:C286, ci:C287 |
+| AG-C176 | 3 | `tests/test_third_party_integration.py` | ci:C296, ci:C297, ci:C298 |
+| AG-C177 | 3 | `tests/test_timeline_editing_helpers.py` | ci:C299, ci:C300, ci:C301 |
+| AG-C178 | 3 | `tests/test_failure_mode_executor.py` | ci:C408, ci:C409, ci:C410 |
+| AG-C179 | 3 | `tests/test_installer_installed_schema.py` | ci:C419, ci:C420, ci:C421 |
+| AG-C180 | 2 | `tests/test_setup_skill_branches.py` | ci:C73 |
+| AG-C181 | 2 | `tests/test_local_install.py` | ci:C74 |
+| AG-C182 | 2 | `tests/test_skills_cli.py` | ci:C76 |
+| AG-C183 | 2 | `tests/test_diagnostics_callers.py` | ci:C82 |
+| AG-C184 | 2 | `tests/test_installer_autostart.py` | ci:C86 |
+| AG-C185 | 2 | `tests/test_installer_launcher_repair.py` | ci:C87 |
+| AG-C186 | 2 | `tests/test_installer_service_repair_integration.py` | ci:C89 |
+| AG-C187 | 2 | `tests/test_installer_shim.py` | ci:C91 |
+| AG-C188 | 2 | `tests/test_journey_diagnostic_checkpoint.py` | ci:C271, ci:C273 |
+| AG-C189 | 2 | `tests/test_skills_selected_composition.py` | ci:C290, ci:C291 |
+| AG-C190 | 2 | `tests/test_structure_contracts.py` | ci:C294, ci:C295 |
+| AG-C191 | 2 | `tests/test_ci_journey.py` | ci:C398, ci:C399 |
+| AG-C192 | 2 | `tests/test_creator_entry_declarations.py` | ci:C403, ci:C404 |
+| AG-C193 | 2 | `tests/test_installer_lifecycle.py` | ci:C424, lanes:C63 |
+| AG-C194 | 1 | `tests/upgrade/test_c1_product_gaps.py` | lanes:C70 |
+| AG-C195 | 1 | `tests/upgrade/test_upgrade_release.py` | lanes:C71 |
+| AG-C196 | 1 | `tests/journeys/test_cross_client.py` | lanes:C95 |
+| AG-C197 | 1 | `tests/journeys/test_journey_plumbing.py` | lanes:C96 |
+| AG-C198 | 1 | `test_case.py` | ci:C45 |
+| AG-C199 | 1 | `tests/test_journey_windows_acl_capture.py` | ci:C272 |
+| AG-C200 | 1 | `tests/test_n1_permission_boundary_guard.py` | ci:C274 |
+| AG-C201 | 1 | `tests/test_onboarding_one_home.py` | ci:C278 |
+| AG-C202 | 1 | `tests/test_pipeline_dispatch_aliases.py` | ci:C279 |
+| AG-C203 | 1 | `tests/test_platform_matrix.py` | ci:C280 |
+| AG-C204 | 1 | `tests/test_public_boundary.py` | ci:C282 |
+| AG-C205 | 1 | `tests/test_recoverability_conformance.py` | ci:C283 |
+| AG-C206 | 1 | `tests/test_sdk_public_surface.py` | ci:C284 |
+| AG-C207 | 1 | `tests/test_skills_installed_composition.py` | ci:C288 |
+| AG-C208 | 1 | `tests/test_skills_package_data.py` | ci:C289 |
+| AG-C209 | 1 | `tests/test_skip_policy.py` | ci:C293 |
+| AG-C210 | 1 | `tests/test_update_from_field_states.py` | ci:C302 |
+| AG-C211 | 1 | `tests/test_boundary_handoff.py` | ci:C391 |
+| AG-C212 | 1 | `tests/test_boundary_registration.py` | ci:C392 |
+| AG-C213 | 1 | `tests/test_canonical_entrypoint.py` | ci:C397 |
+| AG-C214 | 1 | `tests/test_core_pack_boundary_guard.py` | ci:C400 |
+| AG-C215 | 1 | `tests/test_core_provider_neutrality.py` | ci:C401 |
+| AG-C216 | 1 | `tests/test_core_util_surface.py` | ci:C402 |
+| AG-C217 | 1 | `tests/test_env_vars_conformance.py` | ci:C405 |
+| AG-C218 | 1 | `tests/test_external_app_contract.py` | ci:C406 |
+| AG-C219 | 1 | `tests/test_external_pack_contract.py` | ci:C407 |
+| AG-C220 | 1 | `tests/test_generic_host_result_json.py` | ci:C413 |
+| AG-C221 | 1 | `tests/test_gpu_journey_receipts.py` | ci:C414 |
+| AG-C222 | 1 | `tests/test_installer_acl.py` | ci:C415 |
+| AG-C223 | 1 | `tests/test_installer_app_update.py` | ci:C416 |
+| AG-C224 | 1 | `tests/test_installer_bootstrap_imports.py` | ci:C417 |
+| AG-C225 | 1 | `tests/test_installer_busy_fence.py` | ci:C418 |
+| AG-C226 | 1 | `tests/test_installer_launchd_cache_window.py` | ci:C422 |
+| AG-C227 | 1 | `tests/test_installer_launchd_stop_handoff.py` | ci:C423 |
+| AG-C228 | 1 | `tests/test_installer_local_update.py` | ci:C425 |
+| AG-C229 | 1 | `tests/test_installer_r0_entry.py` | ci:C431 |
+| AG-C230 | 1 | `tests/test_installer_update_legacy_record.py` | ci:C432 |
+| AG-C231 | 1 | `tests/test_installer_real_product_root.py` | lanes:C68 |
+| AG-C232 | 1 | `tests/installed/test_installed_generation_package.py` | lanes:C77 |
 
 ## IDs per owner
 
@@ -245,7 +244,6 @@
 | AG-A1 | 227 |
 | AG-A2 | 121 |
 | AG-A3 | 60 |
-| AG-A4 | 44 |
 | AG-A5 | 74 |
 | AG-A6 | 22 |
 | AG-A7 | 284 |
@@ -253,12 +251,9 @@
 | AG-A10 | 80 |
 | AG-B1 | 62 |
 | AG-B2 | 45 |
-| AG-B3 | 40 |
 | AG-B4 | 9 |
 | AG-B5 | 32 |
-| AG-B6 | 10 |
 | AG-B7 | 15 |
-| AG-B8 | 14 |
 | AG-B9 | 7 |
 | AG-B10 | 13 |
 | AG-B11 | 12 |
@@ -273,6 +268,8 @@
 | AG-B20 | 16 |
 | AG-B21 | 7 |
 | AG-B22 | 6 |
-| Wave C | 405 |
+| AG-P1 | 70 |
+| AG-P2 | 50 |
+| Wave C | 393 |
 
 Total: 1874 distinct (job, id) pairs.

@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 70–90 (about 5–6 weeks elapsed with five workers): Phase 1 (the gate and the large causes) 20–24, Phase 2 (the middle) 26–32, Phase 3 (the long tail) 20–30, Phase 4 (green runs and review) 3–5
+**Estimate:** 55–72 (about 4–5 weeks elapsed with five workers): Phase 1 (the gate, the prune pass and the large causes) 23–27, Phase 2 (the middle) 17–22, Phase 3 (the long tail) 12–20, Phase 4 (green runs and review) 3–5
 
-**Waiting on:** the owner's go, a place in Release 15 (D1) and a manager; owner decisions D8 and D10–D15 for the cards that name them; Plan 77 for the failing test files it also edits, and Plan 88 for two ([base choice](inputs.md#source-identities))
+**Waiting on:** the owner's written confirmation of D1 and D3–D15 (agreed in conversation on 24 November; D12 decided), then a place in the Release 15 brief and a manager; Plan 77 for the failing test files it also edits, and Plan 88 for two ([base choice](inputs.md#source-identities))
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -22,7 +22,8 @@ The Agent's share of [Plan 39](../39-green-mains/plan.md), split off as its own 
 
 Every Agent workflow is green on `release/15/main`, and on `main` once Release 15 is published, and it stays green:
 - **Cannot get worse, first.** Before any fix lands, the Agent's current failing tests are sealed as a ceiling that may only fall, keyed by job and test ID, the integration and opt-in lanes included. Every batch the plan merges, and every completed `release/15/main` run, is compared with it. New, lost or reintroduced red fails the comparison.
-- **Green by cause.** Each failing test is fixed at its root cause, under one set of [triage rules](tasks.md#triage-rules): name the kind (env, stale test, retired, product bug, flaky, unknown), fix it the way that kind allows, prove it by ID on hosted CI. Never a loosened assertion, a stub input, a widened deadline, a skip or a growing baseline. Plan 39's anti-hiding rules ([inputs](../39-green-mains/inputs.md#where-changing-a-test-would-hide-a-bug)) apply unchanged.
+- **Prune boldly, then fix.** With no users yet, only current behaviour, and updating from the previous published release, is supported. A test of anything older, or one another passing test already covers, is deleted with its citation rather than repaired (D5). A test of something users do today is never deleted for being hard to fix.
+- **Green by cause.** Each remaining failing test is fixed at its root cause, under one set of [triage rules](tasks.md#triage-rules): name the kind (env, stale test, retired, redundant, product bug, flaky, unknown), fix it the way that kind allows, prove it by ID on hosted CI. Never a loosened assertion, a stub input, a widened deadline, a skip or a growing baseline. Plan 39's anti-hiding rules ([inputs](../39-green-mains/inputs.md#where-changing-a-test-would-hide-a-bug)) apply unchanged.
 - **Kept green.** The owner turns on the Agent's required checks: on pull requests, the jobs that run there; for the release, the full comparison. The quarantine rule (strict xfail with an issue, an owner and an expiry, at most ten; Plan 39's D3 and D9) is the only way a known failure may be tolerated. Product bugs too large for this plan stay visibly red on the ceiling, each with an issue and the owner's acceptance (D6).
 
 **Measured on `release/15/main` at `b324d7c1`**, the latest head with a complete CI and Lanes run (23 November 2026; [evidence](evidence/README.md)):
@@ -33,7 +34,7 @@ Every Agent workflow is green on `release/15/main`, and on `main` once Release 1
 | `CI` | red | All eight `unit` shards and `darwin native`: 1,087, in 274 files, of about 33,000 tests. `fast checks`, `boundary`, `windows-native-and-installer` and both release wheels are green. |
 | `Lanes` | red | The four `integration` shards and `opt-in`: 787, in 129 files. `installed wheel` is green. |
 
-The triage puts the 1,874 in about 150 distinct causes ([how](inputs.md#planning-evidence)). Ten Wave A cards hold about 1,000 of them; 22 Wave B cards hold about 470; Wave C holds the rest, 405 in 233 files.
+The triage puts the 1,874 in about 150 distinct causes ([how](inputs.md#planning-evidence)). About 20% point at removed, retired, moved or legacy code, and a prune pass (AG-P1, AG-P2) sorts those before anything is fixed. Nine Wave A cards hold about 960 IDs; 19 Wave B cards hold about 400; Wave C holds the rest, 393 in 232 files.
 
 **Included:** the Agent workflows on push to `main` and to `release/15/main`:
 - `CI`: `fast checks`, the eight `unit` shards and the aggregate `unit`, `darwin native`, `windows-native-and-installer`, `release wheel` (3.11, 3.12), `boundary`;
@@ -68,12 +69,13 @@ The measurement, the triage, the alternatives and the independent critique are i
 
 Four phases; Phase 1 carries most of the value. Up to **five worker sessions run at once**, kept full from one [dispatch queue](tasks.md#dispatch-order).
 
-1. **The gate and the large causes** (AG-0 to AG-2, Wave A, RS1).
+1. **The gate, the prune pass and the large causes** (AG-0 to AG-2, AG-P1, Wave A, RS1).
    - AG-0 cuts the plan branch, re-measures, and finds what cancels runs on `release/15/main`.
    - AG-1 adds the hosted card runs and the comparison.
-   - Ten cards fix the causes that hold about 1,000 IDs. They start the moment the branch is cut, beside the gate, and land once it works.
+   - AG-P1 (CI) and AG-P2 (Lanes) sort the 370 prune candidates into retire, redundant or keep, and delete the first two with citations, so no card fixes a test that should go.
+   - Nine cards fix the causes that hold about 960 IDs. They start the moment the branch is cut, beside the gate, and land once it works.
    - RS1 reviews the gate, the clip-data decision (D13) and the frame-rate contract (D8), then regenerates Wave C and re-estimates.
-2. **The middle** (Wave B): 22 cards, one per cause, each with a kind, scope and proof.
+2. **The middle** (Wave B): 19 cards, one per cause, each with a kind, scope and proof.
 3. **The long tail** (Wave C): one card per test file, generated from the evidence by `make_wave_c.py` and regenerated at RS1, batched by area.
 4. **Green and kept green** (AG-10, R): three green dispatched runs on one frozen plan head on three nights, one on `release/15/main` after landing, then at most two review rounds.
 

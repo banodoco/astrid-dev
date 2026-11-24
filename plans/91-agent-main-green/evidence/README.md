@@ -24,8 +24,9 @@ What fails in astrid-agent's own CI on `release/15/main`, grouped by where each 
 | [release-15-b324d7c1/ci-failing-ids.tsv](release-15-b324d7c1/ci-failing-ids.tsv), [lanes-failing-ids.tsv](release-15-b324d7c1/lanes-failing-ids.tsv) | Every failing ID with its cluster, outcome and job. The job column tells a `darwin native` failure from a Linux one, so key by (job, id). AG-1 seals its ceiling from the lists AG-0 regenerates |
 | [release-15-b324d7c1/assignment.json](release-15-b324d7c1/assignment.json) | The one record of which Wave A or B card owns which cluster, and which test files (by glob). AG-A8 shares AG-A7's cluster and splits it by refusal message |
 | [release-15-b324d7c1/wave-c-cards.md](release-15-b324d7c1/wave-c-cards.md) | Every unowned ID, as one card per test file, with the count of IDs per card owner |
+| [release-15-b324d7c1/prune-candidates.md](release-15-b324d7c1/prune-candidates.md) | The IDs whose failure points at removed, retired, moved or legacy code, for AG-P1 to sort into retire, redundant or keep |
 | [cluster_failures.py](cluster_failures.py) | Groups pytest failures in job logs by the frame that raised them; writes the clusters and the TSV |
-| [make_wave_c.py](make_wave_c.py) | Reads the TSVs and `assignment.json` and writes `wave-c-cards.md`, counting each (job, id) once |
+| [make_wave_c.py](make_wave_c.py) | Reads the TSVs and `assignment.json` and writes `wave-c-cards.md` and `prune-candidates.md`, counting each (job, id) once |
 | [critique.md](critique.md) | The independent critique and the two ambiguity passes, and what each changed |
 
 ## How it was made, and how to redo it
