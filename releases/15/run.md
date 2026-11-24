@@ -232,5 +232,6 @@ The orchestrator writes the packets at its next break point and lists them here.
 | [R15-P89-02](packets/R15-P89-02.md) | SV-L5 (X): accepted history immutable | Ready (first, alone) | — | astrid-runtime `p89/SV-L5`; integrity change, high-judgment review |
 | [R15-P89-03](packets/R15-P89-03.md) | SV-L8 (N): attribute the 1.7 s of schema validation | Ready (second, after P89-02's early STATUS) | — | Investigation note only; an implementation packet follows on the orchestrator's DECISION |
 | [R15-P89-04](packets/R15-P89-04.md) | SV-L3 (N): history-growth counters | Blocked on SV-L6 (Runtime draft #113 merging) | — | Priority after SV-4; evidence: [Plan 88's history-growth lines](../../plans/89-heavy-saves-in-seconds/evidence/2026-11-24-p88-history-growth/README.md) |
+| [R15-P89-05](packets/R15-P89-05.md) | SV-L9a (X): a slow startup scan no longer locks a healthy store out | Blocked on SV-L5 (P89-02) merging | — | astrid-runtime `p89/SV-L9a`; #1793; high-judgment review; the watermark (SV-L9b) is Release 16 |
 
 Stays in the orchestrator's lane: SV-L1 (merged), SV-L4 (burst test, a measurement), SV-L6 (Runtime covers index, X; the Codex manager's draft #113), SV-L7 (burst coalescing: sized at 4 to 6 App days, awaiting the Release 15 Lead's go), and every installed measurement.
