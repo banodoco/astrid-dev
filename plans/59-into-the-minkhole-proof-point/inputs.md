@@ -1,6 +1,6 @@
 # Inputs — Into the Minkhole proof point
 
-[Plan](plan.md) · [Tasks](tasks.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Narrative outline](narrative-outline.md) · [Visual guide](visual-guide.md)
 
 ## Planning evidence
 
@@ -37,3 +37,7 @@ The supplied rough-cut archive SHA-256 is `50e7bf1262f0b89bd95dcce5ee0edebf80eea
 ## References
 
 [Source brief and archive instructions](https://github.com/peteromallet/minkhole-h3av-handover) · [Release 14](../../releases/14.md)
+
+## Creative production brief — 24 November 2026
+
+The [narrative outline](narrative-outline.md) contains the v4 presenter script, magic-trick pacing and finished mink scene. The [visual guide](visual-guide.md) records the companion motion, typography, reference and composition direction. These are working creative materials; they do not change the engineering scope, completion record, release gate or budget above.
