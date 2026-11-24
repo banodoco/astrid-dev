@@ -6,6 +6,12 @@ This is the working document for running Plan 84's remaining work in Google AI S
 
 **State:** set up; starts when the owner sends the [manager start message](#manager-start-message). The lab's `main` has passed `npm run check` and `npm run build`, and the fidelity check against the App.
 
+## Owner's revised production look — 24 November 2026
+
+The [complete owner production brief](art-direction.md) and [checked-in visual assets](assets/README.md) **replace the mock-up as the final artistic target**. Read these before commissioning/reviewing art-heavy EX packets. Test spherical depth, quiet terrain, scale hierarchy, warm contact/lighting, complete 3D mink identity with restrained authored pixel markings, and the five continuing scenes. RF-A/RF-B must judge plain-material form and normal-size clean/styled views before final polish. The owner prefers a composed stationary arrival; future drag exploration retains sky-time coupling, and reduced-motion keeps a still presentation.
+
+This is a planning handoff only. It changes no existing lab branch, packet acceptance, publisher go or App integration authority; record any changed scope/estimate at the next RF checkpoint.
+
 ## Who does what
 
 | Role | Who | Does | Workstream |
