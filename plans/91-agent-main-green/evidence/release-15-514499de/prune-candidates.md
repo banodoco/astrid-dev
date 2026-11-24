@@ -30,75 +30,75 @@
 | 3 | `tests/core/execution/test_m1_13_pack_provenance.py` | lanes:C12 | AG-B17 | RuntimeError: process control is already sandbox; refusing to change it to strict |
 | 3 | `tests/packs/rendering/test_remotion_layer_tail_compat.py` | ci:C9 | AG-A3 | subprocess.CalledProcessError: Command '['tar', '-xOf', '<path> 'package/dist/chunk-ANLVBE |
 | 3 | `tests/packs/runpod/test_https_transport.py` | lanes:C36 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'session_ref' |
-| 3 | `tests/packs/test_portfolio_parity.py` | ci:C47 | AG-A3 | AssertionError: pack 'iteration' not discovered |
-| 3 | `tests/packs/test_portfolio_parity.py` | ci:C49 | AG-A3 | KeyError: "unknown executor id 'iteration.assemble'" |
+| 3 | `tests/packs/test_portfolio_parity.py` | ci:C48 | AG-A3 | AssertionError: pack 'iteration' not discovered |
+| 3 | `tests/packs/test_portfolio_parity.py` | ci:C50 | AG-A3 | KeyError: "unknown executor id 'iteration.assemble'" |
 | 3 | `tests/test_installer_update_recovery.py` | lanes:C31 | AG-B5 | AssertionError: Traceback (most recent call last): |
-| 2 | `tests/core/generation/test_param_map_migration_parity.py` | ci:C53 | Wave C | AssertionError: [qwen-image-N.N-turbo-edit/edit/local] Manifest param_map keys not in DEFA |
+| 2 | `tests/core/generation/test_param_map_migration_parity.py` | ci:C54 | Wave C | AssertionError: [qwen-image-N.N-turbo-edit/edit/local] Manifest param_map keys not in DEFA |
 | 2 | `tests/editing_conformance/test_authoring_undo_projection.py` | ci:C10 | AG-A6 | astrid.core.timeline.authoring_bundle.AuthoringBundleError: fork native binding schema cha |
 | 2 | `tests/editing_conformance/test_commit_runtime_parent_media.py` | lanes:C1 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
 | 2 | `tests/editing_conformance/test_commit_runtime_parent_media_swap.py` | lanes:C1 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
-| 2 | `tests/editing_conformance/test_fork_historical_source_boundary.py` | ci:C65 | AG-B10 | astrid.sdk.timeline._command_state.CommandError: missing or ambiguous identity 'shot-N' |
+| 2 | `tests/editing_conformance/test_fork_historical_source_boundary.py` | ci:C66 | AG-B10 | astrid.sdk.timeline._command_state.CommandError: missing or ambiguous identity 'shot-N' |
 | 2 | `tests/editing_conformance/test_historical_shared_inverse_owners.py` | lanes:C1 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
 | 2 | `tests/editing_conformance/test_occurrence_shared_historical.py` | lanes:C1 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
 | 2 | `tests/editing_conformance/test_recipe_occurrence_media.py` | lanes:C1 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
 | 2 | `tests/packs/builtin/test_training_run_support.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
-| 2 | `tests/packs/timeline/test_cli_edit_flags.py` | ci:C84 | AG-B4 | AttributeError: 'function' object has no attribute '__wrapped__' |
-| 2 | `tests/sdk/test_inverse_removed_shot_owners_runtime.py` | ci:C78 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
+| 2 | `tests/packs/timeline/test_cli_edit_flags.py` | ci:C85 | AG-B4 | AttributeError: 'function' object has no attribute '__wrapped__' |
+| 2 | `tests/sdk/test_inverse_removed_shot_owners_runtime.py` | ci:C79 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
 | 2 | `tests/sdk/test_timeline_checkout.py` | lanes:C39 | Wave C | AttributeError: 'Runtime' object has no attribute '_last_handshake' |
 | 2 | `tests/sdk/test_timeline_clip_scalar_provider.py` | ci:C24 | AG-B10 | astrid.sdk.timeline._command_state.CommandError: inverse stage image differs from authenti |
 | 2 | `tests/sdk/test_timeline_occurrence_delete_provider.py` | ci:C24 | AG-B10 | astrid.sdk.timeline._command_state.CommandError: inverse stage image differs from authenti |
 | 2 | `tests/stage1/test_zero_shim_lane_c.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
-| 2 | `tests/test_failure_mode_executor.py` | ci:C55 | AG-A2 | scripts.failure_mode_executor.HistoricalSourcePrerequisiteError: Historical release-N prer |
-| 2 | `tests/test_installer_launcher_repair.py` | ci:C59 | Wave C | AttributeError: 'Popen' object has no attribute 'home' |
+| 2 | `tests/test_failure_mode_executor.py` | ci:C56 | AG-A2 | scripts.failure_mode_executor.HistoricalSourcePrerequisiteError: Historical release-N prer |
+| 2 | `tests/test_installer_launcher_repair.py` | ci:C60 | Wave C | AttributeError: 'Popen' object has no attribute 'home' |
 | 2 | `tests/test_installer_lifecycle.py` | ci:C3 | AG-A5 | astrid.installer.rN_stop.RNStopError: RN requires the copy-only upgrade boundary. Run the  |
-| 2 | `tests/test_installer_release0_rollback.py` | ci:C60 | AG-A5 | AssertionError: Traceback (most recent call last): |
-| 2 | `tests/test_installer_shim.py` | ci:C62 | AG-A5 | astrid.installer.rN_stop.RNStopError: RN requires the copy-only upgrade boundary. Run the  |
-| 2 | `tests/test_local_install.py` | ci:C68 | Wave C | AttributeError: 'FakeBackend' object has no attribute 'remove_skills' |
+| 2 | `tests/test_installer_release0_rollback.py` | ci:C61 | AG-A5 | AssertionError: Traceback (most recent call last): |
+| 2 | `tests/test_installer_shim.py` | ci:C63 | AG-A5 | astrid.installer.rN_stop.RNStopError: RN requires the copy-only upgrade boundary. Run the  |
+| 2 | `tests/test_local_install.py` | ci:C69 | Wave C | AttributeError: 'FakeBackend' object has no attribute 'remove_skills' |
 | 1 | `tests/core/execution/test_openai_child_admission.py` | lanes:C5 | AG-B12 | KeyError: 'bridge.parent' |
 | 1 | `tests/core/generation/test_engine_custody.py` | lanes:C105 | AG-B22 | ModuleNotFoundError: No module named 'tests.core.test_action_cli_clip_rehearsal' |
-| 1 | `tests/core/generation/test_generation_index.py` | ci:C113 | Wave C | AttributeError: module 'scripts.gen_capability_index' has no attribute '_generation_sectio |
-| 1 | `tests/core/generation/test_param_map_migration_parity.py` | ci:C119 | Wave C | AssertionError: [z-image/iNi/local] Remote-name mismatch: 'strength': manifest→'strength'  |
-| 1 | `tests/core/generation/test_readiness_inputs_f04.py` | ci:C238 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'kind' |
-| 1 | `tests/core/generation/test_trusted_inventory.py` | ci:C241 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'folder_paths' |
-| 1 | `tests/core/rendering/test_remotion_runtime.py` | ci:C266 | Wave C | AttributeError: module 'astrid.core.rendering.remotion_runtime' has no attribute '_probe_s |
-| 1 | `tests/core/rendering/test_remotion_runtime.py` | ci:C267 | Wave C | AttributeError: module 'ctypes' has no attribute 'WinDLL' |
+| 1 | `tests/core/generation/test_generation_index.py` | ci:C117 | Wave C | AttributeError: module 'scripts.gen_capability_index' has no attribute '_generation_sectio |
+| 1 | `tests/core/generation/test_param_map_migration_parity.py` | ci:C123 | Wave C | AssertionError: [z-image/iNi/local] Remote-name mismatch: 'strength': manifest→'strength'  |
+| 1 | `tests/core/generation/test_readiness_inputs_f04.py` | ci:C242 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'kind' |
+| 1 | `tests/core/generation/test_trusted_inventory.py` | ci:C245 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'folder_paths' |
+| 1 | `tests/core/rendering/test_remotion_runtime.py` | ci:C270 | Wave C | AttributeError: module 'astrid.core.rendering.remotion_runtime' has no attribute '_probe_s |
+| 1 | `tests/core/rendering/test_remotion_runtime.py` | ci:C271 | Wave C | AttributeError: module 'ctypes' has no attribute 'WinDLL' |
 | 1 | `tests/core/rendering/test_remotion_runtime.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
 | 1 | `tests/editing_conformance/test_commit_runtime_identity.py` | lanes:C29 | Wave C | runtime_protocol.errors.ConflictError: vN provider/baseline verification is pending; reque |
 | 1 | `tests/editing_conformance/test_commit_runtime_native_checkout.py` | lanes:C1 | AG-A7 | runtime_protocol.timeline_commit.CommitRejected: Refused: after this edit render and visua |
 | 1 | `tests/editing_conformance/test_commit_runtime_native_frontends.py` | lanes:C48 | Wave C | runtime_protocol.errors.RuntimeErrorBase: candidate.timing: legacy word anchor is missing` |
 | 1 | `tests/editing_conformance/test_commit_runtime_source_copy.py` | lanes:C55 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'receipt' |
-| 1 | `tests/editing_conformance/test_fork_abi1_binding_set.py` | ci:C186 | Wave C | AssertionError: assert [{'dependenci... N, ...}, ...] == [{'dependenci...rence:occ-N'}] |
+| 1 | `tests/editing_conformance/test_fork_abi1_binding_set.py` | ci:C190 | Wave C | AssertionError: assert [{'dependenci... N, ...}, ...] == [{'dependenci...rence:occ-N'}] |
 | 1 | `tests/editing_conformance/test_m1_legacy_archive_read.py` | lanes:C4 | AG-P2 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
 | 1 | `tests/editing_conformance/test_native_sheet_current_runtime.py` | lanes:C3 | AG-A10 | TypeError: runtime.<locals>.<lambda>() got an unexpected keyword argument 'timeout' |
 | 1 | `tests/editing_conformance/test_occurrence_shared_historical.py` | lanes:C74 | Wave C | astrid.sdk.workspace_client.WorkspaceClientError: lost acknowledgement |
 | 1 | `tests/integrations/test_runpod_dry_live_seam.py` | lanes:C90 | Wave C | AttributeError: 'types.SimpleNamespace' object has no attribute 'show' |
-| 1 | `tests/packs/h3_av/test_compile_generalized.py` | ci:C296 | Wave C | astrid.packs.hN_av.shared.spec.HNSpecError: Advanced legacy changes are outside SPEC-MIN |
+| 1 | `tests/packs/h3_av/test_compile_generalized.py` | ci:C300 | Wave C | astrid.packs.hN_av.shared.spec.HNSpecError: Advanced legacy changes are outside SPEC-MIN |
 | 1 | `tests/packs/h3_av/test_two_edit_cpu_qualification.py` | lanes:C97 | Wave C | argparse.ArgumentError: argument ACTION: invalid choice: 'hN_av.transform' (choose from ) |
 | 1 | `tests/packs/rendering/test_scene_source_carry.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
-| 1 | `tests/packs/rendering/test_timeline_storyboard.py` | ci:C307 | Wave C | AttributeError: module 'astrid.packs.rendering.actions.timeline_storyboard.run' has no att |
-| 1 | `tests/packs/rendering/test_timeline_storyboard.py` | ci:C308 | Wave C | AttributeError: module 'astrid.packs.rendering.actions.timeline_storyboard.run' has no att |
-| 1 | `tests/packs/rendering/test_timeline_storyboard.py` | ci:C309 | Wave C | AttributeError: module 'astrid.packs.rendering.actions.timeline_storyboard.run' has no att |
-| 1 | `tests/packs/test_pack_discovery.py` | ci:C321 | AG-B1 | KeyError: "unknown executor id 'builtin.duplicate'"` |
-| 1 | `tests/packs/test_pack_quarantine.py` | ci:C338 | AG-B1 | AssertionError: assert 'keywords.N' in 'Pack manifest needs an explicit schema upgrade. Mi |
-| 1 | `tests/packs/test_pack_quarantine.py` | ci:C340 | AG-B1 | AssertionError: assert 'keywords.N' in 'Pack manifest needs an explicit schema upgrade. Mi |
-| 1 | `tests/packs/timeline/test_verbs_working_copy.py` | ci:C352 | Wave C | AttributeError: 'Timelines' object has no attribute 'history' |
+| 1 | `tests/packs/rendering/test_timeline_storyboard.py` | ci:C311 | Wave C | AttributeError: module 'astrid.packs.rendering.actions.timeline_storyboard.run' has no att |
+| 1 | `tests/packs/rendering/test_timeline_storyboard.py` | ci:C312 | Wave C | AttributeError: module 'astrid.packs.rendering.actions.timeline_storyboard.run' has no att |
+| 1 | `tests/packs/rendering/test_timeline_storyboard.py` | ci:C313 | Wave C | AttributeError: module 'astrid.packs.rendering.actions.timeline_storyboard.run' has no att |
+| 1 | `tests/packs/test_pack_discovery.py` | ci:C325 | AG-B1 | KeyError: "unknown executor id 'builtin.duplicate'"` |
+| 1 | `tests/packs/test_pack_quarantine.py` | ci:C342 | AG-B1 | AssertionError: assert 'keywords.N' in 'Pack manifest needs an explicit schema upgrade. Mi |
+| 1 | `tests/packs/test_pack_quarantine.py` | ci:C344 | AG-B1 | AssertionError: assert 'keywords.N' in 'Pack manifest needs an explicit schema upgrade. Mi |
+| 1 | `tests/packs/timeline/test_verbs_working_copy.py` | ci:C356 | Wave C | AttributeError: 'Timelines' object has no attribute 'history' |
 | 1 | `tests/scripts/test_claim_runpod_5090_backup.py` | ci:C14 | AG-P1 | argparse.ArgumentError: argument command: invalid choice: 'publish' (choose from 'import', |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C370 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C371 | AG-P1 | AssertionError: assert 'fixture source identity refused' in '/bin/bash: <path> No such fil |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C372 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C373 | AG-P1 | AssertionError: assert 'uv not found' in '/bin/bash: <path> No such file or directory\n' |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C374 | AG-P1 | AssertionError: assert ('cannot create or write' in '/bin/bash: <path> No such file or dir |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C375 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C374 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C375 | AG-P1 | AssertionError: assert 'fixture source identity refused' in '/bin/bash: <path> No such fil |
 | 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C376 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C377 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
-| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C378 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C377 | AG-P1 | AssertionError: assert 'uv not found' in '/bin/bash: <path> No such file or directory\n' |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C378 | AG-P1 | AssertionError: assert ('cannot create or write' in '/bin/bash: <path> No such file or dir |
 | 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C379 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
 | 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C380 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
 | 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C381 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C382 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C383 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C384 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
+| 1 | `tests/scripts/test_pod_bootstrap.py` | ci:C385 | AG-P1 | AssertionError: /bin/bash: <path> No such file or directory |
 | 1 | `tests/scripts/test_pod_h3_install.py` | ci:C14 | AG-P1 | argparse.ArgumentError: argument command: invalid choice: 'publish' (choose from 'import', |
-| 1 | `tests/sdk/test_generation_verified_preparation_gr03.py` | ci:C406 | Wave C | AttributeError: 'NoneType' object has no attribute 'runtime_nodes' |
-| 1 | `tests/sdk/test_runtime_response_conformance.py` | ci:C89 | Wave C | AssertionError: assert '/vN/projects...s/main/commit' == '/vN/projects...ion-revisions' |
-| 1 | `tests/sdk/test_timeline_commit_provider.py` | ci:C121 | Wave C | AssertionError: assert ModuleSpec(name='astrid.core.timeline.inverses', loader=<_frozen_im |
+| 1 | `tests/sdk/test_generation_verified_preparation_gr03.py` | ci:C410 | Wave C | AttributeError: 'NoneType' object has no attribute 'runtime_nodes' |
+| 1 | `tests/sdk/test_runtime_response_conformance.py` | ci:C90 | Wave C | AssertionError: assert '/vN/projects...s/main/commit' == '/vN/projects...ion-revisions' |
+| 1 | `tests/sdk/test_timeline_commit_provider.py` | ci:C125 | Wave C | AssertionError: assert ModuleSpec(name='astrid.core.timeline.inverses', loader=<_frozen_im |
 | 1 | `tests/sdk/test_timeline_commit_provider_scalar.py` | ci:C24 | AG-B10 | astrid.sdk.timeline._command_state.CommandError: inverse stage image differs from authenti |
 | 1 | `tests/sdk/test_timeline_export.py` | lanes:C56 | Wave C | runtime_protocol.errors.RetiredRouteError: legacy timeline writes are retired; submit Edit |
 | 1 | `tests/stage1/test_asset_cache_retired_luna.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
@@ -109,25 +109,25 @@
 | 1 | `tests/stage1/test_thread_authority_cutover.py` | ci:C9 | AG-A3 | subprocess.CalledProcessError: Command '['tar', '-xOf', '<path> 'package/dist/chunk-ANLVBE |
 | 1 | `tests/stage1/test_zero_shim_execution_pack_deletion.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
 | 1 | `tests/stage1/test_zero_shim_timeline_cutover_luna.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
-| 1 | `tests/test_canonical_aliases.py` | ci:C146 | AG-P1 | AssertionError: 'editorial.transcribe' not found in mappingproxy({'hivemind.contribute': E |
-| 1 | `tests/test_canonical_aliases.py` | ci:C147 | AG-P1 | AssertionError: Items in the second set but not the first:` |
-| 1 | `tests/test_canonical_aliases.py` | ci:C148 | AG-P1 | AssertionError: Items in the first set but not the second:` |
-| 1 | `tests/test_canonical_aliases.py` | ci:C149 | AG-P1 | AssertionError: Tuples differ: ('imp[N chars]t', 'appearance', 'edit', 'assets', 'find', ' |
+| 1 | `tests/test_canonical_aliases.py` | ci:C150 | AG-P1 | AssertionError: 'editorial.transcribe' not found in mappingproxy({'hivemind.contribute': E |
+| 1 | `tests/test_canonical_aliases.py` | ci:C151 | AG-P1 | AssertionError: Items in the second set but not the first:` |
+| 1 | `tests/test_canonical_aliases.py` | ci:C152 | AG-P1 | AssertionError: Items in the first set but not the second:` |
+| 1 | `tests/test_canonical_aliases.py` | ci:C153 | AG-P1 | AssertionError: Tuples differ: ('imp[N chars]t', 'appearance', 'edit', 'assets', 'find', ' |
 | 1 | `tests/test_creator_entry_declarations.py` | ci:C6 | AG-P1 | FileNotFoundError: [Errno N] No such file or directory: '<path> |
-| 1 | `tests/test_failure_mode_executor.py` | ci:C163 | Wave C | AssertionError: assert 'Runtime' == 'Agent' |
+| 1 | `tests/test_failure_mode_executor.py` | ci:C167 | Wave C | AssertionError: assert 'Runtime' == 'Agent' |
 | 1 | `tests/test_installer_backup.py` | ci:C3 | AG-A5 | astrid.installer.rN_stop.RNStopError: RN requires the copy-only upgrade boundary. Run the  |
-| 1 | `tests/test_installer_launchd_cache_window.py` | ci:C175 | Wave C | AttributeError: '_Backend' object has no attribute 'run' |
-| 1 | `tests/test_installer_local_update.py` | ci:C178 | Wave C | astrid.installer.rN_stop.RNStopError: An interrupted legacy RN update is retained. Automat |
+| 1 | `tests/test_installer_launchd_cache_window.py` | ci:C179 | Wave C | AttributeError: '_Backend' object has no attribute 'run' |
+| 1 | `tests/test_installer_local_update.py` | ci:C182 | Wave C | astrid.installer.rN_stop.RNStopError: An interrupted legacy RN update is retained. Automat |
 | 1 | `tests/test_installer_pinokio_integration.py` | lanes:C42 | AG-B13 | Failed: Timeout (>N.Ns) from pytest-timeout. |
 | 1 | `tests/test_installer_startup_stop.py` | ci:C3 | AG-A5 | astrid.installer.rN_stop.RNStopError: RN requires the copy-only upgrade boundary. Run the  |
 | 1 | `tests/test_installer_transaction_authority.py` | lanes:C43 | AG-B5 | AssertionError: Recovering the interrupted Astrid update. |
-| 1 | `tests/test_installer_update_legacy_record.py` | ci:C185 | Wave C | AssertionError: assert 'recovery-needed' == 'failed' |
+| 1 | `tests/test_installer_update_legacy_record.py` | ci:C189 | Wave C | AssertionError: assert 'recovery-needed' == 'failed' |
 | 1 | `tests/test_onboarding_parity.py` | lanes:C106 | AG-P2 | AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.gener |
 | 1 | `tests/test_skills_selected_composition.py` | ci:C14 | AG-P1 | argparse.ArgumentError: argument command: invalid choice: 'publish' (choose from 'import', |
-| 1 | `tests/test_timeline_editing_helpers.py` | ci:C217 | Wave C | ImportError: cannot import name 'retime_with_ripple' from 'astrid.sdk.timeline_editing' (< |
-| 1 | `tests/test_timeline_editing_helpers.py` | ci:C218 | Wave C | ImportError: cannot import name 'retime' from 'astrid.sdk.timeline_editing' (<path> |
-| 1 | `tests/test_timeline_editing_helpers.py` | ci:C219 | Wave C | ImportError: cannot import name 'retime_with_ripple' from 'astrid.sdk.timeline_editing' (< |
-| 1 | `tests/timeline/test_authoring_bundle.py` | ci:C221 | Wave C | ImportError: cannot import name 'promote_approved_authoring_candidate' from 'astrid.core.t |
-| 1 | `tests/timeline/test_shot_composition_projection.py` | ci:C224 | Wave C | ImportError: cannot import name '_track_merge' from 'astrid.core.timeline.shot_composition |
-| 1 | `tests/v10/test_docs_cli_alignment.py` | ci:C229 | Wave C | AssertionError: SKILL.md contains 'astrid status' |
-| 1 | `tests/v10/test_docs_cli_alignment.py` | ci:C230 | Wave C | AssertionError: astrid/packs/_core/docs/SKILL.md: 'astrid status' |
+| 1 | `tests/test_timeline_editing_helpers.py` | ci:C221 | Wave C | ImportError: cannot import name 'retime_with_ripple' from 'astrid.sdk.timeline_editing' (< |
+| 1 | `tests/test_timeline_editing_helpers.py` | ci:C222 | Wave C | ImportError: cannot import name 'retime' from 'astrid.sdk.timeline_editing' (<path> |
+| 1 | `tests/test_timeline_editing_helpers.py` | ci:C223 | Wave C | ImportError: cannot import name 'retime_with_ripple' from 'astrid.sdk.timeline_editing' (< |
+| 1 | `tests/timeline/test_authoring_bundle.py` | ci:C225 | Wave C | ImportError: cannot import name 'promote_approved_authoring_candidate' from 'astrid.core.t |
+| 1 | `tests/timeline/test_shot_composition_projection.py` | ci:C228 | Wave C | ImportError: cannot import name '_track_merge' from 'astrid.core.timeline.shot_composition |
+| 1 | `tests/v10/test_docs_cli_alignment.py` | ci:C233 | Wave C | AssertionError: SKILL.md contains 'astrid status' |
+| 1 | `tests/v10/test_docs_cli_alignment.py` | ci:C234 | Wave C | AssertionError: astrid/packs/_core/docs/SKILL.md: 'astrid status' |

@@ -1,5 +1,5 @@
 {
- "note": "Which card owns each cluster (ci = ci-clusters.md, lanes = lanes-clusters.md) and, through files, every failing ID in a test file the card's scope already covers. Unlisted IDs are Wave C, carded per test file in wave-c-cards.md. Cluster numbers were remapped from release-15-b324d7c1 by grouping key on 24 November 2026 (AG-0). Regenerate with ../make_wave_c.py. Three keys moved line because the code moved (lanes C1 service.py:3400 to :3421, C11 sync.py:1220 to :1245, C19 timeline_address.py:520 to :524, now C20) and were mapped by hand.",
+ "note": "Which card owns each cluster (ci = ci-clusters.md, lanes = lanes-clusters.md) and, through files, every failing ID in a test file the card's scope already covers. Unlisted IDs are Wave C, carded per test file in wave-c-cards.md. Cluster numbers were remapped from release-15-b324d7c1 by grouping key on 24 November 2026 (AG-0). Regenerate with ../make_wave_c.py. Three keys moved line because the code moved (lanes C1 service.py:3400 to :3421, C11 sync.py:1220 to :1245, C19 timeline_address.py:520 to :524, now C20) and were mapped by hand. CI was re-clustered with the darwin native result of run 45375336008 (same tree) and remapped by key; ci:C93, the macOS render reconciliation budget, is AG-B22's (D14).",
  "AG-P1": {
   "ci": [
    6,
@@ -39,9 +39,9 @@
    11,
    15,
    18,
-   55,
-   71,
-   74
+   56,
+   72,
+   75
   ],
   "lanes": [
    26,
@@ -53,19 +53,19 @@
    9,
    12,
    13,
-   42,
-   44,
-   47,
+   43,
+   45,
    48,
    49,
-   83
+   50,
+   84
   ]
  },
  "AG-A5": {
   "ci": [
    3,
-   60,
-   62
+   61,
+   63
   ]
  },
  "AG-A6": {
@@ -79,7 +79,7 @@
    11
   ],
   "ci": [
-   78
+   79
   ]
  },
  "AG-A9": {
@@ -98,10 +98,10 @@
    20,
    25,
    27,
-   46,
-   79,
-   81,
-   82
+   47,
+   80,
+   82,
+   83
   ],
   "files": [
    "tests/packs/test_pack_discovery*.py",
@@ -114,8 +114,8 @@
    21,
    22,
    23,
-   50,
-   86
+   51,
+   87
   ],
   "files": [
    "tests/scripts/test_pod_jobs.py",
@@ -126,8 +126,8 @@
  "AG-B4": {
   "ci": [
    26,
-   64,
-   84
+   65,
+   85
   ]
  },
  "AG-B5": {
@@ -135,11 +135,11 @@
    17,
    28,
    29,
-   36,
-   41,
-   43,
-   56,
-   57
+   37,
+   42,
+   44,
+   57,
+   58
   ],
   "lanes": [
    31,
@@ -149,7 +149,7 @@
  "AG-B7": {
   "ci": [
    16,
-   38
+   39
   ],
   "files": [
    "tests/sdk/test_timeline_open_commit*.py",
@@ -159,21 +159,21 @@
  "AG-B9": {
   "ci": [
    32,
-   45
+   46
   ]
  },
  "AG-B10": {
   "ci": [
    24,
    31,
-   65,
-   66
+   66,
+   67
   ]
  },
  "AG-B11": {
   "ci": [
-   34,
-   35
+   35,
+   36
   ],
   "lanes": [
    23
@@ -260,7 +260,7 @@
  "AG-B21": {
   "ci": [
    33,
-   37
+   38
   ]
  },
  "AG-B22": {
@@ -268,6 +268,9 @@
    "tests/core/generation/test_readiness_missing_models.py",
    "tests/core/generation/test_engine_custody.py",
    "tests/packs/rendering/test_render_export_task_adapter.py"
+  ],
+  "ci": [
+   93
   ]
  }
 }
