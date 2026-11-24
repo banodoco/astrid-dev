@@ -15,7 +15,7 @@ Timings of this repetition (release to Saved; POST to 200 in brackets): cold 15.
 | --- | --- | --- | --- | --- |
 | **`provider_commit`** (profile / timing line) | 9.65 / 9.65 | 3.00 / 3.15 | 2.89 / 3.04 | 3.07 / 2.93 |
 | patch capture and payload (Agent `_commit_patch`, `_doc_patch`) | 0.89 | 0.83 | 0.76 | 1.02 |
-| copy and compare (`value_equal`, `deepcopy`) | 0.70 | 0.93 | 0.73 | 0.70 |
+| copy and compare (`value_equal`, `deepcopy`) | 0.74 | 0.93 | 0.73 | 0.70 |
 | jsonschema | 0.56 | 0.53 | 0.62 | 0.58 |
 | JSON encode and decode | 2.33 | 0.38 | 0.27 | 0.28 |
 | auth and value validation | 1.28 | 0.03 | 0.14 | 0.21 |
