@@ -14,25 +14,17 @@ description: Dispatch and supervise Lead-approved packets in fresh ChatGPT sessi
 
 Use when the [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [packet queue](../../astrid-dev-lead/workstreams/multi-manager-release.md) and the owner has authorized this Orchestrator. The general [Orchestrate role](../SKILL.md) still applies.
 
-**The session's mode is set by the packet's Route, every time:**
+**The packet's Route sets the session's mode, every time:** N High, X Extra High, S Pro ([run contract](../../../shared/run-contract.md#chatgpt-session-modes)), never one mode for all or by feel. If a mode isn't offered, say so in STATUS and ask the Lead.
 
-| Packet Route | ChatGPT mode |
-| --- | --- |
-| `N`, normal | High |
-| `X`, very hard | Extra High |
-| `S`, super hard | Pro |
-
-Never run every packet in one mode, and never pick a mode by feel. If a mode isn't offered, say so in STATUS and ask the Lead; don't substitute one silently. A packet moved to a harder route moves to that route's mode ([run contract](../../../shared/run-contract.md#chatgpt-session-modes)).
-
-**One packet, one fresh ChatGPT session.** The packet session implements and submits; **you** keep sessions moving; **the Lead** reviews and integrates.
+**One packet, one fresh ChatGPT session.** The session writes; **you** run proof and keep sessions moving; **the Lead** reviews and integrates.
 
 ## Start
 
 1. Read the board, its packets, their `tasks.md` rows and your board. Confirm each packet's dependencies, repository, PR destination, proof and authority.
-2. Do the board's startup checks: the mailbox both ways ([protocol](codex-cloud/README.md#establish-the-mailbox)), how sessions start and resume (a comment or session URL cannot wake one), and how many ChatGPT sessions this account's subscription can run at once. Tell the Lead if that is below the board's cap.
-3. **Find every earlier manager or packet session** on this release's plans: stopped, stalled, broken or finished early. Stop any you can reach, name any you cannot for the owner, and list each one's branches and open pull requests with heads; the Lead decides what each becomes.
+2. Do the board's startup checks: the mailbox both ways ([protocol](codex-cloud/README.md#establish-the-mailbox)), how sessions start and resume (a comment or session URL cannot wake one), how many ChatGPT sessions this account's subscription can run at once, and that **you** can clone, build the environment and run one focused test on a network-capable machine (packet sessions never do).
+3. **Find every earlier manager or packet session** on this release's plans. Stop any you can reach, name any you cannot for the owner, and list each one's branches and open pull requests with heads; the Lead decides what each becomes.
 4. Dispatch the first packet alone: its early STATUS proves a packet session can push, open a pull request and comment. Each later packet's early STATUS proves its own repository.
-5. Give each Ready packet a **new ChatGPT session** in the mode its **Route** sets ([N High, X Extra High, S Pro](../../../shared/run-contract.md#chatgpt-session-modes)) with the [start message](#packet-start-message), and name it in your next STATUS; a packet's ID is its file name.
+5. Give each Ready packet a **new ChatGPT session** in its Route's mode with the [start message](#packet-start-message), and name it in your next STATUS; a packet's ID is its file name.
 
 ## Packet start message
 
@@ -46,20 +38,21 @@ Board: <issue URL>, run <run id>, format in its first post. You are <mailbox nam
 the Orchestrator is <name>; the Lead is <name>.
 [Replacing <prior session>: continue from <branch> at <head> and <last STATUS link>;
  apply Lead decisions <comment IDs> not yet done.]
-Implement and prove this packet. Post STATUS or BLOCKED as comments on the board,
+Write this packet's code and tests; do not clone, build or run tests. Post STATUS or BLOCKED as comments on the board,
 the first as soon as your first branch is pushed and its draft pull request open.
+End with READY-PROOF <repo> <PR> <head> <selectors>, then stop.
 Do not merge, tick tasks.md or start another packet.
 ```
 
-You send it from the owner's account, as her message ([run contract](../../../shared/run-contract.md#who-answers-for-a-run)). If you cannot start a session, give the owner a ready-to-paste prompt and report the limitation.
+You send it as the owner's message ([run contract](../../../shared/run-contract.md#who-answers-for-a-run)). If you cannot start a session, give her a ready-to-paste prompt.
 
 ## Every hour
 
 1. **Read by cursor** ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)): your board, and your parent's board for messages to you.
-2. **Inspect every open packet** in the release queue: Ready, Running, Review or Blocked. Check its messages, PRs and evidence since last time. The branch, not the chat, shows health. No commit or STATUS for 3 hours: resume it. A chat that will not load after one reload, gives no reply 30 minutes after a resume, or is quiet for 6 hours is broken. Replace it only once its branch has not moved for 30 minutes, from the branch head and last STATUS, and name that head in the replacement's first message. Never two writers on one branch.
-   **Proof turnaround.** Answer each `READY-PROOF` within 45 minutes, running independent proofs side by side in background subagents, not one box in turn. After a ruling, resume the session if it has been quiet for 30 minutes.
-3. **Relay, then confirm.** A message is delivered when it shows in the chat or the session's next post answers it. Otherwise post it on the board addressed to that session, then resume the session so it reads it; mark it "unconfirmed" in STATUS.
-4. **Act once where needed:** dispatch Ready packets to fresh sessions; nudge/resume stalled sessions; pass submitted PRs and proof to the Lead as Review; relay rework to the same packet, never duplicated; escalate genuine technical/permission/dependency blockers; an environment block (no way to start, resume or push) is one BLOCKED naming the missing capability. Set Done only on the Lead's DONE. If a session cannot dispatch an authorized workflow on its own branch, dispatch it for the session. A Review unanswered for 4 hours: send the Lead a REQUEST and tell the owner.
+2. **Inspect every open packet** in the release queue: Ready, Running, Review or Blocked. The branch, not the chat, shows health. No commit or STATUS for 3 hours: resume it. A chat that will not load after one reload, is silent 30 minutes after a resume, or is quiet for 6 hours is broken: replace it once its branch has not moved for 30 minutes, naming the head in the replacement's first message. Never two writers on one branch.
+   **Proof turnaround.** Answer each `READY-PROOF` within 45 minutes, running independent proofs side by side in background subagents, not one box in turn. You run the proof and apply small findings yourself under the Lead's [fix-it-yourself rule](../../astrid-dev-lead/workstreams/multi-manager-release.md); resume the session with your findings only for the rest. After a ruling, resume it if quiet for 30 minutes.
+3. **Relay, then confirm.** A message is delivered when it shows in the chat or the session's next post answers it. Otherwise post it on the board to that session, resume the session, and mark it "unconfirmed" in STATUS.
+4. **Act once where needed:** dispatch Ready packets to fresh sessions; nudge/resume stalled sessions; pass submitted PRs and proof to the Lead as Review; relay rework to the same packet, never duplicated; escalate genuine technical/permission/dependency blockers; an environment block (no way to start, resume or push) is one BLOCKED naming the missing capability. Set Done only on the Lead's DONE. A Review unanswered for 4 hours: send the Lead a REQUEST and tell the owner.
 5. **Post one hourly STATUS** on your board, ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)): `acted on:` and `cursor:` lines, then a line per open packet with state, session, latest evidence (or no change) and next action. That STATUS, with `cursor:` your last processed comment, is the live record of handoffs and sessions; the Lead copies it to `run.md`. 
 
-If scheduling or resume is unverified, name the manual nudges. End check-ins when dispatch ends.
+If scheduling or resume is unverified, name the manual nudges.

@@ -94,7 +94,6 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 - **Sessions in use (23 November 2026):** the Release 15 Lead is `session_011EzfW1gtAhRQwk8pgJMzhG`. Plan 56's accountable agent, delegated by the owner, is `session_011EzfW2ePdUMAHRAcAm3nur`. On mailbox #1757 only, it posts under the name `r15-lead`, and the Orchestrator addresses it so. The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override, the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
 - **The Orchestrator** acts in the owner's ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace packet sessions and comment on the mailbox; it does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch, never dispatches hosted CI and never takes a second packet.
-- **Session mode follows the packet's Route:** N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
 - **Bases:** astrid-agent `release/15/plan-56` from `release/15/main` (`045064b6`); VibeComfy `release/15/plan-56` from `c0e910ca`, the commit the Agent pins, which contains VibeComfy `release/15/main` (`48b5fa9e`), so both branches carry the current `release/15/main`. When `release/15/main` moves, the Lead merges it into `release/15/plan-56`; a packet never does.
 - **Heads (24 November 2026):** astrid-agent `release/15/plan-56` = `7fa92be1` (after #621); astrid-agent `p56/landing-s1` = `46f5b945` (or later); VibeComfy `release/15/plan-56` = `42819e14`; VibeComfy `p56/landing-s1` = `033473ff`.
 - **Needs the owner:** the live SAM run (WS-L, after R), publishing, and anything paid or touching her machine, install or media. On 24 November 2026 she delegated every other Plan 56 blocker, owner decisions included, to Plan 56's accountable agent, which records each one on the mailbox.
@@ -106,7 +105,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 3. **RS1 and R are commissioned by the Lead,** each by Codex Astra.
 4. **The Plan 56 bases include `release/15/main` of both repositories** (the owner, 23 November 2026, through the Orchestrator); the Lead records each base's head and ancestry in `releases/15.md` Branches.
 5. **A packet's dependants wait only for the cards they depend on,** not for the whole packet (Lead, 23 November 2026).
-6. **Proof runs where the network is.** ChatGPT packet sandboxes cannot reach `github.com`. Packet sessions publish through the connector and post `READY-PROOF <repo> <PR> <head> <selectors>`. The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
+6. **Proof runs where the network is.** Packet sessions end with `READY-PROOF` ([workstream](../../skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md)). The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
 7. **Hosted CI.** VibeComfy's `ci` runs no unit tests (astrid-dev #1768), so the Lead's local fast suite, compared by id, replaces it (baseline at `c0e910ca`: 758 passed, 9 failed, 9 skipped). Agent `ci.yml` does not trigger on `release/*/plan-*`; the Lead dispatches it on `release/15/plan-56` after each batch and compares it by id with `agent-ci-baseline-8807f820` (Lead, 23 November 2026).
 8. **Batch integration.** The Lead merges accepted VibeComfy PRs with `--no-ff`, tests the integrated tree, pushes that exact tree, and adds one cumulative Agent pin per batch (Lead, 23 November 2026).
 9. **Code-quality audit before every packet merge:** duplication across repos, silent fallbacks, broad `except`, hard-coded cases, test-only seams, dead or duplicate paths. A silent fallback, or a second code path left as an end state, is must-fix (mailbox a0bb99b6; follow-ups in astrid-dev #1772).
@@ -131,7 +130,7 @@ Cadence and time limits: [multi-manager dispatch](../../skills/roles/astrid-dev-
 
 A branch, not a chat, shows health ([liveness](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)). Work that has not moved is blocked by the work or the environment: fix an environment cause where it lives, or bring the owner the exact step, and never dispatch into the same wall again.
 
-- **A packet session** with no commit or STATUS for 3 hours is resumed. If it will not load, does not reply 30 minutes after the resume, or is quiet for 6 hours, the Orchestrator replaces it (`r15-<packet>-<n+1>`) from the branch head and last STATUS, naming that head; never two writers on one branch, so wait if the branch moved in the last 30 minutes.
+- **A packet session:** resumed and replaced as in the [dispatch workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md); the replacement is `r15-<packet>-<n+1>`.
 - **The Orchestrator** quiet: the Lead checks its scheduled task and nudges it; at 3 hours the owner is told and starts a fresh one from the board.
 - **The Lead** quiet: the Orchestrator keeps its running packets going, starts nothing needing a ruling and tells the owner; at 6 hours the owner hands the role to a standby Lead (none named: see Waiting on the owner), under the same mailbox name `r15-lead`, after ruling out a quiet Lead.
 - **A Review** unanswered for 4 hours: the Orchestrator sends the Lead a REQUEST and tells the owner.
@@ -148,7 +147,7 @@ The Orchestrator does these first, posts one STATUS with each as passed or faile
 6. **GitHub from a packet session:** the session can push a `p56/<task id>` branch, open a draft pull request and comment on #1757, in astrid-agent, VibeComfy and astrid-dev.
 7. **GitHub for the Orchestrator:** it can read pull requests, commits and workflow runs in those repositories, and comment on #1757.
 8. **How many ChatGPT sessions the account can run at once.** Tell the Lead if that is below the cap below, and whether Extra High and Pro are offered.
-9. **A packet session can run the tests:** it can build the Agent environment with astrid-agent's in-repo `scripts/worker-env/agent-setup.sh` (VibeComfy at the Agent's pin) and run one focused test, for example `tests/core/generation/test_entries.py`; for VibeComfy, which has no in-repo copy, astrid-dev `env/vc-setup.sh` and `env/vc-pytest.sh`.
+9. **The Orchestrator can run the tests, on a network-capable machine; never a packet startup check:** it builds the Agent environment (`scripts/worker-env/agent-setup.sh`; VibeComfy: astrid-dev `env/vc-setup.sh`, `env/vc-pytest.sh`) and runs one focused test, such as `tests/core/generation/test_entries.py`.
 
 ### Dispatch queue (Plan 56)
 
@@ -228,7 +227,7 @@ Cadence, quiet sessions and replacement follow [Plan 56's table](#when-a-session
 
 ### Manager startup checks
 
-These are [Plan 56's checks](#orchestrator-startup-checks) 1, 3, 4, 5, 7, 8 and 9, run against the plan's own mailbox. Check 2 becomes: `release/15/plan-<P>` exists in each repository the plan's packets name, and no `p<P>/*` branch exists that the board does not list. Check 6 becomes: a packet session can push a `p<P>/<task id>` branch, open a draft PR and comment on the mailbox, in each repository the packets name (Plan 87: astrid-agent, astrid-runtime, astrid-app; Plan 89: astrid-runtime, astrid-agent, astrid-app). The manager posts one STATUS with each result and dispatches nothing until its orchestrator's DECISION answers it.
+These are [Plan 56's checks](#orchestrator-startup-checks) 1, 3, 4, 5, 7, 8 and 9 (9 for the orchestrator only), run against the plan's own mailbox. Check 2 becomes: `release/15/plan-<P>` exists in each repository the plan's packets name, and no `p<P>/*` branch exists that the board does not list. Check 6 becomes: a packet session can push a `p<P>/<task id>` branch, open a draft PR and comment on the mailbox, in each repository the packets name (Plan 87: astrid-agent, astrid-runtime, astrid-app; Plan 89: astrid-runtime, astrid-agent, astrid-app). The manager posts one STATUS with each result and dispatches nothing until its orchestrator's DECISION answers it.
 
 ### Dispatch queue (Plan 87)
 
@@ -307,7 +306,7 @@ Added 24 November 2026 by the Release 15 Qualifier (`r15-qualifier`, `session_01
 2. **Never packet work:** anything needing an installed build, a GPU, a render, a real timing or hosted CI to reproduce.
 3. **Each packet carries** its exact selectors, the failing ids, the tests that must pass unchanged, and "no existing assertion changes".
 4. **PR destination:** `p15q/<packet id>` → `release/15/q-<topic>` (a topic branch the Qualifier cuts from `release/15/main`), then `release/15/q-<topic>` → `release/15/main` through the Lead's gate.
-5. **Proof:** a packet posts `READY-PROOF <repo> <PR> <head> <selectors>`; the Qualifier answers within 45 minutes, proofs run in parallel. Packet sessions never merge, never edit `tasks.md`, never dispatch hosted CI.
+5. **Proof:** a packet ends with `READY-PROOF`; the Qualifier answers within 45 minutes, in parallel. Packets never merge, edit `tasks.md` or dispatch hosted CI.
 6. **Cap:** at most **three** packets in Running or Review at once. None starts before the Lead's DECISION answers the manager's startup STATUS and the Qualifier posts its own.
 
 ### Dispatch queue (qualification)
