@@ -6,7 +6,7 @@ file matches one of the card's "files" globs (a file already in a card's scope s
 IDs are counted once per (job, id).
 
 Usage: make_wave_c.py RELEASE_DIR   (reads assignment.json, ci-failing-ids.tsv and lanes-failing-ids.tsv
-there; writes wave-c-cards.md and prune-candidates.md there). Standard library only. Re-run after a re-measure with
+there; writes wave-c-cards.md, prune-candidates.md and cards/<card>.tsv, each Wave A or B card's IDs, there). Standard library only. Re-run after a re-measure with
 cluster_failures.py.
 """
 import collections
@@ -28,6 +28,7 @@ for card, owned in assignment.items():
     globs += [(pattern, card) for pattern in owned.get("files", [])]
 
 counts = collections.Counter()
+by_card = collections.defaultdict(list)
 by_file = collections.defaultdict(set)
 seen = set()
 for lane in ("ci", "lanes"):
@@ -39,6 +40,8 @@ for lane in ("ci", "lanes"):
         path = test_id.split("::")[0]
         card = by_cluster[lane].get(cluster) or next((c for p, c in globs if fnmatch.fnmatch(path, p)), None)
         counts[card or "Wave C"] += 1
+        if card:
+            by_card[card].append(f"{lane}\t{cluster}\t{outcome}\t{job}\t{test_id}")
         if card is None:
             by_file[path].add(f"{lane}:{cluster}")
             by_file[path, "n"] = by_file.get((path, "n"), set()) | {(job, test_id)}
@@ -65,6 +68,9 @@ order = lambda k: (k == "Wave C", k[:4], int(k[4:]) if k[4:].isdigit() else 0)
 lines += [f"| {k} | {v} |" for k, v in sorted(counts.items(), key=lambda kv: order(kv[0]))]
 lines += ["", f"Total: {sum(counts.values())} distinct (job, id) pairs."]
 (root / "wave-c-cards.md").write_text("\n".join(lines) + "\n")
+(root / "cards").mkdir(exist_ok=True)
+for card, rows in by_card.items():
+    (root / "cards" / f"{card}.tsv").write_text("lane\tcluster\toutcome\tjob\tid\n" + "\n".join(sorted(rows)) + "\n")
 
 # Prune candidates: IDs whose cluster message points at removed, retired, moved or legacy code, plus the
 # clusters assigned to AG-P1. AG-P1 sorts each into retire, redundant or keep before any card fixes it.

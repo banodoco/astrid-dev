@@ -1,0 +1,22 @@
+lane	cluster	outcome	job	id
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_authenticated_managed_jsonl_and_ref_order_reach_real_materialization
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_existing_child_limits_refuse_before_upload_or_admission[limit0]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_existing_child_limits_refuse_before_upload_or_admission[limit1]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_existing_child_limits_refuse_before_upload_or_admission[limit2]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_existing_child_limits_refuse_before_upload_or_admission[limit3]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[bad-image]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[duplicate-key]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[malformed-jsonl]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[missing-producer]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[oversized-image]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[oversized-jsonl]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[too-many-outputs]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[undelegated]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[unsafe-producer]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_invalid_producer_request_never_binds_uploads_or_admits[wrong-provider]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_jsonl_and_ordered_edit_refs_are_retained_before_binding_and_upload
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_managed_jsonl_custody_refusal_precedes_binding_and_mutation[malformed]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_managed_jsonl_custody_refusal_precedes_binding_and_mutation[oversized]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_managed_jsonl_custody_refusal_precedes_binding_and_mutation[unauthorized]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_managed_jsonl_custody_refusal_precedes_binding_and_mutation[wrong-hash]
+lanes	C5	FAILED	integration shard 1 _ 4	tests/core/execution/test_openai_child_admission.py::test_openai_t2i_one_admitted_task_binds_frozen_outputs_and_replays

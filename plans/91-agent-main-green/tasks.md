@@ -128,6 +128,15 @@ Five slots. The manager fills a free slot with the first card in this order whos
 
 **Landing:** a card's PR goes into `release/15/plan-91` after its focused proof. The manager merges up to five, runs the batch comparison, ratchets the ceiling, and reverts any card whose batch result shows a new failure. The plan branch lands in `release/15/main` with the owner's go: once after RS1 (Phase 1's result), and at the end.
 
+## Run decisions
+
+One line each, by the Plan 91 orchestrator (`r15-p91-orchestrator`), from 24 November 2026.
+
+- **Packets:** one per card, `releases/15/packets/R15-P91-<nn>.md`, in the dispatch order: 01 AG-P1, 02 AG-P2, 03 AG-A8, 04 AG-A9, 05 AG-A7, 06 AG-A1, 07 AG-A2, 08 AG-A10, 09 AG-A6, 10 AG-A3, 11 AG-A5, then Wave B in index order, 12 AG-B1 to 30 AG-B22. AG-0, AG-1, AG-2, RS1, R, AG-10, every hosted run and the ceiling stay in the orchestrator's lane. Wave C packets follow RS1's regenerated list.
+- **Card IDs** come from AG-0's `evidence/release-15-514499de/cards/<card>.tsv` (written by `make_wave_c.py`); the cluster numbers in the task rows above are `b324d7c1`'s. AG-A8's list is a first reading by refusal message, split from AG-A7's clusters.
+- **The ceiling and the comparison key by job family** (`unit`, `darwin native`, `integration`, `opt-in`, and single jobs by name), not by shard: tests move between shard numbers across runs ([AG-0](evidence/release-15-514499de/README.md#two-findings-for-ag-1)).
+- **Base choice re-checked at `514499de`:** Plan 88 has landed. Plan 77's failing test files are already identical on the base, so no card stacks on Plan 77 today; only `ci.yml` still differs, so the workflow cards re-check their merge at proof. New overlaps found: Plan 87 changes `tests/core/rendering/test_remotion_registry_context_key.py` (AG-A2's proof), `tests/packs/rendering/test_render_export_task_adapter.py` (AG-B22), `astrid/packs/rendering/pack.yaml` (AG-B9) and `astrid/core/execution/generic_host.py` (AG-B11); Plan 56 changes `generic_host.py`, `astrid/core/generation/managed_preparation.py` (AG-B19) and `tests/core/generation/test_workflow_input_a01.py` (AG-B17's file). The packets name them; the orchestrator agrees the order with those lanes.
+
 ## Taken from Plan 39
 
 These Plan 39 rows and packets are this plan's from 23 November 2026 (D2). Their evidence stays where it is.

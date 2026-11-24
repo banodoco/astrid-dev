@@ -1,0 +1,8 @@
+lane	cluster	outcome	job	id
+ci	C32	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/packs/test_portfolio_parity.py::test_pack_manifest_v3_compliant[rendering]
+ci	C32	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/packs/test_portfolio_parity.py::test_pack_manifest_v3_compliant[runpod]
+ci	C32	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/packs/test_portfolio_parity.py::test_pack_manifest_v3_compliant[training]
+ci	C32	FAILED	unit shard 6 _ 8 (ubuntu-latest)	tests/packs/test_portfolio_parity.py::test_pack_manifest_v3_compliant[vibecomfy]
+ci	C45	FAILED	unit shard 4 _ 8 (ubuntu-latest)	tests/packs/h3_av/test_no_astrid_imports.py::test_module_imports_nothing_from_astrid[extensions/vibecomfy.workflows/hooks.py]
+ci	C45	FAILED	unit shard 4 _ 8 (ubuntu-latest)	tests/packs/h3_av/test_no_astrid_imports.py::test_module_imports_nothing_from_astrid[shared/conform.py]
+ci	C45	FAILED	unit shard 4 _ 8 (ubuntu-latest)	tests/packs/h3_av/test_no_astrid_imports.py::test_module_imports_nothing_from_astrid[shared/handoff.py]

@@ -4,13 +4,13 @@
 
 **Goal:** Every CI workflow on astrid-agent `main` is green and stays green, so a red Agent check means a new regression, and anyone changing the Agent knows within one run whether they broke something.
 
-**Status:** active
+**Status:** queued
 
 **Owner:** Orchestrator session `session_011EzfW1yUojAfWkGcaZNRph` (`r15-p91-orchestrator`), with one manager for its packets
 
 **Estimate:** 55–72 (about 4–5 weeks elapsed with five workers): Phase 1 (the gate, the prune pass and the large causes) 23–27, Phase 2 (the middle) 17–22, Phase 3 (the long tail) 12–20, Phase 4 (green runs and review) 3–5
 
-**Waiting on:** the Release 15 Lead to add Plan 91 to the brief and the run board; AG-0 (cut and re-measure); Plan 77 for the failing test files it also edits ([base choice](inputs.md#source-identities)). Plan 88 landed in `release/15/main` (`514499de`), so its two files no longer stack
+**Waiting on:** the Release 15 Lead to add Plan 91 to the brief and the run board (Status turns active with the brief line; the run itself started 24 November); AG-0 (cut and re-measure); Plan 77 for the failing test files it also edits ([base choice](inputs.md#source-identities)). Plan 88 landed in `release/15/main` (`514499de`), so its two files no longer stack
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
