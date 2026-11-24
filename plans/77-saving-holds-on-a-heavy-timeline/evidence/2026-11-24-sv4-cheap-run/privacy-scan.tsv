@@ -1,0 +1,6 @@
+pattern	file
+email	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-55806c16a316754ec974a741db353463371fd2c5/program.before.sha256
+email	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-55806c16a316754ec974a741db353463371fd2c5/program.after.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-55806c16a316754ec974a741db353463371fd2c5/archive-files.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-55806c16a316754ec974a741db353463371fd2c5/program.before.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-55806c16a316754ec974a741db353463371fd2c5/program.after.sha256
