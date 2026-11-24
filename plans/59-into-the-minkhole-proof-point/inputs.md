@@ -2,6 +2,10 @@
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
+## Creative production brief — 24 November 2026
+
+The owner's current video direction is recorded in the [narrative outline](narrative-outline.md) (spoken script, finished short and magic-trick pacing) and [visual guide](visual-guide.md) (presenter/explainer art direction, reusable compositions and transitions). These are creative production inputs, not additional engineering scope, completion evidence or release gates.
+
 ## Planning evidence
 
 **Scope decision:** Accepted — Hannah's direction in the accountable session on 16 November 2026: deliver the video and, more importantly, a reusable workflow a weaker agent can run. Work through Astrid's tools; fix blockers at cause or file useful work that is too large; return creative choices to the owner. The [source brief](https://github.com/peteromallet/minkhole-h3av-handover) is also a source record.
