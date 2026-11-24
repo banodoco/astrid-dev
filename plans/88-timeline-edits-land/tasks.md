@@ -21,6 +21,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 ## Run decisions
 
+- 24 Nov 2026: Agent final plan head `7f1ff1d6` includes independently reviewed publication-helper PR #597 (merge `7f1ff1d6`); the affected lanes shard had zero new failing IDs and all 18 publication cases passed. Standalone resolution PR #598 merged to release/15/main as `6a1d247a`; main CI comparison remains with the host. Render proofs remain a release-freeze check.
+
 - 24 Nov 2026 (Lead): adapt the existing element-publication fake only if it enforces the real revision/publication mismatch error, preserves existing assertions, and adds one mismatch refusal test.
 
 - 2026-11-23: Start from the existing `release/15/plan-88` at `0615e4e9`, as the Run start directs; TE-2 and TE-3 start from TE-1's cherry-pick and merge forward without rewriting history.

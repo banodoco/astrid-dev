@@ -1,0 +1,18 @@
+import time: self [us] | cumulative | imported package
+import time:       225 |        225 |   _io
+import time:        37 |         37 |   marshal
+import time:       412 |        412 |   posix
+import time:       354 |       1028 | _frozen_importlib_external
+import time:       183 |        183 |   time
+import time:       123 |        305 | zipimport
+import time:       169 |        169 |     _codecs
+import time:       329 |        498 |   codecs
+import time:       473 |        473 |   encodings.aliases
+import time:       683 |       1654 | encodings
+import time:       330 |        330 | encodings.utf_8
+import time:       118 |        118 | _signal
+import time:        49 |         49 |     _abc
+import time:       127 |        176 |   abc
+import time:       163 |        339 | io
+import time:       217 |        217 | _socket
+{"py_identical": true, "companion_identical": true, "receipt_identical": true, "warmup_seconds": 5.367019736000657, "connect_seconds": 0.5605988540010003, "warmup_task": "3811546679784b28ad4c08b47042f1c5", "validation_task": null, "ok": true, "server_seconds": 0.000117477000458166}
