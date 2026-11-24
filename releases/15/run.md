@@ -314,4 +314,4 @@ Added 24 November 2026 by the Release 15 Qualifier (`r15-qualifier`, `session_01
 
 | Packet brief | Source failure | Handoff | Session | Next action / evidence |
 | --- | --- | --- | --- | --- |
-| — | No packet yet. First candidates: none found; the Release 14 Runtime and App reference sets are in [evidence/ci-baseline-r14](evidence/ci-baseline-r14/README.md). | — | — | The Qualifier writes a packet when a whole-run comparison on a landed head names a failing id with a no-network repro and no owning lane. |
+| [R15-Q-01](packets/R15-Q-01.md) | Agent writes must open in the editor (qualification row 5; Lead DECISION r15-lead-qual-0004): parser contract harness | Ready (first, alone; after its early STATUS, up to three at once) | — | astrid-agent `p15q/R15-Q-01` → `release/15/q-agent-writes`; Route X; phase 1 is the parser, R15-Q-03 (loader, fractional `start_ms`) follows; the Qualifier records the selectors' baseline in the PR body |
