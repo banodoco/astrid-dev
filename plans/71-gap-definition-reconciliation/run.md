@@ -2,9 +2,9 @@
 
 The live state of Plan 71's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (21:30 UTC, Tue 24 Nov)
+## Now (22:30 UTC, Tue 24 Nov)
 
-Set up, not started. The orchestrator starts with the lane's integration card once the owner merges the setup PR; packets become Ready as their dependencies merge.
+The integration card has landed: the project branch is at `901e2c3d76155341a69df2b57af9cc02a4bda9ef`. Ready: P71-01. The first packet goes alone until its early STATUS proves a packet session can push, open a draft PR and comment.
 
 ## Authority
 
@@ -67,7 +67,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
-| [P71-01](packets/P71-01.md) The accepted rubric in its canonical home | GDC-2 | Blocked on GDC-1 (orchestrator's lane) | — | Extra High. First packet, alone |
+| [P71-01](packets/P71-01.md) The accepted rubric in its canonical home | GDC-2 | Ready (project head `901e2c3d`) | — | Extra High. First packet, alone |
 | [P71-SC](packets/P71-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | GPT-6.2 Astra, High. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** P71-01 alone writes `docs/contribution-workflow.md`, the gap workstream and `templates/gap.md`. Plan 73's P73-02 to P73-05 also write the gap workstream's `agent/` copy: whichever lands on `main` second carries the edit (orchestrator rules the order).
