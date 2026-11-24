@@ -97,6 +97,16 @@ Keep only the recovery state needed to resume: goal, ready tasks/dependencies, c
 
 When work proceeds without the owner (for example, a contributor or agent helping while the owner is offline or out of quota), keep a decisions ledger from the [template](templates/decisions-ledger.md). Record any proposed change to the written plan, an in-scope best guess where it is silent, any stop-and-ask decision awaiting authority (such as a conflict where both sides change one statement), the trajectory inferred, and improvements not built. Include evidence, the candidate SHA when one exists, and how to revert. A provisional proposal is never permission to execute work outside the accepted scope or bypass a stop. This is the concrete need the paragraph above asks for: it lets the owner accept, change or revert each call later, without rereading the run. A ledger entry is never authorization: stop-and-ask boundaries remain stops, and anything that lands still needs the owner's go.
 
+## Coordination: boards and check-ins
+
+Every role in a project uses one shared board, so history is where the owner can read it, not in private sessions.
+
+- **Boards.** One GitHub issue per release for the Lead (release-wide rulings, the freeze, CI slots, gate requests and confirmations) and one per plan or dispatch run, each titled `coordination: Release <N> <scope> ...`. The run board's [Boards table](../../templates/release/run.md#boards) names each with its run id and every role's mailbox name; the first post holds the header block and name table ([format](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox)). Reuse a board; never open a second.
+- **Reports.** Each role posts its hourly STATUS on its own plan's board, `to: <parent mailbox name>`. The parent answers there with a DECISION.
+- **`send_message`** is only a one-line doorbell for what needs an answer within the hour (a gate request, a blocker, a freeze risk), pointing at the board comment.
+- **Reading.** At each hourly check, read your plan board and the Lead board to the last page.
+- **Check-ins.** Every role with a cadence creates its own hourly scheduled task into its own session at start-up, at a minute other than :30, and checks that it fires. It never disables another session's task, and re-checks its own wake after any schedule change. A Claude cloud session also keeps a keep-awake loop: a background `sleep` of about 110 minutes, restarted at each check-in.
+
 ## Checks and failure repair
 
 Locally, run only explicitly scoped, feature-focused test runs; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. The full relevant suite runs on hosted CI, only at the moments the [table below](#when-a-test-run-is-load-bearing) names ([how](workstreams/astrid-dev-green/SKILL.md#using-github-actions)). Pure planning and research do not execute product checks unless specifically requested. Editing planning documents or check code still requires the appropriate local documentation validators and focused unit tests before submitting a PR; that validation is not permission to execute product tests. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.

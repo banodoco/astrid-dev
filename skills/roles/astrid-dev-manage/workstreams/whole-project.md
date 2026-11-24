@@ -109,4 +109,6 @@ You are expected to decide. The advisor is for thinking that is bigger than your
 
 ## Report
 
+Post the hourly STATUS on the plan's board ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)).
+
 **Closing the project:** open the completion PR from the [completion template](../../../../.github/PULL_REQUEST_TEMPLATE/project-completion.md); `python3 scripts/astrid_dev.py check` checks its fields. Review the affected release brief and the gap’s assessment and route to closure; update the source if needed or record why it did not change ([hierarchy](../../../../docs/contribution-workflow.md#review-the-strategy)). Tell the owner what changed; what is proven, on which exact versions; what failed and why; and each decision that needs them. For a blocker, name what it waits on, who produces it and any deadline.

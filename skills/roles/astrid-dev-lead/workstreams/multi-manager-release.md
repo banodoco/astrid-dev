@@ -28,12 +28,12 @@ Use when the Lead prepares accepted plan work for an Orchestrator to assign to *
 
 2. **Prepare one queue.** List each packet in `releases/<N>/run.md` with its handoff state, session and next action. `tasks.md` stays the record of progress.
 3. **Own plan-level completion.** For plans assigned through this workstream, record the **Lead as the accountable agent** on its `inputs.md` Run start, with the owner's authorization; there is **no separate plan manager**. You review and land accepted task PRs, keep `tasks.md` current on `main`, and do the plan manager's [Release](../../../shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs) steps: merging `release/<N>/main` into plan branches, and landing them. Review stops (RS1, R) are yours: commission an independent reviewer, not a packet.
-4. **Prepare the mailbox.** Reuse the release's existing coordination issue, or create one `coordination: Release <N> Lead / Orchestrator` linked from `run.md`. Comments follow the [mailbox protocol](../../astrid-dev-orchestrate/workstreams/codex-cloud/README.md#establish-the-mailbox); no packet issues, no labels.
+4. **Prepare the boards.** Reuse the release's existing boards, or create them ([rules](../../../shared/run-contract.md#coordination-boards-and-check-ins)) and list them in the `run.md` Boards table; no packet issues, no labels.
 5. **Hand off to the owner.** Provide queue and mailbox links, ready/blocked packets, any missing authorization and the Orchestrator launch message, filled in from the [run board template](../../../../templates/release/run.md#orchestrator-launch-message). The board's startup checks verify access, session creation, resume, the hour and the mailbox; describe any manual steps.
 
 ## At each Lead check-in
 
-**Inputs:** the mailbox since your cursor, including every packet the Orchestrator's STATUS marks Review; open packet PRs; and `python3 scripts/release_branches.py check <N>`.
+**Inputs:** your boards since your cursor, including every packet the Orchestrator's STATUS marks Review; open packet PRs; and `python3 scripts/release_branches.py check <N>`.
 
 **Each Review:** accept, merge, open the `tasks.md` progress PR and post DONE; or list the rework on the PR and post a DECISION. A fresh sub-agent may review for you; the decision stays yours. Brief it to run the packet's own tests and its own probes, and to read hosted results for full suites, not rerun them. Accept a gate only after the reviewer injects the realistic failures in its brief and sees the gate reject them. Judge against that threat model and leave crafted bypasses out of the findings. Route each reviewer by the run contract:
 

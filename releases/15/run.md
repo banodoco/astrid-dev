@@ -12,6 +12,19 @@ Two lanes are running, a third has its brief, and a fourth is proposed. [Release
 - **The release's headline has no lane.** Generation tested for real on three systems rests on issues #678 to #683 and Plan 39; neither has an owner in this release yet.
 - **This board was rewritten from the lanes' reports and records.** CI on the three release heads was not re-read for this rewrite.
 
+### Boards
+
+Rules: [coordination](../../skills/shared/run-contract.md#coordination-boards-and-check-ins). Every role posts its hourly STATUS on its plan's board, and reads that board and the Lead board each hour. The per-plan name tables are under each dispatch below.
+
+| Board | Issue |
+|---|---|
+| Lead (release-wide) | [astrid-dev #1836](https://github.com/banodoco/astrid-dev/issues/1836) |
+| Plan 56 | [#1757](https://github.com/banodoco/astrid-dev/issues/1757) |
+| Plan 87 | [#1776](https://github.com/banodoco/astrid-dev/issues/1776) |
+| Plan 89 | [#1777](https://github.com/banodoco/astrid-dev/issues/1777) |
+| Plan 82 | [#1824](https://github.com/banodoco/astrid-dev/issues/1824) |
+| Qualification | [#1834](https://github.com/banodoco/astrid-dev/issues/1834) |
+
 ### Timeline to publish
 
 Not set. The cut line is still the first decision owed: about 150 engineering days of the listed plans have not started.
