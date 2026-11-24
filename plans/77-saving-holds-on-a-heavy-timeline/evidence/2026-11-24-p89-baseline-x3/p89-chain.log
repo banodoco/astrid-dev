@@ -1,0 +1,7 @@
+BASE1 start free_kib=19602136 14:46:41
+BASE1 exit 1 14:58:03
+BASE2 start free_kib=19477808 14:58:05
+BASE2 exit 1 15:09:16
+BASE3 start free_kib=19353532 15:09:18
+BASE3 exit 1 15:20:39
+CHAIN_DONE

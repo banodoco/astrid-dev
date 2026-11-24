@@ -1,0 +1,41 @@
+{"credential_file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/work-data-1/runtime/credentials/owner.token", "door_endpoint": "http://127.0.0.1:17501", "endpoint": "http://127.0.0.1:40793", "realm_id": "201c0486-58d8-4d23-b05d-9220c1762120", "worker_actor": "astrid-pack-host", "worker_credential_file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/work-data-1/runtime/credentials/astrid-pack-host.token", "worker_profile_configured": false, "worker_scopes": ["handshake", "worker:register", "worker:execute", "projects:read", "tasks:read", "objects:read", "objects:write"]}
+Runtime internal error (request request-798365915fc04c5d9f3e66d9ad5d286d, POST /v1/tasks/claim):
+Traceback (most recent call last):
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/server.py", line 1662, in _dispatch
+    self._route()
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/server.py", line 1375, in _route
+    result = self.runtime.claim_next(self._body(), idempotency_key=key, identity=identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/service.py", line 544, in wrapped
+    with self.store._transaction():
+  File "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/store.py", line 1234, in _transaction
+    self.conn.execute("BEGIN IMMEDIATE")
+sqlite3.OperationalError: database is locked
+
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 38022)
+Traceback (most recent call last):
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/server.py", line 1662, in _dispatch
+    self._route()
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/server.py", line 1375, in _route
+    result = self.runtime.claim_next(self._body(), idempotency_key=key, identity=identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/service.py", line 544, in wrapped
+    with self.store._transaction():
+  File "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/source/24e2c9291d5bcaface78324696286f2dc896debc/runtime_protocol/store.py", line 1234, in _transaction
+    self.conn.execute("BEGIN IMMEDIATE")
+sqlite3.OperationalError: database is locked
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/lib/python3.11/socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
