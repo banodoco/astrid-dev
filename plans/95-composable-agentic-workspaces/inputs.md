@@ -41,7 +41,7 @@ Plans 71–73 are not edited or redispatched by this proposal. Their current sco
 
 ### Ten vivid boundaries of the end state
 
-1. A new workspace imports Otto and adopts a few defaults; no Astro-specific infrastructure or mandatory pipeline is required.
+1. A new workspace imports Otto and adopts a few defaults; no Astrid-specific infrastructure or mandatory pipeline is required.
 2. Dev defines Goals → Gaps → Projects → Releases; Marketing defines Goals → Projects → Campaigns; neither definition changes Otto.
 3. One organisation can define multiple named pipelines; graph queries can overlap, branch and feed back, with no automatic execution.
 4. One project can appear in two pipelines with one identity, owner, task list, status and evidence; deleting a pipeline deletes no project.
