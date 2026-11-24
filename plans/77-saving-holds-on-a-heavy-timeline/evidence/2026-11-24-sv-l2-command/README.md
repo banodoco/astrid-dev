@@ -4,7 +4,7 @@ Status: static checks only; this package has not been run. It reuses the retaine
 
 ## Build the App artifact
 
-The App worktree must already be at the exact SHA, with `node_modules` symlinked to the requalification checkout and `package.json` plus `package-lock.json` byte-identical. No install is needed. Build CPU-only and stop the build if free space drops below 16 GiB; require at least 18 GiB free before starting:
+From this package directory, the App worktree must already be at the exact SHA, with `node_modules` symlinked to the requalification checkout and `package.json` plus `package-lock.json` byte-identical. No install is needed. Build CPU-only and stop the build if free space drops below 16 GiB; require at least 18 GiB free before starting:
 
 ```bash
 app=/home/user/codex-run/wt/astrid-app-p77-svl2-7705ebd4
@@ -15,23 +15,10 @@ ln -s "$ref/node_modules" "$app/node_modules"
 cmp "$app/package.json" "$ref/package.json"
 cmp "$app/package-lock.json" "$ref/package-lock.json"
 (( $(df -Pk /home/user | awk 'NR==2 {print $4}') >= 18*1024*1024 ))
-cd "$app"
-setsid --wait bash -c 'npm run build' >build.log 2>&1 &
-build_pgid=$!
-while kill -0 "$build_pgid" 2>/dev/null; do
-  free_kib=$(df -Pk /home/user | awk 'NR==2 {print $4}')
-  if (( free_kib < 16*1024*1024 )); then
-    kill -- "-$build_pgid" 2>/dev/null || true
-    wait "$build_pgid" || true
-    echo "Stopped App build below 16 GiB free: ${free_kib} KiB" >&2
-    exit 1
-  fi
-  sleep 2
-done
-wait "$build_pgid"
+bash ./build-app-svl2.sh "$app" "$ref"
 ```
 
-The package rechecks these App identities, computes `dist-files.sha256` from this build (not the old App inventory), verifies served assets against it, and recomputes the inventory after the run. The build worktree and dist are about 170 MB. During build and run, stop below 16 GiB free.
+The build helper pins the App commit and original Vite config hash, checks the reference checkout and dependency symlink, then temporarily adds only a `cacheDir` override pointing inside the disposable App worktree. Vite is 5.4.21 per the App lockfile; its config bundler's temporary module is written beside the config file in the disposable App worktree and removed after loading, before the cache setting is available. The original config is restored on success, failure, interrupt, or termination and its pinned hash is checked. The helper snapshots the reference `node_modules` tree (entry type, size, symlink target, and ctime/mtime for every entry) before and after the build and fails if it changed; before and after digests are recorded in `build-node-modules-guard.json`. It logs to `build-svl2.log`, enforces the same 18 GiB start and 16 GiB stop floors, and removes its temporary cache after build. No install is run. The package rechecks these App identities, computes `dist-files.sha256` from this build (not the old App inventory), verifies served assets against it, and recomputes the inventory after the run. The build worktree and dist are about 170 MB. During build and run, stop below 16 GiB free.
 
 ## Run once
 
@@ -54,7 +41,7 @@ The starting data is the retained stopped sandbox from the signed v30 SQLite fix
 
 Read scope: retained App/Runtime/Agent source identities, signed backup, retained stack and fixture. Write scope: package output, disposable App build worktree, and fresh per-repetition copies of the fixture data; the retained stack's program and original data are not intentionally changed. Named receipts include `versions.json`, `dist-files.sha256` and `.after.sha256`, `browser-sv3-measure.json`, `measurements.jsonl`, `summary.tsv`, logs, boundary receipts and `SHA256SUMS`.
 
-Before any saves, the browser must open the timeline, become writable within 120 seconds, and read the exact starting verified head. A 409, refusal, wrong head or failure to become writable stops that attempt before scenarios; this is the early wire-compatibility refusal for the unverified App/Runtime pair. HTTP 200 is accepted only when the existing harness also observes the accepted commit and verifies the resulting public head. The four bounded App marks are captured after each sequential Saved as raw `{name,t}` entries and grouped by correlation counter: `astrid.save.<n>.gesture-end`, `.post-sent`, `.200`, `.saved-badge`. The receipt records missing or multiple group ambiguity rather than inferring HTTP acceptance from a mark. Burst marks are snapshotted after the burst settles, with raw entries retained.
+Before any saves, the browser must open the timeline, become writable within 120 seconds, and read the exact starting verified head. A 409, refusal, wrong head or failure to become writable stops that attempt before scenarios; this is the early wire-compatibility refusal for the unverified App/Runtime pair. The SV-4 harness tape was written against App 148eaf38 and has not been verified against App #377 (7705ebd4), including its changed toolbar/badge DOM and `data-timeline-save-status`. If the tape cannot arm or its first drag fails, the run stops at the cold save and retains only the S0 and App build receipts; it does not proceed to warm or burst scenarios. HTTP 200 is accepted only when the existing harness also observes the accepted commit and verifies the resulting public head. The four bounded App marks are captured after each sequential Saved as raw `{name,t}` entries and grouped by correlation counter: `astrid.save.<n>.gesture-end`, `.post-sent`, `.200`, `.saved-badge`. The receipt records missing or multiple group ambiguity rather than inferring HTTP acceptance from a mark. Burst marks are snapshotted after the burst settles, with raw entries retained.
 
 The run uses the existing S0, cold/warm save and B5/B10 scenarios, the two-file Agent overlay, one fresh browser profile and owned stack, a 120-second writable deadline, an 18 GiB start floor and a 16 GiB stop floor. Cleanup stops only processes owned by this run, requires idle-safe shutdown, verifies ports and original-data boundary, removes copied data, and writes hashes. It does not replace or consume the retained head.
 
@@ -65,6 +52,7 @@ This is a MEASURE command: the package SHA-256 and full package contents are in 
 `run-sv3-overlay.sh` compares the sorted manifest paths with every regular file in this package directory, excluding only `package.sha256` (the manifest) and `package-digest.txt` (the digest of that manifest). It then verifies the manifest hashes before doing any work. The package files that are executed or imported are:
 
 - `run-sv3-overlay.sh` — entry point.
+- `build-app-svl2.sh` — isolated App build helper; temporarily overrides only Vite's cache directory and guards/restores the shared dependency tree.
 - `verify-overlay.py` — executed by the shell for boundary checks, preparation, and receipts.
 - `overlay-direct.py` — executed as the Runtime CLI wrapper.
 - `overlay-guard/sitecustomize.py` — imported by the Runtime Python during startup; witnesses daemon imports and checks overlay selection.
