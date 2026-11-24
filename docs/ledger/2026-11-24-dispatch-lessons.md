@@ -1,0 +1,6 @@
+Date: 2026-11-24
+Kind: fix
+Source: Release 15 Lead, from the mailboxes banodoco/astrid-dev #1757, #1776 and #1777 (23–24 November 2026)
+Resolved by: —
+
+Packet dispatch ran slowly for avoidable reasons. Packet sandboxes have no network and run no hosted test, so proofs waited on the orchestrator's single proof box (75–90 minutes each, one missed a page short in the mailbox). Rulings were asked one at a time mid-run, 1–2 hours each. Packets needing renders, installed measurements or generators stalled (one took 6+ rounds over 9 hours; one passed correctness but failed its measured gate), and multi-card bundles and sweeps took 5–10 hours where narrow packets took 1–2; sweeps left sites unconverted. One orchestrator lost its hourly wake when an old scheduled task was disabled, and 18 `release/*/main` push runs were cancelled by hand, removing gate references. The packet workstream now holds the packet-writing rules (one contract, pre-ruling, lane-only measurement with counters, counted sweeps) and a rolling issue-packet queue with a Repro field; dispatch holds the 45-minute parallel proof turnaround, the full-page mailbox read and the resume after a ruling; the lane orchestrator workstream holds the schedule and CI-run rules. Release 15's Plan 82 rulings are now a pointer. Follows: 2026-11-23-session-modes
