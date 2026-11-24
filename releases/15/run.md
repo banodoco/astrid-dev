@@ -219,6 +219,7 @@ The orchestrator writes the packets at its next break point and lists them here.
 | [R15-P87-03](packets/R15-P87-03.md) | RN-5 (X): one pinned pack revision | Blocked on RN-4 (orchestrator's lane) | — | Continues the three `p87/rn5-*` branches; `READY-PIN` for the pin |
 | [R15-P87-04](packets/R15-P87-04.md) | RN-8 (S): lease through a long render | Blocked on the orchestrator's long-render measurement (`READY-MEASURE`) | — | RN-7 logs are on the plan branch; high-judgment review (S) |
 | [R15-P87-05](packets/R15-P87-05.md) | RN-14 (X): motion pack on a fresh install | Blocked on RN-5's pin; sized first | — | Over one day moves to Release 16 |
+| [R15-P87-06](packets/R15-P87-06.md) | RN-15 (S): long renders die on a recycled process id | Ready (top priority; Lead DECISION 24 November 2026) | — | New branch `p87/rn15-pid-wrap`; high-judgment review (S); the outputs policy is a separate commit |
 
 Stays in the orchestrator's lane: RN-1 to RN-3 (draft astrid-agent#567, awaiting RN-2's real own-object render), RN-4 (`p87/rn4-roots-clean`, review and installed proof), RN-6 and RN-7 (merged), RN-10, RN-12, RN-13 and every real render.
 
