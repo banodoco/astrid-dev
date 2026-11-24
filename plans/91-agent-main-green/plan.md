@@ -23,7 +23,7 @@ The Agent's share of [Plan 39](../39-green-mains/plan.md), split off as its own 
 Every Agent workflow is green on `release/16/main`, and on `main` once Release 16 is published, and it stays green (the owner moved the plan to Release 16 on 24 November 2026; until `release/16/main` is cut, the plan branch builds on `release/15/main` and merges it forward):
 - **Cannot get worse, first.** Before any fix lands, the Agent's current failing tests are sealed as a ceiling that may only fall, keyed by job and test ID, the integration and opt-in lanes included. Every batch the plan merges, and every completed `release/15/main` run, is compared with it. New, lost or reintroduced red fails the comparison.
 - **Prune boldly, then fix.** With no users yet, only current behaviour, and updating from the previous published release, is supported. A test of anything older, or one another passing test already covers, is deleted with its citation rather than repaired (D5). A test of something users do today is never deleted for being hard to fix.
-- **Green by cause.** Each remaining failing test is fixed at its root cause, under one set of [triage rules](tasks.md#triage-rules): name the kind (env, stale test, retired, redundant, product bug, flaky, unknown), fix it the way that kind allows, prove it by ID on hosted CI. Never a loosened assertion, a stub input, a widened deadline, a skip or a growing baseline. Plan 39's anti-hiding rules ([inputs](../39-green-mains/inputs.md#where-changing-a-test-would-hide-a-bug)) apply unchanged.
+- **Green by cause.** Each remaining failing test is fixed at its root cause, under one set of [triage rules](tasks.md#triage-rules): name the kind (env, stale test, retired, redundant, product bug, flaky, unknown), fix it the way that kind allows, prove it by ID on hosted CI. Never a loosened assertion, a stub input, a widened deadline, a skip or a growing baseline. Plan 39's anti-hiding rules ([inputs](../39-green-mains/evidence/release-14-record/inputs.md#where-changing-a-test-would-hide-a-bug)) apply unchanged.
 - **Kept green.** The owner turns on the Agent's required checks: on pull requests, the jobs that run there; for the release, the full comparison. The quarantine rule (strict xfail with an issue, an owner and an expiry, at most ten; Plan 39's D3 and D9) is the only way a known failure may be tolerated. Product bugs too large for this plan stay visibly red on the ceiling, each with an issue and the owner's acceptance (D6).
 
 **Measured on `release/15/main` at `b324d7c1`**, the latest head with a complete CI and Lanes run (23 November 2026; [evidence](evidence/README.md)):
@@ -43,7 +43,7 @@ The triage puts the 1,874 in about 150 distinct causes ([how](inputs.md#planning
 
 It also includes:
 - the comparison and the hosted card runs that make the gate work (AG-1);
-- the Agent rows of Plan 39's [Release 15 ceiling](../39-green-mains/tasks.md#release-15-ceiling);
+- the Agent rows of Plan 39's [Release 15 ceiling](../39-green-mains/evidence/release-14-record/tasks.md#release-15-ceiling);
 - the worker environment's Runtime install, so workers can reproduce what CI runs;
 - the small product fixes the triage finds, where each takes a day or less.
 

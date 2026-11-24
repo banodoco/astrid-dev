@@ -44,7 +44,7 @@ Whole-project execution, proof, task integration and progress steps: [whole-proj
 
 ## Report
 
-Whole-project completion evidence: [whole-project workstream](workstreams/whole-project.md#report). Packet sessions submit PRs/proof through the shared issue and stop.
+Whole-project completion evidence: [whole-project workstream](workstreams/whole-project.md#report). Every manager reports hourly by the run contract's [coordination rules](../../shared/run-contract.md#coordination-boards-and-check-ins); packet sessions submit PRs/proof on their board and stop.
 
 ## Shared workstreams
 

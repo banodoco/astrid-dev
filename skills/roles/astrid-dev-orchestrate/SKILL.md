@@ -26,7 +26,7 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 | The owner wants regular updates on a run | 3. Check in |
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
-**Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
+**Report and check in as the run contract's [coordination rules](../../shared/run-contract.md#coordination-boards-and-check-ins) say.** **Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
 
 **A queue is yours to keep moving.** For an ordered queue (phases of a plan, or several projects):
 - **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.

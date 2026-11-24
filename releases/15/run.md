@@ -12,6 +12,10 @@ Two lanes are running, a third has its brief, and a fourth is proposed. [Release
 - **The release's headline has no lane.** Generation tested for real on three systems rests on issues #678 to #683 and Plan 39; neither has an owner in this release yet.
 - **This board was rewritten from the lanes' reports and records.** CI on the three release heads was not re-read for this rewrite.
 
+### Boards
+
+Every project's board is the astrid-dev issue titled `board: release 15 ...` ([rules](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)); [list them](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22board%3A+release+15%22).
+
 ### Timeline to publish
 
 Not set. The cut line is still the first decision owed: about 150 engineering days of the listed plans have not started.
@@ -195,7 +199,7 @@ On 23 November 2026, in the Release 15 Lead's session (`session_011EzfW1gtAhRQwk
 - **Orchestrators.** For Plan 87, `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-orchestrator`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-orchestrator`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
 - **Managers.** `r15-p87-manager-1` and `r15-p89-manager-1`, one per plan, each started by the owner the same way as Plan 56's Orchestrator and acting in her ChatGPT account at her request. A manager may start, resume, stop and replace its own plan's packet sessions and comment on its mailbox. It does not edit the repository, merge, approve or dispatch hosted CI. It reports to its plan's orchestrator and follows the Release 15 Lead's DECISIONs.
 - **Packet sessions** may push to the branches their packet's PR destination names, open pull requests there and comment on their plan's mailbox. They never merge, never edit `tasks.md`, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro.
-- **What stays in the lane:** real renders, installed save measurements, fixture builds and anything else that needs an installed stack. A packet's proof is its focused tests. Its acceptance proof is the lane's (Plan 56 ruling 6: packet sandboxes cannot reach `github.com`).
+- **What stays in the lane:** see the [packet rules](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once).
 - **Needs the owner:** publishing, anything paid, her install or media, and changing an existing test's assertion.
 
 ### Standing rulings (Plans 87 and 89)
@@ -261,17 +265,11 @@ Added 24 November 2026, when the owner gave her go for [Plan 82](../../plans/82-
 
 Plan branches: `release/15/plan-82` in astrid-agent, astrid-runtime and VibeComfy, cut by the orchestrator from each `release/15/main` before the first packet. The manager's check 6 covers those three repositories.
 
-### Rulings for Plan 82, from the first three dispatches
+### Rulings for Plan 82
 
-The Release 15 Lead's review of Plans 56, 87 and 89's packets on 24 November 2026: twelve merged. Narrow, test-led changes with one contract finished in one to two hours. Renders, installed measurements, shared-file sweeps and multi-card bundles took five to ten hours, with repeated rounds.
+The packet and dispatch rules from Plans 56, 87 and 89 are in the [Lead's packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once) and [dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md#every-hour). Plan-specific: split RA-2 (S) into the prepared-template contract and key, the approval compile split, then the 53-template differential. RA-0a and every installed timing are the lane's.
 
-1. **Assume the packet sandbox has no network and runs no hosted test.** Before the first dispatch, the orchestrator runs a local baseline on each plan branch and writes into every packet its exact focused selectors and the ids that already fail there. The packet writes code and tests, then posts `READY-PROOF`.
-2. **One contract, one packet, aimed at about three hours.** Never bundle cards. RA-2 (S) is split at its natural seams: the prepared-template contract and key, then the approval compile split, then the 53-template differential. Each piece is its own packet.
-3. **Rule the hard questions before dispatch, not during it.** Each packet lists the existing tests that must pass unchanged (the card's "pass unchanged" list), says that no existing assertion may change, and states which fixtures or helpers it may touch. A packet that finds one of these untrue posts BLOCKED once with the exact list. It doesn't argue it out over several rounds.
-4. **Measurement stays in the lane, and counters come first.** RA-0a (the measurements) and every installed timing are the orchestrator's. Each cache packet emits hit, miss and recompute counters, which the lane reads before it trusts a timing. A packet's gate is stated in numbers and measured by the orchestrator on the exact head.
-5. **Sweeps carry their count.** A packet that changes a pattern across call sites lists every site found, and every site changed, in its PR before the first review.
-6. **Proof within 45 minutes, in parallel.** The orchestrator answers each `READY-PROOF` within 45 minutes, running independent proofs side by side in background subagents. It reads the mailbox to the last page on every check.
-7. **Order:** RA-6 first (it gates every cache); RA-1b in parallel; RA-0b after RA-6, RA-0a and Plan 87's RN-4 on `release/15/main` (until then RA-0b may be built against RN-4's commit on `release/15/plan-87`, cherry-picked under the standing ruling); the RA-2 packets after RA-6; R last, in the lane.
+**Order:** RA-6 first (it gates every cache); RA-1b in parallel; RA-0b after RA-6, RA-0a and Plan 87's RN-4 on `release/15/main` (until then RA-0b may be built against RN-4's commit on `release/15/plan-87`, cherry-picked under the standing rulings); the RA-2 packets after RA-6; R last, in the lane.
 
 ### Dispatch queue (Plan 82)
 
