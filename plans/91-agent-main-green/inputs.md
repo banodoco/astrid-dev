@@ -15,7 +15,7 @@
 The end state is Plan 39's, for one repository: every Agent workflow green and kept green. Where it lands and when it starts are D1 and the owner's go.
 
 **Prior art:**
-- [Plan 39](../39-green-mains/plan.md), its [triage](../39-green-mains/inputs.md#agent-ci-lanes-windows-task-host-journey), its [handover](../39-green-mains/handover.md) and its [Release 15 ceiling](../39-green-mains/tasks.md#release-15-ceiling). Each Agent row's cause and kind were traced from Plan 39's tasks, evidence and the Release 14 packets; the map is in [tasks](tasks.md#taken-from-plan-39).
+- [Plan 39](../39-green-mains/plan.md), its [triage](../39-green-mains/evidence/release-14-record/inputs.md#agent-ci-lanes-windows-task-host-journey), its [handover](../39-green-mains/evidence/release-14-record/handover.md) and its [Release 15 ceiling](../39-green-mains/evidence/release-14-record/tasks.md#release-15-ceiling). Each Agent row's cause and kind were traced from Plan 39's tasks, evidence and the Release 14 packets; the map is in [tasks](tasks.md#taken-from-plan-39).
 - The [Release 14 run board](../../releases/14/run.md): rulings 6a, 10 and 13. K2/K3 never passed on an unchanged tree (ruling 10). `release/14/plan-39` (head `2ef74155` on 24 November) was not merged. The [Release 14 brief](../../releases/14.md): Release 14 published on "no new red against Release 13", and its committed inherited-red list (`releases/14/evidence/inherited-red.json`) is empty.
 - The [Release 15 hosted baseline](../../releases/15/evidence/agent-ci-baseline-8807f820/README.md): the unit and macOS failing IDs at `8807f820`, compared by hand with every Release 15 lane, and the groups that move between runs of unchanged code. It does not cover the integration or opt-in lanes, so their failures are compared with nothing: 36 integration IDs are new on `release/15/main` since Release 14.
 - **The workflows as they are** (`release/15/main` at `a09ea669`):
@@ -119,6 +119,6 @@ On 24 November 2026, in this plan's session, Hannah answered D12 and agreed in c
 
 ## References
 
-- [Plan 39](../39-green-mains/plan.md), its [handover](../39-green-mains/handover.md) and its [owner decisions](../39-green-mains/inputs.md#owner-decisions) D3, D9 and D10, which this plan keeps.
+- [Plan 39](../39-green-mains/plan.md), its [handover](../39-green-mains/evidence/release-14-record/handover.md) and its [owner decisions](../39-green-mains/evidence/release-14-record/inputs.md#owner-decisions) D3, D9 and D10, which this plan keeps.
 - [Release 14 run board](../../releases/14/run.md) rulings 6a, 10 and 13; [Release 15 run board](../../releases/15/run.md).
 - [Evidence](evidence/README.md): the measurement, the clusters, the card ownership, the Wave C cards and the [critique](evidence/critique.md).

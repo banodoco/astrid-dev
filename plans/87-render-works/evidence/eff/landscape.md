@@ -16,7 +16,7 @@
 - **(d) Render:** P27 *Complete video rendering and export options* — queued/unassigned/no release; export should “produce” a playable file (`plans/27-video-render-options/plan.md:1,7-13,19-27`).
 - **(e) Custody:** P83 *Execution host in modules* — queued/unassigned/no release; “process custody” (`plans/index.md:87`; `plans/83-execution-host-in-modules/plan.md:1,55`). P38 *One process identity* — queued/unassigned (`plans/index.md:23`). PROCLIFE/process-lifecycle not found.
 - **(f) Motion:** P78 *Live custom-element editing* — active/Plan 78 manager/R15; fresh-install pin awaits owner (`plans/78-live-custom-element-editing/plan.md:1,7-13`; `plans/78-live-custom-element-editing/inputs.md:7,16`). P69: `astrid_motion` moved to `poms_packs`; unpinned (`plans/69-project-elements/inputs.md:16`).
-- **(g) CI journeys:** P39 *All three mains green* — active/Release 14 Lead; remainder R15 (`plans/39-green-mains/plan.md:1,7-13`; `releases/15.md:31`). Windows journey `plans/39-green-mains/tasks.md:79`; `journey.yml` receipts are Release-skill-owned (`plans/39-green-mains/plan.md:36; plans/39-green-mains/tasks.md:154`).
+- **(g) CI journeys:** P39 *All three mains green* — active/Release 14 Lead; remainder R15 (`plans/39-green-mains/plan.md:1,7-13`; `releases/15.md:31`). Windows journey `plans/39-green-mains/evidence/release-14-record/tasks.md:79`; `journey.yml` receipts are Release-skill-owned (`plans/39-green-mains/plan.md:36; plans/39-green-mains/evidence/release-14-record/tasks.md:154`).
 - P84 *A living planet on the vision page* is active; P85–86 exist (`plans/index.md:88-90`); next free: **87**.
 
 ## Issues
