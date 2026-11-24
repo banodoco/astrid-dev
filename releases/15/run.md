@@ -281,7 +281,7 @@ Cap: at most **four** packets in Running or Review at once. P82-01 goes alone fi
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R15-P82-01](packets/R15-P82-01.md) | RA-6 (X): receipt and companion checked against the admitted bytes | Ready (first, alone) | — | astrid-agent `p82/RA-6`; design STATUS first; high-judgment review (integrity). The check is Agent-side (worker, before `_approve_live`); the Runtime has no VibeComfy dependency (Lead ruling requested) |
+| [R15-P82-01](packets/R15-P82-01.md) | RA-6 (X): receipt and companion checked against the admitted bytes | Ready (first, alone) | — | astrid-agent `p82/RA-6`; design STATUS first; high-judgment review (integrity). Host-side check (worker, before `_approve_live`; Lead ruling 24 November 2026): it also stops a direct POST, proved by a test; a Runtime validator seam is Release 16 |
 | [R15-P82-02](packets/R15-P82-02.md) | RA-1b (X): lazy imports | Ready (second, after P82-01's early STATUS) | — | astrid-agent `p82/RA-1b`; the lane's import profile is its first STATUS |
 | [R15-P82-03](packets/R15-P82-03.md) | RA-2 part 1 (S): prepared-template contract and key | Blocked on P82-01 and the counters helper | — | astrid-agent and VibeComfy `p82/RA-2a`; design STATUS first; high-judgment review |
 | [R15-P82-04](packets/R15-P82-04.md) | RA-2 part 2 (S): approval compile split | Blocked on P82-03 | — | VibeComfy and astrid-agent `p82/RA-2b`; same functions as P82-03 (`workflow_bundle.py`, `local_server_engine.py`), so after it; high-judgment review |
