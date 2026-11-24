@@ -37,7 +37,7 @@ Start here. Attach <repos>. Follow the astrid-dev-orchestrate skill, its lane-or
 
 Host one Codex manager on Terra (route X, effort high) that follows the astrid-dev-manage skill and works through those cards. It dispatches each card on its named route (Luna for N, Terra for X, Sol for S, Astra for reviews), runs only the tests the cards name, and ticks Progress in tasks.md as each card merges. <Checkpoints, e.g. "RN-13: report and start nothing further until the Lead and I decide.">
 
-Check in on the manager every hour with a scheduled task and send the Release <N> Lead (<lead session>) one short report each hour; otherwise follow the lane-orchestrator workstream's rules (anchor points only, decide and record, keep-awake). <Coordination: "X touches the same code as <lane>: agree the order directly with <session>.">
+Report on your plan's board and check in on the manager hourly, as the run contract's [coordination rules](../../../shared/run-contract.md#coordination-boards-and-check-ins) say; the Release <N> Lead is `<lead mailbox name>`. Otherwise follow the lane-orchestrator workstream's rules (anchor points only, decide and record). <Coordination: "X touches the same code as <lane>: agree the order directly with <session>.">
 
 Speed over bureaucracy: keep real correctness and every existing test unchanged, and prove the result <by a real render / an installed measurement> before any hosted CI.
 
@@ -48,7 +48,7 @@ Ask the owner to do the Codex device sign-in in the session first if the check i
 
 ## 4. The orchestrator's rules live in its own workstream
 
-The lane's side (Codex check, anchor points only, decide and record, hourly reports, proof before CI, direct coordination, keep-awake, merging its own records) is the orchestrate role's [lane workstream](../../astrid-dev-orchestrate/workstreams/lane-orchestrator.md). The launch message points there; send the Lead's rulings as they come, and when a lane asks what it could decide, add the missing rule to that workstream or to its plan once rather than answering again.
+The lane's side (Codex check, anchor points only, decide and record, proof before CI, direct coordination, merging its own records) is the orchestrate role's [lane workstream](../../astrid-dev-orchestrate/workstreams/lane-orchestrator.md). The launch message points there; send the Lead's rulings as they come, and when a lane asks what it could decide, add the missing rule to that workstream or to its plan once rather than answering again.
 
 ## The Lead's check-ins: strategy, not dispatch
 

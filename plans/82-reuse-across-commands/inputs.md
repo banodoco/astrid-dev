@@ -16,7 +16,7 @@
 
 **Review rounds:** Recommended: one round at the end (R). Pending — the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: record the date, tasks, accountable session and limits when the owner starts one.
+**Run start:** 24 November 2026 — the owner's go and D2 (yes), in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG), by [packet dispatch](../../releases/15/run.md#plan-82-dispatch). Accountable agent: the Plan 82 orchestrator, Claude session `session_011EzfW1e1nGMfuKEg7z7nKN`, mailbox [#1824](https://github.com/banodoco/astrid-dev/issues/1824). Tasks: RA-6, RA-0a, RA-0b, RA-1b, RA-2, R. Limits: no publishing, nothing paid, nothing on her machine or media, no change to an existing test's assertion; the landing gate into `release/15/main` is the Release 15 Lead's. Plan branches `release/15/plan-82` cut 24 November 2026 at astrid-agent `514499de`, astrid-runtime `24e2c929`, VibeComfy `c0e910ca`; Plan 81 is landed in all three (Agent `045064b6` is its landing merge).
 
 ## Owner decisions
 
@@ -28,9 +28,11 @@
 
 **D1** (resident or disk) moved to Plan 92, recorded "resident first, supported by the floor experiment". **D3** (ComfyUI's node list) moved with GS-4.
 
-**D2 — trusting an install.** Status: recommended, pending. Yes for shipped packs, once installed files are made read-only so the stamp covers them (the owner agreed to the idea on 22 November 2026 as Plan 81's D3). Own and project packs keep a per-command witness check (Plan 92).
+**D2 — trusting an install.** Status: **decided, yes** (the owner, 24 November 2026, in the Release 15 Lead session, with her go for this plan's dispatch). Yes for shipped packs, once installed files are made read-only so the stamp covers them (the owner agreed to the idea on 22 November 2026 as Plan 81's D3). Own and project packs keep a per-command witness check (Plan 92).
 
 **The owner, 22 November 2026:** "could we preload stuff once it's loaded once? ... why do we need to?" and "is there any way we could have [ComfyUI] ... give a signal when a new model ... has been updated to do the qualification stuff, or ... where a new custom node is installed, could there be a trigger for that?" These led to RA-0 and, in Plan 92, GS-1 and GS-4.
+
+**RA-6's seam — decision of 24 November 2026 (Release 15 Lead).** RA-6 is enforced on the **host** side: the pack host or worker recomputes the receipt fields and the companion digest from the staged admitted bytes before `_approve_live` and refuses, naming the field. Because every executed task passes through that worker, it also stops a task POSTed directly to `/v1/tasks`. Reason: the Runtime has no VibeComfy dependency and cannot recompute `api_digest`, and the host check covers every executed task. A Runtime-side validator seam moves to Release 16 (Plan 92). The order is unchanged: RA-6 lands before any cache, and no refusal moves later.
 
 ## Source identities
 

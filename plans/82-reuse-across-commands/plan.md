@@ -4,13 +4,13 @@
 
 **Goal:** `astrid generate` on an installed Astrid is queued in about 3 s instead of about 5.8 s, because caches reuse what an earlier command worked out, and never uses a result that is out of date.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Release 15 Plan 82 orchestrator (`session_011EzfW1e1nGMfuKEg7z7nKN`), by [packet dispatch](../../releases/15/run.md#plan-82-dispatch)
 
 **Estimate:** About 3 to 4 engineering days.
 
-**Waiting on:** Release 15, and D2 ([inputs.md](inputs.md#owner-decisions)).
+**Waiting on:** nothing from the owner: she gave the go and decided D2 (yes) on 24 November 2026 ([inputs.md](inputs.md#owner-decisions)). RA-0b also waits on Plan 87's RN-4 reaching `release/15/main`.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
 
