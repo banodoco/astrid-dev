@@ -8,9 +8,9 @@
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
-**Estimate:** About 5 to 6 engineering days, all in Release 15: the growth guard, the safety net and the first, measured extraction. HM1 to HM3 are done. The rest of the extraction is [Plan 83](../83-execution-host-in-modules/plan.md).
+**Estimate:** About 5 to 6 engineering days, all in Release 16 (moved from Release 15 on 24 November 2026): the growth guard, the safety net and the first, measured extraction. HM1 to HM3 are done. The rest of the extraction is [Plan 83](../83-execution-host-in-modules/plan.md).
 
-**Waiting on:** a manager for its Release 15 tasks. The owner chose the Release 15 scope and who may let the file grow on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)). It no longer waits for Plan 55, which left Release 15 the same day.
+**Waiting on:** a manager, in **Release 16**: the owner moved it from Release 15 on 24 November 2026, before its Release 15 tasks started; its branches become `release/16/plan-13`. The owner chose the Release 15 scope and who may let the file grow on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)). It no longer waits for Plan 55, which left Release 15 the same day.
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 

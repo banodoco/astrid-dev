@@ -37,6 +37,18 @@ Not set. The cut line is still the first decision owed: about 150 engineering da
 
 Release 14 is published. Its last state is in `release/15/main` in all three repositories: astrid-runtime by #86 and #100, astrid-agent by #482 and #523, astrid-app by #369. Nothing is waiting.
 
+### Owner decisions, 24 November 2026
+
+The owner accepted all of the Release 15 Lead's recommendations, in the Lead's session (`session_011EzfW1gtAhRQwk8pgJMzhG`):
+
+- **Cut and freeze:** freeze in about two days, about 26 November, once Plan 87's core lands in `release/15/main`. What isn't on `release/15/main` by then ships in Release 16. Publishing still needs her own go.
+- **Plan 87's RN-15** (long renders lose their outputs when a process id is reused) is a **release blocker**.
+- **Plan 87's RN-14** (the motion pack on a fresh install, D2) moves to Release 16.
+- **Plan 82: go**, with its D2 (trust a shipped install) decided yes; it runs as a packet dispatch ([Plan 82 dispatch](#plan-82-dispatch)). **Plan 92: go** for Release 16, after Plan 82.
+- **VibeComfy `release/15/main`** may be fast-forwarded to `c0e910ca` (Plan 56's head; the current tip is its ancestor).
+- **Plans 13, 79 and 72** move to [Release 16](../16.md); none had started in Release 15.
+- **The Release 7 branches** may be tagged and deleted.
+
 ### Waiting on the owner
 
 - **The cut line and the headline.** The release is named for every platform and rented machines; what is running is speed and editing. The Lead recommends naming it for what will ship and moving Plans 63, 76, 18 and 39 to the next release.
@@ -238,3 +250,33 @@ The orchestrator writes the packets at its next break point and lists them here.
 | [R15-P89-07](packets/R15-P89-07.md) | SV-L10 (X): validate the unchanged clips once | Ready (design first; I review the design before code) | — | astrid-runtime `p89/SV-L10`; evidence: Plan 89's counters (894 KB `PreparedCommit`, 1.91 s instrumented); acceptance change, high-judgment review |
 
 Stays in the orchestrator's lane: SV-L1 (merged), SV-L4 (burst test, a measurement), SV-L6 (Runtime covers index, X; the Codex manager's draft #113), SV-L7 (burst coalescing: sized at 4 to 6 App days, awaiting the Release 15 Lead's go), and every installed measurement.
+
+## Plan 82 dispatch
+
+Added 24 November 2026, when the owner gave her go for [Plan 82](../../plans/82-reuse-across-commands/plan.md) (the `astrid generate` caches) and decided its D2 (yes). It works exactly like [Plans 87 and 89 dispatch](#plans-87-and-89-dispatch): the same roles, Authority, standing rulings, manager startup checks and cadence, with these names.
+
+| Plan | Mailbox | Run | Orchestrator | Manager |
+|---|---|---|---|---|
+| 82 | [astrid-dev #1824](https://github.com/banodoco/astrid-dev/issues/1824) | `r15-p82-dispatch` | `r15-p82-orchestrator`, Claude session `session_011EzfW2WTdpQCgiHoGm3afZ` | `r15-p82-manager-1` |
+
+Plan branches: `release/15/plan-82` in astrid-agent, astrid-runtime and VibeComfy, cut by the orchestrator from each `release/15/main` before the first packet. The manager's check 6 covers those three repositories.
+
+### Rulings for Plan 82, from the first three dispatches
+
+The Release 15 Lead's review of Plans 56, 87 and 89's packets on 24 November 2026: twelve merged. Narrow, test-led changes with one contract finished in one to two hours. Renders, installed measurements, shared-file sweeps and multi-card bundles took five to ten hours, with repeated rounds.
+
+1. **Assume the packet sandbox has no network and runs no hosted test.** Before the first dispatch, the orchestrator runs a local baseline on each plan branch and writes into every packet its exact focused selectors and the ids that already fail there. The packet writes code and tests, then posts `READY-PROOF`.
+2. **One contract, one packet, aimed at about three hours.** Never bundle cards. RA-2 (S) is split at its natural seams: the prepared-template contract and key, then the approval compile split, then the 53-template differential. Each piece is its own packet.
+3. **Rule the hard questions before dispatch, not during it.** Each packet lists the existing tests that must pass unchanged (the card's "pass unchanged" list), says that no existing assertion may change, and states which fixtures or helpers it may touch. A packet that finds one of these untrue posts BLOCKED once with the exact list. It doesn't argue it out over several rounds.
+4. **Measurement stays in the lane, and counters come first.** RA-0a (the measurements) and every installed timing are the orchestrator's. Each cache packet emits hit, miss and recompute counters, which the lane reads before it trusts a timing. A packet's gate is stated in numbers and measured by the orchestrator on the exact head.
+5. **Sweeps carry their count.** A packet that changes a pattern across call sites lists every site found, and every site changed, in its PR before the first review.
+6. **Proof within 45 minutes, in parallel.** The orchestrator answers each `READY-PROOF` within 45 minutes, running independent proofs side by side in background subagents. It reads the mailbox to the last page on every check.
+7. **Order:** RA-6 first (it gates every cache); RA-1b in parallel; RA-0b after RA-6, RA-0a and Plan 87's RN-4 on `release/15/main` (until then RA-0b may be built against RN-4's commit on `release/15/plan-87`, cherry-picked under the standing ruling); the RA-2 packets after RA-6; R last, in the lane.
+
+### Dispatch queue (Plan 82)
+
+The orchestrator writes the packets after its startup baseline, lists them here and answers the manager's startup STATUS with a DECISION. Candidates from [tasks](../../plans/82-reuse-across-commands/tasks.md): RA-6 (X), RA-1b (X), RA-0b (X), RA-2 split in up to three (S). RA-0a and R stay in the lane.
+
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| — | — | — | — | The orchestrator lists packets here |
