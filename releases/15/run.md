@@ -94,6 +94,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch, never dispatches hosted CI and never takes a second packet.
 - **Session mode follows the packet's Route:** N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
 - **Bases:** astrid-agent `release/15/plan-56` from `release/15/main` (`045064b6`); VibeComfy `release/15/plan-56` from `c0e910ca`, the commit the Agent pins, which contains VibeComfy `release/15/main` (`48b5fa9e`), so both branches carry the current `release/15/main`. When `release/15/main` moves, the Lead merges it into `release/15/plan-56`; a packet never does.
+- **Heads (24 November 2026):** astrid-agent `release/15/plan-56` = `7fa92be1` (after #621); astrid-agent `p56/landing-s1` = `46f5b945` (or later); VibeComfy `release/15/plan-56` = `42819e14`; VibeComfy `p56/landing-s1` = `033473ff`.
 - **Needs the owner:** the live SAM run (WS-L, after R), publishing, and anything paid or touching her machine, install or media. On 24 November 2026 she delegated every other Plan 56 blocker, owner decisions included, to Plan 56's accountable agent, which records each one on the mailbox.
 
 ### Standing rulings (Plan 56)
@@ -109,6 +110,8 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 9. **Code-quality audit before every packet merge:** duplication across repos, silent fallbacks, broad `except`, hard-coded cases, test-only seams, dead or duplicate paths. A silent fallback, or a second code path left as an end state, is must-fix (mailbox a0bb99b6; follow-ups in astrid-dev #1772).
 10. **Agent CI capacity is release-wide:** at most two Agent `ci.yml` runs at once across all lanes. Check the running runs before dispatching (Release 15 Lead, 23 November 2026).
 11. **Owner decisions are delegated (24 November 2026)** to Plan 56's accountable agent, except the reserved items under Authority. An assertion change that implements an accepted plan outcome is decided by that agent and recorded with its reason (mailbox 9c75f07b).
+12. **Stage 1 lands from snapshots.** P56-01 to -05 and -07 land into `release/15/main` from `p56/landing-s1` in each repo (VibeComfy `033473ff` as a fast-forward; Agent `3956bc41` + merge of `release/15/main` + pin), never from the moving plan-56 tip. Only the `release/15/main` merge, the pin, the coherence fixes and the RS1 fix packets go on the snapshot, each covered by a focused fresh RS1. The gate request carries the three-dot diff comparison command and output. Release Lead decision of 24 Nov; RS1 fresh pass due by 25 Nov 18:00 UTC or Plan 56 goes to Release 16 whole.
+13. **Release-wide rulings live on astrid-dev #1836** (read to the last page hourly). Release ruling 11: never cancel a `release/*/main` CI run. Hourly reports go as a STATUS on #1757 `to: r15-release-lead`.
 
 ### Mailbox
 
@@ -116,7 +119,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Plan 56 accountable agent (`r15-lead`) | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7123844708 |
+| Plan 56 accountable agent (`r15-lead`) | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7130458784 |
 | Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
@@ -156,16 +159,21 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Done | `r15-P56-01-1` (ChatGPT Pro) | Merged 23 November 2026: Agent #570 (`c3d8ee2d`), VibeComfy #187. Pro |
-| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Running | `r15-P56-02-1` (Extra High) | WS-0a/b/d and LE-15 complete; WS-0g #591 in rework (VibeComfySaveTranscript false block). Extra High |
+| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Done | `r15-P56-02-1` (Extra High) | WS-0a/b/d and LE-15 complete; WS-0g #591 in rework (VibeComfySaveTranscript false block). Extra High |
 | [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Done | `r15-P56-03-1` (High) | Merged 24 Nov 2026: WS-0c (#188, #193, #573), WS-0e (#574). High |
 | [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Done | `r15-P56-04-1` (Extra High) | Merged 24 Nov 2026: LE-4 (#189 + #199 speed fix), WS-5 (#191), LE-6 (#192, #197, #577). Extra High |
 | [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Done | — | Merged 24 Nov 2026: WS-7b (#196). Pro |
 | [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Running | `r15-P56-06-1` (Extra High) | LE-3 and LE-12 VibeComfy halves merged (#200, #201); Agent halves after #599; LE-1b after WS-0g. Extra High |
-| [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Running | `r15-P56-07-1` (Pro) | LE-2b VibeComfy #198 merged; Agent #599 in rework; RS1 (Codex Astra, brief evidence/rs1-brief.md) follows its merge. Pro |
+| [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Done | `r15-P56-07-1` (Pro) | LE-2b VibeComfy #198 merged; Agent #599 in rework; RS1 (Codex Astra, brief evidence/rs1-brief.md) follows its merge. Pro |
 | [R15-P56-08](packets/R15-P56-08.md) Lookup suggestions, several packs, models | LE-5, LE-16, LE-9 | Blocked | — | After P56-04 and 06. High |
 | [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Running | `r15-P56-09-1` (Extra High) | LE-10 then LE-8; target_schema after #591; LE-14 after P56-10; LE-17 after RS1. Extra High |
-| [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | After P56-05, 06, 07 and RS1. Extra High |
+| [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | On hold until the fresh RS1 passes (RS1 failed 11:00Z, 3150d425). Extra High |
 | [R15-P56-11](packets/R15-P56-11.md) Renderer, wording, skill proof | LE-18b, LE-11, WS-6b | Blocked | — | After every other packet. Extra High |
+| [R15-P56-12](packets/R15-P56-12.md) Restore checkout (F1) | RS1.2, RS1.4 | Ready | — | Extra High. Base: `p56/landing-s1` in each repo. |
+| [R15-P56-13](packets/R15-P56-13.md) Lock trust (F2) | RS1.3, RS1.5, RS1.11 | Ready | — | Extra High. Merges after P56-12. |
+| [R15-P56-14](packets/R15-P56-14.md) Selection keeps the authored recipe (F3) | RS1.6 | Ready | — | Extra High. |
+| [R15-P56-15](packets/R15-P56-15.md) Pip boundary (F4) | RS1.7, RS1.8, RS1.9, RS1.1 if it fits | Ready | — | Pro. |
+| [R15-P56-16](packets/R15-P56-16.md) Publish only after approvals (F5) | RS1.10 | Ready | — | Extra High; Agent and VibeComfy. |
 | Conflicts (one task branch at a time writes each) | — | — | — | `cli.py:_workflow_command`: P56-02 (WS-0d, WS-0a), 06, 07, 08, 10; P56-07 goes first of 06, 07, 08 and 10 (critical path) and starts once P56-02's WS-0a has merged. `entries.py:target_schema`: P56-02 (WS-0g), 06 (LE-1b), 08, 09. VibeComfy `_install.py` in the order P56-03, 05, 07, 10, then P56-09's LE-14. `managed_preparation.py:native_failure_diagnostic`: P56-04 (LE-6), then P56-09 (LE-14). P56-01 and P56-04 share `comfyui_engine.py` and `managed_preparation.py` in different functions and may run together (ruling 1). |
 | RS1 and R | Review stops | Lead | — | Codex Astra, commissioned by the Lead: RS1 after P56-07; R after P56-11 (up to two rounds) |
 
