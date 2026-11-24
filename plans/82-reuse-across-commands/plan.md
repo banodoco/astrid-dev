@@ -6,7 +6,7 @@
 
 **Status:** active
 
-**Owner:** Release 15 Plan 82 orchestrator (`session_011EzfW2WTdpQCgiHoGm3afZ`), by [packet dispatch](../../releases/15/run.md#plan-82-dispatch)
+**Owner:** Release 15 Plan 82 orchestrator (`session_011EzfW1e1nGMfuKEg7z7nKN`), by [packet dispatch](../../releases/15/run.md#plan-82-dispatch)
 
 **Estimate:** About 3 to 4 engineering days.
 

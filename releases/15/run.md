@@ -257,7 +257,7 @@ Added 24 November 2026, when the owner gave her go for [Plan 82](../../plans/82-
 
 | Plan | Mailbox | Run | Orchestrator | Manager |
 |---|---|---|---|---|
-| 82 | [astrid-dev #1824](https://github.com/banodoco/astrid-dev/issues/1824) | `r15-p82-dispatch` | `r15-p82-orchestrator`, Claude session `session_011EzfW2WTdpQCgiHoGm3afZ` | `r15-p82-manager-1` |
+| 82 | [astrid-dev #1824](https://github.com/banodoco/astrid-dev/issues/1824) | `r15-p82-dispatch` | `r15-p82-orchestrator`, Claude session `session_011EzfW1e1nGMfuKEg7z7nKN` | `r15-p82-manager-1` |
 
 Plan branches: `release/15/plan-82` in astrid-agent, astrid-runtime and VibeComfy, cut by the orchestrator from each `release/15/main` before the first packet. The manager's check 6 covers those three repositories.
 
