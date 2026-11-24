@@ -56,45 +56,86 @@ def split_nodeid(rest: str):
     return rest, ""
 
 
-def outer_summary(lines):
-    """FAILED/ERROR rows of the job's own pytest run, plus its failed subtests.
+SESSION = re.compile(r"^=+ test session starts =+$")
+STEP = re.compile(r"^##\[group\]Run ")
+SELECTION = re.compile(r"^===== selection \d+ of \d+: ")
+SUMMARY_START = re.compile(r"^=+ short test summary info =+$")
 
-    Only the last "short test summary info" section before the job's final result line is read, so pytest output that
-    a test prints from an inner run is not counted. A failed subtest is counted by pytest in "N failed" but has no
-    summary row, so it is taken from its progress line and keyed "<nodeid> SUBFAILED(<params>)".
+
+def top_level_runs(lines):
+    """The job's own pytest runs as [(start, summary_start or None, end)].
+
+    A GitHub job log is cut at each "##[group]Run" step and each "===== selection i of n" repeat, and each piece's
+    run is its last final result line with the last summary section before it; a plain log pairs "test session
+    starts" with final result lines like brackets (an inner run stays inside its outer one); a plain log with no
+    session header is one run. Same rule as astrid-dev env/baseline-diff.py and astrid-agent
+    scripts/ci/agent_ceiling_compare.py.
     """
-    finals = [i for i, line in enumerate(lines) if FINAL.match(line)]
-    if not finals:
-        return []
-    end = finals[-1]
-    starts = [i for i in range(end) if re.match(r"^=+ short test summary info =+$", lines[i])]
+    runs = []
+    if any(STEP.match(line) for line in lines):
+        bounds = [i for i, line in enumerate(lines) if STEP.match(line) or SELECTION.match(line)]
+        for a, b in zip([0] + bounds, bounds + [len(lines)]):
+            finals = [i for i in range(a, b) if FINAL.match(lines[i])]
+            if finals:
+                starts = [i for i in range(a, finals[-1]) if SUMMARY_START.match(lines[i])]
+                runs.append((a, starts[-1] if starts else None, finals[-1]))
+        return runs
+    if not any(SESSION.match(line) for line in lines):
+        finals = [i for i, line in enumerate(lines) if FINAL.match(line)]
+        if finals:
+            starts = [i for i in range(finals[-1]) if SUMMARY_START.match(lines[i])]
+            runs.append((0, starts[-1] if starts else None, finals[-1]))
+        return runs
+    stack = []
+    for i, line in enumerate(lines):
+        if SESSION.match(line):
+            stack.append(i)
+        elif FINAL.match(line) and stack:
+            begin = stack.pop()
+            if not stack:
+                starts = [k for k in range(begin, i) if SUMMARY_START.match(lines[k])]
+                runs.append((begin, starts[-1] if starts else None, i))
+    return runs
+
+
+def outer_summary(lines):
+    """FAILED/ERROR rows of the job's own pytest runs, plus their failed subtests.
+
+    A failed subtest is counted by pytest in "N failed" but has no summary row, so it is taken from its progress line
+    and keyed "<nodeid> SUBFAILED(<params>)". Pytest output that a test prints from an inner run is not counted.
+    """
     rows = []
-    if starts:
-        for line in lines[starts[-1] + 1:end]:
-            match = re.match(r"^(FAILED|ERROR) (.+)$", line)
-            if match and "::" in match.group(2):
-                nodeid, message = split_nodeid(match.group(2))
-                rows.append((match.group(1), nodeid.strip(), message.strip()))
-    seen = set()
-    for line in lines[:end]:
-        match = SUBFAILED.match(line)
-        if match:
-            nodeid = f"{match.group(1)} SUBFAILED{match.group(2)}"
-            if nodeid not in seen:
-                seen.add(nodeid)
-                rows.append(("FAILED", nodeid, ""))
+    for begin, summary, end in top_level_runs(lines):
+        if summary is not None:
+            for line in lines[summary + 1:end]:
+                match = re.match(r"^(FAILED|ERROR) (.+)$", line)
+                if match and "::" in match.group(2):
+                    nodeid, message = split_nodeid(match.group(2))
+                    rows.append((match.group(1), nodeid.strip(), message.strip()))
+        seen = set()
+        for line in lines[begin:end]:
+            match = SUBFAILED.match(line)
+            if match:
+                nodeid = f"{match.group(1)} SUBFAILED{match.group(2)}"
+                if nodeid not in seen:
+                    seen.add(nodeid)
+                    rows.append(("FAILED", nodeid, ""))
     return rows
 
 
 def summary_counts(lines):
-    """The (failed, errors) pytest printed on the job's final result line, or None."""
-    finals = [line for line in lines if FINAL.match(line)]
-    if not finals:
+    """The (failed, errors) summed over the job's own runs' final result lines, or None when it has none."""
+    runs = top_level_runs(lines)
+    if not runs:
         return None
-    text = finals[-1]
-    failed = re.search(r"(\d+) failed", text)
-    errors = re.search(r"(\d+) errors?", text)
-    return (int(failed.group(1)) if failed else 0, int(errors.group(1)) if errors else 0)
+    failed = errors = 0
+    for _, _, end in runs:
+        text = lines[end]
+        f = re.search(r"(\d+) failed", text)
+        e = re.search(r"(\d+) errors?", text)
+        failed += int(f.group(1)) if f else 0
+        errors += int(e.group(1)) if e else 0
+    return failed, errors
 
 
 def parse(log: Path, job: str):
