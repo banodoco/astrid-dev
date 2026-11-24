@@ -1,0 +1,289 @@
+
+### 7bf7d9086
+Auto-merging astrid/packs/rendering/actions/render/managed_timeline.py
+Auto-merging astrid/sdk/authoring_render_preview.py
+Auto-merging astrid/sdk/invocation.py
+Auto-merging astrid/sdk/timeline_filmstrip.py
+Auto-merging tests/packs/rendering/test_managed_timeline_render.py
+[detached HEAD 30a565dd7] Drop the editor's own-object route before managed render validation
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 15:52:09 2026 +0100
+ 7 files changed, 182 insertions(+), 7 deletions(-)
+RESULT clean
+
+### 24740fdf4
+Auto-merging astrid/sdk/timeline/_commit_timing_validation.py
+CONFLICT (content): Merge conflict in astrid/sdk/timeline/_commit_timing_validation.py
+Auto-merging astrid/sdk/timeline/commit_session.py
+error: could not apply 24740fdf4... fix(timeline): preserve shot clips when swapping imported media
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+astrid/sdk/timeline/_commit_timing_validation.py
+diff --cc astrid/sdk/timeline/_commit_timing_validation.py
+index 571c000b6,480e665cc..000000000
+--- a/astrid/sdk/timeline/_commit_timing_validation.py
++++ b/astrid/sdk/timeline/_commit_timing_validation.py
+@@@ -78,6 -82,25 +82,28 @@@ def _reference_shape(clip: Mapping[str
+      return value
+  
+  
+++<<<<<<< HEAD
+++=======
++ _WORD_TIMING_FIELDS = ("id", "track", "at", "at_ms", "from", "to", "hold", "duration", "speed",
++                        "asset", "asset_id")
++ 
++ 
++ def _fixed_visual_duration(clip: Mapping[str, Any], assets: Mapping[str, Any] | None) -> bool:
++     """An explicit visual hold makes the selected picture immaterial to timing.
++ 
++     Keep asset identity in the basis for intrinsic-duration and audio inputs.
++     This only retains a baseline failure; changed declarations/timing still
++     require normal exact binding validation.
++     """
++     hold = clip.get("hold")
++     entry = (assets or {}).get(clip.get("asset", clip.get("asset_id")))
++     media_type = entry.get("type") if isinstance(entry, Mapping) else None
++     kind = media_type.split("/")[0] if isinstance(media_type, str) else None
++     return (kind in ("image", "video") and not isinstance(hold, bool)
++             and isinstance(hold, (int, float)) and math.isfinite(hold) and hold > 0)
++ 
++ 
+++>>>>>>> 24740fdf4 (fix(timeline): preserve shot clips when swapping imported media)
+  class _BasisReader:
+      """Reference bases of one bundle, built once and looked up per declaration.
+  
+@@@ -99,8 -122,28 +125,31 @@@
+              self._text[name] = json.dumps(value, sort_keys=True, default=str)
+          return self._text[name]
+  
++     def _assets(self, kind: str, owner: str) -> Mapping[str, Any]:
++         scope = (self.bundle.get('parent', {}) if kind == 'parent' else
++                  self.bundle.get('shots', {}).get(owner, {}).get('internal_timeline', {}))
++         registry = scope.get('registry', scope.get('config', {}).get('registry', {}))
++         return registry.get('assets', {}) if isinstance(registry, Mapping) else {}
++ 
+      def signature(self, key: tuple[Any, ...], clip: Mapping[str, Any], declaration: str) -> str:
+          """The basis as text, assembled from per-bundle parts so each declaration adds only its own."""
+++<<<<<<< HEAD
+++=======
++         try:
++             word = moments.parse(declaration).kind == "word"
++         except (TypeError, ValueError, moments.MomentError):
++             word = False
++         if word and key[0] != "parent":
++             # A shot clip's word declaration never has an authorized binding, whatever its siblings,
++             # placements or other shots say: the finding depends on this clip's timing alone, not on
++             # which element it shows or its params.
++             timing = {name: clip[name] for name in _WORD_TIMING_FIELDS if name in clip}
++             if _fixed_visual_duration(clip, self._assets(key[0], key[1])):
++                 timing.pop("asset", None)
++                 timing.pop("asset_id", None)
++             anchors = intent._app(clip).get("word_anchors")
++             return json.dumps({"clip": timing, "word_anchors": anchors}, sort_keys=True, default=str)
+++>>>>>>> 24740fdf4 (fix(timeline): preserve shot clips when swapping imported media)
+          basis = self.basis(key, clip, declaration)
+          own = {"clip": basis["clip"]}
+          parts = [json.dumps(own, sort_keys=True, default=str), self._json("documents", basis["documents"])]
+RESULT conflict aborted
+
+### cb90a4b99
+Auto-merging astrid/packs/rendering/actions/render/managed_timeline.py
+Auto-merging tests/packs/rendering/test_managed_timeline_render.py
+[detached HEAD 428164635] fix(render): project thumbnail metadata and redundant object locators safely
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 18:48:50 2026 +0100
+ 3 files changed, 36 insertions(+), 2 deletions(-)
+RESULT clean
+
+### 7332e03d6
+Auto-merging astrid/core/rendering/remotion_runtime.py
+CONFLICT (content): Merge conflict in astrid/core/rendering/remotion_runtime.py
+error: could not apply 7332e03d6... fix(render): name differing launch-context fields without exposing values
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+astrid/core/rendering/remotion_runtime.py
+diff --cc astrid/core/rendering/remotion_runtime.py
+index f62d2b7eb,7a4bb4462..000000000
+--- a/astrid/core/rendering/remotion_runtime.py
++++ b/astrid/core/rendering/remotion_runtime.py
+@@@ -1272,13 -1272,15 +1272,25 @@@ def _validated_runtime(project_dir: Pat
+              raise RemotionValidationError("runtime validation launch/source differs")
+          matches = [item for item in artifact['contexts'][role]['variants'] if item['context'] == context]
+          if len(matches) != 1:
+++<<<<<<< HEAD
+ +            differences = [_context_differences(item['context'], context)
+ +                           for item in artifact['contexts'][role]['variants']]
+ +            fields = min(differences, key=len) if differences else []
+ +            detail = ", ".join(fields) if fields else "validated context or role"
+ +            raise RemotionValidationError(
+ +                f"runtime validation consumer context differs in {detail}; "
+ +                "restart the Astrid host after aligning its launch and worker environment, then retry")
+++=======
++             differences = [_context_differences(item.get('context'), context)
++                            for item in artifact['contexts'][role]['variants']]
++             fields = min(differences, key=len) if differences else []
++             detail = ", ".join(fields[:8]) if fields else "validated context or role"
++             if len(fields) > 8:
++                 detail += ", …"
++             raise RemotionValidationError(
++                 f"runtime validation consumer context differs in {detail}: this process's environment was not validated at "
++                 "launch (only the host and Remotion-capable capability workers are)")
+++>>>>>>> 7332e03d6 (fix(render): name differing launch-context fields without exposing values)
+          entry = matches[0]
+          if python_executable is None:
+              facts = entry['closure']['startup']
+RESULT conflict aborted
+
+### d4bf28e4d
+Auto-merging astrid/sdk/timeline/_commit_timing_validation.py
+CONFLICT (content): Merge conflict in astrid/sdk/timeline/_commit_timing_validation.py
+error: could not apply d4bf28e4d... fix(timeline): retain exact legacy word provenance across interval-only edits
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+astrid/sdk/timeline/_commit_timing_validation.py
+diff --cc astrid/sdk/timeline/_commit_timing_validation.py
+index 571c000b6,ec888963a..000000000
+--- a/astrid/sdk/timeline/_commit_timing_validation.py
++++ b/astrid/sdk/timeline/_commit_timing_validation.py
+@@@ -78,6 -82,26 +78,29 @@@ def _reference_shape(clip: Mapping[str
+      return value
+  
+  
+++<<<<<<< HEAD
+++=======
++ _WORD_TIMING_FIELDS = ("id", "track", "at", "at_ms", "from", "to", "hold", "duration", "speed",
++                        "asset", "asset_id")
++ _WORD_RETIME_FIELDS = frozenset({"at", "at_ms", "hold", "duration"})
++ 
++ 
++ def _fixed_visual_duration(clip: Mapping[str, Any], assets: Mapping[str, Any] | None) -> bool:
++     """An explicit visual hold makes the selected picture immaterial to timing.
++ 
++     Keep asset identity in the basis for intrinsic-duration and audio inputs.
++     This only retains a baseline failure for an asset-only edit; timing-only
++     edits use a separate signature that keeps the selected media pinned.
++     """
++     hold = clip.get("hold")
++     entry = (assets or {}).get(clip.get("asset", clip.get("asset_id")))
++     media_type = entry.get("type") if isinstance(entry, Mapping) else None
++     kind = media_type.split("/")[0] if isinstance(media_type, str) else None
++     return (kind in ("image", "video") and not isinstance(hold, bool)
++             and isinstance(hold, (int, float)) and math.isfinite(hold) and hold > 0)
++ 
++ 
+++>>>>>>> d4bf28e4d (fix(timeline): retain exact legacy word provenance across interval-only edits)
+  class _BasisReader:
+      """Reference bases of one bundle, built once and looked up per declaration.
+  
+@@@ -99,8 -123,43 +122,48 @@@
+              self._text[name] = json.dumps(value, sort_keys=True, default=str)
+          return self._text[name]
+  
+++<<<<<<< HEAD
+ +    def signature(self, key: tuple[Any, ...], clip: Mapping[str, Any], declaration: str) -> str:
+ +        """The basis as text, assembled from per-bundle parts so each declaration adds only its own."""
+++=======
++     def _assets(self, kind: str, owner: str) -> Mapping[str, Any]:
++         scope = (self.bundle.get('parent', {}) if kind == 'parent' else
++                  self.bundle.get('shots', {}).get(owner, {}).get('internal_timeline', {}))
++         registry = scope.get('registry', scope.get('config', {}).get('registry', {}))
++         return registry.get('assets', {}) if isinstance(registry, Mapping) else {}
++ 
++     def signature(self, key: tuple[Any, ...], clip: Mapping[str, Any], declaration: str,
++                   *, retimed: bool = False) -> str:
++         """The basis as text, assembled from per-bundle parts so each declaration adds only its own."""
++         try:
++             word = moments.parse(declaration).kind == "word"
++         except (TypeError, ValueError, moments.MomentError):
++             word = False
++         if word and key[0] != "parent":
++             # This second, narrow signature admits authored interval edits only. Keep the
++             # selected media and source-window fields in the clip shape; unlike the historical
++             # asset-only signature below, no media identity is removed here.
++             timing = {name: clip[name] for name in _WORD_TIMING_FIELDS
++                       if name in clip and (not retimed or name not in _WORD_RETIME_FIELDS)}
++             if not retimed and _fixed_visual_duration(clip, self._assets(key[0], key[1])):
++                 # Preserve the established asset-only visual-hold exception, with timing pinned.
++                 timing.pop("asset", None)
++                 timing.pop("asset_id", None)
++             anchors = intent._app(clip).get("word_anchors")
++             source = None
++             if retimed:
++                 source_shots = self.source.get("shots", {})
++                 shot = source_shots.get(key[1], {}) if isinstance(source_shots, Mapping) else {}
++                 asset_key = clip.get("asset", clip.get("asset_id"))
++                 source = {
++                     "shot_id": shot.get("shot_id") if isinstance(shot, Mapping) else None,
++                     "internal_timeline_id": shot.get("internal_timeline_id") if isinstance(shot, Mapping) else None,
++                     "pinned_documents": self.source.get("pinned_documents", []),
++                     "asset_entry": self._assets(key[0], key[1]).get(asset_key),
++                 }
++             return json.dumps({"clip": timing, "word_anchors": anchors, "source": source},
++                               sort_keys=True, default=str)
+++>>>>>>> d4bf28e4d (fix(timeline): retain exact legacy word provenance across interval-only edits)
+          basis = self.basis(key, clip, declaration)
+          own = {"clip": basis["clip"]}
+          parts = [json.dumps(own, sort_keys=True, default=str), self._json("documents", basis["documents"])]
+RESULT conflict aborted
+
+### 0f6aea928
+Auto-merging astrid/core/execution/generic_host.py
+CONFLICT (content): Merge conflict in astrid/core/execution/generic_host.py
+Auto-merging tests/core/rendering/test_remotion_host_regressions.py
+error: could not apply 0f6aea928... Align render launch validation with worker contexts
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+astrid/core/execution/generic_host.py
+diff --cc astrid/core/execution/generic_host.py
+index ff7fd140c,47700ffc4..000000000
+--- a/astrid/core/execution/generic_host.py
++++ b/astrid/core/execution/generic_host.py
+@@@ -1592,10 -1592,11 +1592,18 @@@ def _prepare_vibecomfy_execution_identi
+              os.environ["VIBECOMFY_HEADLESS"] = previous_headless
+  
+  
+++<<<<<<< HEAD
+ +def _dependency_pythonpath(environment: Mapping[str, str] | None = None) -> tuple[str, ...]:
+ +    """Keep only approved dependency roots across children."""
+ +    roots = dependency_pythonpath(environment)
+ +    if (os.environ if environment is None else environment).get("ASTRID_HOST_EXECUTION_PROFILE") == "installed":
+++=======
++ def _dependency_pythonpath(environ: Mapping[str, str] | None = None) -> tuple[str, ...]:
++     """Keep only approved dependency roots across children."""
++     environment = os.environ if environ is None else environ
++     roots = dependency_pythonpath(environment)
++     if environment.get("ASTRID_HOST_EXECUTION_PROFILE") == "installed":
+++>>>>>>> 0f6aea928 (Align render launch validation with worker contexts)
+          return roots
+      # Source-mode workers need the Runtime already selected by this host.
+      # Carry its actual origin, without inheriting the caller's PYTHONPATH.
+RESULT conflict aborted
+
+### ad10ff6de
+Auto-merging astrid/sdk/timeline/validation.py
+Auto-merging tests/editing_conformance/test_commit_boundaries_d12.py
+[detached HEAD f9c55dab0] Allow unchanged legacy occurrence overrun on pure retime
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 19:34:17 2026 +0100
+ 2 files changed, 111 insertions(+), 3 deletions(-)
+RESULT clean

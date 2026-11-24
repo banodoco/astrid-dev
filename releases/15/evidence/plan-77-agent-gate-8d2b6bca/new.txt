@@ -1,0 +1,5 @@
+FAILED	darwin: tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream
+FAILED	darwin: tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke
+FAILED	tests/core/generation/test_readiness_missing_models.py::test_the_download_plan_and_readiness_agree[True]
+FAILED	tests/packs/rendering/test_render_export_task_adapter.py::test_registry_qualifying_discovery_refuses_corpus_change[new_manifest]
+FAILED	tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output

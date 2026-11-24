@@ -1,0 +1,126 @@
+SETTING: installed builds, CPU container, stand-in ComfyUI; not covered: a real ComfyUI's node-info answer, GPU work.
+  before: agent c0ad6b54 runtime 5120462d vibecomfy 48b5fa9e lifecycle 9f88ef76 omp @oh-my-pi/pi-coding-agent@18.12.6
+  after: agent bc75d6c5 runtime 72b129e5 vibecomfy 36ea976f lifecycle 9f88ef76 omp @oh-my-pi/pi-coding-agent@18.12.6
+  vc48: agent 9c95c680 runtime 72b129e5 vibecomfy 48b5fa9e lifecycle 9f88ef76 omp @oh-my-pi/pi-coding-agent@18.12.6
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared 4-vCPU box, --no-wait (times Astrid up to 'task queued')
+[same] warm-up, then 5 alternating rounds
+  same-before-warmup             15.254 s  exit 0  load 0.93 -> 0.94
+  same-after-warmup               6.106 s  exit 0  load 0.94 -> 1.03
+  same-vc48-warmup               11.269 s  exit 0  load 0.93 -> 0.94
+  same-before-1                  15.498 s  exit 0  load 0.94 -> 1.30
+  same-after-1                    5.743 s  exit 0  load 0.96 -> 1.20
+  same-vc48-1                    10.915 s  exit 0  load 0.99 -> 0.99
+  same-before-2                  15.504 s  exit 0  load 0.99 -> 1.14
+  same-after-2                    6.011 s  exit 0  load 0.93 -> 0.94
+  same-vc48-2                    10.705 s  exit 0  load 0.94 -> 1.10
+  same-before-3                  15.183 s  exit 0  load 1.00 -> 1.00
+  same-after-3                    6.075 s  exit 0  load 0.92 -> 0.93
+  same-vc48-3                    11.294 s  exit 0  load 0.93 -> 1.09
+  same-before-4                  14.873 s  exit 0  load 0.99 -> 1.06
+  same-after-4                    5.684 s  exit 0  load 0.96 -> 0.97
+  same-vc48-4                    11.354 s  exit 0  load 0.97 -> 1.13
+  same-before-5                  15.077 s  exit 0  load 0.93 -> 0.94
+  same-after-5                    5.906 s  exit 0  load 0.94 -> 1.03
+  same-vc48-5                    11.314 s  exit 0  load 0.92 -> 0.94
+[changed] warm-up, then 5 alternating rounds
+  changed-before-warmup          15.260 s  exit 0  load 0.94 -> 1.09
+  changed-after-warmup            7.190 s  exit 0  load 0.99 -> 1.07
+  changed-vc48-warmup            10.613 s  exit 0  load 0.96 -> 0.97
+  changed-before-1               14.312 s  exit 0  load 0.97 -> 1.12
+  changed-after-1                 5.453 s  exit 0  load 0.93 -> 0.94
+  changed-vc48-1                 10.951 s  exit 0  load 0.94 -> 1.18
+  changed-before-2               15.300 s  exit 0  load 0.98 -> 1.12
+  changed-after-2                 5.344 s  exit 0  load 0.99 -> 0.99
+  changed-vc48-2                 10.870 s  exit 0  load 0.99 -> 1.07
+  changed-before-3               15.771 s  exit 0  load 0.97 -> 0.98
+  changed-after-3                 5.879 s  exit 0  load 0.98 -> 1.06
+  changed-vc48-3                 11.060 s  exit 0  load 0.95 -> 1.04
+  changed-before-4               15.127 s  exit 0  load 0.95 -> 0.96
+  changed-after-4                 5.820 s  exit 0  load 0.96 -> 1.04
+  changed-vc48-4                 11.367 s  exit 0  load 0.94 -> 0.95
+  changed-before-5               14.745 s  exit 0  load 0.95 -> 1.10
+  changed-after-5                 5.311 s  exit 0  load 0.96 -> 0.97
+  changed-vc48-5                 10.533 s  exit 0  load 0.97 -> 1.05
+[timeline] warm-up, then 5 alternating rounds
+  timeline-before-warmup          2.261 s  exit 0  load 0.95 -> 0.95
+  timeline-after-warmup           2.025 s  exit 0  load 0.95 -> 0.96
+  timeline-vc48-warmup            2.158 s  exit 0  load 0.96 -> 0.96
+  timeline-before-1               0.948 s  exit 0  load 0.96 -> 0.96
+  timeline-after-1                1.099 s  exit 0  load 0.96 -> 0.96
+  timeline-vc48-1                 1.122 s  exit 0  load 0.96 -> 0.96
+  timeline-before-2               1.097 s  exit 0  load 0.96 -> 0.96
+  timeline-after-2                1.147 s  exit 0  load 0.96 -> 0.96
+  timeline-vc48-2                 1.104 s  exit 0  load 0.96 -> 0.96
+  timeline-before-3               1.349 s  exit 0  load 0.96 -> 0.97
+  timeline-after-3                1.206 s  exit 0  load 0.97 -> 0.97
+  timeline-vc48-3                 1.196 s  exit 0  load 0.97 -> 0.97
+  timeline-before-4               1.113 s  exit 0  load 0.97 -> 0.97
+  timeline-after-4                1.147 s  exit 0  load 0.97 -> 0.97
+  timeline-vc48-4                 1.071 s  exit 0  load 0.97 -> 0.97
+  timeline-before-5               1.215 s  exit 0  load 0.97 -> 0.97
+  timeline-after-5                1.274 s  exit 0  load 0.97 -> 0.97
+  timeline-vc48-5                 1.165 s  exit 0  load 0.97 -> 0.97
+
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared 4-vCPU box, --no-wait (times Astrid up to 'task queued')
+group      before med s   after med s    vc48 med s  after/before   vc48/before   ok  load1 before-cmd
+same             15.183         5.906        11.2940.389 (-61.1%)0.744 (-25.6%)   5/5/5  0.92-1.00
+changed          15.127         5.453        10.951 0.36 (-64.0%)0.724 (-27.6%)   5/5/5  0.93-0.99
+timeline          1.113         1.147         1.122  1.031 (3.1%)  1.008 (0.8%)   5/5/5  0.96-0.97
+  same: saving 9.277 s; without the VibeComfy fix 3.889 s; the VibeComfy fix accounts for 5.388 s = 58.1% of the saving (agent/runtime alone 41.9%)
+  changed: saving 9.674 s; without the VibeComfy fix 4.176 s; the VibeComfy fix accounts for 5.498 s = 56.8% of the saving (agent/runtime alone 43.2%)
+
+after arm stages, same (median of 5; top 12 by total seconds):
+     1.127 s total     0.062 s self  model registry  (in: None)
+     1.117 s total     0.000 s self  candidate preparation  (in: None)
+     0.831 s total     0.043 s self  Runtime connection  (in: None)
+     0.761 s total     0.643 s self  workflow build  (in: candidate preparation)
+     0.600 s total     0.004 s self  candidate qualification  (in: None)
+     0.579 s total     0.389 s self  pack host attachment  (in: Runtime connection)
+     0.509 s total     0.509 s self  pack discovery  (in: model registry)
+     0.476 s total     0.008 s self  invocation  (in: None)
+     0.441 s total     0.441 s self  other command work  (in: None)
+     0.426 s total     0.000 s self  bundle materialisation  (in: None)
+     0.426 s total     0.426 s self  workflow emission  (in: bundle materialisation)
+     0.239 s total     0.054 s self  capability registries  (in: invocation)
+
+after arm stages, changed (median of 5; top 12 by total seconds):
+     1.076 s total     0.058 s self  model registry  (in: None)
+     1.065 s total     0.000 s self  candidate preparation  (in: None)
+     0.815 s total     0.042 s self  Runtime connection  (in: None)
+     0.715 s total     0.603 s self  workflow build  (in: candidate preparation)
+     0.566 s total     0.394 s self  pack host attachment  (in: Runtime connection)
+     0.532 s total     0.002 s self  candidate qualification  (in: None)
+     0.493 s total     0.493 s self  pack discovery  (in: model registry)
+     0.424 s total     0.007 s self  invocation  (in: None)
+     0.415 s total     0.000 s self  bundle materialisation  (in: None)
+     0.415 s total     0.415 s self  workflow emission  (in: bundle materialisation)
+     0.412 s total     0.412 s self  other command work  (in: None)
+     0.224 s total     0.049 s self  capability registries  (in: invocation)
+
+vc48 arm stages, same (median of 5; top 12 by total seconds):
+     5.806 s total     0.000 s self  bundle materialisation  (in: None)
+     5.805 s total     5.805 s self  workflow emission  (in: bundle materialisation)
+     1.229 s total     0.000 s self  candidate preparation  (in: None)
+     1.095 s total     0.066 s self  model registry  (in: None)
+     0.845 s total     0.706 s self  workflow build  (in: candidate preparation)
+     0.801 s total     0.041 s self  Runtime connection  (in: None)
+     0.591 s total     0.003 s self  candidate qualification  (in: None)
+     0.542 s total     0.357 s self  pack host attachment  (in: Runtime connection)
+     0.500 s total     0.500 s self  pack discovery  (in: model registry)
+     0.442 s total     0.442 s self  other command work  (in: None)
+     0.439 s total     0.007 s self  invocation  (in: None)
+     0.239 s total     0.052 s self  capability registries  (in: invocation)
+
+vc48 arm stages, changed (median of 5; top 12 by total seconds):
+     5.683 s total     0.000 s self  bundle materialisation  (in: None)
+     5.683 s total     5.683 s self  workflow emission  (in: bundle materialisation)
+     1.158 s total     0.063 s self  model registry  (in: None)
+     1.089 s total     0.000 s self  candidate preparation  (in: None)
+     0.890 s total     0.040 s self  Runtime connection  (in: None)
+     0.762 s total     0.611 s self  workflow build  (in: candidate preparation)
+     0.610 s total     0.397 s self  pack host attachment  (in: Runtime connection)
+     0.566 s total     0.002 s self  candidate qualification  (in: None)
+     0.494 s total     0.008 s self  invocation  (in: None)
+     0.491 s total     0.491 s self  pack discovery  (in: model registry)
+     0.396 s total     0.396 s self  other command work  (in: None)
+     0.265 s total     0.061 s self  capability registries  (in: invocation)

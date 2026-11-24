@@ -1,0 +1,16 @@
+{
+  "project_id": "23e489705d764d1497e6c9b830f55ffe",
+  "timeline_id": "save-loop-heavy-c2930794",
+  "head": {
+    "publication_id": "txn-f3cbd404b1a0417ebc39901a3cd2b97a",
+    "revision_id": "authoring-parent-revision-811ee570a87ee8eb1a3fd7d94309320dd12485a2db35aef4e1f774fb6d4ad69b"
+  },
+  "history_entries": 38,
+  "history_next_cursor": null,
+  "clip_count": 432,
+  "track_count": 9,
+  "shot_revision_count": 0,
+  "internal_timeline_revision_count": 0,
+  "canonical_document_bytes": 342924,
+  "document_digest": "sha256:5d8e8ce015e55bc0692ee906bc4d01d612e1dded960a65de75c8bfc6bc8c5036"
+}

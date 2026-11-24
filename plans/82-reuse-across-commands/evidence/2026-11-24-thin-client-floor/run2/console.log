@@ -1,0 +1,28 @@
+A-warmup       5.374 s exit 0 load 0.77 task ab33cf27 succeeded server 0.000
+Cfull-warmup   0.408 s exit 0 load 0.98 task 94360b7e succeeded server 0.396
+Cnaive-warmup   0.037 s exit 0 load 0.98 task 9ae758be succeeded server 0.025
+Cping-warmup   0.011 s exit 0 load 0.98 task None None server 0.000
+A-1            5.209 s exit 0 load 0.98 task e149547a succeeded server 0.000
+Cfull-1        0.309 s exit 0 load 0.91 task a9ad8077 succeeded server 0.298
+Cnaive-1       0.035 s exit 0 load 0.93 task b2d85f87 succeeded server 0.024
+Cping-1        0.011 s exit 0 load 0.94 task None None server 0.000
+A-2            5.093 s exit 0 load 0.94 task 32450ac8 succeeded server 0.000
+Cfull-2        0.374 s exit 0 load 0.95 task 88070bbf succeeded server 0.363
+Cnaive-2       0.036 s exit 0 load 0.95 task 7a3bbbef succeeded server 0.022
+Cping-2        0.012 s exit 0 load 0.96 task None None server 0.000
+A-3            5.310 s exit 0 load 0.96 task 4da822df succeeded server 0.000
+Cfull-3        0.320 s exit 0 load 0.96 task 09d977dd succeeded server 0.306
+Cnaive-3       0.036 s exit 0 load 0.97 task 6bc86431 succeeded server 0.024
+Cping-3        0.011 s exit 0 load 0.97 task None None server 0.000
+A-4            5.201 s exit 0 load 0.97 task 53c1bb93 succeeded server 0.000
+Cfull-4        0.344 s exit 0 load 0.96 task 420348d2 succeeded server 0.333
+Cnaive-4       0.035 s exit 0 load 0.97 task 9cca5057 succeeded server 0.024
+Cping-4        0.009 s exit 0 load 0.97 task None None server 0.000
+A-5            5.168 s exit 0 load 0.97 task 0c83fc11 succeeded server 0.000
+Cfull-5        0.292 s exit 0 load 0.98 task b6363a83 succeeded server 0.280
+Cnaive-5       0.038 s exit 0 load 0.98 task 7662144e succeeded server 0.023
+Cping-5        0.040 s exit 0 load 0.91 task None None server 0.000
+A       median 5.201 s  samples [5.2086, 5.0928, 5.3098, 5.2006, 5.1683]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+Cfull   median 0.320 s  samples [0.3094, 0.3742, 0.3196, 0.3439, 0.2917]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+Cnaive  median 0.036 s  samples [0.035, 0.0357, 0.036, 0.0353, 0.0378]  states ['succeeded', 'succeeded', 'succeeded', 'succeeded', 'succeeded']
+Cping   median 0.011 s  samples [0.0111, 0.0119, 0.0107, 0.0094, 0.0396]  states [None, None, None, None, None]

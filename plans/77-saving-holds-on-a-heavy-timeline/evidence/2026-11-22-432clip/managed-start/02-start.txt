@@ -1,0 +1,6 @@
+2026-11-22T23:17:03.142Z
+Environment variable names: PATH HOME XDG_DATA_HOME XDG_STATE_HOME TMPDIR ASTRID_NODE_EXECUTABLE ASTRID_RUNTIME_DOOR_PORT
+Command: /root/codex/p77box/stack/program/versions/1d2700baa660/py/bin/astrid-runtime up --profile astrid --data-root /root/codex/p77box/stack/data --door-port 17501 --json
+wrapper_pid=4710
+exit_code=1
+end_utc=2026-11-22T23:19:06.622Z

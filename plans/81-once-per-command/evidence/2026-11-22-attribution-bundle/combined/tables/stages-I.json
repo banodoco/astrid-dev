@@ -1,0 +1,219 @@
+[
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.024408233000940527,
+    "stage": "Runtime GET /v1/app-state/user/generation",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.013530037000236916,
+    "stage": "Runtime GET /v1/capabilities",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.007499959999222483,
+    "stage": "Runtime GET /v1/health",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A022e236e9bd1e9777ebff5a9c970bec0c614cdddbaa7fbe466f4d16c7bd2a8d5",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A0d5863c04234daafc44c0800838cdf667931633d55bf20bb1d426296df3d5830",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A1da8bcc966aec8fda55421de747cfbfd4c01fd9782a21c9bd45b8039c2c2db0a",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A50377bb153ab509f432a946c9123a43825c5e535a6b80840ae25ea6018f17b92",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A5ba991c70b238c3378935d1127c39e2c4de66bcad34c74522d1aa4858841d673",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A6a929f117718447d458b50365601511371d10258c9528a905d8ae66a8ad792bd",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A8545746c4c7daf6fcd1b07241df422e2af97ee9f797b3786c88b65356ee81b27",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Aba9181db80249d574fafe3a487f61132dbef147c084a7b4400389a191a8691d6",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.02424717400026566,
+    "stage": "Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Ae8d628189eab2b24ef16da78d4e91f90d4518c96e4c617c3b1475501709958dc",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Aed36d1e06405f294140d58fe3e37424f0199d4441a037d8a01a36fda6502f496",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.007213462999970943,
+    "stage": "Runtime GET /v1/projects/200b4f234945412da1a5deb49ab39d7d",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.006438779999371036,
+    "stage": "Runtime POST /v1/handshake",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.037728197999058466,
+    "stage": "Runtime POST /v1/projects/200b4f234945412da1a5deb49ab39d7d/objects",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.012489508999351528,
+    "stage": "Runtime POST /v1/tasks",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.0006830120009908569,
+    "stage": "Runtime acquisition lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 1.0465070099999139,
+    "stage": "Runtime launcher connection",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.005430537999927765,
+    "stage": "entry discovery",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 2.865899932658067e-05,
+    "stage": "in-process Runtime acquisition lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.05885466000108863,
+    "stage": "model registry",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 6.452376424997055,
+    "stage": "other command work",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 18,
+    "parent": null,
+    "seconds_median": 2.7813008189996253,
+    "stage": "pack discovery",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.39409139699910156,
+    "stage": "pack host attachment",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 4.10250004279078e-05,
+    "stage": "pack host lifecycle lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.009226054999999178,
+    "stage": "pack host readiness",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.15064148500005103,
+    "stage": "pack host source identity",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.006351873999847157,
+    "stage": "target check",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.6115222099997482,
+    "stage": "workflow build",
+    "total_seconds_median": null
+  }
+]

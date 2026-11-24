@@ -1,0 +1,14 @@
+{
+ "le4-cyan": {
+  "packId": "project_4944f3baaa40481ba360",
+  "id": "le4-cyan",
+  "revision": "sha256:dcb5e113e7016f7c0a0792a66364be41a158b2a2a536c26b3d7b49aaaebed6ea",
+  "kind": "effect"
+ },
+ "le4-gold": {
+  "packId": "project_4944f3baaa40481ba360",
+  "id": "le4-gold",
+  "revision": "sha256:d8eaaf4855528d7c36e434a3c7ef07a73229f6aee70599e03d8fc1b41cf74fb8",
+  "kind": "effect"
+ }
+}

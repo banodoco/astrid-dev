@@ -1,139 +1,112 @@
-# All three mains green
+# Runtime and App main green
 
-**Project:** All three mains green
+**Project:** Runtime and App main green
 
-**Goal:** Every CI workflow on Agent, Runtime and App `main` is green and stays green: root causes fixed (never a loosened test), one strict-xfail quarantine rule with an owner and an expiry, a nightly report of new red, and releases that need every required check green on each pinned commit (through Plan 31's `release-contract`).
+**Goal:** Every CI workflow on the Runtime's and the App's `main` is green and stays green, so a red check means a new regression; the Agent's share is [Plan 91](../91-agent-main-green/plan.md).
 
-**Status:** active
+**Status:** queued
 
-**Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
+**Owner:** Unassigned
 
-**Estimate:** 22–31 (8–11 elapsed): phase 1 6.5, phase 2 13–21, phase 3 3.5
+**Estimate:** 64–78 engineering days, about 6–8 weeks elapsed with five workers: phase 1 (the quarantine, the baselines, the prune pass, the large causes) 20–24; phase 2 (the middle and the long tail, CI and Nightly) 40–48; phase 3 (kept green) 4–6
 
-**Waiting on:** a manager; G1 redone on `release/14/main` ([Release 14 scope](#release-14-scope)); Plan 38 for the custody tests; Plan 31 RL-1b for K4, which is Release 15's
+**Waiting on:** now, the owner's D14 and D15 (the App's quarantine entries expire on 25 November, the Runtime's on 1 December); before start, the owner's confirmation of the other open decisions in [inputs.md](inputs.md#owner-decisions) (D11 and D17 are decided) and an orchestrator and manager under the Release 16 Lead; Plan 91's comparator change (astrid-dev #1833) and its acceptance of D21's Agent cards; Plan 31's acceptance of D22; Plans 89 and 77 landing ([base choice](inputs.md#source-identities)).
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). A red check on `main` should mean a new regression. Today it means nothing, because every full CI workflow on Agent, Runtime and App `main` has been red for weeks.
+**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). A red check on `main` should mean a new regression. Today the Runtime's CI and Nightly, and the App's E2E, Lanes and Direct Journey, are red on every run, and the same failures repeat on every run.
 
 ## Outcome and scope
 
-Every CI workflow that runs on a push to `main`, in astrid-agent, astrid-runtime and astrid-app, is green, and it stays green:
-- **Green.** Each failing job is fixed at its root cause ([triage](inputs.md#root-cause-triage)), never by loosening an assertion to match a bug. A test changes only when the behaviour it checks changed on purpose, and the task card names the commit or contract that changed it.
-- **Kept green.** Hannah turns on the [required checks](tasks.md#required-checks) for each `main`. One [quarantine rule](#quarantine-rule), the same in all three repositories, is the only way a known failure may be tolerated. A nightly report names any new red within a day.
-- **Releases.** The release rule changes from "no new red against `main`" ([Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md)) to "every required check is green on each pinned commit". The check lives in [Plan 31](../31-releases-from-astrid-dev/plan.md)'s `release-contract` job as one more rule on the release record. It is not a second gate.
-- **Structural (phase 4, from [Release 12](inputs.md#release-12-structural-evidence)).** The causes that kept the mains hard to read are removed too. Each App three-products test owns its seed, so the journey runs in parallel and in any order, and CI shuffles it. An expected failure names the step and error it expects. Every `main` and `int` run stores per-test results, so a candidate is compared with the published `main` without reruns, and a cancelled or truncated shard turns the run red. Once the mains are green, feature work lands on `main` through ordinary CI, so a release candidate is `main` plus a short, listed set of fixes; the mains are frozen from cut-off to publication, and the release record states both. Each Agent code and harness smell Release 12 found gets a fix and a guard for its class. Upgrade safety of installed state, found after Release 12 shipped (the Release 1 → 12 Hivemind incident), is [Plan 09 phase 2](../09-install-and-update-confidence/plan.md#phase-2-upgrade-safe-installed-state), not this plan.
+**Rebuilt on 24 November 2026.**
+- **The split.** The owner split the Agent's share into [Plan 91](../91-agent-main-green/plan.md) on 23 November.
+- **The release.** She moved both plans to [Release 16](../../releases/16.md), built on `release/15/main` ([D11](inputs.md#owner-decisions)).
+- **The re-measure.** This plan was re-measured on the `release/15/main` heads ([evidence](evidence/release-15-measure/README.md)), and checked by an independent [critique](evidence/critique.md) and two ambiguity passes.
+- **The old rows.** Every row of the Release 14 plan was carried, closed or dropped ([row map](evidence/release-15-measure/row-map.md)). The Release 14 plan, tasks, inputs and handover are kept in [evidence/release-14-record](evidence/release-14-record/plan.md).
 
-**Included:** the CI workflows that run on push to `main`:
-- Agent: `CI`, `Lanes`, `Chat service` and `Windows task host journey`;
-- Runtime: `CI`, plus `Nightly` on its schedule;
-- App: `Tests`, `Lanes` and `E2E`, plus `Direct Journey` on its schedule.
+**Measured on 23–24 November** (Runtime `24e2c929`; App `3f5da385`, the App's last head that ran):
 
-It also includes astrid-dev's worker environment for the Runtime and App (G0), the quarantine guard in each repository, and the nightly report. Phase 4 adds the three-products journey's structure, per-test result artifacts and their comparison, the release record's scope and freeze sections, and the Agent code and journey-harness fixes its rows name.
+| Repository | Workflow | Result |
+| --- | --- | --- |
+| Runtime | `CI` | 5 of 9 jobs fail: 508 distinct failing tests, the same on 7 runs, and inherited from `main`. 358 of them come from one cause: a 1 November safety check (`v33_lifecycle.py:300`) correctly blocks tests that never register a Timeline provider. About three quarters of the failing rows are setup errors, so more failures lie beneath them |
+| Runtime | `Nightly` | All 15 runs on `main` from 12 to 23 November failed, with 152 distinct tests on `main` `5120462`. It has never run on `release/15/main`, because a schedule fires only on `main` |
+| App | `Tests` | Green (21,474 tests). It goes red on 26 November, when four quarantine entries expire, and then no Vitest result is reported at all ([D14](inputs.md#owner-decisions)) |
+| App | `E2E` | 85 failing of 649. About 44 come from the fake Runtime missing three routes the App now calls |
+| App | `Lanes` | 2 failing: a missing browser install and a quick-journey test bug |
+| App | `Direct Journey` | 6 of the last 7 scheduled runs on `main` failed |
+
+**What changes:**
+- **Cannot get worse, first.** Each repository gets a sealed baseline: one status line per test ID from two runs at the start, in `ci/runtime-baseline.txt` and `ci/app-baseline.txt`. Its FAILED lines are the ceiling, and its PASSED lines are the inventory, so a deleted test is caught as well as a new failure. Comparisons use `env/baseline-diff.py --strict`, through one gate tool that also turns any job without a result red. Only the orchestrator edits the baseline, and only to move what passed. The App's Playwright jobs gain per-test JSON results and an adapter, so the App can be compared by test at all.
+- **Prune boldly, then fix.** The [support line](inputs.md#owner-decisions) (D12): only current behaviour, and updating from the previous published release, is supported. Tests of anything older are deleted with their citation, and duplicates are deleted naming the test that covers them. The Runtime has at least 31 known candidates, and most of its 19 quarantined IDs; the App helpers found none.
+- **Green by cause.** One card per cause, routed N, X or S, under [Plan 91's triage rules](../91-agent-main-green/tasks.md#triage-rules), which this plan uses unchanged.
+- **Kept green.** A nightly red report across the Agent, the Runtime and the App, and the Runtime and App entries in astrid-dev's one required-checks list, for the owner to turn on. One quarantine rule ([below](#quarantine-rule)) covers what must stay green meanwhile.
+
+**Included:** the Runtime's `CI` and `Nightly`; the App's `Tests`, `E2E`, `Lanes` and `Direct Journey`; the gate tool, the App adapter and the nightly report in astrid-dev.
 
 **Not included:**
-- the custody and host-spawn tests [Plan 38](../38-one-process-identity/plan.md) owns (its [test inventory](../38-one-process-identity/tasks.md#test-inventory)). This plan's tasks skip them, and its completion counts them green only when Plan 38 lands them;
-- the Agent's `journey.yml` release receipts (push `int/r1` only, owned by the Release skill);
-- GPU and live lanes (Plan 34);
-- product features. A real product bug found here gets its own fix task. When it is large, it goes to an issue and is quarantined under the rule.
-
-**Replaces:** the "full CI health is a separate project" deferral in [Plan 29](../29-update-and-release/inputs.md#planning-evidence) (decision 6), Plan 29's unfinished UR-0 ("why App main is red"), and the strategy row "Green mains (proposed): a Release rule plus a one-off fix batch". [Plan 30](../30-update-everywhere/plan.md) inherited the same deferral through Plan 29's shared evidence.
-
-## Release 14 scope
-
-Added on 16 November 2026, when the owner brought this plan into [Release 14](../../releases/14.md). The plan was written on 9 November, two releases ago. Where this section and the text around it differ, this section governs until G1 is redone and the task table is corrected from it.
-
-**What is in.** Phases 1 to 3, and from phase 4 only SF3a to SF3c: results stored per test, a comparison without re-runs, and shards that finish. The rest of phase 4, and K4 and K5, which wait for Plan 31, are [Release 15](../../releases/15.md)'s.
-
-**Where it lands.** `release/14/plan-39` in each repository, then `release/14/main`. This replaces `int/39-green-mains`. Until Release 14 is published, "green `main`" in this plan means green `release/14/main`; publishing fast-forwards each `main` to it, and the required checks then apply to `main` as well.
-
-**Done for Release 14.** Every merge-tier and release-tier check in [Required checks](tasks.md#required-checks) is green on the head of `release/14/main` in Agent, Runtime and App three nights in a row, the merge tier is required on pull requests into it, and each repository's quarantine holds at most ten entries, all within age.
-
-**What it leaves alone.** Tests in [Plan 55](../55-local-speed/tasks.md)'s test inventory (the VibeComfy pack, the ComfyUI target, delivery, the generic host and SDK invocation) until its fast lane has landed, because that plan rewrites what they test: a failure there gets a row and waits. Plan 38's tests, as before. Rented-machine defects that no failing test shows: those issues were filed here during Release 13 and moved to Release 15 on 16 November.
-
-### Measured on 16 November
-
-Read from the latest completed runs on `release/14/main`. Two of the Agent's eight unit shards and three of its five failing lane jobs were sampled, from the last 1,500 lines of each log, so the Agent's numbers are a floor. G1 replaces this table.
-
-| Repository | Failing | What the logs show |
-| --- | --- | --- |
-| Runtime | 5 of 10 `CI` jobs | `unit` on Ubuntu: 77 failed, 8,440 passed, 1,010 errors, the error count of the 9 November triage unchanged. At least 718 of the errors are causes R-a, R-b and R-c: no Agent checkout, a hard-coded scratch path, and `git archive` on a shallow checkout. |
-| Agent | 10 of 16 `CI` jobs, with all eight unit shards; 5 of 6 `Lanes` jobs; both `Windows task host journey` jobs | Collection no longer aborts (A-a is fixed), so real failures show: 250 failed and 160 errors in shard 7, 98 failed in shard 8. They cluster: 62 are one copy-only upgrade-boundary error, 25 one `KeyError: 'macos-15'`. The lint gate fails because findings fell ([#742](https://github.com/banodoco/astrid-dev/issues/742)). |
-| App | all six `E2E` jobs; 2 of 5 `Lanes` jobs; `Tests` is green | Three `E2E` jobs share one cause: the fake Runtime has no route for `GET /api/runtime/packs/inventory`. `chrome-export` gets `retired_route` from it. |
-
-Since the triage: A-a and PE1 are fixed, and vitest runs on pull requests into a release branch (part of K1c). R-a, R-b, R-c, R-f, A-c and A-i are still present on `release/14/main`. An Agent run takes about two hours, jobs waited 30 to 68 minutes to start, and a new push cancels the run in flight.
-
-### What changes in the order
-
-1. **Store results first.** SF3a moves from phase 4 to the start. The Runtime runs `pytest -q`, with no per-test lines, so its runs cannot be compared by test at all; the Agent prints `-rA` and uploads only durations. Every later measurement, and every worker's proof, reads the stored results.
-2. **Gates that parallel work can pass.** The Agent's Ruff and mypy gates fail when findings fall as well as when they rise. Two pull requests that each remove findings then break each other once both merge. Before the fan-out, the gate fails on a rise only, and the baseline is rewritten once per batch on the plan branch.
-3. **One full run per batch, not per card.** A worker proves a card with its focused tests and the stored results. The manager merges a batch into the plan branch and waits for one full run, because a full run per card would queue fifteen two-hour runs on runners that are already full.
-
-### How the work fans out
-
-The 35 to 47 worker-days do not divide by the number of workers, because four steps cannot be shared out: the two measurements, the review stop, and three consecutive green nights. Between them the work is one cause to one worker.
-
-| Wave | Workers | Work | Elapsed |
-| --- | --- | --- | --- |
-| 0 | 1 to 3 | G0 and G1 redone on `release/14/main`; SF3a in the three repositories; GL, the gate change above | about 1 day |
-| 1 | about 10 | The wiring cards, all independent: RE1 to RE4 in the Runtime, AE2 in the Agent, K1a to K1c, and AE1 and PE1 confirmed fixed | 1 to 2 days |
-| stop | 1 | G2, then the one review round RS1 | about 1 day |
-| 2 | 10 to 15 | One worker per cause from G2's clusters, the three repositories at once, with the Windows journey (AT4) and the App's fake Runtime (PT2) among them; K2, K3, SF3b and SF3c beside them | 4 to 7 days, set by the Agent's count |
-| 3 | 1 | Three green nights, then the final review R | 3 days at least |
-
-The rows in each wave are listed in [tasks.md](tasks.md#release-14-waves). That is 10 to 14 days elapsed, as the [estimate](tasks.md#estimate) says. More workers shorten wave 2 only; more CI capacity shortens every wave. The rule in the estimate still holds: if G2 shows more than 60 distinct Agent causes, the manager splits AT1 and re-estimates before going on.
-
-### Issues
-
-Filed against this plan and in scope, each to be given a task row at G1: the red release branch ([#742](https://github.com/banodoco/astrid-dev/issues/742)); 133 timeline tests that assert one hard-coded Runtime commit ([#637](https://github.com/banodoco/astrid-dev/issues/637)); the stale structure baseline ([#647](https://github.com/banodoco/astrid-dev/issues/647)); shards that never finish ([#614](https://github.com/banodoco/astrid-dev/issues/614)); stale or environment-dependent fixtures ([#615](https://github.com/banodoco/astrid-dev/issues/615), [#626](https://github.com/banodoco/astrid-dev/issues/626)); tests that fail with no cause recorded yet ([#639](https://github.com/banodoco/astrid-dev/issues/639), [#636](https://github.com/banodoco/astrid-dev/issues/636), [#621](https://github.com/banodoco/astrid-dev/issues/621)); a test no CI job can run ([#606](https://github.com/banodoco/astrid-dev/issues/606)); the integration lane's unprovisioned checkouts ([#585](https://github.com/banodoco/astrid-dev/issues/585)); the 57-minute CPU journey ([#578](https://github.com/banodoco/astrid-dev/issues/578)); the lint and type findings Release 13 added and the parked type fixes ([#613](https://github.com/banodoco/astrid-dev/issues/613), [#633](https://github.com/banodoco/astrid-dev/issues/633)); and the deferred engine-lane items ([#612](https://github.com/banodoco/astrid-dev/issues/612)). The live-scene tests that run in no lane ([#734](https://github.com/banodoco/astrid-dev/issues/734)) are shared with the release's standing lane.
+- **The Agent,** which is [Plan 91](../91-agent-main-green/plan.md). Where a Runtime or App failure is an Agent bug, the card hands it to Plan 91 ([D21](inputs.md#owner-decisions)).
+- **The release rule** in `release-contract` (that every required check is green on each pinned commit), and the release record's scope and freeze sections. These belong with [Plan 31](../31-releases-from-astrid-dev/plan.md), once it accepts them ([D22](inputs.md#owner-decisions)). This plan provides their inputs: the required-checks entries and the green runs.
+- **Other plans' tests:** the custody, bootstrap and host-spawn tests [Plan 38](../38-one-process-identity/plan.md) owns, and the Runtime's `darwin-native` job, which it replaces.
+- **The three-products structure** (each test owning its seed, then shuffled runs). It is deferred unless the Direct Journey cards show that order matters.
+- **GPU, live and Pinokio lanes; VibeComfy.**
+- **Product features.** A real product bug found here gets its own card, or, if it is large, an issue and a visible ceiling entry the owner accepts.
 
 ## Quarantine rule
 
-A test that cannot be fixed in its task may be quarantined only like this:
-- it gets a **strict** expected-failure mark (pytest `xfail(strict=True)` through each repository's existing declared-xfail registry, or the App's `skipRegistry.mjs` and `check-known-failures.mjs`), never a skip. When the test starts passing, CI fails until the mark is removed;
-- the entry carries an issue link, an owner and an expiry date at most 14 days out;
-- each repository's guard test fails CI on a missing field, an expired entry, or more than 10 entries per repository;
-- the nightly report lists every quarantined test with its age.
-
-The Runtime (`tests/lanes.py` `DECLARED_XFAILS`, `SKIP_REGISTRY`) and the App (`config/testing/skipRegistry.mjs`, `scripts/quality/check-known-failures.mjs`) already have registries. The Agent has `tests/test_skip_policy.py` and the lane xfail rule in `tests/lanes.py`. Each task extends these and adds no new mechanism.
+A test that cannot be fixed in its card stays visibly red on the ceiling. That is the default, and the ceiling absorbs what a quarantine would otherwise carry. Quarantine is only for a test that must stay green in a required check before its fix lands, and only like this:
+- a **strict** expected-failure mark through the repository's existing registry: the Runtime's `tests/lanes.py` `DECLARED_XFAILS`, or the App's `config/testing/direct-journey-expected-failures.json`, checked by `scripts/quality/check-known-failures.mjs`. Never a skip. When the test starts passing, CI fails until the mark is removed;
+- the entry carries an issue link, an owner and an expiry at most 14 days after the day it merges. At expiry the mark comes off and the ID goes on the ceiling, unless the owner renews it once, recorded on its issue;
+- each repository's guard fails CI on a missing field, an expired entry, or more entries than its cap. The cap counts test node IDs (the Release 14 record's [D9](evidence/release-14-record/inputs.md#owner-decisions)) and only falls: the Runtime's is 19 today, and both repositories are at 10 or fewer at completion ([D15](inputs.md#owner-decisions));
+- the nightly report lists every quarantined test with its age;
+- an ID that is quarantined when a baseline is sealed is recorded as FAILED, not as passing.
 
 ## Existing work and decision
 
-The work reuses each repository's own registry and guard, Plan 38's Runtime worker setup (W0), Plan 31's App worker setup (RL-0) and `release-contract` job, and the Agent's mypy and Ruff baselines. The evidence, the ranked causes, the alternatives and the challenge are in [inputs.md](inputs.md#planning-evidence).
+The approach is Plan 91's, applied to two repositories. It reuses:
+- each repository's quarantine registry and guard;
+- the Runtime's existing `-rA` and JUnit output in three of its jobs;
+- `direct-journey.yml`'s Playwright JSON reporter;
+- the Runtime's `needs_real_pidfd` marker;
+- the comparator `env/baseline-diff.py`, as Plan 91 fixes it in astrid-dev #1833.
+
+What the Release 14 run built on `release/14/plan-39` was never merged, and this plan ports none of it ([audit](evidence/release-15-measure/audit.md)). The evidence, the alternatives and the critique are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-- **Queued to start after release 12 is published.** Release 12 already clears several Agent causes: the Ruff import-sort debt, the Windows POSIX-filesystem custody refusal, and the wheel-smoke `entries.py` import, and likely the ESBUILD collection error. So G1 re-measures every cause on the release-12 heads before any fix starts.
-- **Phase 1, CI environment and wiring** (G0 to G2, then the `RS1` review stop). Most of the red is here: about 1,000 Runtime errors and every Agent shard aborting at collection. Fixing it first shows the real test failures it hides.
-- **Phase 2, test-by-test**, by cause, with the three repositories in parallel. Each cause is one or a few small N tasks that many workers can take at once.
-- **Phase 3, keep it green:** the required checks, the nightly report and the release rule. Then the final review.
-- **Phase 4, structural fixes from Release 12**, beside phases 2 and 3: most rows start after RS1, and SF3a after G2. The final review R covers them. SF4 and SF5 change the release rules, so they wait for the Release skill owner and an advisor review, and apply from the first release after the mains are green.
+The task list and critical path are in [tasks.md](tasks.md):
+1. **Now: the quarantine.** The expiring entries are sorted before they turn the mains red (GM-Q).
+2. **Phase 1: the baselines, the prune pass and the large causes.**
+   - Cut the plan branches, bump the Runtime's Agent pin, and re-measure twice.
+   - Add per-test reporting where it is missing, the gate tool and the dispatch inputs, and seal each baseline.
+   - The prune pass runs beside them, with the four largest causes: the Runtime's v33 provider fixtures (358 tests) and commit-crash fixture (32), and the App's fake Runtime routes (about 44) and missing browser installs.
+   - The review stop RS1 covers the baselines before anything lands.
+3. **Phase 2: the middle and the long tail,** by cause, the two repositories in parallel. Cards start after the re-measure and land once their repository's baseline is sealed. Those in files Plans 89 and 77 are changing wait for those plans to land.
+4. **Phase 3: kept green.** The nightly report, the required-checks entries, and three green nights per workflow on one frozen head. Then the final review R.
 
-Plan 38 runs at the same time. Its tests are excluded here, and its W0 and Plan 31's RL-0 are reused, not rebuilt ([tasks](tasks.md)).
+Nothing starts until the owner confirms the decisions and the Release 16 Lead names who runs it. Recording this plan authorizes no implementation.
 
 ## Interfaces and handoff
 
 - **Consumes:**
-  - each repository's `main` at the release-12 heads, recorded in G1;
-  - the cross-repository pins (`runtime.lock.json`, the Runtime's `tests/astrid-agent.pin`, the App's `runtime.lock.json` and `config/astrid-cli-surface/vendor.lock.json`);
-  - Plan 31's release record and `release-contract` job.
+  - each repository's `release/15/main` head, recorded at GM-0, and later `release/16/main`;
+  - the cross-repository pins: the Runtime's `tests/astrid-agent.pin`, and the App's `runtime.lock.json`, `config/astrid-cli-surface/vendor.lock.json` and `public/install-manifest.json`. This plan moves only the first;
+  - Plan 91's `env/baseline-diff.py` change (astrid-dev #1833), and its `ci/required-checks.json` in astrid-dev (AG-2).
 - **Produces:**
-  - green `main` workflows;
-  - a list of required checks per repository, for the owner to set;
-  - one quarantine guard per repository;
-  - `scripts/ci_red_report.py` and its nightly workflow in astrid-dev;
-  - the `release-contract` rule "every required check on each pinned commit is success";
-  - the Release skill's new rule text;
-  - per-test result artifacts on each `main` and `int` run, compared by `env/baseline-diff.py`;
-  - the release record's `## Candidate scope` and `## Freeze` sections, checked by `release-contract`.
+  - green Runtime and App workflows;
+  - `ci/runtime-baseline.txt` and `ci/app-baseline.txt`, with no FAILED line at the end, or only entries the owner accepted;
+  - per-test JSON from every App Playwright job, and `env/app-results-ids.mjs`;
+  - `env/run-gate.py`, the gate tool for any repository;
+  - `tests` and `repeat` dispatch inputs on the Runtime's and the App's test workflows, `nightly.yml` included;
+  - the Runtime and App entries in astrid-dev's `ci/required-checks.json`, for the owner to set and for Plan 31's `release-contract` to read;
+  - `scripts/ci_red_report.py` and its nightly workflow in astrid-dev, covering the Agent too.
 
 ## Completion
 
-- Each workflow listed above has a green run on the final head of its `main`, three nights in a row, with any quarantine entries listed and within age.
-- Plan 38's tests are counted only once Plan 38 has landed them.
-- **Negative cases:**
-  - an expired quarantine entry, or a strict xfail that starts passing, turns its repository red;
-  - a release record pinning a commit whose required check failed is refused by `release-contract`;
-  - a three-products test that reads another test's state fails in the shuffled run;
-  - a release record over the scope limit without the owner's sign-off, or whose `main` moved after its cut-off with the commits unlisted, is refused by `release-contract`.
-- **Limits:** green on GitHub-hosted runners only. GPU, live and Pinokio lanes are out of scope. Branch protection is Hannah's setting, and the plan can only list and check it.
+- Each workflow listed in Included has a green run on one frozen head of `release/16/plan-39`, on three different nights, then one green run on `release/16/main` after the plan branch lands.
+- Each baseline holds no FAILED line, or only entries the owner accepted, each with its issue. Each quarantine holds at most 10 IDs, all within age.
+- The nightly report has run for three nights and named any new red.
+- **Negative cases** (each shown by an injected failure on a scratch branch):
+  - each of these turns the gate red: a test that passed in the baseline and fails on the candidate, a new failing test, a deleted test, and a job that was cancelled or truncated;
+  - an expired quarantine entry, and a strict xfail that starts passing, each turn their repository red;
+  - the App's fake Runtime check fails when the App calls a route the fake does not serve.
+- **Limits:** GitHub-hosted runners only. Branch protection is the owner's setting; this plan lists the checks and shows them green.

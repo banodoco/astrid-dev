@@ -1,0 +1,237 @@
+{
+ "runs": [
+  {
+   "modules": 1284,
+   "total_s": 0.830247,
+   "self_by_package_s": {
+    "astrid": 0.2601,
+    "vibecomfy": 0.2392,
+    "other (stdlib and third-party)": 0.1984,
+    "numpy": 0.0743,
+    "astrid_runtime_client": 0.0276,
+    "yaml": 0.0107,
+    "PIL": 0.0101,
+    "jsonschema": 0.0069,
+    "runtime_protocol": 0.0035
+   },
+   "top_level_cumulative_s": [
+    [
+     "astrid.core.execution.generic_host",
+     0.1642
+    ],
+    [
+     "vibecomfy.porting.emit.ui",
+     0.1457
+    ],
+    [
+     "astrid.core.generation.backends.comfy_schema",
+     0.1166
+    ],
+    [
+     "vibecomfy.nodes.core",
+     0.0428
+    ],
+    [
+     "astrid.sdk.host_bootstrap",
+     0.0349
+    ],
+    [
+     "astrid",
+     0.0301
+    ],
+    [
+     "astrid.core.generation.preflight",
+     0.0294
+    ],
+    [
+     "astrid.sdk.client",
+     0.0279
+    ],
+    [
+     "astrid.core.util.http",
+     0.0213
+    ],
+    [
+     "astrid.core.execution.thumbnail_backfill",
+     0.0207
+    ],
+    [
+     "astrid.core.generation.placement",
+     0.0197
+    ],
+    [
+     "vibecomfy.registry.ready",
+     0.0166
+    ],
+    [
+     "vibecomfy.porting.layout.delta",
+     0.0118
+    ],
+    [
+     "vibecomfy.porting.layout.reconcile",
+     0.0095
+    ],
+    [
+     "astrid.core.extensions.registry",
+     0.0094
+    ]
+   ]
+  },
+  {
+   "modules": 1284,
+   "total_s": 0.865965,
+   "self_by_package_s": {
+    "astrid": 0.2591,
+    "vibecomfy": 0.2463,
+    "other (stdlib and third-party)": 0.2252,
+    "numpy": 0.0734,
+    "astrid_runtime_client": 0.0239,
+    "yaml": 0.0134,
+    "PIL": 0.012,
+    "jsonschema": 0.01,
+    "runtime_protocol": 0.0033
+   },
+   "top_level_cumulative_s": [
+    [
+     "astrid.core.execution.generic_host",
+     0.1926
+    ],
+    [
+     "vibecomfy.porting.emit.ui",
+     0.1684
+    ],
+    [
+     "astrid.core.generation.backends.comfy_schema",
+     0.1128
+    ],
+    [
+     "astrid",
+     0.0396
+    ],
+    [
+     "vibecomfy.nodes.core",
+     0.0393
+    ],
+    [
+     "astrid.sdk.host_bootstrap",
+     0.0366
+    ],
+    [
+     "astrid.core.generation.preflight",
+     0.0271
+    ],
+    [
+     "astrid.sdk.client",
+     0.0242
+    ],
+    [
+     "astrid.core.util.http",
+     0.024
+    ],
+    [
+     "astrid.core.execution.thumbnail_backfill",
+     0.0186
+    ],
+    [
+     "astrid.core.generation.placement",
+     0.0167
+    ],
+    [
+     "vibecomfy.registry.ready",
+     0.015
+    ],
+    [
+     "urllib.request",
+     0.01
+    ],
+    [
+     "astrid.core.extensions.registry",
+     0.0099
+    ],
+    [
+     "vibecomfy.porting.layout.reconcile",
+     0.008
+    ]
+   ]
+  },
+  {
+   "modules": 1284,
+   "total_s": 0.930713,
+   "self_by_package_s": {
+    "vibecomfy": 0.3192,
+    "astrid": 0.2529,
+    "other (stdlib and third-party)": 0.2068,
+    "numpy": 0.1047,
+    "astrid_runtime_client": 0.0217,
+    "yaml": 0.0082,
+    "PIL": 0.008,
+    "jsonschema": 0.0061,
+    "runtime_protocol": 0.0036
+   },
+   "top_level_cumulative_s": [
+    [
+     "vibecomfy.porting.emit.ui",
+     0.2156
+    ],
+    [
+     "astrid.core.generation.backends.comfy_schema",
+     0.1651
+    ],
+    [
+     "astrid.core.execution.generic_host",
+     0.1383
+    ],
+    [
+     "vibecomfy.nodes.core",
+     0.0576
+    ],
+    [
+     "astrid.sdk.host_bootstrap",
+     0.0395
+    ],
+    [
+     "astrid.core.execution.thumbnail_backfill",
+     0.0302
+    ],
+    [
+     "astrid.core.generation.preflight",
+     0.0276
+    ],
+    [
+     "astrid",
+     0.0272
+    ],
+    [
+     "vibecomfy.registry.ready",
+     0.0226
+    ],
+    [
+     "astrid.sdk.client",
+     0.022
+    ],
+    [
+     "astrid.core.util.http",
+     0.018
+    ],
+    [
+     "astrid.core.generation.placement",
+     0.0165
+    ],
+    [
+     "astrid.core.extensions.registry",
+     0.0097
+    ],
+    [
+     "astrid.core.execution.executor.registry",
+     0.0078
+    ],
+    [
+     "vibecomfy.porting.layout.reconcile",
+     0.0072
+    ]
+   ]
+  }
+ ],
+ "median_total_s": 0.866,
+ "median_modules": 1284
+}

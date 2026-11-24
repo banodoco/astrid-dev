@@ -1,0 +1,107 @@
+# Render and timeline fixes: release integration analysis
+
+22 November 2026. **Verified** means observed in fetched Git objects, local diffs, referenced review or contributor instructions; **inferred** means a judgment or recommended action. No tests, builds, installs, browser, pushes or GitHub writes. Trial worktree removed. Working patch and detailed trial transcripts are alongside this report. Branch protection, current PR checks, issue labels, release brief state and CI results were not queried, so none is represented as verified complete or incomplete.
+
+## 1. Fetched topology
+
+**Verified:** fetched explicit origin refs in the Agent clone (the default fetch refspec alone only fetched the clone's current branch). Commiter dates as recorded:
+
+| Ref | Head | Committer date | Subject |
+|---|---|---|---|
+| release/14/main | c0ad6b54aadd21630d98bb5039613e37efe92a8f | 2026-11-22 10:02:13 UTC | Skills: ask agents to report, fix and PR Astrid problems (#512) |
+| release/15/main | 8807f820eb47d6018db723511e024a0a123fbe95 | 2026-11-22 15:16:14 +0100 | Merge pull request #523 from banodoco/release/15/forward-14-5 |
+| main | c0ad6b54aadd21630d98bb5039613e37efe92a8f | 2026-11-22 10:02:13 UTC | same as 14/main |
+| release/14/r6-fixes | ad10ff6de370db547e3ae2af45311751d228f98f | 2026-11-22 19:34:17 +0100 | Allow unchanged legacy occurrence overrun on pure retime |
+
+`rev-list --left-right --count target...r6-fixes`: 14/main **504 28**, 15/main **597 7**, main **504 28**. Left is target-only, right is fix-branch-only. 83d5f8fe is **not** an ancestor of 14/main or main; merge base is 9f614dff7707a493f29a548583f86c4791b957d2. It **is** an ancestor of 15/main. A direct 14 merge brings 21 additional commits beyond the seven fixes, including three Runtime pin changes; their presence is not an owner-approved release scope. A direct 15 merge adds only the seven in ancestry terms, but the branch lacks 597 target commits and conflicts, is named for another release, lacks proper readiness evidence and contains an unsafe exemption. **Inferred decision:** merge neither branch as-is; build reviewed, issue-scoped fix branches from current 14/main, then forward accepted work to current 15/main through a 15-scoped branch, reconciling both target histories. 15 alone could technically receive only seven commits in ancestry terms; cherry-pick/reimplement there when required by the release strategy, not because 83d5 is absent.
+
+### The 21 additional 14-side lineage commits (verified subjects)
+
+| Commit | Subject / likely scope |
+|---|---|
+| 60cd9e2d2 | Compile admitted project elements into pack snapshot |
+| 2718373a2 | Document project-pack effects, admission and editor facts |
+| 91a97d980 | Pin Runtime serving admitted project elements |
+| e9fd4ccf3 | Preserve untouched clip baseline on shot-internal revision bump |
+| 6b87e6110 | Admit project elements with renderer Node and esbuild |
+| 79f979d35 | place-element targets admitted project effect |
+| 9dd811514 | Test parent-level effect retargeting |
+| 7c1446584 | Strict candidate timing checks only added/changed clips |
+| f911d83ee | Sign unbound shot-clip word declaration by clip timing |
+| 3affb01c2 | Preserve untouched child baseline across new shot revision |
+| 3c1c3c5ab | Refuse unbound clips with set-element message |
+| 7d0fcc548 | Resolve esbuild through Node JS API |
+| 9fa572f0a | Upgrade unchanged legacy admission with compiled module |
+| 7440d2a35 | Stage admitted compiled module as rendered component |
+| 9c3447cd4 | Current project-pack API and render root |
+| 922cbcd12 | Pin Runtime with project-scoped element routes |
+| f2aed5993 | Settle lost-ack element flight before head check |
+| 7e10bf2dc | Extend Runtime timeout for large realms |
+| 5a9a9693b | Pin Runtime whose element list reads no snapshots |
+| f063b6caf | Load retained element snapshot on params publish |
+| 83d5f8fe3 | Pin Runtime with once-per-process CAS verification |
+
+**Inferred:** these are plan-69 feature/fix work and stack pins, not automatically wanted by Release 14 merely because tonight's stack uses them. Some may be desirable independently, but owner/brief decisions and compatibility review are needed per change; none can be called authorized stack-only or approved for 14 solely from ancestry. All 21 are already in 15's ancestry, not newly dragged there. The previous [branch report](../branches/REPORT.md) confirms the complete cross-repo plan-69 stack was not merged as a whole.
+
+## 2. Trial integration
+
+**Verified method:** detached throwaway worktree cut from each fetched target; cherry-picked in specified order. On a conflict saved the combined diff and aborted that pick without resolution, then attempted the next on the surviving prior clean picks. Therefore subsequent clean picks are *conditional*, not proof the whole ordered series integrates. `git apply --reject --verbose` applied the captured `git diff --binary` after those partial sequences, leaving failed hunks unresolved; this was not a resolved seven-commit tree. Full outputs: [14](trial14.txt), [15](trial15.txt), [patch check 14](apply14.txt), [patch check 15](apply15.txt), [actual apply 14](actual14.txt), [actual apply 15](actual15.txt), [patch](stopgaps.patch). `git diff` excludes the untracked `tests/core/rendering/test_captured_render_readiness.py`; that test was not included in the patch or applied. The modified tracked `test_remotion_host_regressions.py` is included. Trial commits were local throwaway objects, worktree deleted.
+
+| Fix | 14 trial | 15 trial |
+|---|---|---|
+| 7bf7d9086 own-object route | Clean | Clean |
+| 24740fdf4 media swap | Conflict: `_commit_timing_validation.py`; semantic baseline/signature prerequisite absent on 14, including inherited shot-word handling and fixed visual hold. | Clean |
+| cb90a4b99 thumbnail/locators | Clean after skipped 247 | Clean |
+| 7332e03d6 context diagnostics | Conflict: `astrid/core/rendering/remotion_runtime.py`; both sides already name differing fields, but choose different truncation, malformed-context access and recovery advice. Semantic/user diagnostic reconciliation. | Same conflict |
+| d4bf28e4d word provenance | Conflict: `_commit_timing_validation.py`; semantic, depends on missing base word-signature logic and aborted 247; exemption itself is unsafe. | Clean after skipped 733; not a safety approval |
+| 0f6aea928 launch validation | Conflict: `astrid/core/execution/generic_host.py`, `_dependency_pythonpath` argument/context handling; small mechanical-looking overlap with semantic environment projection consequences. | Same conflict |
+| ad10ff6de legacy overrun | Clean after preceding skips | Clean after preceding skips |
+
+**Stopgap patch check, both targets:** `generic_host.py` three hunks, `renderers/remotion/run.py` two hunks, `astrid_runtime_client/generated.py`, and `webpack-alias.mjs` apply in this partial trial (some offsets). `remotion_runtime.py` fails at the context diagnostic/debug hunk because 733 was skipped/conflicted; its empty-path hunk applies on both targets when using `--reject`, while the debug hunk is rejected. `tests/core/rendering/test_remotion_host_regressions.py` fails where the skipped 0f6 prerequisite changed the expected helper. These are textual dependency conflicts; the debug dump must be removed for semantic/privacy reasons regardless. A passing per-hunk check is not proof of safe behavior or compatibility. The untracked test needs independent review and inclusion if useful.
+
+**Overlap, verified:** relative to their respective merge bases with 83d5, both target histories change `generic_host.py`, `remotion_runtime.py`, `managed_timeline.py`, and `webpack-alias.mjs`. 15 does not change `_commit_timing_validation.py` since 83d5; 14's target history does not change it since 9f614, but 83d5 introduced baseline code absent on 14 (hence the conflict). `astrid/core/subprocess_env.py` is unchanged on both targets since their respective bases; the stopgap nevertheless relies on its existing parent-propagation precedence. Direct 83d5-to-target comparisons show large host changes (14: 165 lines; 15: 805), managed-timeline changes (188/214), Runtime validation (17/34), and webpack (11 each). File-level changes are not all overlap at the exact hunk: trial output identifies actual conflicting hunks. In particular 15 has already changed diagnostic text and host launch code; the semantic behavior needs comparison, not blind replacement.
+
+## 3. Disposition of twelve changes
+
+Judgments **inferred** from source, [independent ASTRA-530 review](../review/ASTRA-530.md), and trial. “With tests” means proposed code needs target integration/review and evidence; it is not a claim that existing checks passed. Review covered through 0f6, not ad10 or tonight's dirty files.
+
+| Change | Disposition | Reason / proof needed |
+|---|---|---|
+| 7bf7d9086 route projection | Mergeable with tests added | Review finds approach sound; test projected registry for active and unused bad entries, preview/filmstrip and admission failure rollback; don't hide genuinely invalid locators. |
+| 24740fdf4 occurrence media swap | Mergeable with tests added | Review finds occurrence-preserving direction sound. Port around 14's missing timing baseline, test real imported media, shot identity and unchanged sibling preservation; do not inherit unsafe later exemption. |
+| cb90a4b99 thumbnail/locators | Mergeable with tests added | Validate identity-equivalent redundant locators, mismatches and thumbnail metadata; coordinate editor import writer. |
+| 7332e03d6 differing context names | Mergeable with tests added | Both targets already have related diagnostics; reconcile safe field access, truncation, secret-free output and accurate actionable message. |
+| d4bf28e4d interval-only word provenance | **Redo first** | Exempts all four interval fields; a resolvable word anchored at 10s may move to 9.5s and reflow back, despite unchanged source identity. Existing regression uses unresolved word; independent anchor-alignment audit also remains open. |
+| 0f6aea928 worker context | Mergeable with tests added | Resolve host overlap and exercise production worker launch/readiness, source and installed profiles, Runtime selection, personal roots and path-tampering rejection, not only helper projection. |
+| ad10ff6de unchanged legacy overrun | Mergeable with tests added | Review did not cover this commit. Verify unchanged legacy versus newly introduced/worsened overrun, pure retime versus media/source or speed changes, and interaction with fixed word bindings; no endorsement by ASTRA-530. |
+| Command dispatch kind and source worker pack roots | Mergeable with tests added | Check actual command and native readiness identity, selected host roots and source/installed isolation at worker boundary; pair with launch fix. |
+| Heartbeat 600s, timeout and generated client | **Redo first** | Runtime already accepts lease_seconds on both pinned versions; initial claim still defaults to 30s and an extended heartbeat cannot resurrect an expired lease. Vendored generated client is Runtime-owned and manual change breaks boundary lock, while 600s delays recovery from dead workers. |
+| Empty pack path and R6-DEBUG | **Redo first** | Empty and unset may be normalized only if registry and actual child resolve identically across supported profiles. Debug writes environment and contexts to a predictable local file and silently swallows errors; remove entirely. |
+| Personal pack root to Remotion bundler | **Redo first** | Derive bundler roots from the same validated, admitted registry/worker context rather than augmenting environment ad hoc; explicit-env overridden by parent propagation must be resolved deliberately. Verify project/personal selection, precedence, installed/source behavior and untrusted roots. |
+| webpack relative shared aliases | **Redo first** | Global aliases for two relative import spellings couple external collection layout to in-tree paths and may rewrite unrelated requests. Establish a stable exported module/package contract or narrowly scoped resolver tied to the requesting pack, with portability and collision tests. |
+
+**Redo scope and proper fix:**
+
+- **Word provenance:** Bind occurrences to captured target and source identities, transcript version/digest, word IDs and source-window/speed mapping, and either migrate legacy declarations explicitly or restrict the unconditional child-unresolved exemption so edits cannot misalign resolved anchors. Add resolved-word move→reflow and identity/timing mutation regressions. Estimate 3–6 Agent files plus migration/contract work if required; high data-integrity risk.
+- **Lease:** Change the Runtime-owned client generator/contract and regenerate vendored artifacts, then define bounded lease/heartbeat and initial-claim semantics based on measured starvation, or remove starvation with nonblocking/priority heartbeat handling. Exercise real slow input service, first lease, recovery after worker death, timeout, idempotency and stale fences. Estimate 3–6 Runtime/Agent files plus lock/pin, medium-high operational risk; protocol already supports the field, so a new wire endpoint is not inherently required.
+- **Empty path/debug:** Delete the debug block and normalize paths through one canonical context builder only after demonstrating identical effective registry resolution for absent and empty inputs. Cover context matching and mismatch diagnostics without emitting values or writing files. Estimate 1–3 Agent files plus tests, low-medium risk.
+- **Bundler roots:** Supply the exact validated pack roots to bundling through a single explicit, bounded contract that respects environment precedence and registry identity. Test real registry generation and bundling with personal/project packs, installed and source mode, including spoofed paths. Estimate 2–4 Agent files plus tests, medium-high security/compatibility risk.
+- **Relative aliases:** Define and consume a stable shared-rendering package import or restrict resolution by issuer and admitted pack root, retaining a deliberate compatibility path for existing packs. Test both relative depths, collisions, in-tree and external packs and installed layouts. Estimate 2–5 Agent/pack files plus tests, medium risk; pack authors may need migration.
+
+## 4. Release process, coverage, cross-repo dependencies
+
+**Verified from target workflow definitions, not branch-protection rules or CI results:**
+
+- Both `ci.yml` run on PRs to `release/*/main` and pushes to those branches: PR jobs include `checks`, eight `unit-shard` jobs with aggregate `unit`, `boundary` (vendored Runtime artifacts versus pin) and `landing-reference` (release branch and plan/issue reference). `windows-native-and-installer`, `darwin-native`, and wheel `release` are push-only. `chat.yml` runs `chat` for PRs and Windows launchers additionally on pushes. `windows-journey.yml` runs on PRs and release pushes; `windows-install-guard.yml` runs on PRs when paths including `astrid/core/execution/**` or Runtime lock change, plus manual dispatch. `windows-runtime-retention.yml` runs on PRs/pushes when `generic_host.py` or other named paths change. `task-stall-diagnostics.yml` triggers only its named paths. 15 additionally has `execution-size.yml` for release-main and plan PRs; it is absent on 14.
+- `lanes.yml` runs on release pushes, scheduled and manual, not PRs: integration shards, opt-in, installed-wheel lane and associated receipts. `journey.yml` runs `int/r1` pushes, scheduled, manual or reusable calls; it is not automatically a release PR check. The workflow files show triggers and job behavior, **not which checks GitHub's ruleset actually requires**; owner must confirm ruleset including landing-reference and up-to-date branch requirement. Full CI/Lanes exact release-head results and applicable qualification evidence remain to be obtained, not asserted currently red or absent.
+- Focused coverage includes `tests/packs/rendering/test_managed_timeline_render.py`, `tests/timeline/test_occurrence_media_swap.py` and `test_legacy_occurrence_timing_provenance.py` (introduced by picks), `tests/editing_conformance/test_commit_boundaries_d12.py`, `tests/core/rendering/test_remotion_host_regressions.py`, `test_remotion_runtime.py`, `test_remotion_registry_context_key.py`, `tests/core/test_subprocess_env.py`, `tests/packs/rendering/test_remotion_v3_aliases.py`, and `tests/integrations/test_generic_host_remotion_render.py`, `test_lease_publication_journey.py`. Add actual worker-boundary and end-to-end cases rather than relying on helper mocks or static AST callsite inspection. No suite was run here.
+
+**Release instructions (verified as requirements; completion not checked):** release skill (source: `~/.claude/skills/astrid-dev-release/SKILL.md`) requires fix branches cut from current release head and merged only after integrating current head, naming their issue and passing proof. Put each fix in scope with `release:14` / `release:15` or an included plan's `plan:<P>` label; refresh Issues using `scripts/release_issues.py`, add Branches rows (role `fix #<issue>`, cut commit, state), and record each included PR and reason in the corresponding release brief. Owner-approved Included plans rows govern plan scope. Run `scripts/release_branches.py check <N>`, resolve all rows merged or explicitly excluded, freeze issue list, obtain full green exact-head CI and claim-bound candidate evidence before asking owner for exact-SHA go. Baseline comparison and promotion/installer/deployment authorization are distinct steps; forward fixes from older to newer release. Consult merge skill (source: `~/.claude/skills/astrid-dev-merge/SKILL.md`), plan skill (source: `~/.claude/skills/astrid-dev-plan/SKILL.md`) and dev entry (source: `~/.claude/skills/astrid-dev/SKILL.md`). These instructions do not establish actual labels, brief rows, PR state or live CI status.
+
+**Cross-repo and pins:** Agent 14 currently pins Runtime `5120462d67479dc4719406d0d34440edb616ace1`; 15 pins `3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5`; stack base pins `b2ea261f36f5f39c5f9964b02c8012c420e0b359` (verified Agent `runtime.lock.json`). Both pinned Runtime services accept positive `lease_seconds`, use 30 seconds when omitted, and `store.py` has `LEASE_SECONDS = 30`; both pinned generated clients omit the argument. A Runtime service change is not strictly required merely to accept heartbeat duration, but a Runtime-owned generated-client change and contract/lock regeneration are required for this implementation; consider initial claim and scheduling, not just heartbeat. If Runtime changes, land and qualify Runtime first, regenerate Agent vendored artifacts and `runtime.lock.json`/resource copy from that exact producer, then merge Agent and update App's installer manifest tuple to the selected Agent and Runtime SHA/schema digest via its owning tooling. App import writes retired locators per supplied incident/review context; fix the writer separately after confirming actual target source and test old persisted data compatibility; Agent projection alone treats existing data, not future provenance. App pin movement is needed when producing a new installed tuple; a purely Agent-side code change does not inherently require an App source behavior change. Exact App served pins and target App import source were not freshly verified here; don't infer final tuple.
+
+## 5. Recommended sequence
+
+**Inferred:** First scope issues and obtain owner release decisions; cut small 14 fix branches at current 14 head, then forward accepted 14 changes to fresh 15 branches and reconcile 15's additional changes. Separate PRs: (1) managed render registry/thumbnail locator projection plus focused compatibility tests; (2) occurrence media swap and narrow legacy overrun validation, independently of unapproved word exemption; (3) launch diagnostics and real worker readiness/pack-root parity; (4) Runtime-owned lease/client and Agent follow-up after starvation/recovery design; (5) bundler pack-root and shared import contract; (6) word provenance and explicit migration after data-integrity design. Editor import fix is its own App PR, coordinated with (1). This week, 1–3 and the overrun subset are candidates **only after** target-specific reconciliation, tests, review and green checks; 4–6 require design and should not be promised this week. Depending on owner cut line, defer unsafe portions rather than bringing plan-69 wholesale. If urgency requires 15 first, obtain an explicit release sequencing decision and still keep 14→15 consistency and branch-specific checks.
+
+A meaningful “render works end to end” CI check should start an exact pinned Runtime + Agent tuple in a disposable realm, create/import representative media including legacy redundant locators and a shot occurrence, admit a personal/project pack, commit an edit with a resolvable word anchor, and dispatch a real command worker through production launch validation to a small Remotion render. Assert selected registry roots and validation contexts match, heartbeat/fence stay valid under a deliberately slow but bounded input response, render reaches a successful Runtime receipt with a nonempty playable artifact and expected frame or pixel properties, and invalid/tampered roots and stale leases fail closed; run source and installed profiles and retain exact tuple, logs and receipts. This supplements, rather than substitutes for, focused unit, integration, platform and full release-head lanes.

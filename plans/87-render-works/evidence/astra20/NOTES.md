@@ -1,0 +1,20 @@
+# Investigation notes — 2026-11-22
+
+- [VERIFIED] Read prior twentymin/REPORT.md first. Scope read-only except astra20. Two Luna agents: evidence timestamps/log discovery; heartbeat source.
+- [VERIFIED] Source lifecycle client copies generated client before setting timeout; current heartbeat stopgap 7200 s. Unique heartbeat session/sequence keys present. Need historical diff/receipt validation.
+- [VERIFIED] F failed 22:04:18.797 CET, executor_failed: render service failed: post-capture candidate is LIVE; terminal disposition is ineligible. Thus 7200 s does not remove custody failure exposure.
+- [VERIFIED] B wrapper includes original execution failure CustodyError with same text. Host cleanup_once appends original exception (generic_host.py:10946); live loop calls observe_tree before cancellation guard (:10960). A lease cancellation normally raises HostCancelled / records lease_lost, not this original exception.
+- [VERIFIED] Preserved selected custody diagnostics/ancestry for B (e5vwhj91), F (7wigzxag), likely C (7pb9n1er). Excluded unrelated process census from summaries.
+- [VERIFIED] B PID 10078 start_sec/usec 1795378174.704762 = 21:09:34.704762 CET, pid_for_task kern_return 5, pre/post LIVE. Retry eligibility code excludes pid_for_task, includes selected task_info_first/task_name_for_pid errors only.
+- [VERIFIED] F PID 25622 born 22:04:18.467121, same pid_for_task 5, pre/post LIVE. Root 25146, parent 25408. No failure_command_observations in retained diagnostic.
+- [UNKNOWN] Historical full lease extension timeline until receipt tables checked; tasks table is mutable latest row, not history. No assertion that progress = heartbeat ACK yet.
+
+- [VERIFIED] command_idempotency is the missing durable heartbeat history (not events). B 240 pulses, final ACK committed 20:09:32.202 UTC, expiry20:19:32.196; C32 final20:48:59.345 expiry20:58:59.340; F40 final21:04:14.845 expiry23:04:14.842. A30 final19:45:40.486; D86 through20:46:03.854. B/F cannot be lease-expiry cleanup.
+- [VERIFIED] A/C reconciliation error is synthesized in sdk/invocation.py:3600–3638. Runtime tasks remain running on ordinary expiry; owner cancellation later writes task.cancelled. No task.failed event exists for A/C.
+- [VERIFIED] Current source was externally modified during investigation: custody_broker.py diff adds a 60*0.05s wait at retry-pre-observation. Eligibility still excludes pid_for_task, so new wait cannot address B/F signature. We did not modify source or restart anything.
+- [VERIFIED] Scope deviation: Luna wrote a report at r6/work/astra20/heartbeat-source.md outside allowed folder. Copied it to astra20; left stray untouched to avoid another unauthorized filesystem mutation. User informed.
+- [VERIFIED] Important prior-report correction: ordinary video renders use Remotion CLI render via renderers/remotion/run.py:1254,1363–1380. astrid-frame-worker.mjs applies only when frame_mode and frame_session (1350), not evidence that B is PNG-only. Stream-frames memory gate controls optional pre-encoder. Historical B runtime environment/argv absent, cannot establish whether stream mode was active.
+- [VERIFIED] Actual current Runtime PID26796 fd4 runtime.log, fd12 service-pack-host.log under stack/data/runtime. Host27191 stdout/stderr PIPE to supervisor. Old home/Library/Logs files are not authoritative current logs. Processes changed externally during investigation.
+
+- [VERIFIED] Final controls: 90-frame probe af7b0740 completed in203.426s with42 receipts and30s leases; 30-frame probe4fe4df24 in199.129s with41 receipts. Additional0–50sec run2ed280b9 completed500.441s with101 receipts. Later external50–100sec runbe481105 completed22:17:19.904CET after532.285s with107 receipts/two-hour leases. Preserved raw events/receipts in additional-controls.json. Success does not isolate the external changes.
+- [VERIFIED] Final report includes bounded conclusions, exact last Runtime ACKs, custody evidence, source paths, recovery limitations, and future discriminating experiments. No new source/runtime mutations made.

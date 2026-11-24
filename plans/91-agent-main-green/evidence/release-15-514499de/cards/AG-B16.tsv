@@ -1,0 +1,20 @@
+lane	cluster	outcome	job	id
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_reselection_refuses_while_original_pin_params_succeed[None]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_reselection_refuses_while_original_pin_params_succeed[params1]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_same_selected_hold_reload_inverse_retry[False-None-None]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_same_selected_hold_reload_inverse_retry[False-None-existing1]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_same_selected_hold_reload_inverse_retry[False-None-existing2]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_same_selected_hold_reload_inverse_retry[False-params1-None]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_same_selected_hold_reload_inverse_retry[False-params1-existing1]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_same_selected_hold_reload_inverse_retry[False-params1-existing2]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_unchanged_params_noop_needs_no_snapshot[params0]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_legacy_unchanged_params_noop_needs_no_snapshot[params1]
+lanes	C10	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_raw_element_only_refusal_is_atomic[legacy]
+lanes	C25	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_public_helper_restart_exact_retry_later_head_inverse_redo[False-None]
+lanes	C25	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_public_helper_restart_exact_retry_later_head_inverse_redo[False-public-element]
+lanes	C25	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_public_helper_restart_exact_retry_later_head_inverse_redo[True-None]
+lanes	C25	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_public_helper_restart_exact_retry_later_head_inverse_redo[True-public-element]
+lanes	C50	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_public_helper_native_refusal_preserves_error_and_flight
+lanes	C51	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_preexisting_element_hold_flight_retries_exact_body
+lanes	C52	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_acknowledged_rebased_lost_ack_restart_pagination_and_typed_intent
+lanes	C53	FAILED	integration shard 2 _ 4	tests/core/test_timeline_element_publication_runtime.py::test_attached_selected_param_p1_survives_lost_ack_restart_and_undo

@@ -1,0 +1,5 @@
+20:38:12 unstructured - this is a bug.
+20:38:12 refusing astrid.packs: pack id 'rendering' at ~/astrid-release/release-14-r6-fixes/home/Astrid/packs/rendering collides with ~/Developer/astrid-release-src/wt-r14-r6-fixes/astrid/packs/rendering
+20:38:12 fix: retry the command; if it repeats, report this bug
+20:38:12 recovery: retry the command; if it repeats, report this bug
+20:38:12 state snapshot: {"argv": ["timelines", "render", "77f906f3242c48179ab86ca7c3e62eb4", "--project", "801a01b3a87941a1ab25958c488afdbf", "--backend", "rendering.remotion", "--profile", "{\"width\": 1920, \"height\": 1080, \"fps_rational\": [30, 1], \"time_base\": [1, 90000], \"container\": \"mp4\", \"video_codec\": \"h264\", \"video_profile\": null, \"video_level\": null, \"pixel_format\": \"yuv420p\", \"audio_codec\": \"aac\", \"audio_sample_rate\": 48000, \"audio_channel_layout\": \"stereo\", \"duration_tolerance\": 1}", "--output-name", "probe7.mp4", "--wait", "--timeout-seconds", "14400", "--json", "--expected-version", "38", "--range", "55", "58"], "entrypoint": "astrid.core.gateway.main", "original_type": "ImportError"}

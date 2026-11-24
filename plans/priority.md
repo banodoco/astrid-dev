@@ -4,6 +4,7 @@ Open plans in the [catalog](index.md) are ranked in this order, top first; move 
 A plan not listed here comes after the listed ones, and `done` and `cancelled` plans always sit at the bottom.
 
 ## Order
+- 56-workflow-setup
 - 29-update-and-release
 - 20-zero-to-first-image
 - 40-machine-lifetime-controls
@@ -12,6 +13,7 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 31-releases-from-astrid-dev
 - 30-update-everywhere
 - 39-green-mains
+- 91-agent-main-green
 - 34-real-gpu-proof
 - 32-generation-placement-targets
 - 37-generate-time-destination
@@ -56,7 +58,6 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 50-recorded-boundaries
 - 53-vision-aspirations
 - 55-local-speed
-- 56-workflow-setup
 - 57-pack-database-extensions
 - 59-into-the-minkhole-proof-point
 - 64-h3-speaker-references

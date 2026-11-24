@@ -1,0 +1,13 @@
+diff --git a/home/user/p81b/astrid-dev/plans/81-once-per-command/evidence/installed-container-baseline/run-ab-installed.sh b/harness/run-ab-installed.sh
+index 87dd7b1..cd4c06d 100755
+--- a/home/user/p81b/astrid-dev/plans/81-once-per-command/evidence/installed-container-baseline/run-ab-installed.sh
++++ b/harness/run-ab-installed.sh
+@@ -162,7 +162,7 @@ for a in os.environ["ARMS"].split():
+     out[a] = {"launcher": f"{IB}/program{s}/run-astrid", "home": f"{IB}/home{s}",
+               "tmp": f"{IB}/scratch/tmp{s}" if a != "before" else f"{IB}/scratch/tmp", "door_port": ports[a],
+               "current": f"{IB}/program{s}/current", "manifest": f"{os.environ['EVIDENCE_DIR']}/manifest-{a}.json"}
+-    if a != "before": out[a]["generate_extra"] = ["--timings"]   # candidate builds only; the published build cannot
++    if True: out[a]["generate_extra"] = ["--timings"]   # candidate builds only; the published build cannot
+ print(json.dumps(out))
+ PY
+ )

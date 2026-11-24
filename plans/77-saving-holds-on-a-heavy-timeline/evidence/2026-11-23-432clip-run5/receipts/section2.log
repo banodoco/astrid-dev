@@ -1,0 +1,3 @@
+2026-11-23T05:19:51Z after_restore free_kib=26090192 required_gib=12
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   44G   25G  64% /

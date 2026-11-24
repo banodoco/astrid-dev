@@ -1,0 +1,22 @@
+The fix is pushed; **neither film swap landed** because the running Runtime’s installed Agent provider refused the word-anchored preview.
+
+**Verified cause:** occurrence replacement rejected footage elements, required legacy catalog pins, and treated an asset-only change as invalidating unchanged word timing. New aliases also lacked explicit media admission, while combined patch/admission capture could produce `capture_mismatch`.
+
+The fix shares guarded document capture and Runtime `media.admit` across SDK `swap_asset`, ordinary CLI `--swap-asset`, and detached publishing. It preserves authored fields and old registry entries. Changes cover `media_swap.py`, `commit_session.py`, `_commit_timing_validation.py`, `native_occurrence_media_commands.py`, `timeline_media_replacement.py`, both adapters, and focused tests.
+
+**Verified validation:** 146 passed, 14 repository lane exclusions; `git diff --check` passed. Tests cover word-anchored footage, stills, unpinned legacy entries, authentication, and exact outgoing scope. A live literal-timed sandbox SDK preview passed; live word-anchored sandbox success remains unverified.
+
+Branch: `release/14/fix-occurrence-media-swap`, commit `53833fd30`, based on the exact stack pin `83d5f8fe`. [Draft PR #526](https://github.com/banodoco/astrid-agent/pull/526) targets `release/14/main`; inherited stack commits and main divergence require integration review. Cause/evidence comments: [#1403](https://github.com/banodoco/astrid-dev/issues/1403#issuecomment-7081688027), [#1404](https://github.com/banodoco/astrid-dev/issues/1404#issuecomment-7081688325), [#1405](https://github.com/banodoco/astrid-dev/issues/1405#issuecomment-7081688685).
+
+**Verified enforcement:** these Agent guards run both client-side and inside Runtime’s startup-loaded provider. The film preview failed there with `candidate.timing: missing exact word binding … c28-seq0-00 … .on`. Runtime independently retains media authentication and publication checks. Loading the fixed provider is required; no neutral Runtime source change was identified. Deployment sufficiency remains inferred until exercised.
+
+| Swap | Result and revisions | Inspected outgoing scope |
+|---|---|---|
+| Hair | **Not done**; `18e0ce… → 18e0ce…` | Four target asset fields + four registry entries |
+| Cream | **Not done**; prepared `479099…`, readback `18e0ce…` after peer edits; never sent | Seven target asset fields + five registry entries |
+
+Zero film publications. All eleven targets read back exactly unchanged, including timing; hair `-04/-05` retain RW3-04.
+
+All eleven requested editor stills were captured and inspected in `occ/verify/`; they are pixel-identical to the before set, so they verify unchanged state, not successful replacements.
+
+Full revisions, paths, refusal details, and still links are in the evidence pack (source: `~/occ/bug-evidence-pack.md`).

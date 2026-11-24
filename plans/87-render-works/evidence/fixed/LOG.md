@@ -1,0 +1,39 @@
+# R6 fixed stack and film log
+
+2026-11-22T18:41:41.236187 — Started authorized fixes/stack migration/ripple/render run. Original stack read only so far. Disk 9.8GiB free, data 2.3GiB. Contributor skills read; parallel Luna investigations active. Actual Agent clone agent-src (brief alias astrid-agent absent).
+
+2026-11-22T18:43:22.783960 — Driver clean stop completed. cp -Rp ~/astrid-release/release-14-plan-69/data ~/astrid-release/release-14-plan-69.data-20261122-1843 started.
+
+2026-11-22T18:44:37.417226 — Snapshot verified: {"snapshot": "~/astrid-release/release-14-plan-69.data-20261122-1843", "files": 670, "bytes": 2431167574, "same_paths_and_sizes": true, "quick_check": "ok", "timeline": ["77f906f3242c48179ab86ca7c3e62eb4", 37, "Almost Ready \u2014 without first/second (trial v2)"], "head": ["authoring-parent-revision-f9237406fdda59eea5c81e30fd6548eb7b42e0a26655058155f6db6da97e5488", "txn-935048d132ae4a8786a6deca91122716"]}
+
+2026-11-22T18:44:43.862583 — Deleted only authorized older snapshot ~/astrid-release/release-14-plan-69.data-20261121-1207 (du2.1G), after fresh snapshot verified.
+
+2026-11-22T18:44:52.789625 — APFS independent working copy: cp -cRp ~/astrid-release/release-14-plan-69.data-20261122-1843 ~/astrid-release/release-14-r6-fixes/data; original and fresh snapshot retained.
+
+2026-11-22T18:48:24.256247 — Integration worktree ~/Developer/astrid-release-src/wt-r14-r6-fixes from83d5f8fe. Cherry-picked PR5251951cfe43 as7bf7d9086 and PR52653833fd30 as24740fdf4. Asset regressions8 fail pre-fix (assets-red.log);76 focused pass assets-green.log after render-only thumbnail projection and own-object locator parity with Runtime. Source environment APFS-copied py into newroot, uv pip install --no-deps -e Agent -e Runtime successful, immutable old install untouched (source-env-install.log).
+
+2026-11-22T18:49:44.796542 — Copied Remotion node_modules via APFS clone into Agent worktree so source registry generation cannot alter installed code.
+
+2026-11-22T18:53:57.742577 — Generated source SourceProfile using SourceProfile.from_mapping and services via astrid.services.service_declaration. Preserved copied launch metadata under newroot/state/copied-launch-state, including catalog and copied home install selection to avoid any original path authority. Public workspace attach invoked on copied realm; original data never selected. Source launcher/wrappers recorded under fixed/.
+
+2026-11-22T18:57:48.565181 — Source stack started: editor68337 Runtime68562. Public projects/timelines and detached bundle read PASS: version37/headf923 and parent/placements/shots exactly equal saved snapshot baseline. Workspace inspect deep verification OK/schema33. One-second product render probe refused pre-admission identity_mismatch because source was still changing during startup; no render task admitted. Will restart on stable integration after timing regression proof.
+
+2026-11-22T19:05:16.403891 — Timing final d4bf28e4d:70 focused pass8 lane deselect; reviewed dual asset-only versus interval-only provenance signatures. Stable source restart succeeded. First source range probe admitted but lease expired before any heartbeat under simultaneous preview/validation load; public task reports reconciliation_required and prescribed tasks cancel invoked. No film changes. Initial C screenshots contain previewpacktimeout placeholders and are explicitly rejected as proof; retry after idle.
+
+2026-11-22T19:06:17.484238 — Public cancellation terminal state failed for probe task dee502751b2d4f63a8da872322543d55. Source host Remotion launch validation now warmed/completed24.3s. Subsequent renderer test deferred until previewproof, preventing competing heavy work.
+
+2026-11-22T19:12:19.149911 — C retry failed safely: project-element list and compiled bundles HTTP200 but 30s client import timeout; no invalid screenshots accepted, film stillversion37. Running isolated warmed range0..1 render probe3 to obtain exact field-path diagnostic; source unchanged atd4bf28e4d. Branch push underway. Disk7.7GiB.
+
+2026-11-22T19:14:23.999213 — Agent integration pushed; draft PR https://github.com/banodoco/astrid-agent/pull/530. Warm isolated probe3 reached task18dc45b92422480da911a871d00e9c69 and failed with exact readiness fields registry_context.ASTRID_PACKS_PATH and registry_context.PYTHONPATH; no check disabled. Investigating launch/execution root projection. Independent editor bundle digest checks/imports pass, so preview timeout is isolated to admission/loading path.
+
+2026-11-22T19:28:11.647872 — Confirmed source launch context causes: launch used raw dependency_pythonpath instead of worker helper (lost selected Runtime origin), and raw args.pack_root instead of host effective roots (lost existing personal collection). Agent0f6aea928 commits shared projection/effective roots; focused3pass plusred/green evidence. Source stack cleanly stopped; App launcher now leavesASTRID_CHECKOUTunset and selects fixedAgent throughSourceProfile, retaining App bundledbrowsercomponents exactlyasoldstack. Offline fullcandidatevalidation exposed retained334microsecond legacyoverrun atc29-06; narrow baseline-retentionfix underfocusedtests before nextstable restart. Film stillunmodified37.
+
+2026-11-22T19:31:34.213368 — Runtime and pack-host service declaration now explicitly reserve2GiB via product ASTRID_RUNTIME_FREE_DISK_FLOOR_BYTES. Read-only scratchinventory: demo/harness/shots1.5GiB reproduciblePNGs butreportreferencesdirectory; no deletion underexistingpermission. Askedexplicitapprovalforthatlimitedcleanup whileindependentfixworkcontinues.
+
+2026-11-22T19:36:01.985519 — Agentfinalad10ff6de pushedtoPR530; retainedoverrun8pass, D12/scoped/retainedselection83pass8lanedeselect; basepositivecasered; full389clipcandidategreen. ProductSourceProfile restart App81149 Runtime81354, UIretainsbundledbrowser. PRbodyupdatedwithcauses/testlimits; issue1253commentpostedwithreproducedsourcefieldsandhistoricalinstalleduncertainty. C/D-beforecaptureagentwaitsHTTPready. NoRuntimecodechanged.
+
+2026-11-22T19:41:45.952957 — C firstcomplete20 seeks/video-ready passed butmetadatahelperURLconstantbug; UIchrome included. Latercapture-onlyglobalvisibilityCSS madeiframe/imagecontentsdisappear (C36/C56.4); rootcomparedGitHubreference andD-before57, rejectingthoseCSSshotsanddirectednoCSSrecapture. Thisisverificationtooling, notfilmdatachange. Alsoobservedfreeincrease8.8GiBanddemo/harness/shotsabsent; neitherrootnorLunacaptureagentissueddeletion, andnoapprovalresponsehasarrived. Noadditionaldeleteclaimmade.
+
+2026-11-22T19:49:41.779525 — C normal player contact sheet visually reviewed: Discord, tomorrow text, desk timelapse, GitHub card, winter/window, cream interface, orange everything/shared, endcard all present. Version37 remains unchanged. Live pause dryrun stopped in harness before request: internal-revision refs were not mapped to reviewed shot scope; correcting pinned mapping. Filesystem inventory now finds protected1719-final path absent, no root deletion issued; corrected R6-STACKS retention claim. Fresh snapshot/original still present.
+
+2026-11-22T19:56:43.554621 — DATA SAFETY STOP: live dryrun refused stale base before commit; external livehead version38 revision986093456a2f58d92aad0fe63b4c7b206f40188755d7f304127dd19b7e5fabfc/txn-b988fbb5ecb7471bb500a1fa609d3353. Canonical readback differs from37 only by missing parent r6-sfx-wah-clip, no placement/timing/music changes. Root and all subagents submitted no publish. Asked user whether concurrent editor exists. Per explicit rule, stopped source stack with ownedPID check, all3portsfree, ran original as-built start-2400.sh at19:56 (editor87280). Newcopy38preserved unchanged. Original/freshsnapshot read-only quick_checkOK andtimeline37 rechecked before restart. Dnotpublished, Efullrendernotattempted onunexpectedhead.

@@ -1,0 +1,16 @@
+Getting Astrid ready. The first time takes a few minutes.
+Using your workspace at /root/codex/p77box/run5/stack/installed-data.
+Downloading Release 14
+Creating your workspace
+Starting Release 14
+Checking Release 14 started
+Open https://astrid.haus
+Connect this computer at https://astrid.haus/?connect=1
+
+Your choice: start at sign-in is off. To turn it on, rerun the install line with --autostart on.
+Your choice: the astrid command is off. To turn it on, rerun the install line with --command on.
+Run Astrid with: /root/codex/p77box/run5/stack/program/run-astrid
+Your choice: Astrid skills are off. To turn them on, rerun the install line with --skills on.
+
+Astrid installed: Release 14 (build f19aed4c).
+Next: run `./run-astrid generate scan` in Astrid's install folder to find your ComfyUI.

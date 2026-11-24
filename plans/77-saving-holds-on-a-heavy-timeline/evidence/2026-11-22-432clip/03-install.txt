@@ -1,0 +1,8 @@
+UTC 2026-11-22T15:46:38Z
+npm ci in wt: exit 0; run/receipts/npm-ci.log
+Node 20.19.4 official distribution SHA256 checked against official SHASUMS256.txt: exit 0; node -v: v20.19.4
+Before installer: bind tests for 127.0.0.1 ports 2400, 17500, 17501 passed; 51711572 KiB free.
+Installer: sh public/install --root "$BUILD_STACK/program" --data-root "$BUILD_STACK/data" --yes --autostart off --command off --skills off --skill-copies off --no-browser --manifest public/install-manifest.json; isolated HOME/XDG/TMPDIR; ASTRID_RUNTIME_DOOR_PORT=17501; ASTRID_NODE_EXECUTABLE pinned Node 20.19.4. Exit 1.
+Failure: HTTP 403 fetching pinned OMP source archive in install_tools; no completed installation. Logs: run/receipts/install.log and stack/home/.local/state/astrid-runtime/logs/install.log. Agent and Runtime bootstrap sources were downloaded at manifest SHAs but installed tuple verification is incomplete.
+Filesystem     1024-blocks     Used Available Capacity Mounted on
+/dev/vda         264212084 21742500  50407512      31% /

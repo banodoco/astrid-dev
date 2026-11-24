@@ -1,0 +1,156 @@
+{
+  "scope": "Signed synthetic 10-clip compatibility fixture. SDK source overlays use the installed native launcher.",
+  "pairs": [
+    {
+      "runtime_installed": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5",
+      "public_head": {
+        "revision": "authoring-parent-revision-dd1c094a8258b00ec766d94ffa3764f576358f7c752462c19e6462bada77e472",
+        "publication": "txn-c9f2040755384848a8672383b03998c1",
+        "content_digest": "sha256:913a6db2a5d921cf992d57898b0de5c41d1ebef739f157a3e2c4c9832b5aed43"
+      },
+      "proof": {
+        "head_count": 1,
+        "clips": 10,
+        "occurrences": 0
+      },
+      "compiled_openings": [
+        {
+          "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+          "route": "GET /commits",
+          "status": 200,
+          "timeline_writes": 0,
+          "profile_removed": true,
+          "source": {
+            "file": "stock-fallback/stock-fallback-opening.json",
+            "sha256": "9878afa166766b00dd8d8b2e3824f860651441a00a32407b4722393ee5ea063c"
+          }
+        },
+        {
+          "app": "ae3e0db0308dc35c1e45e3ceb48d6ed5de613795",
+          "route": "GET /commits",
+          "status": 200,
+          "timeline_writes": 0,
+          "profile_removed": true,
+          "source": {
+            "file": "stock-fallback/mixed-editor.json",
+            "sha256": "a75d5d1be57fd9954fb0423368fa44d86004a5867f710e6781b62d8b839a8a09"
+          }
+        }
+      ],
+      "sdk_source_overlays": [
+        {
+          "sdk_commit": "8807f820eb47d6018db723511e024a0a123fbe95",
+          "expected_read_method": "list_timeline_commits",
+          "generated_read_method_names": [
+            "get_project_parent_composition_revision",
+            "inspect_timeline",
+            "list_timeline_commits",
+            "list_timelines"
+          ],
+          "runtime_advertises_verified_head": false,
+          "status": "pass",
+          "source": {
+            "file": "stock-fallback/sdk-stock.json",
+            "sha256": "91efd245450439f2961788f3a0901c6c9aaa12f56da4640afc3fc45760dfd469"
+          }
+        },
+        {
+          "sdk_commit": "b7f0e96a4934ddb4c123eab791a6e18efb8f79ac",
+          "expected_read_method": "list_timeline_commits",
+          "generated_read_method_names": [
+            "get_project_parent_composition_revision",
+            "inspect_timeline",
+            "list_timeline_commits",
+            "list_timelines"
+          ],
+          "runtime_advertises_verified_head": false,
+          "status": "pass",
+          "source": {
+            "file": "stock-fallback/sdk-current.json",
+            "sha256": "722b9ce31a6b42dfe6ee1fcbdad0924782b37c4c551609bd5c261613c3d35030"
+          }
+        }
+      ],
+      "owned_stack_cleanup": {
+        "profiles_remaining": 0,
+        "closed_primary_ports": 3,
+        "joint_controller_exit": 0
+      }
+    },
+    {
+      "runtime_installed": "8dfa96aca3bbe08ffc9824cdf799354d028acbff",
+      "public_head": {
+        "revision": "authoring-parent-revision-dd1c094a8258b00ec766d94ffa3764f576358f7c752462c19e6462bada77e472",
+        "publication": "txn-c9f2040755384848a8672383b03998c1",
+        "content_digest": "sha256:913a6db2a5d921cf992d57898b0de5c41d1ebef739f157a3e2c4c9832b5aed43"
+      },
+      "proof": {
+        "head_count": 1,
+        "clips": 10,
+        "occurrences": 0
+      },
+      "compiled_openings": [
+        {
+          "app": "ae3e0db0308dc35c1e45e3ceb48d6ed5de613795",
+          "route": "GET /verified-head",
+          "status": 200,
+          "timeline_writes": 0,
+          "profile_removed": true,
+          "source": {
+            "file": "candidate-compat/candidate-compat-opening.json",
+            "sha256": "1c42885477b6eba8f7c8435e137087d7f191b34ceb609a88c637b19445856f64"
+          }
+        },
+        {
+          "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+          "route": "GET /commits",
+          "status": 200,
+          "timeline_writes": 0,
+          "profile_removed": true,
+          "source": {
+            "file": "candidate-compat/mixed-editor.json",
+            "sha256": "e7d0863f81cc665d0d02cbb77185574e1bbfe4a76e4f967b38ddf3bf3b3cc4a0"
+          }
+        }
+      ],
+      "sdk_source_overlays": [
+        {
+          "sdk_commit": "8807f820eb47d6018db723511e024a0a123fbe95",
+          "expected_read_method": "list_timeline_commits",
+          "generated_read_method_names": [
+            "get_project_parent_composition_revision",
+            "inspect_timeline",
+            "list_timeline_commits",
+            "list_timelines"
+          ],
+          "runtime_advertises_verified_head": true,
+          "status": "pass",
+          "source": {
+            "file": "candidate-compat/sdk-stock.json",
+            "sha256": "e9bacf2dd17b35e97c9a89732b41104125d528fefa5f52f17853043f6d5cbeba"
+          }
+        },
+        {
+          "sdk_commit": "b7f0e96a4934ddb4c123eab791a6e18efb8f79ac",
+          "expected_read_method": "get_project_timeline_verified_head",
+          "generated_read_method_names": [
+            "get_project_timeline_verified_head",
+            "list_timelines"
+          ],
+          "runtime_advertises_verified_head": true,
+          "status": "pass",
+          "source": {
+            "file": "candidate-compat/sdk-current.json",
+            "sha256": "55632dcb672cb27332a23c9971a7ed6cfb6df4d964fda36e841dae3c4ea200c2"
+          }
+        }
+      ],
+      "owned_stack_cleanup": {
+        "profiles_remaining": 0,
+        "closed_primary_ports": 3,
+        "joint_controller_exit": 1
+      }
+    }
+  ],
+  "candidate_controller_exit_1": "The four candidate-Runtime pairings passed before the port preflight stopped the separate source-safety launch."
+}

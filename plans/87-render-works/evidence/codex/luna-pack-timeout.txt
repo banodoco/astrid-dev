@@ -1,0 +1,9 @@
+Wrote the evidence report to packtimeout/REPORT.md (source: `~/packtimeout/REPORT.md`).
+
+The 30-second timeout covers the Runtime list request and bundle imports together; there’s no automatic retry, though **Retry preview** is available. All three exact revisions are currently admitted and their bundles returned HTTP 200. The “requires its exact admitted pack revision” sentence is generic fallback text, not evidence of a mismatch.
+
+Across five curl samples, list requests took 0.18–1.53 s and bundles 0.06–1.53 s; an earlier list probe took 3.02 s. Runtime logs contain many transport timeouts, but lack timestamps to tie them to the reported incident. Transient Runtime contention is the likeliest timeout cause, inferred rather than reproduced.
+
+In headless playback, the Player advanced only 3 frames around 30.77 s and 1 frame around 105.77 s in roughly 10 seconds each. The preview revision attribute did not change. This verifies severe stalling in the capture, but the specific cause remains inferred.
+
+After the agents finish, retry the preview; reload the editor if it remains stuck. The report recommends a 60-second budget with phase timing, clearer failure messages, and keeping the retry action visible.

@@ -1,0 +1,4 @@
+AB_ATTEST=off
+ARMS_JSON={"before": {"launcher": "/home/user/p81b/box/pb7/installs/A/data/astrid/run-astrid", "home": "/home/user/p81b/box/pb7/installs/A/home", "tmp": "/home/user/p81b/box/pb7/installs/A/tmp", "door_port": 18220, "current": "/home/user/p81b/box/pb7/installs/A/data/astrid/current", "manifest": "/home/user/p81b/box/pb7/evidence/timing-run-1/manifest-before.json", "generate_extra": ["--timings"]}, "after": {"launcher": "/home/user/p81b/box/pb7/installs/B/data/astrid/run-astrid", "home": "/home/user/p81b/box/pb7/installs/B/home", "tmp": "/home/user/p81b/box/pb7/installs/B/tmp", "door_port": 18221, "current": "/home/user/p81b/box/pb7/installs/B/data/astrid/current", "manifest": "/home/user/p81b/box/pb7/evidence/timing-run-1/manifest-after.json", "generate_extra": ["--timings"]}}
+load_max=1.0 wait_seconds=600 samples=5
+standin_port=18188 A_door=18220 B_door=18221

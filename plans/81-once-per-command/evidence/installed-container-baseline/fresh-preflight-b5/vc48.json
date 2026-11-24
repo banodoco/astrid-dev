@@ -1,0 +1,25 @@
+{
+  "arm": "vc48",
+  "selected_version": "891af6e79ddf",
+  "requested_manifest": "manifest-candidate-vc48.json",
+  "requested_manifest_sha256": "2628f346eb6f6407dbbf35135e996830433a240cfc2c3fe9954621e22ff31270",
+  "installed_manifest_sha256": "a068b24a09b1fa647310f3484b6738c25e531a92c0155eb7dbc5c454ad58f612",
+  "pins": {
+    "agent": "b5c30e616e788308e9b6152adbc7064f2000db47",
+    "runtime": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
+    "vibecomfy": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c",
+    "lifecycle": "9f88ef7640bc664f697112d966ecefa123d44340"
+  },
+  "pins_match": {
+    "agent": true,
+    "runtime": true,
+    "vibecomfy": true,
+    "lifecycle": true
+  },
+  "omp_source": "@oh-my-pi/pi-coding-agent@18.12.6",
+  "version_stdout": "astrid/0.1.0",
+  "version_stderr": "",
+  "version_exit": 0,
+  "attestation": "off",
+  "scope": "selected manifest and launcher version; source bytes and connected Runtime not attested"
+}

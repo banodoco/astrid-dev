@@ -1,0 +1,10 @@
+**Neither job was completed.** No target timeline changes were published, and no overlay clips were added. Almost Ready’s `trial v2` head remains `authoring-parent-revision-18e0ce9a…` **(verified)**.
+
+- **Hair stills:** Not done. No clip IDs or tracks were added; no target outgoing change was sent.
+- **Cream recordings:** Not done. No clip IDs or tracks were added; no target outgoing change was sent.
+
+The single-revision route was tested in the sandbox. Its dry run attempted to admit a new image and insert a shot-owned clip together, but the runtime refused it with `semantic step assertion differs from execution`, even though the base and current sandbox revisions matched **(verified)**. The freeze agent’s working workaround uses separate admission, insertion, and cleanup revisions; that conflicts with the brief’s revision and outgoing-change limits.
+
+Position, first/last-frame, and draw-order checks were therefore **not performed**; there are no after-stills to compare. The existing before-stills remain in land/verify (source: `~/land/verify`). The requested draw-order inspection also remained unresolved, so the appropriate cream overlay track was not established.
+
+The exact sandbox error and workaround are in FRICTION.md (source: `~/overlay/FRICTION.md`); the unchanged head is recorded in revisions.log (source: `~/overlay/revisions.log`). UNDO.md (source: `~/overlay/UNDO.md`) records that there are no overlays to delete.

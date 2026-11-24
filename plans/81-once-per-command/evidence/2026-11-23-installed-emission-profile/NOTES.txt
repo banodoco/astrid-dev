@@ -1,0 +1,7 @@
+Emission probe (probe.py) using installed trees from /root/codex/p81box/part2-attempt2/installs, qwen_image_2_1_turbo ready template, emit_bundle into a temp dir.
+cold = reader reset before emit; warm = one get_class() before emit (mimics generate, where earlier stages load object_info).
+Results (3 repeats, load ~0.7-1.1): see runs.txt
+  48b5fa9e (vc48):  5.5-5.8 s, 5.43 GB SHA-256 (5815 hashes), cold or warm
+  675f5dc2 (after): cold 2.1-2.3 s / 1.52 GB ; warm 5.5-5.9 s / 5.44 GB  -> memo disabled when reader already warm (consume.py:273-276)
+  36ea976f (simple memo overlaid on vc48 tree): 0.79-0.83 s / 0.20 GB
+Profile prof-48-warm.txt: 476 class lookups (13 classes) -> 1904 _sync_reader -> 7610 cache_file_witness; sha256 3.98 s + read 0.45 s of 6.84 s profiled.

@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+"""Stable console entry point; source selection comes from the runner's PYTHONPATH."""
+from astrid.console import entrypoint
+raise SystemExit(entrypoint())

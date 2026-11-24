@@ -1,0 +1,35 @@
+**Verified: all five edits are done**, one revision each. Only the named clips changed.
+
+| Edit | Result | Revision prefixes, before → after |
+|---|---|---|
+| A | Stray image removed | `606c2a92 → dbbb9ebe` |
+| B | Five names changed; timings retained | `dbbb9ebe → 796f0de2` |
+| C | Requested camera steps and coast | `796f0de2 → c723b440` |
+| D | Earlier/longer callout; cut-relative anchor | `d97a2528 → fe54bd8c` |
+| E | 341→99 stills; minimum four frames; overlays unchanged | `c723b440 → d97a2528` |
+
+D re-read and reapplied after E advanced the head. Full revisions and receipts are in RESULTS.md (source: `~/edits/RESULTS.md`).
+
+Final verified head:
+`authoring-parent-revision-fe54bd8ce50106cdd4803f23c83ea210afe8c85f03d743a617537f6d9fe2cac1`
+
+The stuck request was an oversized **dry run**, so it could not publish. A sandbox commit proved Runtime writes worked. Supported separate-outbox sessions enabled the film edits without restarting. **The original default outbox remains blocked:** no supported safe-reset operation exists.
+
+Findings, with reproductions, verbatim errors, source lines, severity and fixes in DEFECTS.md (source: `~/edits/DEFECTS.md`):
+
+- Verified: 1 MiB request cap plus emitter amplification creates oversized flights.
+- Inferred: the early size refusal caused the observed `Broken pipe`.
+- Verified: no-argument recovery loses the original dry-run mode.
+- Verified: no supported escape exists for an unknown preview.
+- Verified: deletion scans unrelated semantic declarations.
+- Verified: parameter lookup ignores project-admitted packs.
+- Verified: `nudge()` invokes global retiming.
+- Verified: retained pending records do **not** inherently block new edits; `_OutboxChanged` guards races.
+- Verified: an unstamped caller claims release 0; “older Runtime” misdiagnoses it.
+- Verified: row-removal observations conflict with Runtime’s collection requirement.
+- Verified: exact word-anchor capture supports parent ownership only.
+- Verified: editor time labels floor centiseconds.
+
+All eight real-editor stills were captured and visually checked: `r6/edits/verify/frame-t-{2.5,7.4,7.6,7.9,9.0,40.0,56.4}.png` and `frame-last-frame.png`. Open the still index (source: `~/edits/verify/README.md`).
+
+Verified end: **196.566667 s = 3:16.57 rounded**. The editor displays `3:16.56` because it truncates. No render, managed-install patch, or GitHub post was performed.

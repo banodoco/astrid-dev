@@ -1,0 +1,599 @@
+........................................................................ [ 18%]
+........................................................................ [ 37%]
+........................................................................ [ 55%]
+....................F................................................... [ 74%]
+FF..F...................................................FF.F............ [ 92%]
+............................                                             [100%]
+=================================== FAILURES ===================================
+__________ test_target_filename_survives_canonical_source_publication __________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_target_filename_survives_0')
+
+    def test_target_filename_survives_canonical_source_publication(tmp_path):
+        workflow = workflow_from_ready("image/z_image_turbo")
+        exact_vae = r"FLUX1\ae.safetensors"
+        workflow.set_input("vae", exact_vae)
+        workflow.requirements.models = [
+            exact_vae if isinstance(item, dict) and item.get("name") == "ae.safetensors" else item
+            for item in workflow.requirements.models
+        ]
+        # The selected filename is attested by a target picker, not by the old
+        # default filename's download URL/hash. Other download witnesses remain.
+        workflow.metadata["model_assets"] = [
+            item for item in workflow.metadata["model_assets"] if item.get("name") != "ae.safetensors"
+        ]
+        before = workflow.semantic_digest()
+        published = emit_bundle(workflow, tmp_path / "workflow.py", {"operation": "authored"})
+        loaded = load_bundle(published.python_path, trust=Provenance.USER_CONFIRMED)
+        loaded.require_canonical_authority("target model publication regression")
+>       assert loaded.workflow.semantic_digest() == before
+E       AssertionError: assert '27075a64b84c...841b5e111d51b' == '3df3047ae120...bcdcf0c714d7c'
+E         
+E         - 3df3047ae1209ebb8a21393769256ca964817b03346bdc015a7bcdcf0c714d7c
+E         + 27075a64b84c4a1d7e11174f48f37822612e8a8e5b3367263e1841b5e111d51b
+
+tests/test_target_model_bundle_custody.py:25: AssertionError
+_ test_derived_template_live_identity_requires_package_lock_and_checkout[False-True-True-True] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_derived_template_live_ide0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb14e5a3af0>
+staged_lock = False, installed = True, target_has_class = True, live = True
+
+    @pytest.mark.parametrize(
+        "staged_lock,installed,target_has_class,live",
+        [(False, True, True, True), (True, False, True, True),
+         (True, True, False, True), (True, True, True, False), (True, True, True, True)],
+    )
+    def test_derived_template_live_identity_requires_package_lock_and_checkout(
+        tmp_path, monkeypatch, staged_lock, installed, target_has_class, live,
+    ):
+        """A checkout found through env cannot replace a missing staged lockfile."""
+        import vibecomfy.workflow_bundle as bundles
+        import vibecomfy.node_packs as node_packs
+        import vibecomfy.porting.object_info as object_info
+        import vibecomfy.runtime.drift as drift
+        from vibecomfy.node_packs import CustomNodePack
+    
+        package_root = tmp_path / "staged-package"
+        package_root.mkdir()
+        monkeypatch.setattr(bundles, "__file__", str(package_root / "vibecomfy" / "workflow_bundle.py"))
+        lock_text = (
+            '[nodepacks.TargetPack]\nname="TargetPack"\ncommit="abc123"\n'
+            'url="https://example.test/TargetPack.git"\nclass_set=["TargetNode"]\n'
+        )
+        # A correct lock in cwd is deliberately not the loaded package's authority.
+        (tmp_path / "custom_nodes.lock").write_text(lock_text)
+        monkeypatch.chdir(tmp_path)
+        if staged_lock:
+            (package_root / "custom_nodes.lock").write_text(lock_text)
+        custom_nodes = tmp_path / "ComfyUI" / "custom_nodes"
+        custom_nodes.mkdir(parents=True)
+        checkout = tmp_path / "installed-checkout"
+        checkout.mkdir()
+        if installed:
+            (custom_nodes / "TargetPack").symlink_to(checkout, target_is_directory=True)
+        monkeypatch.setenv("VIBECOMFY_CUSTOM_NODES_DIR", str(custom_nodes))
+        monkeypatch.setattr(drift, "_git_head", lambda path: "abc123" if path.resolve() == checkout else None)
+        monkeypatch.setattr(node_packs, "get_known_node_packs", lambda path: (
+            CustomNodePack("TargetPack", "local", frozenset({"TargetNode"})),
+        ))
+        monkeypatch.setattr(object_info, "resolve_class_entry", lambda *a, **kw: type(
+            "Result", (), {"entry": None, "source": "identity_miss"},
+        )())
+        workflow = _workflow("derived-template")
+        workflow.metadata["source_role"] = "materialized_ready_python_template" if live else "authored"
+        workflow.add_node("TargetNode", uid="target-node", value=1)
+        provider = type("Provider", (), {
+            "requires_fresh_target": live,
+            "schema_authority": "live_target" if live else "offline",
+            "get_schema": lambda self, name: object() if target_has_class else None,
+        })()
+        if staged_lock and installed and target_has_class and live:
+            diagnostics = bundles._approval_preconditions(workflow, provider)
+            assert diagnostics[0]["verified_installed_commit"] == "abc123"
+        else:
+            with pytest.raises(WorkflowBundleError) as error:
+                bundles._approval_preconditions(workflow, provider)
+            if not staged_lock:
+>               assert str(package_root / "custom_nodes.lock") in str(error.value)
+E               AssertionError: assert '/tmp/pytest-of-root/pytest-260/test_derived_template_live_ide0/staged-package/custom_nodes.lock' in 'object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review-81b/scratch/head/cu...k. Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.'
+E                +  where '/tmp/pytest-of-root/pytest-260/test_derived_template_live_ide0/staged-package/custom_nodes.lock' = str((PosixPath('/tmp/pytest-of-root/pytest-260/test_derived_template_live_ide0/staged-package') / 'custom_nodes.lock'))
+E                +  and   'object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review-81b/scratch/head/cu...k. Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.' = str(WorkflowBundleError('object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review.... Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.'))
+E                +    where WorkflowBundleError('object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review.... Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.') = <ExceptionInfo WorkflowBundleError('object-info identity is unavailable for TargetNode (1); authoritative lockfile /ro...he matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.') tblen=2>.value
+
+/root/codex/review-81b/scratch/head/tests/test_workflow_bundle.py:864: AssertionError
+_ test_derived_template_live_identity_requires_package_lock_and_checkout[True-False-True-True] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_derived_template_live_ide1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb14cb694e0>
+staged_lock = True, installed = False, target_has_class = True, live = True
+
+    @pytest.mark.parametrize(
+        "staged_lock,installed,target_has_class,live",
+        [(False, True, True, True), (True, False, True, True),
+         (True, True, False, True), (True, True, True, False), (True, True, True, True)],
+    )
+    def test_derived_template_live_identity_requires_package_lock_and_checkout(
+        tmp_path, monkeypatch, staged_lock, installed, target_has_class, live,
+    ):
+        """A checkout found through env cannot replace a missing staged lockfile."""
+        import vibecomfy.workflow_bundle as bundles
+        import vibecomfy.node_packs as node_packs
+        import vibecomfy.porting.object_info as object_info
+        import vibecomfy.runtime.drift as drift
+        from vibecomfy.node_packs import CustomNodePack
+    
+        package_root = tmp_path / "staged-package"
+        package_root.mkdir()
+        monkeypatch.setattr(bundles, "__file__", str(package_root / "vibecomfy" / "workflow_bundle.py"))
+        lock_text = (
+            '[nodepacks.TargetPack]\nname="TargetPack"\ncommit="abc123"\n'
+            'url="https://example.test/TargetPack.git"\nclass_set=["TargetNode"]\n'
+        )
+        # A correct lock in cwd is deliberately not the loaded package's authority.
+        (tmp_path / "custom_nodes.lock").write_text(lock_text)
+        monkeypatch.chdir(tmp_path)
+        if staged_lock:
+            (package_root / "custom_nodes.lock").write_text(lock_text)
+        custom_nodes = tmp_path / "ComfyUI" / "custom_nodes"
+        custom_nodes.mkdir(parents=True)
+        checkout = tmp_path / "installed-checkout"
+        checkout.mkdir()
+        if installed:
+            (custom_nodes / "TargetPack").symlink_to(checkout, target_is_directory=True)
+        monkeypatch.setenv("VIBECOMFY_CUSTOM_NODES_DIR", str(custom_nodes))
+        monkeypatch.setattr(drift, "_git_head", lambda path: "abc123" if path.resolve() == checkout else None)
+        monkeypatch.setattr(node_packs, "get_known_node_packs", lambda path: (
+            CustomNodePack("TargetPack", "local", frozenset({"TargetNode"})),
+        ))
+        monkeypatch.setattr(object_info, "resolve_class_entry", lambda *a, **kw: type(
+            "Result", (), {"entry": None, "source": "identity_miss"},
+        )())
+        workflow = _workflow("derived-template")
+        workflow.metadata["source_role"] = "materialized_ready_python_template" if live else "authored"
+        workflow.add_node("TargetNode", uid="target-node", value=1)
+        provider = type("Provider", (), {
+            "requires_fresh_target": live,
+            "schema_authority": "live_target" if live else "offline",
+            "get_schema": lambda self, name: object() if target_has_class else None,
+        })()
+        if staged_lock and installed and target_has_class and live:
+            diagnostics = bundles._approval_preconditions(workflow, provider)
+            assert diagnostics[0]["verified_installed_commit"] == "abc123"
+        else:
+            with pytest.raises(WorkflowBundleError) as error:
+                bundles._approval_preconditions(workflow, provider)
+            if not staged_lock:
+                assert str(package_root / "custom_nodes.lock") in str(error.value)
+                assert "installed checkout alone is not a pin" in str(error.value)
+            elif not installed:
+>               assert "installed checkout does not match abc123" in str(error.value)
+E               AssertionError: assert 'installed checkout does not match abc123' in 'object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review-81b/scratch/head/cu...k. Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.'
+E                +  where 'object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review-81b/scratch/head/cu...k. Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.' = str(WorkflowBundleError('object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review.... Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.'))
+E                +    where WorkflowBundleError('object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review.... Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.') = <ExceptionInfo WorkflowBundleError('object-info identity is unavailable for TargetNode (1); authoritative lockfile /ro...he matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.') tblen=2>.value
+
+/root/codex/review-81b/scratch/head/tests/test_workflow_bundle.py:867: AssertionError
+_ test_derived_template_live_identity_requires_package_lock_and_checkout[True-True-True-True] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_derived_template_live_ide4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb14cb691d0>
+staged_lock = True, installed = True, target_has_class = True, live = True
+
+    @pytest.mark.parametrize(
+        "staged_lock,installed,target_has_class,live",
+        [(False, True, True, True), (True, False, True, True),
+         (True, True, False, True), (True, True, True, False), (True, True, True, True)],
+    )
+    def test_derived_template_live_identity_requires_package_lock_and_checkout(
+        tmp_path, monkeypatch, staged_lock, installed, target_has_class, live,
+    ):
+        """A checkout found through env cannot replace a missing staged lockfile."""
+        import vibecomfy.workflow_bundle as bundles
+        import vibecomfy.node_packs as node_packs
+        import vibecomfy.porting.object_info as object_info
+        import vibecomfy.runtime.drift as drift
+        from vibecomfy.node_packs import CustomNodePack
+    
+        package_root = tmp_path / "staged-package"
+        package_root.mkdir()
+        monkeypatch.setattr(bundles, "__file__", str(package_root / "vibecomfy" / "workflow_bundle.py"))
+        lock_text = (
+            '[nodepacks.TargetPack]\nname="TargetPack"\ncommit="abc123"\n'
+            'url="https://example.test/TargetPack.git"\nclass_set=["TargetNode"]\n'
+        )
+        # A correct lock in cwd is deliberately not the loaded package's authority.
+        (tmp_path / "custom_nodes.lock").write_text(lock_text)
+        monkeypatch.chdir(tmp_path)
+        if staged_lock:
+            (package_root / "custom_nodes.lock").write_text(lock_text)
+        custom_nodes = tmp_path / "ComfyUI" / "custom_nodes"
+        custom_nodes.mkdir(parents=True)
+        checkout = tmp_path / "installed-checkout"
+        checkout.mkdir()
+        if installed:
+            (custom_nodes / "TargetPack").symlink_to(checkout, target_is_directory=True)
+        monkeypatch.setenv("VIBECOMFY_CUSTOM_NODES_DIR", str(custom_nodes))
+        monkeypatch.setattr(drift, "_git_head", lambda path: "abc123" if path.resolve() == checkout else None)
+        monkeypatch.setattr(node_packs, "get_known_node_packs", lambda path: (
+            CustomNodePack("TargetPack", "local", frozenset({"TargetNode"})),
+        ))
+        monkeypatch.setattr(object_info, "resolve_class_entry", lambda *a, **kw: type(
+            "Result", (), {"entry": None, "source": "identity_miss"},
+        )())
+        workflow = _workflow("derived-template")
+        workflow.metadata["source_role"] = "materialized_ready_python_template" if live else "authored"
+        workflow.add_node("TargetNode", uid="target-node", value=1)
+        provider = type("Provider", (), {
+            "requires_fresh_target": live,
+            "schema_authority": "live_target" if live else "offline",
+            "get_schema": lambda self, name: object() if target_has_class else None,
+        })()
+        if staged_lock and installed and target_has_class and live:
+>           diagnostics = bundles._approval_preconditions(workflow, provider)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/root/codex/review-81b/scratch/head/tests/test_workflow_bundle.py:858: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+workflow = VibeWorkflow(id='derived-template', source=WorkflowSource(id='derived-template', path=None, source_type='unknown', pro...alse, groups=[], definitions={}, interfaces={}, boundary_ports=[], virtual_wires={}, variants={}, default_variant=None)
+schema_provider = <tests.test_workflow_bundle.Provider object at 0x7fb1465e1fd0>
+
+    def _approval_preconditions(
+        workflow: VibeWorkflow,
+        schema_provider: Any,
+        *,
+        models_root: str | Path | None = None,
+    ) -> list[dict[str, Any]]:
+        """Run local, read-only requirement, schema-identity, and model gates."""
+        approval_diagnostics: list[dict[str, Any]] = []
+    
+        def publish_approval_diagnostics() -> None:
+            try:
+                setattr(schema_provider, "_approval_diagnostics", list(approval_diagnostics))
+            except Exception:
+                # A third-party provider may be slotted/immutable; the return value
+                # still lets the bundle compiler retain the same diagnostics.
+                pass
+        requirements = getattr(workflow, "requirements", None)
+        # ``missing_nodes`` is an imported-workflow hint, not authoritative proof
+        # that a node is absent.  Older UI imports populate it before the local
+        # lockfile / target schema is consulted; treating it as a hard blocker here
+        # rejects an installed, pinned pack (the common H3 case).  Reconcile those
+        # names below with the actual schema and known pack class sets, and only
+        # fail when a class remains genuinely unresolved.  Models and unsupported
+        # features remain hard blockers because they have no equivalent local-pack
+        # witness that can safely discharge the declaration.
+        for field_name in ("missing_models", "unsupported"):
+            values = getattr(requirements, field_name, ()) if requirements is not None else ()
+            if values:
+                raise WorkflowBundleError(
+                    f"workflow requirements contain unresolved {field_name}: "
+                    + ", ".join(sorted(str(value) for value in values))
+                )
+    
+        try:
+            from vibecomfy.node_packs import CORE_COMFY_CLASSES, CustomNodePack, get_known_node_packs, read_lockfile
+            from vibecomfy.node_packs._lockfile import resolve_lockfile_path
+            from vibecomfy.custom_node_refs import effective_lock_entries
+    
+            # Bind both local pack authorities to the repository containing this
+            # implementation.  In particular, never branch on a caller's CWD or
+            # invoke the legacy helper's ambient/on-demand schema path.
+            lock_path = resolve_lockfile_path()
+            lock_entries = effective_lock_entries(workflow, read_lockfile(lock_path))
+            known_packs = get_known_node_packs(lock_path)
+            # A portable workflow may carry the only available class inventory.
+            # Add synthetic pack records for those scoped records without changing
+            # the installed-pack catalog used for runtime verification.
+            known_packs = tuple(known_packs) + tuple(
+                CustomNodePack(
+                    name=str(entry.name),
+                    repo=str(entry.url or entry.path or entry.name),
+                    classes=frozenset(entry.class_set),
+                    pip_packages=tuple(entry.pip_packages),
+                    class_schema_sha256=entry.class_schema_sha256,
+                )
+                for entry in lock_entries
+                if entry.class_set and str(entry.name) not in {str(pack.name) for pack in known_packs}
+            )
+            known_pack_classes = {
+                str(class_type)
+                for pack in known_packs
+                for class_type in pack.classes
+            }
+            get_schema = getattr(schema_provider, "get_schema", None)
+            if not callable(get_schema):
+                get_schema = getattr(schema_provider, "get", None)
+            schema_classes = {
+                str(node.class_type)
+                for node in workflow.nodes.values()
+                if callable(get_schema) and get_schema(str(node.class_type)) is not None
+            }
+            declared_missing_nodes = {
+                str(class_type)
+                for class_type in getattr(requirements, "missing_nodes", ())
+            }
+            # Canvas furniture can be present in an imported UI graph without
+            # being executable Comfy classes.  It must not turn into a false
+            # "genuinely absent" runtime dependency.
+            ui_only_classes = {"Note", "MarkdownNote", "Label (rgthree)"}
+            missing_classes = sorted(
+                ({str(node.class_type) for node in workflow.nodes.values()} | declared_missing_nodes)
+                - schema_classes
+                - known_pack_classes
+                - set(CORE_COMFY_CLASSES)
+                - ui_only_classes
+            )
+        except Exception as exc:
+            raise WorkflowBundleError(
+                f"local node-pack reconciliation failed: {type(exc).__name__}: {exc}"
+            ) from exc
+        if missing_classes:
+            raise WorkflowReconciliationError(tuple(missing_classes))
+    
+        metadata = getattr(workflow, "metadata", {})
+        reconciliation = metadata.get("reconciliation") if isinstance(metadata, Mapping) else None
+        if reconciliation is not None and not isinstance(reconciliation, Mapping):
+            raise WorkflowBundleError("workflow reconciliation evidence is malformed")
+    
+        def _reconciliation_blocker(value: Any) -> str | None:
+            if isinstance(value, Mapping):
+                status = value.get("status")
+                if status in {"blocked", "error", "failed", "stale", "unknown", "restart_required"}:
+                    return str(status)
+                if value.get("severity") == "error":
+                    return "error diagnostic"
+                for item in value.values():
+                    blocker = _reconciliation_blocker(item)
+                    if blocker:
+                        return blocker
+            elif isinstance(value, (list, tuple)):
+                for item in value:
+                    blocker = _reconciliation_blocker(item)
+                    if blocker:
+                        return blocker
+            return None
+    
+        blocker = _reconciliation_blocker(reconciliation)
+        if blocker:
+            raise WorkflowBundleError(f"workflow reconciliation is not approved: {blocker}")
+    
+        identity_table = metadata.get("object_info_identities") if isinstance(metadata, Mapping) else None
+        if identity_table is not None and not isinstance(identity_table, Mapping):
+            raise WorkflowBundleError("object-info identity evidence is malformed")
+        try:
+            from vibecomfy.porting.object_info import resolve_class_entry
+    
+            # An explicit target provider is the authority for the server that
+            # will receive this projection.  Its fresh /object_info response is
+            # stronger evidence than a historical offline identity cache: a node
+            # can be locally installed and executable while its imported workflow
+            # still carries an older pack commit.  Keep this escape hatch narrow;
+            # ordinary/offline providers must continue to resolve exact identity
+            # matches so stale provenance cannot silently pass authoring gates.
+            target_authority = bool(
+                getattr(schema_provider, "requires_fresh_target", False)
+                and getattr(schema_provider, "schema_authority", None) == "live_target"
+            )
+    
+            pack_by_class = {
+                str(class_type): pack
+                for pack in known_packs
+                for class_type in pack.classes
+            }
+            lock_by_name = {str(entry.name): entry for entry in lock_entries}
+            lock_by_slug = {str(entry.slug or entry.name): entry for entry in lock_entries}
+    
+            for node_id, node in sorted(workflow.nodes.items(), key=lambda item: str(item[0])):
+                source = node.metadata.get("schema_source") if isinstance(node.metadata, Mapping) else None
+                identity = node.metadata.get("object_info_identity") if isinstance(node.metadata, Mapping) else None
+                if identity is None and isinstance(identity_table, Mapping):
+                    identity = identity_table.get(str(node_id), identity_table.get(node_id))
+                # Ready templates are materialized from the repository's pinned
+                # schema cache, but their generated node metadata intentionally
+                # does not carry a per-node object-info identity.  Remember that
+                # distinction before deriving the pack's lock identity below;
+                # authored/captured workflows must remain fail-closed when an
+                # exact identity cannot be resolved.
+                has_explicit_identity = identity is not None or (
+                    isinstance(source, Mapping)
+                    and any(
+                        key in source
+                        for key in (
+                            "pack_slug", "pack", "package", "git_commit",
+                            "commit", "evidence_identity",
+                        )
+                    )
+                )
+                pack = pack_by_class.get(str(node.class_type))
+                pack_name = str(pack.name) if pack is not None else None
+                lock_entry = lock_by_name.get(pack_name) if pack_name is not None else None
+                if lock_entry is None and isinstance(source, Mapping):
+                    source_pack = source.get("pack_slug") or source.get("pack") or source.get("package")
+                    if isinstance(source_pack, str):
+                        lock_entry = lock_by_name.get(source_pack) or lock_by_slug.get(source_pack)
+    
+                explicit_identities: list[Any] = []
+                if isinstance(source, Mapping) and any(
+                    key in source
+                    for key in ("pack_slug", "pack", "package", "git_commit", "commit", "evidence_identity")
+                ):
+                    explicit_identities.append(source)
+                if identity is not None:
+                    explicit_identities.append(identity)
+                if lock_entry is not None and explicit_identities:
+                    lock_slug = str(lock_entry.slug or lock_entry.name)
+                    lock_name = str(lock_entry.name)
+                    lock_commit = lock_entry.commit or lock_entry.git_commit_sha
+                    for explicit in explicit_identities:
+                        if isinstance(explicit, Mapping):
+                            explicit_pack = explicit.get("pack_slug") or explicit.get("pack") or explicit.get("package")
+                            explicit_commit = explicit.get("git_commit") or explicit.get("commit")
+                            explicit_evidence = explicit.get("evidence_identity")
+                        else:
+                            explicit_pack = getattr(explicit, "pack_slug", None)
+                            explicit_commit = getattr(explicit, "git_commit", None)
+                            explicit_evidence = getattr(explicit, "evidence_identity", None)
+                        if explicit_pack is not None and str(explicit_pack) not in {lock_slug, lock_name}:
+                            raise WorkflowBundleError(
+                                f"object-info identity pack conflicts with lock for {node.class_type} ({node_id})"
+                            )
+                        if lock_commit is not None:
+                            for pin in (explicit_commit, explicit_evidence):
+                                if pin is not None and str(pin) != str(lock_commit):
+                                    raise WorkflowBundleError(
+                                        f"object-info identity pin conflicts with lock for {node.class_type} ({node_id})"
+                                    )
+    
+                # A schema_source is provenance, not an identity by itself.  Use
+                # only its explicit identity fields or an actual lock commit; do
+                # not invent a value from provider/path/hash text.
+                if identity is None and isinstance(source, Mapping):
+                    source_pack = source.get("pack_slug") or source.get("pack") or source.get("package")
+                    source_commit = source.get("git_commit") or source.get("commit")
+                    source_evidence = source.get("evidence_identity")
+                    if source_pack and source_commit:
+                        identity = {"pack_slug": str(source_pack), "git_commit": str(source_commit)}
+                    elif source_pack and source_evidence:
+                        identity = {"pack_slug": str(source_pack), "evidence_identity": str(source_evidence)}
+                if lock_entry is not None:
+                    commit = lock_entry.commit or lock_entry.git_commit_sha
+                    if commit:
+                        identity = {
+                            "pack_slug": str(lock_entry.slug or lock_entry.name),
+                            "git_commit": str(commit),
+                        }
+                if identity is None:
+                    if pack is not None:
+>                       raise WorkflowBundleError(
+                            f"object-info identity is unavailable for {node.class_type} ({node_id}); "
+                            f"authoritative lockfile {lock_path} has no commit identity for "
+                            f"pack {pack.name}. Stage the matching custom_nodes.lock beside "
+                            "the loaded VibeComfy package; an installed checkout alone is not a pin."
+                        )
+E                       vibecomfy.workflow_bundle.WorkflowBundleError: object-info identity is unavailable for TargetNode (1); authoritative lockfile /root/codex/review-81b/scratch/head/custom_nodes.lock has no commit identity for pack TargetPack. Stage the matching custom_nodes.lock beside the loaded VibeComfy package; an installed checkout alone is not a pin.
+
+/root/codex/review-81b/scratch/head/vibecomfy/workflow_bundle.py:2350: WorkflowBundleError
+______ test_v2_companion_keeps_generated_python_small_and_round_trippable ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_v2_companion_keeps_genera0')
+
+    def test_v2_companion_keeps_generated_python_small_and_round_trippable(tmp_path: Path) -> None:
+        workflow = _nonempty_workflow("v2-shape")
+        path = tmp_path / "v2-shape.py"
+    
+        bundle = emit_bundle(workflow, path, {"operation": "authored"})
+        source = path.read_text(encoding="utf-8")
+    
+        assert path.with_suffix(".vibe.json").is_file()
+        assert bundle.ui_sidecar is not None
+        assert set(bundle.ui_sidecar) == {"format_version", "bind", "custody", "presentation"}
+        assert all(
+            token not in source
+            for token in (
+                "CANONICAL_CUSTODY",
+                "HELPER_CUSTODY",
+                "resolver_helper_custody",
+                "wf.connect(",
+                "wf.nodes[",
+            )
+        )
+>       assert "wf = wf.finalize({}, outputs=[])" in source
+E       assert 'wf = wf.finalize({}, outputs=[])' in "# vibecomfy: generated\n# For hand-editing, run: python -m vibecomfy.cli copy-to-recipe <id>\n# vibecomfy: surface=ca...ath=__file__) as wf:\n\n        integer = raw_call('Integer', value=7)\n\n        return wf.finalize({}, outputs=[])\n"
+
+tests/test_workflow_bundle.py:2102: AssertionError
+________ test_v2_source_contract_rejects_whole_file_integrity_mutations ________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_v2_source_contract_reject0')
+
+    def test_v2_source_contract_rejects_whole_file_integrity_mutations(tmp_path: Path) -> None:
+        """Mutation evidence covers hidden custody, replay tails, and bloated finalizers."""
+        path = tmp_path / "source-contract.py"
+        emit_bundle(_nonempty_workflow("source-contract"), path, {"operation": "authored"})
+        source = path.read_text(encoding="utf-8")
+        _assert_clean_v2_source(source)
+        anchor = "        wf = wf.finalize({}, outputs=[] )"
+        if anchor not in source:
+            anchor = "        wf = wf.finalize({}, outputs=[])"
+>       assert anchor in source
+E       assert '        wf = wf.finalize({}, outputs=[])' in "# vibecomfy: generated\n# For hand-editing, run: python -m vibecomfy.cli copy-to-recipe <id>\n# vibecomfy: surface=ca...ath=__file__) as wf:\n\n        integer = raw_call('Integer', value=7)\n\n        return wf.finalize({}, outputs=[])\n"
+
+tests/test_workflow_bundle.py:2230: AssertionError
+______________ test_v2_rebuild_refreshes_edited_model_requirement ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-260/test_v2_rebuild_refreshes_edit0')
+
+    def test_v2_rebuild_refreshes_edited_model_requirement(tmp_path: Path) -> None:
+        workflow = _workflow("model-requirement-refresh")
+        workflow.nodes["1"] = VibeNode(
+            "1",
+            "CheckpointLoaderSimple",
+            inputs={"ckpt_name": "old.safetensors"},
+            uid="loader",
+        )
+        workflow.requirements.models = ["old.safetensors"]
+        path = tmp_path / "model-requirement-refresh.py"
+        emit_bundle(workflow, path, {"operation": "authored"})
+    
+        source = path.read_text(encoding="utf-8")
+        source = source.replace(
+            "CKPT_NAME = 'old.safetensors'",
+            "CKPT_NAME = 'new.safetensors'",
+            1,
+        )
+        path.write_text(source, encoding="utf-8")
+    
+        rebuilt = load_bundle(path, trust=Provenance.USER_CONFIRMED).workflow
+        assert rebuilt.nodes["1"].inputs["ckpt_name"] == "new.safetensors"
+>       assert rebuilt.requirements.models == ["new.safetensors"]
+E       AssertionError: assert [{'name': 'ne...points', ...}] == ['new.safetensors']
+E         
+E         At index 0 diff: {'name': 'new.safetensors', 'subdir': 'checkpoints', 'sha256': None, 'size_bytes': None, 'url': None} != 'new.safetensors'
+E         Use -v to get more diff
+
+tests/test_workflow_bundle.py:2337: AssertionError
+=============================== warnings summary ===============================
+tests/test_r13_object_info_contract.py::test_music_source_emission_and_canonical_approval_keep_required_values[legacy]
+  /root/codex/review-81b/scratch/head/ready_templates/audio/ace_step_1_5_t2a_song.py:32: PendingDeprecationWarning: vibecomfy.templates.ref('name') is a legacy generated-template fallback; new generated templates bind InputSpec.node to node objects inside build().
+    'prompt': InputSpec(node=ref('textencodeacestepaudio1_5'), field='tags', default=DEFAULT_PROMPT, type='STRING', infer_type=False),
+
+tests/test_workflow_bundle.py::test_v2_annotations_bind_scope_and_owner_and_materialize_content
+  /root/codex/review-81b/scratch/head/vibecomfy/porting/emit/ui.py:3654: UserWarning: emit_ui_json: schema-less node 1(Integer); emitting best-effort slots. Pass strict=True to hard-fail.
+    return func(wf, *args, **kwargs)
+
+tests/test_workflow_bundle.py::test_normalized_virtual_wire_legs_materialize_through_native_port_rosters
+  /root/codex/review-81b/scratch/head/vibecomfy/porting/emit/ui.py:3654: UserWarning: emit_ui_json: schema-less node source(Source); emitting best-effort slots. Pass strict=True to hard-fail.
+    return func(wf, *args, **kwargs)
+
+tests/test_workflow_bundle.py::test_normalized_virtual_wire_legs_materialize_through_native_port_rosters
+  /root/codex/review-81b/scratch/head/vibecomfy/porting/emit/ui.py:3654: UserWarning: emit_ui_json: schema-less node target(Target); emitting best-effort slots. Pass strict=True to hard-fail.
+    return func(wf, *args, **kwargs)
+
+tests/test_workflow_bundle.py::test_nonempty_canonical_virtual_wire_reaches_execution_and_ui_materialization
+  /root/codex/review-81b/scratch/head/vibecomfy/porting/emit/ui.py:3654: UserWarning: emit_ui_json: schema-less node 1(Source); emitting best-effort slots. Pass strict=True to hard-fail.
+    return func(wf, *args, **kwargs)
+
+tests/test_workflow_bundle.py::test_nonempty_canonical_virtual_wire_reaches_execution_and_ui_materialization
+  /root/codex/review-81b/scratch/head/vibecomfy/porting/emit/ui.py:3654: UserWarning: emit_ui_json: schema-less node 2(Target); emitting best-effort slots. Pass strict=True to hard-fail.
+    return func(wf, *args, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+pytest gate counts: passed=381 failed=7 errors=0 skipped=0 xfailed=0 xpassed=0 quarantined_failures=0 unexpected_failures=7 stale_quarantines=264
+======================== NEW FAILURES (not quarantined) ========================
+  NEW FAIL: tests/test_target_model_bundle_custody.py::test_target_filename_survives_canonical_source_publication
+  NEW FAIL: tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[False-True-True-True]
+  NEW FAIL: tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[True-False-True-True]
+  NEW FAIL: tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[True-True-True-True]
+  NEW FAIL: tests/test_workflow_bundle.py::test_v2_companion_keeps_generated_python_small_and_round_trippable
+  NEW FAIL: tests/test_workflow_bundle.py::test_v2_rebuild_refreshes_edited_model_requirement
+  NEW FAIL: tests/test_workflow_bundle.py::test_v2_source_contract_rejects_whole_file_integrity_mutations
+7 new failure(s) detected — add a scoped tests/quarantine/*.txt entry only if intentional.
+=========================== short test summary info ============================
+FAILED tests/test_target_model_bundle_custody.py::test_target_filename_survives_canonical_source_publication
+FAILED tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[False-True-True-True]
+FAILED tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[True-False-True-True]
+FAILED tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[True-True-True-True]
+FAILED tests/test_workflow_bundle.py::test_v2_companion_keeps_generated_python_small_and_round_trippable
+FAILED tests/test_workflow_bundle.py::test_v2_source_contract_rejects_whole_file_integrity_mutations
+FAILED tests/test_workflow_bundle.py::test_v2_rebuild_refreshes_edited_model_requirement
+7 failed, 381 passed, 6 warnings in 160.80s (0:02:40)

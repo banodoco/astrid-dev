@@ -1,0 +1,11 @@
+lane	cluster	outcome	job	id
+lanes	C101	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_json_selection_uses_production_composition_and_real_cpu_staging
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_changed_config_corrupt_journal_and_account_or_volume_mismatch_refuse_reuse
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_interrupted_upload_reconciles_remote_bytes_without_reupload
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_materialized_h3_bundle_stages_as_an_owned_workflow_root
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_preparation_runs_real_child_probe_and_reuses_verified_content
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_remote_drift_fails_closed_then_explicit_refresh_repairs_owned_source
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_same_byte_custom_node_release_aliases_fail_before_resolved_reuse[lock_leaf]
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_same_byte_custom_node_release_aliases_fail_before_resolved_reuse[lock_parent]
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_same_byte_custom_node_release_aliases_fail_before_resolved_reuse[node_leaf]
+lanes	C14	FAILED	integration shard 3 _ 4	tests/packs/runpod/test_worker_staging.py::test_same_byte_custom_node_release_aliases_fail_before_resolved_reuse[node_parent]

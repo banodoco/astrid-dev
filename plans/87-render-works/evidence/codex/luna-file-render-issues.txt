@@ -1,0 +1,15 @@
+Filed nine issues:
+
+- [#1469 — Editor preview and render use different revisions of the same element pack](https://github.com/banodoco/astrid-dev/issues/1469)
+- [#1470 — Render bundler cannot resolve collection-pack elements](https://github.com/banodoco/astrid-dev/issues/1470)
+- [#1471 — Collection-pack elements cannot import shared rendering contracts](https://github.com/banodoco/astrid-dev/issues/1471)
+- [#1472 — Long renders lose the execution lease](https://github.com/banodoco/astrid-dev/issues/1472)
+- [#1473 — Custody capture failure aborts a live render](https://github.com/banodoco/astrid-dev/issues/1473)
+- [#1474 — Failed render leaves the managed session slot occupied](https://github.com/banodoco/astrid-dev/issues/1474)
+- [#1475 — Failed render scratch blocks the next admission](https://github.com/banodoco/astrid-dev/issues/1475)
+- [#1476 — Render failures and progress are invisible outside the invoking command](https://github.com/banodoco/astrid-dev/issues/1476)
+- [#1477 — Render export hint uses an unsupported `--to` option](https://github.com/banodoco/astrid-dev/issues/1477)
+
+Added evidence comments to [#1253](https://github.com/banodoco/astrid-dev/issues/1253#issuecomment-7085505413), [#759](https://github.com/banodoco/astrid-dev/issues/759#issuecomment-7085505572), and [#1320](https://github.com/banodoco/astrid-dev/issues/1320#issuecomment-7085505714). The source-edit restart message is already covered by #759; command-worker readiness and empty pack-path mismatches fit #1253. #1320 is related to the lease failure but describes a different lease path, so I filed #1472 too. #1433/#1434 cover editor preview performance, not render task progress.
+
+Commented on [astrid-agent PR #530](https://github.com/banodoco/astrid-agent/pull/530#issuecomment-7085513411) with the new issue numbers and the stopgap warning. Appended all issue and comment links to `tooling/ISSUES.md`. Nothing remained unfiled.

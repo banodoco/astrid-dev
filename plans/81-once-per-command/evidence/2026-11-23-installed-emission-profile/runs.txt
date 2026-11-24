@@ -1,0 +1,12 @@
+load 0.68 tree=35fff130104c mode=cold build=0.021s emit=2.254s sha256_calls=1689 sha256_bytes=1.522GB witness_calls=2034 class_lookups=476 distinct_classes=13
+load 0.68 tree=35fff130104c mode=warm build=0.017s emit=5.890s sha256_calls=5823 sha256_bytes=5.436GB witness_calls=7560 class_lookups=476 distinct_classes=13
+load 0.73 tree=e2cc94baa2da mode=cold build=0.018s emit=5.483s sha256_calls=5813 sha256_bytes=5.425GB witness_calls=7548 class_lookups=476 distinct_classes=13
+load 0.75 tree=e2cc94baa2da mode=warm build=0.018s emit=5.559s sha256_calls=5815 sha256_bytes=5.430GB witness_calls=7550 class_lookups=476 distinct_classes=13
+load 0.77 tree=35fff130104c mode=cold build=0.016s emit=2.081s sha256_calls=1689 sha256_bytes=1.522GB witness_calls=2034 class_lookups=476 distinct_classes=13
+load 1.11 tree=35fff130104c mode=warm build=0.017s emit=5.539s sha256_calls=5823 sha256_bytes=5.436GB witness_calls=7560 class_lookups=476 distinct_classes=13
+load 1.10 tree=e2cc94baa2da mode=cold build=0.018s emit=5.802s sha256_calls=5813 sha256_bytes=5.425GB witness_calls=7548 class_lookups=476 distinct_classes=13
+load 1.09 tree=e2cc94baa2da mode=warm build=0.018s emit=5.745s sha256_calls=5815 sha256_bytes=5.430GB witness_calls=7550 class_lookups=476 distinct_classes=13
+load 1.08 tree=35fff130104c mode=cold build=0.018s emit=2.084s sha256_calls=1689 sha256_bytes=1.522GB witness_calls=2034 class_lookups=476 distinct_classes=13
+load 1.07 tree=35fff130104c mode=warm build=0.018s emit=5.747s sha256_calls=5823 sha256_bytes=5.436GB witness_calls=7560 class_lookups=476 distinct_classes=13
+load 1.07 tree=e2cc94baa2da mode=cold build=0.016s emit=5.507s sha256_calls=5813 sha256_bytes=5.425GB witness_calls=7548 class_lookups=476 distinct_classes=13
+load 1.06 tree=e2cc94baa2da mode=warm build=0.017s emit=5.698s sha256_calls=5815 sha256_bytes=5.430GB witness_calls=7550 class_lookups=476 distinct_classes=13

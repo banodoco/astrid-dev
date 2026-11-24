@@ -1,0 +1,8 @@
+invalid index installed permanently after first index read of inner lookup 30
+inner leaves final scalar, owner active
+outer OK
+inner resumes, owner revoked
+inner prepublication callback sees owner revoked
+inner prepublication callback sees owner revoked
+inner OK
+inner scalar lookups 30 index remains invalid True outer pair True True inner pair True True

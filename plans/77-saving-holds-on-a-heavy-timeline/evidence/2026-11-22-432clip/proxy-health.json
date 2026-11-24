@@ -1,0 +1,26 @@
+{
+  "identity": {
+    "managed_by": null,
+    "release": 13
+  },
+  "protocol": "workspace.v1",
+  "runtime_epoch": 1,
+  "runtime_instance_id": "1e8a332ac276414b85c1c0bba8ecb1f2",
+  "runtime_session_id": "6393d3507d4b4a69bfb9eab34ccb5f87",
+  "schema_digest": "sha256:2c6a76e17b4441398ab91e3e9d6283a719fd5b08807447db9dbf2ecc5e1339a2",
+  "services": [
+    {
+      "last_exit": null,
+      "name": "pack-host",
+      "restart_count": 0,
+      "state": "running"
+    },
+    {
+      "last_exit": null,
+      "name": "chat",
+      "restart_count": 0,
+      "state": "running"
+    }
+  ],
+  "status": "ok"
+}

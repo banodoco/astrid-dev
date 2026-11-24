@@ -1,0 +1,4 @@
+#!/root/codex/plan-81m/attribution-evidence.env/bin/python
+import sys
+from astrid.console import entrypoint
+raise SystemExit(entrypoint())

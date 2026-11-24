@@ -1,0 +1,212 @@
+[
+  {
+    "count_median": 4,
+    "parent": null,
+    "seconds_median": 0.02959137899961206,
+    "stage": "Runtime GET /v1/app-state/user/generation",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.013565845999437443,
+    "stage": "Runtime GET /v1/capabilities",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.013706337999792595,
+    "stage": "Runtime GET /v1/health",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A191e196e3e469c030e39ff4a2f04631ea2a15f901d8162bad0f4a33e93c614ec",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A195d9587568b8c7337dd64170c12c51b215a7e4d16ac2e7b879188902bd15996",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A353e245a3cf446db0f2fcdb1cb26471aafa58718216d75a6b2543ab8e3ef5ac3",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.02017440599956899,
+    "stage": "Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A4243272bc8a1969ff442cb834ef17f722dc7418c867439f6fc8bb4930169eb3c",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A578a767a5c81b33d6a7670af8dbb4bbac5c741d05e124e8bcefa5ac40004b542",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A60a4bebd29fc8bb2824466078651a37c5c864cdc5e1b4dcca18e3f485172e2b1",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3A83a8c3a986cf0c0092de2dd052e6012a37305b8ba5156c3f8df06d25358435f3",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Aa24c69d7054d75b85d9013c590efaa34b5ce59c46c2fec040f64da876f47321e",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Aad3de176f1b453330775e09780576255e1c7309c18f80042d1a82ab07ac92935",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 0,
+    "parent": null,
+    "seconds_median": 0,
+    "stage": "Runtime GET /v1/objects/sha256%3Af2f5173e437db3e4d3c3265cc6c189a906be7e15fa1bebf2a99cffa7d1d4898e",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.007042688999717939,
+    "stage": "Runtime GET /v1/projects/de251aa5b7f8466aae6d95a946dea751",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.013246771000012814,
+    "stage": "Runtime POST /v1/handshake",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 3,
+    "parent": null,
+    "seconds_median": 0.03529530300056649,
+    "stage": "Runtime POST /v1/projects/de251aa5b7f8466aae6d95a946dea751/objects",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.008896141000150237,
+    "stage": "Runtime POST /v1/tasks",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.0009672730002421304,
+    "stage": "Runtime acquisition lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 2.0523203849998026,
+    "stage": "Runtime launcher connection",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 3.0016999517101794e-05,
+    "stage": "in-process Runtime acquisition lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.04276539600050455,
+    "stage": "model registry",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 6.686327200000051,
+    "stage": "other command work",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 10,
+    "parent": null,
+    "seconds_median": 1.8177285330002633,
+    "stage": "pack discovery",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.5021052649990452,
+    "stage": "pack host attachment",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 8.077600068645552e-05,
+    "stage": "pack host lifecycle lock",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.014978926999901887,
+    "stage": "pack host readiness",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.2711565999998129,
+    "stage": "pack host source identity",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 2,
+    "parent": null,
+    "seconds_median": 0.006717992000631057,
+    "stage": "target check",
+    "total_seconds_median": null
+  },
+  {
+    "count_median": 1,
+    "parent": null,
+    "seconds_median": 0.3295166320003773,
+    "stage": "workflow build",
+    "total_seconds_median": null
+  }
+]

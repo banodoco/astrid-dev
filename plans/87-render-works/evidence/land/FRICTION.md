@@ -1,0 +1,22 @@
+# Media swap investigation — Almost Ready, trial v2
+
+## Occurrence add cannot preserve these clips
+- Command: `./edits/stackpy.sh land/probe_guard.py` (local, read-only guard probe of the exact current film rows; private outbox).
+- Verbatim output: `c28-seq0-00 clipType=am-footage CommandError: media edit requires one matching media clip` and `d-typing clipType=am-footage CommandError: media edit requires one matching media clip`.
+- Expected: authenticated occurrence media add/swap accepts existing `am-footage` elements while retaining their complete authored data, timing and semantic bindings.
+- Source: `astrid/sdk/timeline/native_occurrence_media_commands.py:155-159` restricts clipType to `media`, the media kind, or image `hold`; `:219-234` calls this guard for occurrence add. `astrid/sdk/timeline/media_add.py:87-126` and `commit_session.py:425-451` implement `Timeline.add` as a parent birth. Thus the successful SFX remove/add would change ownership; it does not reconstruct these occurrence clips. The guard probe calls the same `_clip` validator directly, not the complete Runtime commit.
+- Workaround: none established that preserves ownership, element params, sequence/layer fields and word anchor. Smallest product change: support verified media replacement on existing occurrence-owned element clips without treating media replacement as a timing declaration edit, with scoped diff and CAS.
+
+## Word-binding sandbox compiler probe
+- Command: `./edits/stackpy.sh land/sandbox_guard_probe.py` (sandbox `r6-write-test`, private outbox; synthetic detached occurrence, no publication).
+- Verbatim output: `shot_word_binding TimingCompileError missing exact word binding for ('synthetic-occ-word-on', 'synthetic-shot-word-on', 'c23-desloppify-arrow').on`.
+- Expected: unchanged shot-owned word declarations retain their exact authenticated word binding during a media-only change. Source: `astrid/sdk/timeline/_timing_evaluators.py:413-425`; `astrid/sdk/timeline/_commit_timing_validation.py:126-133,840-866` and `native_word_anchor.py:233-257,293` describe the occurrence binding gap. This is a detached compiler reproduction, not a successful sandbox publication. Cut-relative replacement compiled in the probe but would sacrifice the requested word binding, so it was not used.
+- Workaround: none preserving the anchor. Extend authenticated word-anchor capture for shot-owned clips and carry existing exact pins across media-only edits.
+
+## Legacy same-alias and new-alias routes
+- Earlier exact commands and Runtime errors: `hair/FRICTION.md` sections 4, 5, 7 and 7b; `cream/FRICTION.md` section “Detached publication rejects new imported registry aliases.” The latter command `edits/stackpy.sh -m astrid.packs.rendering.docs.scripts.timeline_document publish --file cream/edit.json --idempotency-key r6-cream-ui-20261122` returned `astrid.sdk.timeline._command_state.CommandError: patch references media outside Runtime-verified inputs`. No film publication from these attempts.
+- Expected: a checked, already-imported new media selection can be included in a scoped occurrence media edit. `astrid/packs/rendering/docs/scripts/timeline_document.py:38-76` verifies only same-alias rebinds and requires both old and new exact generation/variant pins. Current old entries are legacy records lacking those pins. The native rebind additionally rejects legacy identity codecs at `astrid/sdk/timeline/native_occurrence_media_commands.py:142-149`. Verifying new aliases and emitting an authenticated occurrence replacement, including legacy pin resolution and element/word-binding preservation, would unblock this without altering unrelated clips. No clean workaround was proven.
+
+## Scope and editor evidence
+- `./edits/stackpy.sh land/scan_requested_aliases.py` scans current clip asset references in all six project timelines using private outboxes. The 13 intended references are in trial v2; the other five timelines have none of the requested aliases. This does not establish absence from archived revisions or non-clip references.
+- `node land/verify/capture-current.cjs` sought the 11 frames via PlayerRef and captured current-state evidence. The old cream baseline at 109.5, 116, 123 and 130 seconds shows the earlier preview-load failure, so it cannot prove visual alignment against the now-loaded preview. The editor automatically sent a project-selection PUT on load; the selected project was already Almost Ready at the start. No timeline write was sent.

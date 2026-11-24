@@ -1,0 +1,9 @@
+[vibecomfy] Local-library config is not fully set up:
+  custom_nodes: run `vibecomfy config set-library --custom-nodes <PATH>`
+  models: run `vibecomfy config set-library --models <PATH>`
+no object-info read before digest
+no object-info read before digest
+Copied '/tmp/tmpqvnzdomf/original/workflow.py' → /tmp/tmpqvnzdomf/new/workflow.py
+  (v2 Python + companion published atomically)
+CLI exit 0
+changed False new bytes published True pair True True

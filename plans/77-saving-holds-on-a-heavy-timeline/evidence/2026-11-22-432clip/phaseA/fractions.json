@@ -1,0 +1,23 @@
+{
+  "denominator": "decodable weighted samples; per-name presence anywhere in stack",
+  "decodable_samples": 27134,
+  "rejected_records": 2,
+  "fractions": {
+    "list_timeline_commits": {
+      "samples": 16645,
+      "fraction": 0.6134370162895261
+    },
+    "_history_page": {
+      "samples": 14990,
+      "fraction": 0.5524434289083806
+    },
+    "_verify_accepted_replay": {
+      "samples": 11093,
+      "fraction": 0.4088228790447409
+    },
+    "jsonschema": {
+      "samples": 18493,
+      "fraction": 0.6815434510208594
+    }
+  }
+}

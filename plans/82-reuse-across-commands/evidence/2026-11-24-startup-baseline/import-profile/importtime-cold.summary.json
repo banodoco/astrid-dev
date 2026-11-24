@@ -1,0 +1,200 @@
+{
+ "file": "importtime-cold.stderr",
+ "modules": 1275,
+ "total_toplevel_s": 1.691,
+ "top25_cumulative": [
+  [
+   "vibecomfy.porting.emit.ui",
+   0.485,
+   0,
+   null
+  ],
+  [
+   "vibecomfy.porting.emit",
+   0.485,
+   1,
+   "vibecomfy.porting.emit.ui"
+  ],
+  [
+   "vibecomfy.porting.emit.ui",
+   0.426,
+   2,
+   "vibecomfy.porting.emit"
+  ],
+  [
+   "astrid.core.execution.generic_host",
+   0.404,
+   0,
+   null
+  ],
+  [
+   "vibecomfy.porting.edit.ops",
+   0.355,
+   3,
+   "vibecomfy.porting.emit.ui"
+  ],
+  [
+   "vibecomfy.comfy_nodes.agent.provider",
+   0.341,
+   4,
+   "vibecomfy.porting.edit.ops"
+  ],
+  [
+   "vibecomfy.comfy_nodes.agent",
+   0.254,
+   5,
+   "vibecomfy.comfy_nodes.agent.provider"
+  ],
+  [
+   "vibecomfy.comfy_nodes",
+   0.253,
+   6,
+   "vibecomfy.comfy_nodes.agent"
+  ],
+  [
+   "vibecomfy.comfy_nodes.exec_node",
+   0.247,
+   7,
+   "vibecomfy.comfy_nodes"
+  ],
+  [
+   "numpy",
+   0.244,
+   8,
+   "vibecomfy.comfy_nodes.exec_node"
+  ],
+  [
+   "astrid.core.generation.backends.comfy_schema",
+   0.179,
+   0,
+   null
+  ],
+  [
+   "vibecomfy.schema.provider",
+   0.178,
+   1,
+   "astrid.core.generation.backends.comfy_schema"
+  ],
+  [
+   "vibecomfy.schema",
+   0.178,
+   2,
+   "vibecomfy.schema.provider"
+  ],
+  [
+   "vibecomfy.schema.call_validation",
+   0.173,
+   3,
+   "vibecomfy.schema"
+  ],
+  [
+   "vibecomfy.schema.provider",
+   0.171,
+   4,
+   "vibecomfy.schema.call_validation"
+  ],
+  [
+   "vibecomfy.runtime.client",
+   0.138,
+   5,
+   "vibecomfy.schema.provider"
+  ],
+  [
+   "vibecomfy.runtime",
+   0.138,
+   6,
+   "vibecomfy.runtime.client"
+  ],
+  [
+   "vibecomfy.runtime.run",
+   0.137,
+   7,
+   "vibecomfy.runtime"
+  ],
+  [
+   "numpy.__config__",
+   0.135,
+   9,
+   "numpy"
+  ],
+  [
+   "numpy._core._multiarray_umath",
+   0.134,
+   10,
+   "numpy.__config__"
+  ],
+  [
+   "numpy._core",
+   0.134,
+   11,
+   "numpy._core._multiarray_umath"
+  ],
+  [
+   "numpy.lib",
+   0.101,
+   9,
+   "numpy"
+  ],
+  [
+   "astrid.sdk.host_bootstrap",
+   0.084,
+   0,
+   null
+  ],
+  [
+   "astrid.core.execution.capability_ledger",
+   0.077,
+   1,
+   "astrid.core.execution.generic_host"
+  ],
+  [
+   "vibecomfy.runtime.client",
+   0.076,
+   8,
+   "vibecomfy.runtime.run"
+  ]
+ ],
+ "targets": {
+  "astrid.core.execution.generic_host": {
+   "cum_s": 0.404,
+   "self_s": 0.209,
+   "depth": 0,
+   "importer_chain": [
+    null
+   ]
+  },
+  "vibecomfy.porting.emit.ui": {
+   "cum_s": 0.426,
+   "self_s": 0.062,
+   "depth": 2,
+   "importer_chain": [
+    "vibecomfy.porting.emit",
+    "vibecomfy.porting.emit.ui",
+    null
+   ]
+  },
+  "astrid.core.generation.backends.comfy_schema": {
+   "cum_s": 0.179,
+   "self_s": 0.001,
+   "depth": 0,
+   "importer_chain": [
+    null
+   ]
+  },
+  "numpy": {
+   "cum_s": 0.244,
+   "self_s": 0.004,
+   "depth": 8,
+   "importer_chain": [
+    "vibecomfy.comfy_nodes.exec_node",
+    "vibecomfy.comfy_nodes",
+    "vibecomfy.comfy_nodes.agent",
+    "vibecomfy.comfy_nodes.agent.provider",
+    "vibecomfy.porting.edit.ops",
+    "vibecomfy.porting.emit.ui",
+    "vibecomfy.porting.emit",
+    "vibecomfy.porting.emit.ui"
+   ]
+  }
+ }
+}

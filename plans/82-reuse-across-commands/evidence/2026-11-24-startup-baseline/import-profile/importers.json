@@ -1,0 +1,46 @@
+{
+ "astrid.core.execution.generic_host": [
+  "core/gateway/dispatch.py:106 _dispatch_generate",
+  "core/generation/cli.py:1024 main",
+  "core/generation/cli.py:1061 _main_with_errors",
+  "core/generation/cli.py:628 _main",
+  "core/generation/cli.py:859 _main_request",
+  "core/generation/cli.py:65 _open_client",
+  "astrid/sdk/client.py:469 open_from_launcher",
+  "astrid/sdk/autobootstrap.py:526 ensure_runtime",
+  "astrid/sdk/host_bootstrap.py:2109 ensure_pack_host"
+ ],
+ "astrid.core.generation.backends.comfy_schema": [
+  "astrid/sdk/generation.py:617 call",
+  "astrid/sdk/generation.py:2389 image",
+  "astrid/sdk/generation.py:2392 _media_request",
+  "astrid/sdk/generation.py:2526 _media_request_impl",
+  "astrid/sdk/generation.py:1704 _generate_on_target",
+  "astrid/sdk/generation.py:1962 _generate_on_target_impl",
+  "astrid/sdk/command_timing.py:284 timed_call",
+  "astrid/sdk/generation.py:946 _prepare_catalog_target_workflow",
+  "generation/backends/vibecomfy.py:514 prepare_catalog_workflow"
+ ],
+ "vibecomfy.porting.emit.ui": [
+  "astrid/sdk/generation.py:2392 _media_request",
+  "astrid/sdk/generation.py:2526 _media_request_impl",
+  "astrid/sdk/generation.py:1704 _generate_on_target",
+  "astrid/sdk/generation.py:2073 _generate_on_target_impl",
+  "astrid/sdk/command_timing.py:284 timed_call",
+  "vibecomfy/vibecomfy/workflow_bundle.py:2840 compile",
+  "vibecomfy/vibecomfy/workflow_bundle.py:2745 materialize_ui",
+  "vibecomfy/vibecomfy/workflow_bundle.py:2886 materialize_ui_json",
+  "porting/emit/__init__.py:43 <module>"
+ ],
+ "numpy": [
+  "astrid/sdk/command_timing.py:284 timed_call",
+  "vibecomfy/vibecomfy/workflow_bundle.py:2840 compile",
+  "vibecomfy/vibecomfy/workflow_bundle.py:2745 materialize_ui",
+  "vibecomfy/vibecomfy/workflow_bundle.py:2886 materialize_ui_json",
+  "porting/emit/__init__.py:43 <module>",
+  "porting/emit/ui.py:5889 <module>",
+  "porting/edit/ops.py:29 <module>",
+  "vibecomfy/comfy_nodes/__init__.py:40 <module>",
+  "vibecomfy/comfy_nodes/exec_node.py:12 <module>"
+ ]
+}

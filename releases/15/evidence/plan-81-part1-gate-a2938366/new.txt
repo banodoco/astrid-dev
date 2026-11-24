@@ -1,0 +1,1 @@
+FAILED	tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output

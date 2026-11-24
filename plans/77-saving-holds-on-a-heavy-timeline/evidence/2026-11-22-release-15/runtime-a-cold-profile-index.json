@@ -1,0 +1,321 @@
+{
+  "decodable_weighted_samples": 26862,
+  "nonblocking": true,
+  "rate_hz": 100,
+  "raw_sha256": "1b9e31399146d10df279c112389c33144e99804dba80d4d5aca62e5b80c16dc8",
+  "raw_size_bytes": 51298943,
+  "rejected_stack_records": {
+    "invalid_encoding": 5,
+    "malformed_stack": 5,
+    "missing_weight": 239
+  },
+  "rejected_weighted_samples_with_recoverable_counts": 22,
+  "reported_errors": 3008,
+  "reported_samples": 27175,
+  "sampler": "py-spy 0.4.1",
+  "top_inclusive_frames": [
+    {
+      "function": "run",
+      "module": "threading.py",
+      "percent": 62.65,
+      "samples": 16830
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py",
+      "percent": 62.65,
+      "samples": 16830
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py",
+      "percent": 62.65,
+      "samples": 16830
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py",
+      "percent": 62.28,
+      "samples": 16730
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py",
+      "percent": 62.27,
+      "samples": 16727
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py",
+      "percent": 62.27,
+      "samples": 16726
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py",
+      "percent": 62.24,
+      "samples": 16719
+    },
+    {
+      "function": "handle",
+      "module": "server.py",
+      "percent": 62.24,
+      "samples": 16719
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py",
+      "percent": 62.24,
+      "samples": 16718
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py",
+      "percent": 62.11,
+      "samples": 16683
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py",
+      "percent": 62.1,
+      "samples": 16682
+    },
+    {
+      "function": "_route",
+      "module": "server.py",
+      "percent": 60.38,
+      "samples": 16220
+    },
+    {
+      "function": "wrapped",
+      "module": "service.py",
+      "percent": 60.0,
+      "samples": 16117
+    },
+    {
+      "function": "list_timeline_commits",
+      "module": "service.py",
+      "percent": 59.9,
+      "samples": 16091
+    },
+    {
+      "function": "evaluate",
+      "module": "timeline_commit_store.py",
+      "percent": 59.9,
+      "samples": 16091
+    },
+    {
+      "function": "_read_history",
+      "module": "timeline_commit_store.py",
+      "percent": 59.87,
+      "samples": 16081
+    },
+    {
+      "function": "_history_page",
+      "module": "timeline_commit_store.py",
+      "percent": 56.23,
+      "samples": 15104
+    },
+    {
+      "function": "<listcomp>",
+      "module": "timeline_commit_store.py",
+      "percent": 56.22,
+      "samples": 15103
+    },
+    {
+      "function": "_history_entry_view",
+      "module": "timeline_commit_store.py",
+      "percent": 56.21,
+      "samples": 15100
+    },
+    {
+      "function": "history_entry",
+      "module": "timeline_commit_store.py",
+      "percent": 56.18,
+      "samples": 15091
+    },
+    {
+      "function": "descend",
+      "module": "validators.py",
+      "percent": 52.07,
+      "samples": 13986
+    },
+    {
+      "function": "_verify_accepted",
+      "module": "timeline_commit_store.py",
+      "percent": 50.14,
+      "samples": 13468
+    },
+    {
+      "function": "_verify_accepted_replay",
+      "module": "timeline_commit_store.py",
+      "percent": 40.6,
+      "samples": 10906
+    },
+    {
+      "function": "ref",
+      "module": "_keywords.py",
+      "percent": 36.79,
+      "samples": 9883
+    },
+    {
+      "function": "_historical_sequential",
+      "module": "timeline_commit_store.py",
+      "percent": 36.23,
+      "samples": 9731
+    }
+  ],
+  "top_leaf_frames": [
+    {
+      "function": "descend",
+      "module": "validators.py",
+      "percent": 27.26,
+      "samples": 7322
+    },
+    {
+      "function": "type",
+      "module": "_keywords.py",
+      "percent": 10.79,
+      "samples": 2899
+    },
+    {
+      "function": "iterencode",
+      "module": "encoder.py",
+      "percent": 7.54,
+      "samples": 2026
+    },
+    {
+      "function": "raw_decode",
+      "module": "decoder.py",
+      "percent": 4.28,
+      "samples": 1151
+    },
+    {
+      "function": "deepcopy",
+      "module": "copy.py",
+      "percent": 4.01,
+      "samples": 1077
+    },
+    {
+      "function": "ref",
+      "module": "_keywords.py",
+      "percent": 3.43,
+      "samples": 921
+    },
+    {
+      "function": "finite_json",
+      "module": "timeline_commit_validation.py",
+      "percent": 3.4,
+      "samples": 912
+    },
+    {
+      "function": "value_equal",
+      "module": "timeline_commit_producer.py",
+      "percent": 3.29,
+      "samples": 884
+    },
+    {
+      "function": "<genexpr>",
+      "module": "_keywords.py",
+      "percent": 3.02,
+      "samples": 811
+    },
+    {
+      "function": "anyOf",
+      "module": "_keywords.py",
+      "percent": 2.98,
+      "samples": 800
+    },
+    {
+      "function": "reuse",
+      "module": "timeline_commit_validation.py",
+      "percent": 2.81,
+      "samples": 756
+    },
+    {
+      "function": "_deepcopy_dict",
+      "module": "copy.py",
+      "percent": 2.64,
+      "samples": 710
+    },
+    {
+      "function": "additionalProperties",
+      "module": "_keywords.py",
+      "percent": 2.49,
+      "samples": 670
+    },
+    {
+      "function": "is_type",
+      "module": "_types.py",
+      "percent": 2.19,
+      "samples": 587
+    },
+    {
+      "function": "_set",
+      "module": "exceptions.py",
+      "percent": 1.93,
+      "samples": 518
+    },
+    {
+      "function": "check",
+      "module": "timeline_commit_store.py",
+      "percent": 1.27,
+      "samples": 342
+    },
+    {
+      "function": "<genexpr>",
+      "module": "timeline_commit_producer.py",
+      "percent": 1.26,
+      "samples": 339
+    },
+    {
+      "function": "is_type",
+      "module": "validators.py",
+      "percent": 1.14,
+      "samples": 306
+    },
+    {
+      "function": "properties",
+      "module": "_keywords.py",
+      "percent": 1.05,
+      "samples": 282
+    },
+    {
+      "function": "digest",
+      "module": "timeline_commit_validation.py",
+      "percent": 1.05,
+      "samples": 281
+    },
+    {
+      "function": "<genexpr>",
+      "module": "timeline_commit_validation.py",
+      "percent": 0.85,
+      "samples": 228
+    },
+    {
+      "function": "items",
+      "module": "_keywords.py",
+      "percent": 0.8,
+      "samples": 215
+    },
+    {
+      "function": "_history_entry_view",
+      "module": "timeline_commit_store.py",
+      "percent": 0.6,
+      "samples": 161
+    },
+    {
+      "function": "_deepcopy_list",
+      "module": "copy.py",
+      "percent": 0.59,
+      "samples": 159
+    },
+    {
+      "function": "in_subresource",
+      "module": "timeline_commit_validation.py",
+      "percent": 0.54,
+      "samples": 145
+    }
+  ],
+  "weighted_sample_count_gap": 291
+}

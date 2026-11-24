@@ -1,0 +1,9 @@
+..................                                                       [100%]
+=============================== warnings summary ===============================
+tests/test_bundle_read_set.py::test_warm_qwen_reader_hash_count_under_300
+  /home/user/p81b/wt/pb-2/ready_templates/image/qwen_image_2_1_turbo.py:31: PendingDeprecationWarning: vibecomfy.templates.ref('name') is a legacy generated-template fallback; new generated templates bind InputSpec.node to node objects inside build().
+    'seed': InputSpec(node=ref('randomnoise'), field='noise_seed', default=DEFAULT_SEED, type='INT', infer_type=False),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+pytest gate counts: passed=18 failed=0 errors=0 skipped=0 xfailed=0 xpassed=0 quarantined_failures=0 unexpected_failures=0 stale_quarantines=264
+18 passed, 1 warning in 1.44s

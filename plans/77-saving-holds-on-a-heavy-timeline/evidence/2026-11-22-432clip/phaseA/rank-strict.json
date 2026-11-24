@@ -1,0 +1,261 @@
+{
+  "samples": 27616,
+  "errors": 2550,
+  "rate_hz": 100,
+  "nonblocking": true,
+  "trace_sha256": "7687f6f7917154a51dab4056d89897834aff1eb3c3245781364a5dbf890c955b",
+  "top_leaf_frames": [
+    {
+      "frame": "create.<locals>.Validator.descend (jsonschema/validators.py)",
+      "samples": 7786,
+      "percent_of_active_stacks": 28.19
+    },
+    {
+      "frame": "type (jsonschema/_keywords.py)",
+      "samples": 3167,
+      "percent_of_active_stacks": 11.47
+    },
+    {
+      "frame": "JSONEncoder.iterencode (json/encoder.py)",
+      "samples": 2074,
+      "percent_of_active_stacks": 7.51
+    },
+    {
+      "frame": "JSONDecoder.raw_decode (json/decoder.py)",
+      "samples": 1115,
+      "percent_of_active_stacks": 4.04
+    },
+    {
+      "frame": "deepcopy (copy.py)",
+      "samples": 1024,
+      "percent_of_active_stacks": 3.71
+    },
+    {
+      "frame": "ref (jsonschema/_keywords.py)",
+      "samples": 959,
+      "percent_of_active_stacks": 3.47
+    },
+    {
+      "frame": "type.<locals>.<genexpr> (jsonschema/_keywords.py)",
+      "samples": 898,
+      "percent_of_active_stacks": 3.25
+    },
+    {
+      "frame": "anyOf (jsonschema/_keywords.py)",
+      "samples": 847,
+      "percent_of_active_stacks": 3.07
+    },
+    {
+      "frame": "finite_json (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 789,
+      "percent_of_active_stacks": 2.86
+    },
+    {
+      "frame": "_reuse_schema_validators.<locals>.reuse (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 781,
+      "percent_of_active_stacks": 2.83
+    },
+    {
+      "frame": "TypeChecker.is_type (jsonschema/_types.py)",
+      "samples": 648,
+      "percent_of_active_stacks": 2.35
+    },
+    {
+      "frame": "_deepcopy_dict (copy.py)",
+      "samples": 645,
+      "percent_of_active_stacks": 2.34
+    },
+    {
+      "frame": "additionalProperties (jsonschema/_keywords.py)",
+      "samples": 634,
+      "percent_of_active_stacks": 2.3
+    },
+    {
+      "frame": "_HistoryReadInputs.check (runtime_protocol/timeline_commit_store.py)",
+      "samples": 531,
+      "percent_of_active_stacks": 1.92
+    },
+    {
+      "frame": "_Error._set (jsonschema/exceptions.py)",
+      "samples": 513,
+      "percent_of_active_stacks": 1.86
+    },
+    {
+      "frame": "",
+      "samples": 480,
+      "percent_of_active_stacks": 1.74
+    },
+    {
+      "frame": "value_equal (runtime_protocol/timeline_commit_producer.py)",
+      "samples": 402,
+      "percent_of_active_stacks": 1.46
+    },
+    {
+      "frame": "digest (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 401,
+      "percent_of_active_stacks": 1.45
+    },
+    {
+      "frame": "create.<locals>.Validator.is_type (jsonschema/validators.py)",
+      "samples": 331,
+      "percent_of_active_stacks": 1.2
+    },
+    {
+      "frame": "value_equal.<locals>.<genexpr> (runtime_protocol/timeline_commit_producer.py)",
+      "samples": 246,
+      "percent_of_active_stacks": 0.89
+    },
+    {
+      "frame": "properties (jsonschema/_keywords.py)",
+      "samples": 242,
+      "percent_of_active_stacks": 0.88
+    },
+    {
+      "frame": "items (jsonschema/_keywords.py)",
+      "samples": 202,
+      "percent_of_active_stacks": 0.73
+    },
+    {
+      "frame": "TimelineCommitStore._history_entry_view (runtime_protocol/timeline_commit_store.py)",
+      "samples": 197,
+      "percent_of_active_stacks": 0.71
+    },
+    {
+      "frame": "finite_json.<locals>.<genexpr> (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 192,
+      "percent_of_active_stacks": 0.7
+    },
+    {
+      "frame": "_HistoryReadCursor._read (runtime_protocol/timeline_commit_store.py)",
+      "samples": 185,
+      "percent_of_active_stacks": 0.67
+    }
+  ],
+  "top_inclusive_frames": [
+    {
+      "frame": "Thread.run (threading.py)",
+      "samples": 16845,
+      "percent_of_active_stacks": 61.0
+    },
+    {
+      "frame": "Thread._bootstrap (threading.py)",
+      "samples": 16845,
+      "percent_of_active_stacks": 61.0
+    },
+    {
+      "frame": "Thread._bootstrap_inner (threading.py)",
+      "samples": 16845,
+      "percent_of_active_stacks": 61.0
+    },
+    {
+      "frame": "ThreadingMixIn.process_request_thread (socketserver.py)",
+      "samples": 16649,
+      "percent_of_active_stacks": 60.29
+    },
+    {
+      "frame": "BaseServer.finish_request (socketserver.py)",
+      "samples": 16649,
+      "percent_of_active_stacks": 60.29
+    },
+    {
+      "frame": "RuntimeHandler.handle_one_request (runtime_protocol/server.py)",
+      "samples": 16649,
+      "percent_of_active_stacks": 60.29
+    },
+    {
+      "frame": "BaseHTTPRequestHandler.handle_one_request (http/server.py)",
+      "samples": 16649,
+      "percent_of_active_stacks": 60.29
+    },
+    {
+      "frame": "BaseHTTPRequestHandler.handle (http/server.py)",
+      "samples": 16649,
+      "percent_of_active_stacks": 60.29
+    },
+    {
+      "frame": "BaseRequestHandler.__init__ (socketserver.py)",
+      "samples": 16649,
+      "percent_of_active_stacks": 60.29
+    },
+    {
+      "frame": "RuntimeHandler._dispatch (runtime_protocol/server.py)",
+      "samples": 16648,
+      "percent_of_active_stacks": 60.28
+    },
+    {
+      "frame": "RuntimeHandler.do_GET (runtime_protocol/server.py)",
+      "samples": 16648,
+      "percent_of_active_stacks": 60.28
+    },
+    {
+      "frame": "RuntimeHandler._route (runtime_protocol/server.py)",
+      "samples": 16648,
+      "percent_of_active_stacks": 60.28
+    },
+    {
+      "frame": "RuntimeService.list_timeline_commits (runtime_protocol/service.py)",
+      "samples": 16645,
+      "percent_of_active_stacks": 60.27
+    },
+    {
+      "frame": "_clear_replay_on_refusal.<locals>.wrapped (runtime_protocol/service.py)",
+      "samples": 16645,
+      "percent_of_active_stacks": 60.27
+    },
+    {
+      "frame": "_evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py)",
+      "samples": 16645,
+      "percent_of_active_stacks": 60.27
+    },
+    {
+      "frame": "TimelineCommitStore._read_history (runtime_protocol/timeline_commit_store.py)",
+      "samples": 16621,
+      "percent_of_active_stacks": 60.19
+    },
+    {
+      "frame": "TimelineCommitStore._history_entry_view (runtime_protocol/timeline_commit_store.py)",
+      "samples": 16049,
+      "percent_of_active_stacks": 58.11
+    },
+    {
+      "frame": "TimelineCommitStore._history_page.<locals>.<listcomp> (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14990,
+      "percent_of_active_stacks": 54.28
+    },
+    {
+      "frame": "TimelineCommitStore._history_page (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14990,
+      "percent_of_active_stacks": 54.28
+    },
+    {
+      "frame": "TimelineCommitStore.history_entry (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14974,
+      "percent_of_active_stacks": 54.22
+    },
+    {
+      "frame": "create.<locals>.Validator.descend (jsonschema/validators.py)",
+      "samples": 14456,
+      "percent_of_active_stacks": 52.35
+    },
+    {
+      "frame": "TimelineCommitStore._verify_accepted (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14439,
+      "percent_of_active_stacks": 52.28
+    },
+    {
+      "frame": "TimelineCommitStore._verify_accepted_replay (runtime_protocol/timeline_commit_store.py)",
+      "samples": 11093,
+      "percent_of_active_stacks": 40.17
+    },
+    {
+      "frame": "ref (jsonschema/_keywords.py)",
+      "samples": 10515,
+      "percent_of_active_stacks": 38.08
+    },
+    {
+      "frame": "TimelineCommitStore._historical_sequential (runtime_protocol/timeline_commit_store.py)",
+      "samples": 10368,
+      "percent_of_active_stacks": 37.54
+    }
+  ]
+}
