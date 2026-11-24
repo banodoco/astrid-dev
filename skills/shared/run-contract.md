@@ -106,7 +106,7 @@ When work proceeds without the owner (for example, a contributor or agent helpin
 5. **Hourly update.** Leads, orchestrators and managers post one STATUS an hour on their own board, in 10 lines or fewer ("no change" is one line). It lists what was acted on since the last update, which replaces standalone ACKs. Packets post only milestones: early STATUS, READY-*, BLOCKED and DONE. Post each message once, to one addressee.
 6. **Read by cursor.** Read your board with `inbox.py --after <cursor>` ([usage](../roles/astrid-dev-orchestrate/workstreams/codex-cloud/inbox.py)), putting the cursor in your STATUS. Read your parent's board for messages addressed to you. Re-read `run.md` Standing rulings only when it has a newer commit.
 7. **Waking and urgency.** Every Claude role and every manager creates its own hourly scheduled task at start-up, at a minute other than :30, checks that it fires, and never disables another session's task. A Claude cloud session also keeps a keep-awake loop. `send_message` is a Claude-to-Claude doorbell for what can't wait an hour. ChatGPT sessions post BLOCKED instead.
-8. **Liveness.** A parent checks each child's last post and branch movement. Nudge at 2 hours; tell the owner at 3 hours.
+8. **Liveness.** A parent checks each child's last post and branch movement. Nudge at 2 hours; tell the owner at 3 hours. See who is where: `python3 scripts/boards.py roster <N>`.
 
 ## Checks and failure repair
 
