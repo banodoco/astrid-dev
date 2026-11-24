@@ -52,7 +52,7 @@ app="${SV3_APP_DIR:-}"
 tooling="$work/wt/astrid-app-p77-quick-indicator"
 trace_tools="$work/wt/astrid-app-p77-current-compiled-trace"
 mirror="$evidence/sv2a-prep/candidate-runtime.git"
-out="$evidence/p89-app-9f26112d-runtime-$sha"
+out="$evidence/p89-app-092013f3-runtime-$sha"
 archive="$out/source/$sha"
 launcher_cwd="$out/launcher-cwd"
 verify="$prep/verify-overlay.py"
@@ -80,7 +80,7 @@ jq -e --arg runtime "$base_runtime" '.release==14 and .runtime.sha==$runtime and
   "$program/versions/4b62ab1a6521/manifest.json" >/dev/null
 [[ -x "$interpreter" ]]
 [[ -n "$app" && "$app" == /* && "$(realpath "$app")" == "$app" && -d "$app/dist" \
-  && "$(git -C "$app" rev-parse HEAD)" == 9f26112d746cba7a1a3287f0b679fd6c9ca39907 ]]
+  && "$(git -C "$app" rev-parse HEAD)" == 092013f3b88e9d49e48102630951a40a450c4868 ]]
 reference_app="$work/wt/astrid-app-p77-r7-firstcut-requalification-install"
 [[ -L "$app/node_modules" && "$(realpath "$app/node_modules")" == "$(realpath "$reference_app/node_modules")" ]]
 cmp "$app/package.json" "$reference_app/package.json"
@@ -461,7 +461,7 @@ boundary_snapshot before
 boundary_checked=1
 cp -- "$prep/package.sha256" "$out/script-package.sha256"
 [[ $(jq -er .app "$prior/versions.json") == 148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715 ]]
-jq --arg runtime "$sha" --arg app 9f26112d746cba7a1a3287f0b679fd6c9ca39907 --arg agent "$agent_sha" '.runtime=$runtime | .app=$app | .agent=$agent' "$prior/versions.json" >"$out/versions.json"
+jq --arg runtime "$sha" --arg app 092013f3b88e9d49e48102630951a40a450c4868 --arg agent "$agent_sha" '.runtime=$runtime | .app=$app | .agent=$agent' "$prior/versions.json" >"$out/versions.json"
 (cd "$app/dist" && find . -type f -print0 | sort -z | xargs -0 sha256sum --) >"$out/dist-files.sha256"
 
 # Pristine copy of the original data. The original is only read. The check is 16 GiB free after the copy.
@@ -491,7 +491,7 @@ run_repetition() {
   # Rebase the COPIED catalog and profile from the original data root (their data_root paths are absolute). See README.
   python3 "$verify" prepare "$orig_support" "$wsupport" "$realm" "$archive" "$rep_dir"
   cp -- "$prior/fixture.json" "$rep_dir/fixture.json"
-  jq --arg runtime "$sha" --arg app 9f26112d746cba7a1a3287f0b679fd6c9ca39907 --arg agent "$agent_sha" '.runtime=$runtime | .app=$app | .agent=$agent' "$prior/versions.json" >"$rep_dir/versions.json"
+  jq --arg runtime "$sha" --arg app 092013f3b88e9d49e48102630951a40a450c4868 --arg agent "$agent_sha" '.runtime=$runtime | .app=$app | .agent=$agent' "$prior/versions.json" >"$rep_dir/versions.json"
   cp -- "$prep/package.sha256" "$rep_dir/script-package.sha256"
   rep_env=("${owned[@]}"
     PYTHONPATH="$prep/overlay-guard:$archive" PYTHONDONTWRITEBYTECODE=1

@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 app="${1:?path to the disposable App worktree}"
 reference="${2:?path to the reference App checkout providing node_modules}"
-expected_app=9f26112d746cba7a1a3287f0b679fd6c9ca39907
+expected_app=092013f3b88e9d49e48102630951a40a450c4868
 expected_config=b5a636d330a7e1f145d475b3385ff85980bf815af0a3085b1276a3549c8989a5
 config="$app/config/vite/vite.config.ts"
 backup="$app/.svl2-vite.config.ts.original"

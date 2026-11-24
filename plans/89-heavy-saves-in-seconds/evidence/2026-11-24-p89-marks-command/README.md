@@ -1,16 +1,16 @@
 # Plan 89 installed save measurement (SV-L2 marks, SV-L5..L10 Runtime)
 
-Status: static checks only; this package has not been run. It reuses the retained stopped sandbox (no fresh restore) and measures one repetition on data copies. The measurement tuple is App `9f26112d746cba7a1a3287f0b679fd6c9ca39907`, Agent `096a2fb3536192785fabd33e6673ba8ab4ef5ead` (the existing two-file overlay), and a Runtime SHA supplied as the first command argument, expected to be `c8b861c770aa58fd0392fe2dcefbda9ce23c84d1`.
+Status: static checks only; this package has not been run. It reuses the retained stopped sandbox (no fresh restore) and measures one repetition on data copies. The measurement tuple is App `092013f3b88e9d49e48102630951a40a450c4868`, Agent `096a2fb3536192785fabd33e6673ba8ab4ef5ead` (the existing two-file overlay), and a Runtime SHA supplied as the first command argument, expected to be `c8b861c770aa58fd0392fe2dcefbda9ce23c84d1`.
 
 ## Build the App artifact
 
 From this package directory, the App worktree must already be at the exact SHA, with `node_modules` symlinked to the requalification checkout and `package.json` plus `package-lock.json` byte-identical. No install is needed. Build CPU-only and stop the build if free space drops below 16 GiB; require at least 18 GiB free before starting:
 
 ```bash
-app=/home/user/codex-run/wt/astrid-app-p89-9f26112d
+app=/home/user/codex-run/wt/astrid-app-p89-092013f3
 ref=/home/user/codex-run/wt/astrid-app-p77-r7-firstcut-requalification-install
-git -C "$ref" worktree add --detach "$app" 9f26112d746cba7a1a3287f0b679fd6c9ca39907
-[[ "$(git -C "$app" rev-parse HEAD)" == 9f26112d746cba7a1a3287f0b679fd6c9ca39907 ]]
+git -C "$ref" worktree add --detach "$app" 092013f3b88e9d49e48102630951a40a450c4868
+[[ "$(git -C "$app" rev-parse HEAD)" == 092013f3b88e9d49e48102630951a40a450c4868 ]]
 ln -s "$ref/node_modules" "$app/node_modules"
 cmp "$app/package.json" "$ref/package.json"
 cmp "$app/package-lock.json" "$ref/package-lock.json"
@@ -25,7 +25,7 @@ The build helper pins the App commit and original Vite config hash, checks the r
 On the fixture box, from the package directory, with the candidate Runtime ref available in the candidate mirror:
 
 ```bash
-SV3_APP_DIR=/home/user/codex-run/wt/astrid-app-p89-9f26112d \
+SV3_APP_DIR=/home/user/codex-run/wt/astrid-app-p89-092013f3 \
 SV3_SIGNED_BACKUP=<canonical-signed-v30-backup-directory> \
 SV3_RUNTIME_REF=<ref-resolving-to-c8b861c770aa58fd0392fe2dcefbda9ce23c84d1> \
 SV3_AGENT_REF=<ref-resolving-to-096a2fb3536192785fabd33e6673ba8ab4ef5ead> \
@@ -33,7 +33,7 @@ SV3_REPETITIONS=1 \
 bash run-sv3-overlay.sh c8b861c770aa58fd0392fe2dcefbda9ce23c84d1 <approved-package.sha256-digest>
 ```
 
-The package itself checks the exact Runtime ref, App SHA, Agent SHA, package digest, and minimum free-space floor before it starts. Output is unique to this App/Runtime tuple at `run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-<runtime-sha>/`; an existing output is a refusal. The normal owned stack wrapper starts one copied-data Runtime and preview. No stack build or dependency install is part of the package.
+The package itself checks the exact Runtime ref, App SHA, Agent SHA, package digest, and minimum free-space floor before it starts. Output is unique to this App/Runtime tuple at `run/evidence/plan-77/round7-acceptance/p89-app-092013f3-runtime-<runtime-sha>/`; an existing output is a refusal. The normal owned stack wrapper starts one copied-data Runtime and preview. No stack build or dependency install is part of the package.
 
 ## Fixture, scope and acceptance
 
@@ -65,5 +65,9 @@ This is a MEASURE command: the package SHA-256 and full package contents are in 
 
 ## Plan 89 changes from the SV-L2 package (24 November 2026)
 
-This package is the SV-L2 command package with only these edits: App `9f26112d746cba7a1a3287f0b679fd6c9ca39907` (release/15/plan-89 with #377 merged; `package.json`, `package-lock.json` and `config/vite/vite.config.ts` byte-identical to the SV-L2 App `7705ebd4`: sha256 of the Vite config begins `b5a636d3`), Runtime `c8b861c770aa58fd0392fe2dcefbda9ce23c84d1` (release/15/plan-89: history guards, covers index, deferred history scan with its authority fix, subtree validation memo; `pyproject.toml`, `uv.lock` and `contract/` have an empty diff against the retained Runtime `77c38d03`), the output directory name `p89-app-9f26112d-runtime-<sha>`, and the pinned SHAs in `build-app-svl2.sh`, `run-sv3-overlay.sh` and `browser-sv3-measure.mjs`. The Agent overlay stays the proven two-file `096a2fb3` overlay: Agent `release/15/plan-89` (`e3da121f`) changes 25 files beyond those two (an installer rollback hook, pins and docs), so this run measures the Runtime and App changes plus the Agent capture fix, not the Agent rollback hook.
+This package is the SV-L2 command package with only these edits: App `092013f3b88e9d49e48102630951a40a450c4868` (release/15/plan-89 with #377 merged; `package.json`, `package-lock.json` and `config/vite/vite.config.ts` byte-identical to the SV-L2 App `7705ebd4`: sha256 of the Vite config begins `b5a636d3`), Runtime `c8b861c770aa58fd0392fe2dcefbda9ce23c84d1` (release/15/plan-89: history guards, covers index, deferred history scan with its authority fix, subtree validation memo; `pyproject.toml`, `uv.lock` and `contract/` have an empty diff against the retained Runtime `77c38d03`), the output directory name `p89-app-092013f3-runtime-<sha>`, and the pinned SHAs in `build-app-svl2.sh`, `run-sv3-overlay.sh` and `browser-sv3-measure.mjs`. The Agent overlay stays the proven two-file `096a2fb3` overlay: Agent `release/15/plan-89` (`e3da121f`) changes 25 files beyond those two (an installer rollback hook, pins and docs), so this run measures the Runtime and App changes plus the Agent capture fix, not the Agent rollback hook.
 Expected effect: warm save POST-to-200 and gesture-end-to-Saved shorter than the 24 November baselines (5.1 s and 6.15 s); SV-L10 removes about half of the PreparedCommit schema time. S0 now includes the startup path of the new Runtime: if the realm's history scan finishes inside the 120 s admission deadline it behaves as before; if not, the editor opens read-only (`/v1/health` lists the service `realm-history-verification` with "(N/M history rows checked)", and a write returns 409 `realm_admission_failed` "verification in progress, retry in a moment") and the 120-second writable deadline then fails the attempt as a refusal result; that is a finding, not a retry. The PreparedCommit schema time per save is not emitted in the timing line; only the profile variant (`SV3_PROFILE=1`) can attribute it.
+
+## Variant for per-stage attribution of the editor save (SV-L13), 24 November 2026
+
+Same package as `2026-11-24-p89-measure-command` (the 54-save Release 15 measurement), with ONLY the App SHA changed to astrid-app draft PR #395 head `092013f3b88e9d49e48102630951a40a450c4868` (SV-L2 marks plus about 40 additional instrumentation-only User Timing marks for the pre-POST and post-200 stages; base `release/15/plan-89` 9f26112d; `package.json`, `package-lock.json` and `config/vite/vite.config.ts` byte-identical to 9f26112d) and the output directory name `p89-app-092013f3-runtime-<sha>`. The driver already retains the raw `{name,t}` entries of every `astrid.save.*` mark after each Saved (`captureSaveMarks`, `raw`), including the new phase names, so no driver change is needed; the per-stage analysis reads the raw entries. Runtime stays `c8b861c770aa58fd0392fe2dcefbda9ce23c84d1` (command argument), Agent the two-file `096a2fb3` overlay. One repetition (19 saves) is enough: the analysis takes per-stage medians over the 18 warm saves; marks are bounded to 16 correlations, so the raw entries must be read after each save, as the driver does.

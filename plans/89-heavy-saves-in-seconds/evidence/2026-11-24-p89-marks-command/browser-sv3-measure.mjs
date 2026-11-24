@@ -22,7 +22,7 @@ assert.equal(mode, 'candidate');
 process.umask(0o077);
 const readJson = async location => JSON.parse(await readFile(location, 'utf8'));
 const tuple = await readJson(tuplePath);
-assert.equal(tuple.app, '9f26112d746cba7a1a3287f0b679fd6c9ca39907');
+assert.equal(tuple.app, '092013f3b88e9d49e48102630951a40a450c4868');
 assert.equal(tuple.agent, '096a2fb3536192785fabd33e6673ba8ab4ef5ead');
 assert.match(tuple.runtime, /^[a-f0-9]{40}$/);
 const preflight = await readJson(preflightPath);
