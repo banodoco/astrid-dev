@@ -10,7 +10,7 @@
 
 **Estimate:** About 7–10 engineering days, provisional until an independent architecture critique and current-source baseline.
 
-**Waiting on:** supervisor-dispatched supplementary design critique findings; formal RS1 reviewer binding; accepted Release 15 Lead and integration custody.
+**Waiting on:** **Release 16** (the owner moved it from Release 15 on 24 November 2026; its branch becomes `release/16/plan-72`); then supervisor-dispatched supplementary design critique findings; formal RS1 reviewer binding; accepted Release 16 Lead and integration custody.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md), [Plan workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above own the catalog facts; priority stays in [priority.md](../priority.md). [Inputs](inputs.md) · [Tasks](tasks.md).
 

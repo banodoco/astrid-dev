@@ -28,7 +28,7 @@
 
 **D1** (resident or disk) moved to Plan 92, recorded "resident first, supported by the floor experiment". **D3** (ComfyUI's node list) moved with GS-4.
 
-**D2 — trusting an install.** Status: recommended, pending. Yes for shipped packs, once installed files are made read-only so the stamp covers them (the owner agreed to the idea on 22 November 2026 as Plan 81's D3). Own and project packs keep a per-command witness check (Plan 92).
+**D2 — trusting an install.** Status: **decided, yes** (the owner, 24 November 2026, in the Release 15 Lead session, with her go for this plan's dispatch). Yes for shipped packs, once installed files are made read-only so the stamp covers them (the owner agreed to the idea on 22 November 2026 as Plan 81's D3). Own and project packs keep a per-command witness check (Plan 92).
 
 **The owner, 22 November 2026:** "could we preload stuff once it's loaded once? ... why do we need to?" and "is there any way we could have [ComfyUI] ... give a signal when a new model ... has been updated to do the qualification stuff, or ... where a new custom node is installed, could there be a trigger for that?" These led to RA-0 and, in Plan 92, GS-1 and GS-4.
 
