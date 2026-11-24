@@ -150,10 +150,10 @@ class ProjectCatalogContractTests(unittest.TestCase):
 
     def test_synthetic_fixture_essential_errors(self):
         expected = {
-            "bad-status": ("plan-catalog", ("plans/99-fixture/plan.md: invalid status 'maybe'",)),
+            "bad-status": ("plan-catalog", ("plans/9999-fixture/plan.md: invalid status 'maybe'",)),
             "unnamed-active-owner": ("catalog-paths", ("active project needs a named accountable owner: Synthetic fixture",)),
-            "missing-project-field": ("plan-catalog", ("plans/99-fixture/plan.md:", "Status", "missing")),
-            "duplicate-project-field": ("plan-catalog", ("plans/99-fixture/plan.md:", "Status", "duplicat")),
+            "missing-project-field": ("plan-catalog", ("plans/9999-fixture/plan.md:", "Status", "missing")),
+            "duplicate-project-field": ("plan-catalog", ("plans/9999-fixture/plan.md:", "Status", "duplicat")),
             "priority-unknown-id": ("plan-catalog", ("plans/priority.md", "98-no-such-folder")),
         }
         for name, (rule, fragments) in expected.items():
@@ -161,9 +161,9 @@ class ProjectCatalogContractTests(unittest.TestCase):
                 root = Path(directory) / "repo"
                 golden._copy_tree(root)
                 overlay = json.loads((golden.FIXTURES / name / "overlay.json").read_text(encoding="utf-8"))
-                self.assertIn("plans/99-fixture/plan.md", overlay)
+                self.assertIn("plans/9999-fixture/plan.md", overlay)
                 self.assertFalse(any(path.startswith("plans/") and path.endswith("/plan.md")
-                                     and path != "plans/99-fixture/plan.md" for path in overlay))
+                                     and path != "plans/9999-fixture/plan.md" for path in overlay))
                 for relative, text in overlay.items():
                     target = root / relative
                     target.parent.mkdir(parents=True, exist_ok=True)
