@@ -1,0 +1,8 @@
+{
+  "status": "pack host running",
+  "log_growth_bytes": 2853,
+  "claim_lines": 0,
+  "supervised_crash_lines": 0,
+  "pgrep_pack_host_count": 0,
+  "note": "counts only; no group or owner assertion"
+}

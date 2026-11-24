@@ -1,0 +1,6 @@
+py-spy> Sampling process 100 times a second. Press Control-C to exit.
+
+
+py-spy> Stopped sampling because Control-C pressed
+py-spy> Wrote speedscope file to '/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-c8b861c770aa58fd0392fe2dcefbda9ce23c84d1/rep-1/profile-w3.speedscope.json'. Samples: 6069 Errors: 0
+py-spy> Visit https://www.speedscope.app/ to view

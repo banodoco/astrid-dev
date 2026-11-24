@@ -1,0 +1,7 @@
+{
+  "work_copy": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-c8b861c770aa58fd0392fe2dcefbda9ce23c84d1/work-data-1",
+  "logs_directory": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-c8b861c770aa58fd0392fe2dcefbda9ce23c84d1/work-data-1/logs",
+  "removed_known_files": [],
+  "reset_at_utc": "2026-11-24T14:06:40.525650+00:00",
+  "scope": "only four known timing sink files inside the disposable work copy"
+}

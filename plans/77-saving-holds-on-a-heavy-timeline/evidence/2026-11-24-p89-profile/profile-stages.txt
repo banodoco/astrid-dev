@@ -1,0 +1,172 @@
+== profile-cold Thread 4239 "Thread-773 (process_request_thread)" commit-thread 12.2s
+  provider_commit           9.44 s
+        2.28  json encode/decode
+        1.88  other
+        1.07  old-history verification
+        0.88  copy/compare via other callers
+        0.87  patch capture/payload
+        0.84  sqlite
+        0.84  auth/value validation
+        0.75  jsonschema
+        0.03  copy/compare via patch capture
+       other call site  0.72  _read_manifest canonical.py:435
+       other call site  0.22  resolve pathlib.py:993
+       other call site  0.06  _resource_handle canonical.py:802
+       other call site  0.05  operations commands.py:47
+       other call site  0.04  current_identity cas.py:195
+  port_store_accept         1.82 s
+        0.52  jsonschema
+        0.47  copy/compare via other callers
+        0.46  auth/value validation
+        0.21  other
+        0.14  json encode/decode
+        0.02  copy/compare via covers
+       other call site  0.05  _publish timeline_commit_store.py:2543
+       other call site  0.05  _transaction store.py:1315
+       other call site  0.02  _check_context timeline_commit_store.py:2279
+       other call site  0.02  _publish timeline_commit_store.py:2542
+       other call site  0.01  request_identity timeline_commit_store.py:117
+  durable_reconciliation    0.57 s
+        0.20  json encode/decode
+        0.15  old-history verification
+        0.10  copy/compare via other callers
+        0.09  auth/value validation
+        0.02  copy/compare via covers
+        0.01  other
+       other call site  0.01  get message.py:498
+  initial_replay_lookup     0.01 s
+        0.01  other
+       other call site  0.01  clear_replay_memo timeline_commit_store.py:387
+  handler/other             0.38 s
+        0.17  jsonschema
+        0.12  copy/compare via other callers
+        0.04  auth/value validation
+        0.04  other
+        0.01  json encode/decode
+       other call site  0.01  _timeline_authorize service.py:3331
+       other call site  0.01  stat pathlib.py:1013
+       other call site  0.01  _timeline_commits service.py:3305
+       other call site  0.01  request_identity timeline_commit_store.py:117
+== profile-w1 Thread 5105 "Thread-1051 (process_request_thread)" commit-thread 4.8s
+  provider_commit           2.71 s
+        0.80  patch capture/payload
+        0.78  copy/compare via other callers
+        0.40  jsonschema
+        0.33  json encode/decode
+        0.29  other
+        0.06  auth/value validation
+        0.05  copy/compare via patch capture
+       other call site  0.07  resolve pathlib.py:993
+       other call site  0.04  _baseline_clips validation.py:518
+       other call site  0.03  current_identity cas.py:195
+       other call site  0.01  _history_entry_view timeline_commit_store.py:1470
+       other call site  0.01  __eq__ pathlib.py:579
+  port_store_accept         1.37 s
+        0.42  auth/value validation
+        0.29  jsonschema
+        0.24  copy/compare via other callers
+        0.22  json encode/decode
+        0.17  other
+        0.03  copy/compare via covers
+       other call site  0.05  _transaction store.py:1315
+       other call site  0.03  _publish timeline_commit_store.py:2542
+       other call site  0.02  _check_context timeline_commit_store.py:2279
+       other call site  0.02  current_identity cas.py:195
+       other call site  0.01  _transaction store.py:1310
+  durable_reconciliation    0.46 s
+        0.12  json encode/decode
+        0.11  old-history verification
+        0.08  auth/value validation
+        0.08  copy/compare via other callers
+        0.04  copy/compare via covers
+        0.03  other
+       other call site  0.02  evaluate timeline_commit_store.py:236
+       other call site  0.01  evaluate timeline_commit_store.py:260
+  initial_replay_lookup     0.02 s
+        0.02  other
+       other call site  0.02  current_identity cas.py:195
+  handler/other             0.28 s
+        0.17  jsonschema
+        0.07  auth/value validation
+        0.02  copy/compare via other callers
+        0.02  json encode/decode
+== profile-w2 Thread 5311 "astrid-runtime-lifetime-reaper" commit-thread 4.7s
+  provider_commit           2.58 s
+        0.83  patch capture/payload
+        0.78  copy/compare via other callers
+        0.32  jsonschema
+        0.28  json encode/decode
+        0.26  other
+        0.08  auth/value validation
+        0.03  copy/compare via patch capture
+       other call site  0.04  current_identity cas.py:195
+       other call site  0.04  resolve pathlib.py:993
+       other call site  0.02  _execute timeline_commit_execution.py:625
+       other call site  0.01  _history_entry_view timeline_commit_store.py:1474
+       other call site  0.01  _physical_version timeline_commit_store.py:394
+  port_store_accept         1.45 s
+        0.45  auth/value validation
+        0.41  copy/compare via other callers
+        0.35  jsonschema
+        0.12  json encode/decode
+        0.09  other
+        0.03  copy/compare via covers
+       other call site  0.03  _publish timeline_commit_store.py:2542
+       other call site  0.02  _physical_version timeline_commit_store.py:404
+       other call site  0.01  <lambda> service.py:3308
+       other call site  0.01  <genexpr> cas.py:51
+       other call site  0.01  _publish timeline_commit_store.py:2543
+  durable_reconciliation    0.39 s
+        0.18  auth/value validation
+        0.08  old-history verification
+        0.06  other
+        0.04  json encode/decode
+        0.03  copy/compare via other callers
+       other call site  0.05  evaluate timeline_commit_store.py:236
+       other call site  0.01  current_identity cas.py:195
+  handler/other             0.23 s
+        0.11  jsonschema
+        0.05  auth/value validation
+        0.03  copy/compare via other callers
+        0.03  json encode/decode
+        0.01  other
+       other call site  0.01  randbytes random.py:812
+== profile-w3 Thread 5608 "Thread-1188 (process_request_thread)" commit-thread 5.0s
+  provider_commit           2.88 s
+        0.72  patch capture/payload
+        0.66  other
+        0.62  copy/compare via other callers
+        0.43  jsonschema
+        0.31  json encode/decode
+        0.12  auth/value validation
+        0.02  copy/compare via patch capture
+       other call site  0.12  __new__ fractions.py:93
+       other call site  0.11  resolve pathlib.py:993
+       other call site  0.05  _read timeline_commit_port.py:223
+       other call site  0.04  _collect_media authoring_bundle.py:927
+       other call site  0.02  _history_entry_view timeline_commit_store.py:1474
+  port_store_accept         1.27 s
+        0.37  auth/value validation
+        0.36  copy/compare via other callers
+        0.21  other
+        0.19  jsonschema
+        0.11  json encode/decode
+        0.02  copy/compare via covers
+        0.01  old-history verification
+       other call site  0.04  current_identity cas.py:195
+       other call site  0.03  _transaction store.py:1315
+       other call site  0.01  _project store.py:1910
+       other call site  0.01  _check_context timeline_commit_store.py:2279
+       other call site  0.01  materialization_join timeline_materialization.py:178
+  durable_reconciliation    0.34 s
+        0.18  json encode/decode
+        0.07  old-history verification
+        0.05  auth/value validation
+        0.02  copy/compare via covers
+        0.01  copy/compare via other callers
+        0.01  sqlite
+  handler/other             0.48 s
+        0.35  jsonschema
+        0.06  auth/value validation
+        0.05  copy/compare via other callers
+        0.02  json encode/decode

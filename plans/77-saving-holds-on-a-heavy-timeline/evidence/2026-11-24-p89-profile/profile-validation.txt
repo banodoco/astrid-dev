@@ -1,0 +1,56 @@
+== profile-cold Thread 4239 "Thread-773 (process_request_thread)"
+   commit thread s                           12.22
+   under timeline_commit_validation.py        4.88
+   under validate_commit_value                0.93
+   under any jsonschema frame                 1.63
+   under jsonschema descend                   1.59
+   under jsonschema iter_errors               1.63
+   frame _remember_success                    0.33
+   frame _subtree_bytes                       0.09
+   frame _has_subtree_recursion_headroom      0.01
+   frame _memoized_reference                  0.00
+   frame _reviewed_item_nodes                 0.00
+   frame _schema_resources                    0.00
+   timeline_commit_validation.py frames (inclusive s): digest:285 2.81, detached:281 0.87, validate_commit_value:445 0.69, _remember_success:208 0.33, detached:280 0.27, validate_commit_value:449 0.19, finite_json:230 0.12, reference:192 0.09
+== profile-w1 Thread 5105 "Thread-1051 (process_request_thread)"
+   commit thread s                            4.84
+   under timeline_commit_validation.py        1.57
+   under validate_commit_value                0.72
+   under any jsonschema frame                 1.06
+   under jsonschema descend                   1.05
+   under jsonschema iter_errors               1.06
+   frame _remember_success                    0.00
+   frame _subtree_bytes                       0.04
+   frame _has_subtree_recursion_headroom      0.01
+   frame _memoized_reference                  0.00
+   frame _reviewed_item_nodes                 0.00
+   frame _schema_resources                    0.00
+   timeline_commit_validation.py frames (inclusive s): detached:281 0.45, validate_commit_value:445 0.43, validate_commit_value:449 0.23, detached:280 0.23, digest:285 0.17, finite_json:230 0.12, <genexpr>:230 0.08, finite_json:237 0.08
+== profile-w2 Thread 5311 "astrid-runtime-lifetime-reaper"
+   commit thread s                            4.65
+   under timeline_commit_validation.py        1.94
+   under validate_commit_value                0.78
+   under any jsonschema frame                 1.02
+   under jsonschema descend                   0.98
+   under jsonschema iter_errors               1.01
+   frame _remember_success                    0.01
+   frame _subtree_bytes                       0.11
+   frame _has_subtree_recursion_headroom      0.04
+   frame _memoized_reference                  0.00
+   frame _reviewed_item_nodes                 0.00
+   frame _schema_resources                    0.00
+   timeline_commit_validation.py frames (inclusive s): detached:281 0.71, validate_commit_value:445 0.58, detached:280 0.33, finite_json:230 0.14, validate_commit_value:449 0.12, digest:285 0.12, reference:192 0.11, _subtree_bytes:91 0.09
+== profile-w3 Thread 5608 "Thread-1188 (process_request_thread)"
+   commit thread s                            4.97
+   under timeline_commit_validation.py        1.67
+   under validate_commit_value                0.78
+   under any jsonschema frame                 1.19
+   under jsonschema descend                   1.17
+   under jsonschema iter_errors               1.19
+   frame _remember_success                    0.00
+   frame _subtree_bytes                       0.04
+   frame _has_subtree_recursion_headroom      0.01
+   frame _memoized_reference                  0.00
+   frame _reviewed_item_nodes                 0.00
+   frame _schema_resources                    0.00
+   timeline_commit_validation.py frames (inclusive s): detached:281 0.60, validate_commit_value:449 0.40, validate_commit_value:445 0.36, detached:280 0.24, finite_json:230 0.08, <genexpr>:230 0.05, in_subresource:387 0.05, digest:285 0.05
