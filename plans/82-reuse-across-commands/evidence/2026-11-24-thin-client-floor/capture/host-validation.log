@@ -1,0 +1,2 @@
+{"ready": true, "validation": {"py_identical": true, "companion_identical": true, "receipt_identical": true, "warmup_seconds": 5.367019736000657, "connect_seconds": 0.5605988540010003, "warmup_task": "3811546679784b28ad4c08b47042f1c5", "validation_task": null}}
+{"ready": true, "validation": {"py_identical": true, "companion_identical": true, "receipt_identical": true, "warmup_seconds": 4.873069007000595, "connect_seconds": 0.5661245269984647, "warmup_task": "8cdaa972c5b940c6afd65eb065bf0a80", "validation_task": null}}
