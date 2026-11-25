@@ -382,6 +382,10 @@ def release_brief(text: str, *, strict: bool = True) -> dict:
         if separator and key in {"Release", "State", "Kind"}:
             fields.setdefault(key, []).append(value)
     title_match = re.search(r'^# Release ([1-9]\d*) — (\S.+)$', header, re.M)
+    # Duplicated release headings or membership sections are ambiguous
+    # authored sources, not a reason to choose the first one silently.
+    release_titles = re.findall(r"^# Release\b.*$", text, re.M)
+    included_headings = re.findall(r"^## Included plans\s*$", text, re.M)
     sections = {name: section(text, name) or "" for name in RELEASE_BRIEF_SECTIONS}
     content = sections["Included plans"]
     links = RELEASE_PLAN_LINK.findall(content)
@@ -398,6 +402,9 @@ def release_brief(text: str, *, strict: bool = True) -> dict:
             else:
                 invalid_lines.append(line)
     errors = []
+    release_numbers = fields.get("Release", [])
+    if len(release_numbers) > 1:
+        errors.append("Release duplicated; keep exactly one **Release:** line")
     kinds = fields.get("Kind", [])
     if len(kinds) > 1:
         errors.append("Kind duplicated; keep one **Kind:** line")
@@ -405,6 +412,10 @@ def release_brief(text: str, *, strict: bool = True) -> dict:
         errors.append("Kind empty; write patch, minor or major")
     elif kinds and kinds[0] not in {"patch", "minor", "major"}:
         errors.append("Kind must be patch, minor or major")
+    if len(release_titles) > 1:
+        errors.append("Release heading duplicated; keep exactly one # Release heading")
+    if len(included_headings) > 1:
+        errors.append("Included plans section duplicated; keep one ## Included plans")
     if invalid_lines:
         errors.append("Included plans must contain linked plan bullets with a dash and sentence")
     try:

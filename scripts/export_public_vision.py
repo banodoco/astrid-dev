@@ -11,13 +11,13 @@ from urllib.parse import quote
 from check_docs import ROOT, read
 from gap_relationships import gap_metadata, parse_gap_aspirations, parse_gap_relationships
 from project_contract import plan_gap_ids
+from project_delivery import GAP_FILE as GAP_ID
 from records import PLAN_CELL, git_output, heading as record_heading, section as record_section
 from vision_subject import parse_subject, render_subject_markdown
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
 PILLAR = re.compile(r"^### \[([^\]]+)\]\((pillars/[^)]+\.md)\)\s*$", re.M)
 PRINCIPLE = re.compile(r"^### \[([^\]]+)\]\((principles/[^)]+\.md)\)\s*$", re.M)
-GAP_ID = re.compile(r"([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md")
 MD_LINK = re.compile(r"(?<!!)\[([^\]\n]+)\]\(([^)\n]+)\)")
 STATUS = re.compile(r"^(Open|Partially evidenced|Closed|Needs recheck)\b", re.I)
 REVISION = re.compile(r"^[a-f0-9]{40}$", re.I)

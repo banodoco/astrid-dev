@@ -1,0 +1,296 @@
+diff --git a/scripts/project_delivery.py b/scripts/project_delivery.py
+index 8d87b913e..7f5a96595 100644
+--- a/scripts/project_delivery.py
++++ b/scripts/project_delivery.py
+@@ -41,6 +41,35 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
+     root = Path(root)
+     if not root.is_dir():
+         raise RelationshipError(f"delivery root is not an existing directory: {root}")
++    # A real (possibly partial) authored tree needs at least one canonical
++    # source area; an unrelated existing directory is not a valid empty graph.
++    if not any((root / name).is_dir() for name in ("vision", "plans", "releases")):
++        raise RelationshipError(
++            f"delivery root contains no canonical vision/, plans/, or releases/ "
++            f"directories: {root}")
++    canonical_root = root.resolve()
++
++    # An empty symlinked source area may contain no files for the per-file
++    # containment check to examine; refuse escaped and dangling directories.
++    for source_name in ("vision", "vision/pillars", "vision/principles",
++                        "vision/gaps", "plans", "releases"):
++        source_area = root / source_name
++        if source_area.is_symlink():
++            if not source_area.is_dir():
++                raise RelationshipError(
++                    f"{source_name}: source directory symlink has no directory target")
++            if not source_area.resolve().is_relative_to(canonical_root):
++                raise RelationshipError(
++                    f"{source_name}: source directory resolves outside delivery root")
++
++    def require_authored_source(path: Path) -> None:
++        # Authored facts may be aliased within this tree but not loaded from
++        # an external symlink destination masquerading as a canonical path.
++        if not path.resolve().is_relative_to(canonical_root):
++            raise RelationshipError(
++                f"{path.relative_to(root).as_posix()}: "
++                "authored source resolves outside delivery root")
++
+     records: list[RecordRef] = []
+     links: list[Relationship] = []
+     enablers: list[RecordRef] = []
+@@ -49,6 +78,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
+     # The existing subject reader owns goal parsing, including stable slug IDs.
+     for directory, kind in (("pillars", "pillar"), ("principles", "principle")):
+         for path in sorted((root / "vision" / directory).glob("*.md")):
++            require_authored_source(path)
+             subject = parse_subject(path.read_text(encoding="utf-8"), path.as_posix())
+             for item in subject.get("goals", subject.get("characteristics", ())):
+                 records.append(RecordRef("goal", f"{kind}:{path.stem}/{item['id']}"))
+@@ -56,6 +86,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
+     # The existing gap parser validates the *actual* subject and heading,
+     # and determines the unique primary aspiration.
+     for path in sorted((root / "vision/gaps").glob("*.md")):
++        require_authored_source(path)
+         matched = GAP_FILE.fullmatch(path.name)
+         if not matched:
+             raise RelationshipError(f"{path}: gap filename lacks stable ID")
+@@ -96,6 +127,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
+     for path in sorted((root / "plans").glob("*/plan.md")):
+         if not PLAN_FOLDER.fullmatch(path.parent.name):
+             continue  # Existing catalog-path check owns malformed folder names.
++        require_authored_source(path)
+         project = RecordRef("project", project_number(path))
+         provenance = path.relative_to(root).as_posix()
+         first_folder = project_folders.get(project.id)
+@@ -141,6 +173,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
+     for path in sorted((root / "releases").glob("*.md")):
+         if not path.stem.isdigit():
+             continue
++        require_authored_source(path)
+         provenance = path.relative_to(root).as_posix()
+         release = RecordRef("release", path.stem)
+         try:
+diff --git a/scripts/test_project_delivery_root_identity.py b/scripts/test_project_delivery_root_identity.py
+new file mode 100644
+index 000000000..d422377dc
+--- /dev/null
++++ b/scripts/test_project_delivery_root_identity.py
+@@ -0,0 +1,51 @@
++"""F72.4 regression probes for existing directories without Astrid source roots.
++
++An unrelated existing folder must not masquerade as a validated empty
++Astrid Dev delivery graph. This does not add required release membership or
++change the meaning of absent issue/release edges in a real source tree.
++"""
++import contextlib
++import io
++import tempfile
++import unittest
++from pathlib import Path
++
++from project_delivery import load_delivery, main
++from relationships import RelationshipError
++
++
++class DeliveryRootIdentityTests(unittest.TestCase):
++    def setUp(self):
++        temporary = tempfile.TemporaryDirectory()
++        self.addCleanup(temporary.cleanup)
++        self.root = Path(temporary.name)
++
++    def test_existing_empty_directory_is_not_a_delivery_root(self):
++        with self.assertRaisesRegex(RelationshipError, "canonical.*directories"):
++            load_delivery(self.root)
++
++    def test_unrelated_markdown_does_not_make_a_delivery_root(self):
++        (self.root / "notes.md").write_text("# Notes\n", encoding="utf-8")
++        with self.assertRaisesRegex(RelationshipError, "canonical.*directories"):
++            load_delivery(self.root)
++
++    def test_cli_check_refuses_existing_unrelated_directory(self):
++        (self.root / "notes.md").write_text("# Notes\n", encoding="utf-8")
++        output = io.StringIO()
++        with contextlib.redirect_stdout(output):
++            result = main(["check", "--root", str(self.root)])
++        self.assertEqual(result, 1)
++        self.assertIn("ERROR project delivery:", output.getvalue())
++        self.assertIn("canonical", output.getvalue())
++
++    def test_partial_canonical_tree_still_allows_unknown_relationships(self):
++        # A real source area may have no authored records yet; absent
++        # release links must stay unknown, not become a validation failure.
++        (self.root / "plans").mkdir()
++        graph = load_delivery(self.root)
++        self.assertEqual(graph.records, frozenset())
++        self.assertEqual(graph.relationships, ())
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/scripts/test_project_delivery_source_containment.py b/scripts/test_project_delivery_source_containment.py
+new file mode 100644
+index 000000000..ab7416697
+--- /dev/null
++++ b/scripts/test_project_delivery_source_containment.py
+@@ -0,0 +1,78 @@
++"""F72 source-boundary probes: a Markdown symlink must not import outside facts.
++
++A parsed in-root filename is not a canonical authored source when the underlying
++file resolves outside the delivery root. Internal source aliases stay supported.
++"""
++import tempfile
++import unittest
++from pathlib import Path
++
++import gap_relationships as goal_links
++from project_delivery import deliveries_for_goal, load_delivery
++from relationships import RecordRef, RelationshipError
++from test_project_delivery import GAP, PILLAR, PLAN, RELEASE
++from vision_subject import SECTIONS
++
++
++class DeliverySourceContainmentTests(unittest.TestCase):
++    def setUp(self):
++        root_tmp = tempfile.TemporaryDirectory()
++        outside_tmp = tempfile.TemporaryDirectory()
++        self.addCleanup(root_tmp.cleanup)
++        self.addCleanup(outside_tmp.cleanup)
++        self.root = Path(root_tmp.name)
++        self.outside = Path(outside_tmp.name)
++        self.write("vision/pillars/shared.md",
++                   PILLAR.replace("## Aspirations", f"## {SECTIONS[2]}"))
++        self.write("vision/gaps/CA-001-finish-work.md",
++                   GAP.replace("**Aspiration:**", "**Goal:**")
++                   if hasattr(goal_links, "parse_gap_goals") else GAP)
++        self.write("plans/72-demo/plan.md", PLAN)
++        self.write("releases/15.md", RELEASE)
++
++    def write(self, relative, content):
++        path = self.root / relative
++        path.parent.mkdir(parents=True, exist_ok=True)
++        path.write_text(content, encoding="utf-8")
++
++    def externalize(self, relative):
++        source = self.root / relative
++        outside = self.outside / source.name
++        outside.write_bytes(source.read_bytes())
++        source.unlink()
++        source.symlink_to(outside)
++
++    def assert_external_source_refused(self, relative):
++        self.externalize(relative)
++        with self.assertRaisesRegex(
++            RelationshipError, "outside delivery root"
++        ) as failure:
++            load_delivery(self.root)
++        self.assertIn(relative, str(failure.exception))
++
++    def test_external_pillar_source_cannot_author_goal(self):
++        self.assert_external_source_refused("vision/pillars/shared.md")
++
++    def test_external_gap_source_cannot_author_measurement(self):
++        self.assert_external_source_refused("vision/gaps/CA-001-finish-work.md")
++
++    def test_external_project_source_cannot_author_addresses(self):
++        self.assert_external_source_refused("plans/72-demo/plan.md")
++
++    def test_external_release_source_cannot_author_membership(self):
++        self.assert_external_source_refused("releases/15.md")
++
++    def test_internal_source_alias_preserves_valid_traversal(self):
++        source = self.root / "vision/pillars/shared.md"
++        internal = self.root / "source-alias" / "shared-pillar.md"
++        internal.parent.mkdir(parents=True)
++        internal.write_bytes(source.read_bytes())
++        source.unlink()
++        source.symlink_to(internal)
++        graph = load_delivery(self.root)
++        goal = RecordRef("goal", "pillar:shared/finish-work")
++        self.assertTrue(deliveries_for_goal(graph, goal))
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/scripts/test_project_delivery_source_directories.py b/scripts/test_project_delivery_source_directories.py
+new file mode 100644
+index 000000000..e3ae8f851
+--- /dev/null
++++ b/scripts/test_project_delivery_source_directories.py
+@@ -0,0 +1,77 @@
++"""Pre-RS1 fail-closed checks for canonical source-directory symlink aliases.
++
++The authored-file containment guard cannot inspect an empty outside directory.
++A symlinked source area outside the selected checkout must be refused even
++before that source area contains any Markdown files. In-tree aliases remain legal.
++"""
++import tempfile
++import unittest
++from pathlib import Path
++
++from project_delivery import load_delivery
++from relationships import RelationshipError
++
++
++class CanonicalSourceDirectoryTests(unittest.TestCase):
++    def setUp(self):
++        inside = tempfile.TemporaryDirectory()
++        outside = tempfile.TemporaryDirectory()
++        self.addCleanup(inside.cleanup)
++        self.addCleanup(outside.cleanup)
++        self.root = Path(inside.name)
++        self.external = Path(outside.name)
++
++    def outside_directory(self, relative):
++        link = self.root / relative
++        link.parent.mkdir(parents=True, exist_ok=True)
++        target = self.external / relative.replace("/", "-")
++        target.mkdir(parents=True, exist_ok=True)
++        link.symlink_to(target, target_is_directory=True)
++
++    def assert_outside_source_refused(self, relative):
++        self.outside_directory(relative)
++        with self.assertRaisesRegex(RelationshipError, "outside delivery root") as failure:
++            load_delivery(self.root)
++        self.assertIn(relative, str(failure.exception))
++
++    def test_external_empty_vision_root_is_not_canonical(self):
++        self.assert_outside_source_refused("vision")
++
++    def test_external_empty_plans_root_is_not_canonical(self):
++        self.assert_outside_source_refused("plans")
++
++    def test_external_empty_releases_root_is_not_canonical(self):
++        self.assert_outside_source_refused("releases")
++
++    def test_external_empty_pillar_area_is_not_canonical(self):
++        self.assert_outside_source_refused("vision/pillars")
++
++    def test_external_empty_principle_area_is_not_canonical(self):
++        self.assert_outside_source_refused("vision/principles")
++
++    def test_external_empty_gap_area_is_not_canonical(self):
++        self.assert_outside_source_refused("vision/gaps")
++
++    def test_external_source_area_refuses_even_with_valid_partial_area(self):
++        (self.root / "plans").mkdir()
++        self.assert_outside_source_refused("vision")
++
++    def test_dangling_source_area_is_not_silently_ignored(self):
++        (self.root / "plans").mkdir()
++        (self.root / "releases").symlink_to(
++            self.external / "missing", target_is_directory=True
++        )
++        with self.assertRaisesRegex(RelationshipError, "source directory"):
++            load_delivery(self.root)
++
++    def test_internal_source_directory_alias_preserves_partial_tree(self):
++        target = self.root / "source-alias" / "plans"
++        target.mkdir(parents=True)
++        (self.root / "plans").symlink_to(target, target_is_directory=True)
++        graph = load_delivery(self.root)
++        self.assertEqual(graph.records, frozenset())
++        self.assertEqual(graph.relationships, ())
++
++
++if __name__ == "__main__":
++    unittest.main()
