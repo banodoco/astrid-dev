@@ -1,0 +1,17 @@
+Release 15 Qualifier — Lanes comparison
+Final head cc1d48f0, run 45668919952; R14 head e0da794a, run 45028860135; previous head dca367cb, run 45563031893 (ht17).
+
+checkout-lanes
+R14 and final: 1 failed + 89 passed; 5 test files (1 failed + 4 passed), 90 tests.
+Failing ID (same in all three runs):
+src/tools/video-editor/runtime/runtimePackRefresh.integration.test.ts > renders a real M1-installed effect in the open editor and retains the working revision through refused updates
+First error: browserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell
+New/fixed IDs vs R14: 0/0. Previous dca run: same ID, same counts, same missing executable.
+
+quick-journey
+R14 and final: 1 failed, 0 passed. Same logical test; line moved 3435 -> 3436:
+tests/e2e/local/three-products.spec.ts:3436:1 > quick: Astrid edit then App edit are visible and readable on the adopted timeline
+First assertion error at three-products.spec.ts:196: revisionSet() expected to equal journey.sources (source tuple must remain fixed throughout the cross-product run).
+New/fixed IDs vs R14: 0/0; moved IDs: 1. Previous dca run also line 3436 and same assertion.
+
+Installer node:test jobs: POSIX macOS 35/35; POSIX Ubuntu 35/35; PowerShell 63/63; total 133/133, no failed/skipped/todo. Matches R14 and previous dca.

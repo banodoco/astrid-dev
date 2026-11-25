@@ -1,0 +1,8 @@
+Scope: CI run 45658943056; `tests/packs/rendering/test_installed_pack_element_contracts.py`.
+PASSED: test_installed_pack_contract_redirects
+PASSED: test_outside_pack_and_other_requests_are_untouched
+PASSED: test_existing_relative_file_is_untouched
+PASSED: test_missing_builtin_contract_fails_clearly
+PASSED: test_configured_pack_root_is_supported
+Also PASSED: test_registry_qualifying_discovery_refuses_corpus_change[new_manifest] (file timestamp dependent test).
+Lanes run 45658943220: none of these tests appear in downloaded logs; the installed wheel job succeeded.

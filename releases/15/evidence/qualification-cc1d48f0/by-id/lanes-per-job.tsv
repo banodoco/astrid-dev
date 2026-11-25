@@ -1,0 +1,43 @@
+head	job	FAILED	ERROR	union
+dc45d97c	integration shard 4 / 4	92	26	118
+dc45d97c	installed wheel	0	0	0
+dc45d97c	integration shard 2 / 4	119	305	424
+dc45d97c	opt-in	12	0	12
+dc45d97c	integration shard 1 / 4	48	0	48
+dc45d97c	integration shard 3 / 4	120	104	224
+b934555c	opt-in	12	0	12
+b934555c	integration shard 4 / 4	92	26	118
+b934555c	integration shard 3 / 4	120	104	224
+b934555c	integration shard 2 / 4	119	305	424
+b934555c	installed wheel	0	0	0
+b934555c	integration shard 1 / 4	48	0	48
+89768ef9	opt-in	12	0	12
+89768ef9	installed wheel	0	0	0
+89768ef9	integration shard 1 / 4	48	0	48
+89768ef9	integration shard 3 / 4	119	104	223
+89768ef9	integration shard 2 / 4	120	305	425
+89768ef9	integration shard 4 / 4	92	26	118
+23ace564	opt-in	12	0	12
+23ace564	installed wheel	0	0	0
+23ace564	integration shard 3 / 4	118	104	222
+23ace564	integration shard 4 / 4	93	26	119
+23ace564	integration shard 2 / 4	123	305	428
+23ace564	integration shard 1 / 4	45	0	45
+edfc2dc9	installed wheel	0	0	0
+edfc2dc9	integration shard 3 / 4	118	104	222
+edfc2dc9	opt-in	12	0	12
+edfc2dc9	integration shard 1 / 4	45	0	45
+edfc2dc9	integration shard 4 / 4	93	26	119
+edfc2dc9	integration shard 2 / 4	123	305	428
+8807f820	installed wheel	0	0	0
+8807f820	integration shard 2 / 4	120	288	408
+8807f820	integration shard 4 / 4	93	26	119
+8807f820	integration shard 3 / 4	123	121	244
+8807f820	integration shard 1 / 4	43	0	43
+8807f820	opt-in	12	0	12
+c0ad6b54	installed wheel	0	0	0
+c0ad6b54	integration shard 3 / 4	123	119	242
+c0ad6b54	integration shard 1 / 4	43	0	43
+c0ad6b54	opt-in	12	0	12
+c0ad6b54	integration shard 4 / 4	93	26	119
+c0ad6b54	integration shard 2 / 4	86	289	375

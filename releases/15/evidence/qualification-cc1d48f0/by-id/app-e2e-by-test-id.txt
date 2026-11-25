@@ -1,0 +1,105 @@
+Release 15 Qualifier — App E2E by ID
+R14 45028860170; previous head dca367cb run 45563031820; final head cc1d48f0 run 45668919978. Failure IDs parsed from numbered final failure lists, not ::error annotations.
+Job counts f/p/fl/sk/dnr; changes vs R14 and previous candidate:
+extension-visual: R14=(1, 0, 0, 0, 4), previous=(1, 0, 0, 0, 4), final=(1, 0, 0, 0, 4); vs R14 new/fixed/moved=0/0/0; vs previous=0/0/0
+  NEW vs R14: 0; FIXED: 0; MOVED: 0
+  FINAL failing IDs:
+    [chromium-visual] tests/e2e/extension-visual-regression.spec.ts:154:5 › desktop composed timeline › matches the composed extension timeline at desktop size
+extension-cross-browser: R14=(6, 3, 0, 0, 0), previous=(6, 3, 0, 0, 0), final=(6, 3, 0, 0, 0); vs R14 new/fixed/moved=0/0/0; vs previous=0/0/0
+  NEW vs R14: 0; FIXED: 0; MOVED: 0
+  FINAL failing IDs:
+    [chrome-stable] tests/e2e/extension-cross-browser.spec.ts:76:1 › combined extension surfaces compose and expose keyboard semantics
+    [chrome-stable] tests/e2e/extension-cross-browser.spec.ts:97:1 › combined extension controls remain visible and operable at phone width
+    [firefox] tests/e2e/extension-cross-browser.spec.ts:76:1 › combined extension surfaces compose and expose keyboard semantics
+    [firefox] tests/e2e/extension-cross-browser.spec.ts:97:1 › combined extension controls remain visible and operable at phone width
+    [webkit] tests/e2e/extension-cross-browser.spec.ts:76:1 › combined extension surfaces compose and expose keyboard semantics
+    [webkit] tests/e2e/extension-cross-browser.spec.ts:97:1 › combined extension controls remain visible and operable at phone width
+playwright-timeline-chrome-export: R14=(3, 0, 0, 0, 0), previous=(3, 0, 0, 0, 0), final=(3, 0, 0, 0, 0); vs R14 new/fixed/moved=0/0/0; vs previous=0/0/0
+  NEW vs R14: 0; FIXED: 0; MOVED: 0
+  FINAL failing IDs:
+    [timeline-chrome-export] tests/e2e/timeline/audio-reactive-colour-export.spec.ts:304:3 › audio-reactive-colour browser export proof › renders the pinned Astrid marker fixture with exact decoded frame boundaries @chrome-h264
+    [timeline-chrome-export] tests/e2e/timeline/audio-reactive-colour-export.spec.ts:412:3 › audio-reactive-colour browser export proof › keeps marker frames clip-relative when the colour clip starts after a global gap @chrome-h264
+    [timeline-chrome-export] tests/e2e/timeline/preview-scrub-evidence.spec.ts:231:3 › preview scrubbing pixel evidence › correlates cold/repeat, drag, pause, and replacement seeks with real pixels @chrome-h264
+playwright-default: R14=(30, 552, 0, 0, 0), previous=(30, 552, 0, 0, 0), final=(30, 552, 0, 0, 0); vs R14 new/fixed/moved=0/0/0; vs previous=0/0/0
+  NEW vs R14: 0; FIXED: 0; MOVED: 0
+  FINAL failing IDs:
+    [chromium-condensed] tests/e2e/extension-harness.spec.ts:273:3 › Extension Harness — Integrated Manager Cycle › disable/enable persists and re-renders installed-extension activation without page refresh
+    [chromium-condensed] tests/e2e/public-astrid-integrated.spec.ts:124:1 › A04/A05/A06/A07/A08 daylight palettes, resize, disclosure and live motion
+    [chromium-condensed] tests/e2e/public-astrid-vision-hierarchy.spec.ts:175:1 › principle cards use four reserved sigil colors, tinted panels and border-only hover feedback
+    [chromium-condensed] tests/e2e/public-astrid-vision-hierarchy.spec.ts:381:1 › aspiration hover animates only its arrow without underlining the title
+    [chromium-condensed] tests/e2e/public-astrid-vision-hierarchy.spec.ts:435:1 › every joined principle, including interior cards without physical left borders, gains a full hover box
+    [chromium-condensed] tests/e2e/public-astrid-vision-sigils-nav.spec.ts:51:1 › each principle animates a different part of its sigil on hover and respects reduced motion
+    [chromium-condensed] tests/e2e/public-astrid-vision-sigils-nav.spec.ts:72:1 › technical wrangling takes three seconds to resolve and one second to return
+    [chromium-condensed] tests/e2e/public-astrid-vision-sigils-nav.spec.ts:352:1 › principle sigils use softer faded page colors while their readable cue stays solid
+    [chromium-condensed] tests/e2e/video-editor-workflow-parity.spec.ts:27:1 › full/dialog save, reopen, canonical import, selected agent CAS and host Tasks recovery share authorities
+    [chromium-condensed] tests/e2e/video-editor-workflow-parity.spec.ts:133:1 › the explicitly supported local browser renderer exports real media from the same editor
+    [chromium-desktop] tests/e2e/extension-harness.spec.ts:273:3 › Extension Harness — Integrated Manager Cycle › disable/enable persists and re-renders installed-extension activation without page refresh
+    [chromium-desktop] tests/e2e/production-widget-scope.spec.ts:53:1 › production Gallery refuses to add a route-project item to a dialog of another project
+    [chromium-desktop] tests/e2e/production-widget-scope.spec.ts:64:17 › production Gallery targets selected dialog in the same project and captures pending load
+    [chromium-desktop] tests/e2e/production-widget-scope.spec.ts:89:2 › production Tasks selects dialog query and captured managed-output action (different project)
+    [chromium-desktop] tests/e2e/production-widget-scope.spec.ts:89:2 › production Tasks selects dialog query and captured managed-output action (same project)
+    [chromium-desktop] tests/e2e/production-widget-scope.spec.ts:111:1 › production Tasks recovers same admitted task after Widgets and editor close/reopen with background completion
+    [chromium-desktop] tests/e2e/public-astrid-integrated.spec.ts:124:1 › A04/A05/A06/A07/A08 daylight palettes, resize, disclosure and live motion
+    [chromium-desktop] tests/e2e/video-editor-instance-lifecycle.spec.ts:6:1 › full and dialog editor lifetimes keep independent roots, commands, selection and renderers
+    [chromium-desktop] tests/e2e/video-editor-workflow-parity.spec.ts:27:1 › full/dialog save, reopen, canonical import, selected agent CAS and host Tasks recovery share authorities
+    [chromium-desktop] tests/e2e/video-editor-workflow-parity.spec.ts:133:1 › the explicitly supported local browser renderer exports real media from the same editor
+    [chromium-mobile] tests/e2e/extension-harness.spec.ts:273:3 › Extension Harness — Integrated Manager Cycle › disable/enable persists and re-renders installed-extension activation without page refresh
+    [chromium-mobile] tests/e2e/public-astrid-integrated.spec.ts:124:1 › A04/A05/A06/A07/A08 daylight palettes, resize, disclosure and live motion
+    [chromium-mobile] tests/e2e/public-astrid-vision-hierarchy.spec.ts:175:1 › principle cards use four reserved sigil colors, tinted panels and border-only hover feedback
+    [chromium-mobile] tests/e2e/public-astrid-vision-hierarchy.spec.ts:381:1 › aspiration hover animates only its arrow without underlining the title
+    [chromium-mobile] tests/e2e/public-astrid-vision-hierarchy.spec.ts:435:1 › every joined principle, including interior cards without physical left borders, gains a full hover box
+    [chromium-mobile] tests/e2e/public-astrid-vision-sigils-nav.spec.ts:51:1 › each principle animates a different part of its sigil on hover and respects reduced motion
+    [chromium-mobile] tests/e2e/public-astrid-vision-sigils-nav.spec.ts:72:1 › technical wrangling takes three seconds to resolve and one second to return
+    [chromium-mobile] tests/e2e/public-astrid-vision-sigils-nav.spec.ts:352:1 › principle sigils use softer faded page colors while their readable cue stays solid
+    [chromium-mobile] tests/e2e/video-editor-workflow-parity.spec.ts:27:1 › full/dialog save, reopen, canonical import, selected agent CAS and host Tasks recovery share authorities
+    [chromium-mobile] tests/e2e/video-editor-workflow-parity.spec.ts:133:1 › the explicitly supported local browser renderer exports real media from the same editor
+extension-accessibility: R14=(9, 6, 0, 0, 0), previous=(9, 6, 0, 0, 0), final=(9, 6, 0, 0, 0); vs R14 new/fixed/moved=0/0/0; vs previous=0/0/0
+  NEW vs R14: 0; FIXED: 0; MOVED: 0
+  FINAL failing IDs:
+    [chromium] tests/e2e/extension-accessibility.spec.ts:114:1 › the bundled extensions expose state and retain keyboard focus through disable and re-enable
+    [chromium] tests/e2e/extension-accessibility.spec.ts:156:3 › bundled extension states remain reachable at phone size
+    [chromium] tests/e2e/extension-accessibility.spec.ts:156:3 › bundled extension states remain reachable at tablet size
+    [firefox] tests/e2e/extension-accessibility.spec.ts:114:1 › the bundled extensions expose state and retain keyboard focus through disable and re-enable
+    [firefox] tests/e2e/extension-accessibility.spec.ts:156:3 › bundled extension states remain reachable at phone size
+    [firefox] tests/e2e/extension-accessibility.spec.ts:156:3 › bundled extension states remain reachable at tablet size
+    [webkit] tests/e2e/extension-accessibility.spec.ts:114:1 › the bundled extensions expose state and retain keyboard focus through disable and re-enable
+    [webkit] tests/e2e/extension-accessibility.spec.ts:156:3 › bundled extension states remain reachable at phone size
+    [webkit] tests/e2e/extension-accessibility.spec.ts:156:3 › bundled extension states remain reachable at tablet size
+playwright-timeline: R14=(36, 3, 0, 0, 0), previous=(36, 3, 0, 0, 0), final=(36, 3, 0, 0, 0); vs R14 new/fixed/moved=0/0/0; vs previous=0/0/0
+  NEW vs R14: 0; FIXED: 0; MOVED: 0
+  FINAL failing IDs:
+    [timeline-devices] tests/e2e/timeline/audio-reactive-colour-export.spec.ts:229:3 › audio-reactive-colour browser export proof › loads and plays the managed source_audio asset after a user gesture
+    [timeline-devices] tests/e2e/timeline/command-outbox.spec.ts:48:1 › persists and excludes native browser command outbox claims across restart
+    [timeline-devices] tests/e2e/timeline/data-lane-viewport.spec.ts:16:1 › dense data lane paints late viewport items with bounded DOM and real geometry
+    [timeline-devices] tests/e2e/timeline/desktop-interaction.spec.ts:19:3 › timeline desktop interaction › renders and responds to mouse interaction on desktop
+    [timeline-devices] tests/e2e/timeline/editor-tour.spec.ts:232:3 › editor tour › runs the whole tour once, leaves the real editor with the composer focused, and never restarts
+    [timeline-devices] tests/e2e/timeline/editor-tour.spec.ts:323:3 › editor tour › Esc leaves mid-tour, and a reload mid-tour does not bring it back
+    [timeline-devices] tests/e2e/timeline/editor-tour.spec.ts:357:3 › editor tour › a skip at the welcome is remembered by the Runtime: with the browser flag gone, the tour stays away
+    [timeline-devices] tests/e2e/timeline/editor-tour.spec.ts:375:3 › editor tour › Settings > Replay tour runs the whole tour again, and a reload after it does not restart it
+    [timeline-devices] tests/e2e/timeline/extension-performance-budget.spec.ts:67:3 › extension performance and resource budgets › bounds startup, activation, command search, virtualization, DOM, and heap
+    [timeline-devices] tests/e2e/timeline/layout-geometry.spec.ts:261:7 › timeline layout geometry › desktop › desktop: geometry snapshot matches baseline
+    [timeline-devices] tests/e2e/timeline/layout-geometry.spec.ts:261:7 › timeline layout geometry › desktopFirstRun › desktopFirstRun: geometry snapshot matches baseline
+    [timeline-devices] tests/e2e/timeline/layout-geometry.spec.ts:261:7 › timeline layout geometry › phone › phone: geometry snapshot matches baseline
+    [timeline-devices] tests/e2e/timeline/layout-geometry.spec.ts:261:7 › timeline layout geometry › tabletLandscape › tabletLandscape: geometry snapshot matches baseline
+    [timeline-devices] tests/e2e/timeline/layout-geometry.spec.ts:261:7 › timeline layout geometry › tabletPortrait › tabletPortrait: geometry snapshot matches baseline
+    [timeline-devices] tests/e2e/timeline/phone-gestures.spec.ts:32:3 › timeline phone gestures › phone browse, Inspector and armed gestures survive real touch input
+    [timeline-devices] tests/e2e/timeline/seeded-preview-samples.spec.ts:21:3 › seeded browser preview samples › asserts eight distinct observed frames across zoom and blend boundaries
+    [timeline-devices] tests/e2e/timeline/shell-responsive-overflow.spec.ts:42:5 › desktop › keeps composed editor shell inside the desktop viewport
+    [timeline-devices] tests/e2e/timeline/shell-responsive-overflow.spec.ts:42:5 › phone › keeps composed editor shell inside the phone viewport
+    [timeline-devices] tests/e2e/timeline/shell-responsive-overflow.spec.ts:42:5 › tablet-portrait › keeps composed editor shell inside the tablet-portrait viewport
+    [timeline-devices] tests/e2e/timeline/tablet-gestures.spec.ts:41:5 › timeline tablet gestures (landscape) › tablet landscape: Inspector, armed gestures and drag under touch
+    [timeline-devices] tests/e2e/timeline/tablet-gestures.spec.ts:41:5 › timeline tablet gestures (portrait) › tablet portrait: Inspector, armed gestures and drag under touch
+    [timeline-devices] tests/e2e/timeline/toolbar-reachable.spec.ts:27:5 › condensed desktop › starts with the right panel closed, so the preview and the timeline are reachable
+    [timeline-devices] tests/e2e/timeline/toolbar-reachable.spec.ts:27:5 › phone › starts with the right panel closed, so the preview and the timeline are reachable
+    [timeline-devices] tests/e2e/timeline/toolbar-reachable.spec.ts:89:5 › thumb bar on phone › thumb bar reachable without scrolling
+    [timeline-devices] tests/e2e/timeline/toolbar-reachable.spec.ts:89:5 › thumb bar on tablet landscape › thumb bar reachable without scrolling
+    [timeline-devices] tests/e2e/timeline/toolbar-reachable.spec.ts:89:5 › thumb bar on tablet portrait › thumb bar reachable without scrolling
+    [timeline-devices] tests/e2e/timeline/viewing-parity/cases.ts:240:5 › ordinary media: mounted App Player versus real task export › normal App Render action downloads a valid native-size MP4 without a parity comparison
+    [timeline-devices] tests/e2e/timeline/viewing-parity/cases.ts:257:5 › ordinary media: mounted App Player versus real task export › fixture readiness seeks actual managed Player video and captures native frames without export
+    [timeline-devices] tests/e2e/timeline/viewing-parity/cases.ts:278:5 › ordinary media: mounted App Player versus real task export › compares native-size actual Player frames with decoded real CPU Remotion task output
+    [timeline-devices] tests/e2e/timeline/viewing-parity/cases.ts:288:5 › ordinary media: mounted App Player versus real task export › captures the actual Player page as one native-PTS VP8/Opus tab stream without a physical-mix claim
+    [timeline-devices] tests/e2e/timeline/viewing-parity/cases.ts:328:5 › ordinary media: mounted App Player versus real task export › picture-only one-host patch is reported as a mismatch after the full passing baseline
+RECONCILIATION:
+final: sum per-job failed results=85; distinct numbered project/file/title=80; distinct exact line/col IDs=80
+R14: sum per-job failed results=85; distinct numbered project/file/title=80; distinct exact line/col IDs=80
+Previous dca367cb: sum per-job failed results=85; distinct numbered project/file/title=80; distinct exact line/col IDs=80.
