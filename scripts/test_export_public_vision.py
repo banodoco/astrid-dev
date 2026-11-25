@@ -325,33 +325,29 @@ class PublicVisionProjectionTests(unittest.TestCase):
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
                          "/vision/pillars/artistic-ambition.md)")
 
-    def test_root_vision_counts_follow_source_data(self):
+    def test_root_navigation_follows_source_data_without_counts(self):
         actual = (self.fixture_root / "README.md").read_text(encoding="utf-8")
         self.assertEqual(render_root_readme(actual, self.page), actual)
-        self.assertIn("Our vision has four main pillars and four guiding principles.", actual)
-        self.assertIn(f"We've identified {len(self.page['gaps'])} gaps", actual)
-        self.assertIn(f"informing {len(self.page['projects'])} projects.", actual)
-        self.assertIn("[Vision](vision/README.md) · [Pillars]", actual)
-        self.assertIn("[Principles](vision/README.md#four-driving-principles)", actual)
+        for label, path in (("Vision", "vision/README.md"), ("Strategy", "strategy.md"),
+                            ("Projects", "plans/index.md"), ("Releases", "releases/")):
+            self.assertIn(f"[{label}]({path})", actual)
         self.assertIn(f"[Gaps](vision/README.md#gaps--{len(self.page['gaps'])}-assessed-outcomes)", actual)
-        self.assertIn("[Projects](plans/index.md)", actual)
-        self.assertNotIn("Read the full vision", actual)
+        self.assertNotIn("We've identified", actual)
+        self.assertNotIn("informing", actual)
+        self.assertNotIn("four main pillars", actual)
 
-        hypothetical = {**self.page,
-                        "gaps": self.page["gaps"] + [{}],
-                        "projects": self.page["projects"] + [{}]}
-        changed = render_root_summary(hypothetical)
-        self.assertIn(f"We've identified {len(self.page['gaps']) + 1} gaps", changed)
-        self.assertIn(f"informing {len(self.page['projects']) + 1} projects", changed)
+        projects_only = {**self.page, "projects": self.page["projects"] + [{}]}
+        self.assertEqual(render_root_readme(actual, projects_only), actual)
+        gaps_changed = {**self.page, "gaps": self.page["gaps"] + [{}]}
+        changed = render_root_summary(gaps_changed)
         self.assertIn(f"gaps--{len(self.page['gaps']) + 1}-assessed-outcomes", changed)
-        self.assertNotEqual(actual, render_root_readme(actual, hypothetical))
+        self.assertNotEqual(actual, render_root_readme(actual, gaps_changed))
 
     @staticmethod
     def region(readme, name):
         return readme.split(f"<!-- {name}:start -->", 1)[1].split(f"<!-- {name}:end -->", 1)[0]
 
-    SENTENCE = ("Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) "
-                "with an agent equipped with tools for creative work and open-source AI.")
+    SENTENCE = "We're building an open creative environment that people and agents can shape together."
 
     def test_root_statement_comes_from_the_vision_title(self):
         root = self.fixture_copy()
@@ -375,7 +371,10 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(readme.count(statement), 1)
         self.assertEqual(self.region(readme, "vision-statement").strip(), statement)
         self.assertNotIn(statement, self.region(readme, "vision-summary"))
-        self.assertIn(f"<!-- vision-statement:end -->\n\n{self.SENTENCE}\n\n<!-- vision-summary:start -->", readme)
+        self.assertIn(f"<!-- vision-statement:end -->\n\n{self.SENTENCE}\n\n", readme)
+        self.assertTrue(readme.startswith("# Astrid Dev\n\n<!-- vision-statement:start -->"))
+        self.assertIn("## Explore what we're building\n\n<!-- vision-summary:start -->", readme)
+        self.assertEqual(readme.count(self.SENTENCE), 1)
         self.assertNotIn(self.SENTENCE, self.region(readme, "vision-statement") + self.region(readme, "vision-summary"))
         view = next(v for v in VIEWS if v.name == "root-vision-statement")
         self.assertEqual(expected(view, self.fixture_root).count(self.SENTENCE), 1)
