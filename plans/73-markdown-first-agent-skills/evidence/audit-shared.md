@@ -810,7 +810,7 @@ Source: `skills/shared/workstreams/astrid-dev-gpu-validate/SKILL.md`; destinatio
 | then re-run that cell live. | L75 | L87 | kept |
 | Release the pod while the fix is made unless the fix is minutes away and the budget allows. | L75 | L87 | kept |
 | A run ends when every cell passes or the budget is spent. | L75 | L87 | kept |
-| One file per run: `skills/shared/workstreams/astrid-dev-gpu-validate/records/&lt;YYYY-MM-DD&gt;-&lt;short-sha&gt;.md`, | L79 | L91 (new plan/release evidence location) | moved |
+| One file per run: | L79 | L91 (same per-run record rule; old location replaced with plan/release evidence location by cutover) | kept |
 | where the short sha is the Agent revision under test. | L79 | L91 | kept |
 | Commit it to astrid-dev, and link it from the plan or release it serves. | L79 | L91 | kept |
 | A cell passes only on a real output from the inner command, bound to the revisions above. | L121 | L133 | kept |
@@ -821,7 +821,7 @@ Source: `skills/shared/workstreams/astrid-dev-gpu-validate/SKILL.md`; destinatio
 | Use the raw RunPod SDK instead of runpod-lifecycle. | L128 | L140 | kept |
 | Patch around a failure on the pod and call the cell passed. | L129 | L141 | kept |
 
-Count: 71 found, 70 kept, 0 restored, 1 moved, 0 superseded.
+Count: 71 found, 71 kept, 0 restored, 0 moved, 0 superseded.
 
 ## workstreams/green.md
 
@@ -1886,3 +1886,32 @@ Source: `skills/shared/workstreams/astrid-dev-release/SKILL.md`; destination: `a
 
 Count: 456 found, 456 kept, 0 restored, 0 moved, 0 superseded.
 
+## Totals and handoff
+
+These are conservative clause/excerpt counts, not a claim that every row is a logically independent semantic obligation. Repeated contractual statements in different documents are recorded separately to preserve each document's behavior. The Step 1 run-contract sample of 172 units was a preliminary grouping; the enumerated 248 substantive rows split additional independent constraints and include closely related instructions for spot checking. Five layout marker/notice rows are counted separately across the run contract and plan workstream.
+
+| Document | Found | Kept | Restored | Moved | Superseded |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Run contract | 250 | 248 | 0 | 0 | 2 |
+| glossary.md | 78 | 78 | 0 | 0 | 0 |
+| domains.md | 28 | 28 | 0 | 0 | 0 |
+| release-sources.md | 18 | 18 | 0 | 0 | 0 |
+| release-qualification.md | 47 | 47 | 0 | 0 | 0 |
+| templates/decisions-ledger.md | 11 | 11 | 0 | 0 | 0 |
+| templates/run.yaml | 35 | 35 | 0 | 0 | 0 |
+| workstreams/bugfix.md | 60 | 60 | 0 | 0 | 0 |
+| workstreams/gap.md | 57 | 57 | 0 | 0 | 0 |
+| workstreams/gpu-validate.md | 71 | 71 | 0 | 0 | 0 |
+| workstreams/green.md | 180 | 180 | 0 | 0 | 0 |
+| workstreams/improve.md | 46 | 46 | 0 | 0 | 0 |
+| workstreams/iterate.md | 60 | 60 | 0 | 0 | 0 |
+| workstreams/merge.md | 97 | 97 | 0 | 0 | 0 |
+| workstreams/plan.md | 170 | 150 | 0 | 17 | 3 |
+| workstreams/release.md | 456 | 456 | 0 | 0 | 0 |
+| **Total** | 1664 | 1642 | 0 | 17 | 5 |
+
+No migration-induced missing or weakened substantive rule was found. No agent instruction needed a restoration; the evidence file is the entire change. No adjacent edits. The 17 moved rows are the plan's direct link to the canonical run contract; the GPU evidence location is a deliberate migration choice, not a moved policy authority. No existing link target, test, script, old skill, plan task or role document changed.
+
+**Ruling requested (not a missing behavior row):** the direct canonical routing links and packaging link/anchor checks replace the old generated-copy markers; the observed checks do not explicitly forbid a new competing routing table in authored agent Markdown. Additionally, agent/shared/run-contract.md L26 retains the original generated-copy wording (kept text, but obsolete when the old copy machinery is removed). Do not mistake that retained text for proof that the new layout generates copies. The orchestrator should decide at MSC-6 whether to rely on judgment and direct links or add enforcement, and how to retire this stale layout wording. No new duplicate copy, marker, or test change is proposed by this packet. The decisions-ledger STOP-proposal wording is likewise inherited; the canonical stop-and-ask rule still governs and no authority is expanded.
+
+**Proof reserved to orchestrator:** both repository checks; skills build/check; focused selectors `scripts/test_agent_documents.py scripts/test_skill_builder.py scripts/test_workstreams.py scripts/test_views.py`; five spot checks per document and every rule of Who answers for a run and Review and promotion boundaries. No clone, build, test, CI dispatch, merge, or task tick by this packet. Read-only source and row-count comparison is not a proof result.
