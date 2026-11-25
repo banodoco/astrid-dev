@@ -70,10 +70,10 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | [P73-01](packets/P73-01.md) Milestone probes become tests; builder constants | MSC-2 | Ready (project head `4584a138`) | — | Extra High. First packet, alone |
 | [P73-02](packets/P73-02.md) Forward-port `main`'s `skills/` changes, half A | MSC-3 | Ready (project head `7f9f9978`, P73-01 merged) | — | Extra High. In parallel with P73-03 |
 | [P73-03](packets/P73-03.md) Forward-port, half B, new homes and run-contract sections | MSC-3 | Ready (project head `7f9f9978`, P73-01 merged) | — | Extra High. In parallel with P73-02 |
-| [P73-04](packets/P73-04.md) Rule-preservation audit, roles and role workstreams | MSC-4 | Ready (project head `090c3f87`) | — | Extra High. In parallel with P73-05 |
-| [P73-05](packets/P73-05.md) Rule-preservation audit, shared documents | MSC-4 | Ready (project head `090c3f87`) | — | Extra High. In parallel with P73-04 |
-| [P73-06](packets/P73-06.md) Active consumers and the authoring guide | MSC-5 | Ready (project head `090c3f87`; the site-list DECISION, 85 sites, is on the board) | — | Extra High. Starts when one of P73-04 or P73-05 reaches READY-PROOF (cap two) |
-| [P73-07](packets/P73-07.md) Delete the old layout | MSC-6 | Blocked on P73-01, P73-04, P73-05 and P73-06 merging | — | Pro. Pro |
+| [P73-04](packets/P73-04.md) Rule-preservation audit, roles and role workstreams | MSC-4 | Merged (25 Nov 2026) | — | Extra High. In parallel with P73-05 |
+| [P73-05](packets/P73-05.md) Rule-preservation audit, shared documents | MSC-4 | Merged (25 Nov 2026) | — | Extra High. In parallel with P73-04 |
+| [P73-06](packets/P73-06.md) Active consumers and the authoring guide | MSC-5 | Merged (25 Nov 2026) | — | Extra High. Starts when one of P73-04 or P73-05 reaches READY-PROOF (cap two) |
+| [P73-07](packets/P73-07.md) Delete the old layout | MSC-6 | Ready (project head `c8e104a9`; link rewrite done, audits and sweep merged) | — | Pro. Pro |
 | [P73-INT](packets/P73-INT.md) Absorb a landed Plan 71 or 72 (read-only fact-find, then the port) | MSC-9 | On REQUEST only | — | Extra High. A fresh session for each landing, on the orchestrator's REQUEST with the delta and link evidence |
 | [P73-RV](packets/P73-RV.md) High-judgment review (read-only, Pro) | P73-07 (route S) and the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
