@@ -28,7 +28,7 @@ Record the IDs in `plans/<NN-name>/.otto/runs/<run-id>/run.yaml`, which is git-i
 
 Which model each route uses is the Codex column of the run contract's table:
 
-See [routing and bindings](../../shared/run-contract.md#routing-and-bindings) in the run contract.
+See [routing and bindings](../../shared/run-contract.md#routing-and-bindings) in the run contract, including the bounded-fix review rule and [per-card review boundaries](../../shared/run-contract.md#review-and-promotion-boundaries).
 
 Fill in this run's IDs:
 - N: <id>

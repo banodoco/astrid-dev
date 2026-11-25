@@ -22,7 +22,7 @@ Use this when a Claude manager session keeps managing (briefing, checking diffs,
 
 Each task goes to its route's Codex model, as this table maps it:
 
-See [routing and bindings](../../shared/run-contract.md#routing-and-bindings) in the run contract.
+See [routing and bindings](../../shared/run-contract.md#routing-and-bindings) in the run contract, including the bounded-fix review rule and [per-card review boundaries](../../shared/run-contract.md#review-and-promotion-boundaries).
 
 - **Routes.** Choose and escalate routes as the run contract's [cheapest-model-first rules](../../shared/run-contract.md#cheapest-model-first) say. Reviews go to the high-judgment role's Codex model, run read-only (`-s read-only`) on the exact commit range and given the previous round's report. `T` (taste) tasks may run on the Codex taste family; Claude is recommended.
 - **Sign-in first, once per session** (its own container needs its own): do the [one-time setup](#one-time-setup-in-the-session), then post the link and code `codex login --device-auth` prints in your own reply, where the owner can see them, and tell the orchestrator they are waiting. The code expires in minutes, so ask when the owner is present, and again if it lapses. Never read or copy `~/.codex`.
