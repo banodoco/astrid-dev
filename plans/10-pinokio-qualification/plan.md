@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../vision/gaps/F-002-safe-user-control.md).
 
-**Contributing:** [Astrid development skill](../../agent/start.md).
+**Contributing:** [Astrid development skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md).
 
 Qualify Pinokio Stop/Quit safety, direct custody, fully-local journeys, and unknown-state stop on every supported OS. This follows [Plan 07](../07-pinokio/plan.md), from its verified launcher and gate; no legacy migration is needed because Pinokio had no users when R1 shipped.
 
@@ -63,3 +63,10 @@ Getting the Windows Pinokio row to pass on 7 Nov 2026 took seven fix-and-rerun r
 - [tasks.md](tasks.md): task index, routes, dependencies, focused checks, and completion evidence.
 - [inputs.md](inputs.md): source identities, retained work, provenance, and evidence limits.
 - [Project status and owner](../../README.md): queue authority.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+retain actual native engine hosted/local journeys on all three OS. Reuse current launcher and delivered setup; separate human-owned discovered ComfyUI from launcher-owned children. Do not call a descriptor or simulator native engine proof.

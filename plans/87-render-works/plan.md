@@ -1,5 +1,7 @@
 # The renderer works end to end
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** The renderer works end to end
 
 **Goal:** A heavy real timeline renders from first frame to last in one product render on a build of `release/15/main` with no local patches, and the file matches what the editor shows.
@@ -12,7 +14,7 @@
 
 **Waiting on:** Recorded core and staged follow-ups landed in Release 15; RN-0 and R still have open Progress rows. Reconcile their exact proof and the remaining rendering scope with the Lead against frozen-candidate qualification and the Release 16 handoff #1938.
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
 **Vision role:** Foundational enabler — rendering is how finished work leaves Astrid. [Plan 27](../27-video-render-options/plan.md) keeps export choices; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline-editing fixes found in the same session; everything else found that day is an issue, listed in [inputs.md](inputs.md#moved-to-issues).
 
@@ -127,3 +129,9 @@ A first version of this plan ported all sixteen commits before fixing anything. 
 - After the branch lands, the same three renders complete on a build of `release/15/main` (RN-12). Only then is the goal met.
 - Every defect met during the loop that was not fixed here has an issue.
 - Limits: one machine class, macOS and Linux; Windows and render speed are not covered.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+only residual R15 delivery, exact pack/projection/output, native custody/recovery and representative final proof. No new render architecture or expanded authoring feature scope. Correct authored background/easing/source phase and next-render recovery are supported-path correctness.

@@ -1,5 +1,7 @@
 # Tasks: refined concurrent editing
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../index.md)
 
 ## Task index
@@ -76,7 +78,7 @@ The CE-LIMIT check selector and the exact identities/definitions of CE-0 and CE-
 - **Outcome / work:** Publish fresh immutable increment lanes and promote those same heads to `pre-main`.
 - **Route:** N / Luna.
 - **Dependencies and inputs:** CE-REVIEW and its exact reviewed heads.
-- **Focused checks:** Verify remote heads equal reviewed heads; reconcile moved targets and rerun affected checks under the [run contract](../../agent/shared/run-contract.md).
+- **Focused checks:** Verify remote heads equal reviewed heads; reconcile moved targets and rerun affected checks under the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md).
 - **Done:** Exact reviewed heads are promoted; no force push and no second aggregate. Existing project/initiative authority governs publication.
 
 ### CE-REF
@@ -86,3 +88,9 @@ The CE-LIMIT check selector and the exact identities/definitions of CE-0 and CE-
 - **Dependencies and inputs:** Agent source in astrid-agent; the failing App CI Lanes/quick-journey job. No other dependency is recorded.
 - **Focused checks:** `tests/journeys/test_journey_plumbing.py` and `tests/journeys/test_quick_journey_f1.py`, plus the App CI Lanes/quick-journey job. Exact selectors TBD at setup.
 - **Done:** The builder commits through `commit_timeline`, the two journey test files pass, and the retired call is gone from the builder.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+keep all seven **Not recorded** statuses and conditional CE-REPAIR. CE-FINAL uses actual R16 tuple and original seven SDK/eight hosted outcomes; recover CE-0/CE-LIMIT/wrapper selectors or get explicit equivalence ruling. CE-REPAIR routes only shown gaps to CC-4b/5b/13/14. CE-END and CE-REVIEW become a named independent concurrency verdict within R0, preserving review scope/limits. CE-COMPOSE replaces retired pre-main/generation-promotion dependency with normal reviewed provider→Agent→App pins. CE-PROMOTE joins the one Release Lead go. CE-REF verifies the now-existing commit_timeline reference builder rather than rebuilding an obsolete missing path. Missing original acceptance remains a real proof blocker. Evidence: [SC-04](https://github.com/banodoco/astrid-dev/blob/cbd951924424ecbad213d3ad999a75ade2aabb51/plans/04-concurrent-edits/evidence/release-16-scoping/SC-04.md), [SC-63](https://github.com/banodoco/astrid-dev/blob/6cf0dda31179711582a6ed0d8fcf76d3456c4de9/plans/63-dependable-saving/evidence/release-16-scoping/SC-63.md), [INV-03](https://github.com/banodoco/astrid-dev/blob/5d924e96aee1a2afdaeeb86131f698f5a57a5daf/releases/16/evidence/scoping/INV-03.md), [AUD-01](https://github.com/banodoco/astrid-dev/blob/43e3e390d6ffe026e6f2a61f0c866b0ac94daf9b/releases/16/evidence/scoping/AUD-01.md).

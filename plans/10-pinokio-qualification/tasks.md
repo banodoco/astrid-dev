@@ -12,7 +12,7 @@
 | [PIN-3 — Reconcile direct-custody provider](#pin-3--reconcile-direct-custody-provider) | X / Terra + Luna helpers | PIN-2 contract; current Agent/Q adapter and process observer heads | |
 | [PIN-4 — Focused validation and scoped review](#pin-4--focused-validation-and-scoped-review) | X / Terra + Luna helpers; Astra review | PIN-1 through PIN-3; exact candidate frozen | |
 | [PIN-END — Record disposition](#pin-end--record-disposition) | N / Luna | PIN-4 | |
-| [PIN-PROMOTE — Publish accepted launcher increment](#pin-promote--publish-accepted-launcher-increment) | N / Luna | Scoped acceptance of the launcher increment's exact head; mutation authorization | |
+| [PIN-PROMOTE — Handoff accepted launcher increment to single release](#pin-promote--handoff-accepted-launcher-increment-to-single-release) | N / Luna | Scoped acceptance of the launcher increment's exact head; mutation authorization | |
 
 ## Task details
 
@@ -51,10 +51,10 @@
 - **Route:** N / Luna. **Depends on:** PIN-4.
 - **Done:** Report only demonstrated outcomes and remaining NEEDS. If native refusal-veto or custody settlement is unresolved, mark that release boundary blocked/unqualified and preserve the specific evidence gap. Historical `BLOCKED` snapshots are not current status.
 
-### PIN-PROMOTE — Publish accepted launcher increment
+### PIN-PROMOTE — Handoff accepted launcher increment to single release
 
 - **Route:** N / Luna. **Depends on:** Scoped acceptance of the launcher increment's exact head; mutation authorization.
-- **Authority and done:** Publish only the reviewed immutable Pinokio candidate and promote that same head to the resolved `pre-main` by ordinary create/fast-forward rules. Recheck the target immediately before mutation; if it moved, retain the reviewed candidate and reconcile on a fresh base. The launcher increment may be delivered independently of engine/custody rows only if it makes no unsupported native Stop/Quit safety or qualification claim. Full native qualification/release remains gated by PIN-2/3 evidence.
+- **Authority and done (proposed R16):** Hand off the reviewed immutable launcher candidate and exact qualification evidence to the single Plan 31 release process. Reconcile any moved destination on its current base; do not publish a separate pre-main increment. Full native qualification remains gated by PIN-2/3 evidence and publication requires existing owner authority.
 
 ## Constraints and retained limits
 
@@ -62,3 +62,10 @@
 - Task L's 12 native checks guide eventual qualification. Its known render-smoke omission, manual-only fully-local journey, and upstream diagnostics hint are revisited only when a changed boundary or qualification owner selects them.
 - Native Stop/Quit refusal veto is a hard unsatisfied requirement: adapter-side lifecycle ordering, fake kernel tests, POSIX child fixtures, and pinned historical engine source cannot establish deployed veto behavior.
 - M4-6's historical provider had no success-producing authorization path. Do not weaken fail-closed ownership for a passing test or infer that old Q coordination, provisional `TrustedCollectorContext`, hosted rows, or receipts are current.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+preserve the **blank** progress cells. PIN-0 records actual launcher `1e4c1e77…` including consent fix, not the obsolete pre-main source. PIN-1 retains bounded setup/readiness diagnostics and, with P09 IU-1's adapter, durable paired App/Runtime recovery authority **before editor promotion**. Fault after editor rename and before/during bootstrap must recover to a coherent old or new pair; this addresses the specific current launcher promotion/bootstrap gap. PIN-2 engine contract/venue investigation starts immediately; PIN-3 lands after PIN-2 plus reviewed P38 provider. PIN-4 consumes PIN-1–3 and exact installed candidate for the six OS×mode cells in [support matrix](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md#7-exact-support-negative-and-preservation-matrix). PIN-END consumes accepted PIN-4. PIN-PROMOTE becomes a handoff into the single P31 publication, preserving its authorization requirement. No separate pre-main lane publication. Evidence: [SC-10](../../releases/16/evidence/scoping/README.md#receipts), [SC-38](../../releases/16/evidence/scoping/README.md#receipts), [INV-01](../../releases/16/evidence/scoping/README.md#receipts), [INV-04](../../releases/16/evidence/scoping/README.md#receipts), [AUD-01](../../releases/16/evidence/scoping/README.md#receipts).

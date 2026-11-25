@@ -1,5 +1,7 @@
 # Inputs — Dependable environment setup and recovery
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
@@ -79,3 +81,9 @@ Each is a recommendation until the owner confirms it in writing.
 - [#816](https://github.com/banodoco/astrid-dev/issues/816), [#1729](https://github.com/banodoco/astrid-dev/issues/1729), [#683](https://github.com/banodoco/astrid-dev/issues/683): readiness and diagnostics.
 - [#1206](https://github.com/banodoco/astrid-dev/issues/1206): compatibility.
 - [Release 16](../../releases/16.md); [Release 17](../../releases/17.md); [Plan 20](../20-zero-to-first-image/plan.md); [Plan 32](../32-generation-placement-targets/plan.md); [Plan 34](../34-real-gpu-proof/plan.md); [Plan 56](../56-workflow-setup/plan.md); [Plan 90](../90-workflow-setup-exact-plan/plan.md).
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+ER-0/D3 compares Windows Portable and recipe by actual work/provenance/custody/rollback; select one. D4 proposes the [SYN support matrix](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md#7-exact-support-negative-and-preservation-matrix): eight small physical Windows/Linux × RTX 20/30/40/50 compute cells, and the separately identified full existing/managed route journeys. The [release acceptance record](../../releases/16.md#proposed-support-and-negative-acceptance) maps each to owners, task receipts and release joins; final support limits remain pending owner agreement. D5 defaults to existing foreground resumable operation, not a new Runtime scheduler absent evidence. Require per-volume peak additional bytes including archive/extraction/wheels/model partial+stage coexistence, previous working version, concurrent reservations and cleanup reserve. Unknown peak cannot be represented as a safe exact cap. A revised plan that increases source/root/cost/write scope requires renewed approval.
