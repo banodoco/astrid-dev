@@ -1,6 +1,6 @@
 # Test the actual Release 15 frontend (Windows and Linux)
 
-This is the browser section of the [tester brief](windows-tester-brief.md) and [technical matrix](windows-test-matrix.md). First [prepare and verify the installed snapshot](prepare-build.md). The installer alone does not install the frontend: astrid.haus may serve a different App. Run the exact compatible App commit from the receipt. This is a real local editor connected to the installed Runtime, not a fake editor preview.
+This is the browser section of the [tester brief](tester-brief.md) and [technical matrix](test-matrix.md). First [prepare and verify the installed snapshot](prepare-build.md). The installer alone does not install the frontend: astrid.haus may serve a different App. Run the exact compatible App commit from the receipt. This is a real local editor connected to the installed Runtime, not a fake editor preview.
 
 ## Start the pinned editor
 

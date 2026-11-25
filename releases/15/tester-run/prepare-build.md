@@ -1,6 +1,6 @@
 # Prepare the current Release 15 testing build
 
-**For the tester's coding agent:** Start at the [tester brief](windows-tester-brief.md), then use this self-service procedure before the [technical matrix](windows-test-matrix.md). No separate maintainer-provided manifest, write credential or old tester branch is needed. Preparation is read-only; get the tester's consent before changing their machine or publishing feedback. A self-prepared build is exploratory unless its exact tuple has recorded qualification and explicit tester-build approval.
+**For the tester's coding agent:** Start at the [tester brief](tester-brief.md), then use this self-service procedure before the [technical matrix](test-matrix.md). No separate maintainer-provided manifest, write credential or old tester branch is needed. Preparation is read-only; get the tester's consent before changing their machine or publishing feedback. A self-prepared build is exploratory unless its exact tuple has recorded qualification and explicit tester-build approval.
 
 ## Resolve and freeze
 
