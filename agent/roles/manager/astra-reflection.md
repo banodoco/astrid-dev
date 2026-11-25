@@ -6,7 +6,7 @@ description: Gate each AI Studio lab packet and periodically replan the lab queu
 
 ## When to use
 
-When the run's manager hands you a lab packet at Gate, at each RF row of a lab run board, and at the owner's daily look, for a lab run such as Plan 84's.
+When the run's manager hands you a lab packet at Gate, at each RF row of a lab run board, and at the owner's daily look, for a current lab run with an explicit run board.
 
 ## Outcome
 
