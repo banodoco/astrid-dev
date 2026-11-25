@@ -1,5 +1,7 @@
 # GD-7/GD-8 proposal index — corrected after RS2
 
+**Historical, 25 November 2026:** superseded by owner ruling [D8](../inputs.md#owner-decisions) and the [completion-run table](../tasks.md#completion-run-owner-go-24-november-2026), which is now the only dispatch list. The "NOT MERGE-READY" status below describes the draft as of 22 November 2026, not a current blocker; the accepted result, the frozen census and its limits, the follow-up issues and the review receipts are summarised in the Plan 71 completion handoff (card GDC-7).
+
 **Preservation draft — NOT MERGE-READY.** Source qualification is incomplete. All source-derived counts, memberships, scope assignments and outcome claims below remain provisional; where not independently checked against an established non-HOLD source, the result is **NO-RESULT**. No ownership assignment, outcome, review acceptance, migration approval or project completion is implied.
 
 **Status:** The sole prospective RS2 review returned **REWORK** and is consumed **1/1**; the one-use HOLD is also consumed. This correction is a draft, not review acceptance, migration authorization or closure. Its original report and pre-read receipt remain private. Historical review counts remain unknown.
