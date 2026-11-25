@@ -22,6 +22,7 @@ A release starts **in advance** as one living strategy document in astrid-dev, `
 
 - **Plan the release.** Start from [`releases/TEMPLATE.md`](../../releases/TEMPLATE.md). A draft has a short, memorable **highlight**, a longer **intent/outcome**, the **approach and trade-offs**, and a list of included [plans](../../plans/index.md) with one-line reasons. Identify dependencies and boundaries; adjust scope as evidence comes in, before freezing. It can be created and revised on `main` without publishing anything. An unassigned plan stays unassigned rather than being silently promised to a release.
 - **Release-led strategy.** [`strategy.md`](../../strategy.md) draws its repeated release material from release briefs; the release file owns rationale and scope. The catalog owns project status, priority, estimates and ownership; gaps own closure evidence ([hierarchy](../../docs/contribution-workflow.md#review-the-strategy)).
+- **Prepare a tentative testing build.** A contributor or their coding agent can discover the designated active testing release (or specify a release or recorded snapshot), resolve its latest coherent release-branch tuple, and locally generate and validate its manifest and matching Windows/Linux installers without a maintainer, pre-created bundle, write credential or Final transition. Derive dependency pins from their owners; do not combine independent floating heads. Freeze the full source identities, artifact hashes and qualification status per session; fresh sessions resolve again and resumed sessions reuse their receipt. Multiple snapshots may share a release integer. Keep tentative use opt-in and separate from production publication. Update the existing [tester brief](../../releases/15/tester-run/windows-tester-brief.md) and [technical matrix](../../releases/15/tester-run/windows-test-matrix.md) into a permanent reusable testing entrypoint with platform adapters and release-specific focus, preserving existing links and consent/reporting safeguards. See RL-1e.
 - **Finalize the same file.** A ready-to-publish record keeps the strategy sections and adds the pinned publication payload: release integer, version and kind, optional required-update reason, full App/Agent/Runtime SHAs, schema digest, tool versions and any informational Pinokio pin. The final transition is owner-approved; after publication the file is append-only history (no editing or deleting the released record).
 - **Gate.** CI validates draft structure and plan links without demanding pins; strategy material is generated from briefs. Only an explicit draft-to-final transition with a complete, coherent payload can trigger publication; it checks the pinned commits, monotonic release number and owner approval. A draft edit, a strategy edit, or the presence of future planned releases **must never publish an installer**.
 - **Protection.** Only the owner can approve a release, and publishing fails closed if that approval or the branch protection is missing.
@@ -29,7 +30,7 @@ A release starts **in advance** as one living strategy document in astrid-dev, `
 - **App copy.** An App workflow syncs that manifest and the pinned install scripts into the App's one generated copy, which deploys. There is no App PR per release, and nobody edits those files by hand.
 - **On screen.** Users see versions, such as "Astrid 0.0.10", and never release numbers.
 
-**Not changed:** the Agent, Runtime and Pinokio. The integer `release` stays the ordering key on the wire and on users' disks. The installer URLs stay the same.
+**Not changed by the publication pipeline:** the Agent, Runtime and Pinokio. If a same-release tentative snapshot update exposes an installer defect, route the smallest supported repair to Plans 09/29/30; never fake a release number or bypass update safety. The integer `release` stays the ordering key on the wire and on users' disks. The installer URLs stay the same.
 
 **Not building:**
 - runtime proxying of the manifest by astrid.haus;
@@ -48,7 +49,8 @@ Phase 1, releases defined and published from astrid-dev:
 1. **RL-0:** a worker setup script for the App, so workers can run its checks.
 2. **RL-1a–RL-1d:** a release-file template, draft/strategy checks, final-record checks, the `release-contract` job across repositories, the fail-closed `publish-release` gate, and the Release skill publishing through final records. RL-1a also imports the release live at start as a historical record and proves its rendered manifest matches the served one. Earlier published releases are backfilled only from real receipts, never invented.
 3. **RL-2a–RL-2d:** a typed manifest schema shared by every App reader, the bootstrap move, the App's generated copy and sync (deleting `release-guard` and `pin.mjs` write mode in the same change), and the canary comparing with `release-published`. Syncing the legacy record changes only metadata.
-4. **Review rounds (RL-R),** then **go live (RL-G)** through the Release skill, in a fixed order with the owner's settings changes between steps.
+4. **RL-1e:** self-service tentative build preparation and the permanent tester guide, using the same manifest renderer and validation logic before retiring the old pin writer.
+5. **Review rounds (RL-R),** then **go live (RL-G)** through the Release skill, in a fixed order with the owner's settings changes between steps.
 
 Phase 2, on screen: **RL-3**, users see versions. It ships with the next record after its own review round.
 
@@ -69,7 +71,8 @@ This plan was sequenced after [Plan 29](../29-update-and-release/plan.md) and th
   - `releases/<N>.md` (draft strategy → final release ledger), its template, CI structure/strategy checks and publishable record format;
   - the `release-published` branch, with one generated `install-manifest.json`;
   - the App's generated `public/install*` copy;
-  - the release skill's publishing steps.
+  - the release skill's publishing steps;
+  - a permanent tester entrypoint and read-only tentative-build preparation with reproducible manifest/installer receipts.
 
 ## Completion
 
@@ -79,6 +82,7 @@ The proof is these observable results:
   - The first release after this plan is published by an owner-approved transition of its existing draft `releases/<N>.md` to final, with no App PR, and the canary confirms the deployed manifest matches it.
   - A final record that is incomplete, inconsistent or unapproved can't merge or publish. That includes a commit that isn't on its repository's `main`. A published release document cannot be silently rewritten or removed.
   - A hand edit to the App's generated files fails its PR.
+  - A Windows and a Linux tester independently prepare and install an unpublished coherent snapshot without repository write access or a pre-made bundle, verify the active identities, produce a first result and report it. A fresh session resolves newer coherent inputs; replay reproduces the old snapshot. A same-release-number update succeeds through the supported route or reports an explicit routed blocker. Wrong release, ambiguous discovery, missing/stale/mixed pins and invalid tools fail clearly. Tentative preparation cannot change the public manifest, update feed, required policy or publication gate; production still requires main ancestry and owner approval.
 - **Phase 2:** the hosted App and the local launcher show versions, such as "Astrid is up to date (0.0.11)", and never a release number.
 
 Limits: the trust root becomes astrid-dev `main`, so its protection is a prerequisite. Releases go live within one sync interval plus a deploy.
