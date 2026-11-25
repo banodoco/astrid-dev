@@ -17,7 +17,7 @@ from pathlib import Path
 import contribution_api as api
 
 ROOT = Path(__file__).resolve().parents[1]
-TYPES = ("observation", "bug", "question", "idea")
+TYPES = ("observation", "bug", "question", "idea", "usertest")
 TYPE_TITLE = re.compile(r"^\s*(?:(" + "|".join(TYPES) + r")\s*:|\[(bug)\])", re.I)
 # The section ends at the next heading, a line that is only "---" (the footer a session's
 # GitHub access appends), or the end of the body.

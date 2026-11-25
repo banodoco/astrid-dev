@@ -50,7 +50,7 @@ The critique estimated only the inventory and baseline (1–2 days); the rest is
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the install's write and consent boundary, and R at most 1. Next: the owner confirms (D6).
 
-**Run start:** Pending — no implementation, hardware use or real download is authorized. Next: the owner names the accountable orchestrator, approves the host or tester, the disk reserve, the download and time limits, zero paid spend (D4) and the base (D6); then record the date and limits here.
+**Run start:** Pending — no implementation, hardware use or real download is authorized. Next: the owner names the accountable orchestrator, confirms the user test request's limits and zero paid spend (D4) and the base (D6); then record the date and limits here.
 
 ## Owner decisions
 
@@ -61,7 +61,7 @@ Each is a recommendation until the owner confirms it in writing.
 | D1 | Release | **Decided (owner, 24 November 2026):** Release 16. This is release intent, not a go to implement. |
 | D2 | The end state and the split | Plan 93 owns the ladder and existing installs, including Desktop's witness. This plan owns the install offered when nothing usable is left, the `computes` rung, and Astrid's own download as a resumable task. The ten statements in plan.md hold for the declared combination only. |
 | D3 | The install route | Official ComfyUI Portable into an isolated destination, started the supported way, unless ER-0 shows finishing Astrid's Windows recipe is smaller. One route only. |
-| D4 | The support matrix and limits | Qualify the tested Windows 11 / RTX 5070 Ti Laptop combination first, labelling everything else unqualified. A named tester or approved host. An agreed destination and disk reserve, download and time limits, and zero paid spend. |
+| D4 | The support matrix and limits | Qualify the tested Windows 11 / RTX 5070 Ti Laptop combination first, labelling everything else unqualified. A tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), with its proposed destination, disk reserve (40 GB), download (25 GB) and time (about 3 hours per round) limits, and zero paid spend, as the owner confirms. |
 | D5 | A Runtime download task | Not now. Use the existing verified, resumable download, and decide from the live loop's evidence, keeping #722's and Plan 90's ownership. |
 | D6 | Reviews and the base | RS1 at most 1 and R at most 1. The base: `release/16/main` once it is cut, or an owner-approved early start on `release/15/main`, with the SHA recorded. |
 
