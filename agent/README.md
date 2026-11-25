@@ -30,6 +30,8 @@ Choose a procedure for an already-authorized task; selecting a workstream never 
 - [Review and merge a pull request](shared/workstreams/merge.md)
 - [Plan a new Astrid project](shared/workstreams/plan.md)
 - [Astrid development release](shared/workstreams/release.md)
+- [Scope a release](shared/workstreams/scope-release.md)
+- [Sense check a project or release](shared/workstreams/sense-check.md)
 <!-- shared-workstreams:end -->
 
 ## Author a document
