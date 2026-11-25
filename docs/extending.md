@@ -105,7 +105,7 @@ A record identifying the checkout's exact commit and whether its working tree is
 
 ## Inputs
 
-The repository checkout and the review assignment.
+The repository checkout, the review assignment and the shared run contract (link it from the file, as the note below the example shows).
 
 ## Procedure
 
@@ -118,7 +118,7 @@ The repository checkout and the review assignment.
 The report names the commit, observed working-tree state and any limit; it does not claim tests passed or authorize a merge.
 ~~~
 
-The opted-in filename stem must be lowercase kebab-case and unique across all opted-in documents. Here the generated name is `astrid-dev-record-checkout-identity`, irrespective of the folder. A duplicate name fails rather than silently selecting a source. There is no hand-maintained package registry and no separately authored `SKILL.md`. Keep role-specific procedures linked from their role by default; add a navigation link for a new shared workstream when it is accepted for general use. Opting in changes discovery only: the active assignment and owner still govern authority.
+A generated skill links only what its source links, so link the shared rules a procedure depends on (for example the [shared run contract](../agent/shared/run-contract.md); from a file in `agent/shared/workstreams/` the relative target is `../run-contract.md`) or the installed skill has no route to them. The opted-in filename stem must be lowercase kebab-case and unique across all opted-in documents. Here the generated name is `astrid-dev-record-checkout-identity`, irrespective of the folder. A duplicate name fails rather than silently selecting a source. There is no hand-maintained package registry and no separately authored `SKILL.md`. Keep role-specific procedures linked from their role by default; add a navigation link for a new shared workstream when it is accepted for general use. Opting in changes discovery only: the active assignment and owner still govern authority.
 
 **3. Regenerate declared views, build and check.** From the repository root, run:
 
@@ -129,7 +129,7 @@ python3 scripts/astrid_dev.py skills check
 python3 scripts/astrid_dev.py check
 ~~~
 
-`views generate` updates declared Markdown views, not installed skills. `skills build` creates the ignored `.generated/skills/` packages. For the example, inspect `.generated/skills/astrid-dev-record-checkout-identity/SKILL.md`: the generated frontmatter supplies the skill name and description, and the body carries the authored instructions with accessible references. Never edit or commit generated skill output. On a refusal or stale-output report, fix the Markdown source or its references, rebuild and check again. The checks establish structure and package consistency, not whether an instruction is wise or its actor authorized.
+`views generate` updates declared Markdown views, not installed skills; it also lists every valid shared workstream in the navigation index of `agent/README.md` automatically, whether or not the document opts in to a skill. (`skills build` reports each package as created and then updated in one run; that is expected.) `skills build` creates the ignored `.generated/skills/` packages. For the example, inspect `.generated/skills/astrid-dev-record-checkout-identity/SKILL.md`: the generated frontmatter supplies the skill name and description, and the body carries the authored instructions with accessible references. Never edit or commit generated skill output. On a refusal or stale-output report, fix the Markdown source or its references, rebuild and check again. The checks establish structure and package consistency, not whether an instruction is wise or its actor authorized.
 
 **4. Dry-run and install into a safe destination.** To exercise the generated packages without changing your real agent catalog, use a fresh temporary directory. Run these commands from the same checkout after a successful build and check:
 
@@ -139,9 +139,19 @@ demo=$(mktemp -d) &&
   python3 scripts/astrid_dev.py skills install --destination "$demo"
 ~~~
 
-The dry run requires current packages and displays intended link changes. The real install builds and links the repository's owned packages; foreign entries occupying an intended name are refused, not overwritten. The destination must already exist as a real directory, and `--destination` may be repeated. Inspect the resulting package directory symlinks in the temporary directory; remove that temporary directory when finished. An installed package must remain a directory symlink into this checkout so its references remain accessible; copying a generated file elsewhere is not the supported installation. If you tried the illustrative source, discard it in the disposable checkout and rebuild to remove its generated package.
+The dry run requires current packages and displays intended link changes. The real install builds and links the repository's owned packages; foreign entries occupying an intended name are refused, not overwritten. The destination must already exist as a real directory, and `--destination` may be repeated. Inspect the resulting package directory symlinks in the temporary directory; remove that temporary directory when finished. An installed package must remain a directory symlink into this checkout so its references remain accessible; each package's `repo` link points at the checkout root, so tools that follow symlinks (such as `find -L`) report a loop there; skip `repo` when walking a package. A repeat install also removes the stale link of a package you have retired, and only owned links; copying a generated file elsewhere is not the supported installation. If you tried the illustrative source, discard it in the disposable checkout and rebuild to remove its generated package.
 
 Only install into real Claude, Codex or other supported agent skill roots when the owner authorizes that installation. With no explicit destination, the installer uses existing supported skill roots. Use an explicit authorized destination and review the dry run first; verify the agent can discover the expected skill and read its references. Building or installing packages never grants execution, spending, merge or publishing authority.
+
+**5. Verify discovery from a client.** A newly started session must list the skill and be able to read its procedure and the run contract. For Claude Code, expose the disposable destination as a project skills directory and start a fresh non-interactive session that reads nothing from your own user settings:
+
+~~~sh
+proj=$(mktemp -d) && mkdir "$proj/.claude" && ln -s "$demo" "$proj/.claude/skills" &&
+  (cd "$proj" && claude -p --setting-sources project --allowedTools Read -- \
+    "List the astrid-dev- skills you can see, load astrid-dev-record-checkout-identity, quote its Procedure and read the shared run contract it links." < /dev/null)
+~~~
+
+The `--` stops `--allowedTools` swallowing the prompt and `< /dev/null` avoids the stdin warning. To retire the skill, remove its `skill: true` line, run the commands in step 3 and the install again: only that package disappears and unrelated entries stay. Other clients (Codex, for example) need their own project skills directory; this guide has not been run against them.
 
 ## Compose existing delivery relationships
 
