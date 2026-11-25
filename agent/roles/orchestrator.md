@@ -128,7 +128,7 @@ Choose the workstream that fits the environment and assignment; these are **path
 - [separate Codex Cloud sessions](orchestrator/codex-cloud-sessions.md) — Coordinate separate Codex Cloud sessions through the shared GitHub mailbox and durable session handoffs.
 - [Codex hosted inside Claude Cloud](orchestrator/codex-in-claude-cloud.md) — Host Codex workers or a manager inside Claude Cloud while preserving explicit ownership, permissions and recovery.
 - [Workstream: run a lane for the Release Lead](orchestrator/lane-orchestrator.md) — Run one lane of a release for the Release Lead end to end, deciding inside the plan and coming to the Lead only at anchor points.
-- [dispatch to fresh ChatGPT sessions](orchestrator/multi-manager-dispatch.md) — Dispatch and supervise Lead-approved packets in fresh ChatGPT sessions while leaving review and integration to the Lead.
+- [dispatch to fresh ChatGPT sessions](orchestrator/multi-manager-dispatch.md) — Dispatch and supervise authorized engineering, research and review packets in fresh ChatGPT sessions, using GitHub as the durable handoff.
 <!-- workstreams:end -->
 
 

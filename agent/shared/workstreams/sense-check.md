@@ -32,7 +32,7 @@ Distinguish scope (proposed design against current code) from completion (actual
 
 Write one short Markdown assignment in the owning project or release's existing packet/evidence location, or link the existing assignment. Name review kind, question, route, independence and permissions, exact base/head or source register, canonical records, original evidence and prior judgments, expected verdict and return location. For scope review provide the actual proposed diff and baseline; for completion provide exact candidate and proof. Use immutable Git references. Assemble a temporary attachment bundle only if needed; it is transport, not a second source.
 
-Return one report with reviewed identities, limitations, verdict and numbered BLOCKING/FOLLOW-UP/NOTE findings: evidence, impact, smallest amendment, owner and verification. Preserve disagreement and negative evidence. Store the original in the owning project's or release's evidence and link accepted changes from canonical records. Recheck material fixes independently without reopening unrelated settled questions.
+Return one report with reviewed identities, limitations, verdict and numbered BLOCKING/FOLLOW-UP/NOTE findings: evidence, impact, smallest amendment, owner and verification. Preserve disagreement and negative evidence. Store the original in the owning project's or release's evidence and link accepted changes from canonical records. In a delegated ChatGPT review, the reviewer pushes its own report under the explicitly authorized [evidence-only packet path](../../roles/manager/chatgpt-packet.md#receive--investigate-or-judge--submit-evidence-only); the reviewed candidate remains read-only. Recheck material fixes independently without reopening unrelated settled questions.
 
 ## Completion
 
