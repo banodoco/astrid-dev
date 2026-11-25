@@ -42,6 +42,8 @@ One meaning per word; two meanings, two terms.
 
 **plan:** a project as numbered in `plans/` (Plan NN), file `plan.md`.
 
+**loop plan:** a plan whose end state is known but whose tasks come from each round's live measurement; its `tasks.md` has a few setup cards and one standing loop card, run by the [live-loop workstream](../roles/manager/live-loop.md).
+
 **project pack:** `plans/<NN-name>/`: `plan.md`, `inputs.md`, `tasks.md`.
 
 **product pack:** a capability bundle in Astrid's agent repository.
