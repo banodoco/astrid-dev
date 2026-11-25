@@ -743,3 +743,327 @@ Source: `skills/shared/workstreams/astrid-dev-gap/SKILL.md`; destination: `agent
 
 Count: 57 found, 57 kept, 0 restored, 0 moved, 0 superseded.
 
+## workstreams/gpu-validate.md
+
+Source: `skills/shared/workstreams/astrid-dev-gpu-validate/SKILL.md`; destination: `agent/shared/workstreams/gpu-validate.md`. The evidence path is deliberately relocated by the Markdown-first migration (MS-7/D5; agent L91 states when it takes effect). One dated file per tested Agent SHA, commit and backlink remain required; no results are stored under authored agent instructions. Template fields in source L81–119 are format examples and remain present at L93–131. Contract fields reorganized as headings; skill identity is derived and checked by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: Real-GPU validation receipts for the exact revision and required matrix, with every rented pod released. | L10 | L14 | kept |
+| When to use: When the owner explicitly requests full GPU validation or the release gate requires real hardware proof. | L11 | L10 | kept |
+| Inputs: The pinned candidate revision, GPU matrix, model dependencies, credentials, approved budget and infrastructure permissions. | L12 | L18 | kept |
+| Procedure: Run the prescribed VibeComfy and Astrid probes on real GPU placements, capture per-cell failures and release all pods. | L13 | L22 | kept |
+| Completion: Every required cell has a recorded pass or failure, pods are released and a dated evidence file identifies revisions and limitations. | L14 | L26 | kept |
+| CPU proof cannot establish real inference, model downloads, custom-node installs or RunPod capacity. The matrix and dated evidence record below specify the hardware proof; | L16 | L28 | kept |
+| the skill was built under Plan 34 and is rerun when needed, not recreated as a new project. | L16 | L28 | kept |
+| Read the entrypoint and the shared run contract. | L18 | L30 | kept |
+| They own routing, provenance, review and authority; this skill owns only the GPU run. | L18 | L30 | kept |
+| On owner request: "run full GPU validation". | L22 | L34 | kept |
+| As a release gate: Release requires a passing run on the exact candidate for any release that touches generation. | L23 | L35 | kept |
+| No schedule. | L25 | L37 | kept |
+| Every run spends money, so it needs the owner's standing budget (below). | L25 | L37 | kept |
+| Without it, stop and ask; don't start a pod. | L25 | L37 | kept |
+| Hard cap: $20 per run (owner, 9 Nov 2026). The first run, Plan 34, has $24. | L29 | L41 | kept |
+| read the RunPod account balance and write it in the record. | L30 | L42 | kept |
+| If the balance is below the cap, stop and tell the owner. | L30 | L42 | kept |
+| after each cell, add the pod's elapsed cost to the running spend. | L31 | L43 | kept |
+| When the next cell's worst-case cost would pass the cap, stop: | L31 | L43 | kept |
+| release every pod, | L31 | L43 | kept |
+| record the cells not run as `not run (budget)`, and end. | L31 | L43 | kept |
+| read the balance again; spend is the difference. | L32 | L44 | kept |
+| If it disagrees with your running total by more than $1, say so in the record. | L32 | L44 | kept |
+| Every pod action (census, create, attach a volume, stop, terminate, balance) goes through runpod-lifecycle at the pin in Agent's `astrid/packs/runpod/pins.json`, or through Astrid's own `astrid … | L36 | L48 | kept |
+| Never call the raw RunPod SDK or API. | L36 | L48 | kept |
+| Census before and after every run: the pod count and each pod id with its status. Write both into the record. | L37 | L49 | kept |
+| A pod in the "before" census that this run did not make is not yours: leave it, and tell the owner. | L38 | L50 | kept |
+| Release every pod this run made, whatever happened, including on an error or an interrupted session. | L39 | L51 | kept |
+| The run is not over until the "after" census holds no pod of yours. | L39 | L51 | kept |
+| Never store, print or paste a credential. | L40 | L52 | kept |
+| Use the credential reference the environment provides; | L40 | L52 | kept |
+| redact any key that appears in a log before it goes in the record. | L40 | L52 | kept |
+| every slot from `astrid generate defaults --json` on the Agent revision under test, | L44 | L56 | kept |
+| read at run time (never a hard-coded list), | L44 | L56 | kept |
+| plus h3_av on the Matrix clip (80.886–83.305 s). | L44 | L56 | kept |
+| \| `runpod` \| always \| | L50 | L62 | kept |
+| \| `local` (managed install) \| only where a local GPU exists; otherwise run it on the pod as a local placement and say so \| | L51 | L63 | kept |
+| \| `attached` \| a ComfyUI the run starts on the pod or local GPU, reached as the user's own \| | L52 | L64 | kept |
+| Each cell is one `(slot, placement)` pair with pass, fail or not run. | L54 | L66 | kept |
+| Also check what CPU cannot prove (fetch destination against the checked models root, volume reuse across pods, poll-after-start, transport under large outputs): see Plan 34 … | L56 | L68 | kept |
+| Make one pod in the storage volume's datacenter. | L60 | L72 | kept |
+| For each slot, run that slot's workflow directly with VibeComfy's own commands (`prepare`, `fetch`, `run`), | L60 | L72 | kept |
+| with no Astrid routing. | L60 | L72 | kept |
+| A failure here is a model or node failure, not a routing failure. This step also fills the storage volume once; | L60 | L72 | kept |
+| the models must not be downloaded again later. | L60 | L72 | kept |
+| Record each slot's output or its first failing line. | L60 | L72 | kept |
+| On the same volume, run `astrid generate &lt;entry&gt; … --placement runpod` per slot, then `--placement local` and `--placement attached`. | L64 | L76 | kept |
+| Use warm reuse and the volume cache. Record: | L64 | L76 | kept |
+| the cold timing (first job on a fresh pod) and warm timings (later jobs); | L66 | L78 | kept |
+| the per-job overhead (total time minus the ComfyUI execution time); | L67 | L79 | kept |
+| reused the warm pod (same pod id) and that the pod was | L68 | L80 | kept |
+| reset between jobs (no leftover outputs or queue); | L68 | L80 | kept |
+| that no model was downloaded again. | L69 | L81 | kept |
+| Send each output to the owner. | L71 | L83 | kept |
+| A slot that failed in Step 1 is marked `blocked (step 1)` here, not re-run. | L71 | L83 | kept |
+| Each failing cell goes to Bug fixing: | L75 | L87 | kept |
+| reproduce it on CPU where possible, | L75 | L87 | kept |
+| fix it as a repair task through Iterate on the owning plan's plan branch, | L75 | L87 | kept |
+| then re-run that cell live. | L75 | L87 | kept |
+| Release the pod while the fix is made unless the fix is minutes away and the budget allows. | L75 | L87 | kept |
+| A run ends when every cell passes or the budget is spent. | L75 | L87 | kept |
+| One file per run: `skills/shared/workstreams/astrid-dev-gpu-validate/records/&lt;YYYY-MM-DD&gt;-&lt;short-sha&gt;.md`, | L79 | L91 (new plan/release evidence location) | moved |
+| where the short sha is the Agent revision under test. | L79 | L91 | kept |
+| Commit it to astrid-dev, and link it from the plan or release it serves. | L79 | L91 | kept |
+| A cell passes only on a real output from the inner command, bound to the revisions above. | L121 | L133 | kept |
+| A prepared-only result, a wrapper's green status or an earlier run is not a pass. | L121 | L133 | kept |
+| Run without the owner's standing budget, or past the cap. | L125 | L137 | kept |
+| Leave a pod running, or touch a pod this run did not make. | L126 | L138 | kept |
+| Store, print or commit a credential. | L127 | L139 | kept |
+| Use the raw RunPod SDK instead of runpod-lifecycle. | L128 | L140 | kept |
+| Patch around a failure on the pod and call the cell passed. | L129 | L141 | kept |
+
+Count: 71 found, 70 kept, 0 restored, 1 moved, 0 superseded.
+
+## workstreams/green.md
+
+Source: `skills/shared/workstreams/astrid-dev-green/SKILL.md`; destination: `agent/shared/workstreams/green.md`. Diagnostic versus qualifying run distinctions, native failure identities, ceiling/retirement authority, CI triggers and paid-work constraints all remain. Existing publication/ledger policies are not reconciled here. Contract fields reorganized as headings; skill identity is derived and checked by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: Complete, trustworthy test evidence showing either no new failures or diagnosed repair of old red without weakening checks. | L10 | L14 | kept |
+| When to use: When a candidate needs qualification or existing CI failures prevent reliable integration. | L11 | L10 | kept |
+| Inputs: The exact source and baseline revisions, original test inventories, runner and dependency identities, and authorized proof scope. | L12 | L18 | kept |
+| Procedure: Measure original jobs and identities, compare real failures, repair causes within scope and retain all regressions and gate evidence. | L13 | L22 | kept |
+| Completion: Native outcomes and raw exits reconcile with the stated claim, including blockers and any remaining red. | L14 | L26 | kept |
+| This skill owns how to read, complete and act on CI results. These rules have their own homes, and this skill links to them: | L16 | L28 | kept |
+| the regression rule and when a run bears load; | L17 | L29 | kept |
+| never weakening a check, and where local runs stop; | L18 | L30 | kept |
+| dispatch, integration and pushes; | L19 | L31 | kept |
+| the publish gate; | L20 | L32 | kept |
+| the green-mains projects' order, quarantine and completion: Plan 91 for the Agent, Plan 39 for the Runtime and the App; | L21 | L33 | kept |
+| the tools in `env/`. | L22 | L34 | kept |
+| Each single fix is one Iterate card. | L24 | L36 | kept |
+| Measure before you judge. A comparison is only as good as its least complete side. | L28 | L40 | kept |
+| No result is not a pass. | L29 | L41 | kept |
+| A required job that was cancelled, timed out, skipped when it should have run, or stopped in setup has NO-RESULT, | L29 | L41 | kept |
+| as does a test job that ran zero tests. | L29 | L41 | kept |
+| Never count it as green, and | L29 | L41 | kept |
+| never count its tests as missing. | L29 | L41 | kept |
+| A log that omits passes (pytest `-ra`) shows its failures, but can never support a complete comparison or a claim of zero regressions. | L29 | L41 | kept |
+| Diagnose freely; qualify once. | L30 | L42 | kept |
+| A NON-PROOF run tells you what is there, and never counts for a gate. | L30 | L42 | kept |
+| Only an ordinary run of the exact candidate, with complete reporting, qualifies (Iterate). | L30 | L42 | kept |
+| Full suites run on hosted CI (where local runs stop). | L31 | L43 | kept |
+| \| Is this candidate worse than its baseline, test by test? \| A: no new failures (a release or project gate) \| no blocking row, … | L37 | L49 | kept |
+| \| Why is this `main` red, and how do we make it green? \| B: retire old red (the green-mains projects: Plan 91 for the … | L38 | L50 | kept |
+| Both start at step 2. If step 2 can't complete, the first card in either mode is to fix the reporting. | L40 | L52 | kept |
+| For each side, and each workflow in scope: | L44 | L56 | kept |
+| 1. Inventory the jobs of the exact run, and sort each one into a kind: | L45 | L57 | kept |
+| a test job, which must report per-test results; | L46 | L58 | kept |
+| an aggregate (for example, the Agent's `unit` job only echoes, and reads "skipped" when a shard is cancelled); | L47 | L59 | kept |
+| a non-test check (lint, mypy, a build), compared by its own output; | L48 | L60 | kept |
+| an expected omission, a job that is meant to be skipped on this trigger. | L49 | L61 | kept |
+| The kind says what a usable result is: per-test lines for a test job, its own output for a non-test check, and its dependencies' results … | L50 | L62 | kept |
+| Every required job needs one. | L50 | L62 | kept |
+| A required job that is unexpectedly cancelled, skipped or absent is NO-RESULT, and blocks qualification; | L50 | L62 | kept |
+| only an omission the workflow defines for this trigger is exempt, with the reason recorded. | L50 | L62 | kept |
+| Fetch the logs (see Using GitHub Actions), | L51 | L63 | kept |
+| strip the timestamp prefix, and | L51 | L63 | kept |
+| keep the raw copies. | L51 | L63 | kept |
+| Count each test job's tests. | L52 | L64 | kept |
+| A count far below that job's usual count means a setup break, a collection abort or a hang, even when the job reads "success". | L52 | L64 | kept |
+| Count failures as distinct (job, id) pairs, not summary lines: one id can appear twice in a job's summary. | L52 | L64 | kept |
+| Find out what is behind each NO-RESULT with a NON-PROOF run. | L53 | L65 | kept |
+| Change only what stops the run, and | L53 | L65 | kept |
+| keep every marker, selector and lane option: | L53 | L65 | kept |
+| Cancel it; don't wait. Name the test: | L57 | L69 | kept |
+| collect the shard exactly as CI does (the same command, `--splits`, `--group` and `--durations-path`), | L57 | L69 | kept |
+| map the last progress line's characters onto that order, and | L57 | L69 | kept |
+| read the pytest-timeout dumps. | L57 | L69 | kept |
+| Run that test alone on both sides with `-o faulthandler_timeout=300`. | L57 | L69 | kept |
+| A scratch run that leaves out the hanging file changes coverage, and the shards' membership with it. So | L57 | L69 | kept |
+| compare by test id, | L57 | L69 | kept |
+| account for every id of the original inventory, and | L57 | L69 | kept |
+| keep the left-out ids unsorted \| | L57 | L69 | kept |
+| \| A setup step fails, so no tests run \| Fix the setup; it is usually one card. Then run again \| | L58 | L70 | kept |
+| \| A suite stops at its first failure (`-x`, `--maxfail`, a serial chain) \| Override only the stop. Append `--maxfail=0` after the job's own options, … | L59 | L71 | kept |
+| \| A failing gate skips the job's later steps \| Run the skipped steps once on a scratch ref \| | L60 | L72 | kept |
+| diagnostic_keep_going`, under the input contract in that workflow: legs `release9-then-install`, `fresh-install` or `both`, direct rows only. | L61 | L73 | kept |
+| Its gate is always red \| | L61 | L73 | kept |
+| A NO-RESULT closes only through an ordinary run of the exact commit with complete reporting. Usually that means | L63 | L75 | kept |
+| a reviewed reporting fix lands first, for example `-rA` in that repository's workflow. | L63 | L75 | kept |
+| A baseline run from a scratch commit counts only if the commit changes reporting alone, so the same tests run, and its row names that … | L64 | L76 | kept |
+| A commit that leaves tests out is diagnostic, and its left-out tests stay unsorted. | L65 | L77 | kept |
+| The gate's owner rules on any other case, and the ruling is recorded on the row. | L66 | L78 | kept |
+| reads pytest `-rA` summary lines only. App test runners (Vitest, Playwright) report per test, but nothing compares them yet. | L68 | L80 | kept |
+| Until an adapter exists, App per-test qualification is unresolved: say so on the gate, and | L68 | L80 | kept |
+| never stand in a by-name comparison for it. | L68 | L80 | kept |
+| Sort with `baseline-diff.py`, never by hand. | L72 | L84 | kept |
+| Give it each same-commit baseline run under its own label. | L72 | L84 | kept |
+| compare those baseline runs with each other. | L73 | L85 | kept |
+| A test that flips between runs of one commit gets its own row, with both runs, and | L73 | L85 | kept |
+| is never retried until green. | L73 | L85 | kept |
+| A flip excuses nothing: a candidate failure that passed on any baseline run is still a regression, and still blocks. | L73 | L85 | kept |
+| One row per failing or missing id. | L74 | L86 | kept |
+| Each row gives the bucket, candidate SHA, one-line cause, the commit or lane that introduced it, owner, disposition and link. | L74 | L86 | kept |
+| A regression, or a failing new test that checks the candidate's own behaviour: | L75 | L87 | kept |
+| blocks until its owner fixes it, or, for a release, the owner accepts it on that release's known ledger. | L75 | L87 | kept |
+| A failing new test that exposes a defect already on the baseline: | L76 | L88 | kept |
+| prove it on the baseline, | L76 | L88 | kept |
+| keep the test out of the candidate, and | L76 | L88 | kept |
+| give it a row in the green-mains plan. | L76 | L88 | kept |
+| Preexisting: listed only. | L77 | L89 | kept |
+| Missing: cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage (the contract's ruling). | L78 | L90 | kept |
+| A deleting commit alone doesn't clear it. | L78 | L90 | kept |
+| Find the introducing commit by bisecting across the candidate's merges, which are named lanes. | L79 | L91 | kept |
+| A failure in files an active lane owns goes to that lane: the test id, the commit, the first error and your best guess. | L79 | L91 | kept |
+| Re-sort at each load-bearing run. | L80 | L92 | kept |
+| The gate stands on the frozen candidate's qualifying run, with no blocking row left and no required job without a usable result. | L80 | L92 | kept |
+| A packet or task PR is judged on what its own change does. | L81 | L93 | kept |
+| A failure that also fails or flips on its base is not caused by it: it gets its own row and does not block that … | L81 | L93 | kept |
+| It is not excused, and its row still blocks the release candidate under step 2. To tell a suspected flip, | L81 | L93 | kept |
+| run that one test in isolation three times on the base and three on the head. | L81 | L93 | kept |
+| If it fails on any head run and on no base run, it is the change's. | L81 | L93 | kept |
+| Never rerun until green. | L81 | L93 | kept |
+| 7. To get a release branch green, run this mode on the head of `release/&lt;NN&gt;/main` (the stage); a regression goes to the plan that brought … | L82 | L94 | kept |
+| 1. Fix in layers, top first, because each layer hides the one below: | L86 | L98 | kept |
+| 1. reporting: complete runs, `-rA`, real aggregates; | L87 | L99 | kept |
+| 2. a few shared causes: setup, environment, a hang; | L88 | L100 | kept |
+| 3. the prune pass: tests of behaviour that is no longer supported, and duplicates (step 3); | L89 | L101 | kept |
+| 4. the long tail: stale tests, with real bugs among them. | L90 | L102 | kept |
+| Before the first fix lands, seal the measured failing (job, id) pairs as the project's ceiling, a file in the repository (the Agent's is `ci/agent-ceiling.tsv`). | L93 | L105 | kept |
+| Every batch run is compared with it by `env/baseline-diff.py`: | L93 | L105 | kept |
+| a failure not on the ceiling blocks, and so does a missing id. | L93 | L105 | kept |
+| Only the manager edits the ceiling, and | L93 | L105 | kept |
+| only to remove ids that passed in a hosted batch run; | L93 | L105 | kept |
+| cards never touch it. The ceiling is how a red repository tolerates its old failures while they are fixed. | L93 | L105 | kept |
+| It is not a quarantine: nothing on it is marked, skipped or hidden, and | L93 | L105 | kept |
+| it only shrinks. | L93 | L105 | kept |
+| Prune before fixing. | L94 | L106 | kept |
+| The owner rules once on what is still supported (the support line; for the Agent, Plan 91's D5: only current behaviour, and updating from the … | L94 | L106 | kept |
+| a test of behaviour outside that line is retired: deleted, citing the change that retired it or the ruling. | L95 | L107 | kept |
+| Where a user could still reach the old path (an API route, a command, a file the App opens), a test asserts that it refuses, … | L95 | L107 | kept |
+| a test that only repeats a passing test is redundant: deleted, naming the covering test and what both assert; | L96 | L108 | kept |
+| a test of something users do today is never deleted for being hard to fix. | L97 | L109 | kept |
+| Every deletion is listed in its pull request and | L99 | L111 | kept |
+| read by an `X` reviewer. This is a ruled deletion under the contract, | L99 | L111 | kept |
+| never a way to get a pass. | L99 | L111 | kept |
+| Select candidates by failure message and test name, judge each one, and | L99 | L111 | kept |
+| run the prune pass before the cause cards, because its verdicts decide which ids those cards fix at all. | L99 | L111 | kept |
+| Cluster by cause, not by file. | L100 | L112 | kept |
+| The key is the exception type plus the first frame in product code. | L100 | L112 | kept |
+| Rank clusters by the tests a fix would unblock. `cluster_failures.py` does this from job logs; it is the next tool to move into `env/`. | L100 | L112 | kept |
+| Name the kind of each cause, with evidence, and | L101 | L113 | kept |
+| fix it by kind: env, stale test, retired, redundant, product bug, flaky or unknown. Plan 91's triage rules give the allowed fix and the proof … | L101 | L113 | kept |
+| A stale-test fix quotes a source that states the new behaviour and postdates the test's last change; | L101 | L113 | kept |
+| without one, the kind is unknown. | L101 | L113 | kept |
+| One cause is one Iterate card. | L103 | L115 | kept |
+| Run every card whose scope doesn't overlap another's at the same time (scopes). | L103 | L115 | kept |
+| Land them in batches (pushes start CI), and re-sort once per batch. | L104 | L116 | kept |
+| A pull request into a release branch runs only a subset, and a push to a plan branch starts nothing in the Agent or the … | L105 | L117 | kept |
+| 7. Stop patching and spec a project (Plan) when any of these holds: | L106 | L118 | kept |
+| a cause needs a contract or schema decision; | L107 | L119 | kept |
+| a cause spans about ten files or more; | L108 | L120 | kept |
+| the same signature comes back after two batches. | L109 | L121 | kept |
+| A real bug gets its own fix card. | L110 | L122 | kept |
+| A test that can't be fixed in its card follows its project's quarantine rule (Plan 39's for the Runtime and the App), and | L110 | L122 | kept |
+| only once that rule's guard exists in the repository. The Agent's guard fails every xfail (`tests/lanes.py`), so | L110 | L122 | kept |
+| an Agent defect stays visibly red on the ceiling, with an issue and the owner's acceptance (Plan 91's D6). | L110 | L122 | kept |
+| 9. Fix where the change will ship: a fix branch under the release in progress, or a fix release for the published one (which, step … | L111 | L123 | kept |
+| REST through the session proxy, no token. | L115 | L127 | kept |
+| List runs: `GET /repos/&lt;o&gt;/&lt;r&gt;/actions/runs?branch=&lt;b&gt;` or `?head_sha=&lt;sha&gt;`. | L116 | L128 | kept |
+| List jobs: `.../runs/&lt;id&gt;/jobs?per_page=100`, or `.../runs/&lt;id&gt;/attempts/&lt;n&gt;/jobs` for an earlier attempt. | L117 | L129 | kept |
+| Fetch a log: `.../actions/jobs/&lt;id&gt;/logs` (follow the redirect). | L118 | L130 | kept |
+| Fetch artifacts: `fetch-artifacts.sh`. | L119 | L131 | kept |
+| Cancel your own run: `POST .../runs/&lt;id&gt;/cancel`. | L120 | L132 | kept |
+| Strip it with the regex `^\S+Z ` (for example, Python `re.sub`) before sorting, or the sorter finds nothing. | L121 | L133 | kept |
+| Grep for the failing ids rather than reading whole logs. | L121 | L133 | kept |
+| Logs and artifacts expire (test durations after 3 days, and some logs vanish), so | L121 | L133 | kept |
+| commit the evidence when you take it. | L121 | L133 | kept |
+| Know each workflow's trigger. Read its `on:` block before relying on a run. This is the one statement of what CI runs: | L122 | L134 | kept |
+| A push to `release/*/main` runs the full workflows. Agent: CI (15 jobs, including Windows and macOS), Lanes, Chat and the Windows journey. App: Tests, E2E … | L123 | L135 | kept |
+| A pull request into `release/*/main` runs a fast subset. Agent: fast checks, unit shard 1 of 8, boundary, chat and the Windows journey. App: Tests, … | L124 | L136 | kept |
+| A push to a plan or fix branch starts nothing in the Agent or App unless a pull request is open. | L125 | L137 | kept |
+| Runtime and VibeComfy run their full CI on every push and pull request. | L126 | L138 | kept |
+| The installed journey (`journey.yml`) is not started by release branches: dispatch it with `branch=release/&lt;NN&gt;/main`. | L127 | L139 | kept |
+| So the full suite first runs on the combined tree after a merge to the release branch, which is why getting the release branch green … | L128 | L140 | kept |
+| Before a gate, list every required workflow and where the candidate's run of each comes from. | L129 | L141 | kept |
+| Schedules fire only on the default branch. A `schedule:` trigger runs on `main` alone, so the Agent's nightly Lanes and journey, the Runtime's `Nightly` and … | L130 | L142 | kept |
+| Dispatch them there. | L130 | L142 | kept |
+| A scratch ref is your own branch, started with `POST .../actions/workflows/&lt;file&gt;/dispatches`, the header ` | L131 | L143 | kept |
+| Content-Type: application/json` (the proxy refuses the call without it) and `{"ref": "&lt;branch&gt;"}`. | L131 | L143 | kept |
+| Then find its run by listing runs for that branch. | L131 | L143 | kept |
+| It never enters a candidate. | L131 | L143 | kept |
+| Concurrency is set per workflow. | L132 | L144 | kept |
+| Read its `concurrency:` block. | L132 | L144 | kept |
+| Where `cancel-in-progress` is on, a new run on the same group cancels the one in flight. The Agent's `ci.yml` groups by workflow and ref; | L132 | L144 | kept |
+| manual journey dispatches never cancel each other. | L132 | L144 | kept |
+| The coordination rule is manage's. | L132 | L144 | kept |
+| An unexplained cancellation is NO-RESULT. A run cancelled where `cancel-in-progress` is off was cancelled by someone or something else. On 22–24 November 2026 that happened … | L133 | L145 | kept |
+| Find the cause before relying on that branch's runs. | L133 | L145 | kept |
+| Paid workflows. VibeComfy's `nightly-runpod.yml` and `e2e_matrix.yml` can rent RunPod pods. | L134 | L146 | kept |
+| Never dispatch them without paid authorization. | L134 | L146 | kept |
+| Diagnose on one shard or one file, not the whole matrix. | L135 | L147 | kept |
+| Re-run a cancelled shard only after you have changed or diagnosed its cause (two-same-signature rule). | L135 | L147 | kept |
+| Never wait on a run. While it runs, cluster the last results and brief the next batch. | L140 | L152 | kept |
+| Run everything independent at once: measurement, clustering and disjoint fix cards, using cheap helpers for the mechanical parts (routes). | L141 | L153 | kept |
+| Turn repeated judgment into a tool in `env/`. A recipe you have run twice by hand is the next tool card. | L142 | L154 | kept |
+| Spend review where it bears load: a disputed bucket, a change to an assertion, the decision to spec a project, and the qualifying run. | L143 | L155 | kept |
+| Record every friction in the process ledger, so the next run starts from a better skill. | L144 | L156 | kept |
+
+Count: 180 found, 180 kept, 0 restored, 0 moved, 0 superseded.
+
+## workstreams/improve.md
+
+Source: `skills/shared/workstreams/astrid-dev-improve/SKILL.md`; destination: `agent/shared/workstreams/improve.md`. Each canonical-home table row identifies one responsibility. Existing source references to generated layout are recorded as inherited; MSC-6 owns their retirement. Contract fields reorganized as headings; skill identity is derived and checked by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: A demonstrated Astrid Dev process or documentation failure corrected at its canonical source with regression proof. | L10 | L14 | kept |
+| When to use: When changing an Astrid Dev rule, term, skill, template, check or generated document. | L11 | L10 | kept |
+| Inputs: The recorded failure or need, one authoritative source, neighboring references, existing tests and permission to change the machinery. | L12 | L18 | kept |
+| Procedure: Identify the owning source, make the smallest coherent change, run the relevant checks and record the fix without duplicating policy. | L13 | L22 | kept |
+| Completion: Documentation and generated views remain consistent, original regressions are covered and the change's proof is recorded. | L14 | L26 | kept |
+| Enter through astrid-dev. Words follow the glossary. | L16 | L28 | kept |
+| A run rule: routes and families; taste tasks; stopping thresholds; authority, Run start, merges of progress PRs; commits only, credentials, rented machines; no test edited … | L22 | L34 | kept |
+| A role's own steps and selected workstreams: a Release Lead and its multi-manager workstream; a manager's progress, plan branch and worker cards (including `AskUserQuestion`); an … | L23 | L35 | kept |
+| \| Running Codex from a Claude session: workers are the default; a Codex manager's check-in \| Codex-in-Claude workstream \| judgment \| | L24 | L36 | kept |
+| \| Reading CI results, getting them complete, using GitHub Actions for tests \| green skill \| judgment \| | L25 | L37 | kept |
+| \| Installing skills for Codex \| the guide for that environment: Claude cloud or Codex cloud \| judgment \| | L26 | L38 | kept |
+| \| Vision wording: an element, an aspiration, its lists \| contribution workflow \| `subjects`, owner review \| | L27 | L39 | kept |
+| \| Release rationale, scope and contributions \| the release brief \| `release-documents` \| | L28 | L40 | kept |
+| \| Version and major-version decisions, with generated release material \| strategy; hierarchy \| `strategy-consistency`, `generated-views` \| | L29 | L41 | kept |
+| \| A term \| glossary \| judgment \| | L30 | L42 | kept |
+| \| A record of decisions \| the glossary names three: a manager's decision log, the decisions ledger, `inputs.md` Owner decisions \| judgment \| | L31 | L43 | kept |
+| \| A pack's shape; what a card holds \| the plan, inputs and tasks templates \| `pack-shape` \| | L32 | L44 | kept |
+| \| A project fact: name, goal, status, owner, estimate, waiting \| the six lines of its `plan.md` \| `plan-catalog` \| | L33 | L45 | kept |
+| \| Priority \| `plans/priority.md` \| `plan-catalog` \| | L34 | L46 | kept |
+| \| Claiming, proposing or finishing a project \| the contribution workflow \| the claim bot, `completion-assessment` \| | L35 | L47 | kept |
+| \| A check \| `scripts/checks.py`; how: extending guide \| its tests, `list` \| | L36 | L48 | kept |
+| \| A generated page \| `scripts/views.py`; how: extending guide \| `generated-views` \| | L37 | L49 | kept |
+| \| Who owns a project; who merges; accountability, not permission \| principle 5 in the principles; the glossary's project owner \| `catalog-paths`, judgment \| | L38 | L50 | kept |
+| \| A principle \| the principles \| judgment \| | L39 | L51 | kept |
+| \| A question, bug, observation or idea about Astrid \| the Issues section and each type's form \| GitHub's forms, judgment \| | L40 | L52 | kept |
+| \| Friction \| the process ledger \| `ledger` \| | L41 | L53 | kept |
+| Start from a recorded failure: a process ledger entry, an issue or an accepted card. | L45 | L57 | kept |
+| No failure, no change. | L45 | L57 | kept |
+| Find the home in the table. | L46 | L58 | kept |
+| Change it and nothing else; | L46 | L58 | kept |
+| replace any copy with a link to the home's heading. | L46 | L58 | kept |
+| 3. If you add words, cut as many. | L47 | L59 | kept |
+| Change what a check accepts, or add a check, in a separate, announced change: | L48 | L60 | kept |
+| list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract | L48 | L60 | kept |
+| bars editing one to get a pass. | L48 | L60 | kept |
+| Run `python3 scripts/astrid_dev.py check`; | L49 | L61 | kept |
+| the tests of what you touched (`python3 -m unittest discover -s scripts -p "test_&lt;file&gt;.py"`); | L49 | L61 | kept |
+| and `sync` if a generated page changed. | L49 | L61 | kept |
+| `check` confirms that a linked file exists and (`link-anchors`) that a `#heading` link into a skill, template or top-level doc names an existing heading. | L49 | L61 | kept |
+| A pull request is checked with `check --base &lt;base commit&gt; --body-file /dev/null`. | L49 | L61 | kept |
+| 6. Add a `fix` entry to the process ledger that ends `Follows: &lt;entry it resolves&gt;`. | L50 | L62 | kept |
+| Run it when a process ledger entry from a run names friction in the skills, or the owner asks; | L54 | L66 | kept |
+| never on a schedule. | L54 | L66 | kept |
+| `N` helpers each map one area read-only: a skill, a guide, the templates. | L54 | L66 | kept |
+| One high-judgment critic then verifies their claims against the code and judges them. | L54 | L66 | kept |
+| The output is ledger entries and at most one proposal, not edits. | L54 | L66 | kept |
+
+Count: 46 found, 46 kept, 0 restored, 0 moved, 0 superseded.
+
