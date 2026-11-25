@@ -105,20 +105,33 @@ traversal and structural refusals), not domain interpretation or a new registry.
 
 For example, a `project:53` **addresses** the `gap:CA-003` it names in its own
 plan, and a release **includes** that project only if the release brief
-lists it. A merely labeled GitHub issue or a non-frozen issue listing does
-**not** prove it shipped. A project's completion never closes its gap.
+lists it. A project's completion never closes its gap.
 
-Try the read-only queries on a qualified checkout:
+The registered `project-delivery` check runs on every repository
+`python3 scripts/astrid_dev.py check`, using the same delivery reader. Try the
+standalone read-only queries on a qualified checkout:
 
 ~~~sh
 python3 scripts/project_delivery.py check
 python3 scripts/project_delivery.py goal principle:open-by-design/open-decisions-and-working-knowledge
-python3 scripts/project_delivery.py issue 123
+python3 scripts/project_delivery.py issue 578
 ~~~
 
-The latter query returns release membership only for a frozen release issue
-ledger. Empty output means *no supported recorded relationship*, not proof
-that the issue was irrelevant or unfixed. No GitHub API access is needed or
-performed. A second pipeline, scheduler, generic DSL, approvals system or
-graph database is explicitly **not** part of this layer. This reader's
-domain scope must be reviewed when the underlying authoring contract changes.
+- `check` prints the number of validated records and typed relationships on
+  success; an invalid authored relationship is an error, not silently dropped.
+- `goal` prints one line per supported goal → gap → project → release path,
+  with four typed IDs and the primary/supporting role in parentheses after
+  the gap and the project. The query takes the aspiration ID without the
+  `goal:` prefix; the printed goal ID includes it.
+- `issue` prints recorded frozen release membership. Issue 578 appears in
+  the [frozen Release 14 issue ledger](../releases/14.md#issues), so the
+  output includes `issue:578 -> release:14`. A GitHub label or a non-frozen
+  issue listing alone does not establish membership; even frozen membership
+  does not prove the issue shipped or was fixed.
+
+For goal and issue queries, empty output means *no supported recorded
+relationship*, not proof that the goal was achieved or that the issue was
+irrelevant or unfixed. No GitHub API access is needed or performed. A second
+pipeline, scheduler, generic DSL, approvals system or graph database is
+explicitly **not** part of this layer. This reader's domain scope must be
+reviewed when the underlying authoring contract changes.
