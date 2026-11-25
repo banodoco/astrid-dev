@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import tempfile
 
+from agent_documents import SKILL_PREFIX
 from skill_builder import OUTPUT, check_packages
 
 
@@ -70,7 +71,7 @@ def _retarget_owned_link(link: Path, source: Path, expected_identity: tuple) -> 
     try:
         # The private same-filesystem directory ensures staging cannot replace
         # an unrelated entry and is normally removed on success or failure.
-        with tempfile.TemporaryDirectory(prefix=".astrid-dev-stage-", dir=link.parent) as tmp:
+        with tempfile.TemporaryDirectory(prefix=f".{SKILL_PREFIX}stage-", dir=link.parent) as tmp:
             staged = Path(tmp) / "package"
             staged.symlink_to(source, target_is_directory=True)
             # Preflight and the per-item check ran before staging. Recheck
@@ -126,7 +127,7 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
             raise ValueError(f"duplicate skill destination: {target}")
         target_identities[canonical] = (target, _identity(target))
         for item in sorted(target.iterdir()):
-            if (item.name in desired or not item.name.startswith("astrid-dev-")
+            if (item.name in desired or not item.name.startswith(SKILL_PREFIX)
                     and item.name not in ("astrid-dev", "shared")):
                 continue
             if _owned_link(item, root):
