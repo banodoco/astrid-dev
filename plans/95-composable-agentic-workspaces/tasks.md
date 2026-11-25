@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-Draft task list; all rows unchecked. It grants no execution authority: the run starts only when [Run start](inputs.md#planning-evidence) is recorded. Re-check every path and symbol named here against the code at dispatch, because Plans 72 and 73 are still landing.
+Task list; the run started on 25 November 2026 ([Run start](inputs.md#planning-evidence)); authority and the packet queue are on the [run board](run.md). Re-check every path and symbol named here against the code at dispatch, because Plans 72 and 73 are still landing.
 
 **Task ids:** `OT-1` to `OT-24`, `RS1`, `R`. **Critical path:** OT-1 → OT-4 → RS1 → OT-7 → OT-8 → OT-9 → OT-10 → OT-13 → OT-20 → OT-22 → OT-23 → R → OT-24, about 7 days of elapsed work. OT-3, OT-5 and OT-6 run during OT-4 and RS1; OT-15 starts with OT-1; OT-11, OT-12, OT-14, OT-16 to OT-19 and OT-21 run beside the path.
 
