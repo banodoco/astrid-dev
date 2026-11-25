@@ -55,7 +55,7 @@ Only when dispatching packets. The owner pastes it into the Orchestrator's own s
 
 ```text
 You are the Orchestrator for Release <N>, reporting to the Lead (mailbox name <lead name>).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev.
 Read releases/<N>/run.md at <SHA>, then on main at every hourly check. Ready rows link the packets.
 Board: the astrid-dev issue titled `board: release <N> <scope>` (<issue URL>), format in its first post. Your mailbox name: <name>.
 First do the board's startup checks and post one STATUS with each result; dispatch nothing until

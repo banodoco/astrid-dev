@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-A compact record for a **new project's** decision. Bugs and small fixes use their issue/PR evidence instead. The [planning skill](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) describes when a deeper independent review is worthwhile. For a draft, use **Pending — why. Next: action**; do not invent a source or approval.
+A compact record for a **new project's** decision. Bugs and small fixes use their issue/PR evidence instead. The [planning workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) describes when a deeper independent review is worthwhile. For a draft, use **Pending — why. Next: action**; do not invent a source or approval.
 
 **Scope decision:** Pending — The owner has not selected an end state. Next: present meaningful alternatives and record the actual decision.
 
