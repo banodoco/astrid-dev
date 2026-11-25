@@ -74,10 +74,21 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | [P73-05](packets/P73-05.md) Rule-preservation audit, shared documents | MSC-4 | Blocked on P73-02 and P73-03 merging | — | Extra High. In parallel with P73-04 |
 | [P73-06](packets/P73-06.md) Active consumers and the authoring guide | MSC-5 | Blocked on P73-03 merging | — | Extra High. Sweep with a count the orchestrator supplies |
 | [P73-07](packets/P73-07.md) Delete the old layout | MSC-6 | Blocked on P73-01, P73-04, P73-05 and P73-06 merging | — | Pro. Pro |
+| [P73-INT](packets/P73-INT.md) Absorb a landed Plan 71 or 72 (read-only fact-find, then the port) | MSC-9 | On REQUEST only | — | Extra High. A fresh session for each landing, on the orchestrator's REQUEST with the delta and link evidence |
 | [P73-RV](packets/P73-RV.md) High-judgment review (read-only, Pro) | P73-07 (route S) and the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** `agent/**` files are split between P73-02 and P73-03 by file (each packet lists its own); P73-04 and P73-05 split the audit by document group and may each fix only their own group's files. P73-01 writes `scripts/` and `.github/workflows/docs.yml`; P73-06 writes `README.md`, `CONTRIBUTING.md`, `docs/**`, `templates/**`, `env/**` and active release and plan documents; P73-07 deletes `skills/**` and `sync.sh`.
+
+## Landing with Plans 71 and 72
+
+Plan 73 is the last to reach `main`, so it absorbs the other two; nothing is rebased (the repository merges, never rewrites a published branch). The owner decides each merge into `main`; the order they land in does not matter to Plan 73.
+
+1. **Plan 72** and **Plan 71** each open their own completion pull request (PDC-7, GDC-7) once their sense check is accepted. They do not open a combined one: review intake labels exactly one `Project:` and one completion section per pull request.
+2. After each lands, the orchestrator merges current `main` into this project branch and runs **MSC-9**: the ChatGPT session ([P73-INT](packets/P73-INT.md)) fact-finds from the orchestrator's `git log` and `git grep` output and re-applies any `skills/` edit to its `agent/` home. Session limits: it cannot run git, code search is default-branch only, and it cannot verify link anchors, so the orchestrator supplies the evidence and runs `check` before accepting.
+3. Known surfaces (trial merge of the three heads into `main`, 25 November 2026: no conflicts, `check` exit 0, 683 tests): Plan 71's gap-workflow edit to `skills/shared/workstreams/astrid-dev-gap/SKILL.md` and 15 relative links into `skills/` in `docs/contribution-workflow.md`, Plan 71's `inputs.md` and eight evidence files; Plan 72's `scripts/checks.py` entry, `docs/checks.md` (regenerate after P73-07) and one section of `docs/extending.md`.
+4. At MSC-10 the orchestrator merges `main` once more. R and SC need not repeat if the new `main` commits touch nothing under `agent/`, `skills/`, `scripts/` or Markdown links into them (the delta check and `git diff --stat` prove it); otherwise the orchestrator asks the reviewer for a delta read of those commits only.
+5. Rollback is the revert of one merge commit per project; the project branches stay.
 
 ## Manager launch message
 
