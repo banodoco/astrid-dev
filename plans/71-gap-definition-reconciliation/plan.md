@@ -4,13 +4,13 @@
 
 **Goal:** A contributor or agent can reliably distinguish a meaningful missing Astrid capability from an issue, project or vision goal, and the existing gap catalogue is reassessed against actual issues, projects and verified outcomes using that standard.
 
-**Status:** active
+**Status:** done
 
 **Owner:** The orchestrator, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d` (accountable), with ChatGPT manager `p71-manager-1` dispatching fresh packet sessions; owner-authorized 24 November 2026
 
 **Estimate:** About 1–2 engineering days remain for the completion run (originally 10–16 for Phases 1–5); Phases 6–7 are deferred and unestimated.
 
-**Waiting on:** nothing to start: the completion run's cards are in [tasks.md](tasks.md#completion-run-owner-go-24-november-2026). Then the final review R, the owner's project-wide sense check and the owner's go to merge the project branch into `main`. Phases 6–7 remain deferred.
+**Waiting on:** nothing.
 
 **Run route:** astrid-dev-only
 
