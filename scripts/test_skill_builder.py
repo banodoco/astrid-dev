@@ -1,6 +1,5 @@
 """Focused generated-skill packaging, reference and refusal tests."""
 import os
-import re
 import subprocess
 import select
 import sys
@@ -1468,17 +1467,32 @@ b.build_packages(root)
         self.assertEqual(check_packages(self.root), [])
 
 
-_OLD_LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|\((?:\\[^\n]|[^()\\\n])*\)|[^()\\\n])+?)\)")
-
 
 class LinkPatternTests(unittest.TestCase):
     """The link pattern must not backtrack catastrophically and must keep matching ordinary links as before."""
 
-    SAME = (
-        "[x](../a.md)", '[x](../a.md "title")', "[x](<a b.md>)", "[x](<a(b).md>)", "[x](a(b).md)",
-        "[x](a(b(c)).md)", "[x](a\\(b\\).md)", "![x](image.png)", "[x](https://example.test/a<b)",
-        "[x](https://example.test/a>b)", "[x](https://example.test/a<>b)", "[x](https://example.test/a<b) >",
-        "[x](a) [y](b)", "[x]()", "[x](<>)", "[x](<a>b)",
+    # (text, expected search result (whole match, destination, span) or None, expected fullmatch or None),
+    # recorded from the pattern this one replaced: ordinary links must keep matching exactly as before.
+    UNCHANGED = (
+        ("[x](../a.md)", ("[x](../a.md)", "../a.md", (0, 12)), "[x](../a.md)"),
+        ('[x](../a.md "title")', ('[x](../a.md "title")', '../a.md "title"', (0, 20)), '[x](../a.md "title")'),
+        ("[x](<a b.md>)", ("[x](<a b.md>)", "<a b.md>", (0, 13)), "[x](<a b.md>)"),
+        ("[x](<a(b).md>)", ("[x](<a(b).md>)", "<a(b).md>", (0, 14)), "[x](<a(b).md>)"),
+        ("[x](a(b).md)", ("[x](a(b).md)", "a(b).md", (0, 12)), "[x](a(b).md)"),
+        ("[x](a(b(c)).md)", None, None),
+        ("[x](a\\(b\\).md)", ("[x](a\\(b\\).md)", "a\\(b\\).md", (0, 14)), "[x](a\\(b\\).md)"),
+        ("![x](image.png)", ("![x](image.png)", "image.png", (0, 15)), "![x](image.png)"),
+        ("[x](https://example.test/a<b)", ("[x](https://example.test/a<b)", "https://example.test/a<b", (0, 29)),
+         "[x](https://example.test/a<b)"),
+        ("[x](https://example.test/a>b)", ("[x](https://example.test/a>b)", "https://example.test/a>b", (0, 29)),
+         "[x](https://example.test/a>b)"),
+        ("[x](https://example.test/a<>b)", ("[x](https://example.test/a<>b)", "https://example.test/a<>b", (0, 30)),
+         "[x](https://example.test/a<>b)"),
+        ("[x](https://example.test/a<b) >", ("[x](https://example.test/a<b)", "https://example.test/a<b", (0, 29)), None),
+        ("[x](a) [y](b)", ("[x](a)", "a", (0, 6)), None),
+        ("[x]()", None, None),
+        ("[x](<>)", ("[x](<>)", "<>", (0, 7)), "[x](<>)"),
+        ("[x](<a>b)", ("[x](<a>b)", "<a>b", (0, 9)), "[x](<a>b)"),
     )
 
     def test_unclosed_destinations_are_matched_in_bounded_time(self):
@@ -1500,12 +1514,12 @@ class LinkPatternTests(unittest.TestCase):
     def test_ordinary_links_match_exactly_as_the_previous_pattern_did(self):
         from skill_builder import _LINK
 
-        for text in self.SAME:
-            for name in ("search", "fullmatch"):
-                with self.subTest(text=text, method=name):
-                    old, new = getattr(_OLD_LINK, name)(text), getattr(_LINK, name)(text)
-                    self.assertEqual(None if old is None else (old.group(0), old.groups(), old.span()),
-                                     None if new is None else (new.group(0), new.groups(), new.span()))
+        for text, searched, full in self.UNCHANGED:
+            with self.subTest(text=text):
+                match = _LINK.search(text)
+                self.assertEqual(None if match is None else (match.group(0), match.group(2), match.span()), searched)
+                whole = _LINK.fullmatch(text)
+                self.assertEqual(None if whole is None else whole.group(0), full)
 
     def test_angle_form_is_a_destination_only_at_its_start(self):
         from skill_builder import _LINK
@@ -1515,7 +1529,6 @@ class LinkPatternTests(unittest.TestCase):
         self.assertIsNone(_LINK.fullmatch("[x](a<b)c>d)"))
         raw = "[x](https://example.test/a<(`>x`)y)"
         self.assertEqual(_LINK.fullmatch(raw).group(0), raw)
-        self.assertEqual(_OLD_LINK.fullmatch(raw).group(0), raw)
         self.assertEqual(_LINK.search(raw).group(0), raw)
 
 
