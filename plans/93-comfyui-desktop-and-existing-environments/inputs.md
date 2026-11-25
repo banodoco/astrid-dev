@@ -40,7 +40,7 @@ The estimate follows the critique's 4–6 days, plus the ladder contract, which 
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the ladder, because CD-2 to CD-5 and Plan 94 build on it, and R at most 1. Next: the owner confirms (D4).
 
-**Run start:** Pending — no implementation is authorized. Next: the owner names the accountable orchestrator, approves the machine or tester, the matching build and what may change on that machine (D2, D5), and the base; then record the date and limits here.
+**Run start:** Pending — no implementation is authorized. Next: the owner names the accountable orchestrator, confirms the user test request's limits and the matching build (D2, D5), and the base; then record the date and limits here.
 
 ## Owner decisions
 
@@ -52,7 +52,7 @@ Each is a recommendation until the owner confirms it in writing.
 | D2 | What is qualified | One Windows NVIDIA machine and one ComfyUI Desktop version, proved with a real image. Running Portable, Git and Pinokio stay regression checks; anything else is labelled unqualified. |
 | D3 | Who starts ComfyUI Desktop | The person, when Astrid asks. Astrid never launches, restarts, updates or replaces Desktop or Pinokio. Native launch is cut from this plan; revisit only if the witness shows asking is not enough. |
 | D4 | The split and the reviews | Keep two plans with the handoff in plan.md: this plan defines the ladder and owns existing installs, and Plan 94 owns the separate install when nothing usable is left. One review stop on the ladder, and one final review. |
-| D5 | The base and the tester | `release/16/main` once it is cut, or an owner-approved early start on `release/15/main`, with the SHA recorded. A named tester or the owner's approved machine, with consent covering what CD-0 and CD-5 observe and change. |
+| D5 | The base and the tester | `release/16/main` once it is cut, or an owner-approved early start on `release/15/main`, with the SHA recorded. A tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), within its Limits and consent, which the owner confirms; no lane tests on the owner's machine. |
 
 ## Source identities
 

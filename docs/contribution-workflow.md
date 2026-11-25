@@ -239,6 +239,13 @@ Report anything you notice in Astrid here. Each form defines its headings:
 - [bug](../.github/ISSUE_TEMPLATE/bug.yml): a failure to fix or recover from.
 - [question](../.github/ISSUE_TEMPLATE/question.yml): anything for the maintainers.
 - [idea](../.github/ISSUE_TEMPLATE/idea.yml): something missing; it never creates a gap.
+- [usertest](../.github/ISSUE_TEMPLATE/usertest.yml): a request for a person to try a real journey on their own machine, before a release on a tester build or after it on the published version.
+
+**User test requests.** A journey that needs real hardware or a real install (a GPU, ComfyUI Desktop, a clean machine) is tested by a person, not by a lane on the owner's machine. The plan's orchestrator files one `usertest` request per round, with its plan in `About`. Each request:
+- says what to test and when, the build, the machine and starting state, the steps, and what to record;
+- lists what may change on the machine, the disk, download and time limits, and that nothing is paid for. Anything not listed is not allowed.
+
+The tester reports on the issue. The orchestrator reads the report into the plan's evidence, and closes the request as completed when its result is recorded. A request whose build is not ready waits in Backlog.
 
 **Dispatch is not issue intake.** A [Release Lead's dispatch packet](../agent/roles/leader/multi-manager-release.md) is a short Markdown brief under `releases/<N>/packets/` referring to accepted `tasks.md` rows, linked from the release `run.md`, **not a new GitHub issue**. Do not turn packets into issue labels or a second project catalog. For separate agent chats, reuse an existing release coordination issue if present; otherwise one explicitly named coordination-only issue may carry mailbox comments under the [existing Codex Cloud protocol](../agent/guides/codex-cloud/README.md); it does not enter the release issue list, grant authority, or replace task evidence. It may still appear in ordinary issue searches; keep it to one per release, with no `plan:NN` or `release:NN` labels. Only the coordination issue explicitly linked from `run.md` is exempt from product issue triage; no new label or automated issue state is needed.
 

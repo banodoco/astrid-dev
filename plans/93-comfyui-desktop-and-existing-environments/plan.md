@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, the installed Desktop witness and review 1–1.5. Assumes an approved Windows NVIDIA machine and a matching editor; re-estimate if CD-0 cannot tie a Desktop install to its endpoint.
+**Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, the installed Desktop witness and review 1–1.5. Assumes a tester takes the user test request on a matching build; re-estimate if CD-0 cannot tie a Desktop install to its endpoint.
 
-**Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; an approved Windows NVIDIA machine with ComfyUI Desktop, or a consented tester, and a matching editor build; Release 16's base for the branch.
+**Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; a tester taking [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on a matching tester build; Release 16's base for the branch.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -51,7 +51,7 @@ The agent's skills reduce to: run `generate targets`, and do what its next actio
 - the existing-install rungs for ComfyUI Desktop on Windows: a running install, a closed one, a stale registration whose recorded files are gone (#1848), a wrong responder on the install's port, a denied or ambiguous observation, and several installs;
 - next actions: the person-side start instruction, re-probing after it, and attaching the chosen endpoint through the existing consented placement (Plan 20's `settings set placement`, Plan 32's path);
 - the setup and VibeComfy skills and the editor's connection copy, saying the same states;
-- one installed Desktop witness on a real Windows NVIDIA machine, with the existing Portable, Git and Pinokio cases checked for regressions where available.
+- one installed Desktop witness, run by a tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) before or after the release, with the existing Portable, Git and Pinokio cases checked for regressions where available. No lane tests on the owner's machine.
 
 **Not included:**
 - Astrid launching Desktop itself (the native launch boundary is Linux-only today and needs Desktop's own launcher; see D3);
@@ -73,11 +73,11 @@ The plan reuses all of these and changes only what makes an unchecked target loo
 
 ## Sequence and readiness
 
-1. **CD-0:** capture the real Desktop states on the approved machine and inventory the code and tests.
+1. **CD-0:** capture the real Desktop states from #1848's report and inventory the code and tests.
 2. **CD-1:** the ladder contract, then **RS1** reviews it, because Plan 94 and the rest of this plan build on it.
 3. **CD-2 and CD-3:** the existing-install rungs and the next actions, in parallel.
 4. **CD-4:** the wording.
-5. **CD-5:** the installed witness.
+5. **CD-5:** the installed witness, through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952).
 6. **R:** the final review.
 
 Plan 94 starts its install branch once RS1 accepts the ladder. The details are in [tasks.md](tasks.md). Recording this plan authorizes no implementation.
@@ -100,7 +100,7 @@ Plan 94 starts its install branch once RS1 accepts the ladder. The details are i
 
 ## Completion
 
-On the declared Windows NVIDIA machine and Desktop version, through the installed CLI and the matching editor:
+On the declared Windows NVIDIA machine and Desktop version, run by a tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on the installed CLI and the matching editor:
 - **A running Desktop** is found, identified as that install, attached, and produces an image in the editor.
 - **A closed Desktop** gets "open it", and once the person opens it, the next check continues to an image.
 - **A stale registration** is diagnosed as broken, with no data deleted, and the next action offers Desktop's reinstall or Plan 94's separate copy.

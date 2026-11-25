@@ -78,7 +78,7 @@ def run(live, root, existing=TYPES, ev=None):
 class TitleTests(unittest.TestCase):
     def test_type_word_before_a_colon_ignoring_case(self):
         for title, want in (("observation: slow", "observation"), ("Bug: crash", "bug"),
-                            ("QUESTION : how", "question"), ("idea:x", "idea"),
+                            ("QUESTION : how", "question"), ("idea:x", "idea"), ("usertest: Desktop journey", "usertest"),
                             ("[Bug] crash", "bug"), ("[bug]crash", "bug"),
                             ("  bug: padded\n", "bug")):
             with self.subTest(title=title):
@@ -90,7 +90,7 @@ class TitleTests(unittest.TestCase):
             with self.subTest(title=title):
                 self.assertIsNone(type_label(title))
 
-    def test_type_words_match_the_four_forms(self):
+    def test_type_words_match_the_forms(self):
         forms = {t: ROOT / ".github" / "ISSUE_TEMPLATE" / f"{t}.yml" for t in TYPES}
         for word, path in forms.items():
             text = path.read_text(encoding="utf-8")

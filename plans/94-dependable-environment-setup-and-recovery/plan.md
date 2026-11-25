@@ -10,7 +10,7 @@
 
 **Estimate:** 1–2 engineering days for ER-0 and ER-1, then estimated from that baseline. Once ER-0 has chosen the route, the install branch, GPU rung, resumable downloads and skill wiring are likely 6–10 more, and the live loop runs until two passing rounds.
 
-**Waiting on:** the owner's decisions D2–D6 in [inputs.md](inputs.md#owner-decisions) and the Run start; [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md)'s readiness ladder (its RS1) for ER-2 to ER-5; an approved Windows NVIDIA machine or a consented tester, and a matching editor build; Release 16's base for the branch.
+**Waiting on:** the owner's decisions D2–D6 in [inputs.md](inputs.md#owner-decisions) and the Run start; [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md)'s readiness ladder (its RS1) for ER-2 to ER-5; a tester taking [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on a matching tester build; Release 16's base for the branch.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
 
@@ -94,7 +94,7 @@ The plan reuses Plan 20's setup flow, Plan 32's placement, Plan 34's GPU evidenc
 A [loop plan](../../agent/roles/manager/live-loop.md):
 1. **ER-0 and ER-1:** the inventory and route choice, and the baseline, beside Plan 93's CD-0 and CD-1.
 2. **ER-2 to ER-5:** once Plan 93's RS1 accepts the ladder, the install branch, the GPU rung, resumable downloads and skill wiring. RS1 reviews the install's write and consent boundary.
-3. **ER-L:** the live loop, until two consecutive passing rounds or a recorded stop.
+3. **ER-L:** the live loop, each round one run of [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) by a tester, until two consecutive passing rounds or a recorded stop. No lane tests on the owner's machine.
 
 Details are in [tasks.md](tasks.md). Recording this plan authorizes no implementation, hardware use or spend.
 
@@ -117,7 +117,7 @@ The proof can feed Release 17's stable qualification, not replace it.
 
 ## Completion
 
-The bar: an external coding agent with only Astrid's maintained instructions and a creative intention. On the declared Windows NVIDIA combination, through the installed CLI and the matching editor, it takes these, each to an image in the editor (then a warm image), on two consecutive rounds:
+The bar: an external coding agent with only Astrid's maintained instructions and a creative intention, run by a tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952). On the declared Windows NVIDIA combination, through the installed CLI and the matching editor, it takes these, each to an image in the editor (then a warm image), on two consecutive rounds:
 - a clean machine;
 - a machine whose Desktop Plan 93 reports as broken.
 
