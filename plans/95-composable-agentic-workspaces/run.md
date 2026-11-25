@@ -67,6 +67,8 @@ Cap: three Running or Review at once (ruling 6). Priority: P95-04, P95-06, P95-0
 | [P95-05](packets/P95-05.md) Lift the Markdown, Git, check and view engines | OT-5 | Ready (OT-3 merged; Otto main `ef946b9d`) | — | High. Beside P95-04 and P95-06 |
 | [P95-06](packets/P95-06.md) Lift the skill reader, builder and installer | OT-6 | Ready (OT-3 merged; Otto main `ef946b9d`) | — | Extra High. Beside P95-04 and P95-05 |
 | [P95-07](packets/P95-07.md) Workspace config and record kinds as data | OT-7 | Ready (RS1 accepted; OT-5 merged; Otto main `4179ba5f`) | — | Extra High. Alone on the critical path; OT-8 and OT-11 follow it |
+| [P95-16](packets/P95-16.md) Otto guidance: stand-up playbook, run-contract core, glossary | OT-16 | Ready (OT-15 merged into `project/95-otto`) | — | Extra High. Beside P95-17 and P95-07 |
+| [P95-17](packets/P95-17.md) Otto guidance: generic roles and workstreams | OT-17 | Ready (OT-15 merged; merges after P95-16) | — | High. Beside P95-16 and P95-07 |
 | [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
 
