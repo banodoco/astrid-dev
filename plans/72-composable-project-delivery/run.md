@@ -2,9 +2,9 @@
 
 The live state of Plan 72's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (21:30 UTC, Tue 24 Nov)
+## Now (22:30 UTC, Tue 24 Nov)
 
-Set up, not started. The orchestrator starts with the lane's integration card once the owner merges the setup PR; packets become Ready as their dependencies merge.
+The integration card has landed: the project branch is at `c29908e587b59dc1ba8fc3891cce7ee94480412d`. Ready: P72-01. The first packet goes alone until its early STATUS proves a packet session can push, open a draft PR and comment.
 
 ## Authority
 
@@ -22,7 +22,7 @@ On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`,
 2. **Proof runs where the network is.** Packet sessions write code and tests and end with `READY-PROOF <repo> <PR> <head> <selectors>`; the orchestrator runs `python3 scripts/astrid_dev.py check`, `python3 -m unittest discover -s scripts -p "test_*.py"` and the packet's focused selectors on the exact head, and posts the result.
 3. **The destination is the project branch.** Where the packet workstream says `release/<N>/plan-<P>`, read `project/72-composable-project-delivery`. Cut each task branch from its current head; merge it in, never rebase; post BLOCKED if the board lists a different head for an existing draft.
 4. **Dependants wait only for the cards they depend on,** not for a whole packet.
-5. **Reviews are the orchestrator's.** It reviews each submission itself on the run contract's routes (high-judgment for S cards and for any change to what a check accepts or refuses). It never asks a packet to review another packet. The one exception is the owner's project-wide sense check: a read-only session the manager starts only on the orchestrator's REQUEST, in GPT-6.2 Astra at High as the owner asked, at most two rounds. If that mode is not offered, the manager says so and the orchestrator asks the owner.
+5. **Reviews.** The orchestrator runs every proof and reviews ordinary submissions itself. A high-judgment verdict goes to a fresh, read-only ChatGPT session in **Pro** (owner, 24 November 2026), using the review packet [P72-RV](packets/P72-RV.md). That covers S packets, any change to what a check accepts or refuses, and the final review R; in this plan, P72-01 (it changes what `check` refuses) and the final review R (up to two rounds). The manager starts it only on the orchestrator's REQUEST, which names the review kind, the pull request, the exact head and the proof results, and it starts a fresh session for each REQUEST. No packet session reviews its own work. The owner's project-wide sense check is separate: a read-only session in **Pro** in normal ChatGPT Chat (owner, 24 November 2026; it replaces GPT-6.2 Astra at High), at most two rounds, also started only on the orchestrator's REQUEST. Astra is not substituted. If Pro is not offered, the manager says so and the orchestrator asks the owner, who starts the review manually in Pro.
 6. **Cap:** at most two packets Running or Review in this plan at once. The first packet goes alone, until its early STATUS shows a session can push, open a draft PR and comment.
 7. **Sessions:** packet sessions run in a normal ChatGPT Chat, not Work. One writer per branch: replace a stopped session only after its branch has been still for 30 minutes, naming the head in the replacement's first message.
 8. **Plan records:** `plans/72-composable-project-delivery/*.md` change on `main` only through the orchestrator's progress PRs. A packet may add only the evidence file its packet names.
@@ -57,7 +57,7 @@ The manager does these first, posts one STATUS with each as passed or failed, an
 5. **The hour:** a reminder that fires every hour, verified by one firing.
 6. **GitHub from a packet session:** proved by the first packet's early STATUS: it pushed a `p72/<card id>` branch, opened a draft PR into `project/72-composable-project-delivery` and commented on #1881.
 7. **GitHub for the manager:** it can read pull requests, commits and workflow runs in astrid-dev, and comment on #1881.
-8. **Capacity:** how many ChatGPT sessions the account can run at once, and whether Extra High, Pro and GPT-6.2 Astra at High are offered.
+8. **Capacity:** how many ChatGPT sessions the account can run at once, and whether Extra High and Pro are offered.
 
 The orchestrator's own check (it runs the proofs): it can clone astrid-dev, run both checks and one focused test. Passed on 24 November 2026.
 
@@ -67,9 +67,10 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
-| [P72-01](packets/P72-01.md) Delivery integrity as a registered check | PDC-3 | Blocked on PDC-1 (orchestrator's lane) | — | Extra High. First packet, alone |
-| [P72-02](packets/P72-02.md) Duplicate interpretation and the extension guide | PDC-4 | Blocked on P72-01 merging | — | Extra High. Investigation STATUS first |
-| [P72-SC](packets/P72-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | GPT-6.2 Astra, High. Started only on the orchestrator's REQUEST |
+| [P72-01](packets/P72-01.md) Delivery integrity as a registered check | PDC-3 | Ready (project head `c29908e5`) | — | Extra High. First packet, alone |
+| [P72-02](packets/P72-02.md) Duplicate interpretation and the extension guide | PDC-4 | Ready (project head `23e74d34`, P72-01 merged) | — | Extra High. Investigation STATUS first |
+| [P72-RV](packets/P72-RV.md) High-judgment review (read-only, Pro) | P72-01 (it changes what `check` refuses) and the final review R (up to two rounds) | On REQUEST only | — | Pro. A fresh session for each REQUEST |
+| [P72-SC](packets/P72-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** P72-01 writes `scripts/checks.py:REGISTRY` and its tests; P72-02 writes link-deriving functions in `scripts/export_public_vision.py`, `scripts/project_contract.py`, `scripts/gap_relationships.py` and one section of `docs/extending.md`. They run in that order. Plan 73's P73-01 also edits `scripts/checks.py` (a different function) and P73-06 edits other sections of `docs/extending.md`: different functions and sections are not a conflict (ruling 1).
 

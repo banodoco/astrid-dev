@@ -16,6 +16,7 @@ The Qualifier finds, measures, records and reports. **It never decides that a fa
    - **Update:** a real Release 14 install updated to the Release 15 candidate and then rolled back, with no project data lost.
 3. **Nothing harmful:** no lost work, no broken install or update, no wrong output on a real path.
 4. **The owner's go names exact SHAs** for every repository; she checks the result on her own long-lived install afterwards.
+5. **Pre-publish check (Lead DECISION r15-lead-q-0005):** the Release 15 manifest's `release` field must be `15` (not `14`) on the frozen candidate. The Qualifier reads it from the candidate manifest and records the value and the manifest SHA in the evidence directory; a different value blocks publishing.
 
 ### Tier 2 — should pass, or ship with the owner's OK as a known issue
 
