@@ -1316,4 +1316,274 @@ Source: `skills/roles/astrid-dev-orchestrate/workstreams/codex-cloud-sessions.md
 
 Count: 19 found; 19 kept; 0 restored; 0 moved; 0 superseded.
 
-*Draft in progress: remaining 7 document audits follow before READY-PROOF.*
+
+## agent/roles/orchestrator/codex-in-claude-cloud.md
+
+Source: `skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud.md` at M. Destination: `agent/roles/orchestrator/codex-in-claude-cloud.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: Codex work hosted inside Claude Cloud with explicit permissions, ownership and recoverable execution. | 9 | 13 | kept |
+| When to use: When a Claude Cloud Orchestrator hosts Codex as workers or, with justification, as a managed process. | 10 | 9 | kept |
+| Inputs: The approved task or plan, assigned actors, permissions, tool availability, current checkout, and environment guide. | 11 | 17 | kept |
+| Procedure: Establish noninteractive permissions, use the documented Codex-hosting path and preserve source, run and recovery evidence. | 12 | 21 | kept |
+| Completion: Delegated work and remaining blockers have verified receipts and an authorized handoff | 13 | 25 | kept |
+| no silent permission or merge escalation occurred. | 13 | 25 | kept |
+| Choose when a Claude Cloud session runs Codex in its container, either as workers (default) or, when justified, as a managed Codex process. | 15 | 27 | kept |
+| The detailed commands and scripts remain in the environment guide | 15 | 27 | kept |
+| do not copy them here. | 15 | 27 | kept |
+| Follow the general Orchestrate role and run contract. | 15 | 27 | kept |
+| A session that waits on a prompt nobody sees is a stalled run. | 19 | 31 | kept |
+| Before any work starts: | 19 | 31 | kept |
+| Worker sessions and their permissions are set up as in manage step 1. | 21 | 33 | kept |
+| Add a missing allow rule by PR with the owner's OK: a rule change is a change to permissions. | 21 | 33 | kept |
+| Refusals: who may lift one is in the run contract. | 22 | 34 | kept |
+| Merges: a manager merges its own progress pull requests | 23 | 35 | kept |
+| every other merge into main needs the owner's go (the rule). | 23 | 35 | kept |
+| Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the plan PRs | 23 | 35 | kept |
+| my progress PRs auto-merge") and record that go on the Run start line (run.yaml is local and git-ignored, so it can't carry it: who answers | 23 | 35 | kept |
+| for a run). | 23 | 35 | kept |
+| A Claude cloud session can run Codex in its own container (codex-in-claude-cloud/). | 27 | 39 | kept |
+| There are two shapes, and the first is the default: | 27 | 39 | kept |
+| \| Codex workers (default) \| The Claude session manages: it briefs each card, starts one codex exec per card on the card's route, checks the | 31 | 43 | kept |
+| \| A Codex manager \| A long-running Codex process manages its own sub-agents; the Claude session hosts it and still answers for the run \| | 32 | 44 | kept |
+| This is the one statement that Codex workers are the default | 34 | 46 | kept |
+| every other file links here. | 34 | 46 | kept |
+| Each route's model is in the run contract's table. | 34 | 46 | kept |
+| A Codex manager is a second manager in the same container: it can't commit, reaches you only through a mailbox, and needs a runner and | 34 | 46 | kept |
+| a keep-alive. | 34 | 46 | kept |
+| Don't add that layer by default, and never tell a session to "run the Codex manager" when you mean "send the cards to Codex". | 34 | 46 | kept |
+| The rest of this section applies only when you have chosen a Codex manager. | 36 | 48 | kept |
+| A worker restart kills every process, the keep-alive included. | 37 | 49 | kept |
+| Your hosting check-in is a different timer from the owner's cadence in path 3: while a Codex manager's run is live, keep one scheduled (send_later) | 37 | 49 | kept |
+| at most 20 minutes away, and have it re-arm codex-hold.sh with all live run folders. | 37 | 49 | kept |
+| The daemon and its SessionStart hook, which the owner adds because auto mode refuses Claude's edits to its own settings, are in the README. | 37 | 49 | kept |
+| Install the astrid-dev skills for Codex (README) | 38 | 50 | kept |
+| the brief gives the manager its plan, branches, route lines and the rules that differ under Codex. | 38 | 50 | kept |
+| Brief a manager as a manager. | 39 | 51 | kept |
+| Start every Codex manager from manager-brief.md, and re-read it before each new run, because it changes. | 39 | 51 | kept |
+| Codex takes its authority only from its starting prompt: a mailbox note can't later grant it merge rights or change its role. | 39 | 51 | kept |
+| A prompt that forbids integrating ("never push to a release branch") makes Codex a worker, and you end up relaying every branch. | 39 | 51 | kept |
+| To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end DONE) and start a fresh manager run | 39 | 51 | kept |
+| from the handover. | 39 | 51 | kept |
+| You host it. | 40 | 52 | kept |
+| Codex can't keep itself alive, wake itself, reach the owner or run a model outside Codex | 40 | 52 | kept |
+| you hold all of those. | 40 | 52 | kept |
+| Say "my run" and "my Codex manager". | 40 | 52 | kept |
+| At every check-in, without waiting for the mailbox: | 40 | 52 | kept |
+| - Compare tasks.md and the plan branch with the last check-in. | 41 | 53 | kept |
+| If nothing moved, read codex.log for why and send one next action through to-codex.md. | 41 | 53 | kept |
+| - Start every task Codex can't run (a route bound to a Claude model, or the review) as soon as its inputs have landed, or | 42 | 54 | kept |
+| Codex writes READY: &lt;task id&gt; to the mailbox | 42 | 54 | kept |
+| don't wait to be asked. | 42 | 54 | kept |
+| - Clear what is stuck on your side: an unmerged or conflicting progress PR, a dead runner, a refused command to take to the owner. | 43 | 55 | kept |
+| - Open the final PR and bring the owner their decisions. | 44 | 56 | kept |
+| Codex still manages the tasks. | 45 | 57 | kept |
+| Don't redo its fixes, re-review what its reviewer passed, or relay its branches: it dispatches, judges and integrates under its starting brief. | 45 | 57 | kept |
+| Answer its questions, and raise a structural cause when its reports show a pattern it hasn't named. | 45 | 57 | kept |
+
+Count: 58 found; 58 kept; 0 restored; 0 moved; 0 superseded.
+
+
+## agent/roles/orchestrator/multi-manager-dispatch.md
+
+Source: `skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md` at M. Destination: `agent/roles/orchestrator/multi-manager-dispatch.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: Authorized release packets assigned and supervised through fresh ChatGPT sessions with a reliable Lead handoff. | 9 | 13 | kept |
+| When to use: When the Release Lead has prepared a packet queue and an owner has authorized the Orchestrator to dispatch it. | 10 | 9 | kept |
+| Inputs: The live run board, accepted packet briefs, task rows, mailbox, session access, capacity and dispatch authority. | 11 | 17 | kept |
+| Procedure: Run startup and resume checks, dispatch one packet per session, track check-ins and surface blocked work for Lead decisions. | 12 | 21 | kept |
+| Completion: Every dispatched packet has an identified session, current state and evidence or an explicit blocker | 13 | 25 | kept |
+| the Lead retains review and integration. | 13 | 25 | kept |
+| Use when the Release Lead has prepared the packet queue and the owner has authorized this Orchestrator. | 15 | 27 | kept |
+| The general Orchestrate role still applies. | 15 | 27 | kept |
+| The packet's Route sets the session's mode, every time: N High, X Extra High, S Pro (run contract), never one mode for all or by | 17 | 29 | kept |
+| feel. | 17 | 29 | kept |
+| If a mode isn't offered, say so in STATUS and ask the Lead. | 17 | 29 | kept |
+| One packet, one fresh ChatGPT session. | 19 | 31 | kept |
+| The session writes | 19 | 31 | kept |
+| you run proof and keep sessions moving | 19 | 31 | kept |
+| the Lead reviews and integrates. | 19 | 31 | kept |
+| Read the board, its packets, their tasks.md rows and your board. | 23 | 35 | kept |
+| Confirm each packet's dependencies, repository, PR destination, proof and authority. | 23 | 35 | kept |
+| Do the board's startup checks: the mailbox both ways (protocol), how sessions start and resume (a comment or session URL cannot wake one), how many | 24 | 36 | kept |
+| ChatGPT sessions this account's subscription can run at once, and that you can clone, build the environment and run one focused test on a network-capable | 24 | 36 | kept |
+| machine (packet sessions never do). | 24 | 36 | kept |
+| Find every earlier manager or packet session on this release's plans. | 25 | 37 | kept |
+| Stop any you can reach, name any you cannot for the owner, and list each one's branches and open pull requests with heads | 25 | 37 | kept |
+| the Lead decides what each becomes. | 25 | 37 | kept |
+| Dispatch the first packet alone: its early STATUS proves a packet session can push, open a pull request and comment. | 26 | 38 | kept |
+| Each later packet's early STATUS proves its own repository. | 26 | 38 | kept |
+| Give each Ready packet a new ChatGPT session in its Route's mode with the start message, and name it in your next STATUS | 27 | 39 | kept |
+| a packet's ID is its file name. | 27 | 39 | kept |
+| You are the ChatGPT manager implementing ONE packet for Release &lt;N&gt;. | 32 | 44 | kept |
+| Follow skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md in banodoco/astrid-dev. | 33 | 45 | kept |
+| Packet: releases/&lt;N&gt;/packets/&lt;id&gt;.md at &lt;SHA&gt; | 34 | 46 | kept |
+| its PR destination names your branches. | 34 | 46 | kept |
+| Authority: the Authority section of releases/&lt;N&gt;/run.md at &lt;SHA&gt;, given by the owner. | 35 | 47 | kept |
+| Standing rulings: the same file's Standing rulings section | 36 | 48 | kept |
+| they bind you. | 36 | 48 | kept |
+| Board: &lt;issue URL&gt;, run &lt;run id&gt;, format in its first post. | 37 | 49 | kept |
+| You are &lt;mailbox name&gt;; | 37 | 49 | kept |
+| the Orchestrator is &lt;name&gt; | 38 | 50 | kept |
+| the Lead is &lt;name&gt;. | 38 | 50 | kept |
+| [Replacing &lt;prior session&gt;: continue from &lt;branch&gt; at &lt;head&gt; and &lt;last STATUS link&gt;; | 39 | 51 | kept |
+| apply Lead decisions &lt;comment IDs&gt; not yet done.] | 40 | 52 | kept |
+| Write this packet's code and tests | 41 | 53 | kept |
+| do not clone, build or run tests. | 41 | 53 | kept |
+| Post STATUS or BLOCKED as comments on the board, | 41 | 53 | kept |
+| the first as soon as your first branch is pushed and its draft pull request open. | 42 | 54 | kept |
+| End with READY-PROOF &lt;repo&gt; &lt;PR&gt; &lt;head&gt; &lt;selectors&gt;, then stop. | 43 | 55 | kept |
+| Do not merge, tick tasks.md or start another packet. | 44 | 56 | kept |
+| You send it as the owner's message (run contract). | 47 | 59 | kept |
+| If you cannot start a session, give her a ready-to-paste prompt. | 47 | 59 | kept |
+| Read by cursor (rules): your board, and your parent's board for messages to you. | 51 | 63 | kept |
+| Inspect every open packet in the release queue: Ready, Running, Review or Blocked. | 52 | 64 | kept |
+| The branch, not the chat, shows health. | 52 | 64 | kept |
+| No commit or STATUS for 3 hours: resume it. | 52 | 64 | kept |
+| A chat that will not load after one reload, is silent 30 minutes after a resume, or is quiet for 6 hours is broken: replace | 52 | 64 | kept |
+| it once its branch has not moved for 30 minutes, naming the head in the replacement's first message. | 52 | 64 | kept |
+| Never two writers on one branch. | 52 | 64 | kept |
+| Proof turnaround. | 53 | 65 | kept |
+| Answer each READY-PROOF within 45 minutes, running independent proofs side by side in background subagents, not one box in turn. | 53 | 65 | kept |
+| You run the proof and apply small findings yourself under the Lead's fix-it-yourself rule | 53 | 65 | kept |
+| resume the session with your findings only for the rest. | 53 | 65 | kept |
+| After a ruling, resume it if quiet for 30 minutes. | 53 | 65 | kept |
+| Relay, then confirm. | 54 | 66 | kept |
+| A message is delivered when it shows in the chat or the session's next post answers it. | 54 | 66 | kept |
+| Otherwise post it on the board to that session, resume the session, and mark it "unconfirmed" in STATUS. | 54 | 66 | kept |
+| Act once where needed: dispatch Ready packets to fresh sessions | 55 | 67 | kept |
+| nudge/resume stalled sessions | 55 | 67 | kept |
+| pass submitted PRs and proof to the Lead as Review | 55 | 67 | kept |
+| relay rework to the same packet, never duplicated | 55 | 67 | kept |
+| escalate genuine technical/permission/dependency blockers | 55 | 67 | kept |
+| an environment block (no way to start, resume or push) is one BLOCKED naming the missing capability. | 55 | 67 | kept |
+| Set Done only on the Lead's DONE. | 55 | 67 | kept |
+| A Review unanswered for 4 hours: send the Lead a REQUEST and tell the owner. | 55 | 67 | kept |
+| Post one hourly STATUS on your board, (rules): acted on: and cursor: lines, then a line per open packet with state, session, latest evidence (or | 56 | 68 | kept |
+| no change) and next action. | 56 | 68 | kept |
+| That STATUS, with cursor: your last processed comment, is the live record of handoffs and sessions | 56 | 68 | kept |
+| the Lead copies it to run.md. | 56 | 68 | kept |
+| If scheduling or resume is unverified, name the manual nudges. | 58 | 70 | kept |
+
+Count: 76 found; 76 kept; 0 restored; 0 moved; 0 superseded.
+
+
+## agent/roles/orchestrator/lane-orchestrator.md
+
+Source: `skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md` at M. Destination: `agent/roles/orchestrator/lane-orchestrator.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: The lane's carded plan runs end to end in this session, with decisions taken and recorded here and the Lead's attention spent only on | 9 | 13 | kept |
+| anchor points. | 9 | 13 | kept |
+| When to use: When the owner's launch message makes this session a release lane's orchestrator, with the Release Lead as advisor (the Lead's side is | 10 | 9 | kept |
+| its lane orchestrators workstream). | 10 | 9 | kept |
+| Inputs: The plan's tasks.md cards and Run start line on astrid-dev main, the owner's launch message, and this session's Codex login. | 11 | 17 | kept |
+| Procedure: The rules below, together with the Codex-in-Claude workstream for hosting Codex. | 12 | 21 | kept |
+| Completion: Every card ticked in tasks.md, each landing confirmed by the Lead, the check-ins cancelled, and a short closing report to the Lead. | 13 | 25 | kept |
+| Written from Release 15's lanes (23 November 2026) | 15 | 27 | kept |
+| the process ledger has what went wrong without them. | 15 | 27 | kept |
+| Check your Codex login once before dispatching: codex exec --skip-git-repo-check -s read-only 'Reply ok.'. | 19 | 31 | kept |
+| If it reports a usage limit, run the cards on Claude subagents by the same routes (N Haiku, X Sonnet, S and reviews Opus) and | 19 | 31 | kept |
+| tell the Lead in your next report | 19 | 31 | kept |
+| never borrow another account or key. | 19 | 31 | kept |
+| Raise with the Lead only at anchor points (a board comment, plus a doorbell where the run contract says): a gate confirmation before merging into | 20 | 32 | kept |
+| a release branch | 20 | 32 | kept |
+| changing an assertion in a test that exists at the base, or a pin outside the generator-only rule | 20 | 32 | kept |
+| changing a goal, gate or stop rule | 20 | 32 | kept |
+| relaxing an integrity fence or an accepted contract | 20 | 32 | kept |
+| anything paid or touching the owner's machine or media | 20 | 32 | kept |
+| a blocker you could not get round in two attempts. | 20 | 32 | kept |
+| Decide everything else. | 21 | 33 | kept |
+| Before asking, answer "what would the Lead say, given the plan, the cards, the run contract and the rulings so far?" and act on it. | 21 | 33 | kept |
+| Record each decision in one line in tasks.md. | 21 | 33 | kept |
+| A question that comes up twice gets its answer written into tasks.md or the Run start line. | 21 | 33 | kept |
+| Report hourly, briefly, by the run contract's coordination rules: done, in progress, measured numbers, decisions you took, and the one thing you are least sure | 22 | 34 | kept |
+| about. | 22 | 34 | kept |
+| Look one step ahead at each check-in (disk, fixture, a slot, a review, another lane's code) and arrange it before you reach it. | 22 | 34 | kept |
+| Parallelism pass, every hour. | 23 | 35 | kept |
+| Before you report, list the cards whose dependencies have landed, and compare each with the cards now running: two cards that write the same file | 23 | 35 | kept |
+| or function are one lane, not two. | 23 | 35 | kept |
+| Start every ready card that has no such conflict, up to four writers per repository, each on its own branch | 23 | 35 | kept |
+| leave none idle because the plan's order says "next". | 23 | 35 | kept |
+| Send route N workers (Luna, or Haiku on Claude) to read the code and name the files and functions a card will change, so conflicts | 23 | 35 | kept |
+| are known before the card starts | 23 | 35 | kept |
+| never give them a verdict. | 23 | 35 | kept |
+| Say in the report how many writers ran, which ready cards waited and why, and whether a split or a reorder would let more run. | 23 | 35 | kept |
+| Take a free CI slot without asking: the CI rule names the slots. | 24 | 36 | kept |
+| Send your own comparison with a gate request. | 25 | 37 | kept |
+| Compare the hosted run by test id against the release baseline and its recorded moving groups. | 25 | 37 | kept |
+| After a small code change, focused tests plus a re-run of the affected shards is enough | 25 | 37 | kept |
+| a larger change needs a fresh full run on the final head. | 25 | 37 | kept |
+| A test constant that names a pin, and that the test itself says to refresh when the pin moves, is part of the pin commit, | 26 | 38 | kept |
+| not an assertion change. | 26 | 38 | kept |
+| When a fixture hits a product limit, shrink the fixture's inputs. | 27 | 39 | kept |
+| Never raise the limit for a fixture. | 27 | 39 | kept |
+| Post cross-lane findings on the other lane's board, and mention them in your hourly report. | 28 | 40 | kept |
+| Proof before hosted CI. | 29 | 41 | kept |
+| A speed change is profiled on the installed path before it is built and measured installed before CI | 29 | 41 | kept |
+| a functional change is shown working live. | 29 | 41 | kept |
+| Hosted CI is the final check, never the discovery. | 29 | 41 | kept |
+| Coordinate overlaps directly. | 30 | 42 | kept |
+| When the Run start line names another lane touching the same code or fixture, agree the order with that session yourself | 30 | 42 | kept |
+| bring the Lead only a conflict you cannot settle. | 30 | 42 | kept |
+| Merge your own records and plan branch. tasks.md-only progress PRs, evidence PRs of your own plan, and merges into your own release/&lt;N&gt;/plan-&lt;PP&gt; branch are yours | 31 | 43 | kept |
+| (and your manager's) to merge on green | 31 | 43 | kept |
+| only a merge into release/&lt;N&gt;/main waits for the Lead's written gate confirmation. | 31 | 43 | kept |
+
+Count: 56 found; 56 kept; 0 restored; 0 moved; 0 superseded.
+
+
+## agent/guides/measurement-box/README.md
+
+Source: `skills/roles/astrid-dev-orchestrate/workstreams/measurement-box/README.md` at M. Destination: `agent/guides/measurement-box/README.md`. Supporting guide: executable procedure and constraints are retained.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Use a measurement session when a representative fixture takes long enough to compete with managers or test workers, or when browser, App and Runtime timings | 3 | 7 | kept |
+| need quiet cores. | 3 | 7 | kept |
+| A separate workspace on the same constrained machine still shares its CPU. | 3 | 7 | kept |
+| Keep one active stack in the measurement session and put the result receipts in a durable directory. | 3 | 7 | kept |
+| Follow the hosting workstream for the manager's check-ins and restart supervision. | 3 | 7 | kept |
+| Record the exact revisions, generated pins, installer route and workload the run will measure. | 7 | 11 | kept |
+| For editor opening, record whether the browser serves source modules or a compiled bundle. | 7 | 11 | kept |
+| Use the route a user actually takes for a user-facing timing claim. | 7 | 11 | kept |
+| Check df -h on the fixture's filesystem before every build and measurement. | 8 | 12 | kept |
+| Use the plan's start and stop floors. | 8 | 12 | kept |
+| Where the run calls for 20 GiB to start a seed and 15 GiB as the stop floor, reserve space for the installed stack, the | 8 | 12 | kept |
+| backup and one disposable restore at the same time. | 8 | 12 | kept |
+| Apply any higher floor the plan sets for a measured arm. | 8 | 12 | kept |
+| Seed the representative sandbox once, through the product interface, and record its exact selection and head. | 9 | 13 | kept |
+| Stop the owned stack and make one authenticated backup. | 9 | 13 | kept |
+| Verify a restore against the backup's realm ID and database digest. | 9 | 13 | kept |
+| Keep the backup and its support directory in the same session at their original locations. | 9 | 13 | kept |
+| The product handles authentication material. | 9 | 13 | kept |
+| Schedule future restores in that session so verification custody stays intact. | 9 | 13 | kept |
+| If the stock backup admission deadline interrupts verification, keep the original failure and use a longer supported budget only for setup. | 10 | 14 | kept |
+| Preserve the owner fence and every validation step. | 10 | 14 | kept |
+| Record both deadlines and the final verified restore. | 10 | 14 | kept |
+| Allow for setup time before promising a measurement window. | 10 | 14 | kept |
+| Start the exact installed stack from the disposable restore. | 14 | 18 | kept |
+| Wait until the owned instance and realm are visible in health, allow startup verification to settle, then start the App and confirm its authenticated proxy | 14 | 18 | kept |
+| identifies that same Runtime. | 14 | 18 | kept |
+| Record any setup deadline or retry separately from the measurement. | 14 | 18 | kept |
+| Collect startup-to-ready only when the recorder observes start and readiness on the same clock. | 14 | 18 | kept |
+| Use a fresh headless Chrome profile per run. | 15 | 19 | kept |
+| Give Chrome a private short temporary directory such as one created with mktemp -d /tmp/astrid-browser.XXXXXX. | 15 | 19 | kept |
+| A deep stack path can exceed the Linux singleton socket length before Chrome opens a page. | 15 | 19 | kept |
+| Stop the browser, dispose of its profile and temporary directory, and stop the owned stack after the evidence is safe. | 15 | 19 | kept |
+| Run one timed arm at a time. | 16 | 20 | kept |
+| Pause fixture builds, installs and test workers during each arm. | 16 | 20 | kept |
+| Keep the exact trace, exit status, revisions, verified restore receipt, disk observations, product outcomes and cleanup. | 16 | 20 | kept |
+| Keep CPU and elapsed-time clocks separate and state the events that bound each interval. | 16 | 20 | kept |
+| After a container restart, check the durable phase receipts, active ownership, ports, operation locks, disk and any browser profiles before resuming. | 17 | 21 | kept |
+| Keep the last verified artifact and repeat only an unfinished setup step through normal product recovery. | 17 | 21 | kept |
+| When a gesture may have occurred, verify its authoritative result before any replacement run. | 17 | 21 | kept |
+| Mark an interrupted observation in the record. | 17 | 21 | kept |
+
+Count: 40 found; 40 kept; 0 restored; 0 moved; 0 superseded.
+
+*Draft in progress: remaining 3 document audits follow before READY-PROOF.*
