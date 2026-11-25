@@ -1067,3 +1067,357 @@ Source: `skills/shared/workstreams/astrid-dev-improve/SKILL.md`; destination: `a
 
 Count: 46 found, 46 kept, 0 restored, 0 moved, 0 superseded.
 
+## workstreams/iterate.md
+
+Source: `skills/shared/workstreams/astrid-dev-iterate/SKILL.md`; destination: `agent/shared/workstreams/iterate.md`. The focused iteration/qualification distinction and venue rules are retained without creating a second workflow. Contract fields reorganized as headings; skill identity is derived and checked by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: A scoped implementation candidate with focused acceptance proof, reproducible source identity and clearly stated residual failures. | L10 | L14 | kept |
+| When to use: When executing an assigned code or focused document change under an accepted task or issue. | L11 | L10 | kept |
+| Inputs: The authorized brief, repository and exact base, relevant existing behavior, focused proof and permitted dependencies. | L12 | L18 | kept |
+| Procedure: Trace the behavior, make the smallest complete repair, qualify original tests and return source and evidence to the manager. | L13 | L22 | kept |
+| Completion: The candidate is linked to exact revisions and focused results, with all remaining uncertainty or downstream failures visible. | L14 | L26 | kept |
+| Read the shared run contract, the assigned brief (an issue, bug report or existing project task), and the working repository's instructions. | L16 | L28 | kept |
+| An issue or small fix needs no new project pack. | L16 | L28 | kept |
+| This is the single implementation/debug/focused-test repair loop. | L16 | L28 | kept |
+| Work only within the accepted outcome, paths, dependencies, frozen source identity, route, and authority. | L16 | L28 | kept |
+| Do not create another worker workflow. | L16 | L28 | kept |
+| In a loop plan each round's fix is an ordinary run of this loop, with the live scenario that failed as its red test. | L16 | L28 | kept |
+| Confirm the actual repository, ref/SHA, dirty state, current base, dependency identities, and custody before mutation. | L20 | L32 | kept |
+| Preserve user changes; | L20 | L32 | kept |
+| report mismatched or missing source identity to the manager. | L20 | L32 | kept |
+| Trace the assigned behavior from setup and inputs through the existing action/state path to its observable result and focused acceptance check. | L21 | L33 | kept |
+| Reuse current code and | L21 | L33 | kept |
+| fix demonstrated causes at their source. | L21 | L33 | kept |
+| Make the smallest complete in-scope change. | L21 | L33 | kept |
+| On an `X` or `S` task, delegate as the run contract requires. | L22 | L34 | kept |
+| Use the cheapest venue that can prove the stated claim. | L23 | L35 | kept |
+| Local focused checks are the default; | L23 | L35 | kept |
+| use a hosted runner only for a real OS/CI requirement, and | L23 | L35 | kept |
+| GPU/remote infrastructure only when it is both explicitly authorized and required by live hardware or that environment. | L23 | L35 | kept |
+| A higher venue alone does not make proof stronger. | L23 | L35 | kept |
+| A local check proves a claim only if it exercises the same path as the acceptance check. | L24 | L36 | kept |
+| For an installed or served product, start it the way the installed service does (same profile and configuration, called over its public interface), | L24 | L36 | kept |
+| not by calling its internals in-process. | L24 | L36 | kept |
+| A fixture standing in for an older release uses only what that release's public interface serves. | L24 | L36 | kept |
+| If the local setup cannot match, say so and let the hosted run be the proof. | L24 | L36 | kept |
+| Run only the scoped checks the run contract allows. | L25 | L37 | kept |
+| Two different activities share the word "test". Keep them apart. | L29 | L41 | kept |
+| Iterating is getting one red test to green. It is cheap and disposable. | L31 | L43 | kept |
+| Reproduce the failing test with its exact command, | L31 | L43 | kept |
+| keep the full raw output in your workdir, | L31 | L43 | kept |
+| read the first error before forming a hypothesis, | L31 | L43 | kept |
+| fix the cause, and rerun that test as often as you need. | L31 | L43 | kept |
+| Reruns on a new commit need no permission, no review and no committed record. | L31 | L43 | kept |
+| Stop at the worker threshold in the run contract and | L31 | L43 | kept |
+| hand the manager the raw output, what you tried and your best guess. | L31 | L43 | kept |
+| Qualifying is the evidence a release gate counts. | L32 | L44 | kept |
+| It runs once, on the frozen commit, on CI. | L32 | L44 | kept |
+| Only this run needs the exact-SHA record described below, and | L32 | L44 | kept |
+| nothing before it counts as evidence. | L32 | L44 | kept |
+| Gate rules do not apply to iteration. | L34 | L46 | kept |
+| A scratch or diagnostic run needs no authorization, no independent review and no sanitized-only output. | L34 | L46 | kept |
+| Keep raw logs while diagnosing; | L34 | L46 | kept |
+| redact only what you commit, and | L34 | L46 | kept |
+| never print credentials. Two things hold in both modes: | L34 | L46 | kept |
+| no check is weakened to get a pass, and | L34 | L46 | kept |
+| paid spend always needs its own authorization. | L34 | L46 | kept |
+| Record each check's proof, repair its failures and carry proof forward exactly as the run contract says. | L38 | L50 | kept |
+| Return the exact candidate SHA/tree and source identity, | L42 | L54 | kept |
+| changed paths, mapped behavior, | L42 | L54 | kept |
+| focused commands and inner exits, | L42 | L54 | kept |
+| proof carried forward with its unchanged-input basis, | L42 | L54 | kept |
+| first failures and reruns, | L42 | L54 | kept |
+| remaining claims/gaps, and any dependency or scope issue. | L42 | L54 | kept |
+| A candidate is a feature handoff only. | L42 | L54 | kept |
+| Broad suite defaults, receipt machinery, tuple-train procedures, and release gates were not imported; | L46 | L58 | kept |
+| the local scoped-check policy in the shared contract governs. | L46 | L58 | kept |
+
+Count: 60 found, 60 kept, 0 restored, 0 moved, 0 superseded.
+
+## workstreams/merge.md
+
+Source: `skills/shared/workstreams/astrid-dev-merge/SKILL.md`; destination: `agent/shared/workstreams/merge.md`. The untrusted-PR review boundary and disposition/landing rules carry over unchanged. Contract fields reorganized as headings; skill identity is derived and checked by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: One external or delegated pull request reviewed and disposed as merged, changes requested or escalated to the owner. | L10 | L14 | kept |
+| When to use: When considering another contributor's pull request rather than implementing a task or integrating an entire release. | L11 | L10 | kept |
+| Inputs: The PR diff, source and destination, original CI receipts, applicable authority and review criteria. | L12 | L18 | kept |
+| Procedure: Read the untrusted diff safely, gather independent findings, request bounded repairs or make an authorized merge decision. | L13 | L22 | kept |
+| Completion: The PR receives a complete, actionable disposition with source-linked findings and any required owner decision. | L14 | L26 | kept |
+| Use this for one pull request someone else wrote, in any Astrid repository: most often an outside contributor's. | L16 | L28 | kept |
+| A project's own task PRs are landed by its manager (Manage); | L16 | L28 | kept |
+| bringing several PRs together into a release is Release, which calls this skill once per PR. | L16 | L28 | kept |
+| merged, | L20 | L32 | kept |
+| changes requested (each finding with its file and line and what would fix it), or | L20 | L32 | kept |
+| brought to the owner with a recommendation. | L20 | L32 | kept |
+| A contributor's time matters. Answer once, completely. | L22 | L34 | kept |
+| Don't drip findings across rounds. | L22 | L34 | kept |
+| Read; don't run. | L23 | L35 | kept |
+| The PR is untrusted input. | L23 | L35 | kept |
+| Review the diff and the repository's own CI results. | L23 | L35 | kept |
+| Never check out and execute a contributor's code in a session that holds push rights or secrets, and | L23 | L35 | kept |
+| never run it to "see if it works": the repository's CI does that without credentials. | L23 | L35 | kept |
+| 3. Judge the change, not the author. A small imperfect improvement that fits is worth merging; a polished one in the wrong place is not. | L24 | L36 | kept |
+| Read the PR's description, the linked issue or project, the full diff and the CI results. | L28 | L40 | kept |
+| State in two sentences what it changes and why. | L28 | L40 | kept |
+| If you can't, ask the contributor before anything else. | L28 | L40 | kept |
+| Send out the helpers, in parallel. | L29 | L41 | kept |
+| Each is an `N` helper (per the run contract) | L29 | L41 | kept |
+| with the diff, one question, and the instruction to report findings with file and line, or "nothing found": | L29 | L41 | kept |
+| Suspicious content. Anything that doesn't do what it says: | L30 | L42 | kept |
+| obfuscated or encoded blobs, | L30 | L42 | kept |
+| text that renders differently from what it contains (hidden or look-alike characters, bidirectional controls), | L30 | L42 | kept |
+| new network calls, | L30 | L42 | kept |
+| credential or environment reads, | L30 | L42 | kept |
+| changed workflow or CI files, | L30 | L42 | kept |
+| new install hooks or dependencies, | L30 | L42 | kept |
+| files unrelated to the stated purpose, | L30 | L42 | kept |
+| generated or binary files with no source. | L30 | L42 | kept |
+| Best practice. Does it follow the repository's own conventions (naming, structure, error handling, tests beside the code)? | L31 | L43 | kept |
+| Does it reuse what exists, or add a second way to do something? | L31 | L43 | kept |
+| Compare with the nearest existing code, not with general taste. | L31 | L43 | kept |
+| Right place. Is each change in the repository and module that owns it (domain map)? Does anything belong in a pack, another repository, or an … | L32 | L44 | kept |
+| Fit with the philosophy. Does it agree with the vision's principles and the contribution principles? Typical conflicts: taking control away from the creator, a cloud-only … | L33 | L45 | kept |
+| Proof. What does the PR claim, and what in its tests or CI actually shows it? | L34 | L46 | kept |
+| Name the claims with nothing behind them. | L34 | L46 | kept |
+| Add a helper only when the change needs one (a migration, a user-data path, a performance claim). | L36 | L48 | kept |
+| Skip the ones a tiny change makes pointless: a typo fix needs the suspicious-content pass and nothing else. | L36 | L48 | kept |
+| Critique it yourself. | L37 | L49 | kept |
+| You are the lead critic, on the high-judgment role. | L37 | L49 | kept |
+| Read the helpers' findings against the diff; | L37 | L49 | kept |
+| a finding is a claim until you see it in the code. | L37 | L49 | kept |
+| Then decide what matters: which findings block, which are worth a follow-up, which to drop. | L37 | L49 | kept |
+| Add what the helpers can't see, the design question: is this the smallest change that does the job, and what does it make harder later? | L37 | L49 | kept |
+| Check how it lands. Does it conflict with an open PR, a live plan branch, or a release branch in its gate? | L38 | L50 | kept |
+| If so, say which goes first. | L38 | L50 | kept |
+| Ask the contributor, or merge the base in (commits only). | L38 | L50 | kept |
+| Merge when nothing blocks, | L40 | L52 | kept |
+| CI covering the change is green on the PR's current head, and | L40 | L52 | kept |
+| the change is not in a category below. | L40 | L52 | kept |
+| Use the repository's normal merge method and credit the contributor. | L40 | L52 | kept |
+| Request changes when something blocks and the contributor can fix it. | L41 | L53 | kept |
+| Post one review listing every blocking finding with file, line and the fix, | L41 | L53 | kept |
+| then the optional ones, clearly separated. | L41 | L53 | kept |
+| Bring it to the owner, with your recommendation, | L42 | L54 | kept |
+| when the change touches security, credentials, user data, a migration, cost, deployment or release machinery, workflow files, or licensing; | L42 | L54 | kept |
+| when the suspicious-content pass found anything; or | L42 | L54 | kept |
+| when the right answer is "no" to a substantial contribution. | L42 | L54 | kept |
+| Say on the PR what was checked and what wasn't run. | L43 | L55 | kept |
+| If the PR belongs to a release, add it under `## Included pull requests` in that release brief, distinct from its `## Issues` list. | L43 | L55 | kept |
+| If the process itself got in the way, add a ledger entry. | L43 | L55 | kept |
+| A pull request lands where its plan or issue lands. First find what it belongs to, then: | L47 | L59 | kept |
+| It belongs to a plan that is in a release. | L49 | L61 | kept |
+| Its base becomes that plan's branch, `release/&lt;N&gt;/plan-&lt;PP&gt;`, in that repository. | L49 | L61 | kept |
+| The plan's manager reviews and merges it there, and merging closes it. | L49 | L61 | kept |
+| A pull request from a fork can target the plan branch directly. | L49 | L61 | kept |
+| It reaches the release when the plan branch lands, like the rest of the plan. | L49 | L61 | kept |
+| It fixes an issue that is in a release. | L50 | L62 | kept |
+| It lands in `release/&lt;N&gt;/main` from a fix branch. | L50 | L62 | kept |
+| If it already comes from a `release/&lt;N&gt;/&lt;topic&gt;` branch, retarget it and merge. | L50 | L62 | kept |
+| If it comes from a fork or an older branch, whose name cannot satisfy the landing check, whoever takes it | L50 | L62 | kept |
+| merges the contributor's commits unchanged into a new `release/&lt;N&gt;/&lt;topic&gt;` branch in the repository, | L50 | L62 | kept |
+| opens the pull request from there naming the issue and the original pull request, and | L50 | L62 | kept |
+| closes the original with a link. | L50 | L62 | kept |
+| Authorship is kept; nothing is rewritten. | L50 | L62 | kept |
+| It belongs to a plan that is in no release. | L51 | L63 | kept |
+| There is no branch to merge into. | L51 | L63 | kept |
+| Record it in the plan's `inputs.md` as contributed work (repository, number, head commit, what it offers), | L51 | L63 | kept |
+| comment on it naming the plan, and close it; | L51 | L63 | kept |
+| the contributor's branch stays. | L51 | L63 | kept |
+| When the plan joins a release, its manager brings the work into the plan branch by merging those commits, or asks the contributor to reopen … | L51 | L63 | kept |
+| It belongs to nothing yet. | L52 | L64 | kept |
+| File the issue (label `release:&lt;N&gt;` or `plan:&lt;P&gt;`) or point to the plan, then follow 1 to 3. | L52 | L64 | kept |
+| A change nobody wants is closed with the reason. | L52 | L64 | kept |
+| 5. The change is already in the served release. Close it, saying so. | L53 | L65 | kept |
+| No pull request into a product repository targets `main`. | L55 | L67 | kept |
+| An open pull request therefore always has a branch it can merge into today; anything else is recorded and closed, so the open list shows … | L55 | L67 | kept |
+| Execute a contributor's code with credentials, or approve a workflow run that would. | L59 | L71 | kept |
+| Merge on a helper's summary without reading the diff yourself. | L60 | L72 | kept |
+| Merge something the suspicious-content pass flagged, however small. | L61 | L73 | kept |
+| Weaken or skip a failing check to get a PR in. | L62 | L74 | kept |
+| Rewrite a contributor's branch (commits only). | L63 | L75 | kept |
+
+Count: 97 found, 97 kept, 0 restored, 0 moved, 0 superseded.
+
+## workstreams/plan.md
+
+Source: `skills/shared/workstreams/astrid-dev-plan/SKILL.md`; destination: `agent/shared/workstreams/plan.md`. The entire duplicate routing content now lives in the canonical run contract, directly linked from plan L107; it was not deleted as policy. Legacy generated-copy markers and generated notice are superseded. No new competing routing table is introduced. Contract fields reorganized as headings; skill identity is derived and checked by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: An agreed, independently useful project scope with a verifiable end state and executable tasks. | L10 | L14 | kept |
+| When to use: When defining a new project outcome that cannot reasonably be handled as an existing issue or task. | L11 | L10 | kept |
+| Inputs: The proposed outcome, prior art, current strategy and gaps, design constraints, reviewer input and owner authority. | L12 | L18 | kept |
+| Procedure: Investigate existing work, challenge consequential choices, define acceptance evidence and write the project plan and task records. | L13 | L22 | kept |
+| Completion: The agreed plan is testable and sufficiently decomposed for another agent to run without reopening accepted decisions. | L14 | L26 | kept |
+| Enter through astrid-dev and its domain map. | L16 | L28 | kept |
+| Terms follow the glossary. | L18 | L30 | kept |
+| You, the planner (an administrator: gather evidence, write the task cards, and | L22 | L34 | kept |
+| send consequential judgment to the advisor), produce an agreed, testable end state and tasks another agent can run. | L22 | L34 | kept |
+| An orchestrator may also plan a project itself before farming it out. | L22 | L34 | kept |
+| Projects are for new, separately useful outcomes with their own priority, owner and completion proof. | L24 | L36 | kept |
+| Bugs, small fixes and maintenance normally go in issues; | L24 | L36 | kept |
+| existing project tasks use their accepted plan. | L24 | L36 | kept |
+| Read the aspirations of its gaps. | L24 | L36 | kept |
+| Write a loop plan only when the end state is clear but the tasks can't be known until a live round measures them; how it … | L24 | L36 | kept |
+| Planning authorizes no execution or release (run contract), and | L25 | L37 | kept |
+| performs no product testing unless specifically requested; | L25 | L37 | kept |
+| planning-document PRs still run relevant doc validators and focused unit tests (checks). | L25 | L37 | kept |
+| Agree the outcome once. | L26 | L38 | kept |
+| Record the owner's actual choice with a traceable source; | L26 | L38 | kept |
+| a draft project or PR, or no objection, is not approval. | L26 | L38 | kept |
+| Keep earlier accepted scope; | L26 | L38 | kept |
+| avoid repeated sign-offs. | L26 | L38 | kept |
+| Start from `strategy.md`, to understand the current direction (hierarchy), | L30 | L42 | kept |
+| then find prior art in affected source, issues, plans, gaps and, where relevant, outside approaches. | L30 | L42 | kept |
+| Trace input → actual implementation → user-visible result, noting useful source revisions, reuse, negative findings and uncertainties. | L30 | L42 | kept |
+| Delegate bounded research when helpful, but | L30 | L42 | kept |
+| no broad audit without a decision it could change. | L30 | L42 | kept |
+| Pick the smallest complete result. | L31 | L43 | kept |
+| Compare reusing or extending a pack, adding one, changing core and, when relevant, doing less or nothing. | L31 | L43 | kept |
+| Prefer an existing plan or gap to a new entry. | L31 | L43 | kept |
+| Justify placement and tradeoffs from evidence, not architectural preference. | L31 | L43 | kept |
+| When the gap has a route to closure, place the plan in it with the Gap skill, and | L31 | L43 | kept |
+| add the plan's `Contributes to closure:` line. | L31 | L43 | kept |
+| Challenge in proportion to consequence. For material architecture, an expensive or hard-to-reverse decision, or a table case below, | L32 | L44 | kept |
+| an independent critique is required before you seek greenlight: | L32 | L44 | kept |
+| have the advisor critique the written plan and tasks for real removals, consolidation and reuse, | L32 | L44 | kept |
+| checking your claims against the code, not against your summary. | L32 | L44 | kept |
+| Where there is no standing advisor, that is a fresh high-judgment subagent with no stake in your draft. | L32 | L44 | kept |
+| Record its findings and what you accepted, rejected or left to the owner. | L32 | L44 | kept |
+| A simple bounded project needs only a concise alternatives review and a reason to skip the critique. | L32 | L44 | kept |
+| Present the real options (as many as the owner needs; ten is a useful technique, not a quota), | L33 | L45 | kept |
+| their user-facing tradeoffs and a testable end state. | L33 | L45 | kept |
+| When the change is complex, or the owner has to picture it to decide, offer ten vivid statements. | L33 | L45 | kept |
+| Write a compact handoff, one home per fact: | L34 | L46 | kept |
+| `inputs.md` for source evidence, alternatives, challenge decision, approval and uncertainty; | L34 | L46 | kept |
+| `plan.md` for outcome, scope, sequence and completion; | L34 | L46 | kept |
+| `tasks.md` for assignments and focused proof (rules below). | L34 | L46 | kept |
+| The three templates are the one definition of each file's sections and fields: | L34 | L46 | kept |
+| copy their headings exactly, and | L34 | L46 | kept |
+| do not take the shape from another plan, this skill or any other document. | L34 | L46 | kept |
+| A PR that adds a new pack is checked against them; | L34 | L46 | kept |
+| an existing pack, renamed or not, is never checked. | L34 | L46 | kept |
+| Link detailed work only for a distinct use. | L34 | L46 | kept |
+| A contributor may open an idea issue without permission. | L35 | L47 | kept |
+| A maintainer-reviewed scope PR greenlights new scope by recording the owner's actual decision in `inputs.md` and adding the plan with `Status: queued`. | L35 | L47 | kept |
+| Leave a new plan out of `plans/priority.md`. | L35 | L47 | kept |
+| A line there only moves a plan above others; | L35 | L47 | kept |
+| the owner or the orchestrator adds it, and | L35 | L47 | kept |
+| you may recommend it in `inputs.md`. | L35 | L47 | kept |
+| Planning pull requests can merge by themselves once checks pass; | L36 | L48 | kept |
+| use draft, the `hold` label or the phrase `Owner decision needed` while a decision is open, and | L36 | L48 | kept |
+| run the unit tests as well as the check before pushing (rules and checks). | L36 | L48 | kept |
+| When the work is meaningfully complex (a hard fix, a change to how people work, several decisions the owner must make), | L40 | L52 | kept |
+| ask the owner whether they want about ten statements before they read the plan, and | L40 | L52 | kept |
+| write them if they do. | L40 | L52 | kept |
+| Skip the offer for a simple, bounded project. | L40 | L52 | kept |
+| What they are for: the owner scans them in a minute, sees the anchor decisions and the edges of the change, and can say "no, … | L42 | L54 | kept |
+| Each statement is one sentence about what changes, phrased boldly enough to disagree with. Contrast works well: "Now, the list defines the plans. After, the … | L43 | L55 | kept |
+| Cover the edges, not only the benefits: what stops being possible, who has to change a habit, what is deliberately left out, and the choice … | L44 | L56 | kept |
+| Every statement must be true of the plan as written. | L45 | L57 | kept |
+| If one overstates it, change the statement or change the plan. | L45 | L57 | kept |
+| Do not write a slogan the tasks don't deliver. | L45 | L57 | kept |
+| Record the owner's reaction to each contested statement as a decision in `inputs.md`, and revise the plan before seeking greenlight. | L46 | L58 | kept |
+| Ten is a guide: use fewer when there are fewer real anchors. | L48 | L60 | kept |
+| Each step below earns its cost only under its condition; skip it otherwise. | L52 | L64 | kept |
+| Each produces a file the next step reads. | L52 | L64 | kept |
+| \| Map current behaviour with parallel N helpers, one read-only area each \| the behaviour spans several repositories or areas, or no one planning knows … | L56 | L68 | kept |
+| \| List each problem with its root cause and where it is fixed \| the request starts from symptoms (bugs, confusing UI) rather than a … | L57 | L69 | kept |
+| \| Consult the advisor as the critic (required in these cases), briefed to build as little as possible and to verify claims in code \| … | L58 | L70 | kept |
+| \| Phase it: a first phase with most of the value, later phases committed, estimates per phase \| the estimate exceeds about ten days or … | L59 | L71 | kept |
+| \| Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions \| other agents will execute the tasks, … | L60 | L72 | kept |
+| \| Record owner decisions in `inputs.md` and enforce them with a test \| a later merge could silently undo the decision \| | L61 | L73 | kept |
+| In the tasks template, every task has a scope (the paths, and any shared surface or contract, it may change; a path includes its own … | L65 | L77 | kept |
+| Scope detail: name the functions or classes too (`path:symbol`) when the task changes only part of a file. | L67 | L79 | kept |
+| A route: `N`, `X`, `S` or `T`, as the run contract defines them. | L68 | L80 | kept |
+| Use `S` where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration). | L68 | L80 | kept |
+| Split taste out of larger tasks, so the functional change is `N`, `X` or `S` and the wording or polish is its own small `T` … | L68 | L80 | kept |
+| Dependencies, only where one task needs another's result, or both change the same function, class or contract. | L69 | L81 | kept |
+| Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. | L69 | L81 | kept |
+| The same applies across other active projects. | L69 | L81 | kept |
+| If a shared surface needs one model first, consult the advisor. | L69 | L81 | kept |
+| The critical path: state it in `tasks.md`, and | L70 | L82 | kept |
+| keep it as short as the work allows. | L70 | L82 | kept |
+| Chain tasks only where the rule above requires it. | L70 | L82 | kept |
+| Before implementation: its actual base and dependency revisions, exact focused checks and authority. | L71 | L83 | kept |
+| A deliberate base. The default base is the release branch, `release/&lt;NN&gt;/main`. | L72 | L84 | kept |
+| Question it before you accept it. | L72 | L84 | kept |
+| Find overlapping plans. | L73 | L85 | kept |
+| Check every other active plan in the same release whose branch hasn't landed: run `git merge-tree --write-tree --name-only release/&lt;NN&gt;/main release/&lt;NN&gt;/plan-&lt;PP&gt;` and compare what it touches … | L73 | L85 | kept |
+| A plan overlaps when it changes the same functions, classes or contracts, or the producer pins (VibeComfy and Runtime pins, locks and recipes). | L73 | L85 | kept |
+| Choose a base for each overlapping plan, | L74 | L86 | kept |
+| record the choice in `inputs.md` with its reason, and | L74 | L86 | kept |
+| add the plan to Waiting on: | L74 | L86 | kept |
+| Wait for it to land first. | L75 | L87 | kept |
+| Stack: cut this plan from its plan branch and land after it. | L76 | L88 | kept |
+| Build on the release branch only if the overlap is disjoint, or the other plan's change is one this plan should replace. | L77 | L89 | kept |
+| Deferring an overlapping plan's items doesn't make the plans independent. Their contracts still meet when they merge. | L79 | L91 | kept |
+| Tests only at load-bearing moments, per the run contract's table. | L80 | L92 | kept |
+| A test inventory and focused proofs. `tasks.md` names the existing tests the plan affects (its test inventory) and, | L81 | L93 | kept |
+| for each task, the exact test files that prove it. | L81 | L93 | kept |
+| The manager's local baseline runs only these. | L81 | L93 | kept |
+| Proofs run on inputs any session can rebuild. A card's proof uses a generated fixture or a structure-only export (no media), | L82 | L94 | kept |
+| never the owner's own project or media. | L82 | L94 | kept |
+| When a real project surfaces a bug, record its shape: | L82 | L94 | kept |
+| add a minimal reproduction to the fixture builder and file an issue, so the fix is proved and guarded on the fixture; | L82 | L94 | kept |
+| a workaround made in the real project is the owner's to undo, not a card. | L82 | L94 | kept |
+| A card's proof is evidence, not a review. Tests, a measurement, a render or a read-back; never "an independent review". | L83 | L95 | kept |
+| Reviews live only in the `R` row and any agreed `RS` stop, and | L83 | L95 | kept |
+| a per-card high-judgment review follows the run contract's per-card rule. | L83 | L95 | kept |
+| A contract card lists what it makes untrue. A card that changes a contract, a check's trigger or a message | L84 | L96 | kept |
+| names every existing pinned test, fixture and oracle line the change invalidates, and | L84 | L96 | kept |
+| says how each may change. | L84 | L96 | kept |
+| A card whose proof is a `grep` or a list of pinned tests says "re-check against the code at dispatch", because an earlier card may … | L84 | L96 | kept |
+| Checks a cloud worker can run. Setup and checks use astrid-dev's shared worker environment, | L85 | L97 | kept |
+| called by literal path. | L85 | L97 | kept |
+| They must work in a session with only the task's repository attached: | L85 | L97 | kept |
+| other repositories come from public git at pinned commits; | L86 | L98 | kept |
+| no GitHub archive downloads; | L87 | L99 | kept |
+| no private repositories; | L88 | L100 | kept |
+| small fixtures go inline in the task card. | L89 | L101 | kept |
+| Add a missing script there, not in the plan folder. | L91 | L103 | kept |
+| The run contract defines each route; the same table applies to every task's route: | L93 | L105 | kept |
+| Default model for each route, using the newest available model of that family: | L97 | `agent/shared/run-contract.md` L13 (linked at plan L107) | moved |
+| \| `N` \| Everything below very hard, including ordinary hard work: research, reading, running checks, most changes and fixes \| Haiku \| Luna \| | L101 | `agent/shared/run-contract.md` L17 (linked at plan L107) | moved |
+| \| `X` \| Very hard: intricate changes, subtle bugs, coupled or non-obvious reasoning \| Sonnet \| Terra \| | L102 | `agent/shared/run-contract.md` L18 (linked at plan L107) | moved |
+| \| `S` \| Super hard: deep design, or correctness that needs the deepest reasoning \| Opus \| Sol \| | L103 | `agent/shared/run-contract.md` L19 (linked at plan L107) | moved |
+| \| `T` \| Taste: small, editorial refinement of something that already exists, such as user-facing copy, error and refusal messages, names, a screen's layout or … | L104 | `agent/shared/run-contract.md` L20 (linked at plan L107) | moved |
+| Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); | L106 | `agent/shared/run-contract.md` L22 (linked at plan L107) | moved |
+| configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`. | L106 | `agent/shared/run-contract.md` L22 (linked at plan L107) | moved |
+| A review's verdict runs on the high-judgment role. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| Check a pure sync by tree equality. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| A bounded-fix check runs the focused tests on both base and head. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| A bounded-fix check goes to the high-judgment role only when its own tests cannot show it is right (see the per-card rule under review and … | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| size alone is not a reason. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| A meter, gate or check is reviewed by injecting the failures it must catch. | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run). | L108 | `agent/shared/run-contract.md` L24 (linked at plan L107) | moved |
+| edit it there.* | L110 | `agent/shared/run-contract.md` L7 (linked at plan L107) | moved |
+| Suggest reviews only where they earn their cost. | L113 | L109 | kept |
+| State your recommendation in every plan, including when it is none; don't wait to be asked. | L113 | L109 | kept |
+| A simple, bounded project needs no review rounds, so leave the review row out. | L115 | L111 | kept |
+| For meaningful complexity, recommend one round at the end, before any publishing task, which depends on it. | L115 | L111 | kept |
+| Recommend more only as the run contract's guide says, say why, and | L115 | L111 | kept |
+| record the recommendation and the owner's agreed number on the `Review rounds` line in `inputs.md`. | L115 | L111 | kept |
+| Add a review stop after a load-bearing part of a significant project: a contract, data model, protocol, security boundary or shared interface that later tasks … | L116 | L112 | kept |
+| Put it right after that part, as its own row (`RS&lt;n&gt;`, named for what it reviews), | L116 | L112 | kept |
+| with the later tasks that build on it depending on it. | L116 | L112 | kept |
+| It uses the same protocol as the final review: rounds at most _n_, findings as task cards, done before the stop clears. | L116 | L112 | kept |
+| Use it sparingly, typically only on larger projects (above about five days, or cross-repository) and at most one or two per plan. | L116 | L112 | kept |
+| Each stop needs a stated reason: which later tasks it protects and what a late finding would cost. | L116 | L112 | kept |
+| Record each stop and its agreed rounds in `inputs.md`, alongside the final review. | L116 | L112 | kept |
+| A draft can mark what is Pending, with the next action. | L120 | L116 | kept |
+| A defined project needs real prior-art findings, an explained reuse decision, a traceable owner choice and meaningful completion evidence; | L121 | L117 | kept |
+| a consequential design also needs critique or an explicit unresolved blocker. | L121 | L117 | kept |
+| Don't make the agent fabricate evidence, or add heavy ritual to a simple decision. | L122 | L118 | kept |
+| `&lt;!-- block:routing:start --&gt;` | L95 | L105–107, direct canonical link instead of generated copy; same link/anchor checks and single-authority enforcement limit as run-contract marker rows above. | superseded |
+| `&lt;!-- Generated by Astrid Dev view: block-routing-skills/shared/workstreams/astrid-dev-plan/SKILL.md; sources: skills/shared/run-contract.md. Do not edit. --&gt;` | L96 | L105–107, direct canonical link instead of generated copy; same link/anchor checks and single-authority enforcement limit as run-contract marker rows above. | superseded |
+| `&lt;!-- block:routing:end --&gt;` | L111 | L105–107, direct canonical link instead of generated copy; same link/anchor checks and single-authority enforcement limit as run-contract marker rows above. | superseded |
+
+Count: 170 found, 150 kept, 0 restored, 17 moved, 3 superseded.
+
