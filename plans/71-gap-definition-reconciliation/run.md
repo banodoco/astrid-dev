@@ -69,7 +69,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 |---|---|---|---|---|
 | [P71-01](packets/P71-01.md) The accepted rubric in its canonical home | GDC-2 | Ready (project head `901e2c3d`) | — | Extra High. First packet, alone |
 | [P71-RV](packets/P71-RV.md) High-judgment review (read-only, Pro) | the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
-| [P71-SC](packets/P71-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
+| [P71-SC](packets/P71-SC.md) Project-wide sense check, round 1 (read-only) | SC | R accepted at `ff119a09`; starts only on the orchestrator's REQUEST | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** P71-01 alone writes `docs/contribution-workflow.md`, the gap workstream and `templates/gap.md`. Plan 73's P73-02 to P73-05 also write the gap workstream's `agent/` copy: whichever lands on `main` second carries the edit (orchestrator rules the order).
 

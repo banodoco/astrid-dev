@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — Owner selected standard and loop as templates of one project, and asked to add the work toward Otto on 24 November 2026. Next: record durable approved scope and exact contract/migration decisions after critique.
+**Scope decision:** Pending — Cancelled on 24 November 2026 before any scope was approved: the owner absorbed this plan into [Plan 95](../95-composable-agentic-workspaces/plan.md) as its template seam. Earlier record: the owner selected standard and loop as templates of one project. Next: none here; Plan 95's scope PR carries the template decision.
 
 **Prior art:** [Plan 48](../48-one-record-model/plan.md), [pack_shape.py](../../scripts/pack_shape.py), [test_pack_shape.py](../../scripts/test_pack_shape.py), [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), [its task list](../77-saving-holds-on-a-heavy-timeline/tasks.md) and [Plan 89 task list](../89-heavy-saves-in-seconds/tasks.md) inspected at 83ab5c0ec2842023f9227451fbb0d71adfee428c. Shape currently derives headings, labels and the first task-table header from one pack template; the registry calls it only for new packs. Plan 77 explicitly declares loop; 89 does not. Plan 73 changes workstream paths; consume landed layout.
 
