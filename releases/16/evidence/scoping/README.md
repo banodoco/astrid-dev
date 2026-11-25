@@ -71,3 +71,7 @@ For each final reviewer assemble one brief with role/question, exact base/head, 
 ## Receipts
 
 No original reports have been imported or verified here yet. Recover any existing coordinator work before starting. Record the actual refreshed source snapshot and links here as evidence arrives. Scope acceptance, execution and publication are separate owner decisions.
+
+## Run record — 25 November 2026
+
+Research mailbox [#1963](https://github.com/banodoco/astrid-dev/issues/1963); draft proposal destination [#1964](https://github.com/banodoco/astrid-dev/pull/1964). [CTX-00 source register](CTX-00.md) records the observed served and implementation baselines and explicit gaps. A search of GitHub and ChatGPT history found no confirmed existing R16 scoping packet, but browser history search was incomplete; preserve any recovered original assignment or report. The first new packet is [SC-09](dispatch-v2/SC-09-dispatch.md); do not expand concurrency until its real report push, draft PR, mailbox handoff and remote readback are verified. No report has yet been verified.
