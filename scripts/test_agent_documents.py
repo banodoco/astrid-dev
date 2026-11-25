@@ -99,6 +99,35 @@ class AgentDocumentTests(unittest.TestCase):
         path.write_text(STREAM, encoding="utf-8")
         self.assertEqual(parse_document(self.root, path).skill_name, "astrid-dev-iterate")
 
+    def test_skill_name_length_limit_accepts_53_character_stem(self):
+        stem = "check-generated-workstream-and-shared-policy-discover"
+        self.assertEqual(len(stem), 53)
+        path = self.write(f"shared/workstreams/{stem}.md", STREAM)
+        name = parse_document(self.root, path).skill_name
+        self.assertEqual(name, f"astrid-dev-{stem}")
+        self.assertEqual(len(name), 64)
+        self.assertEqual(validate_documents(self.root), [])
+
+    def test_skill_name_length_limit_refuses_54_character_stem(self):
+        stem = "check-generated-workstream-and-shared-policy-discovery"
+        self.assertEqual(len(stem), 54)
+        path = self.write(f"shared/workstreams/{stem}.md", STREAM)
+        message = (f"agent/shared/workstreams/{stem}.md: generated skill name "
+                   f"'astrid-dev-{stem}' is 65 characters; limit is 64")
+        with self.assertRaises(ValueError) as raised:
+            parse_document(self.root, path)
+        self.assertEqual(str(raised.exception), message)
+        self.assertEqual(validate_documents(self.root), [f"agent documents: {message}"])
+
+    def test_long_non_skill_filenames_are_accepted(self):
+        stem = "check-generated-workstream-and-shared-policy-discovery"
+        for flag in ("skill: false\n", ""):
+            with self.subTest(flag=flag):
+                path = self.write(f"shared/workstreams/{stem}.md",
+                                  STREAM.replace("skill: true\n", flag))
+                self.assertIsNone(parse_document(self.root, path).skill_name)
+                self.assertEqual(validate_documents(self.root), [])
+
     def test_duplicate_skill_stems_fail_without_name_override(self):
         self.write("roles/plan.md", ROLE)
         self.write("shared/workstreams/plan.md", STREAM)
