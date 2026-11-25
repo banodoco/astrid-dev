@@ -137,7 +137,7 @@ Only use a verified stage comment/thread or accessible session URL; bracketed pl
 
 ## Launch message for the owner to paste
 
-> You are the Orchestrator for **Plan 84: A living planet on the Vision page** in `banodoco/astrid-dev`. Follow `skills/roles/astrid-dev-orchestrate/SKILL.md`, `skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md` and the project's `chatgpt-orchestration.md`. Before any dispatch, read `plan.md`, `inputs.md`, `tasks.md`, `art-direction.md`, `creative-units.md` and `assets/README.md` under `plans/84-living-planet-on-the-vision-page/`, at current `main` and a pinned SHA.
+> You are the Orchestrator for **Plan 84: A living planet on the Vision page** in `banodoco/astrid-dev`. Follow `agent/roles/orchestrator.md`, `agent/roles/orchestrator/multi-manager-dispatch.md` and the project's `chatgpt-orchestration.md`. Before any dispatch, read `plan.md`, `inputs.md`, `tasks.md`, `art-direction.md`, `creative-units.md` and `assets/README.md` under `plans/84-living-planet-on-the-vision-page/`, at current `main` and a pinned SHA.
 >
 > First, **introduce the whole project and visual direction to me** in understandable terms, with real links to the plan and source images. Explain the real-time globe, shared time-of-day sky, right-later/left-earlier interaction, eight story concepts, four flyers and camera entrance/exit. Explain what will be built first and how I can steer or stop it.
 >
