@@ -31,7 +31,7 @@ Choose a procedure for an already-authorized task; selecting a workstream never 
 
 ## Author a document
 
-Write one Markdown file with a useful first-level heading and one plain-text description in frontmatter. Add the optional line shown below if independently discovering the document as a skill is useful.
+Write one Markdown file with a useful first-level heading and one plain-text description in frontmatter: a nonempty single line of at most 240 characters, ending in punctuation. Add the optional line shown below if independently discovering the document as a skill is useful.
 
 ~~~yaml
 ---
@@ -43,6 +43,8 @@ skill: true
 In the new `agent/` tree, sources are not authored as `SKILL.md`; the existing `skills/` tree still contains authored `SKILL.md` files during the transition. The filename stem gives the generated skill name: manager.md becomes astrid-dev-manager; gap.md becomes astrid-dev-gap. Directory placement determines ownership, **not** the generated identity. Duplicate skill stems are an error. Omit skill: true for shared reference guides or workstreams that are only meaningful within their parent role.
 
 A role contains sections for Responsibility, Authority, Responsibilities, and Handoff. A workstream contains sections for When to use, Outcome, Inputs, Procedure, and Completion. Keep actual steps in the procedure rather than repeating a separate five-field contract. Authorization comes from the owner and active run, never from choosing a skill.
+
+Each workstream has a defined, independently verifiable outcome. Keep its full execution instructions and authoritative discovery metadata in its own document; a role's navigation summary is not a second source. Never replace actual steps or proof with placeholder summaries. Shared run policy and shared workstreams have one authoritative home; do not duplicate their instructions. Keep role responsibilities, defaults, selection rules and composability guidance in the role document. Do not add folders for workstreams that need no variant. The source checks validate structure, not the correctness of instructions, sufficiency of evidence or authority of the actor.
 
 ## Build and install
 
