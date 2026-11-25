@@ -159,7 +159,7 @@ An authored [release brief](../releases/TEMPLATE.md) selects its included plans 
 
 A gap says what must improve; a plan, what is built; a release, what ships together, as one branch per repository that its plans and fixes merge into (see [How a release runs](../agent/shared/workstreams/release.md#how-a-release-runs)); a version, where releases lead; a major version, the aim. See [strategy](../strategy.md) and [release briefs](../releases/TEMPLATE.md).
 
-A plan owns its name; the release brief owns its contribution sentence and Highlight; the version owns its sentence; the major version owns its aim. These are pulled upward; other prose stays home. A draft is not a publication request; the finalized brief becomes the immutable release record.
+A plan owns its name; the release brief owns its contribution sentences, Highlight and issue list; the strategy owns each version's aim and proof. The roadmap runs chronologically to the major milestone and generates compact release links, not copies of project or issue detail. A draft is not a publication request; the finalized brief becomes the immutable release record.
 
 **When it changes:** edit the brief for scope or highlight changes; a release's membership comes from its `## Included plans`, its version step from its Kind, and the generator refreshes strategy. Edit authored version decisions when needed. Review affected releases and gap routes at project start or completion. New priorities and scope need the owner’s decision; listing work authorizes neither execution nor publication.
 

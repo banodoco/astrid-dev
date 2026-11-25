@@ -2,9 +2,9 @@
 
 The live state of Plan 73's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (22:30 UTC, Tue 24 Nov)
+## Now (15:45 UTC, Wed 25 Nov)
 
-The integration card has landed: the project branch is at `4584a138162eb6ea2b7e21af5c64ab2536b2fcbe`. Ready: P73-01, P73-02, P73-03. The first packet goes alone until its early STATUS proves a packet session can push, open a draft PR and comment.
+The project branch is at `c7cbf07ab221344cb91806bf42afc6663b657a40`: P73-01 to P73-07 and both INT rounds are merged, and MSC-7 and MSC-8 are done. The final review R (round 1) returned REWORK with two blocking findings ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7166533493)). Ready: P73-R1-1 (cards R1.1) and P73-R1-2 (R1.2), in parallel, both on that head. After they merge: R round 2 (it verifies only round 1's fixes), then SC, then MSC-10.
 
 ## Authority
 
@@ -76,7 +76,9 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | [P73-07](packets/P73-07.md) Delete the old layout | MSC-6 | Merged (25 Nov 2026) | — | Pro. Pro |
 | [P73-INT](packets/P73-INT.md) Absorb a landed Plan 71 or 72 (read-only fact-find, then the port) | MSC-9 | On REQUEST only | — | Extra High. A fresh session for each landing, on the orchestrator's REQUEST with the delta and link evidence |
 | [P73-RV](packets/P73-RV.md) High-judgment review (read-only, Pro) | P73-07 (route S) and the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
-| [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
+| [P73-R1-1](packets/P73-R1-1.md) Refuse a skill name over 64 characters (+ guide fix) | R1.1 | Ready (project head `c7cbf07a`) | — | Extra High. In parallel with P73-R1-2; its READY-PROOF gets a Pro read-only review on the orchestrator's REQUEST |
+| [P73-R1-2](packets/P73-R1-2.md) Live launch messages point at `agent/` | R1.2 | Ready (project head `c7cbf07a`) | — | Extra High. In parallel with P73-R1-1 |
+| [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R1.1 and R1.2 (then R round 2, then SC) | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** `agent/**` files are split between P73-02 and P73-03 by file (each packet lists its own); P73-04 and P73-05 split the audit by document group and may each fix only their own group's files. P73-01 writes `scripts/` and `.github/workflows/docs.yml`; P73-06 writes `README.md`, `CONTRIBUTING.md`, `docs/**`, `templates/**`, `env/**` and active release and plan documents; P73-07 deletes `skills/**` and `sync.sh`.
 

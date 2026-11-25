@@ -240,7 +240,7 @@ def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> li
 
 
 def version_errors(text: str) -> list[str]:
-    """Validate one major aim and its nine ordered minor aims or Open values."""
+    """Validate chronological minor milestones followed by one major milestone."""
     body = record_section(text, 'Versions', missing='none', boundary=r'^## ', strip=False)
     if body is None:
         return []
@@ -250,43 +250,29 @@ def version_errors(text: str) -> list[str]:
     for index, match in enumerate(heads):
         end = heads[index + 1].start() if index + 1 < len(heads) else len(body)
         fields: dict[str, str] = {}
-        for name, value in VERSION_FIELD.findall(body[match.end():end]):
-            if name in fields:
-                errors.append(f"strategy.md: version {match.group(2)}.{match.group(3)}: duplicate field '{name}'")
-            fields[name] = value.strip()
-        blocks.append((len(match.group(1)), int(match.group(2)), int(match.group(3)), fields))
-    majors = [(major, minor) for level, major, minor, _ in blocks if level == 3]
-    if not majors:
-        return ['strategy.md: Versions needs at least one major version heading (### Version N.0)']
-    if len(majors) > 1:
-        errors.append('strategy.md: Versions must contain exactly one major version heading')
-    current = None
-    expected_minor = 1
-    for level, major, minor, fields in blocks:
+        major, minor = int(match.group(2)), int(match.group(3))
         name = f'{major}.{minor}'
+        for field, value in VERSION_FIELD.findall(body[match.end():end]):
+            if field in fields:
+                errors.append(f"strategy.md: version {name}: duplicate field '{field}'")
+            fields[field] = value.strip()
         aim = fields.get('Aim', '')
         if not aim:
             errors.append(f'strategy.md: version {name} needs an "**Aim:**" sentence')
-        if level == 3:
-            if minor != 0 or major < 1:
-                errors.append(f'strategy.md: major version heading must be N.0: {name}')
-            if current is not None:
-                if expected_minor != 10:
-                    errors.append(f'strategy.md: version {current}.0 must contain versions '
-                                  f'{current - 1}.1 to {current - 1}.9 in order')
-                if major != current + 1:
-                    errors.append(f'strategy.md: major version {name} must follow {current}.0')
-            if aim == VERSION_OPEN:
-                errors.append(f'strategy.md: major version {name} needs a real aim, not "{VERSION_OPEN}"')
-            current, expected_minor = major, 1
-            continue
-        if current is None:
-            errors.append(f'strategy.md: version {name} is outside a major version')
-            continue
-        if major != current - 1 or minor != expected_minor:
-            errors.append(f'strategy.md: expected version {current - 1}.{expected_minor} here, found {name}')
-        expected_minor = minor + 1
-    if current is not None and expected_minor != 10:
-        errors.append(f'strategy.md: version {current}.0 must contain versions '
-                      f'{current - 1}.1 to {current - 1}.9 in order')
+        if len(match.group(1)) != 3:
+            errors.append(f'strategy.md: version {name} must be a level-three heading')
+        if minor == 0 and aim == VERSION_OPEN:
+            errors.append(f'strategy.md: major version {name} needs a real aim, not "{VERSION_OPEN}"')
+        blocks.append((major, minor))
+    majors = [major for major, minor in blocks if minor == 0 and major >= 1]
+    if len(majors) != 1:
+        errors.append('strategy.md: Versions must contain exactly one major version heading (### Version N.0)')
+        return errors
+    major = majors[0]
+    expected = [(major - 1, n) for n in range(1, 10)] + [(major, 0)]
+    for index, (actual, wanted) in enumerate(zip(blocks, expected), start=1):
+        if actual != wanted:
+            errors.append(f'strategy.md: expected version {wanted[0]}.{wanted[1]} here, found {actual[0]}.{actual[1]}')
+    if len(blocks) != len(expected):
+        errors.append(f'strategy.md: Versions must contain {major - 1}.1 to {major - 1}.9 followed by {major}.0 exactly once')
     return errors

@@ -107,7 +107,7 @@ def release_membership(briefs: list[dict]) -> dict[str, list[dict]]:
 
 
 def _strategy(root: Path, version: str) -> str:
-    from records import project_fields, release_brief
+    from records import release_brief
     text = (root / "strategy.md").read_text(encoding="utf-8")
     start, end = f"<!-- strategy-{version}:start -->", f"<!-- strategy-{version}:end -->"
     if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
@@ -122,35 +122,18 @@ def _strategy(root: Path, version: str) -> str:
             if brief["number"] and brief["number"].isdigit():
                 briefs.append(brief)
     releases = release_membership(briefs).get(version, [])
-    lines = []
+    links = []
     for brief in releases:
-        if brief["kind"] in ("minor", "major"):
-            lines.append(f"[Release {brief['number']}](releases/{brief['number']}.md) — {brief['title']} ({brief['state']}): {rebase_links(brief['highlight'], Path('releases'), Path('.'))}")
-    patches = [b for b in releases if b["kind"] == "patch"]
-    if patches:
-        lines.append("On the way: " + ", ".join(f"[Release {b['number']} — {b['title']}](releases/{b['number']}.md)" for b in patches))
-    plans = {}
-    for brief in releases:
-        for plan in brief["plans"]:
-            key = plan["folder"]
-            entry = plans.setdefault(key, {"number": plan["number"], "contributions": []})
-            entry["contributions"].append(f"[Release {brief['number']}](releases/{brief['number']}.md): {rebase_links(plan['sentence'], Path('releases'), Path('.'))}")
-    if plans:
-        lines.append("")
-        for folder, entry in plans.items():
-            number, contributions = entry["number"], entry["contributions"]
-            name = project_fields((root / "plans" / folder / "plan.md").read_text(encoding="utf-8"))["Project"]
-            # Each sentence may end with its own period; drop one so the joined line ends with exactly one.
-            ended = [contribution.rstrip().removesuffix(".").rstrip() for contribution in contributions]
-            lines.append(f"- [Plan {number} — {name}](plans/{folder}/plan.md) — " + "; ".join(ended) + ".")
-    counts = [f"[Release {brief['number']} issues](releases/{brief['number']}.md#issues): {len(brief['issues'])}"
-              for brief in releases if brief.get("issues_frozen", False)]
-    if counts:
-        # A blank line first, or Markdown reads the counts as part of the last plan bullet.
-        lines.extend(["", *counts])
-    if not releases:
-        lines.append("No release yet.")
-    return before + start + "\n" + "\n".join(lines) + "\n" + end + after
+        milestone = brief["kind"] in ("minor", "major")
+        label = f"Release {brief['number']}"
+        if milestone:
+            label += f" — {brief['title']}"
+        link = f"[{label}](releases/{brief['number']}.md)"
+        if milestone:
+            link += f" ({brief['state']})"
+        links.append(link)
+    generated = "**Releases:** " + " · ".join(links) + "\n" if links else ""
+    return before + start + "\n" + generated + end + after
 
 
 ROLE_INDEX_TARGETS = (
@@ -203,7 +186,7 @@ VIEWS = (
 ) + (
     View("shared-workstream-index", ("agent/shared/workstreams/*.md",), "agent/README.md",
          lambda root: _agent_index(root, "agent/README.md"), "shared-workstreams"),
-) + tuple(View(f"strategy-{version}", ("releases/*.md", "plans/*/plan.md"), "strategy.md",
+) + tuple(View(f"strategy-{version}", ("releases/*.md",), "strategy.md",
                lambda root, version=version: _strategy(root, version), f"strategy-{version}")
           for version in [*(f"0.{n}" for n in range(1, 10)), "1.0"])
 
