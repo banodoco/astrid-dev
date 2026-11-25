@@ -33,7 +33,7 @@ Terms follow the [glossary](../glossary.md).
 
 You, the **planner** (an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor), produce an agreed, testable end state and tasks another agent can run. An orchestrator may also plan a project itself before farming it out.
 
-1. **Projects are for new, separately useful outcomes** with their own priority, owner and completion proof. Bugs, small fixes and maintenance normally go in issues; existing project tasks use their accepted plan. Read the [aspirations of its gaps](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
+1. **Projects are for new, separately useful outcomes** with their own priority, owner and completion proof. Bugs, small fixes and maintenance normally go in issues; existing project tasks use their accepted plan. Read the [aspirations of its gaps](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap). Write a [loop plan](../glossary.md) only when the end state is clear but the tasks can't be known until a live round measures them; [how it runs](../../roles/manager/live-loop.md).
 2. **Planning authorizes no execution or release** ([run contract](../run-contract.md#scope-source-identity-and-state)), and performs no product testing unless specifically requested; planning-document PRs still run relevant doc validators and focused unit tests ([checks](../run-contract.md#checks-and-failure-repair)).
 3. **Agree the outcome once.** Record the owner's actual choice with a traceable source; a draft project or PR, or no objection, is not approval. Keep earlier accepted scope; avoid repeated sign-offs.
 
@@ -81,8 +81,18 @@ In the [tasks template](../../../templates/project/tasks.md), every task has a *
 - **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
 - **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and dependency revisions, exact focused checks and authority.
+- **A deliberate base.** The default base is the release branch, `release/<NN>/main`. Question it before you accept it.
+  - **Find overlapping plans.** Check every other active plan in the same release whose branch hasn't landed: run `git merge-tree --write-tree --name-only release/<NN>/main release/<NN>/plan-<PP>` and compare what it touches with this plan's files. A plan overlaps when it changes the same functions, classes or contracts, or the producer pins (VibeComfy and Runtime pins, locks and recipes).
+  - **Choose a base for each overlapping plan,** record the choice in `inputs.md` with its reason, and add the plan to **Waiting on**:
+    - **Wait** for it to land first.
+    - **Stack:** cut this plan from its plan branch and land after it.
+    - **Build on the release branch** only if the overlap is disjoint, or the other plan's change is one this plan should replace.
+
+    Deferring an overlapping plan's items doesn't make the plans independent. Their contracts still meet when they merge.
 - **Tests only at load-bearing moments,** per the [run contract's table](../run-contract.md#when-a-test-run-is-load-bearing).
 - **A test inventory and focused proofs.** `tasks.md` names the existing tests the plan affects (its test inventory) and, for each task, the exact test files that prove it. The manager's local baseline runs only these.
+- **Proofs run on inputs any session can rebuild.** A card's proof uses a generated fixture or a structure-only export (no media), never the owner's own project or media. When a real project surfaces a bug, record its shape: add a minimal reproduction to the fixture builder and file an issue, so the fix is proved and guarded on the fixture; a workaround made in the real project is the owner's to undo, not a card.
+- **A card's proof is evidence, not a review.** Tests, a measurement, a render or a read-back; never "an independent review". Reviews live only in the `R` row and any agreed `RS` stop, and a per-card high-judgment review follows the [run contract's per-card rule](../run-contract.md#review-and-promotion-boundaries).
 - **A contract card lists what it makes untrue.** A card that changes a contract, a check's trigger or a message names every existing pinned test, fixture and oracle line the change invalidates, and says how each may change. A card whose proof is a `grep` or a list of pinned tests says "re-check against the code at dispatch", because an earlier card may have moved what it names.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
   - other repositories come from public git at pinned commits;

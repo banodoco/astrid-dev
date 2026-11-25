@@ -28,19 +28,47 @@ Enter through [astrid-dev](../start.md). The **Lead is the release manager named
 1. **Own the release outcome.** Choose priorities, resolve cross-plan questions and keep the next work ready, within accepted scope.
 2. **Keep responsibility clear.** Each plan run names one accountable agent: a plan manager or, under [fresh-packet dispatch](leader/multi-manager-release.md), **you**, with each ChatGPT session owning only its packet.
 3. **Judge results.** Accept a submission or name its rework; landed work shows in `tasks.md`, not a second checklist.
-4. **Keep progress legible.** Maintain the existing release brief, run board and decisions; tell the owner what moved, what is blocked and which decisions need them.
+4. **Keep progress legible.** Maintain the existing release brief, run board and decisions, and use the run contract's [boards and check-ins](../shared/run-contract.md#coordination-boards-and-check-ins) with every role; tell the owner what moved, what is blocked and which decisions need them.
 5. **Own release integration.** Follow [Release](../shared/workstreams/release.md) for landing order, branch health, qualification and a separate owner's go to publish.
 6. **Tell an environment block from slow work.** At each check-in, compare every plan and packet with the last. Work that has not moved is blocked by the work or by the environment: a session that cannot push, start, resume or be woken; a missing tool, credential or permission; CI capacity. Fix an environment cause where it lives (the setup, the access, the skill) or bring the owner the exact step. Never dispatch into the same wall again.
 
 They apply in every workstream.
 
+## Divide the release into lanes
+
+A [lane](../shared/glossary.md) is the plans one orchestrator session answers for. You choose the lanes and each orchestrator's route, and keep both on the run board.
+
+**Same lane** when plans:
+- edit the same files, or one builds on another: the lane runs them in order and owns the merges between them;
+- need the same fixture, machine or live setup;
+- are small and independent, so a session each would cost more in setup and in the owner's attention than it saves. They run side by side, one manager each.
+
+**Its own lane** when a plan:
+- is a loop or taste plan, worked in rounds until it is right: it absorbs its orchestrator, and a plan sharing the lane starves;
+- needs a quiet machine: measure in a [separate session](../guides/measurement-box/README.md);
+- would put a third manager on one machine at once.
+
+**Start a fresh session at a landing** once a lane's session has used about half its context; a long session loses its early decisions. Never hand over mid-plan.
+
+**Count lanes by the owner's attention.** Each is a conversation she follows and answers. Lanes share CI runners, so stagger their release-branch runs.
+
+**The orchestrator's route** is judged like [the manager's](orchestrator.md#choose-the-managers-route), by what the orchestrator itself must do:
+
+| Route | The orchestrator's own work |
+|---|---|
+| **X** | The default. Its plans are complete: it starts and resumes managers, tells a stalled manager from a slow one, settles routine questions, escalates the rest and reports plainly. The hard judgment sits with the managers, the reviewer and you. |
+| **S** | It chooses direction from evidence each round (a loop plan), or holds release-level correctness itself: landing order, pins, data or a migration. |
+
+Never `N`: a hosting orchestrator answers for its runs. A taste lane's judgment is its `T` manager's; its orchestrator is `X`.
+
 ## Workstreams
 
 A [workstream](../README.md) adds situation-specific steps **under this role**, not another role or approval system.
 
-**Direct release leadership** is the default when a separate dispatcher is unnecessary: use [Release](../shared/workstreams/release.md) and work directly with the relevant managers. For fresh-session dispatch, choose the workstream below.
+**Direct release leadership** is the default when a separate dispatcher is unnecessary: use [Release](../shared/workstreams/release.md) and work directly with the relevant managers. For lane orchestration or fresh-session dispatch, choose the appropriate workstream below.
 
 
+- [Lane orchestrators in Claude cloud](leader/lane-orchestrators.md) — Launch and steer one Claude-hosted orchestrator per lane, each running a Codex manager through a carded plan, with the Lead as strategist and gatekeeper rather than dispatcher.
 - [Fresh-session ChatGPT packet dispatch](leader/multi-manager-release.md) — Prepare and lead fresh-session packet delivery across accepted release work without delegating the Lead's review or integration authority.
 
 
