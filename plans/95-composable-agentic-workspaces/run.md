@@ -73,6 +73,8 @@ Cap: three Running or Review at once (ruling 6). Priority: P95-09 (critical path
 | [P95-11](packets/P95-11.md) Template selection and manifests | OT-11 | Ready (OT-7 merged; Otto main `608ef135`) | — | Extra High. Beside P95-08 within the cap |
 | [P95-09](packets/P95-09.md) Pipeline declarations, listing and traversal | OT-9 | Ready (OT-8 merged; Otto main `cefbfc1e`) | — | Extra High. Critical path (then OT-10, OT-13) |
 | [P95-12](packets/P95-12.md) Standard and loop templates; a third with no code change | OT-12 | Ready (OT-11 merged; Otto main `cefbfc1e`) | — | High |
+| [P95-10](packets/P95-10.md) Pipeline conformance check | OT-10 | Ready (OT-9 merged; Otto main `d67cacfb`) | — | Extra High. Critical path (then OT-13) |
+| [P95-PK](packets/P95-PK.md) Package the templates and guidance for installed Otto | gap from OT-12 | Ready (OT-12 and OT-17 merged) | — | Extra High. Beside P95-10; needed before OT-22 |
 | [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
 
