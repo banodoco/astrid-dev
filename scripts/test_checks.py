@@ -443,5 +443,36 @@ class CanonicalAgentGateTests(unittest.TestCase):
             package.write_text("# Derived\n\n[bad](missing.md)\n", encoding="utf-8")
             self.assertEqual(checks._markdown_links(context), baseline)
 
+class RetiredAgentSourcesTests(unittest.TestCase):
+    def test_restored_authored_skills_or_sync_script_is_refused(self):
+        from unittest.mock import patch
+        gate = next(entry for entry in checks.REGISTRY if entry.id == "obsolete-sources")
+        for name in ("skills", "sync.sh"):
+            for kind in ("authored", "dangling-symlink"):
+                with self.subTest(name=name, kind=kind), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    path = root / name
+                    if kind == "dangling-symlink":
+                        path.symlink_to(root / "absent", target_is_directory=name == "skills")
+                    elif name == "skills":
+                        (path / "astrid-dev").mkdir(parents=True)
+                        (path / "astrid-dev/SKILL.md").write_text("Old authoring source.\n", encoding="utf-8")
+                    else:
+                        path.write_text("#!/bin/sh\n", encoding="utf-8")
+                    with patch.object(checks, "_catalog_ready", return_value=True):
+                        self.assertEqual(gate.run(checks.Context(root)), [f"obsolete source must be removed: {name}"])
+
+    def test_canonical_sources_and_generated_skills_are_not_retired_paths(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "agent").mkdir()
+            generated = root / ".generated/skills/astrid-dev-start"
+            generated.mkdir(parents=True)
+            (generated / "SKILL.md").write_text("Generated output.\n", encoding="utf-8")
+            with patch.object(checks, "_catalog_ready", return_value=True):
+                self.assertEqual(checks._obsolete_sources(checks.Context(root)), [])
+
+
 if __name__ == "__main__":
     unittest.main()
