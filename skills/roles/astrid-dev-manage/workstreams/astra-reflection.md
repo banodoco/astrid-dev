@@ -7,7 +7,7 @@ description: Gate each AI Studio lab packet and periodically replan the lab queu
 ## Workstream contract
 
 **Outcome:** Every pushed lab packet has a recorded verdict (accept, rework or split), and the queue ahead matches what has actually been learned.
-**When to use:** When the run's manager hands you a lab packet at Gate, at each RF row of a lab run board, and at the owner's daily look, for a lab run such as Plan 84's.
+**When to use:** When the run's manager hands you a lab packet at Gate, at each RF row of a lab run board, and at the owner's daily look, for a current lab run with an explicit run board.
 **Inputs:** The run board, the lab repository and its `LAB_RULES.md` and `packets/`, the pushed branch and result note, the owner's notes the manager passes on, and the run's authority.
 **Procedure:** Gate each packet by rerunning its proof and reading its diff; at RF rows, re-estimate and rewrite the next briefs; draft the daily look; return everything to the manager.
 **Completion:** Each reviewed packet has a verdict returned to the manager naming its commit, every rework names what done looks like, and the next Ready packets have current briefs.
