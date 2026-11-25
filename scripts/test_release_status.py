@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from release_status import progress, report, run, snapshot
+from release_status import progress, report, run, snapshot, validate_change
 
 
 BRIEF = """# Release 15 — Fixture
@@ -110,6 +110,28 @@ class ReleaseStatusTests(unittest.TestCase):
             self.invoke(refresh=True)
         with self.assertRaisesRegex(ValueError, "ambiguous"):
             report(self.root, 15, BRIEF.replace("Plan 40", "Plan 41"))
+
+    def test_pr_gate_checks_changed_snapshot_and_final_transition(self):
+        self.assertEqual(validate_change(self.root, 15, BRIEF, BRIEF), [])
+        self.assertTrue(validate_change(self.root, 15, BRIEF, BRIEF.replace("Draft", "Final")))
+        self.invoke(refresh=True)
+        current = self.path.read_text()
+        self.assertEqual(validate_change(self.root, 15, BRIEF, current), [])
+        tampered = current.replace("| queued |", "| done |")
+        self.assertTrue(validate_change(self.root, 15, current, tampered))
+        (self.plan / "plan.md").write_text(PLAN.replace("queued", "active").replace("Unassigned", "Manager"))
+        self.assertEqual(validate_change(self.root, 15, current, current), [])
+        self.assertTrue(validate_change(self.root, 15, current, current.replace("Draft", "Final")))
+        self.invoke(refresh=True)
+        fresh = self.path.read_text()
+        final = fresh.replace("Draft", "Final")
+        self.assertEqual(validate_change(self.root, 15, current, final), [])
+        self.assertTrue(validate_change(self.root, 15, final, final.replace("| active |", "| done |")))
+        self.assertTrue(validate_change(self.root, 15, fresh, BRIEF))
+
+    def test_legacy_final_backfill_without_snapshot(self):
+        old = BRIEF.replace("Release 15", "Release 14").replace("**Release:** 15", "**Release:** 14")
+        self.assertEqual(validate_change(self.root, 14, old, old.replace("Draft", "Final")), [])
 
     def test_missing_progress_and_partial_landing(self):
         (self.plan / "tasks.md").unlink()

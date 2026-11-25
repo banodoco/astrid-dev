@@ -71,6 +71,8 @@ def _unique_project_numbers(context):
 
 def _release_documents(context):
     from check_docs import read, release_errors
+    from records import git_show
+    from release_status import validate_change
     root = context.root
     if not _catalog_ready(context):
         return []
@@ -82,6 +84,11 @@ def _release_documents(context):
                     for p in release_folder.glob('[0-9]*.md') if p.stem.isdigit()}
     for filename, body in release_docs.items():
         errors.extend(release_errors(filename, body))
+        if context.base:
+            path = f"releases/{filename}"
+            before = git_show(root, context.base, path, missing="none")
+            errors.extend(f"{path}: {message}" for message in
+                          validate_change(root, int(Path(filename).stem), before, body))
     return errors
 
 

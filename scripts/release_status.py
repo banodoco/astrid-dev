@@ -8,6 +8,8 @@ from records import project_fields, release_brief, section, split_table_row
 START = "<!-- release-status:start -->"
 END = "<!-- release-status:end -->"
 HEADING = "## Plan status snapshot"
+# Releases before 15 are historical backfill, not live status snapshots.
+SNAPSHOT_FIRST_RELEASE = 15
 
 
 def progress(text):
@@ -128,7 +130,12 @@ def snapshot(text):
         return None
     if text.count(START) != 1 or text.count(END) != 1 or text.index(START) > text.index(END):
         raise ValueError("invalid plan status snapshot markers")
-    body = text.split(START, 1)[1].split(END, 1)[0]
+    if len(re.findall(r"^## Plan status snapshot\s*$", text, re.M)) != 1:
+        raise ValueError("snapshot needs one Plan status snapshot section")
+    region = section(text, "Plan status snapshot")
+    if not region.startswith(START + "\n") or not region.endswith("\n" + END):
+        raise ValueError("snapshot markers must enclose the Plan status snapshot section")
+    body = region.split(START, 1)[1].split(END, 1)[0]
     return body.strip("\n") + "\n"
 
 
@@ -145,6 +152,35 @@ def refreshed(text, body):
     if anchor is None:
         raise ValueError("missing Branches/Publication section")
     return text[:anchor.start()] + HEADING + "\n\n" + block + "\n\n" + text[anchor.start():]
+
+
+def validate_change(root: Path, number: int, before: str | None, after: str):
+    """Check changed snapshots and the Draft-to-Final gate, not unrelated drift.
+
+    Historical Final snapshots may never be rewritten from later plan records.
+    Legacy releases before the feature are not retroactively given a snapshot.
+    """
+    try:
+        previous = snapshot(before or "")
+        current = snapshot(after)
+        old_state = release_brief(before, strict=False)["state"] if before else None
+        new_state = release_brief(after, strict=False)["state"]
+        if old_state == "Final":
+            if previous != current:
+                return ["Final plan status snapshot is historical; restore it"]
+            return []
+        finalizing = new_state == "Final"
+        if current is None:
+            if previous is not None or (finalizing and number >= SNAPSHOT_FIRST_RELEASE):
+                return ["plan status snapshot required; refresh and check it while Draft"]
+            return []
+        if current == previous and not finalizing:
+            return []
+        if current != report(root, number, after):
+            return ["plan status snapshot is stale or edited; regenerate with release status --refresh while Draft"]
+    except (ValueError, OSError) as exc:
+        return [str(exc)]
+    return []
 
 
 def run(root: Path, number: int, *, refresh=False, check=False):
