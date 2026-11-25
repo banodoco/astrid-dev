@@ -248,6 +248,7 @@ The orchestrator writes the packets at its next break point and lists them here.
 | [R15-P87-05](packets/R15-P87-05.md) | RN-14 (X): motion pack on a fresh install | Blocked on RN-5's pin; sized first | — | Over one day moves to Release 16 |
 | [R15-P87-06](packets/R15-P87-06.md) | RN-15 (S): long renders die on a recycled process id | Ready (top priority; Lead DECISION 24 November 2026) | — | New branch `p87/rn15-pid-wrap`; high-judgment review (S); the outputs policy is a separate commit |
 | [R15-P87-07](packets/R15-P87-07.md) | `clip.move` and `placement.move` write integer `at_ms` (S) | Ready (dispatch route pending: Lead to confirm manager) | — | New branch `p87/clip-move-int-ms`; Lead DECISION `r15-lead-p87-0004`; branches from the head named at dispatch |
+| [R15-P87-08](packets/R15-P87-08.md) | Remove the redundant parent/config clip check P87-07 added to `runtimeGraphToContract` (N) | Ready | — | New branch `p87/graph-clips-check-app` in astrid-app from `release/15/main`; fixes five App vitest failures from P87-07 (Lead ruling `r15-lead-p87-0012`); PR into `release/15/main` |
 
 Stays in the orchestrator's lane: RN-1 to RN-3 (draft astrid-agent#567, awaiting RN-2's real own-object render), RN-4 (`p87/rn4-roots-clean`, review and installed proof), RN-6 and RN-7 (merged), RN-10, RN-12, RN-13 and every real render.
 
