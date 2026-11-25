@@ -11,8 +11,7 @@ from pathlib import Path
 import re
 import subprocess
 
-SELF_PATHS = frozenset({"scripts/agent_reference_inventory.py", "scripts/test_agent_reference_inventory.py",
-                        "scripts/ms9_cutover_preflight.py", "scripts/test_ms9_cutover_preflight.py"})
+SELF_PATHS = frozenset({"scripts/agent_reference_inventory.py", "scripts/test_agent_reference_inventory.py"})
 TEXT_SUFFIXES = frozenset({".md", ".py", ".sh", ".yml", ".yaml", ".json", ".toml", ".txt", ".ini"})
 OLD_REFERENCE = re.compile(
     r"(?P<path>skills/(?:astrid-dev(?:/[A-Za-z0-9_./-]+)?(?![A-Za-z0-9_-])|"
@@ -48,10 +47,6 @@ def scope_for(path: str) -> str:
         return "plan-owner-review"
     if path.startswith("releases/"):
         return "release-lead-review"
-    # Disposable migration proof is test/evidence code, never a live consumer.
-    if path in {"scripts/ms9_compat_rollback.py", "scripts/ms10_extension_exercise.py",
-                "scripts/ms11_negative_matrix.py"}:
-        return "pinned-test-or-fixture"
     if path.startswith(("scripts/test_", "scripts/fixtures/", "env/tests/")):
         return "pinned-test-or-fixture"
     if path.startswith(("scripts/", ".github/", "env/", "templates/", "docs/", "vision/")) or path in (
