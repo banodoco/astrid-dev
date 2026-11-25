@@ -49,6 +49,10 @@ sh ./install --update --manifest ./install-manifest.json
 
 For a fresh install on either platform, omit `--update` and present the normal setup choices; keep the explicit `--manifest`. Do not use fresh flags on an existing install. Record exit/output, elapsed time, log location and actual active identities. If a second snapshot with release number 15 is reported already current but active SHAs differ, record BLOCKED and the exact receipt; never force a version bump, uninstall data or bypass installer verification. If the active tuple is wrong or unverified, stop before claiming a generation test.
 
+## Test the pinned frontend
+
+The manifest installs Agent/Runtime, not the editor code. After verifying the active tuple, follow [the frontend testing guide](frontend-testing.md) using the exact compatible App SHA in this receipt. This is the supported local editor route, not the macOS-only isolated release-stack developer tool. Record any blocker independently; CLI-only success is not full-stack success.
+
 ## Linux test adapter
 
 Use a native Linux shell. Record distribution, kernel, GPU/VRAM/driver, RAM, storage, Python/ComfyUI environment, service state and exact placement. Use a new scratch directory, for example `mktemp -d "$HOME/astrid-test.XXXXXXXX"`, with a `report` subdirectory. Keep the same test cell IDs, inputs, seeds, timing and result semantics as the matrix. Replace its Windows paths and PowerShell launcher syntax with native paths and shell quoting. For a normal install:

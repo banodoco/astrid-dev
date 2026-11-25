@@ -1,6 +1,6 @@
 # Release 15 Windows and Linux technical matrix (coding-agent reference)
 
-**Start with the [short tester guide](windows-tester-brief.md).** This appendix preserves the detailed test cells, with Windows command examples and a Linux adapter; it is **not** a second onboarding or issue-reporting process. Create one session issue before testing, collect qualitative feedback throughout, and file separate actionable problem issues as the guide says. Use the frozen Agent's skills for normal setup/generation; this file governs Release 15 source identity and explicit test cells. The currently served web editor is outside this Agent/Runtime qualification.
+**Start with the [short tester guide](windows-tester-brief.md).** This appendix preserves the detailed test cells, with Windows command examples and a Linux adapter; it is **not** a second onboarding or issue-reporting process. Create one session issue before testing, collect qualitative feedback throughout, and file separate actionable problem issues as the guide says. Use the frozen Agent's skills for normal setup/generation; this file governs Release 15 source identity and explicit test cells. The [frontend cases](frontend-testing.md) test the exact local App on the same verified installed tuple. The currently served web editor is not candidate App evidence.
 
 **Start with [self-service build preparation](prepare-build.md).** A verified release-branch snapshot is sufficient for opt-in exploratory testing; formal qualification still requires the Lead's exact approved tuple. Never substitute the published build. The setup skill owns detection, consent, connection and first use; its normal published installer and preinstall helper do not apply to this test. Read skills at the frozen Agent SHA.
 
@@ -261,6 +261,10 @@ A release command returning is **not yet proof that billing stopped**. Confirm t
 
 Add a separate RunPod table to report.md: frozen build pins, cell, GPU/region/pod ID, claim/lease ID, task ID, start/end UTC, approved caps, estimated vs observed billed cost, result, exact termination evidence, and any uncertainty. Share redacted evidence on the same issue. Never count this as proof of the tester's local GPU or ComfyUI.
 
+## Part 5B: Pinned frontend and real editor journey
+
+Follow the [frontend testing guide](frontend-testing.md) on the exact App commit in the session receipt. Exercise native browser connection, import/drag/edit/save/reopen and supported agent setup/first project-aware chat. Record UI-0 to UI-6 independently from CLI and RunPod cells; a blocked frontend does not invalidate honest installed-side results. Do not use a mocked editor or a floating public App for this claim. Stop only the session-owned frontend on cleanup.
+
 ## Part 6: Clean up and report
 
 1. **Make the diagnostics bundle first;** On Linux, use the [adapter](prepare-build.md#linux-test-adapter) for paths, service inspection and ZIP creation. it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\report\astrid-doctor.zip`. Copy the images from A and B into the report folder too, if those cells produced them.
@@ -270,7 +274,7 @@ Add a separate RunPod table to report.md: frozen build pins, cell, GPU/region/po
 
 Never delete a whole `models`, `custom_nodes`, `input` or `output` folder, and never delete a file you didn't add.
 
-**Finish `report.md` and the testing-session issue** with the issue URL; all three frozen Release 15 SHAs, installed/manifest identity and hash, active-build proof, fresh-install or update-from version, machine facts, cell table, problems in severity order, fixes, and exactly what was added/removed/kept/restored. **Add the user's experience:** positive moments, confusing or slow moments, expectations vs reality, workarounds, the tester's feedback after setup/first creation/end, plus links to every distinct problem issue and PR (or an existing issue it reproduced). Distinguish quotes from the agent's interpretation, and local Windows/Linux from RunPod results (approved spend, actual cost and verified teardown). Label served App/UI **NOT TESTED FOR RELEASE 15**. If you can export this agent session, add it to the folder: it shows what really happened.
+**Finish `report.md` and the testing-session issue** with the issue URL; all three frozen Release 15 SHAs, installed/manifest identity and hash, active-build proof, fresh-install or update-from version, machine facts, cell table, problems in severity order, fixes, and exactly what was added/removed/kept/restored. **Add the user's experience:** positive moments, confusing or slow moments, expectations vs reality, workarounds, the tester's feedback after setup/first creation/end, plus links to every distinct problem issue and PR (or an existing issue it reproduced). Distinguish quotes from the agent's interpretation, and local Windows/Linux from RunPod results (approved spend, actual cost and verified teardown). Record the exact pinned App and UI results if tested. Otherwise label candidate App/UI **NOT TESTED**; do not count the served editor as pinned App proof. If you can export this agent session, add it to the folder: it shows what really happened.
 
 **Then zip the folder and attach it to the testing-session issue**, after showing the tester the redacted contents and obtaining their approval to post; paste the summary as the final issue comment:
 
