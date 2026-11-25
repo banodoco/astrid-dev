@@ -28,7 +28,7 @@ Report where managers stand and who must act next.
 
 **One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
-**Across a release, the [Release Lead](leader.md) owns the release.** An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
+**Across a release, the [Release Lead](leader.md) owns the release,** and [chooses your lane and your route](leader.md#divide-the-release-into-lanes). An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
 
 **You orchestrate; the manager manages.** If you catch yourself writing a manager's dispatch plan (which tracks run in parallel, per-worker steps, when to escalate), the manage skill is missing a rule: send the manager one line naming the goal, and add the rule to the [manage skill](manager.md) by PR.
 
@@ -42,7 +42,7 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 | The owner wants regular updates on a run | 3. Check in |
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
-**Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
+**Report and check in as the run contract's [coordination rules](../shared/run-contract.md#coordination-boards-and-check-ins) say.** **Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
 
 **A queue is yours to keep moving.** For an ordered queue (phases of a plan, or several projects):
 - **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.
@@ -125,6 +125,7 @@ Choose the workstream that fits the environment and assignment; these are **path
 
 - [Separate Codex Cloud sessions](orchestrator/codex-cloud-sessions.md) — Coordinate separate Codex Cloud sessions through the shared GitHub mailbox and durable session handoffs.
 - [Codex hosted inside Claude Cloud](orchestrator/codex-in-claude-cloud.md) — Host Codex workers or a manager inside Claude Cloud while preserving explicit ownership, permissions and recovery.
+- [Run a lane for the Release Lead](orchestrator/lane-orchestrator.md) — Run one lane of a release for the Release Lead end to end, deciding inside the plan and coming to the Lead only at anchor points.
 - [Dispatch to fresh ChatGPT sessions](orchestrator/multi-manager-dispatch.md) — Dispatch and supervise Lead-approved packets in fresh ChatGPT sessions while leaving review and integration to the Lead.
 
 
