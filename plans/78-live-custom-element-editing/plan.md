@@ -10,7 +10,7 @@
 
 **Estimate:** 4–6 engineering days, one phase.
 
-**Waiting on:** nothing for its base. [Plan 69](../69-project-elements/plan.md) has landed in `release/15/main` in all three repositories, and `release/15/plan-78` is cut in astrid-agent from `release/15/main` (see the Run start line in [inputs](inputs.md#planning-evidence)). Plan 81 edits `commit_session.py` too: `release/15/main` is merged in after it lands, before the final proof. The motion-pack pin in LE-2b waits for the owner's go.
+**Waiting on:** Agent plan recorded merged; review dispositions and the separate motion-pack fresh-install issue #1525 are recorded in [tasks](tasks.md). Reconcile LE-2, LE-4, R and RF.1 against the actual release candidate, including live-edit proof and the remaining accepted dispositions, before closure.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md).
 

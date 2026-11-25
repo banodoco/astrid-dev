@@ -10,7 +10,7 @@
 
 **Estimate:** Provisional, about 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop. Re-estimate once TE-3's feasibility is known.
 
-**Waiting on:** Plan 87's RN-6 for the render-backed proofs only; TE-1 to TE-3's code starts at once
+**Waiting on:** Recorded landed; read-back proofs and independent review are ticked. The Lead deferred render clauses to the release-freeze check; confirm that proof and the recorded probe limitations before publication and completion assessment.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 

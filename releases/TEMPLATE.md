@@ -25,7 +25,9 @@ Delete this paragraph once the list is written; only plan bullets or `None yet` 
 
 ## Plan status snapshot
 
-Run `python3 scripts/astrid_dev.py release status <N> --refresh` once the brief is created, at Lead check-ins and before publication; run it with `--check` to verify the snapshot. This section is generated from included plan records, not edited by hand. The Final brief retains the last snapshot. See [release reconciliation](../agent/shared/workstreams/release.md#reconcile-plan-status).
+<!-- release-status:start -->
+<!-- Run `python3 scripts/astrid_dev.py release status <N> --refresh` once the brief is created, at Lead check-ins and before publication; run it with `--check` to verify the snapshot. This section is generated from included plan records, not edited by hand. The Final brief retains the last snapshot. See [release reconciliation](../agent/shared/workstreams/release.md#reconcile-plan-status). -->
+<!-- release-status:end -->
 
 ## Branches
 
