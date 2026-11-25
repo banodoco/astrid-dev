@@ -53,19 +53,18 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 *From [Routing and bindings](../../../shared/run-contract.md#routing-and-bindings); edit it there.*
 <!-- block:routing:end -->
 
-**Fix it yourself when it is small.** Instead of posting rework, have a sub-agent make the fixes when all of these hold:
-- the review grades the packet B+ or better;
-- it leaves at most four must-fix items, each in one place, about 50 changed lines or fewer, with a failing case that defines done;
-- none changes a design, protocol, schema, threat model, product default, pin or existing assertion;
-- the packet's session has submitted, and its branch has not moved for 30 minutes.
+**Fixes are packet work, however small** (owner, Release 15). Claude sessions and their sub-agents diagnose, review, prove, merge, pin and run CI. They don't write the fix. Put the diagnosis in the rework or a new packet: the failing ids, the cause, the suggested change, and the May touch list. If ChatGPT fails or shows a limit, retry it, or start a fresh session at the branch head. Otherwise wait, because taking the work over costs more than the wait.
 
-The sub-agent works on the packet's branch, adding each failing-before case, in commits labelled `Lead review fixes`. A second, faster reviewer checks them; then merge and post DONE as usual. Otherwise, post the rework.
+**Judge like a light gatekeeper.** Count failures as distinct test ids from complete logs, never as pytest's summary counters, which repeat entries. Reviewers sort findings into BLOCKING, FOLLOW-UP or NOTE; block only on wrong results accepted, data or install damage, a real security or custody hole, or a regression from base. File the rest of a PR's follow-ups as one issue in astrid-dev, marked `backlog` and linked from the PR. A `tasks.md` row is for work the release must do. A regression the candidate introduced is fixed in its packet. A defect that predates it gets an issue and a test that stays executed and visibly failing, and the packet does not fix it. Changing an existing assertion, including turning a gate's limit into an observation, is the owner's call unless she has delegated it. An Orchestrator acting on her direct instructions needs her confirmation in its own chat.
 
-**Judge like a light gatekeeper.** Reviewers sort findings into BLOCKING, FOLLOW-UP or NOTE; block only on wrong results accepted, data or install damage, a real security or custody hole, or a regression from base. File the rest of a PR's follow-ups as one issue in astrid-dev, marked `backlog` and linked from the PR. A `tasks.md` row is for work the release must do. A regression the candidate introduced is fixed in its packet. A defect that predates it gets an issue and a test that stays executed and visibly failing, and the packet does not fix it. Changing an existing assertion, including turning a gate's limit into an observation, is the owner's call unless she has delegated it. An Orchestrator acting on her direct instructions needs her confirmation in its own chat.
+**Keep work moving. Every hop between sessions costs up to an hour.**
+- **Rule conditionally.** When a gate needs one more result, rule it with its condition and its next step attached, for example "merge when this run shows no new ids; if one is harm-class, cut a packet". That way nobody comes back to you.
+- **Manager cadence.** Managers check every 20 minutes while a packet is Running or in Review, and hourly when idle.
+- **Keep managers up.** A ChatGPT manager runs for a window of about two hours, and a board comment can't wake it. Never stand one down while its plan may still need packets. When one goes quiet with work waiting, give the owner the exact text to paste to resume it.
 
-**Keep work moving.** When a packet has waited more than two hours on hosted jobs, read its run list: pull-request CI may run only part of a suite, so dispatch the full run it is waiting for. Every few hours, ask a high-judgment reviewer for a second opinion on bottlenecks, order and scope; bring what exceeds your authority to the owner.
+When a packet has waited more than two hours on hosted jobs, read its run list: pull-request CI may run only part of a suite, so dispatch the full run it is waiting for. Every few hours, ask a high-judgment reviewer for a second opinion on bottlenecks, order and scope; bring what exceeds your authority to the owner.
 
-**Before merging:** find every pin change: each needs its own commit and the owner's approval or delegation. After a dependency's PR is squash-merged, re-point its pin to the squash commit. Give a gate at most two review rounds; round two only verifies round one's fixes. Then merge.
+**Before merging:** find every pin change: each needs its own commit and the owner's approval or delegation. A pin names what ships. The VibeComfy that ships is the one the candidate Agent pins, and the Agent is the one the candidate App pins, never a branch head. One lane owns the App repin. It repins when qualification starts, and again only if an upstream moves. After a dependency's PR is squash-merged, re-point its pin to the squash commit. Give a gate at most two review rounds; round two only verifies round one's fixes. Then merge.
 
 **Rulings:** when a ruling will recur, add it to the board's Standing rulings (`releases/<N>/run.md`), so that a fresh Lead, Orchestrator or packet session finds it without reading the mailbox. A ruling that holds beyond the release goes into its skill instead, and the board links it.
 
