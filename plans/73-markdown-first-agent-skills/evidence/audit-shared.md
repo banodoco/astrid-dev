@@ -544,3 +544,202 @@ Source: `skills/shared/workstreams/astrid-dev-release/qualification.md`; destina
 
 Count: 47 found, 47 kept, 0 restored, 0 moved, 0 superseded.
 
+## templates/decisions-ledger.md
+
+Source: `skills/shared/templates/decisions-ledger.md`; destination: `agent/shared/templates/decisions-ledger.md`. L8 is inherited wording, not permission to cross a stop: the stricter run contract (agent/shared/run-contract.md L100) governs; no migration-induced change.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Use when product work proceeds while the owner cannot be asked (for example, a contributor helping while the owner is offline). | L3 | L7 | kept |
+| Keep one ledger per run, next to the run's evidence. | L3 | L7 | kept |
+| The owner reconciles it later, row by row: accept, change or revert. | L3 | L7 | kept |
+| override: deviated from the written plan. | L6 | L10 | kept |
+| guess: the plan was silent or ambiguous, and we picked. | L7 | L11 | kept |
+| STOP-proposal: the plan says stop and ask; we recorded both sides, chose a resolution and kept going. | L8 | L12 | kept |
+| improvement: a suggested change to a plan or process; not built unless approved. | L9 | L13 | kept |
+| \| # \| Type \| Plan / task \| What we did \| Why (evidence: file:line, log, SHA) \| Candidate SHA \| How to revert … | L11 | L15 | kept |
+| What the recent plan and owner decisions suggest the owner is steering toward, and how that shaped the guesses above. | L17 | L21 | kept |
+| Keep it short; it is the tie-breaker you used, stated so the owner can correct it. | L17 | L21 | kept |
+| What, why, rough cost. | L21 | L25 | kept |
+
+Count: 11 found, 11 kept, 0 restored, 0 moved, 0 superseded.
+
+## templates/run.yaml
+
+Source: `skills/shared/templates/run.yaml`; destination: `agent/shared/templates/run.yaml`. Source and destination YAML are byte-identical; model labels are illustrative placeholders, not runtime availability. Range rows cover all fields of the named stanza.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| This template does not initialize, reset, or authorize any existing run. | L3 | L3 | kept |
+| mode: planning_only | L4 | L4 | kept |
+| manager: normal | L43 | L43 | kept |
+| worker_normal: normal | L44 | L44 | kept |
+| worker_very_hard: very_hard | L45 | L45 | kept |
+| worker_super_hard: super_hard | L46 | L46 | kept |
+| worker_taste: taste | L47 | L47 | kept |
+| plan_judgment: plan_judgment | L48 | L48 | kept |
+| advisor: advisor | L49 | L49 | kept |
+| completion_reviewer: completion_reviewer | L50 | L50 | kept |
+| Only when the owner asks for advisor check-ins; leave empty otherwise. | L61 | L61 | kept |
+| Copy the actual accepted policy and remaining counters; never reset them here. | L72 | L72 | kept |
+| This template is planning-only; it does not activate a review or execution. | L73 | L73 | kept |
+| Example review stop after a load-bearing part (only if the accepted plan sets one): | L77 | L77 | kept |
+| Copy into a new run only. | L1–2 | L1–2 | kept |
+| Fill exact model IDs, supported effort, and availability from the active runtime before dispatch. | L1–2 | L1–2 | kept |
+| Class labels are not IDs. | L1–2 | L1–2 | kept |
+| normal: class: Luna/Haiku-class model_id: "" reasoning_effort: "" availability: unverified | L6–10 | L6–10 | kept |
+| very_hard: class: Terra/Sonnet-class model_id: "" reasoning_effort: "" availability: unverified | L11–15 | L11–15 | kept |
+| super_hard: class: Sol/Opus-class model_id: "" reasoning_effort: "" availability: unverified | L16–20 | L16–20 | kept |
+| taste: class: Astra/Opus-class model_id: "" reasoning_effort: "" availability: unverified | L21–25 | L21–25 | kept |
+| plan_judgment: class: Astra/Opus/Fable-class model_id: "" reasoning_effort: "" availability: unverified | L26–30 | L26–30 | kept |
+| advisor: class: Astra/Opus/Fable-class model_id: "" reasoning_effort: "" availability: unverified session: "" an existing advisor session to consult, if any | L31–36 | L31–36 | kept |
+| completion_reviewer: class: Astra/Opus/Fable-class model_id: "" reasoning_effort: "" availability: unverified | L37–41 | L37–41 | kept |
+| The cloud environment workers are created in, and the smoke result per repository (env/smoke.sh). cloud_environment_id: "" smoke: {} e.g. astrid-agent: "ENV-PASS agent &lt;selector&gt; @ &lt;sha&gt;" | L52–54 | L52–54 | kept |
+| Failing test ids per repository and baseline, recorded before the first task (Manage step 1). | L55–57 | L55–57 | kept |
+| A regression ran and passed on a baseline and fails on the candidate. | L55–57 | L55–57 | kept |
+| Sorted by env/baseline-diff.py; each comparison is committed under plans/&lt;project&gt;/evidence/tests/&lt;repo&gt;/&lt;candidate short SHA&gt;/. | L55–57 | L55–57 | kept |
+| source: repository: "" ref: "" sha: "" dirty_state: "" custody: "" destination: "" release/&lt;NN&gt;/plan-&lt;PP&gt; | L64–70 | L64–70 | kept |
+| For ordinary delivery, unless the owner or accepted plan selects another policy, configure review rounds on the integrated candidate after scoped checks (max = the … | L74–76 | L74–76 | kept |
+| Preserve existing runs' policy. | L74–76 | L74–76 | kept |
+| role: completion_reviewer | L83–86 | L83–86 | kept |
+| after: ALL_REQUIRED_WORK_AND_SCOPED_CHECKS max_rounds: 2 | L83–86 | L83–86 | kept |
+| copy the plan's agreed number | L83–86 | L83–86 | kept |
+| stages: [] consumed_rounds: {} | L87–88 | L87–88 | kept |
+
+Count: 35 found, 35 kept, 0 restored, 0 moved, 0 superseded.
+
+## workstreams/bugfix.md
+
+Source: `skills/shared/workstreams/astrid-dev-bugfix/SKILL.md`; destination: `agent/shared/workstreams/bugfix.md`. The five contract fields are now headings with the same content. Skill identity is derived from filename plus `skill: true`, verified by `scripts/test_agent_documents.py::test_real_repository_markdown_catalog`.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: A reproduced incident with a safe recovery recommendation and one central issue, whether or not a code change is appropriate. | L10 | L14 | kept |
+| When to use: When a user reports a real Astrid failure or an existing setup stops working. | L11 | L10 | kept |
+| Inputs: The observed failure, user's running versions and pins, reproducible journey, relevant logs and permissible diagnostic access. | L12 | L18 | kept |
+| Procedure: Locate the installed system, reproduce the issue, recommend safe recovery and route justified upstream fixes through the existing issue. | L13 | L22 | kept |
+| Completion: The user has an actionable recovery path and a linked, evidence-backed incident record with any upstream work clearly assigned. | L14 | L26 | kept |
+| A bug is an issue, not a new project, unless it reveals a separate independently useful outcome. | L16 | L28 | kept |
+| A recovery recommendation may be the finished result even when no code changes. | L16 | L28 | kept |
+| Read the development entrypoint, shared run contract, and relevant product repository instructions. | L18 | L30 | kept |
+| Use their existing model bindings, authority, focused checks and review rules. | L18 | L30 | kept |
+| This skill owns the user-incident path, not a second implementation/release workflow. | L18 | L30 | kept |
+| Confirm installed versions, exact source pins, frontend mode and selected workspace before diagnosing against `main`. | L22 | L34 | kept |
+| Both frontend modes normally connect to the user's local Runtime, not a website-hosted project database. | L28 | L40 | kept |
+| Identify the actual browser → Runtime → agent/pack → execution path; | L28 | L40 | kept |
+| a source checkout is not the live workspace. | L28 | L40 | kept |
+| Resolve the *actual* Runtime data root from installer selection, configured arguments and `ASTRID_RUNTIME_DATA_ROOT`. Common defaults: Windows `%LOCALAPPDATA%\Astrid Runtime`; macOS `~/Library/Application Support/Astrid Runtime`; Linux `$XDG_DATA_HOME/astrid-runtime` (usually … | L30 | L42 | kept |
+| Check the selected realm under `runtime/realms/`, `runtime/discovery.json`, `runtime/catalog.json`, `runtime/source-profiles/`, process/service state, installer and service logs. | L30 | L42 | kept |
+| Keep `credentials/`, tokens and private project content confidential; | L30 | L42 | kept |
+| never assume defaults apply to a source or older installation. | L30 | L42 | kept |
+| Start with the original failing user journey, observed evidence and a source-level hypothesis. | L36 | L48 | kept |
+| For ambiguous or cross-repository incidents, delegate bounded N-route investigations of environment, code paths or competing causes when helpers are available. | L36 | L48 | kept |
+| Do not launch four parallel agents for a simple reproducible failure; scale the investigation to uncertainty and impact. | L36 | L48 | kept |
+| Treat hypotheses as hypotheses. | L36 | L48 | kept |
+| If the failure involves the frontend, use an available browser to reproduce it when appropriate. | L38 | L50 | kept |
+| Prefer the user's actual frontend route: `astrid.haus` or their local editor. | L38 | L50 | kept |
+| Capture sanitized steps, expected vs observed behavior, the URL/build, screenshot or recording if useful, browser console/network failures and Runtime health/handshake correlation. | L38 | L50 | kept |
+| Compare hosted/local modes only if it helps isolate the bug. | L38 | L50 | kept |
+| A remote browser may not reach the user's localhost or credentials; | L38 | L50 | kept |
+| don't substitute an unrelated healthy environment and call it a reproduction. | L38 | L50 | kept |
+| If access is unavailable, document what is blocked and use other evidence. | L38 | L50 | kept |
+| Investigate read-only first. | L40 | L52 | kept |
+| Before any action that could alter projects, machine setup, credentials or paid workloads, state its effects and obtain approval. | L40 | L52 | kept |
+| Never casually wipe/reinstall the workspace or expose private diagnostics. | L40 | L52 | kept |
+| Create a concise, sanitized `bug-evidence-pack.md`: | L44 | L56 | kept |
+| 1. Observed failure: goal, reproduction (including browser evidence where applicable), environment and timeline. | L46 | L58 | kept |
+| 2. State and evidence: installed pins, selected workspace/database, relevant logs, affected code paths and links. | L47 | L59 | kept |
+| 3. Root cause: established facts, competing explanations, uncertainty and whether widespread, upgrade-specific or machine-specific. | L48 | L60 | kept |
+| Get the user working ASAP: ordered recovery steps, required backup, risks, rollback and verification against the original failing workflow. | L49 | L61 | kept |
+| One-off local repairs are allowed; | L49 | L61 | kept |
+| do not present an unsafe guess as a solution. | L49 | L61 | kept |
+| 5. Upstream decision: whether to contribute the quick fix, build a deeper solution or defer it, plus minimal regression proof that would prevent recurrence. | L50 | L62 | kept |
+| Give the user the pack and a practical recovery recommendation; invite them to share it with the maintainer. | L52 | L64 | kept |
+| Offer to apply recovery, with a rough effort and risk summary, only with approval. | L52 | L64 | kept |
+| If approved, verify the user's original journey and data preservation and record exactly what changed. | L52 | L64 | kept |
+| Search for duplicates, then | L56 | L68 | kept |
+| file or update one bug issue in banodoco/astrid-dev, whether the result is fact-finding, a one-machine workaround or an upstream fix. | L56 | L68 | kept |
+| Post the incident record (the five-part pack above, redacted) as a comment on it, | L56 | L68 | kept |
+| with links to every related product PR with its repository, purpose and status. | L56 | L68 | kept |
+| Every PR must link back to this issue. | L56 | L68 | kept |
+| If public sharing isn't authorized or the evidence cannot be sanitized, prepare a ready-to-post issue and obtain approval instead of publishing. | L56 | L68 | kept |
+| A proven reusable repair may become a focused PR; | L60 | L72 | kept |
+| a machine-only workaround stays documented in the issue. | L60 | L72 | kept |
+| For a structural fix, investigate existing patterns with N-route helpers and seek high-judgment architectural challenge against overengineering. | L60 | L72 | kept |
+| Then use Iterate for authorized implementation and focused checks; | L60 | L72 | kept |
+| follow the shared run contract for routing/review and Release for integration/promotion where applicable. | L60 | L72 | kept |
+| Where the fix lands, and under which release number, is step 7 of How a release runs; | L60 | L72 | kept |
+| the issue joins that release by its `release:NN` label. | L60 | L72 | kept |
+| Use the PR template. | L60 | L72 | kept |
+| Cross-link PRs and verified results in the central issue. | L60 | L72 | kept |
+| Done: the user has evidence and a safe recovery proposal (plus verified outcome if attempted), and the incident has a central issue URL or a … | L62 | L74 | kept |
+| Never claim a frontend or machine is fixed unless the original failure was actually verified. | L62 | L74 | kept |
+
+Count: 60 found, 60 kept, 0 restored, 0 moved, 0 superseded.
+
+## workstreams/gap.md
+
+Source: `skills/shared/workstreams/astrid-dev-gap/SKILL.md`; destination: `agent/shared/workstreams/gap.md`. Source is INT's fd8a9a04 snapshot, after Plan 71; the canonical gap rule links are preserved in meaning and the newer wording is audited as-is. Contract fields reorganized as headings; skill identity is derived and checked as above.
+
+| Rule (source excerpt) | Source line | Agent line or replacement | Status |
+| --- | --- | --- | --- |
+| Outcome: A well-defined vision gap with closure evidence, a rationale and a route through relevant plans and strategy. | L10 | L14 | kept |
+| When to use: When assessing an aspiration blocked by several potential projects or revisiting a gap's closure approach. | L11 | L10 | kept |
+| Inputs: The vision and aspiration references, existing gaps and plans, supporting observations, strategy and authorized decision makers. | L12 | L18 | kept |
+| Procedure: Compare the vision to current capability, write or revise the gap and its closure route, then maintain plan and strategy links. | L13 | L22 | kept |
+| Completion: The gap records testable closure evidence and consistent references; consequential strategic decisions have been reviewed. | L14 | L26 | kept |
+| Enter through astrid-dev. | L16 | L28 | kept |
+| Use Plan for a single project's scope. | L16 | L28 | kept |
+| Use this skill for the outcome a set of projects serves; | L16 | L28 | kept |
+| releases and their briefs own the cross-project delivery strategy. | L16 | L28 | kept |
+| Vision (elements and their aspirations): where Astrid is heading; a gap names its aspirations. | L20 | L32 | kept |
+| Strategy (`strategy.md`) draws on release briefs; see how the documents fit. | L21 | L33 | kept |
+| Gap (`vision/gaps/`): see the canonical gap rule. | L22 | L34 | kept |
+| the strategy. | L23 | L35 | kept |
+| The approach is prose explaining the idea and the order of work. | L23 | L35 | kept |
+| The route is an ordered table of plans, showing which closure evidence each one delivers. | L23 | L35 | kept |
+| one project's scope, tasks and proof. | L24 | L36 | kept |
+| Its `Vision gaps` line names the gap, and | L24 | L36 | kept |
+| its `Contributes to closure` line names the evidence it delivers. | L24 | L36 | kept |
+| every plan's status, priority, owner and estimate, generated from the six lines at the top of each `plan.md` and from `plans/priority.md`; | L25 | L37 | kept |
+| edit those, not the catalog. | L25 | L37 | kept |
+| Follow the canonical gap rule for the definition, evidence, disposition and boundary record. | L29 | L41 | kept |
+| Start a new gap from the template. | L29 | L41 | kept |
+| 2. Write the closure approach once plans exist. A new agent should understand the strategy from it alone: | L30 | L42 | kept |
+| the idea behind closing the gap; | L31 | L43 | kept |
+| why this order; | L32 | L44 | kept |
+| what each stage changes for creators; | L33 | L45 | kept |
+| what is deliberately out. | L34 | L46 | kept |
+| Keep it to a few paragraphs, and cite evidence rather than restating it. | L36 | L48 | kept |
+| One row per step, in order. | L38 | L50 | kept |
+| Run steps in parallel with `∥` in the Plan cell. | L38 | L50 | kept |
+| Map every closure-evidence item to a plan, or to an `unplanned` row. | L39 | L51 | kept |
+| Name milestones a creator would notice, and state the critical path. | L40 | L52 | kept |
+| Put no statuses, owners, estimates or tasks in it. | L41 | L53 | kept |
+| 4. Make the link two-way. Follow the canonical gap rule for the plan back-links and review boundary. | L42 | L54 | kept |
+| 5. Reassess as plans land. Reassess the gap's current state, assessment and closure under the canonical gap rule, and adjust the route. | L43 | L55 | kept |
+| When a gap’s route or assessment materially changes a planned release, update its brief. | L44 | L56 | kept |
+| Do not silently assign other work to a release. | L44 | L56 | kept |
+| summarizes release briefs, rather than repeating gap plans. | L48 | L60 | kept |
+| Revisit it when gap reassessment or completed work materially changes the intended release outcome: | L48 | L60 | kept |
+| Read the strategy page, the affected release briefs, the catalog and the affected gap route. | L49 | L61 | kept |
+| Each plan's `plan.md` owns its status and | L49 | L61 | kept |
+| `plans/priority.md` owns priorities; | L49 | L61 | kept |
+| see the canonical gap rule for closure evidence; | L49 | L61 | kept |
+| a release brief owns which plans are bundled for delivery and why. | L49 | L61 | kept |
+| Update the release document first, if its highlight, intent, approach or included plans change. | L50 | L62 | kept |
+| Drafts can change without a publication event. | L50 | L62 | kept |
+| An already finalized release is history: plan the change in a later release. | L50 | L62 | kept |
+| Create a numbered release brief when needed and its scope is credible. | L51 | L63 | kept |
+| A queued plan alone does not warrant a number or promise shipment. | L51 | L63 | kept |
+| Review authored strategy decisions and update Last reviewed when direction changes. | L52 | L64 | kept |
+| Sequencing is the owner’s decision. | L52 | L64 | kept |
+| 5. Check it. `python3 scripts/astrid_dev.py check` verifies document structure; generated material is refreshed from its sources. | L53 | L65 | kept |
+| The gap reads well to an agent who has seen none of its plans. | L57 | L69 | kept |
+| Every closure-evidence item has a route row, either a plan or `unplanned`. | L58 | L70 | kept |
+| Every routed plan points back with `Vision gaps` and `Contributes to closure`. | L59 | L71 | kept |
+| The affected release brief reflects the decision, without duplicating catalog ownership/status or gap closure evidence. | L60 | L72 | kept |
+| `python3 scripts/astrid_dev.py check` passes. | L61 | L73 | kept |
+
+Count: 57 found, 57 kept, 0 restored, 0 moved, 0 superseded.
+
