@@ -73,7 +73,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | [P73-04](packets/P73-04.md) Rule-preservation audit, roles and role workstreams | MSC-4 | Merged (25 Nov 2026) | — | Extra High. In parallel with P73-05 |
 | [P73-05](packets/P73-05.md) Rule-preservation audit, shared documents | MSC-4 | Merged (25 Nov 2026) | — | Extra High. In parallel with P73-04 |
 | [P73-06](packets/P73-06.md) Active consumers and the authoring guide | MSC-5 | Merged (25 Nov 2026) | — | Extra High. Starts when one of P73-04 or P73-05 reaches READY-PROOF (cap two) |
-| [P73-07](packets/P73-07.md) Delete the old layout | MSC-6 | Ready (project head `c8e104a9`; link rewrite done, audits and sweep merged) | — | Pro. Pro |
+| [P73-07](packets/P73-07.md) Delete the old layout | MSC-6 | Merged (25 Nov 2026) | — | Pro. Pro |
 | [P73-INT](packets/P73-INT.md) Absorb a landed Plan 71 or 72 (read-only fact-find, then the port) | MSC-9 | On REQUEST only | — | Extra High. A fresh session for each landing, on the orchestrator's REQUEST with the delta and link evidence |
 | [P73-RV](packets/P73-RV.md) High-judgment review (read-only, Pro) | P73-07 (route S) and the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
