@@ -1383,5 +1383,29 @@ b.build_packages(root)
                         build_packages(self.root)
 
 
+    def test_generated_marker_and_lock_identity_bytes_are_stable(self):
+        from skill_builder import MARKER, _LOCK_CONTENT
+
+        self.assertEqual(MARKER, ".astrid-dev-generated")
+        self.assertEqual(_LOCK_CONTENT, b"astrid-dev-skill-build-lock-v1\n")
+        build_packages(self.root)
+        marker = self.package("astrid-dev-leader") / MARKER
+        self.assertEqual(marker.read_bytes(), b"agent/roles/leader.md\n")
+
+    def test_stale_generated_skill_diagnostic_is_read_only_and_rebuild_repairs(self):
+        build_packages(self.root)
+        skill = self.package("astrid-dev-leader") / "SKILL.md"
+        original = skill.read_bytes()
+        tampered = original + b"\nUnapproved local change.\n"
+        skill.write_bytes(tampered)
+        self.assertEqual(check_packages(self.root),
+                         ["astrid-dev-leader: generated SKILL.md is stale"])
+        self.assertEqual(skill.read_bytes(), tampered)
+        self.assertTrue(build_packages(self.root))
+        self.assertEqual(skill.read_bytes(), original)
+        self.assertEqual(check_packages(self.root), [])
+
+
+
 if __name__ == "__main__":
     unittest.main()

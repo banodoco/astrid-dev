@@ -39,6 +39,21 @@ def headings(text: str, level: int = 2) -> list[str]:
     return [title for title, _, _ in _heading_spans(text, level)]
 
 
+def markdown_heading_anchors(text: str) -> list[tuple[int, str, str]]:
+    """Return heading level, title and GitHub anchor, preserving duplicate suffixes."""
+    fence = r"(?ms)^\s*```.*?^\s*```[^\n]*$"
+    seen: dict[str, int] = {}
+    found = []
+    for match in re.finditer(r"(?m)^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", re.sub(fence, "", text)):
+        title = match.group(2)
+        label = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
+        slug = "".join(c for c in label if c.isalnum() or c in " -_").replace(" ", "-")
+        seen[slug] = seen.get(slug, -1) + 1
+        anchor = slug if seen[slug] == 0 else f"{slug}-{seen[slug]}"
+        found.append((len(match.group(1)), title, anchor))
+    return found
+
+
 def ordered_heading_error(actual: list[str], required: list[str], *, level: int = 2) -> str | None:
     """Give the first missing or out-of-order required heading, allowing extras."""
     cursor = 0

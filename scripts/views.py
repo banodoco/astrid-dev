@@ -367,7 +367,7 @@ def _owner_body(text: str, name: str, path: str) -> tuple[str, str, str]:
     """Return the owner's body, its nearest heading title and that heading's anchor."""
     begin, body_start, body_end, _ = _block_regions(text, path)[("block-source", name)]
     body = text[body_start:body_end].strip("\n")
-    from records import markdown_heading_anchors
+    from document_structure import markdown_heading_anchors
     headings = markdown_heading_anchors(text[:begin])
     if not headings:
         return body, "", ""

@@ -294,7 +294,7 @@ def _link_anchors(context):
     from check_docs import LINK, read
     root, fence = context.root, r"(?ms)^\s*```.*?^\s*```[^\n]*$"
 
-    from records import markdown_heading_anchors
+    from document_structure import markdown_heading_anchors
 
     def anchors(relative):
         return {anchor for _, _, anchor in markdown_heading_anchors(read(root, relative))}

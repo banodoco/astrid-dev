@@ -1,7 +1,8 @@
 """Reusable document-structure primitives used by workstream and project-pack checks."""
 import unittest
 
-from document_structure import frontmatter, headings, ordered_bold_fields, ordered_heading_error, section
+from document_structure import (frontmatter, headings, markdown_heading_anchors,
+                                ordered_bold_fields, ordered_heading_error, section)
 
 
 class DocumentStructureTests(unittest.TestCase):
@@ -68,6 +69,17 @@ class DocumentStructureTests(unittest.TestCase):
             with self.subTest(invalid=invalid):
                 with self.assertRaisesRegex(ValueError, pattern):
                     ordered_bold_fields(invalid, labels)
+
+
+    def test_heading_anchors_preserve_duplicate_suffixes_and_ignore_backtick_fences(self):
+        text = ("# Example\n\n## Same heading\n\n"
+                "\x60\x60\x60markdown\n## Hidden\n\x60\x60\x60\n\n## Same heading\n")
+        self.assertEqual(markdown_heading_anchors(text), [
+            (1, "Example", "example"),
+            (2, "Same heading", "same-heading"),
+            (2, "Same heading", "same-heading-1"),
+        ])
+
 
 
 if __name__ == "__main__":

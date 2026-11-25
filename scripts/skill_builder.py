@@ -14,11 +14,11 @@ import shutil
 import tempfile
 from urllib.parse import quote, unquote
 
-from agent_documents import AgentDocument, discover_documents
-from records import markdown_heading_anchors
+from agent_documents import AGENT_SOURCE_ROOT, SKILL_PREFIX, AgentDocument, discover_documents
+from document_structure import markdown_heading_anchors
 
 OUTPUT = Path(".generated/skills")
-MARKER = ".astrid-dev-generated"
+MARKER = f".{SKILL_PREFIX}generated"
 REPO_LINK = "../../../"
 _LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|\((?:\\[^\n]|[^()\\\n])*\)|[^()\\\n])+?)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
@@ -26,7 +26,7 @@ _REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3})\[([^\]\n]+)\]:[ \t]*(.*)$")
 _REFERENCE_USE = re.compile(r"(?<!\\)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
 _REF_TOKEN = re.compile(r"^([ \t]*)(<[^>\n]+>|[^\s\n]+)")
 _CODE_SPAN = re.compile(r"(?<!\\)(\x60+)(?!\x60)((?:(?!\n[ \t]*\n).)*?)(?<!\x60)\1(?!\x60)", re.S)
-_MARKER_SOURCE = re.compile(r"agent/(?:[^/\\\r\n]+/)*([a-z0-9]+(?:-[a-z0-9]+)*)\.md\n\Z")
+_MARKER_SOURCE = re.compile(re.escape(AGENT_SOURCE_ROOT) + r"/(?:[^/\\\r\n]+/)*([a-z0-9]+(?:-[a-z0-9]+)*)\.md\n\Z")
 
 
 def _active_lines(lines: list[str]) -> list[bool]:
@@ -320,7 +320,7 @@ def expected_packages(root: Path) -> dict[str, tuple[str, str]]:
         if doc.skill:
             result[doc.skill_name] = (
                 render_skill(doc, root),
-                (Path("agent") / doc.relative).as_posix() + "\n",
+                (Path(AGENT_SOURCE_ROOT) / doc.relative).as_posix() + "\n",
             )
     return dict(sorted(result.items()))
 
@@ -343,7 +343,7 @@ def _assert_package_dir(package: Path, *, stale: bool = False) -> None:
     source = marker.read_text(encoding="utf-8")
     match = _MARKER_SOURCE.fullmatch(source)
     if (match is None or any(part in (".", "..") for part in source.strip().split("/"))
-            or package.name != "astrid-dev-" + match.group(1)):
+            or package.name != SKILL_PREFIX + match.group(1)):
         raise ValueError(f"invalid ownership marker: {package}")
     # Verify every package's SKILL.md before build_packages can retire anything.
     # A symlink with matching bytes is still foreign content and must be refused.
@@ -443,7 +443,7 @@ def _build_output(output: Path, expected: dict[str, tuple[str, str]]) -> list[st
     return actions
 
 
-_LOCK_CONTENT = b"astrid-dev-skill-build-lock-v1\n"
+_LOCK_CONTENT = f"{SKILL_PREFIX}skill-build-lock-v1\n".encode("ascii")
 
 
 @contextmanager

@@ -244,5 +244,17 @@ class AgentDocumentTests(unittest.TestCase):
         self.assertIn("not a symlink", str(validate_documents(self.root)))
 
 
+    def test_canonical_agent_source_root_and_skill_prefix_are_stable(self):
+        from agent_documents import AGENT_SOURCE_ROOT, SKILL_PREFIX
+
+        self.assertEqual(AGENT_SOURCE_ROOT, "agent")
+        self.assertEqual(SKILL_PREFIX, "astrid-dev-")
+        path = self.write("roles/leader.md", ROLE)
+        document = parse_document(self.root, path)
+        self.assertEqual(document.relative, Path("roles/leader.md"))
+        self.assertEqual(document.skill_name, "astrid-dev-leader")
+
+
+
 if __name__ == "__main__":
     unittest.main()
