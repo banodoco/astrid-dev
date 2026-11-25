@@ -4,13 +4,13 @@
 
 **Goal:** Every command shows where its time went and says what it is waiting for, a timeline command is accepted in about a second, and `astrid generate` is queued in about half the time it takes today, because each command works each thing out once.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Commands lane orchestrator `session_011EzfW2Ut856AFGZS8ZamHU` (recorded Part 1 owner; that run ended; Lead to confirm successor; Part 2b accountable session `session_011EzfW2thrCzq1Cjp4k35mu`)
 
 **Estimate:** About 17 engineering days (14 to 20): the timings, the baseline and the ceiling test about 5.5, generation about 5.5, timeline commands about 4, the client's waits about 2. About 15 without batch edits. Three workers can run most of it side by side.
 
-**Waiting on:** a manager, and the repeatable installed A/B run for the baseline (US-0), which runs in a clean container with a stand-in ComfyUI. The owner's decisions are made ([inputs.md](inputs.md#owner-decisions)). US-1 can start now.
+**Waiting on:** Part 1 landed; the Part 2b repair and installed timing are recorded in [tasks](tasks.md#part-2b-fresh-run-23-november-2026). PB-7 discovery work is parked; earlier US-6, review/attribution rows and transferred work remain to reconcile. The Lead must confirm the whole-plan closure owner and accepted remaining scope; no completion is inferred from the landing.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. A manager starts at the [handover](handover.md).
 

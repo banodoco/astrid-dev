@@ -23,6 +23,12 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 Delete this paragraph once the list is written; only plan bullets or `None yet` may stay in this section. Replace the example with one bullet for each real `plans/<id>/plan.md` link, or write `None yet` for a draft with no plans. List only plans intended for this release. Kind may be omitted (default `patch`), or set to `minor` or `major`. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
 
+## Plan status snapshot
+
+<!-- release-status:start -->
+<!-- Run `python3 scripts/astrid_dev.py release status <N> --refresh` once the brief is created, at Lead check-ins and before publication; run it with `--check` to verify the snapshot. This section is generated from included plan records, not edited by hand. The Final brief retains the last snapshot. See [release reconciliation](../agent/shared/workstreams/release.md#reconcile-plan-status). -->
+<!-- release-status:end -->
+
 ## Branches
 
 One release branch per repository the release changes, `release/<N>/main`, which every plan and fix branch of the release merges into ([How a release runs](../agent/shared/workstreams/release.md#how-a-release-runs)); delete this paragraph once the table is written. Repository is a product repository or `astrid-dev`; every plan under Included plans has a `plan <PP>` row in each repository it changes, `astrid-dev` for a plan that changes only this repository. Role is `release`, `plan <PP>` or `fix #<issue>`, the astrid-dev issue the fix answers (for example `fix #721`); Cut at is the 40-character commit the branch was cut from, or `not yet cut`; State is `open` or `published` for a release row, and `open` or `merged` (contained in that repository's `release/<N>/main`) for a plan or fix row.

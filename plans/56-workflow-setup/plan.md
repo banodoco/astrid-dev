@@ -10,7 +10,7 @@
 
 **Estimate:** About 18.5 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8, and 6.5 from the UX review (LE-12 to LE-18 and consent hardening in LE-2), of which 3.75 (LE-12 to LE-15, LE-2 hardening) are needed for the SAM run to pass; a plain 90/10 without the loose-end tasks is about 6.
 
-**Waiting on:** nothing from the owner until the live SAM run (WS-L) after R; D10–D12 decided 24 November 2026 under her delegation
+**Waiting on:** Reconcile the Release 15 first-slice landing and pins against the freeze; the remaining cards and final review are marked Release 16 in [tasks](tasks.md), including the owner-run live SAM check after R. Do not close the whole plan.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

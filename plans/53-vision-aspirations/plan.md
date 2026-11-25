@@ -10,7 +10,7 @@
 
 **Estimate:** about 4.5 (Phase 1 about 2.7; Phase 2 about 1.8)
 
-**Waiting on:** the owner's mark-up (VA-3, VA-4), her supporting-aspirations table (VA-5) and her look at the page (VA-10)
+**Waiting on:** Reconcile the 13 November implementation against the still-unticked VA cards; owner's mark-up, supporting-aspirations table and physical-device look remain outstanding, along with independent review. The prior Release 14 Lead remains the recorded owner; the Release 15 Lead must confirm handoff or disposition.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

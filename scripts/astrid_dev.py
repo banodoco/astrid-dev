@@ -27,6 +27,13 @@ def main(argv=None, *, root=ROOT, registry=None):
     install.add_argument("--destination", type=Path, action="append",
                          help="Already existing skills directory; repeat to install into several")
 
+    release_command = commands.add_parser("release", help="Release coordination tools")
+    release_subcommands = release_command.add_subparsers(dest="release_action", required=True)
+    status = release_subcommands.add_parser("status", help="Reconcile included plan records")
+    status.add_argument("number", type=int)
+    mode = status.add_mutually_exclusive_group()
+    mode.add_argument("--refresh", action="store_true", help="Refresh the draft release's recorded plan status")
+    mode.add_argument("--check", action="store_true", help="Check the draft snapshot is current")
     check = commands.add_parser("check", help="Run applicable checks")
     check.add_argument("--base")
     body = check.add_mutually_exclusive_group()
@@ -34,6 +41,13 @@ def main(argv=None, *, root=ROOT, registry=None):
     body.add_argument("--body-file", type=Path)
     args = parser.parse_args(argv)
     entries = checks.REGISTRY if registry is None else registry
+    if args.command == "release":
+        from release_status import run
+        try:
+            return run(Path(root), args.number, refresh=args.refresh, check=args.check)
+        except (ValueError, OSError) as exc:
+            print(f"ERROR release status: {exc}")
+            return 1
     if args.command in ("sync", "views"):
         import views
         try:

@@ -10,7 +10,7 @@
 
 **Estimate:** about 2.5
 
-**Waiting on:** the owner's issue transfers (II-10), her two minutes for II-11, and her approval of the reporting rules (II-9)
+**Waiting on:** Reconcile II-8, II-9, II-11 and II-13 against the remaining product redirect/reporting patches and packet evidence; II-10 needs the owner's issue transfers, II-11 her browser proof, and II-9 her approval. The prior Release 14 Lead remains the recorded owner; the Release 15 Lead must confirm handoff or disposition.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

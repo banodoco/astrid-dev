@@ -10,7 +10,7 @@
 
 **Estimate:** Provisional, about 9 engineering days: 1 to port the sound fixes, 5 for the proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check. Re-estimate after the lease measurement and the first whole-fixture attempt.
 
-**Waiting on:** —
+**Waiting on:** Recorded core and staged follow-ups landed in Release 15; RN-0 and R still have open Progress rows. Reconcile their exact proof and the remaining rendering scope with the Lead against frozen-candidate qualification and the Release 16 handoff #1938.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
