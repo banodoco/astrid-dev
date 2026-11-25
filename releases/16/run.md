@@ -61,7 +61,7 @@ The owner pastes this into the manager's own session (a Codex session, as for Pl
 
 ```text
 You are the manager for Release 16 Plan 91 (Agent main green), mailbox name r15-p91-manager-1, reporting to the Plan 91 orchestrator (mailbox name r15-p91-orchestrator, Claude session session_011EzfW1yUojAfWkGcaZNRph).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev, with the orchestrator as "the Lead".
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev, with the orchestrator as "the Lead".
 Read releases/16/run.md on main, section "Plan 91 dispatch", then again at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1826, format in its first post.
 First do the manager startup checks (Release 15's "Manager startup checks" for Plans 87 and 89, run against #1826, for astrid-agent and astrid-dev) and post one STATUS with each result. Dispatch nothing until the orchestrator's DECISION answers it.
