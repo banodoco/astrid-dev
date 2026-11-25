@@ -49,6 +49,8 @@ Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-rel
 - **Hosted App deploys** are not releases.
 - **Source:** astrid-dev defines and publishes each release. This replaces Plan 29 decision 9's "App manifest stays the source".
 
+**Owner direction, 25 November 2026:** contributors and their agents must independently prepare a coherent tentative manifest and matching installers from the active release branches, without waiting for a Release Lead or a pre-created artifact. Fresh sessions resolve the latest coherent snapshot; replay uses its receipt. Update the existing tester documents now for Release 15 and make them the reusable Windows/Linux testing workflow in RL-1e. The trigger was a Release 15 tester finding only Release 13 manifests on the old tester branches. Keep production publication authority, release ordering and safety intact; same-release updates require focused proof.
+
 Open, each with a recommendation:
 1. **Sync trigger and push identity:** a scheduled pull plus a manual run, or an instant push from astrid-dev. Recommend the scheduled pull. Either way, the sync pushes to App `main`, which will be protected. The workflow token probably can't be put on a ruleset bypass list (unconfirmed; confirm at start). If so, the sync needs a GitHub App or deploy key that can write only to the App. That is a new credential, the owner sets it up, and RL-2c becomes S.
 2. **Who can approve a release:** only the owner in `CODEOWNERS`, or any maintainer. Recommend only the owner.
