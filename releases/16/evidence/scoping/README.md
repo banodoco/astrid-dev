@@ -1,6 +1,6 @@
 # Release 16 — scoping evidence and review queue
 
-Owner direction, 25 November 2026. This is the starting assignment and evidence index, **not** an assertion that research has run. Scope [Release 16](../../16.md) only (roadmap [PR #1956](https://github.com/banodoco/astrid-dev/pull/1956), refresh the exact proposed head). Follow [Scope release](https://github.com/banodoco/astrid-dev/blob/89657898c11f3a82d4b38c58089cb850786e42d4/agent/shared/workstreams/scope-release.md) and [Sense check](https://github.com/banodoco/astrid-dev/blob/89657898c11f3a82d4b38c58089cb850786e42d4/agent/shared/workstreams/sense-check.md) from [PR #1960](https://github.com/banodoco/astrid-dev/pull/1960). These are proposed Markdown-first documents: use their exact source now without prematurely cutting over Plan 73.
+Owner direction, 25 November 2026. This is the starting assignment and evidence index, **not** an assertion that research has run. Scope [Release 16](../../../16.md) only (roadmap [PR #1956](https://github.com/banodoco/astrid-dev/pull/1956), refresh the exact proposed head). Follow [Scope release](https://github.com/banodoco/astrid-dev/blob/89657898c11f3a82d4b38c58089cb850786e42d4/agent/shared/workstreams/scope-release.md) and [Sense check](https://github.com/banodoco/astrid-dev/blob/89657898c11f3a82d4b38c58089cb850786e42d4/agent/shared/workstreams/sense-check.md) from [PR #1960](https://github.com/banodoco/astrid-dev/pull/1960). These are proposed Markdown-first documents: use their exact source now without prematurely cutting over Plan 73.
 
 ## Coordinator
 
