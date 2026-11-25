@@ -1,6 +1,6 @@
 # Path to 1.0
 
-**Aim:** Make Astrid a dependable place to create finished work with agents and open tools that people can shape and share.
+**Aim:** An open, dependable, fast and deeply extensible creative environment where people and agents pursue ambitious work across modalities and build on one another's tools and knowledge.
 
 ## Where we are
 
@@ -8,27 +8,31 @@ Astrid has the beginnings of a workspace where people and agents can make creati
 
 ## At 1.0
 
-A creator should be able to take a project through repeated revisions to finished work, with their materials and decisions intact. They can work on their own machine or use one they rent, stay in control of what agents do, and adapt the workspace through packs. A useful tool or technique should be something another creator can build on. These are practical steps toward the [vision](vision/README.md).
+A creator can take ambitious projects through repeated revisions to finished work across video, image, writing, 3D and music/audio, locally or in the cloud, with their materials, creative decisions and control intact. These are not five isolated editors: their tools, resources and components can be composed, adapted and extended by people and agents. Independent contributors can publish and build on one another's tools and knowledge without forking core. These are practical steps toward the [vision](vision/README.md), not a promise of every conceivable modality or professional-suite feature.
 
 ## How we get there
 
-First, make what Astrid already does fast and dependable. Version 0.1 brings together local speed, stability, installation and updates, then hardening and documentation. After that, choose the next steps from real creative work and the problems people encounter. Version 0.2 is open; its candidates are not commitments. Each release brief says what it delivers and why, and the groups below show how those releases build toward each version.
+Make it work (0.1), prove it works dependably and quickly (0.2), make it genuinely extensible (0.3), and make it accessible locally and in the cloud (0.4). Then grow the image, writing, cross-modal, 3D and music/audio foundations (0.5–0.9), bringing them together in 1.0. Community contribution, discovery, shared learning, artistic ambition, and creator control run through the entire trajectory, not a late separate feature. The aims and proof paragraphs below are our current strategic hypothesis; the further away a milestone is, the less fixed its scope. Real usage and evidence determine the particular projects and releases; do not infer implementation authority from an aim.
 
-**Last reviewed:** 2026-11-15. The owner accepted this opening and the 0.1 wording under [Plan 58](plans/58-strategy-from-releases/plan.md); the recorded release and version decisions below stand.
+**Last reviewed:** 2026-11-25. Current owner direction for the path to 1.0; see Decisions. The release-led structure established by [Plan 58](plans/58-strategy-from-releases/plan.md) remains.
 
 ## Focus now
 
-[Release 12](releases/12.md) (updates and the onboarding tour) and [Release 13](releases/13.md) (one generation path, locally or on a rented GPU) are out. Their briefs remain Draft until [Plan 31](plans/31-releases-from-astrid-dev/plan.md) verifies their final records. Next: [version 0.1](#version-01), starting with stability and elegance in [Release 14](releases/14.md): local speed, a real video finished with Astrid's own tools, green tests, and one way to do each job.
+Complete the current Release 15 work, then scope [Release 16 — Make Astrid dependable](releases/16.md) from its integrated product branches. Release 16 is the intended 0.1.0 milestone. [Release 17 — Continuous hardening](releases/17.md) is a patch on the way to 0.2; [Release 18 — Make Astrid fluid and powerful](releases/18.md) is the proposed 0.2.0 milestone, contingent on the agreed proof. [Plan 31](plans/31-releases-from-astrid-dev/plan.md) is included in 16 so semantic versions, the canonical release record and safe publication are ready for the first minor version. Earlier release history is verified from actual receipts, not reconstructed from version aims.
 
 Each release has one theme, plus a standing lane for fixes and small plans that come from actual usage and user reports.
 
 ## Versions
 
-Each version's aim and context are written here. Its releases and their contributions come from the release briefs. An undecided version says `Open`. The [contribution guide](docs/contribution-workflow.md#review-the-strategy) explains how the levels fit together.
+Each version's **Aim**, context and **Proof** are authored here; its release and project listings are generated from release briefs and project names. A numbered release defaults to `patch`; `minor` or `major` advances the version only by explicit owner decision. Patch work rolls up under the next planned minor/major milestone in the generated view, even though its actual published version belongs to the preceding version series. An undecided aim can say `Open`. The [contribution guide](docs/contribution-workflow.md#review-the-strategy) explains how the levels fit together. If the public vision page later visualizes this trajectory, consume these same authored milestones and existing release relationships through the generated views, without a second roadmap or data owner; visualization is not part of Release 16.
 
 ### Version 1.0
 
 **Aim:** [The aim at the top of this page](#path-to-10), with the outcome described in [At 1.0](#at-10).
+
+Bring the five initial creative foundations together into one dependable, fast, composable and open environment. Community knowledge and tools compound; creators retain ownership and control across local and hosted work.
+
+**Proof:** Sustained ambitious work across the initial modalities and real cross-modal compositions, with independently contributed and reused extensions, demonstrated speed, reliability, migration and recovery, clear permissions, and meaningful creator feedback. Reassess the relevant [vision gaps](vision/README.md) with evidence rather than treating version numbers as automatic closure.
 
 <!-- strategy-1.0:start -->
 <!-- Generated by Astrid Dev view: strategy-1.0; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -37,9 +41,11 @@ No release yet.
 
 #### Version 0.1
 
-**Aim:** What Astrid already does, made fast and dependable: hardening, updates, stability and speed.
+**Aim:** Dependable — Astrid's existing creative capabilities work reliably on supported setups.
 
-This is the first version we intend to call stable. A new person should be able to install, update and generate unaided on Windows, macOS and Linux, with every test green and documentation that takes them from purpose to a first result. The work hardens the capabilities already present; the revised sequence is [Release 16 — Make Astrid dependable](releases/16.md), [Release 17 — Continuous hardening](releases/17.md), [Release 18 — Make Astrid fluid and powerful](releases/18.md), then the provisional [Release 19 stable milestone](releases/19.md). Pinokio stays supported; RunPod is experimental with money-safety controls.
+A creator and their agent can install, connect, prepare generation, create, import, edit, save, render and update without technical improvisation or losing work. Windows, macOS, Linux and Pinokio remain supported; RunPod is experimental with mandatory money safety. This is the first dependable baseline, not a claim of exhaustive proof or final performance.
+
+**Proof:** Targeted installed-product qualification of each declared supported route, with failure, recovery and migration cases; a correctly published, visible version and release record. Release 16 is intended to carry 0.1.
 
 <!-- strategy-0.1:start -->
 <!-- Generated by Astrid Dev view: strategy-0.1; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -91,7 +97,11 @@ On the way: [Release 12 — Reliable updates](releases/12.md), [Release 13 — O
 
 #### Version 0.2
 
-**Aim:** Open
+**Aim:** Proven and fast — dependable creative work holds up under real use and feels responsive.
+
+Build confidence in the foundations through continuous hardening, trustworthy automated checks, and sustained artist-led work. Generation, opening, seeking, playback, editing, saving and rendering are quick enough for serious creative practice; human and agent work together safely.
+
+**Proof:** Representative real projects survive repeated revisions, interruptions and updates across supported machines; measured installed-product latency and sustained creative outcomes meet agreed budgets; required checks are green and regression evidence remains trustworthy.
 
 <!-- strategy-0.2:start -->
 <!-- Generated by Astrid Dev view: strategy-0.2; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -100,7 +110,11 @@ No release yet.
 
 #### Version 0.3
 
-**Aim:** Open
+**Aim:** Truly extensible — people and agents can shape and extend their creative environment without forking Astrid.
+
+Tools, components, commands, project data and generation capabilities can be independently created, combined, maintained and shared through small, coherent extension contracts. The creator remains in control of installed code, bindings and permissions. Build on the video foundation while proving reusable extension seams with a different creative domain.
+
+**Proof:** An independent contributor builds a substantial frontend/backend capability, connects it to real work, and another creator or agent discovers, installs, adapts and safely upgrades it without core changes. Prove a different-domain extension, including refusal and recovery.
 
 <!-- strategy-0.3:start -->
 <!-- Generated by Astrid Dev view: strategy-0.3; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -109,7 +123,11 @@ No release yet.
 
 #### Version 0.4
 
-**Aim:** Open
+**Aim:** Accessible from anywhere — Astrid is both local-first and genuinely cloud-capable.
+
+First allow a local project to use approved cloud agents, inference and rendering; then offer a browser-first hosted workspace with durable cloud projects, media and compute. Creators choose where their work lives, without maintaining two different creative products.
+
+**Proof:** Real local projects use remote execution and receive editable results; a new hosted user creates, saves, revisits and renders work without local setup. Prove permission and tenant isolation, cost controls, recovery and export to local custody.
 
 <!-- strategy-0.4:start -->
 <!-- Generated by Astrid Dev view: strategy-0.4; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -118,7 +136,11 @@ No release yet.
 
 #### Version 0.5
 
-**Aim:** Open
+**Aim:** Image — a powerful, deeply extensible image-editing foundation alongside video.
+
+Image becomes a first-class creative workspace, not just a generation result. People and agents can edit, compose and revise images, add tools, and preserve editable project state using the same underlying contracts.
+
+**Proof:** Real artist-led image work through repeated revisions, with independent extensions, safe state, useful agent operations, responsiveness and meaningful failure cases.
 
 <!-- strategy-0.5:start -->
 <!-- Generated by Astrid Dev view: strategy-0.5; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -127,7 +149,11 @@ No release yet.
 
 #### Version 0.6
 
-**Aim:** Open
+**Aim:** Writing — text and writing become a first-class creative modality.
+
+Build a useful writing foundation for scripts, stories and other text-based work, with creator and agent collaboration, extension points and connections to images and video. Reuse shared project, history and permission mechanisms instead of inventing another application model.
+
+**Proof:** A creator completes and revises real written work with an agent; independent tools extend the writing surface; text survives save, recovery and export, with useful connections to existing creative assets.
 
 <!-- strategy-0.6:start -->
 <!-- Generated by Astrid Dev view: strategy-0.6; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -136,7 +162,11 @@ No release yet.
 
 #### Version 0.7
 
-**Aim:** Open
+**Aim:** Connected creative work — video, image and writing work together as one adaptable environment.
+
+Prove the three foundations are more than separate editors: a person or agent can connect scripts, storyboards, imagery and video, arrange the workspace around the work, and maintain meaningful relationships through revisions.
+
+**Proof:** A substantial cross-modal project uses all three foundations and independent contributions, with explicit, inspectable bindings, shared state where appropriate, correct outputs, safe edits and no bespoke core fork.
 
 <!-- strategy-0.7:start -->
 <!-- Generated by Astrid Dev view: strategy-0.7; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -145,7 +175,11 @@ No release yet.
 
 #### Version 0.8
 
-**Aim:** Open
+**Aim:** 3D — creators and agents can build and manipulate 3D worlds within the same extensible environment.
+
+Establish a useful native 3D foundation for scenes, objects, materials and related creative work. Connect it to existing imagery and video where useful, rather than build an isolated 3D application.
+
+**Proof:** Real 3D work is created, edited, saved, reopened and reused in another modality; contributors can extend the 3D surface, and agents can inspect and change it under the same controls.
 
 <!-- strategy-0.8:start -->
 <!-- Generated by Astrid Dev view: strategy-0.8; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -154,7 +188,11 @@ No release yet.
 
 #### Version 0.9
 
-**Aim:** Open
+**Aim:** Music and sound — music and audio become first-class creative environments.
+
+Establish a meaningful foundation for composing, editing and shaping sound with people and agents, connected to video and other modalities through explicit shared creative resources. The initial collection now spans video, image, writing, 3D and music/audio.
+
+**Proof:** A real music or audio project is revised and rendered or exported with editable work intact, contributed tools and cross-modal connections proven, and latency, custody and recovery checked on supported setups.
 
 <!-- strategy-0.9:start -->
 <!-- Generated by Astrid Dev view: strategy-0.9; sources: releases/*.md, plans/*/plan.md. Do not edit. -->
@@ -163,22 +201,22 @@ No release yet.
 
 ### Candidates, not yet in a version
 
-Version 0.2 is open. These are the candidates so far, from Release 13's deferred list, the owner's requests and the plan catalog; none is assigned:
+These are examples of existing projects that may inform later milestone scoping, not additional release assignments. Consult the [catalog](plans/index.md) and [vision gaps](vision/README.md) for the authoritative records.
 
-- **Set up any workflow in one step:** its models and node packs, with a recorded answer for what cannot be found ([Plan 56](plans/56-workflow-setup/plan.md), decisions made 15 November 2026; [issue 665](https://github.com/banodoco/astrid-dev/issues/665) for identifying unknown models). Its small corrections can ship earlier in the standing lane.
-- **Generation complete:** every bundled workflow ready, video models beyond the default, the rest of onboarding ([Plan 20](plans/20-zero-to-first-image/plan.md), [Plan 32](plans/32-generation-placement-targets/plan.md)); frames at positions on the default video workflow (first frame, last frame or any position, one feature).
-- **Finish a video:** generate onto the timeline, agent edits that never overwrite the creator's, export ([Plan 37](plans/37-generate-time-destination/plan.md), [Plan 04](plans/04-concurrent-edits/plan.md), [Plan 18](plans/18-timeline-editing/plan.md), [Plan 27](plans/27-video-render-options/plan.md)). Three of these are goals without tasks; walk one real video end to end before scoping.
-- **Rented machines:** speed and the slow first job ([Plan 54](plans/54-warm-latency/plan.md)).
-- **Packs extend the database:** a pack adds its own tables and rows, with Astrid's own fields protected, updates accommodated and destructive actions refused; features such as references then become default-installed packs ([Plan 57](plans/57-pack-database-extensions/plan.md), a draft; the owner asked for it on 15 November 2026 as one for after version 0.1).
+- **Extensibility:** [Plan 17](plans/17-vibecomfy-extensibility/plan.md), [24](plans/24-liquid-workspace/plan.md), [41](plans/41-agent-managed-tools/plan.md), [45](plans/45-component-connections/plan.md), [46](plans/46-agent-workspace-operations/plan.md), [47](plans/47-pack-stress-tests/plan.md) and [57](plans/57-pack-database-extensions/plan.md) offer potential foundations for 0.3. Reconcile them before assigning work.
+- **Cloud:** [Plan 25](plans/25-cloud-assist-v1/plan.md) and [26](plans/26-fully-hosted-v2/plan.md) inform 0.4; keep local project custody distinct from fully hosted storage, reusing execution and artifact contracts.
+- **Modalities:** [Plan 43](plans/43-nonvideo-editors/plan.md) is a long-term direction, not a single dispatchable project; scope independent image, writing and 3D foundations and the music/audio and cross-modal proofs when evidence warrants them.
+- **Throughout:** [Plans 22](plans/22-hivemind-protocol/plan.md), [23](plans/23-agent-learning-integration/plan.md), [42](plans/42-hivemind-public-sources/plan.md) and [49](plans/49-contribution-discovery/plan.md) inform compounding intelligence and discoverability. Keep shared creative endeavour, open contribution and real artistic work in view at every stage.
 
 ## Not now
 
-Work beyond a single creator's path is not yet placed in a version: hosted workspaces, the sandbox, Hivemind, agent learning, contribution discovery, the portable workspace and editors beyond video. Owner decisions of 25 November 2026: Pinokio remains supported and rented RunPod machines are experimental, with money safety mandatory. Releases after Release 14 are provisional: their scope is set from actual usage when each brief is taken up.
+Do not enlarge the immediate dependability release to deliver later modality, hosted-workspace, universal extensibility or knowledge-system milestones. The roadmap names strategic outcomes, not a pre-funded schedule. Pinokio remains supported and RunPod is experimental with money safety mandatory. Scope the next releases from actual usage, current code and accepted decisions; do not create empty future release briefs just to fill the version regions.
 
 Past releases are documented in the [existing release log](plans/releases.md) and actual receipts. Plan 31 migrates that history into canonical release records only where it can be grounded in publication evidence; Release 11's publication race is recorded in the [ledger](docs/ledger/2026-11-09-two-projects-published-release-11.md).
 
 ## Decisions
 
+- **2026-11-25 (version roadmap):** Owner wants the 0.1 milestone at Release 16, not after the subsequent hardening and fluidity releases. Declare 16 minor, 17 patch, and provisionally 18 minor for 0.2 subject to proof. Keep Plan 31 in 16; reuse Plan 58's existing release-derived strategy. The former provisional Release 19 qualification draft is superseded: targeted dependability qualification belongs in 16, sustained proof and Plan 19 documentation are proposed for 18. The authored 0.1–1.0 aims and proof criteria state the current trajectory, not new project assignments; future vision-page interactivity is deferred and should reuse the same source.
 - **2026-11-25:** Owner split the enlarged Release 16 scope into dependable creative work (16), continuous hardening including the green suites, recorded boundaries and execution-host modularisation (17), and fluid and powerful creative work including timeline responsiveness and generation destination (18). Each release is integrated before publication. Retain Windows, macOS, Linux and Pinokio; RunPod is experimental. A hard cut still preserves users' work and safe update/rollback. The former Release 17 stable milestone is provisionally moved to Release 19 to retain its v0.1 qualification and documentation intent. Release 16 is to be scoped through independent evidence-led investigation and dependability-issue scouting before implementation. Existing Plan 91 execution must be handed off safely to Release 17; its existing branch and evidence are preserved.
 - **2026-11-16:** Hannah set Release 14's theme to stability and elegance, in place of "Local speed": what Astrid does, done one way and dependably. Local speed ([Plan 55](plans/55-local-speed/plan.md)) stays as its largest design. Joining it: the Into the Minkhole proof point ([Plan 59](plans/59-into-the-minkhole-proof-point/plan.md), her decision the same day), getting to green ([Plan 39](plans/39-green-mains/plan.md) phases 1 to 3, moved from Release 15, because the release branch could not be trusted while red), and the map of the execution host ([Plan 13](plans/13-execution-host-refactor/plan.md), its first two steps). [Plan 53](plans/53-vision-aspirations/plan.md) stays in. Issues join the plan that works in the same code. [Release 15](releases/15.md) keeps the tests that do not exist yet, rented-machine money safety, the rest of Plan 39 and the execution host's extraction; its title and highlight were reworded by the advisor to match and are hers to change. No release manager is named yet. Open: a path for website-only fixes to the App's `main`, and more CI capacity. This amends the 15 November entry below, which named Release 14 local speed and Release 15 stability.
 - **2026-11-15:** This page is to be populated from the release briefs and plans (Hannah): each release brief lists its plans and its issues, and the page pulls each release's and each plan's sentence under a hand-written sentence and paragraph for each version. There is one strategy document for each major version, opening with the aim in one line and a few paragraphs. [Plan 58](plans/58-strategy-from-releases/plan.md) does this before [Plan 31](plans/31-releases-from-astrid-dev/plan.md) and corrects the documents that describe this page.
