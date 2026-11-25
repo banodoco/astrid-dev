@@ -1,0 +1,61 @@
+name: User test request
+description: Ask a person to try a real journey on their own machine, before or after a release, and report what happened (no keys, tokens or private paths).
+title: "usertest: "
+labels: ["usertest"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What to test
+      description: The journey from the person's side, in plain words, and what a good result looks like.
+    validations:
+      required: true
+  - type: dropdown
+    id: when
+    attributes:
+      label: When
+      description: Before the release means a tester build of the release branch; after means the published version.
+      options:
+        - Before the release, on a tester build
+        - After the release, on the published version
+        - Either
+    validations:
+      required: true
+  - type: input
+    id: build
+    attributes:
+      label: Build
+      description: "The tester build or version to use, or how to get it. Leave empty if it is not ready yet."
+  - type: textarea
+    id: machine
+    attributes:
+      label: Machine and setup
+      description: The operating system, GPU and starting state the test needs, for example "ComfyUI Desktop installed but closed".
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: The cases to run, one per line, each with what to do and what should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: record
+    attributes:
+      label: What to record
+      description: The facts to report back, for example versions, times, what Astrid said, and where it went wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: Limits and consent
+      description: What may change on the machine, the disk, download and time limits, and that nothing is paid for. Anything not listed is not allowed.
+    validations:
+      required: true
+  - type: input
+    id: about
+    attributes:
+      label: About
+      description: "A plan number or gap ID, if you know it. Leave empty if you are not sure."
