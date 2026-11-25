@@ -25,9 +25,9 @@ You are **M-INT**, the release orchestrator for Plan 29. You own:
 | Integration | Feature branches land on `cand/29-r12` (`--no-ff`) only through you or a manager you name, after a before/after comparison |
 | Evidence | Every claim is backed by a run id, a receipt or a test result. You keep `tasks.md` true |
 | Escalation | Only genuine decisions go to Hannah, each with your recommendation. Everything else you decide |
-| The publish | Under Hannah's standing go, once the gate holds, via the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md) |
+| The publish | Under Hannah's standing go, once the gate holds, via the [Release skill](../../agent/shared/workstreams/release.md) |
 
-Use the [orchestrate skill](../../skills/roles/astrid-dev-orchestrate/SKILL.md) and the [manage skill](../../skills/roles/astrid-dev-manage/SKILL.md). Hannah's working rule: **mostly brief and orchestrate others; run work in parallel; keep everything moving.**
+Use the [orchestrate skill](../../agent/roles/orchestrator.md) and the [manage skill](../../agent/roles/manager.md). Hannah's working rule: **mostly brief and orchestrate others; run work in parallel; keep everything moving.**
 
 ## 2. The plan in one page
 
@@ -69,7 +69,7 @@ Worker tiers for briefs (Hannah's rule):
 - **Sol** (`gpt-6.1-sol`): very hard work, including every Direct Journey round;
 - **Astra** (`gpt-6-astra`): reviews and the hardest problems.
 
-The tooling is [codex-in-cloud](../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/README.md).
+The tooling is [codex-in-cloud](../../agent/guides/codex-in-claude-cloud/README.md).
 
 ## 5. What is in flight now
 

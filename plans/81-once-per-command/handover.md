@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md)
 
-For the manager who takes this plan. **Status on 23 November 2026:** the run built and measured the plan (see the result in [plan.md](plan.md#completion)); US-0 to US-5a, US-7 and the review fixes landed on `release/15/plan-81`, US-6's remainder is deferred, and the VibeComfy hashing fix is held for a later landing (pull request 182). The first-action list below is the plan's original brief. Use the [Manage skill](../../skills/roles/astrid-dev-manage/SKILL.md) and its whole-project workstream.
+For the manager who takes this plan. **Status on 23 November 2026:** the run built and measured the plan (see the result in [plan.md](plan.md#completion)); US-0 to US-5a, US-7 and the review fixes landed on `release/15/plan-81`, US-6's remainder is deferred, and the VibeComfy hashing fix is held for a later landing (pull request 182). The first-action list below is the plan's original brief. Use the [Manage skill](../../agent/roles/manager.md) and its whole-project workstream.
 
 ## First actions
 

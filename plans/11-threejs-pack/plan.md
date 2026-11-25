@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Dependable pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Move the existing built-in Three.js functionality into the native pack format, keep it included by default, and preserve its currently supported behavior. This remains a draft until the current source and executable tasks are scoped. Status, owner, and estimate live in the [project queue](../../README.md).
 

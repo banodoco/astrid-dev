@@ -22,7 +22,7 @@
 
 Copy all three documents into every type (duplicates common rules); subclass project entities (duplicates status, task and graph machinery); embed stop/count logic in a workflow DSL (unneeded and wrong for differing loop policies); use one base plus additive docs/requirements and workstream (recommended). Existing projects already differ in how they run; classification should not treat every reference to iteration as a type. Keep task IDs, proof and review semantics intact.
 
-The [planning rule](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) and [glossary](../../skills/shared/glossary.md) already distinguish loop projects. New type-specific semantics belong in local workstreams/checks rather than extra fields in the shared record. A new template need not define its own lifecycle. Proposed type filenames, manifest syntax and route selection are subject to RS1; no decision requires a new external dependency.
+The [planning rule](../../agent/shared/workstreams/plan.md) and [glossary](../../agent/shared/glossary.md) already distinguish loop projects. New type-specific semantics belong in local workstreams/checks rather than extra fields in the shared record. A new template need not define its own lifecycle. Proposed type filenames, manifest syntax and route selection are subject to RS1; no decision requires a new external dependency.
 
 ## Owner decisions
 
@@ -37,4 +37,4 @@ Planning snapshot: banodoco/astrid-dev main 83ab5c0ec2842023f9227451fbb0d71adfee
 
 ## References
 
-[Plan 48](../48-one-record-model/plan.md) · [Plan 51](../51-astrid-dev-clean-up/plan.md) · [Planning skill](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) · [Run contract](../../skills/shared/run-contract.md) · [Design principles](../../docs/contribution-design-principles.md).
+[Plan 48](../48-one-record-model/plan.md) · [Plan 51](../51-astrid-dev-clean-up/plan.md) · [Planning skill](../../agent/shared/workstreams/plan.md) · [Run contract](../../agent/shared/run-contract.md) · [Design principles](../../docs/contribution-design-principles.md).

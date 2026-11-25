@@ -20,7 +20,7 @@
 | [SF-COMPOSE](#sf-compose) — final producer-to-consumer composition | X / Terra + Luna | Selected independent rows; actual S invariants | Not started |
 | [SF-PROMOTE](#sf-promote) — publish exact reviewed heads | N / Luna | SF-COMPOSE review | Not started |
 
-Route labels and model bindings follow the [shared run contract](../../skills/shared/run-contract.md#routing-and-bindings). Progress is recorded here; the queue alone owns project status.
+Route labels and model bindings follow the [shared run contract](../../agent/shared/run-contract.md#routing-and-bindings). Progress is recorded here; the queue alone owns project status.
 
 ## Task details
 

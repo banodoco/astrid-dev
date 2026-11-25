@@ -12,7 +12,7 @@
 
 **Waiting on:** a manager, and the repeatable installed A/B run for the baseline (US-0), which runs in a clean container with a stand-in ComfyUI. The owner's decisions are made ([inputs.md](inputs.md#owner-decisions)). US-1 can start now.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. A manager starts at the [handover](handover.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. A manager starts at the [handover](handover.md).
 
 **Vision gaps:** [F-008 — Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): a person who already runs ComfyUI routes work through Astrid only if Astrid costs them nothing they can feel. [F-001 — Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (supporting): a command that stalls without saying why reads as broken. Neither route names this plan, so there is no `Contributes to closure` line.
 

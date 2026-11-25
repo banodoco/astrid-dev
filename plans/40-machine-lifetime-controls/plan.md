@@ -12,7 +12,7 @@
 
 **Waiting on:** ships in [Release 15](../../releases/15.md) (Release 13 did not carry it). Most of its code is already on Agent `release/15/main` through the Release 13 machines work; what remains is listed in [tasks](tasks.md#reconciled-against-release15main-22-november-2026). Plan 81 edits `astrid/sdk/generation.py` too: `release/15/main` is merged into `release/15/plan-40` after it lands, before the final proof. Landing in `release/15/main` needs the owner's go.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
 **Vision gaps:** [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (primary): a person sees when a rented machine will stop and can keep it, within a spend cap they set. [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting): warm machines between jobs make RunPod usable for a working session.
 

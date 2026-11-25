@@ -12,7 +12,7 @@
 
 **Waiting on:** nothing for its base. [Plan 69](../69-project-elements/plan.md) has landed in `release/15/main` in all three repositories, and `release/15/plan-78` is cut in astrid-agent from `release/15/main` (see the Run start line in [inputs](inputs.md#planning-evidence)). Plan 81 edits `commit_session.py` too: `release/15/main` is merged in after it lands, before the final proof. The motion-pack pin in LE-2b waits for the owner's go.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md).
 
 **Vision gaps:** [F-004 — Pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary).
 

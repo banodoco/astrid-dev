@@ -8,7 +8,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from records import markdown_heading_anchors
+from document_structure import markdown_heading_anchors
 from vision_subject import parse_subject
 
 ENTRY = re.compile(

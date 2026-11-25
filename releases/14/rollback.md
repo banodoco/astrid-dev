@@ -2,7 +2,7 @@
 
 **Scope:** fix forward after a Release 14 publish problem, preserving user realms. An R13 deployment is a last resort. This runbook is a conditional operational proposal and **not** permission for this packet session to deploy or modify product refs.
 
-**Authority:** The Release 14 Lead coordinates; **the owner approves and an authorized Railway/App operator performs the deployment**. Only an authorized publisher may change product `main` or produce a replacement deployment, and it needs the owner's go in that session ([release skill](../../skills/shared/workstreams/astrid-dev-release/SKILL.md#promote-or-publish)). The PUB-1 worker cannot execute any step below.
+**Authority:** The Release 14 Lead coordinates; **the owner approves and an authorized Railway/App operator performs the deployment**. Only an authorized publisher may change product `main` or produce a replacement deployment, and it needs the owner's go in that session ([release skill](../../agent/shared/workstreams/release.md#promote-or-publish)). The PUB-1 worker cannot execute any step below.
 
 ## 1. Last-known-good Release 13 identity (immutable source)
 

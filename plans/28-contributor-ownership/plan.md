@@ -12,7 +12,7 @@
 
 **Waiting on:** historical ledger reconciliation; owner scope decision; qualified legal/tax review
 
-**Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md). Status, owner and priority belong only in the [catalog](../index.md).
+**Start:** [Astrid development skill](../../agent/start.md). Status, owner and priority belong only in the [catalog](../index.md).
 
 **Vision gaps:** [CA-002 — Contributor ownership](../../vision/gaps/CA-002-contributor-ownership.md) (primary).
 

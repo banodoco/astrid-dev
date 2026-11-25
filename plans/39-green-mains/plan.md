@@ -12,7 +12,7 @@
 
 **Waiting on:** now, the owner's D14 and D15 (the App's quarantine entries expire on 25 November, the Runtime's on 1 December); before start, the owner's confirmation of the other open decisions in [inputs.md](inputs.md#owner-decisions) (D11 and D17 are decided) and an orchestrator and manager under the Release 16 Lead; Plan 91's comparator change (astrid-dev #1833) and its acceptance of D21's Agent cards; Plan 31's acceptance of D22; Plans 89 and 77 landing ([base choice](inputs.md#source-identities)).
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). A red check on `main` should mean a new regression. Today the Runtime's CI and Nightly, and the App's E2E, Lanes and Direct Journey, are red on every run, and the same failures repeat on every run.
 

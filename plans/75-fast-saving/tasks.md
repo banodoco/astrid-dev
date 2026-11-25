@@ -93,7 +93,7 @@ Negative cases: a same-size rewrite of a CAS object, a replaced file and a resto
 
 Set out by the Release 15 Lead on 23 November 2026, after [Plan 89](../89-heavy-saves-in-seconds/plan.md) took FS-0, FS-1, a narrow CC-1 and CC-11, and Plan 77's save run the verified-base part of CC-2 ([inputs](inputs.md#taken-on-by-plan-89-23-november-2026)). **Start only after Plan 89's final installed measurement**, and re-cut this list against its residual: a card whose cost the measurement does not show is dropped, not built. The prerequisites from [Plan 63](../63-dependable-saving/tasks.md) are pulled in here so that one run owns the whole path; Plan 63 keeps everything else.
 
-**Routes** follow the [run contract](../../skills/shared/run-contract.md#routing-and-bindings): N (Luna or Haiku) for ordinary work, X (Terra or Sonnet) for intricate changes, S (Sol or Opus) only where a wrong call silently accepts a bad document. Reviews go to Astra (or Opus). Every card proves its speed on the installed build before any hosted CI.
+**Routes** follow the [run contract](../../agent/shared/run-contract.md#routing-and-bindings): N (Luna or Haiku) for ordinary work, X (Terra or Sonnet) for intricate changes, S (Sol or Opus) only where a wrong call silently accepts a bad document. Reviews go to Astra (or Opus). Every card proves its speed on the installed build before any hosted CI.
 
 | Card | Route | Days | Depends on | Why this route |
 | --- | --- | ---: | --- | --- |

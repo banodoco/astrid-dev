@@ -2,17 +2,26 @@
 
 The live state of Plan 73's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (15:45 UTC, Wed 25 Nov)
+## Now (17:45 UTC, Wed 25 Nov)
 
-The project branch is at `c7cbf07ab221344cb91806bf42afc6663b657a40`: P73-01 to P73-07 and both INT rounds are merged, and MSC-7 and MSC-8 are done. The final review R (round 1) returned REWORK with two blocking findings ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7166533493)). Ready: P73-R1-1 (cards R1.1) and P73-R1-2 (R1.2), in parallel, both on that head. After they merge: R round 2 (it verifies only round 1's fixes), then SC, then MSC-10.
+All cards are done: R round 2 accepted ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7168681648)) and the sense check SC returned SOUND WITH FOLLOW-UPS with no blocking finding ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7169258491)). The completion pull request carries the evidence; the owner gave the go to merge on 25 November. Nothing is Ready.
+
+## Cutover handoff (SC follow-up 2)
+
+Reverting the merge commit restores tracked source only. It does not restore installed symlinks or what a running client has already loaded. The old `sync.sh` and the old `skills/` tree are gone after the merge, and the old `sync.sh` rejects generated installations, so it is not a rollback tool.
+
+- **Who is affected:** every contributor or session owner who installed these skills from a checkout (links under their agent skills folders that point into `<checkout>/skills/`). After the merge those links dangle until the checkout is updated.
+- **To move to the new layout:** in the checkout, pull `main`, then run `python3 scripts/astrid_dev.py skills build` and `python3 scripts/astrid_dev.py skills install`. The installer recognises this checkout's earlier links and retargets them; foreign entries are left alone. A running session keeps its old instructions until it is restarted or reloaded; a new session discovers `astrid-dev-start` from the generated package.
+- **Sessions finishing on the old checkout:** a session already running on a pre-merge checkout may finish there. It must not edit `skills/` on `main` after the merge; the file no longer exists.
+- **Rolling back:** revert the one merge commit on `main` (source), then in each affected checkout run the previous revision's own install step, because the generated links point at `.generated/skills/` and do not return to `skills/` by themselves. Record each destination before moving it.
 
 ## Authority
 
 On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`, the owner asked for Plans 71, 72 and 73 to be finished with that session as orchestrator and one manager per plan, using the fresh ChatGPT packet workstream the way Release 15's Plans 87 and 89 do ([release 15 run board](../../releases/15/run.md#plans-87-and-89-dispatch)). This is an astrid-dev-only run: there is no release, release branch or Release Lead.
 
-- **Orchestrator** (`p71-73-orchestrator`, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d`): the accountable agent for this plan. It takes the Lead's part of the [packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `project/73-markdown-first-agent-skills`, merges `main` into it, runs every proof, keeps `tasks.md` true through progress PRs, commissions the final review R, requests the owner's sense check and opens the completion PR. Its DECISIONs bind the manager and the packet sessions, within this section.
-- **Manager** (`p73-manager-1`): a session in the owner's ChatGPT account, started by her own launch message and acting at her request. It takes the Orchestrator's part of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), with this plan's orchestrator as "the Lead". It may start, resume, stop and replace this plan's packet sessions and comment on the mailbox. It does not edit the repository, merge, approve or dispatch hosted CI.
-- **Packet sessions** (`p73-<packet>-<n>`): may push to the `p73/<card id>` branch their packet names, open pull requests into `project/73-markdown-first-agent-skills`, and comment on the mailbox. They never merge, never edit `tasks.md` or this board, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
+- **Orchestrator** (`p71-73-orchestrator`, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d`): the accountable agent for this plan. It takes the Lead's part of the [packet workstream](../../agent/roles/leader/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `project/73-markdown-first-agent-skills`, merges `main` into it, runs every proof, keeps `tasks.md` true through progress PRs, commissions the final review R, requests the owner's sense check and opens the completion PR. Its DECISIONs bind the manager and the packet sessions, within this section.
+- **Manager** (`p73-manager-1`): a session in the owner's ChatGPT account, started by her own launch message and acting at her request. It takes the Orchestrator's part of [multi-manager dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), with this plan's orchestrator as "the Lead". It may start, resume, stop and replace this plan's packet sessions and comment on the mailbox. It does not edit the repository, merge, approve or dispatch hosted CI.
+- **Packet sessions** (`p73-<packet>-<n>`): may push to the `p73/<card id>` branch their packet names, open pull requests into `project/73-markdown-first-agent-skills`, and comment on the mailbox. They never merge, never edit `tasks.md` or this board, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro ([run contract](../../agent/shared/run-contract.md#chatgpt-session-modes)).
 - **Stays in the orchestrator's lane:** MSC-1 (integration), MSC-7 (the fresh-agent exercise, which the orchestrator arranges in a fresh Claude Code session), MSC-8 (cold start), R (final review), MSC-10 (completion PR and cutover) and every proof, build and install.
 - **Needs the owner:** the cutover time and the final merge of the project branch into `main`; installing generated skills on anyone's real machine or session; publishing; anything paid; changing an existing test's assertion.
 
@@ -39,9 +48,9 @@ On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`,
 
 ## When a session goes quiet
 
-A branch, not a chat, shows health ([liveness](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)).
+A branch, not a chat, shows health ([liveness](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)).
 
-- **A packet session:** the manager resumes it after 3 hours with no commit or STATUS, and replaces it as the [dispatch workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md) says; the replacement is `p73-<packet>-<n+1>`.
+- **A packet session:** the manager resumes it after 3 hours with no commit or STATUS, and replaces it as the [dispatch workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md) says; the replacement is `p73-<packet>-<n+1>`.
 - **The manager:** the orchestrator nudges it on the mailbox at 2 hours; at 3 hours it tells the owner, who starts a fresh manager from the launch message below as `p73-manager-2`.
 - **The orchestrator:** the manager keeps running packets going, starts nothing that needs a ruling, and tells the owner at 3 hours.
 - **A READY-PROOF** unanswered for 45 minutes, or a Review for 4 hours: the manager sends the orchestrator a REQUEST and tells the owner.
@@ -78,6 +87,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | [P73-RV](packets/P73-RV.md) High-judgment review (read-only, Pro) | P73-07 (route S) and the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | [P73-R1-1](packets/P73-R1-1.md) Refuse a skill name over 64 characters (+ guide fix) | R1.1 | Ready (project head `c7cbf07a`) | — | Extra High. In parallel with P73-R1-2; its READY-PROOF gets a Pro read-only review on the orchestrator's REQUEST |
 | [P73-R1-2](packets/P73-R1-2.md) Live launch messages point at `agent/` | R1.2 | Ready (project head `c7cbf07a`) | — | Extra High. In parallel with P73-R1-1 |
+| [P73-R1-3](packets/P73-R1-3.md) Fix the link-pattern ReDoS CodeQL flagged (late finding R1.3) | R1.3 | Ready (project head named in the DECISION) | — | Extra High. Alone |
 | [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R1.1 and R1.2 (then R round 2, then SC) | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** `agent/**` files are split between P73-02 and P73-03 by file (each packet lists its own); P73-04 and P73-05 split the audit by document group and may each fix only their own group's files. P73-01 writes `scripts/` and `.github/workflows/docs.yml`; P73-06 writes `README.md`, `CONTRIBUTING.md`, `docs/**`, `templates/**`, `env/**` and active release and plan documents; P73-07 deletes `skills/**` and `sync.sh`.
@@ -98,7 +108,7 @@ The owner pastes this into the manager's own ChatGPT session.
 
 ```text
 You are the Manager for the Plan 73 completion run (Markdown-first agent documents and generated skills), reporting to the orchestrator (mailbox name p71-73-orchestrator, Claude session session_011EzfW1Urc5P4hpm2SvVy5d).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev, taking its Orchestrator's part, with this plan's orchestrator as "the Lead".
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev, taking its Orchestrator's part, with this plan's orchestrator as "the Lead".
 Read plans/73-markdown-first-agent-skills/run.md on main, then again at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1882, format in its first post. Your mailbox name: p73-manager-1.
 First do the Manager startup checks in run.md and post one STATUS with each result; dispatch nothing until the orchestrator's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session (a normal Chat, not Work) in the mode its packet's Route sets (N High, X Extra High, S Pro), with the packet start message in run.md. Dispatch the first packet alone. Every hour: read the mailbox by cursor, check every open packet, start every Ready packet that has no unmet dependency and no conflict with a Running one (up to the cap), resume or replace stalled sessions, pass READY-PROOF submissions to the orchestrator, and post one STATUS.
@@ -108,11 +118,11 @@ If a check fails, say which manual step the owner must do instead of promising a
 
 ## Packet start message
 
-The manager sends this, filled in, as the first message of each fresh packet session ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md#packet-start-message)).
+The manager sends this, filled in, as the first message of each fresh packet session ([workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md#packet-start-message)).
 
 ```text
 You are the ChatGPT manager implementing ONE packet for the Plan 73 completion run.
-Follow skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md in banodoco/astrid-dev.
+Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
 Packet: plans/73-markdown-first-agent-skills/packets/<id>.md at <main SHA>; its PR destination names your branches.
 Authority: the Authority section of plans/73-markdown-first-agent-skills/run.md at <main SHA>, given by the owner.
 Standing rulings: the same file's Standing rulings section; they bind you.

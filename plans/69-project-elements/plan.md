@@ -12,7 +12,7 @@
 
 **Waiting on:** exact combined full CI comparison and R2. The approved vendor restore and render refusals have landed on the plan branches. The standing landing approval is subject to the remaining gates. [D4–D7](inputs.md#owner-decisions)
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [F-004 — Pack installation and upgrades aren't yet proven under demanding conditions](../../vision/gaps/F-004-pack-lifecycle.md) (primary), [LS-001 — Creative components can't yet move freely](../../vision/gaps/LS-001-portable-components.md).
 

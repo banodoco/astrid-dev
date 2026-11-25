@@ -17,7 +17,9 @@ REVISION = "0000000000000000000000000000000000000000"
 
 
 def _copy_tree(destination: Path) -> None:
-    ignored = shutil.ignore_patterns(".git", ".otto", "__pycache__", "fixtures")
+    # Generated skill packages are disposable, and their repo links can cycle
+    # back into this checkout; never include them in golden fixtures.
+    ignored = shutil.ignore_patterns(".git", ".otto", ".generated", "__pycache__", "fixtures")
     shutil.copytree(ROOT, destination, ignore=ignored, dirs_exist_ok=True, symlinks=True)
 
 

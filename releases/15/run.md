@@ -4,7 +4,7 @@ The live state of the Release 15 run, rewritten at each check-in by the release 
 
 ## Now (19:50 UTC, Sun 22 Nov)
 
-Two lanes are running, a third has its brief, and a fourth is proposed. [Release 14](../14.md) published on 22 November and is forwarded into `release/15/main` in all three product repositories (astrid-app `e3dbad64`, astrid-agent `8807f820`, astrid-runtime `23310dc8`). How lanes are divided, and how capable each orchestrator must be, is in the [Lead skill](../../skills/roles/astrid-dev-lead/SKILL.md#divide-the-release-into-lanes).
+Two lanes are running, a third has its brief, and a fourth is proposed. [Release 14](../14.md) published on 22 November and is forwarded into `release/15/main` in all three product repositories (astrid-app `e3dbad64`, astrid-agent `8807f820`, astrid-runtime `23310dc8`). How lanes are divided, and how capable each orchestrator must be, is in the [Lead skill](../../agent/roles/leader.md#divide-the-release-into-lanes).
 
 - **Speed of one command (Plan 81) has a measured gain that is not yet landed.** `generate image` went from about 15 s to under 6 s on an installed build; about 42% of the saving is in the Agent and Runtime and about 58% in VibeComfy. Its review failed on correctness, the fixes are in progress on a frozen scope, and the installed re-measurement follows them.
 - **The heavy timeline (Plan 77) has its cause and no fix yet.** Opening a 300-clip project takes about five minutes the first time after the Runtime starts, because the Runtime re-reads and re-verifies the timeline's whole history; the same read stopped a 616-clip build at 432 clips and stops a 432-clip backup from being restored and started. The nine earlier Runtime commits are dropped. Round 7, a cheap verified read of the current head and no long hold on the store lock, is approved by the owner and not yet built.
@@ -14,7 +14,7 @@ Two lanes are running, a third has its brief, and a fourth is proposed. [Release
 
 ### Boards
 
-The Lead board is `board: release 15 lead`; each plan's is `board: release 15 plan <P>` ([rules](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)); [list them](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22board%3A+release+15%22).
+The Lead board is `board: release 15 lead`; each plan's is `board: release 15 plan <P>` ([rules](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)); [list them](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22board%3A+release+15%22).
 
 ### Timeline to publish
 
@@ -56,7 +56,7 @@ The owner accepted all of the Release 15 Lead's recommendations, in the Lead's s
 ### Waiting on the owner
 
 - **The cut line and the headline.** The release is named for every platform and rented machines; what is running is speed and editing. The Lead recommends naming it for what will ship and moving Plans 63, 76, 18 and 39 to the next release.
-- **Plan 56: a standby Lead.** A Lead whose session stops is not covered for Release 15 yet; name a standby Lead session (the other model family) under `releases/15/lead/` ([how](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#standby-lead)), or accept that the owner restarts the Lead by hand.
+- **Plan 56: a standby Lead.** A Lead whose session stops is not covered for Release 15 yet; name a standby Lead session (the other model family) under `releases/15/lead/` ([how](../../agent/roles/leader/multi-manager-release.md#standby-lead)), or accept that the owner restarts the Lead by hand.
 - **Starting the two new lanes:** Plan 84, and Plans 78 with 40.
 - **Plan 84:** appoint a delivery owner and confirm the release window and site sky-session interface before work; live 3D with clock-coupled horizontal rotation is the selected medium. Make no product integration without a fresh go.
 - **Plan 81:** whether its new short check of the speed guard becomes a required check, when its orchestrator brings the measured duration.
@@ -94,7 +94,7 @@ Added 23 November 2026 at the owner's request. The Lead rewrites this section at
 
 ### Authority
 
-On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ221kXBNRB4xQcG`), asked for Plan 56 to be set up for the [fresh ChatGPT packet workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md).
+On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ221kXBNRB4xQcG`), asked for Plan 56 to be set up for the [fresh ChatGPT packet workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md).
 
 - **Accountable agent** for Plan 56: `session_011EzfW2ePdUMAHRAcAm3nur`, acting for the Release 15 Lead (`session_011EzfW1gtAhRQwk8pgJMzhG`); there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
 - **Sessions in use (23 November 2026):** the Release 15 Lead is `session_011EzfW1gtAhRQwk8pgJMzhG`. Plan 56's accountable agent, delegated by the owner, is `session_011EzfW2ePdUMAHRAcAm3nur`. On mailbox #1757 only, it posts under the name `r15-lead`, and the Orchestrator addresses it so. The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override, the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
@@ -111,7 +111,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 3. **RS1 and R are commissioned by the Lead,** each by Codex Astra.
 4. **The Plan 56 bases include `release/15/main` of both repositories** (the owner, 23 November 2026, through the Orchestrator); the Lead records each base's head and ancestry in `releases/15.md` Branches.
 5. **A packet's dependants wait only for the cards they depend on,** not for the whole packet (Lead, 23 November 2026).
-6. **Proof runs where the network is.** Packet sessions end with `READY-PROOF` ([workstream](../../skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md)). The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
+6. **Proof runs where the network is.** Packet sessions end with `READY-PROOF` ([workstream](../../agent/roles/manager/chatgpt-packet.md)). The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
 7. **Hosted CI.** VibeComfy's `ci` runs no unit tests (astrid-dev #1768), so the Lead's local fast suite, compared by id, replaces it (baseline at `c0e910ca`: 758 passed, 9 failed, 9 skipped). Agent `ci.yml` does not trigger on `release/*/plan-*`; the Lead dispatches it on `release/15/plan-56` after each batch and compares it by id with `agent-ci-baseline-8807f820` (Lead, 23 November 2026).
 8. **Batch integration.** The Lead merges accepted VibeComfy PRs with `--no-ff`, tests the integrated tree, pushes that exact tree, and adds one cumulative Agent pin per batch (Lead, 23 November 2026).
 9. **Code-quality audit before every packet merge:** duplication across repos, silent fallbacks, broad `except`, hard-coded cases, test-only seams, dead or duplicate paths. A silent fallback, or a second code path left as an end state, is must-fix (mailbox a0bb99b6; follow-ups in astrid-dev #1772).
@@ -134,13 +134,13 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 | Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
-Cadence and time limits: [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md) and the [liveness rule](../../skills/shared/run-contract.md#coordination-boards-and-check-ins).
+Cadence and time limits: [multi-manager dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md) and the [liveness rule](../../agent/shared/run-contract.md#coordination-boards-and-check-ins).
 
 ### When a session goes quiet
 
-A branch, not a chat, shows health ([liveness](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)). Work that has not moved is blocked by the work or the environment: fix an environment cause where it lives, or bring the owner the exact step, and never dispatch into the same wall again.
+A branch, not a chat, shows health ([liveness](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)). Work that has not moved is blocked by the work or the environment: fix an environment cause where it lives, or bring the owner the exact step, and never dispatch into the same wall again.
 
-- **A packet session:** resumed and replaced as in the [dispatch workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md); the replacement is `r15-<packet>-<n+1>`.
+- **A packet session:** resumed and replaced as in the [dispatch workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md); the replacement is `r15-<packet>-<n+1>`.
 - **The Orchestrator** quiet: the Lead checks its scheduled task and nudges it; at 3 hours the owner is told and starts a fresh one from the board.
 - **The Lead** quiet: the Orchestrator keeps its running packets going, starts nothing needing a ruling and tells the owner; at 6 hours the owner hands the role to a standby Lead (none named: see Waiting on the owner), under the same mailbox name `r15-lead`, after ruling out a quiet Lead.
 - **A Review** unanswered for 4 hours: the Orchestrator sends the Lead a REQUEST and tells the owner.
@@ -205,7 +205,7 @@ The owner pastes this into the Orchestrator's own session (`session_011EzfW2WBWy
 
 ```text
 You are the Orchestrator for Release 15 Plan 56, reporting to the Lead (mailbox name r15-lead, session_011EzfW2ePdUMAHRAcAm3nur).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev.
 Read releases/15/run.md at main, section "Plan 56 dispatch", then on main at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1757, format in its first post. Your mailbox name: r15-orchestrator-1.
 First do the Orchestrator startup checks and post one STATUS with each result; dispatch nothing until the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in the mode its packet's Route sets (N High, X Extra High, S Pro), with the workstream's packet start message. Dispatch P56-01 alone first. Every hour: read the mailbox, check every open packet, run the parallelism pass (start every Ready packet that has no unmet dependency and no file conflict with a Running packet, up to the cap), resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
@@ -217,26 +217,26 @@ If a check fails, say which manual step the owner must do instead of promising a
 
 Added 23 November 2026 at the owner's request. It works like [Plan 56 dispatch](#plan-56-dispatch) above, with these names:
 
-- **Orchestrator:** each plan's Claude lane session. It takes the Lead's part of the [packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md) for its own plan: it writes packets, reviews them, merges them into its plan branch, runs the live proofs and requests the landing gate.
-- **Manager:** a separate session that starts and minds a fresh ChatGPT session for each packet. It takes the Orchestrator's part of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), with its plan's orchestrator as "the Lead".
+- **Orchestrator:** each plan's Claude lane session. It takes the Lead's part of the [packet workstream](../../agent/roles/leader/multi-manager-release.md) for its own plan: it writes packets, reviews them, merges them into its plan branch, runs the live proofs and requests the landing gate.
+- **Manager:** a separate session that starts and minds a fresh ChatGPT session for each packet. It takes the Orchestrator's part of [multi-manager dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), with its plan's orchestrator as "the Lead".
 - **Release 15 Lead:** above both, in `session_011EzfW1gtAhRQwk8pgJMzhG`, posting as `r15-release-lead`. Packets live in [packets/](packets/), and each plan's `tasks.md` stays the record of progress.
 
 ### Authority
 
 On 23 November 2026, in the Release 15 Lead's session (`session_011EzfW1gtAhRQwk8pgJMzhG`), the owner asked for Plans 87 and 89 to farm their remaining tasks out this way, and for Plan 88 to finish as it runs now.
 
-- **Release 15 Lead.** It addresses the orchestrators ([chain](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)). A DECISION from `r15-release-lead` binds all of them and overrides an orchestrator's, within this Authority and the owner's reserved items. A comment still grants nothing beyond this section. Its own gate covers only the landing into `release/15/main`; otherwise it steers and rules.
-- **Orchestrators.** For Plan 87, `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-orchestrator`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-orchestrator`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
+- **Release 15 Lead.** It addresses the orchestrators ([chain](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)). A DECISION from `r15-release-lead` binds all of them and overrides an orchestrator's, within this Authority and the owner's reserved items. A comment still grants nothing beyond this section. Its own gate covers only the landing into `release/15/main`; otherwise it steers and rules.
+- **Orchestrators.** For Plan 87, `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-orchestrator`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-orchestrator`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../agent/roles/leader/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
 - **Managers.** `r15-p87-manager-1` and `r15-p89-manager-1`, one per plan, each started by the owner the same way as Plan 56's Orchestrator and acting in her ChatGPT account at her request. A manager may start, resume, stop and replace its own plan's packet sessions and comment on its mailbox. It does not edit the repository, merge, approve or dispatch hosted CI. It reports to its plan's orchestrator and follows the Release 15 Lead's DECISIONs.
 - **Packet sessions** may push to the branches their packet's PR destination names, open pull requests there and comment on their plan's mailbox. They never merge, never edit `tasks.md`, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro.
-- **What stays in the lane:** see the [packet rules](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once).
+- **What stays in the lane:** see the [packet rules](../../agent/roles/leader/multi-manager-release.md#set-up-once).
 - **Needs the owner:** publishing, anything paid, her install or media, and changing an existing test's assertion.
 
 ### Standing rulings (Plans 87 and 89)
 
 1. Plan 56 rulings 1 (functions, not files, conflict), 2 (packets never move a pin; post `READY-PIN`), 5 (dependants wait only for their own cards) and 6 (proof runs where the network is; post `READY-PROOF <repo> <PR> <head> <selectors>`) apply as written.
 2. The orchestrator runs reviews itself on the run contract's routes (high-judgment for S cards, integrity or contract changes, or code already judged unsound; one final round otherwise). It never commissions a packet to review.
-3. The release-wide rulings in [the lane orchestrator workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md) bind the orchestrators: free CI slots, the by-id comparison with each gate request, pin witnesses, fixtures shrink, cross-lane findings go lane to lane.
+3. The release-wide rulings in [the lane orchestrator workstream](../../agent/roles/orchestrator/lane-orchestrator.md) bind the orchestrators: free CI slots, the by-id comparison with each gate request, pin witnesses, fixtures shrink, cross-lane findings go lane to lane.
 4. Cap: at most **four** packets in Running or Review per plan; the orchestrator may lower it. The first packet goes alone, until its early STATUS shows a session can push, open a draft PR and comment.
 5. Packet sessions run in a normal ChatGPT Chat, not Work (owner, 24 November 2026); the Route sets the mode (N High, X Extra High, S Pro). One writer per branch: replace a stopped session only after its branch has been still for 30 minutes.
 6. A test's forging step (direct writes that craft a corrupt or legacy state in setup) may change to a shared helper when a new integrity rule refuses it, if every assertion line stays byte-identical, the helper restores the rule in the same transaction and a test proves it is back (Release 15 Lead, 24 November 2026, for Plan 89's SV-L5).
@@ -301,7 +301,7 @@ Plan branches: `release/15/plan-82` in astrid-agent, astrid-runtime and VibeComf
 
 ### Rulings for Plan 82
 
-The packet and dispatch rules from Plans 56, 87 and 89 are in the [Lead's packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once) and [dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md#every-hour). Plan-specific: split RA-2 (S) into the prepared-template contract and key, the approval compile split, then the 53-template differential. RA-0a and every installed timing are the lane's.
+The packet and dispatch rules from Plans 56, 87 and 89 are in the [Lead's packet workstream](../../agent/roles/leader/multi-manager-release.md#set-up-once) and [dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md#every-hour). Plan-specific: split RA-2 (S) into the prepared-template contract and key, the approval compile split, then the 53-template differential. RA-0a and every installed timing are the lane's.
 
 **Order:** RA-6 first (it gates every cache); RA-1b in parallel; RA-0b after RA-6, RA-0a and Plan 87's RN-4 on `release/15/main` (until then RA-0b may be built against RN-4's commit on `release/15/plan-87`, cherry-picked under the standing rulings); the RA-2 packets after RA-6; R last, in the lane.
 
@@ -329,7 +329,7 @@ Added 24 November 2026 by the Release 15 Qualifier (`r15-qualifier`, `session_01
 
 ### Rules for qualification packets
 
-1. **Issue packets only** ([rolling queue](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#rolling-queue)): a failing test id or an exact repro that a sandbox with no network can target, a fix of about 3 hours or less, one contract, no owning lane. A failure in a plan's own code goes to that plan's orchestrator.
+1. **Issue packets only** ([rolling queue](../../agent/roles/leader/multi-manager-release.md#rolling-queue)): a failing test id or an exact repro that a sandbox with no network can target, a fix of about 3 hours or less, one contract, no owning lane. A failure in a plan's own code goes to that plan's orchestrator.
 2. **Never packet work:** anything needing an installed build, a GPU, a render, a real timing or hosted CI to reproduce.
 3. **Each packet carries** its exact selectors, the failing ids, the tests that must pass unchanged, and "no existing assertion changes".
 4. **PR destination:** `p15q/<packet id>` → `release/15/q-<topic>` (a topic branch the Qualifier cuts from `release/15/main`), then `release/15/q-<topic>` → `release/15/main` through the Lead's gate.

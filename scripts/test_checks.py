@@ -403,11 +403,75 @@ class LinkAnchorTests(unittest.TestCase):
             "docs/guide.md": "## Use `check` and [sync](sync.md)\n",
             "skills/a/SKILL.md": "[x](../../docs/guide.md#use-check-and-sync)\n"}), [])
 
+    def test_canonical_agent_fragments_are_checked_and_derived_packages_excluded(self):
+        files = {
+            "agent/roles/manager.md": "# Manager\n\n## Steps\n",
+            "agent/start.md": "[steps](roles/manager.md#steps)\n",
+            ".generated/skills/astrid-dev-manager/SKILL.md":
+                "[stale](../../../agent/roles/manager.md#missing)\n",
+        }
+        self.assertEqual(self.run_rule(files), [])
+        files["agent/start.md"] = "[missing](roles/manager.md#missing)\n"
+        self.assertEqual(self.run_rule(files), [
+            "agent/start.md: link to agent/roles/manager.md#missing matches no heading in that file; point the link at a heading that exists"])
+
     def test_fragment_into_plans_is_not_reported(self):
         self.assertEqual(self.run_rule({
             "plans/20-x/plan.md": "## Real\n",
             "docs/guide.md": "[p](../plans/20-x/plan.md#missing)\n",
             "skills/a/SKILL.md": "[p](../../plans/20-x/plan.md#missing)\n"}), [])
+
+
+
+class CanonicalAgentGateTests(unittest.TestCase):
+    def test_workstream_structure_checks_agent_document_errors(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "agent").mkdir()
+            (root / "agent/bad.md").write_text("# Missing frontmatter\n", encoding="utf-8")
+            problems = checks._workstream_structure(checks.Context(root))
+            self.assertTrue(any("agent documents:" in issue for issue in problems), problems)
+
+    def test_derived_skill_markdown_is_not_a_source_link(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "repo"
+            golden._copy_tree(root)
+            context = checks.Context(root)
+            baseline = checks._markdown_links(context)
+            package = root / ".generated/skills/astrid-dev-test/SKILL.md"
+            package.parent.mkdir(parents=True)
+            package.write_text("# Derived\n\n[bad](missing.md)\n", encoding="utf-8")
+            self.assertEqual(checks._markdown_links(context), baseline)
+
+class RetiredAgentSourcesTests(unittest.TestCase):
+    def test_restored_authored_skills_or_sync_script_is_refused(self):
+        from unittest.mock import patch
+        gate = next(entry for entry in checks.REGISTRY if entry.id == "obsolete-sources")
+        for name in ("skills", "sync.sh"):
+            for kind in ("authored", "dangling-symlink"):
+                with self.subTest(name=name, kind=kind), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    path = root / name
+                    if kind == "dangling-symlink":
+                        path.symlink_to(root / "absent", target_is_directory=name == "skills")
+                    elif name == "skills":
+                        (path / "astrid-dev").mkdir(parents=True)
+                        (path / "astrid-dev/SKILL.md").write_text("Old authoring source.\n", encoding="utf-8")
+                    else:
+                        path.write_text("#!/bin/sh\n", encoding="utf-8")
+                    with patch.object(checks, "_catalog_ready", return_value=True):
+                        self.assertEqual(gate.run(checks.Context(root)), [f"obsolete source must be removed: {name}"])
+
+    def test_canonical_sources_and_generated_skills_are_not_retired_paths(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "agent").mkdir()
+            generated = root / ".generated/skills/astrid-dev-start"
+            generated.mkdir(parents=True)
+            (generated / "SKILL.md").write_text("Generated output.\n", encoding="utf-8")
+            with patch.object(checks, "_catalog_ready", return_value=True):
+                self.assertEqual(checks._obsolete_sources(checks.Context(root)), [])
 
 
 if __name__ == "__main__":

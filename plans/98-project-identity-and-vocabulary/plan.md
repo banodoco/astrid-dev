@@ -12,7 +12,7 @@
 
 **Waiting on:** [Plan 95](../95-composable-agentic-workspaces/plan.md) landed (Dev on Otto with configurable paths); the owner's decision D2 whether to do this at all.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision role:** Foundational enabler — removes the remaining plan/project double vocabulary from Astrid Dev's own structure; cosmetic for the product and for other Otto workspaces.
 

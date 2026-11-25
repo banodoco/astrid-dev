@@ -14,7 +14,7 @@
 
 **Waiting on:** —
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six fields above define the catalog row. Leave [priority](../priority.md), release membership and run authority unchanged until separately decided.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six fields above define the catalog row. Leave [priority](../priority.md), release membership and run authority unchanged until separately decided.
 
 **Vision role:** Foundational enabler — formalises the existing project execution variants for later reuse by Otto; no claim of CA-005 concurrent-contributor closure.
 
@@ -34,7 +34,7 @@ Extend current pack-shape/check machinery, not a second validator. Validate newl
 
 ## Existing work and decision
 
-[Plan 48](../48-one-record-model/plan.md) completed the common record and pack-shape mechanism. [pack_shape.py](../../scripts/pack_shape.py) reads the current three templates but assumes one shape and checks new packs only. [document_structure.py](../../scripts/document_structure.py) already parses real headings/frontmatter. [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) explicitly declares a loop, uses a standing task and [rounds](../77-saving-holds-on-a-heavy-timeline/rounds.md); [Plan 89](../89-heavy-saves-in-seconds/plan.md) uses a different stop policy. [Whole project](../../skills/roles/astrid-dev-manage/workstreams/whole-project.md) and [live loop](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md) already define the execution alternatives. Keep their substance; Plan 73 will move the source paths. The owner chose the direction on 24 Nov: projects use different templates, but remain one entity. See [inputs](inputs.md#planning-evidence) for open details and independent critique requirement.
+[Plan 48](../48-one-record-model/plan.md) completed the common record and pack-shape mechanism. [pack_shape.py](../../scripts/pack_shape.py) reads the current three templates but assumes one shape and checks new packs only. [document_structure.py](../../scripts/document_structure.py) already parses real headings/frontmatter. [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) explicitly declares a loop, uses a standing task and [rounds](../77-saving-holds-on-a-heavy-timeline/rounds.md); [Plan 89](../89-heavy-saves-in-seconds/plan.md) uses a different stop policy. [Whole project](../../agent/roles/manager/whole-project.md) and [live loop](../../agent/roles/manager/live-loop.md) already define the execution alternatives. Keep their substance; Plan 73 will move the source paths. The owner chose the direction on 24 Nov: projects use different templates, but remain one entity. See [inputs](inputs.md#planning-evidence) for open details and independent critique requirement.
 
 ## Sequence and readiness
 

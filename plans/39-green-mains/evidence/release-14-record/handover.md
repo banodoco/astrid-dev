@@ -58,7 +58,7 @@ Agent CI on `b8f269294` (run 43934820640) had not finished: shards 2 to 6 and 8 
 
 ## For the next manager, in order
 
-1. Read the [Manage skill](../../../../skills/roles/astrid-dev-manage/SKILL.md). You answer for this plan finishing. Fill the `Run start` line in [inputs.md](inputs.md).
+1. Read the [Manage skill](../../../../agent/roles/manager.md). You answer for this plan finishing. Fill the `Run start` line in [inputs.md](inputs.md).
 2. Bring [tasks.md](tasks.md) on `main` up to date by a pull request that changes only that file: it shows every row empty. Record the plan branches' cut commits in [the brief](../../../../releases/14.md) on `main`.
 3. Change `tests/astrid-agent.pin` in the Runtime and re-run `unit`. Expect the 547 to go. Whatever replaces them is the real list.
 4. Merge Agent #369 once its checks have run. Dispatch the Runtime `Nightly` and the App `Direct Journey` on the plan heads, then close G1 and merge #781.

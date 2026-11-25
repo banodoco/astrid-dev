@@ -12,7 +12,7 @@
 
 **Waiting on:** [Plans 71](../71-gap-definition-reconciliation/plan.md), [72](../72-composable-project-delivery/plan.md) and [73](../73-markdown-first-agent-skills/plan.md) landed on `main`; owner decisions D2 (repository and distribution) and D3 (run route); a named orchestrator.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision role:** Foundational enabler — moves the organisation's shared coordination, validation and guidance into Otto, with Astrid Dev and Astrid Marketing as independent consumers; it does not itself close CA-005 or CA-003.
 

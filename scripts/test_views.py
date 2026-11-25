@@ -14,6 +14,20 @@ def git(root, *args):
     return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
 
 
+def copy_repo_fixture(source: Path, destination: Path) -> None:
+    """Copy authored checkout fixtures, never derived skills or private run state.
+
+    Generated packages may contain repo symlinks pointing back to the checkout;
+    following them during an ordinary copytree can recurse indefinitely.
+    Preserve the *authored* legacy symlinks so the original view/alias tests run.
+    """
+    shutil.copytree(
+        source, destination,
+        ignore=shutil.ignore_patterns(".git", ".otto", "__pycache__", ".generated"),
+        symlinks=True,
+    )
+
+
 def commit_base(root):
     """Make a base only in a disposable test repository."""
     git(root, "init", "-q", "-b", "main")
@@ -25,12 +39,31 @@ def commit_base(root):
 
 
 class ViewTests(unittest.TestCase):
+    def test_fixture_copy_ignores_generated_repo_symlink_cycle(self):
+        with tempfile.TemporaryDirectory(prefix="view-derived-cycle-") as tmp:
+            root = Path(tmp)
+            source = root / "original"
+            (source / "skills").mkdir(parents=True)
+            (source / ".generated/skills/astrid-dev-start").mkdir(parents=True)
+            (source / "README.md").write_text("authored\n", encoding="utf-8")
+            (source / "skills/legacy.md").symlink_to("../README.md")
+            (source / ".generated/skills/astrid-dev-start/repo").symlink_to(
+                source, target_is_directory=True
+            )
+            copied = root / "fixture"
+            copy_repo_fixture(source, copied)
+            self.assertEqual((copied / "README.md").read_text(encoding="utf-8"), "authored\n")
+            self.assertTrue((copied / "skills/legacy.md").is_symlink())
+            self.assertEqual((copied / "skills/legacy.md").read_text(encoding="utf-8"), "authored\n")
+            self.assertFalse((copied / ".generated").exists())
+            self.assertTrue((source / ".generated/skills/astrid-dev-start/repo").is_symlink())
+
     def test_hand_edited_vision_title_fails_check(self):
         import astrid_dev
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             base = commit_base(root)
             target = root / "vision/README.md"
             content = target.read_text(encoding="utf-8")
@@ -90,7 +123,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             base_readme = root / "README.md"
             original_readme = base_readme.read_text(encoding="utf-8")
             base_readme.write_text(original_readme.replace("<!-- vision-summary:end -->", "", 1),
@@ -135,7 +168,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             base = commit_base(root)
             target = root / "README.md"
             content = target.read_text(encoding="utf-8")
@@ -196,7 +229,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+            copy_repo_fixture(source, root)
             # main's generated pages may be stale between a merge and the refresh job's
             # commit; bring every view current first so only plans/index.md is left to change.
             sync(root)
@@ -677,16 +710,16 @@ class SharedBlockTests(unittest.TestCase):
 
     def basic(self, root):
         self.repo(root, {"shared/owner.md": self.OWNER.format(name="r"), "shared/sibling.md": "# S\n",
-                         "skills/deep/user.md": self.COPY.format(name="r")})
+                         "agent/deep/user.md": self.COPY.format(name="r")})
 
     def test_copy_is_filled_from_owner_and_is_idempotent(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             self.basic(root)
-            self.assertEqual(sync(root), ["skills/deep/user.md"])
+            self.assertEqual(sync(root), ["agent/deep/user.md"])
             self.assertEqual(sync(root), [])
             self.assertEqual(check(root), [])
-            text = (root / "skills/deep/user.md").read_text(encoding="utf-8")
+            text = (root / "agent/deep/user.md").read_text(encoding="utf-8")
             self.assertIn("Rule r with", text)
             self.assertTrue(text.startswith("Intro.\n\n"))
             self.assertTrue(text.endswith("\nOutro.\n"))
@@ -698,17 +731,17 @@ class SharedBlockTests(unittest.TestCase):
             root = Path(temporary)
             self.basic(root)
             sync(root)
-            text = (root / "skills/deep/user.md").read_text(encoding="utf-8")
+            text = (root / "agent/deep/user.md").read_text(encoding="utf-8")
             self.assertIn("[a link](../../shared/sibling.md)", text)
             self.assertIn("[here](../../shared/owner.md#routing-rules)", text)
-            self.assertEqual(check_docs.local_links(root, Path("skills/deep/user.md")), [])
+            self.assertEqual(check_docs.local_links(root, Path("agent/deep/user.md")), [])
 
     def test_hand_edit_to_a_copy_fails_check_but_text_outside_does_not(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             self.basic(root)
             sync(root)
-            target = root / "skills/deep/user.md"
+            target = root / "agent/deep/user.md"
             original = target.read_text(encoding="utf-8")
             target.write_text(original.replace("Outro", "Changed outro"), encoding="utf-8")
             self.assertEqual(check(root), [])
@@ -747,24 +780,24 @@ class SharedBlockTests(unittest.TestCase):
         import views
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            self.repo(root, {"o.md": self.OWNER.format(name="r"), "skills/c.md": self.COPY.format(name="r")}, add=False)
+            self.repo(root, {"o.md": self.OWNER.format(name="r"), "agent/c.md": self.COPY.format(name="r")}, add=False)
             git(root, "add", "o.md")
             self.assertEqual(views.block_views(root), ((), []))
             (root / ".gitignore").write_text("ignored.md\n", encoding="utf-8")
             (root / "ignored.md").write_text(self.OWNER.format(name="r"), encoding="utf-8")
-            git(root, "add", ".gitignore", "skills/c.md")
+            git(root, "add", ".gitignore", "agent/c.md")
             self.assertEqual(views.block_views(root)[1], [])
 
     def test_errors_are_returned_not_raised(self):
         import views
         cases = {
-            "no owner": ({"skills/c.md": self.COPY.format(name="lost")}, "skills/c.md: block lost has no owner"),
+            "no owner": ({"agent/c.md": self.COPY.format(name="lost")}, "agent/c.md: block lost has no owner"),
             "two owners": ({"a.md": self.OWNER.format(name="r"), "b.md": self.OWNER.format(name="r")}, "2 owners (a.md, b.md)"),
             "copy in owner": ({"a.md": self.OWNER.format(name="r") + self.COPY.format(name="r")}, "a.md: block r has a copy region inside its own owner"),
             "history": ({"o.md": self.OWNER.format(name="r"), "docs/ledger/x.md": self.COPY.format(name="r")}, "docs/ledger/x.md: block r copy is not allowed here"),
             "github": ({"o.md": self.OWNER.format(name="r"), ".github/x.md": self.COPY.format(name="r")}, ".github/x.md: block r copy is not allowed here"),
-            "unpaired": ({"o.md": self.OWNER.format(name="r"), "skills/bad.md": "<!-- block:r:start -->\n"}, "skills/bad.md: block:r needs exactly one start marker"),
-            "duplicate": ({"o.md": self.OWNER.format(name="r"), "skills/bad.md": self.COPY.format(name="r") * 2}, "skills/bad.md: block:r needs exactly one start marker"),
+            "unpaired": ({"o.md": self.OWNER.format(name="r"), "agent/bad.md": "<!-- block:r:start -->\n"}, "agent/bad.md: block:r needs exactly one start marker"),
+            "duplicate": ({"o.md": self.OWNER.format(name="r"), "agent/bad.md": self.COPY.format(name="r") * 2}, "agent/bad.md: block:r needs exactly one start marker"),
         }
         for label, (files, message) in cases.items():
             with self.subTest(label), tempfile.TemporaryDirectory() as temporary:
@@ -780,7 +813,7 @@ class SharedBlockTests(unittest.TestCase):
         import views
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            self.repo(root, {"skills/bad.md": "<!-- block:r:start -->\n"})
+            self.repo(root, {"agent/bad.md": "<!-- block:r:start -->\n"})
             self.assertEqual(views.block_views(root)[0], ())
             self.assertEqual(views.views_for(root)[0], ())
 
@@ -789,19 +822,60 @@ class SharedBlockTests(unittest.TestCase):
         from types import SimpleNamespace
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            self.repo(root, {"skills/c.md": self.COPY.format(name="lost")})
+            self.repo(root, {"agent/c.md": self.COPY.format(name="lost")})
             errors = checks._generated_views(SimpleNamespace(root=root, base=None))
             self.assertEqual(len(errors), 1)
             self.assertIn("block lost has no owner", errors[0])
 
     def test_real_repository_routing_copies(self):
+        # P73-07 decision 7159672645: real canonical consumers use direct links.
         import views
+        from agent_documents import discover_documents, routing_table_headers
+        from document_structure import section
+        from test_agent_documents import REF
         root = Path(__file__).resolve().parent.parent
         found, errors = views.block_views(root)
         self.assertEqual(errors, [])
-        routing = [v for v in found if v.region == "block:routing"]
-        self.assertIn("skills/shared/workstreams/astrid-dev-plan/SKILL.md", [v.target for v in routing])
-        self.assertEqual({v.sources for v in routing}, {("skills/shared/run-contract.md",)})
+        documents = discover_documents(root)
+        owners = {(Path("agent") / doc.relative).as_posix(): len(routing_table_headers(doc.body))
+                  for doc in documents if routing_table_headers(doc.body)}
+        self.assertEqual(owners, {"agent/shared/run-contract.md": 1})
+        consumers = {
+            "guides/codex-in-claude-cloud/README.md": "../../shared/run-contract.md#routing-and-bindings",
+            "guides/codex-in-claude-cloud/manager-brief.md": "../../shared/run-contract.md#routing-and-bindings",
+            "roles/leader/lane-orchestrators.md": "../../shared/run-contract.md#routing-and-bindings",
+            "roles/leader/multi-manager-release.md": "../../shared/run-contract.md#routing-and-bindings",
+            "roles/manager/astra-reflection.md": "../../shared/run-contract.md#routing-and-bindings",
+            "roles/orchestrator.md": "../shared/run-contract.md#routing-and-bindings",
+            "roles/orchestrator/codex-in-claude-cloud.md": "../../shared/run-contract.md#routing-and-bindings",
+            "shared/workstreams/improve.md": "../run-contract.md#routing-and-bindings",
+            "shared/workstreams/plan.md": "../run-contract.md#routing-and-bindings",
+        }
+        for relative, destination in consumers.items():
+            with self.subTest(consumer=relative):
+                self.assertIn("](" + destination + ")", (root / "agent" / relative).read_text(encoding="utf-8"))
+        self.assertEqual(views._agent_routing_errors(root, documents, found), [])
+        policy = next(doc for doc in documents if doc.relative == Path("shared/run-contract.md"))
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            shutil.copytree(root / "agent", scratch / "agent", symlinks=True)
+            (scratch / "agent/competing.md").write_text(
+                REF + "\n" + section(policy.body, "Routing and bindings"), encoding="utf-8")
+            problems = views._agent_routing_errors(scratch, discover_documents(scratch), ())
+            self.assertTrue(any("agent/competing.md: competing route-to-model-family table"
+                                in problem for problem in problems), problems)
+
+    def test_retired_skills_root_is_not_an_allowed_block_copy(self):
+        import views
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.repo(root, {"o.md": self.OWNER.format(name="r"),
+                             "skills/c.md": self.COPY.format(name="r")})
+            declarations, errors = views.block_views(root)
+            self.assertEqual(declarations, ())
+            self.assertTrue(any("skills/c.md: block r copy is not allowed here" in error for error in errors), errors)
+            with self.assertRaisesRegex(ValueError, "not allowed here"):
+                sync(root)
 
 
 class SyncTargetSafetyTests(unittest.TestCase):
@@ -979,7 +1053,7 @@ class StrategyViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'repo'
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            copy_repo_fixture(source, root)
             target = root / 'strategy.md'
             target.write_text(target.read_text().replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
             output = io.StringIO()
@@ -994,7 +1068,7 @@ class StrategyViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'repo'
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            copy_repo_fixture(source, root)
             target = root / 'strategy.md'
             target.write_text(target.read_text(encoding='utf-8').replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
             output = io.StringIO()
@@ -1051,6 +1125,287 @@ class StrategyViewTests(unittest.TestCase):
             self.assertNotIn('Contribution ', rendered)
             self.assertNotIn('[Plan 40', rendered)
             self.assertNotIn('#issues', rendered)
+
+
+class AgentIndexTests(unittest.TestCase):
+    TABLE = ("| Route | Work | Claude | Codex |\n| --- | --- | --- | --- |\n"
+             "| N | Bounded work | First family | Second family |\n")
+    NAMES = {"workstream-index-leader", "workstream-index-manager",
+             "workstream-index-orchestrator", "shared-workstream-index"}
+
+    def declarations(self):
+        import views
+        return tuple(view for view in views.VIEWS if view.name in self.NAMES)
+
+    def fixture(self, root):
+        from test_agent_documents import ROLE, REF
+        for role in ("leader", "manager", "orchestrator"):
+            path = root / "agent/roles" / f"{role}.md"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(ROLE.replace("# Leader", "# " + role.capitalize()) +
+                            "\nBefore navigation.\n\n## Workstreams\n\n"
+                            "<!-- workstreams:start -->\n<!-- workstreams:end -->\n\n"
+                            "After navigation.\n", encoding="utf-8")
+        (root / "agent/README.md").write_text(
+            REF + "\n## Shared workstreams\n\nBefore shared navigation.\n\n"
+            "<!-- shared-workstreams:start -->\n<!-- shared-workstreams:end -->\n\n"
+            "After shared navigation.\n", encoding="utf-8")
+        policy = root / "agent/shared/run-contract.md"
+        policy.parent.mkdir(parents=True)
+        policy.write_text(REF + "\n## Routing and bindings\n\n" + self.TABLE, encoding="utf-8")
+
+    def stream(self, root, relative, title="Alpha", description=None, skill=False):
+        from test_agent_documents import STREAM
+        text = STREAM.replace("# Plan\n", f"# {title}\n")
+        if not skill:
+            text = text.replace("skill: true\n", "")
+        if description is not None:
+            text = text.replace("description: Plan an independently useful outcome.",
+                                "description: " + description)
+        path = root / "agent" / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    def test_real_canonical_indexes_have_only_the_four_declared_targets(self):
+        import views
+        from agent_documents import discover_documents
+        root = Path(__file__).resolve().parents[1]
+        declarations = self.declarations()
+        self.assertEqual(len(declarations), 4)
+        self.assertEqual({view.name: view.target for view in declarations}, {
+            "workstream-index-leader": "agent/roles/leader.md",
+            "workstream-index-manager": "agent/roles/manager.md",
+            "workstream-index-orchestrator": "agent/roles/orchestrator.md",
+            "shared-workstream-index": "agent/README.md",
+        })
+        self.assertEqual(views.agent_index_errors(root), [])
+        documents = discover_documents(root)
+        for view in declarations:
+            rendered = views.expected(view, root)
+            self.assertIn(view.marker, rendered)
+            self.assertTrue(all(source.startswith("agent/") for source in view.sources))
+            if view.region == "workstreams":
+                role = Path(view.target).stem
+                for document in documents:
+                    if document.kind == "workstream" and document.relative.parent == Path("roles") / role:
+                        self.assertIn(f"- [{document.title}]({role}/{document.path.name}) — {document.description}", rendered)
+            else:
+                region = rendered.split("<!-- shared-workstreams:start -->", 1)[1].split("<!-- shared-workstreams:end -->", 1)[0]
+                for document in documents:
+                    if document.kind == "workstream" and document.relative.parent == Path("shared/workstreams"):
+                        self.assertIn(f"- [{document.title}](shared/workstreams/{document.path.name})", region)
+                        self.assertNotIn(document.description, region)
+
+    def test_add_edit_remove_uses_only_canonical_workstream_metadata(self):
+        import views
+        from test_agent_documents import REF
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            first = self.stream(root, "roles/manager/alpha.md")
+            view = next(view for view in self.declarations() if view.name == "workstream-index-manager")
+            original = views.expected(view, root)
+            self.assertIn("[Alpha](manager/alpha.md)", original)
+            second = self.stream(root, "roles/manager/beta.md", "Beta")
+            added = views.expected(view, root)
+            self.assertLess(added.index("[Alpha]"), added.index("[Beta]"))
+            self.stream(root, "roles/manager/beta.md", "Beta changed", "Follow the updated procedure and report evidence.")
+            changed = views.expected(view, root)
+            self.assertIn("[Beta changed](manager/beta.md) — Follow the updated procedure and report evidence.", changed)
+            guide = root / "agent/roles/manager/setup/README.md"
+            guide.parent.mkdir()
+            guide.write_text(REF, encoding="utf-8")
+            self.assertEqual(views.expected(view, root), changed)
+            second.unlink()
+            self.assertEqual(views.expected(view, root), original)
+            first.unlink()
+            self.assertNotIn("[Alpha]", views.expected(view, root))
+
+    def test_shared_index_lists_reference_only_and_opted_in_workstreams_without_descriptions(self):
+        import views
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            self.stream(root, "shared/workstreams/alpha.md", "Alpha", skill=False)
+            self.stream(root, "shared/workstreams/beta.md", "Beta", skill=True)
+            view = next(view for view in self.declarations() if view.name == "shared-workstream-index")
+            rendered = views.expected(view, root)
+            self.assertIn("- [Alpha](shared/workstreams/alpha.md)", rendered)
+            self.assertIn("- [Beta](shared/workstreams/beta.md)", rendered)
+            self.assertNotIn("Plan an independently useful outcome.", rendered)
+            self.assertLess(rendered.index("[Alpha]"), rendered.index("[Beta]"))
+
+    def test_regeneration_preserves_prose_and_is_idempotent(self):
+        import views
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            self.stream(root, "roles/manager/alpha.md")
+            self.stream(root, "shared/workstreams/shared.md", "Shared")
+            declarations = self.declarations()
+            before = {view.target: (root / view.target).read_text(encoding="utf-8") for view in declarations}
+            with patch.object(views, "VIEWS", declarations):
+                self.assertEqual(set(sync(root)), set(before))
+                self.assertEqual(sync(root), [])
+                self.assertEqual(check(root), [])
+            for view in declarations:
+                text = (root / view.target).read_text(encoding="utf-8")
+                start, end = f"<!-- {view.region}:start -->", f"<!-- {view.region}:end -->"
+                self.assertEqual(text.split(start, 1)[0], before[view.target].split(start, 1)[0])
+                self.assertEqual(text.split(end, 1)[1], before[view.target].split(end, 1)[1])
+                self.assertEqual(text.count(view.marker), 1)
+
+    def test_source_only_edit_keeps_refresh_policy_and_hand_edited_index_refuses(self):
+        import checks
+        import views
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            self.stream(root, "roles/manager/alpha.md")
+            declarations = self.declarations()
+            view = next(view for view in declarations if view.name == "workstream-index-manager")
+            with patch.object(views, "VIEWS", declarations), \
+                 patch.object(checks, "_catalog", return_value=[]), \
+                 patch.object(checks, "_public_vision", return_value=[]):
+                sync(root)
+                base = commit_base(root)
+                self.stream(root, "roles/manager/alpha.md", "New title", "Follow the updated procedure and report evidence.")
+                self.assertTrue(check_view(view, root))
+                self.assertEqual(checks._generated_views(checks.Context(root, base=base)), [])
+                self.assertEqual(sync(root), [view.target])
+                self.assertEqual(check_view(view, root), [])
+                target = root / view.target
+                target.write_text(target.read_text(encoding="utf-8").replace("[New title]", "[Hand edit]"), encoding="utf-8")
+                errors = checks._generated_views(checks.Context(root, base=base))
+                self.assertTrue(any("view workstream-index-manager:" in error for error in errors), errors)
+
+    def test_every_marker_failure_refuses_before_any_generated_write(self):
+        import views
+        from unittest.mock import patch
+        declarations = self.declarations()
+        for view in declarations:
+            for kind in ("missing", "repeated", "reversed"):
+                with self.subTest(target=view.target, kind=kind), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    self.fixture(root)
+                    start, end = f"<!-- {view.region}:start -->", f"<!-- {view.region}:end -->"
+                    target = root / view.target
+                    original = target.read_text(encoding="utf-8")
+                    if kind == "missing":
+                        altered = original.replace(end, "", 1)
+                    elif kind == "repeated":
+                        altered = original.replace(start, start + "\n" + start, 1)
+                    else:
+                        altered = original.replace(start, "REPLACE_START", 1).replace(end, start, 1).replace("REPLACE_START", end, 1)
+                    target.write_text(altered, encoding="utf-8")
+                    safe = root / "safe.md"
+                    safe.write_text("untouched\n", encoding="utf-8")
+                    first = View("sentinel", ("input.md",), "safe.md", lambda root: "changed\n")
+                    before = {item.target: (root / item.target).read_bytes() for item in declarations}
+                    with patch.object(views, "VIEWS", (first, *declarations)):
+                        with self.assertRaisesRegex(ValueError, "exactly one ordered"):
+                            sync(root)
+                    self.assertEqual(safe.read_text(encoding="utf-8"), "untouched\n")
+                    self.assertEqual({path: (root / path).read_bytes() for path in before}, before)
+
+    def test_undeclared_role_does_not_expand_write_targets(self):
+        import checks
+        import views
+        from test_agent_documents import ROLE
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            (root / "agent/roles/stranger.md").write_text(ROLE, encoding="utf-8")
+            self.stream(root, "roles/stranger/work.md")
+            declarations = self.declarations()
+            safe = root / "safe.md"
+            safe.write_text("untouched\n", encoding="utf-8")
+            first = View("sentinel", ("input.md",), "safe.md", lambda root: "changed\n")
+            with patch.object(views, "VIEWS", (first, *declarations)):
+                errors = checks._workstream_structure(checks.Context(root))
+                self.assertTrue(any("unregistered parent agent/roles/stranger.md" in error for error in errors), errors)
+                self.assertNotIn("agent/roles/stranger.md", {view.target for view in views.views_for(root)[0]})
+                with self.assertRaisesRegex(ValueError, "unregistered parent"):
+                    sync(root)
+            self.assertEqual(safe.read_text(encoding="utf-8"), "untouched\n")
+
+    def test_description_refusal_stays_in_one_always_on_registered_gate(self):
+        import checks
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            path = self.stream(root, "roles/manager/alpha.md")
+            gates = [gate for gate in checks.REGISTRY if gate.id == "workstream-structure"]
+            self.assertEqual(len(gates), 1)
+            self.assertEqual(gates[0].trigger, "always")
+            self.assertEqual(gates[0].run(checks.Context(root)), [])
+            path.write_text(path.read_text(encoding="utf-8").replace("description: Plan an independently useful outcome.\n", ""), encoding="utf-8")
+            self.assertTrue(any("description" in error for error in gates[0].run(checks.Context(root))))
+
+    def test_duplicate_missing_and_competing_route_policies_refuse(self):
+        import checks
+        from test_agent_documents import REF
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            policy = root / "agent/shared/run-contract.md"
+            original = policy.read_text(encoding="utf-8")
+            for altered in (original + "\n" + self.TABLE, original.replace(self.TABLE, "No table.\n")):
+                policy.write_text(altered, encoding="utf-8")
+                errors = checks._workstream_structure(checks.Context(root))
+                self.assertTrue(any("exactly one route-to-model-family table" in error for error in errors), errors)
+            policy.write_text(original, encoding="utf-8")
+            rival = root / "agent/rival.md"
+            for body in (self.TABLE, "<!-- block:routing:start -->\n" + self.TABLE + "<!-- block:routing:end -->\n"):
+                rival.write_text(REF + "\n" + body, encoding="utf-8")
+                errors = checks._workstream_structure(checks.Context(root))
+                self.assertTrue(any("agent/rival.md: competing route-to-model-family table" in error for error in errors), errors)
+
+    def test_role_mode_tables_and_fenced_routing_examples_remain_valid(self):
+        import checks
+        from test_agent_documents import REF
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            ordinary = ("| Route | The manager's own work |\n| --- | --- |\n| X | Decisions |\n\n"
+                        "| Route | ChatGPT mode |\n| --- | --- |\n| X | Extra High |\n")
+            for fence in ("```", "~~~"):
+                (root / "agent/examples.md").write_text(REF + "\n" + ordinary + "\n" + fence + "\n" + self.TABLE + fence + "\n", encoding="utf-8")
+                self.assertEqual(checks._workstream_structure(checks.Context(root)), [])
+
+    def test_generated_routing_region_requires_its_real_owner_and_can_refresh(self):
+        import checks
+        import views
+        from test_agent_documents import REF
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.fixture(root)
+            policy = root / "agent/shared/run-contract.md"
+            text = policy.read_text(encoding="utf-8")
+            policy.write_text(text.replace(self.TABLE, "<!-- block-source:routing:start -->\n" + self.TABLE + "<!-- block-source:routing:end -->\n"), encoding="utf-8")
+            copy = root / "agent/copied.md"
+            copy.write_text(REF + "\n<!-- block:routing:start -->\n<!-- block:routing:end -->\n", encoding="utf-8")
+            git(root, "init", "-q")
+            git(root, "add", "agent")
+            with patch.object(views, "VIEWS", self.declarations()):
+                sync(root)
+                self.assertEqual(check(root), [])
+                self.assertEqual(checks._workstream_structure(checks.Context(root)), [])
+                policy.write_text(policy.read_text(encoding="utf-8").replace("First family", "Updated family"), encoding="utf-8")
+                self.assertTrue(check(root))
+                self.assertEqual(sync(root), ["agent/copied.md"])
+                self.assertIn("Updated family", copy.read_text(encoding="utf-8"))
+                self.assertEqual(check(root), [])
+                copy.write_text(copy.read_text(encoding="utf-8") + "\n" + self.TABLE, encoding="utf-8")
+                errors = checks._workstream_structure(checks.Context(root))
+                self.assertTrue(any("competing route-to-model-family table" in error for error in errors), errors)
+                with self.assertRaisesRegex(ValueError, "competing route-to-model-family table"):
+                    sync(root)
 
 
 if __name__ == "__main__":

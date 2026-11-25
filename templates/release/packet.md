@@ -1,7 +1,7 @@
 # <packet-id> — <bounded outcome>
 
 **Source tasks:** `plans/<P-slug>/tasks.md` — <task IDs>; for an issue packet, issues on the brief's list
-**Route:** <N, X or S, the hardest card's route; sets the ChatGPT mode: N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes))>
+**Route:** <N, X or S, the hardest card's route; sets the ChatGPT mode: N High, X Extra High, S Pro ([run contract](../../agent/shared/run-contract.md#chatgpt-session-modes))>
 **Estimate:** <human engineering days; ~3 maximum>
 **Repro:** <issue packets only: failing test id or exact command>
 **Outcome:** <one sentence>

@@ -4,7 +4,7 @@ Start message for the one manager session that owns generation. Written 11 Nov 2
 
 ## Your job
 
-Make the generation path one that can be run and debugged without confusion, then rebuild it on published Release 12 and prove it live. Read, in this order: [Release 13](../../releases/13.md) (findings, phases, GPU rules, budget, open decisions), the [Release 12 operating principles](../../releases/12.md#operating-principles), the [iterate skill](../../skills/capabilities/astrid-dev-iterate/SKILL.md) and the [run contract's cheapest-first rule](../../skills/shared/run-contract.md#cheapest-model-first). The [task detail](../../releases/13/generation.md) and the [transition handoff](2026-11-11-release12-track-b-transition.md) are reference for SHAs, task cards and the GPU cell table; their cross-track protocol is superseded.
+Make the generation path one that can be run and debugged without confusion, then rebuild it on published Release 12 and prove it live. Read, in this order: [Release 13](../../releases/13.md) (findings, phases, GPU rules, budget, open decisions), the [Release 12 operating principles](../../releases/12.md#operating-principles), the [iterate skill](../../agent/shared/workstreams/iterate.md) and the [run contract's cheapest-first rule](../../agent/shared/run-contract.md#cheapest-model-first). The [task detail](../../releases/13/generation.md) and the [transition handoff](2026-11-11-release12-track-b-transition.md) are reference for SHAs, task cards and the GPU cell table; their cross-track protocol is superseded.
 
 ## What you may do now
 

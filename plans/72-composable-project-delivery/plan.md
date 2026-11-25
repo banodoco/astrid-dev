@@ -14,7 +14,7 @@
 
 **Run route:** astrid-dev-only
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md), [Plan workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above own the catalog facts; priority stays in [priority.md](../priority.md). [Inputs](inputs.md) · [Tasks](tasks.md).
+**Start:** [Astrid contributor skill](../../agent/start.md), [Plan workstream](../../agent/shared/workstreams/plan.md) and [domain map](../../agent/shared/domains.md). The six lines above own the catalog facts; priority stays in [priority.md](../priority.md). [Inputs](inputs.md) · [Tasks](tasks.md).
 
 **Vision role:** Foundational enabler — a shared internal interpretation of existing delivery records and relationships. It does not itself provide [CA-003](../../vision/gaps/CA-003-vision-experiments-progress.md)'s public evidence-trail proof or [CA-005](../../vision/gaps/CA-005-parallel-contribution.md)'s real concurrent-contributor proof.
 

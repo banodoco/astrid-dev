@@ -29,7 +29,7 @@ Whether you're an artist, engineer or someone with an idea, you and your agents 
 ```text
 Help me contribute to Astrid. Start at
 https://github.com/banodoco/astrid-dev and follow
-skills/astrid-dev/SKILL.md. Find existing work before proposing
+agent/start.md. Find existing work before proposing
 anything new, and help me make and verify a meaningful contribution.
 ```
 

@@ -3,7 +3,7 @@
 **Aspiration:** <link to the primary aspiration's heading> (primary) · <link to a justified supporting aspiration's heading> (supporting) · **Assessment:** Open / Partially evidenced / Closed / Needs recheck; <evidence and date>.
 
 <!--
-Copy to vision/gaps/<ID>-<short-name>.md. The gap skill (skills/shared/workstreams/astrid-dev-gap/SKILL.md) explains each section.
+Copy to vision/gaps/<ID>-<short-name>.md. The gap workstream (`agent/shared/workstreams/gap.md`) explains each section.
 Choose one primary vision goal and any justified supporting goals; the `Aspiration` metadata key and links remain compatibility identifiers for that same concept.
 See docs/contribution-workflow.md#define-or-reassess-a-vision-gap for the rule.
 A gap names a result that would still matter if today's proposed project were replaced.

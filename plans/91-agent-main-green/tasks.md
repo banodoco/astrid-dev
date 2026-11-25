@@ -113,7 +113,7 @@ Each row is one cause found by triage. The kind is the triage's first reading; r
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
 | AG-10 Three green full runs of every Agent workflow on one frozen head of `release/16/plan-91` (merged up with its base), dispatched by the manager on three different nights. Then one green run on `release/16/main` after the plan branch lands. The ceiling is empty, or holds only D3 and D6 entries the owner accepted (D15). | N | all A, B and C cards | read-only | Four run links, each green, recorded here | [ ] |
-| R Review rounds (at most 2, agreed with the owner), by the high-judgment review role | S | all other tasks | read-only | Rounds per the [run contract](../../skills/shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
+| R Review rounds (at most 2, agreed with the owner), by the high-judgment review role | S | all other tasks | read-only | Rounds per the [run contract](../../agent/shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 
 ## Dispatch order
 

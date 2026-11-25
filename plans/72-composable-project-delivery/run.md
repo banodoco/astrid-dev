@@ -10,9 +10,9 @@ The integration card has landed: the project branch is at `c29908e587b59dc1ba8fc
 
 On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`, the owner asked for Plans 71, 72 and 73 to be finished with that session as orchestrator and one manager per plan, using the fresh ChatGPT packet workstream the way Release 15's Plans 87 and 89 do ([release 15 run board](../../releases/15/run.md#plans-87-and-89-dispatch)). This is an astrid-dev-only run: there is no release, release branch or Release Lead.
 
-- **Orchestrator** (`p71-73-orchestrator`, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d`): the accountable agent for this plan. It takes the Lead's part of the [packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `project/72-composable-project-delivery`, merges `main` into it, runs every proof, keeps `tasks.md` true through progress PRs, commissions the final review R, requests the owner's sense check and opens the completion PR. Its DECISIONs bind the manager and the packet sessions, within this section.
-- **Manager** (`p72-manager-1`): a session in the owner's ChatGPT account, started by her own launch message and acting at her request. It takes the Orchestrator's part of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), with this plan's orchestrator as "the Lead". It may start, resume, stop and replace this plan's packet sessions and comment on the mailbox. It does not edit the repository, merge, approve or dispatch hosted CI.
-- **Packet sessions** (`p72-<packet>-<n>`): may push to the `p72/<card id>` branch their packet names, open pull requests into `project/72-composable-project-delivery`, and comment on the mailbox. They never merge, never edit `tasks.md` or this board, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
+- **Orchestrator** (`p71-73-orchestrator`, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d`): the accountable agent for this plan. It takes the Lead's part of the [packet workstream](../../agent/roles/leader/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `project/72-composable-project-delivery`, merges `main` into it, runs every proof, keeps `tasks.md` true through progress PRs, commissions the final review R, requests the owner's sense check and opens the completion PR. Its DECISIONs bind the manager and the packet sessions, within this section.
+- **Manager** (`p72-manager-1`): a session in the owner's ChatGPT account, started by her own launch message and acting at her request. It takes the Orchestrator's part of [multi-manager dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), with this plan's orchestrator as "the Lead". It may start, resume, stop and replace this plan's packet sessions and comment on the mailbox. It does not edit the repository, merge, approve or dispatch hosted CI.
+- **Packet sessions** (`p72-<packet>-<n>`): may push to the `p72/<card id>` branch their packet names, open pull requests into `project/72-composable-project-delivery`, and comment on the mailbox. They never merge, never edit `tasks.md` or this board, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro ([run contract](../../agent/shared/run-contract.md#chatgpt-session-modes)).
 - **Stays in the orchestrator's lane:** PDC-1 (create the project branch and integrate), PDC-2 (delete the Release 15 scratch test), PDC-5 (integrated qualification), R (final review, up to two rounds), PDC-7 (completion PR) and every proof.
 - **Needs the owner:** the final merge of the project branch into `main`; any change to the public feed shape, existing check verdicts or canonical records beyond the cards; publishing; anything paid; changing an existing test's assertion.
 
@@ -39,9 +39,9 @@ On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`,
 
 ## When a session goes quiet
 
-A branch, not a chat, shows health ([liveness](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)).
+A branch, not a chat, shows health ([liveness](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)).
 
-- **A packet session:** the manager resumes it after 3 hours with no commit or STATUS, and replaces it as the [dispatch workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md) says; the replacement is `p72-<packet>-<n+1>`.
+- **A packet session:** the manager resumes it after 3 hours with no commit or STATUS, and replaces it as the [dispatch workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md) says; the replacement is `p72-<packet>-<n+1>`.
 - **The manager:** the orchestrator nudges it on the mailbox at 2 hours; at 3 hours it tells the owner, who starts a fresh manager from the launch message below as `p72-manager-2`.
 - **The orchestrator:** the manager keeps running packets going, starts nothing that needs a ruling, and tells the owner at 3 hours.
 - **A READY-PROOF** unanswered for 45 minutes, or a Review for 4 hours: the manager sends the orchestrator a REQUEST and tells the owner.
@@ -80,7 +80,7 @@ The owner pastes this into the manager's own ChatGPT session.
 
 ```text
 You are the Manager for the Plan 72 completion run (Composable project-delivery relationships), reporting to the orchestrator (mailbox name p71-73-orchestrator, Claude session session_011EzfW1Urc5P4hpm2SvVy5d).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev, taking its Orchestrator's part, with this plan's orchestrator as "the Lead".
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev, taking its Orchestrator's part, with this plan's orchestrator as "the Lead".
 Read plans/72-composable-project-delivery/run.md on main, then again at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1881, format in its first post. Your mailbox name: p72-manager-1.
 First do the Manager startup checks in run.md and post one STATUS with each result; dispatch nothing until the orchestrator's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session (a normal Chat, not Work) in the mode its packet's Route sets (N High, X Extra High, S Pro), with the packet start message in run.md. Dispatch the first packet alone. Every hour: read the mailbox by cursor, check every open packet, start every Ready packet that has no unmet dependency and no conflict with a Running one (up to the cap), resume or replace stalled sessions, pass READY-PROOF submissions to the orchestrator, and post one STATUS.
@@ -90,11 +90,11 @@ If a check fails, say which manual step the owner must do instead of promising a
 
 ## Packet start message
 
-The manager sends this, filled in, as the first message of each fresh packet session ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md#packet-start-message)).
+The manager sends this, filled in, as the first message of each fresh packet session ([workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md#packet-start-message)).
 
 ```text
 You are the ChatGPT manager implementing ONE packet for the Plan 72 completion run.
-Follow skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md in banodoco/astrid-dev.
+Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
 Packet: plans/72-composable-project-delivery/packets/<id>.md at <main SHA>; its PR destination names your branches.
 Authority: the Authority section of plans/72-composable-project-delivery/run.md at <main SHA>, given by the owner.
 Standing rulings: the same file's Standing rulings section; they bind you.

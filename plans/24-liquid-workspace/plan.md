@@ -12,7 +12,7 @@
 
 **Waiting on:** scope agreement; relevant editing/pack foundations
 
-**Start here:** [Astrid development skill](../../skills/astrid-dev/SKILL.md), [shared run contract](../../skills/shared/run-contract.md), [tasks](tasks.md), [inputs](inputs.md). Status and priority live in the [catalog](../index.md).
+**Start here:** [Astrid development skill](../../agent/start.md), [shared run contract](../../agent/shared/run-contract.md), [tasks](tasks.md), [inputs](inputs.md). Status and priority live in the [catalog](../index.md).
 
 **Vision gaps:** [LS-001 — Portable creative components](../../vision/gaps/LS-001-portable-components.md) (primary).
 

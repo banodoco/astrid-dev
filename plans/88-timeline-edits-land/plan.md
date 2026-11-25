@@ -12,7 +12,7 @@
 
 **Waiting on:** Plan 87's RN-6 for the render-backed proofs only; TE-1 to TE-3's code starts at once
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
 **Vision role:** Foundational enabler — an agent that cannot change a clip on a real timeline cannot finish a film. [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) owns how saves are built, [Plan 76](../76-editing-together/plan.md) agents editing together, [Plan 69](../69-project-elements/plan.md) project elements; this plan lands three existing fixes and proves real edits end to end.
 

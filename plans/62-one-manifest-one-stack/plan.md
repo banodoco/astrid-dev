@@ -12,7 +12,7 @@
 
 **Waiting on:** it is queued and in no release brief. It is the follow-up to Plan 61; it needs Plan 61's RB-7, the two installer fixes V0 (#825) and V9 (the retained-profile guard), then D1: the owner decides its release (recommended: Release 15).
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision role:** Foundational enabler — replaces about ten ways of running a non-release stack with one, so contributors try and develop branch work on a copy of their real work without wrangling installs.
 

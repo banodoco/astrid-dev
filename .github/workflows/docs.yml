@@ -25,6 +25,17 @@ jobs:
           fetch-depth: 0
       - name: Test documentation validators
         run: python3 -m unittest discover -s scripts -p "test_*.py"
+      - name: Check generated agent skill packages
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 scripts/astrid_dev.py skills build
+          PYTHONDONTWRITEBYTECODE=1 python3 scripts/astrid_dev.py skills check
+      - name: Verify view fixtures after generated-skill build
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'p73/')
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_views.py'
+          PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_golden.py' -k test_golden_fixture_copy_excludes_generated_symlink_cycle
       - name: Run repository checks
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}

@@ -3,7 +3,7 @@
 [Plan](../plan.md) · [Inputs](../inputs.md) · [Tasks](../tasks.md)
 
 On 24 November 2026, in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV, the planner had three reviews run on the written plan and tasks. Each checked the plan's claims against astrid-agent `release/15/main` at `a09ea669`, the CI logs and the GitHub API:
-- an independent critique, by a fresh high-judgment agent (Claude Opus) with no stake in the draft, briefed per the [planning skill](../../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) to build as little as possible;
+- an independent critique, by a fresh high-judgment agent (Claude Opus) with no stake in the draft, briefed per the [planning skill](../../../agent/shared/workstreams/plan.md) to build as little as possible;
 - two ambiguity passes (Claude Haiku), one on Phase 1 and one on Wave B.
 
 The planner re-checked each must-fix finding in the code before accepting it. Every finding below was accepted unless it says otherwise.

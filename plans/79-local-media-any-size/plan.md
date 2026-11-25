@@ -12,7 +12,7 @@
 
 **Waiting on:** a manager, in **Release 16** (the owner moved it from Release 15 on 24 November 2026; its branches become `release/16/plan-79`, cut from `release/16/main`), and Plan 77 landing: it edits the same Agent and App files, and the editor half needs its drop handling ([sequence](#sequence-and-readiness)). The interim 1 GiB limit (D2) does not wait.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [F-003 — Creative execution isn't yet dependable end to end](../../vision/gaps/F-003-creative-execution.md) (primary): a creator who cannot put their own footage on a timeline cannot start. F-003's route does not name this plan, so there is no `Contributes to closure` line.
 

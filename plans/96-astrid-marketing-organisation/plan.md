@@ -12,7 +12,7 @@
 
 **Waiting on:** a tagged Otto v0.1.0 from [Plan 95](../95-composable-agentic-workspaces/plan.md) (its OT-23), not Plan 95's completion; owner decisions D2–D4, gathered by MK-0 at any time before; a named manager.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision role:** Foundational enabler — establishes a simple independently operated workspace for communicating and learning about Astrid; not a new product capability or gap closure.
 

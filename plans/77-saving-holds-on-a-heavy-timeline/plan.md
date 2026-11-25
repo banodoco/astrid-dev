@@ -12,11 +12,11 @@
 
 **Waiting on:** the Plan 77 Runtime checkpoint repair and regenerated pins, then a practical public seed for the heavy fixture. Qualify the fixture and run Round 1 on the current plan branches.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [F-001 — Reliability isn't proven across supported setups](../../vision/gaps/F-001-platform-reliability.md) (primary): saving is the first thing a person loses work to, so it is a reliability failure. F-001's route does not name this plan, so there is no `Contributes to closure` line.
 
-**Plan type:** a [loop plan](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md). The end state is known; the tasks after the setup cards come from each round's live measurement.
+**Plan type:** a [loop plan](../../agent/roles/manager/live-loop.md). The end state is known; the tasks after the setup cards come from each round's live measurement.
 
 ## Outcome and scope
 

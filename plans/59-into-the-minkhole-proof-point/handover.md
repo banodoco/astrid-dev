@@ -70,7 +70,7 @@ The GPU rental is also held, for an independent review of the machine's lifetime
 
 ## For the next manager, in order
 
-1. Read the [Manage skill](../../skills/roles/astrid-dev-manage/SKILL.md). The plan's loop is unchanged: take the next creative task, attempt it with Astrid's own tools, fix each blocker at its cause or file it, and record what a weaker agent needs.
+1. Read the [Manage skill](../../agent/roles/manager.md). The plan's loop is unchanged: take the next creative task, attempt it with Astrid's own tools, fix each blocker at its cause or file it, and record what a weaker agent needs.
 2. Bring the record up to date, then bring it to `main`: the blocker log lacks the ranged render work, still calls the Hivemind fix unreviewed, and says nothing of the six task branches above.
 3. Open a pull request from the Agent plan branch so hosted CI runs on it. Every proof so far is local, and 39 commits have never been through CI. Seven tests already fail on the base ([#757](https://github.com/banodoco/astrid-dev/issues/757)); know which before reading the result.
 4. Finish C2: fix the five findings, land the three C2 branches together, since the App, Agent and Runtime halves depend on each other, and show the owner the Matrix frames. Cut `release/14/plan-59` in the App and the Runtime for them to land on.

@@ -12,7 +12,7 @@
 
 **Waiting on:** [Plan 85](../85-one-place-to-measure/plan.md) for the method and the shape of a result; the heavy project from [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md); the owner's decision D1 in [inputs.md](inputs.md#owner-decisions); a release.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary): a person edits by feel, and an editor that takes seconds to show a frame or minutes to settle breaks that long before anything fails. F-003's route does not name this plan, so there is no `Contributes to closure` line.
 

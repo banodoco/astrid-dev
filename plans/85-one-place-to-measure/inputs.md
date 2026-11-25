@@ -74,4 +74,4 @@ No work has started. Read on 22 November 2026: astrid-dev `main` at `3db0fc91`; 
 
 - [Plan 81](../81-once-per-command/plan.md) and [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md): where the tools and the lessons came from.
 - [Plan 82](../82-reuse-across-commands/plan.md) and [Plan 86](../86-the-timeline-feels-fast/plan.md): the next two users of this.
-- [Release workstream](../../skills/shared/workstreams/astrid-dev-release/SKILL.md): where the comparison is added.
+- [Release workstream](../../agent/shared/workstreams/release.md): where the comparison is added.

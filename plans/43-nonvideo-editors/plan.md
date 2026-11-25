@@ -12,7 +12,7 @@
 
 **Waiting on:** owner/scope agreement; source and dependency checks
 
-**Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
+**Start:** [Astrid development skill](../../agent/start.md) and [shared run contract](../../agent/shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [LS-004 — Extend Astrid beyond video with image, 3D and writing editors](../../vision/gaps/LS-004-cross-modal-foundations.md) (primary).
 

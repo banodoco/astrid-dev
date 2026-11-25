@@ -12,7 +12,7 @@
 
 **Waiting on:** the owner's decisions D2–D6 in [inputs.md](inputs.md#owner-decisions) and the Run start; [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md)'s readiness ladder (its RS1) for ER-2 to ER-5; a tester taking [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on a matching tester build; Release 16's base for the branch.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary); [Platform reliability](../../vision/gaps/F-001-platform-reliability.md), [Portable generation](../../vision/gaps/F-008-portable-generation.md) and [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
@@ -91,7 +91,7 @@ The plan reuses Plan 20's setup flow, Plan 32's placement, Plan 34's GPU evidenc
 
 ## Sequence and readiness
 
-A [loop plan](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md):
+A [loop plan](../../agent/roles/manager/live-loop.md):
 1. **ER-0 and ER-1:** the inventory and route choice, and the baseline, beside Plan 93's CD-0 and CD-1.
 2. **ER-2 to ER-5:** once Plan 93's RS1 accepts the ladder, the install branch, the GPU rung, resumable downloads and skill wiring. RS1 reviews the install's write and consent boundary.
 3. **ER-L:** the live loop, each round one run of [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) by a tester, until two consecutive passing rounds or a recorded stop. No lane tests on the owner's machine.

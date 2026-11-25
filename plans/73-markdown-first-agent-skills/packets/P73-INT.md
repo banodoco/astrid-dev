@@ -1,7 +1,7 @@
 # P73-INT — Absorb a landed Plan 71 or Plan 72 into the Plan 73 branch
 
 **Source tasks:** [`tasks.md`](../tasks.md#completion-run-owner-go-24-november-2026) — MSC-9
-**Route:** X (ChatGPT mode: Extra High; [run contract](../../../skills/shared/run-contract.md#chatgpt-session-modes)). One fresh session per absorption round: it runs Part A, stops, and runs Part B only after the orchestrator's DECISION.
+**Route:** X (ChatGPT mode: Extra High; [run contract](../../../agent/shared/run-contract.md#chatgpt-session-modes)). One fresh session per absorption round: it runs Part A, stops, and runs Part B only after the orchestrator's DECISION.
 **Estimate:** about 1–2 hours a round
 **Outcome:** After Plan 71 or Plan 72 lands on `main`, the Plan 73 branch carries it in the new layout: every edit that landed under `skills/` is re-applied under `agent/`, every Markdown link a landed change added into `skills/` points at its new home, and nothing else changes.
 **Dependencies:** a REQUEST from `p71-73-orchestrator` on the board naming the round, the `main` SHA that contains the landed project, the Plan 73 head, and the orchestrator's evidence: the exact output of `git log <last ported SHA>..origin/main -- skills/` and of `git grep -n -E "\]\([^)]*skills/" -- ':!skills' ':!plans/*/evidence'` on the merged head. **You cannot run git or search other branches; work from that evidence and the compare view.**

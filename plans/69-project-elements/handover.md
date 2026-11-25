@@ -21,7 +21,7 @@ Written on 21 November 2026 by the Release 15 setup session, for the manager who
 | astrid-runtime | `1046f4074` | `1758a6df9` | — |
 
 - **What the base holds.** `release/15/main` is Release 15's main with `release/14/main` merged in on 21 November ([astrid-dev#1224](https://github.com/banodoco/astrid-dev/issues/1224)). Since then Agent `release/15/main` took R14-FIX-15 (`aac1ceb68`, astrid-agent#462); App R14-FIX-16 is not forwarded yet (it conflicts with Plan 59's save work; the Release 14 Lead is combining them). It does **not** hold Release 14's integration of Plans 59, 64 and 65, which has not landed in `release/14/main`. PE-3's first step, merging `release/15/main` in, brings whatever has been forwarded by then.
-- **Merge, never rebase or force-push** ([Release workflow](../../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)).
+- **Merge, never rebase or force-push** ([Release workflow](../../agent/shared/workstreams/release.md#how-a-release-runs)).
 - **The old branches** `release/14/plan-69` are superseded by these; do not push to them.
 
 ## Current Release 15 forward on 22 November
