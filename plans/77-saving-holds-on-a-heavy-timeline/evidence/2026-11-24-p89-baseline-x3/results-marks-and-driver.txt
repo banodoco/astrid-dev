@@ -1,0 +1,13 @@
+run-1 n 18 med p2 9.81 g2s 11.81 r2s 11.85 g2p 1.26 s2s 0.76 cold p2 16.73 g2s 19.07 writable 7.2 B5 (53982.80000000028, 0, 5) B10 (102893, 0, 10) refusals 0 failed 0
+   scen medians r2s {'S1': 12.02, 'S2': 11.91, 'S3': 11.74, 'S4': 12.13}
+run-2 n 18 med p2 9.30 g2s 11.19 r2s 11.22 g2p 1.25 s2s 0.66 cold p2 18.15 g2s 21.04 writable 7.3 B5 (49227.5, 0, 5) B10 (101350.1000000001, 0, 10) refusals 0 failed 0
+   scen medians r2s {'S1': 12.42, 'S2': 11.59, 'S3': 11.16, 'S4': 11.0}
+run-3 n 18 med p2 9.51 g2s 11.61 r2s 11.64 g2p 1.28 s2s 0.66 cold p2 17.11 g2s 19.84 writable 6.4 B5 (49921.90000000037, 0, 5) B10 (111008.19999999925, 0, 10) refusals 0 failed 0
+   scen medians r2s {'S1': 11.69, 'S2': 11.85, 'S3': 11.75, 'S4': 11.25}
+ALL n 54
+p2 median 9.58 p90 10.19 max 11.07
+g2s median 11.63 p90 12.34 max 12.98
+r2s median 11.67 p90 12.38 max 13.01
+g2p median 1.26 p90 1.55 max 1.69
+s2s median 0.68 p90 0.86 max 1.02
+driver POST to 200 pooled: n 54 median 9.56 p90 10.15 max 11.04

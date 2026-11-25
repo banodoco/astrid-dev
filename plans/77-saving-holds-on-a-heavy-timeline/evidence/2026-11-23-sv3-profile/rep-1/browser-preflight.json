@@ -1,0 +1,37 @@
+{
+  "runtime_sha": "297863fb04ccff8f38bf968770bbe98c5ffaec68",
+  "pid": 24281,
+  "start": "5813307",
+  "interpreter": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python",
+  "archive": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68",
+  "modules": {
+    "runtime_protocol": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/runtime_protocol/__init__.py",
+    "astrid_runtime": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/astrid_runtime/__init__.py",
+    "timeline_commit_execution": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/runtime_protocol/timeline_commit_execution.py",
+    "timeline_commit_store": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/runtime_protocol/timeline_commit_store.py"
+  },
+  "epoch_ns": 1795450486171269746,
+  "endpoint": "http://127.0.0.1:35225",
+  "instance": "72633f220a274d19b2a432449c53daea",
+  "realm_id": "201c0486-58d8-4d23-b05d-9220c1762120",
+  "realm_root": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/work-data-1/runtime/realms/201c0486-58d8-4d23-b05d-9220c1762120",
+  "module_proofs": {
+    "runtime_protocol": {
+      "file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/runtime_protocol/__init__.py",
+      "sha256": "4e4064e1d9b80c6637576490150f44f3c710fabc520af1e640abf2493dcbb0d2"
+    },
+    "astrid_runtime": {
+      "file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/astrid_runtime/__init__.py",
+      "sha256": "b0d1a06374c421bd85ef6bfc308e6b2ef3b2c0472266a2a85e4894138a9bcbe3"
+    },
+    "timeline_commit_execution": {
+      "file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/runtime_protocol/timeline_commit_execution.py",
+      "sha256": "1b581f1b5572de20ad8ce1746dfdfd762fc2199fc4262cbd6625539f907b7ae9"
+    },
+    "timeline_commit_store": {
+      "file": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68/runtime_protocol/timeline_commit_store.py",
+      "sha256": "d516f29e4193797de74dbf54385553892f9cae97c15d554c9f6d2e06e766b5c1"
+    }
+  },
+  "published_runtime_checkout": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/source/297863fb04ccff8f38bf968770bbe98c5ffaec68"
+}

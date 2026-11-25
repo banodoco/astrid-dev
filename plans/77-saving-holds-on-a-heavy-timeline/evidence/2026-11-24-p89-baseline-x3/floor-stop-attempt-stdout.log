@@ -1,0 +1,47 @@
+Cloning into '/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-command.PJa3QQ/package-repo'...
+HEAD is now at ee89f2ed Plan 89: installed save measurement package (App 9f26112d, Runtime c8b861c7)
+./README.md: OK
+./approved-input.json: OK
+./arm-free-space.mjs: OK
+./browser-sv3-measure.mjs: OK
+./build-app-svl2.sh: OK
+./overlay-direct.py: OK
+./overlay-guard/sitecustomize.py: OK
+./profile-save-hook.mjs: OK
+./reused-trace-helpers.mjs: OK
+./run-sv3-overlay.sh: OK
+./verify-overlay.py: OK
+From https://github.com/banodoco/astrid-runtime
+ * branch            p89/measure-base-24e2c929 -> FETCH_HEAD
+From https://github.com/banodoco/astrid-agent
+ * branch                p77/sv4-agent-capture -> FETCH_HEAD
+From https://github.com/banodoco/astrid-app
+ * branch                release/15/plan-89 -> FETCH_HEAD
+Preparing worktree (detached HEAD 9f26112d7)
+HEAD is now at 9f26112d7 Merge pull request #377 from banodoco/p77/svl2
+BUILD_LOG=/home/user/codex-run/wt/astrid-app-p89-9f26112d/build-svl2.log
+BUILD_GUARD=/home/user/codex-run/wt/astrid-app-p89-9f26112d/build-node-modules-guard.json
+Reference node_modules metadata before: 5cd2a84f9fb304d583ab0097f5eca3866d667063adbb3d7218cbd84923a7a4a8
+Reference node_modules metadata after:  5cd2a84f9fb304d583ab0097f5eca3866d667063adbb3d7218cbd84923a7a4a8
+PACKAGE=ee89f2ed8ba6b4cb7c631b7d3a9f593c5bc01a71
+PACKAGE_SHA256=1a2ee7c323fa483f9e5298a3c9a531fb5f4d1edbd13702823082db1b1d4dc6d8
+RUNTIME=24e2c9291d5bcaface78324696286f2dc896debc
+AGENT=096a2fb3536192785fabd33e6673ba8ab4ef5ead
+APP=9f26112d746cba7a1a3287f0b679fd6c9ca39907
+BUILD_LOG=/home/user/codex-run/wt/astrid-app-p89-9f26112d/build-svl2.log
+RECEIPTS=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc
+./README.md: OK
+./approved-input.json: OK
+./arm-free-space.mjs: OK
+./browser-sv3-measure.mjs: OK
+./build-app-svl2.sh: OK
+./overlay-direct.py: OK
+./overlay-guard/sitecustomize.py: OK
+./profile-save-hook.mjs: OK
+./reused-trace-helpers.mjs: OK
+./run-sv3-overlay.sh: OK
+./verify-overlay.py: OK
+free space below 18 GiB start floor
+P89_RUN_EXIT=1
+DRIVER_LOG=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-command.PJa3QQ/driver.log
+RECEIPTS=/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc

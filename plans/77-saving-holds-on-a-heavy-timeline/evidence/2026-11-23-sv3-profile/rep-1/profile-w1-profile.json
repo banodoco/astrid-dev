@@ -1,0 +1,72 @@
+{
+  "runtime": {
+    "pid": 24281,
+    "start": "5813307"
+  },
+  "sampler": "/home/user/codex-run/run/toolchain/py-spy-0.4.1/bin/py-spy",
+  "version": "0.4.1",
+  "args": [
+    "record",
+    "--pid",
+    "24281",
+    "--rate",
+    "100",
+    "--threads",
+    "--idle",
+    "--format",
+    "speedscope",
+    "--output",
+    "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-297863fb04ccff8f38bf968770bbe98c5ffaec68/rep-1/profile-w1.speedscope.json"
+  ],
+  "rate_hz": 100,
+  "threads": true,
+  "idle": true,
+  "native": false,
+  "raw_file": "profile-w1.speedscope.json",
+  "sampler_log": "profile-w1-sampler.log",
+  "boundary": "just_before_pointerdown_through_scoped_http_200",
+  "attach_timeout_ms": 5000,
+  "scope_limit_ms": 120000,
+  "runtime_cpu_before": 178.7,
+  "spawn_requested": {
+    "monotonic_ms": 45981.740074,
+    "epoch_ms": 1795450685744.786
+  },
+  "attach_observed": {
+    "monotonic_ms": 46029.175192,
+    "epoch_ms": 1795450685792.2212
+  },
+  "pointerdown_requested": {
+    "monotonic_ms": 46035.942316,
+    "epoch_ms": 1795450685798.9883
+  },
+  "http_200": {
+    "monotonic_ms": 67093.555321,
+    "epoch_ms": 1795450706856.6013
+  },
+  "stop_reason": "scoped_http_200",
+  "stop_requested": {
+    "monotonic_ms": 67093.565616,
+    "epoch_ms": 1795450706856.6116
+  },
+  "sigint_sent": true,
+  "sampler_exit": {
+    "code": 0,
+    "signal": null,
+    "spawn_error": null,
+    "observed": {
+      "monotonic_ms": 67128.675494,
+      "epoch_ms": 1795450706891.7214
+    }
+  },
+  "runtime_cpu_after": 195.54,
+  "runtime_cpu_delta": 16.840000000000003,
+  "sampling_sample_count": 26018,
+  "sampling_error_count": 0,
+  "sampler_diagnostics": [],
+  "raw_sha256": "b0cdb0d9a2c91fde67e3391d029e0b64a54d9fdacfcfe97f48ed8013e6e8a3bd",
+  "raw_bytes": 1173297,
+  "raw_sampled_profiles": 17,
+  "raw_stack_samples": 26018,
+  "complete": true
+}

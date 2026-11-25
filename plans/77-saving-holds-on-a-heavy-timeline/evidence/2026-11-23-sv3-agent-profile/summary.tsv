@@ -1,0 +1,13 @@
+scenario	repetition	n_posts	release_to_post_ms	post_to_200_ms	200_to_saved_ms	refusals	n_drags	failed_drags	release_to_saved_ms	post_to_saved_ms	mode	notes	runtime_wall_ms	exclusive_sum_ms	exclusive_sum_over_post_to_200_pct
+W1	1	1	1236.1000000000931	11552.80000000028	549.5	0	1	0	13338.400000000373	12102.30000000028	sequential				
+W2	1	1	1151.8000000002794	11684.799999999814	587	0	1	0	13423.600000000093	12271.799999999814	sequential				
+W3	1	1	1159.1000000000931	19998.399999999907	789.6999999997206	0	1	0	21947.19999999972	20788.099999999627	sequential				
+cold	1	1	2408.9000000003725	20095.099999999627	666.9000000003725	0	1	0	23170.900000000373	20762	sequential				
+W1	all	1	1236.1000000000931	11552.80000000028	549.5	0	1	0	13338.400000000373	12102.30000000028	sequential	max_release_to_saved_ms=13338.400000000373;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+W2	all	1	1151.8000000002794	11684.799999999814	587	0	1	0	13423.600000000093	12271.799999999814	sequential	max_release_to_saved_ms=13423.600000000093;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+W3	all	1	1159.1000000000931	19998.399999999907	789.6999999997206	0	1	0	21947.19999999972	20788.099999999627	sequential	max_release_to_saved_ms=21947.19999999972;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+cold	all	1	2408.9000000003725	20095.099999999627	666.9000000003725	0	1	0	23170.900000000373	20762	sequential	max_release_to_saved_ms=23170.900000000373;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+B5	1	5	0				5	0	57964.700000000186	62990.10000000009	burst	n_edits_made=5;n_posts=5;refusals=0;last_release_to_saved_ms=57964.700000000186;first_release_to_saved_ms=62990.10000000009;final_state_matches=true;expected_start_s=210.010439797562;actual_start_s=210.0333;accepted_by_editor=5;no_post_after_settle=true			
+B10	1	10	0				10	0	120361.20000000019	132334.5	burst	n_edits_made=10;n_posts=10;refusals=0;last_release_to_saved_ms=120361.20000000019;first_release_to_saved_ms=132334.5;final_state_matches=null;expected_start_s=230.8457794718317;actual_start_s=230.9;accepted_by_editor=10;no_post_after_settle=true			
+S0	1	0				0						page_ready_ms=5700.384521484375;verified_head_status=200			
+pack-host	1											pack_host_status=pack host running;claim_lines=0;log_growth_bytes=2839;pgrep_pack_host_count=0			

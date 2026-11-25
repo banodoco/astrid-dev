@@ -1,0 +1,62 @@
+{
+  "services": [
+    {
+      "argv": [
+        "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python",
+        "-X",
+        "utf8",
+        "-m",
+        "astrid.core.execution.generic_host",
+        "--service",
+        "--source-checkout",
+        "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages",
+        "--support-root",
+        "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1/runtime"
+      ],
+      "env": {
+        "ASTRID_CAPABILITY_MATRIX_PATH": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/a/config/astrid-beta-capabilities.json",
+        "ASTRID_HOST_EXECUTION_PROFILE": "installed",
+        "ASTRID_INSTALL_PROGRAM_ROOT": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program",
+        "ASTRID_INSTALL_UV": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/home/.local/share/astrid/bootstrap/uv",
+        "ASTRID_PACK_HOST_PYTHON": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python",
+        "ASTRID_REMOTION_PROJECT_DIR": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/a/remotion",
+        "ASTRID_RUNTIME_DATA_ROOT": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1",
+        "ASTRID_SERVICE_PYTHON": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python",
+        "ASTRID_SOURCE_PROVENANCE_ROOT": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/a",
+        "ASTRID_SUPPORT_ROOT": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1",
+        "ASTRID_TIMELINE_SCHEMA_PYTHONPATH": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/core/timeline/schema/timeline-config.schema.json",
+        "ASTRID_WORKSPACE_DISCOVERY": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1/runtime/discovery.json"
+      },
+      "name": "pack-host",
+      "ready": {
+        "file": "generic-host.ready.json",
+        "timeout_seconds": 300
+      },
+      "restart": "always"
+    },
+    {
+      "argv": [
+        "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/tools/bun/bun-linux-x64/bun",
+        "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages/astrid/chat/service.mjs"
+      ],
+      "env": {
+        "ASTRID_ACP_COMMAND": "astrid",
+        "ASTRID_ACP_CWD": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1/chat",
+        "ASTRID_ACP_LOCAL_MEDIA_ONLY": "1",
+        "ASTRID_INSTALL_PROGRAM_ROOT": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program",
+        "ASTRID_RUNTIME_DATA_ROOT": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1",
+        "ASTRID_SERVICE_PYTHON": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin/python",
+        "ASTRID_SUPPORT_ROOT": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1",
+        "ASTRID_WORKSPACE_DISCOVERY": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-1/runtime/discovery.json",
+        "PATH": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin:/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/tools/bun/bun-linux-x64:/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/bin:/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/tools/omp/bin:/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/tools/bun/bun-linux-x64:/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/tools/node/node-v20.19.4-linux-x64/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      },
+      "name": "chat",
+      "ready": {
+        "file": "chat.json",
+        "timeout_seconds": 30
+      },
+      "restart": "always"
+    }
+  ],
+  "version": 1
+}

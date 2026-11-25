@@ -1,0 +1,47 @@
+warm saves 18
+median offset from gesture-end (ms): phase  median min max
+snapshot-start             -2.2     -3.5     -1.8
+snapshot-ready             -1.5     -2.7     -1.2
+draft-write-queued         -1.5     -2.5     -1.2
+capture-start              -1.5     -2.5     -1.2
+capture-returned           -0.2     -0.4     -0.1
+gesture-end                 0.0      0.0      0.0
+debounce-armed              0.2      0.1      0.3
+draft-write-start         172.6    142.6    225.0
+draft-write-ready         407.4    354.1    513.8
+debounce-fired            536.7    502.0    774.1
+attempt-build-start       536.7    502.1    774.2
+attempt-build-end         537.3    502.7    774.9
+capture-wait-start        537.4    502.8    775.1
+capture-settled           670.5    613.3   1068.3
+capture-wait-end          670.6    613.4   1068.4
+post-sent                1176.3    980.7   1662.9
+200                      5446.5   5057.3   5917.0
+accepted-decode-start    5446.5   5057.4   5917.1
+accepted-decode-end      5447.4   5058.6   5918.0
+hook-ack-start           5867.6   5505.4   6402.2
+hook-status-update       5867.9   5505.5   6402.4
+saved-badge              5912.6   5550.4   6451.0
+stage medians (ms): from -> to  median min max
+debounce-armed         -> debounce-fired            536.4    501.7    774.0
+draft-write-queued     -> draft-write-start         174.0    143.8    227.0
+draft-write-start      -> draft-write-ready         238.0    206.5    294.3
+capture-start          -> capture-returned            1.2      1.0      2.2
+capture-returned       -> capture-settled           670.9    613.5   1068.4
+debounce-fired         -> attempt-build-start         0.1      0.0      0.5
+attempt-build-start    -> attempt-build-end           0.7      0.5      4.3
+capture-wait-start     -> capture-wait-end          140.0    102.8    543.5
+capture-wait-end       -> post-sent                 475.3    361.4    836.6
+debounce-fired         -> post-sent                 612.0    470.3   1153.3
+gesture-end            -> post-sent                1176.3    980.7   1662.9
+post-sent              -> 200                      4270.2   3958.9   4596.2
+accepted-decode-start  -> accepted-decode-end         0.9      0.7      1.3
+200                    -> hook-ack-start            398.7    196.9    774.2
+hook-ack-start         -> hook-status-update          0.1      0.0      0.3
+hook-status-update     -> saved-badge                45.2     36.7     53.4
+200                    -> saved-badge               441.1    243.1    824.4
+gesture-end            -> saved-badge              5912.6   5550.4   6451.0
+driver release-to-saved median 5.95 s
+B5 last edit to Saved 23.9 s, refusals 0
+B10 last edit to Saved 46.0 s, refusals 0
+cold offsets {'snapshot-start': -4.0, 'snapshot-ready': -3.0, 'draft-write-queued': -2.8, 'capture-start': -2.8, 'capture-returned': -0.8, 'gesture-end': 0.0, 'debounce-armed': 0.2, 'draft-write-start': 329.3, 'debounce-fired': 646.6, 'attempt-build-start': 647.1, 'attempt-build-end': 647.8, 'capture-wait-start': 647.9, 'draft-write-ready': 724.7, 'capture-settled': 952.1, 'capture-wait-end': 952.2, 'post-sent': 1501.3, '200': 11228.7, 'accepted-decode-start': 11228.7, 'accepted-decode-end': 11229.8, 'hook-ack-start': 11387.1, 'hook-status-update': 11387.2, 'saved-badge': 11433.3}

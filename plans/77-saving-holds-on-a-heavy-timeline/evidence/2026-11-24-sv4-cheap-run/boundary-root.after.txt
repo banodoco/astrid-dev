@@ -1,0 +1,8 @@
+d data 700 0:0
+d direct-data 700 0:0
+d home 700 0:0
+d logs 700 0:0
+d program 700 0:0
+d tmp 700 0:0
+f .sl1-stack-owned 168 1795434570.8731097570 600 0:0
+f install-manifest.json 5451 1795434570.8777618480 600 0:0

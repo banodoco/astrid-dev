@@ -1,0 +1,9 @@
+pattern	file
+email	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/program.before.sha256
+email	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/program.after.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/archive-files.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/rep-2/browser-sv3-measure.json
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/rep-1/browser-sv3-measure.json
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/program.before.sha256
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/rep-3/browser-sv3-measure.json
+token_like	/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-c9e535bdd05f1e800dd864b5c91445c69dfacb4f/program.after.sha256

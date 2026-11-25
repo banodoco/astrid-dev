@@ -1,0 +1,338 @@
+{
+  "sink_status": "captured",
+  "sink_files": [
+    {
+      "file": "timing-sink/commit-stage-timings.jsonl",
+      "source": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-eb4e8644e3549c88d5d836cd5738ca75e76d311a/work-data-1/logs/commit-stage-timings.jsonl",
+      "bytes": 43108,
+      "lines": 34,
+      "sha256": "d1d8749ddc4191ba79c25d24084c4a6ba0dfed7cd1f44b4f05677560267b9fbd"
+    }
+  ],
+  "posts": 34,
+  "lines": 34,
+  "malformed_lines": 0,
+  "lines_matched": 34,
+  "mismatch": false,
+  "per_drag": {
+    "cold/0": {
+      "runtime_wall_ms": 10689.0,
+      "exclusive_sum_ms": 10689.0,
+      "exclusive_sum_over_post_to_200_pct": 99.94296453516091,
+      "covers": [
+        {
+          "calls": 8664,
+          "elapsed_ns": 162818056,
+          "value_equal_calls": 101599
+        }
+      ]
+    },
+    "S1/0": {
+      "runtime_wall_ms": 4854.0,
+      "exclusive_sum_ms": 4854.0,
+      "exclusive_sum_over_post_to_200_pct": 99.90737882062365,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 100433722,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S2/0": {
+      "runtime_wall_ms": 5081.0,
+      "exclusive_sum_ms": 5081.0,
+      "exclusive_sum_over_post_to_200_pct": 99.98622508215789,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 102143933,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S2/1": {
+      "runtime_wall_ms": 5099.0,
+      "exclusive_sum_ms": 5099.0,
+      "exclusive_sum_over_post_to_200_pct": 99.78668858490393,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 104362376,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/0": {
+      "runtime_wall_ms": 4722.0,
+      "exclusive_sum_ms": 4722.0,
+      "exclusive_sum_over_post_to_200_pct": 99.85620030451724,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 102623991,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/1": {
+      "runtime_wall_ms": 5165.0,
+      "exclusive_sum_ms": 5165.0,
+      "exclusive_sum_over_post_to_200_pct": 99.84342077284346,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 115488178,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/2": {
+      "runtime_wall_ms": 5001.0,
+      "exclusive_sum_ms": 5001.0,
+      "exclusive_sum_over_post_to_200_pct": 99.86421182954615,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 107262456,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/3": {
+      "runtime_wall_ms": 4932.0,
+      "exclusive_sum_ms": 4932.0,
+      "exclusive_sum_over_post_to_200_pct": 99.69880126948144,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 100180458,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/4": {
+      "runtime_wall_ms": 5173.0,
+      "exclusive_sum_ms": 5173.0,
+      "exclusive_sum_over_post_to_200_pct": 99.87643356373393,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 101301116,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/5": {
+      "runtime_wall_ms": 4928.0,
+      "exclusive_sum_ms": 4928.0,
+      "exclusive_sum_over_post_to_200_pct": 99.8500628115256,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 99530533,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/6": {
+      "runtime_wall_ms": 4890.0,
+      "exclusive_sum_ms": 4890.0,
+      "exclusive_sum_over_post_to_200_pct": 99.86113380166664,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 113270048,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/7": {
+      "runtime_wall_ms": 5011.0,
+      "exclusive_sum_ms": 5011.0,
+      "exclusive_sum_over_post_to_200_pct": 99.87841581790323,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 113076142,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/8": {
+      "runtime_wall_ms": 4950.0,
+      "exclusive_sum_ms": 4950.0,
+      "exclusive_sum_over_post_to_200_pct": 99.85677109600418,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 98646593,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S3/9": {
+      "runtime_wall_ms": 4940.0,
+      "exclusive_sum_ms": 4940.0,
+      "exclusive_sum_over_post_to_200_pct": 99.87061297105035,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 101591008,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S4/0": {
+      "runtime_wall_ms": 5315.0,
+      "exclusive_sum_ms": 5315.0,
+      "exclusive_sum_over_post_to_200_pct": 99.88723924074422,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 107385365,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S4/1": {
+      "runtime_wall_ms": 5367.0,
+      "exclusive_sum_ms": 5367.0,
+      "exclusive_sum_over_post_to_200_pct": 99.87346012132963,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 138218507,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S4/2": {
+      "runtime_wall_ms": 5334.0,
+      "exclusive_sum_ms": 5334.0,
+      "exclusive_sum_over_post_to_200_pct": 98.87665443221042,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 109533540,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S4/3": {
+      "runtime_wall_ms": 5019.0,
+      "exclusive_sum_ms": 5019.0,
+      "exclusive_sum_over_post_to_200_pct": 99.88656039166494,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 103444167,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "S4/4": {
+      "runtime_wall_ms": 5227.0,
+      "exclusive_sum_ms": 5227.0,
+      "exclusive_sum_over_post_to_200_pct": 99.89679688097307,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 106501295,
+          "value_equal_calls": 70415
+        }
+      ]
+    }
+  },
+  "burst": {
+    "B5": {
+      "runtime_wall_ms": 25427.0,
+      "exclusive_sum_ms": 25427.0,
+      "exclusive_sum_over_post_to_200_pct": null,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 103706945,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 115727373,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 106562741,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 104154557,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 104216553,
+          "value_equal_calls": 70415
+        }
+      ]
+    },
+    "B10": {
+      "runtime_wall_ms": 51561.0,
+      "exclusive_sum_ms": 51561.0,
+      "exclusive_sum_over_post_to_200_pct": null,
+      "covers": [
+        {
+          "calls": 6001,
+          "elapsed_ns": 104496022,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 104485889,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 107331362,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 107249073,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 117912176,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 106791344,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 109305407,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 101904689,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 102080137,
+          "value_equal_calls": 70415
+        },
+        {
+          "calls": 6001,
+          "elapsed_ns": 104225383,
+          "value_equal_calls": 70415
+        }
+      ]
+    }
+  }
+}

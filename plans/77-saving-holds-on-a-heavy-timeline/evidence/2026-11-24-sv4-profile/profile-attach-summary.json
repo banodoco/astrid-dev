@@ -1,0 +1,50 @@
+[
+  {
+    "save": "profile-cold",
+    "attached": true,
+    "raw_stack_samples": 17825,
+    "sampling_sample_count": 17825,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 1,
+      "raw_error_kind": null
+    }
+  },
+  {
+    "save": "profile-w1",
+    "attached": true,
+    "raw_stack_samples": 8938,
+    "sampling_sample_count": 8938,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  },
+  {
+    "save": "profile-w2",
+    "attached": true,
+    "raw_stack_samples": 6974,
+    "sampling_sample_count": 6974,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  },
+  {
+    "save": "profile-w3",
+    "attached": true,
+    "raw_stack_samples": 7866,
+    "sampling_sample_count": 7866,
+    "errors": {
+      "attach_error": null,
+      "attach_error_kind": null,
+      "sampling_error_count": 0,
+      "raw_error_kind": null
+    }
+  }
+]

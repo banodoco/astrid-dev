@@ -1,0 +1,82 @@
+== profile-cold
+  provider_commit    json           2.33 s
+        2.03  canonical_json util.py:25
+        0.08  _json commit.py:34
+        0.06  _canonical_json authoring_bundle.py:171
+  port_store_accept  jsonschema     1.21 s
+        1.17  validate_commit_value timeline_commit_validation.py:250
+        0.03  in_subresource timeline_commit_validation.py:194
+        0.01  reuse timeline_commit_validation.py:166
+  provider_commit    copy/compare   0.73 s
+        0.23  detached timeline_commit_validation.py:92
+        0.10  prepared_records _commit_preview.py:11
+        0.09  _read timeline_commit_port.py:230
+  provider_commit    jsonschema     0.56 s
+        0.39  validate_reads _commit_patch.py:32
+        0.15  _validate_schema canonical.py:452
+        0.02  _validate_shared_timeline banodoco_schema.py:569
+  port_store_accept  copy/compare   0.49 s
+        0.43  detached timeline_commit_validation.py:92
+        0.04  covers timeline_commit_auth.py:316
+        0.01  validate_read timeline_commit_auth.py:345
+== profile-w1
+  port_store_accept  jsonschema     1.52 s
+        1.46  validate_commit_value timeline_commit_validation.py:250
+        0.03  in_subresource timeline_commit_validation.py:194
+        0.03  reuse timeline_commit_validation.py:159
+  provider_commit    copy/compare   0.93 s
+        0.36  detached timeline_commit_validation.py:92
+        0.10  before _commit_patch.py:413
+        0.09  _read timeline_commit_port.py:230
+  provider_commit    jsonschema     0.53 s
+        0.53  validate_reads _commit_patch.py:32
+  port_store_accept  copy/compare   0.49 s
+        0.36  detached timeline_commit_validation.py:92
+        0.05  covers timeline_commit_auth.py:316
+        0.02  validate timeline_commit_auth.py:3427
+  provider_commit    json           0.38 s
+        0.16  _canonical_json authoring_bundle.py:171
+        0.15  _json commit.py:34
+        0.02  validate_reads _commit_patch.py:29
+== profile-w2
+  port_store_accept  jsonschema     0.91 s
+        0.89  validate_commit_value timeline_commit_validation.py:250
+        0.01  in_subresource timeline_commit_validation.py:194
+        0.01  reuse timeline_commit_validation.py:159
+  provider_commit    copy/compare   0.73 s
+        0.17  detached timeline_commit_validation.py:92
+        0.07  _read timeline_commit_port.py:230
+        0.06  commit commit.py:1281
+  provider_commit    jsonschema     0.62 s
+        0.57  validate_reads _commit_patch.py:32
+        0.03  _validate_shared_timeline banodoco_schema.py:569
+        0.02  validate_command commands.py:137
+  port_store_accept  copy/compare   0.38 s
+        0.33  detached timeline_commit_validation.py:92
+        0.02  project_observation timeline_commit_auth.py:747
+        0.02  validate timeline_commit_auth.py:3536
+  provider_commit    json           0.27 s
+        0.11  _canonical_json authoring_bundle.py:171
+        0.08  _json commit.py:34
+        0.05  _history_entry_view timeline_commit_store.py:1477
+== profile-w3
+  port_store_accept  jsonschema     1.01 s
+        0.90  validate_commit_value timeline_commit_validation.py:250
+        0.08  reuse timeline_commit_validation.py:159
+        0.03  in_subresource timeline_commit_validation.py:194
+  provider_commit    copy/compare   0.70 s
+        0.16  detached timeline_commit_validation.py:92
+        0.10  _copy authoring_bundle.py:166
+        0.08  commit commit.py:1281
+  provider_commit    jsonschema     0.58 s
+        0.51  validate_reads _commit_patch.py:32
+        0.05  _validate_shared_timeline banodoco_schema.py:569
+        0.01  validate_command commands.py:137
+  port_store_accept  copy/compare   0.56 s
+        0.47  detached timeline_commit_validation.py:92
+        0.08  covers timeline_commit_auth.py:316
+        0.01  validate_read timeline_commit_auth.py:345
+  provider_commit    json           0.28 s
+        0.15  _canonical_json authoring_bundle.py:171
+        0.09  _json commit.py:34
+        0.01  command_result idempotency.py:65

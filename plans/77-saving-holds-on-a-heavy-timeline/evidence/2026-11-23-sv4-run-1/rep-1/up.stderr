@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv4-command.DaKXam/package-repo/plans/77-saving-holds-on-a-heavy-timeline/evidence/2026-11-23-sv3-command/overlay-direct.py", line 46, in <module>
+    result = bootstrap(paths, boundary, config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/source/9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/astrid_runtime/bootstrap.py", line 944, in bootstrap
+    return _bootstrap_locked(paths, boundary, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/source/9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/astrid_runtime/bootstrap.py", line 1182, in _bootstrap_locked
+    handle = boundary.start(
+             ^^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/source/9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/astrid_runtime/runtime_boundary.py", line 507, in start
+    endpoint = self._wait_endpoint(support_root, self._process)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/source/9f75de2e5dc8a72b1f5eaf87ea8ea4115e420a09/astrid_runtime/runtime_boundary.py", line 617, in _wait_endpoint
+    raise BootstrapError(
+astrid_runtime.bootstrap.BootstrapError: Runtime daemon exited during startup (see /home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/home/.local/state/astrid-runtime/logs/runtime.log).

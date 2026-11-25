@@ -1,0 +1,29 @@
+{
+  "realms": [
+    {
+      "data_root": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/direct-data/runtime/realms/201c0486-58d8-4d23-b05d-9220c1762120",
+      "display_name": "Astrid Workspace",
+      "realm_id": "201c0486-58d8-4d23-b05d-9220c1762120",
+      "selection_source": "attach",
+      "source_profile": "astrid"
+    }
+  ],
+  "selected_realm_id": "201c0486-58d8-4d23-b05d-9220c1762120",
+  "source_profiles": {
+    "astrid": {
+      "capability_digest": "",
+      "lock_digest": "",
+      "profile": "astrid",
+      "protocol_version": "workspace.v1",
+      "runtime_checkout": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv2a-first-save-5c70a11765ffee3d54652e66f998c3a0bd9493f0/source/5c70a11765ffee3d54652e66f998c3a0bd9493f0",
+      "runtime_command": [],
+      "runtime_environment": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py",
+      "schema_version": "workspace-schema-v1",
+      "service_declaration": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/services.json",
+      "source_checkout": "/home/user/codex-run/wt/astrid-app-p77-quick-indicator.env/quick-indicator/baseline/large/round7-candidate-two-save-profile-20261123-retry/stack/program/versions/4b62ab1a6521/py/lib/python3.11/site-packages",
+      "source_digest": "9fed4af4e710cbb6bbbbebcb3fab9bd13788169ced871094c2c7d21c3bb1df51",
+      "worker_profile": null
+    }
+  },
+  "version": 1
+}

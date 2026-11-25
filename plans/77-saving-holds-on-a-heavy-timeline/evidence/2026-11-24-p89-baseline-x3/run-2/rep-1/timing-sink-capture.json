@@ -1,0 +1,16 @@
+{
+  "status": "missing",
+  "runtime_work_data": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/work-data-1",
+  "idle_safe_stop": true,
+  "captured_at_utc": "2026-11-24T15:09:13.192911+00:00",
+  "source_base": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/work-data-1/logs/commit-stage-timings.jsonl",
+  "files": [],
+  "reset_receipt": {
+    "work_copy": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/work-data-1",
+    "logs_directory": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/p89-app-9f26112d-runtime-24e2c9291d5bcaface78324696286f2dc896debc/work-data-1/logs",
+    "removed_known_files": [],
+    "reset_at_utc": "2026-11-24T14:59:06.628256+00:00",
+    "scope": "only four known timing sink files inside the disposable work copy"
+  },
+  "error": null
+}

@@ -1,0 +1,24 @@
+{"event": "astrid.host_startup_timing", "phase": "module_import_begin", "elapsed_ms": 0}
+{"event": "astrid.host_startup_timing", "phase": "module_import_done", "elapsed_ms": 215}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_begin", "elapsed_ms": 21}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_inventory_done", "elapsed_ms": 38}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_identity_done", "elapsed_ms": 166}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_health_done", "elapsed_ms": 5}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_manifest_done", "elapsed_ms": 21}
+{"event": "astrid.host_startup_timing", "phase": "bootstrap_launch_done", "elapsed_ms": 50}
+{"event": "astrid.host_startup_timing", "phase": "cli_args_parsed", "elapsed_ms": 12}
+{"event": "astrid.host_startup_timing", "phase": "startup_identity_begin", "elapsed_ms": 1}
+{"event": "astrid.host_startup_timing", "phase": "startup_identity_done", "elapsed_ms": 163}
+{"event": "astrid.host_startup_timing", "phase": "host_constructor_begin", "elapsed_ms": 0}
+capability census drift (host keeps running; unapproved capabilities are unavailable): {'executor_inventory': {'added': [], 'missing': ['hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search']}}; review the diff and run: python -m astrid.core.execution.capability_ledger approve
+{"event": "astrid.host_startup_timing", "phase": "host_constructor_done", "elapsed_ms": 2754}
+{"event": "astrid.host_startup_timing", "phase": "discovery_begin", "elapsed_ms": 1}
+{"event": "astrid.host_startup_timing", "phase": "discovery_done", "elapsed_ms": 3796}
+{"event": "astrid.host_startup_timing", "phase": "registration_begin", "elapsed_ms": 0}
+{"event": "astrid.host_startup_timing", "phase": "preflight_begin", "elapsed_ms": 5}
+{"event": "astrid.host_startup_timing", "phase": "preflight_done", "elapsed_ms": 13}
+{"event": "astrid.host_startup_timing", "phase": "registration_done", "elapsed_ms": 63}
+{"capabilities": 49, "event": "registered", "executor_id": "astrid-pack-host", "full_registration": "/home/user/codex-run/run/evidence/plan-77/round7-acceptance/sv3-measure-f2da02e1dcf02439ee149f1412310c72aa4bf0bb/work-data-3/runtime/generic-host.ready.json", "gated": {}, "pid": 11894, "ready": 45, "recovery_blocked": [], "unready": {"generation.generate_speech": "binaries:missing=edge-tts", "hivemind.ingest_youtube": "binaries:missing=yt-dlp", "training.pool_build": "packs:missing=editorial,understanding", "training.pool_merge": "packs:missing=editorial,understanding"}, "withdrawn": []}
+{"event": "astrid.host_startup_timing", "phase": "ready_written", "elapsed_ms": 179}
+generic host shutdown requested: signal=15 reason=SIGTERM
+[]

@@ -1,0 +1,105 @@
+== profile-cold Thread 15225 "Thread-737 (process_request_thread)" commit-thread 20.2s
+    8.61  42.6%  copy/compare via auth.covers
+    2.54  12.6%  json encode/decode
+    2.08  10.3%  other
+    1.53   7.6%  validation: commit auth/value
+    1.53   7.6%  validation: jsonschema
+    1.42   7.0%  copy/compare via other callers
+    1.10   5.4%  old-history verification
+    0.87   4.3%  patch capture/payload
+    0.49   2.4%  sqlite
+    0.04   0.2%  copy/compare via patch capture/payload
+  top 15 self frames (seconds) with callers:
+    2.40 iterencode encoder.py:258   <= encode encoder.py:200 < dumps __init__.py:238 < canonical_json util.py:25 (2.15)
+    1.77 value_equal timeline_commit_producer.py:67   <= covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:465 < validate timeline_commit_auth.py:3406 (0.86)
+    1.35 value_equal timeline_commit_producer.py:69   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (1.34)
+    1.24 <genexpr> timeline_commit_producer.py:67   <= value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:399 (0.49)
+    1.04 value_equal timeline_commit_producer.py:62   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.54)
+    1.02 <genexpr> timeline_commit_producer.py:69   <= value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 (1.02)
+    0.85 check timeline_commit_store.py:349   <= _verify_accepted timeline_commit_store.py:974 < evaluate timeline_commit_store.py:258 < _history_entry_view timeline_commit_store.py:1474 (0.43)
+    0.66 digest timeline_commit_validation.py:96   <= _history_chain timeline_commit_store.py:1153 < _accepted_replay timeline_commit_store.py:1119 < _verify_accepted_record timeline_commit_store.py:1069 (0.65)
+    0.50 value_equal timeline_commit_producer.py:66   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.29)
+    0.49 _read timeline_commit_store.py:293   <= fetchall timeline_commit_store.py:309 < _history_prefix_rows timeline_commit_store.py:1133 < _history_chain timeline_commit_store.py:1142 (0.44)
+    0.45 value_equal timeline_commit_producer.py:60   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.19)
+    0.42 value_equal timeline_commit_producer.py:64   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.19)
+    0.35 value_equal timeline_commit_producer.py:70   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.24)
+    0.35 value_equal timeline_commit_producer.py:68   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.19)
+    0.22 _joinrealpath <frozen posixpath>:460   <= realpath <frozen posixpath>:416 < resolve pathlib.py:993 < _admit canonical.py:874 (0.07)
+== profile-w1 Thread 16232 "astrid-runtime-lifetime-reaper" commit-thread 11.9s
+    5.74  48.3%  copy/compare via auth.covers
+    1.71  14.4%  validation: jsonschema
+    1.16   9.8%  copy/compare via other callers
+    0.96   8.1%  validation: commit auth/value
+    0.95   8.0%  patch capture/payload
+    0.67   5.6%  json encode/decode
+    0.55   4.6%  other
+    0.10   0.8%  old-history verification
+    0.04   0.3%  copy/compare via patch capture/payload
+  top 15 self frames (seconds) with callers:
+    1.06 value_equal timeline_commit_producer.py:67   <= covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:399 < validate timeline_commit_auth.py:3406 (0.47)
+    0.89 value_equal timeline_commit_producer.py:69   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.89)
+    0.74 <genexpr> timeline_commit_producer.py:67   <= value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:465 (0.36)
+    0.70 value_equal timeline_commit_producer.py:62   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.28)
+    0.66 <genexpr> timeline_commit_producer.py:69   <= value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 (0.66)
+    0.55 iterencode encoder.py:258   <= encode encoder.py:200 < dumps __init__.py:238 < _canonical_json authoring_bundle.py:171 (0.20)
+    0.39 value_equal timeline_commit_producer.py:66   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.19)
+    0.38 value_equal timeline_commit_producer.py:64   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.19)
+    0.36 value_equal timeline_commit_producer.py:60   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.16)
+    0.34 value_equal timeline_commit_producer.py:70   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.24)
+    0.18 _deepcopy_dict copy.py:230   <= deepcopy copy.py:146 < _deepcopy_dict copy.py:231 < deepcopy copy.py:146 (0.14)
+    0.16 equal _command_state.py:40   <= <genexpr> _recording.py:97 < read _recording.py:97 < capture _commit_patch.py:358 (0.16)
+    0.16 value_equal timeline_commit_producer.py:68   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.09)
+    0.15 _deepcopy_dict copy.py:231   <= deepcopy copy.py:146 < _deepcopy_list copy.py:206 < deepcopy copy.py:146 (0.08)
+    0.14 is_type _types.py:116   <= is_type validators.py:454 < <genexpr> _keywords.py:285 < type _keywords.py:285 (0.07)
+== profile-w2 Thread 16575 "astrid-runtime-lifetime-reaper" commit-thread 11.4s
+    5.63  49.4%  copy/compare via auth.covers
+    1.56  13.7%  validation: jsonschema
+    1.13   9.9%  copy/compare via other callers
+    0.99   8.7%  patch capture/payload
+    0.79   6.9%  validation: commit auth/value
+    0.57   5.0%  other
+    0.55   4.8%  json encode/decode
+    0.13   1.1%  old-history verification
+    0.04   0.4%  copy/compare via patch capture/payload
+    0.01   0.1%  sqlite
+  top 15 self frames (seconds) with callers:
+    1.18 value_equal timeline_commit_producer.py:67   <= covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:465 < validate timeline_commit_auth.py:3406 (0.49)
+    0.96 value_equal timeline_commit_producer.py:69   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.95)
+    0.65 value_equal timeline_commit_producer.py:62   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.32)
+    0.64 <genexpr> timeline_commit_producer.py:69   <= value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 (0.64)
+    0.59 <genexpr> timeline_commit_producer.py:67   <= value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:465 (0.22)
+    0.41 iterencode encoder.py:258   <= encode encoder.py:200 < dumps __init__.py:238 < canonical_json util.py:25 (0.17)
+    0.41 value_equal timeline_commit_producer.py:66   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.16)
+    0.29 value_equal timeline_commit_producer.py:64   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.14)
+    0.24 value_equal timeline_commit_producer.py:60   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.14)
+    0.23 equal _command_state.py:40   <= <genexpr> _recording.py:97 < read _recording.py:97 < capture _commit_patch.py:358 (0.23)
+    0.23 value_equal timeline_commit_producer.py:68   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.13)
+    0.23 value_equal timeline_commit_producer.py:70   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.19)
+    0.20 _deepcopy_dict copy.py:230   <= deepcopy copy.py:146 < _deepcopy_dict copy.py:231 < deepcopy copy.py:146 (0.16)
+    0.16 _deepcopy_dict copy.py:231   <= deepcopy copy.py:146 < _deepcopy_list copy.py:206 < deepcopy copy.py:146 (0.09)
+    0.14 is_type _types.py:116   <= is_type validators.py:454 < <genexpr> _keywords.py:285 < type _keywords.py:285 (0.09)
+== profile-w3 Thread 16875 "astrid-runtime-lifetime-reaper" commit-thread 20.5s
+    9.04  44.0%  copy/compare via auth.covers
+    3.23  15.7%  json encode/decode
+    1.79   8.7%  validation: commit auth/value
+    1.46   7.1%  copy/compare via other callers
+    1.41   6.9%  validation: jsonschema
+    1.37   6.7%  old-history verification
+    0.85   4.1%  patch capture/payload
+    0.74   3.6%  other
+    0.61   3.0%  sqlite
+    0.03   0.1%  copy/compare via patch capture/payload
+  top 15 self frames (seconds) with callers:
+    3.01 iterencode encoder.py:258   <= encode encoder.py:200 < dumps __init__.py:238 < canonical_json util.py:25 (2.72)
+    1.69 value_equal timeline_commit_producer.py:67   <= covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:465 < validate timeline_commit_auth.py:3406 (0.74)
+    1.27 value_equal timeline_commit_producer.py:69   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (1.24)
+    1.26 value_equal timeline_commit_producer.py:62   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.53)
+    1.21 <genexpr> timeline_commit_producer.py:69   <= value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 (1.21)
+    1.08 <genexpr> timeline_commit_producer.py:67   <= value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 < validate_step timeline_commit_auth.py:465 (0.49)
+    1.03 check timeline_commit_store.py:349   <= _verify_accepted timeline_commit_store.py:953 < evaluate timeline_commit_store.py:258 < _history_entry_view timeline_commit_store.py:1474 (0.59)
+    0.81 digest timeline_commit_validation.py:96   <= _history_chain timeline_commit_store.py:1153 < _accepted_replay timeline_commit_store.py:1119 < _verify_accepted_record timeline_commit_store.py:1069 (0.78)
+    0.61 _read timeline_commit_store.py:293   <= fetchall timeline_commit_store.py:309 < _history_prefix_rows timeline_commit_store.py:1133 < _history_chain timeline_commit_store.py:1142 (0.61)
+    0.61 value_equal timeline_commit_producer.py:68   <= <genexpr> timeline_commit_producer.py:67 < value_equal timeline_commit_producer.py:67 < covers timeline_commit_auth.py:223 (0.31)
+    0.47 value_equal timeline_commit_producer.py:70   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.37)
+    0.46 value_equal timeline_commit_producer.py:60   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_producer.py:67 (0.21)
+    0.45 value_equal timeline_commit_producer.py:66   <= <genexpr> timeline_commit_producer.py:69 < value_equal timeline_commit_producer.py:69 < <genexpr> timeline_commit_produ

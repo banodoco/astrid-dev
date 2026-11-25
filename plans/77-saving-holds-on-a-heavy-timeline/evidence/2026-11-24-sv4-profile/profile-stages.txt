@@ -1,0 +1,180 @@
+== profile-cold Thread 2868 "Thread-864 (process_request_thread)" commit-thread 12.7s
+  provider_commit           9.65 s
+        2.33  json encode/decode
+        2.00  other
+        1.28  auth/value validation
+        1.19  old-history verification
+        0.89  patch capture/payload
+        0.67  copy/compare via other callers
+        0.66  sqlite
+        0.56  jsonschema
+        0.04  copy/compare via covers
+        0.03  copy/compare via patch capture
+       other call site  0.70  _read_manifest canonical.py:435
+       other call site  0.27  resolve pathlib.py:993
+       other call site  0.12  _create_fn dataclasses.py:433
+       other call site  0.09  stat pathlib.py:1013
+       other call site  0.09  _resource_handle canonical.py:802
+  port_store_accept         1.99 s
+        0.97  jsonschema
+        0.45  copy/compare via other callers
+        0.38  auth/value validation
+        0.11  other
+        0.04  copy/compare via covers
+        0.04  json encode/decode
+       other call site  0.02  current_identity cas.py:195
+       other call site  0.02  _publish timeline_commit_store.py:2502
+       other call site  0.02  _transaction store.py:1239
+       other call site  0.01  _record_command_receipt store.py:3871
+       other call site  0.01  join_parsed_parts pathlib.py:94
+  durable_reconciliation    0.36 s
+        0.10  json encode/decode
+        0.10  auth/value validation
+        0.08  old-history verification
+        0.05  copy/compare via other callers
+        0.02  copy/compare via covers
+        0.01  other
+       other call site  0.01  evaluate timeline_commit_store.py:234
+  initial_replay_lookup     0.02 s
+        0.02  other
+       other call site  0.02  clear_replay_memo timeline_commit_store.py:385
+  handler/other             0.65 s
+        0.35  jsonschema
+        0.13  auth/value validation
+        0.10  copy/compare via other callers
+        0.07  other
+       other call site  0.06  _timeline_authorize service.py:3296
+       other call site  0.01  write logs.py:63
+== profile-w1 Thread 3447 "Thread-998 (process_request_thread)" commit-thread 6.4s
+  provider_commit           3.00 s
+        0.85  copy/compare via other callers
+        0.83  patch capture/payload
+        0.53  jsonschema
+        0.38  json encode/decode
+        0.30  other
+        0.08  copy/compare via patch capture
+        0.03  auth/value validation
+       other call site  0.03  current_identity cas.py:195
+       other call site  0.02  _head_entry timeline_commit_store.py:1409
+       other call site  0.02  _canonical validation.py:426
+       other call site  0.02  resolve pathlib.py:993
+       other call site  0.01  _history_entry_view timeline_commit_store.py:1469
+  port_store_accept         2.49 s
+        1.32  jsonschema
+        0.51  auth/value validation
+        0.44  copy/compare via other callers
+        0.11  other
+        0.06  json encode/decode
+        0.05  copy/compare via covers
+       other call site  0.02  _publish timeline_commit_store.py:2503
+       other call site  0.02  _transaction store.py:1239
+       other call site  0.01  fullmatch __init__.py:171
+       other call site  0.01  evaluate timeline_commit_store.py:275
+       other call site  0.01  __str__ pathlib.py:542
+  durable_reconciliation    0.52 s
+        0.19  json encode/decode
+        0.13  auth/value validation
+        0.06  old-history verification
+        0.05  copy/compare via other callers
+        0.05  copy/compare via covers
+        0.04  other
+       other call site  0.02  evaluate timeline_commit_store.py:258
+       other call site  0.01  evaluate timeline_commit_store.py:234
+       other call site  0.01  path_for cas.py:53
+  initial_replay_lookup     0.01 s
+        0.01  other
+       other call site  0.01  path_for cas.py:51
+  handler/other             0.38 s
+        0.19  jsonschema
+        0.15  copy/compare via other callers
+        0.04  auth/value validation
+== profile-w2 Thread 3698 "Thread-1069 (process_request_thread)" commit-thread 5.4s
+  provider_commit           2.89 s
+        0.76  patch capture/payload
+        0.67  copy/compare via other callers
+        0.62  jsonschema
+        0.37  other
+        0.27  json encode/decode
+        0.14  auth/value validation
+        0.06  copy/compare via patch capture
+       other call site  0.10  _without_meta authoring_bundle.py:898
+       other call site  0.09  resolve pathlib.py:993
+       other call site  0.02  _history_entry_view timeline_commit_store.py:1469
+       other call site  0.01  _head_entry timeline_commit_store.py:1409
+       other call site  0.01  current_identity cas.py:195
+  port_store_accept         1.71 s
+        0.77  jsonschema
+        0.37  copy/compare via other callers
+        0.36  auth/value validation
+        0.13  other
+        0.05  json encode/decode
+        0.02  copy/compare via covers
+        0.01  old-history verification
+       other call site  0.02  _persist_closure timeline_commit_store.py:2478
+       other call site  0.02  _publish timeline_commit_store.py:2502
+       other call site  0.01  item_identity timeline_materialization.py:27
+       other call site  0.01  evaluate timeline_commit_store.py:234
+       other call site  0.01  request_identity timeline_commit_store.py:115
+  durable_reconciliation    0.45 s
+        0.18  auth/value validation
+        0.10  old-history verification
+        0.10  json encode/decode
+        0.05  copy/compare via other callers
+        0.02  other
+       other call site  0.01  _lookup timeline_commit_store.py:870
+       other call site  0.01  current_identity cas.py:195
+  handler/other             0.35 s
+        0.23  jsonschema
+        0.04  copy/compare via other callers
+        0.03  auth/value validation
+        0.03  other
+        0.02  json encode/decode
+       other call site  0.02  _timeline_authorize service.py:3296
+       other call site  0.01  execute timeline_commit_execution.py:618
+== profile-w3 Thread 3979 "Thread-1149 (process_request_thread)" commit-thread 6.2s
+  provider_commit           3.07 s
+        1.02  patch capture/payload
+        0.68  copy/compare via other callers
+        0.58  jsonschema
+        0.28  json encode/decode
+        0.27  other
+        0.21  auth/value validation
+        0.02  copy/compare via patch capture
+        0.01  old-history verification
+       other call site  0.03  resolve pathlib.py:993
+       other call site  0.02  _history_entry_view timeline_commit_store.py:1469
+       other call site  0.02  _make_child pathlib.py:531
+       other call site  0.02  _baseline_clips validation.py:518
+       other call site  0.01  _history_entry_view timeline_commit_store.py:1465
+  port_store_accept         2.20 s
+        0.86  jsonschema
+        0.51  auth/value validation
+        0.48  copy/compare via other callers
+        0.16  other
+        0.11  json encode/decode
+        0.08  copy/compare via covers
+       other call site  0.03  current_identity cas.py:195
+       other call site  0.02  <genexpr> cas.py:51
+       other call site  0.02  _physical_version timeline_commit_store.py:402
+       other call site  0.01  _physical_version timeline_commit_store.py:394
+       other call site  0.01  _check_context timeline_commit_store.py:2239
+  durable_reconciliation    0.64 s
+        0.26  auth/value validation
+        0.13  json encode/decode
+        0.09  old-history verification
+        0.08  copy/compare via covers
+        0.04  other
+        0.04  copy/compare via other callers
+       other call site  0.02  evaluate timeline_commit_store.py:234
+       other call site  0.01  _physical_version timeline_commit_store.py:394
+       other call site  0.01  _physical_version timeline_commit_store.py:402
+  initial_replay_lookup     0.01 s
+        0.01  other
+       other call site  0.01  lookup timeline_commit_store.py:854
+  handler/other             0.31 s
+        0.17  jsonschema
+        0.10  auth/value validation
+        0.02  copy/compare via other callers
+        0.01  other
+        0.01  json encode/decode
+       other call site  0.01  _execute_timeline_commit service.py:3363

@@ -1,0 +1,58 @@
+== profile-cold.speedscope.json Thread 27974 "Thread-780 (process_request_thread)" commit-thread samples 30.0s
+   17.69  58.9%  record copy/compare (value_equal, deepcopy)
+    2.86   9.5%  json encode/decode
+    2.13   7.1%  validation: jsonschema
+    2.02   6.7%  validation: commit auth/value
+    1.08   3.6%  old-history verification (_verify_accepted*)
+    1.02   3.4%  patch capture/payload (_commit_patch, _doc_patch)
+    0.69   2.3%  sqlite
+    2.52   8.4%  other (not matched above)
+          0.25 resolve pathlib.py:993
+          0.11 get_mark reader.py:119
+          0.09 _create_fn dataclasses.py:433
+          0.06 _resource_handle canonical.py:802
+          0.06 evaluate timeline_commit_store.py:234
+          0.05 current_identity cas.py:195
+== profile-w1.speedscope.json Thread 29028 "Thread-1048 (process_request_thread)" commit-thread samples 19.6s
+   14.15  72.0%  record copy/compare (value_equal, deepcopy)
+    1.46   7.4%  validation: jsonschema
+    1.37   7.0%  patch capture/payload (_commit_patch, _doc_patch)
+    1.00   5.1%  validation: commit auth/value
+    0.68   3.5%  json encode/decode
+    0.13   0.7%  old-history verification (_verify_accepted*)
+    0.85   4.3%  other (not matched above)
+          0.14 _timeline_commits service.py:3270
+          0.09 current_identity cas.py:195
+          0.06 resolve pathlib.py:993
+          0.03 _publish timeline_commit_store.py:2502
+          0.03 _publish timeline_commit_store.py:2503
+          0.03 _transaction store.py:1229
+== profile-w2.speedscope.json Thread 29502 "astrid-runtime-lifetime-reaper" commit-thread samples 28.1s
+   18.05  64.2%  record copy/compare (value_equal, deepcopy)
+    2.46   8.7%  json encode/decode
+    1.97   7.0%  validation: jsonschema
+    1.91   6.8%  validation: commit auth/value
+    1.55   5.5%  old-history verification (_verify_accepted*)
+    1.16   4.1%  patch capture/payload (_commit_patch, _doc_patch)
+    0.34   1.2%  sqlite
+    0.69   2.5%  other (not matched above)
+          0.07 _head_entry timeline_commit_store.py:1409
+          0.07 resolve pathlib.py:993
+          0.04 _publish timeline_commit_store.py:2502
+          0.04 execute timeline_commit_execution.py:508
+          0.03 _baseline_clips validation.py:519
+          0.03 evaluate timeline_commit_store.py:258
+== profile-w3.speedscope.json Thread 30073 "Thread-1290 (process_request_thread)" commit-thread samples 19.1s
+   14.39  75.5%  record copy/compare (value_equal, deepcopy)
+    1.65   8.7%  validation: jsonschema
+    1.11   5.8%  patch capture/payload (_commit_patch, _doc_patch)
+    0.88   4.6%  validation: commit auth/value
+    0.33   1.7%  json encode/decode
+    0.12   0.6%  old-history verification (_verify_accepted*)
+    0.57   3.0%  other (not matched above)
+          0.10 resolve pathlib.py:993
+          0.07 _head_entry timeline_commit_store.py:1409
+          0.04 current_identity cas.py:195
+          0.03 _baseline_clips validation.py:518
+          0.03 _publish timeline_commit_store.py:2503
+          0.02 _timeline_commits service.py:3270

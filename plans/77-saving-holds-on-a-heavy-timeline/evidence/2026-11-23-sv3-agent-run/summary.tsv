@@ -1,0 +1,33 @@
+scenario	repetition	n_posts	release_to_post_ms	post_to_200_ms	200_to_saved_ms	refusals	n_drags	failed_drags	release_to_saved_ms	post_to_saved_ms	mode	notes	runtime_wall_ms	exclusive_sum_ms	exclusive_sum_over_post_to_200_pct
+S1	1	1	1152	15893.199999999953	656.8000000000466	0	1	0	17702	16550	sequential				
+S1	2	1	1408.1000000000931	10546.5	766	0	1	0	12720.600000000093	11312.5	sequential				
+S1	3	1	1713.7999999998137	10161.80000000028	730.7999999998137	0	1	0	12606.399999999907	10892.600000000093	sequential				
+S2	1	2	1291.399999999965	9960.299999999988	747.6000000000349	0	2	0	11999.299999999988	10707.900000000023	sequential				
+S2	2	2	1255.4500000000698	12629.900000000023	654	0	2	0	14539.350000000093	13283.900000000023	sequential				
+S2	3	2	1445.5999999998603	13826.550000000047	658.1500000001397	0	2	0	15930.300000000047	14484.700000000186	sequential				
+S3	1	10	1220.25	10414.349999999977	711.7999999999302	0	10	0	12498.400000000023	11271.200000000012	sequential				
+S3	2	10	1220.5500000000466	9750.54999999993	632.4500000000698	0	10	0	11531.300000000047	10441.599999999977	sequential				
+S3	3	10	1233	10598.749999999767	800.6500000001397	0	10	0	12627.5	11408.600000000093	sequential				
+S4	1	5	1217.4000000000233	10549.40000000014	717.5	0	5	0	12522.199999999953	11360.800000000047	sequential				
+S4	2	5	1370.8999999999069	9980.199999999953	722.1000000000931	0	5	0	12082.700000000186	10674.800000000047	sequential				
+S4	3	5	1377.8000000002794	10629.69999999972	718.9000000003725	0	5	0	12597.700000000186	11526.5	sequential				
+cold	1	1	1717.3000000000466	17538.79999999993	632.7000000000698	0	1	0	19888.800000000047	18171.5	sequential				
+cold	2	1	2015.1999999999534	17988.100000000093	699	0	1	0	20702.300000000047	18687.100000000093	sequential				
+cold	3	1	2274.9000000003725	18002.799999999814	609.5	0	1	0	20887.200000000186	18612.299999999814	sequential				
+S1	all	3	1408.1000000000931	10546.5	730.7999999998137	0	3	0	12720.600000000093	11312.5	sequential	max_release_to_saved_ms=17702;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+S2	all	6	1302.4499999999534	10200.599999999977	676.6500000000233	0	6	0	12209.600000000035	10904.800000000163	sequential	max_release_to_saved_ms=19609.100000000093;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+S3	all	30	1224.0500000000466	10402.54999999993	681.1000000000931	0	30	0	12403	11137.59999999986	sequential	max_release_to_saved_ms=20902.5;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+S4	all	15	1343.3999999999069	10549.40000000014	718.9000000003725	0	15	0	12532.30000000028	11233.700000000186	sequential	max_release_to_saved_ms=20408.5;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+cold	all	3	2015.1999999999534	17988.100000000093	632.7000000000698	0	3	0	20702.300000000047	18612.299999999814	sequential	max_release_to_saved_ms=20887.200000000186;gate=FAIL (median<=2000 and max<=4000 on release_to_saved_ms)			
+B5	1	5	0				5	0	63342.80000000005	69380	burst	n_edits_made=5;n_posts=5;refusals=0;last_release_to_saved_ms=63342.80000000005;first_release_to_saved_ms=69380;final_state_matches=true;expected_start_s=241.30624107391762;actual_start_s=241.3333;accepted_by_editor=5;no_post_after_settle=true			
+B10	1	10	0				10	0	120312	135865.6000000001	burst	n_edits_made=10;n_posts=10;refusals=0;last_release_to_saved_ms=120312;first_release_to_saved_ms=135865.6000000001;final_state_matches=null;expected_start_s=262.08328220144534;actual_start_s=262.1333;accepted_by_editor=10;no_post_after_settle=true			
+B5	2	5	0				5	0	59773.60000000009	66018	burst	n_edits_made=5;n_posts=5;refusals=0;last_release_to_saved_ms=59773.60000000009;first_release_to_saved_ms=66018;final_state_matches=true;expected_start_s=241.30624107391762;actual_start_s=241.3333;accepted_by_editor=5;no_post_after_settle=true			
+B10	2	10	0				10	0	120419.8999999999	135038.5	burst	n_edits_made=10;n_posts=10;refusals=0;last_release_to_saved_ms=120419.8999999999;first_release_to_saved_ms=135038.5;final_state_matches=null;expected_start_s=262.08328220144534;actual_start_s=262.1333;accepted_by_editor=10;no_post_after_settle=true			
+B5	3	5	0				5	0	62419.09999999963	67750.29999999981	burst	n_edits_made=5;n_posts=5;refusals=0;last_release_to_saved_ms=62419.09999999963;first_release_to_saved_ms=67750.29999999981;final_state_matches=true;expected_start_s=241.30624107391762;actual_start_s=241.3333;accepted_by_editor=5;no_post_after_settle=true			
+B10	3	10	0				10	0	116631.8999999999	131129.69999999972	burst	n_edits_made=10;n_posts=10;refusals=0;last_release_to_saved_ms=116631.8999999999;first_release_to_saved_ms=131129.69999999972;final_state_matches=null;expected_start_s=262.08328220144534;actual_start_s=262.1333;accepted_by_editor=10;no_post_after_settle=true			
+S0	1	0				0						page_ready_ms=31623.932861328125;verified_head_status=200			
+S0	2	0				0						page_ready_ms=18222.073974609375;verified_head_status=200			
+S0	3	0				0						page_ready_ms=12236.4072265625;verified_head_status=200			
+pack-host	1											pack_host_status=pack host running;claim_lines=0;log_growth_bytes=2845;pgrep_pack_host_count=0			
+pack-host	2											pack_host_status=pack host running;claim_lines=0;log_growth_bytes=2841;pgrep_pack_host_count=0			
+pack-host	3											pack_host_status=pack host running;claim_lines=0;log_growth_bytes=2841;pgrep_pack_host_count=0			

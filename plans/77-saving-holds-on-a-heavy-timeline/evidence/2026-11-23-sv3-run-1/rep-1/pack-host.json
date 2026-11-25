@@ -1,0 +1,7 @@
+{
+  "status": "pack host log grew during the repetition",
+  "log_growth_bytes": 6822,
+  "claim_lines": 0,
+  "pgrep_pack_host_count": 0,
+  "note": "counts only; no group or owner assertion"
+}
