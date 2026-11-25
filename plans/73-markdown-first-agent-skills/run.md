@@ -96,7 +96,7 @@ The owner pastes this into the manager's own ChatGPT session.
 
 ```text
 You are the Manager for the Plan 73 completion run (Markdown-first agent documents and generated skills), reporting to the orchestrator (mailbox name p71-73-orchestrator, Claude session session_011EzfW1Urc5P4hpm2SvVy5d).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev, taking its Orchestrator's part, with this plan's orchestrator as "the Lead".
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev, taking its Orchestrator's part, with this plan's orchestrator as "the Lead".
 Read plans/73-markdown-first-agent-skills/run.md on main, then again at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1882, format in its first post. Your mailbox name: p73-manager-1.
 First do the Manager startup checks in run.md and post one STATUS with each result; dispatch nothing until the orchestrator's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session (a normal Chat, not Work) in the mode its packet's Route sets (N High, X Extra High, S Pro), with the packet start message in run.md. Dispatch the first packet alone. Every hour: read the mailbox by cursor, check every open packet, start every Ready packet that has no unmet dependency and no conflict with a Running one (up to the cap), resume or replace stalled sessions, pass READY-PROOF submissions to the orchestrator, and post one STATUS.
@@ -110,7 +110,7 @@ The manager sends this, filled in, as the first message of each fresh packet ses
 
 ```text
 You are the ChatGPT manager implementing ONE packet for the Plan 73 completion run.
-Follow skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md in banodoco/astrid-dev.
+Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
 Packet: plans/73-markdown-first-agent-skills/packets/<id>.md at <main SHA>; its PR destination names your branches.
 Authority: the Authority section of plans/73-markdown-first-agent-skills/run.md at <main SHA>, given by the owner.
 Standing rulings: the same file's Standing rulings section; they bind you.
