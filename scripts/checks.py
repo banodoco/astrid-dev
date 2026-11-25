@@ -225,8 +225,10 @@ def _obsolete_sources(context):
     if not _catalog_ready(context):
         return []
     errors = []
-    for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md'):
-        if (root / stale).exists():
+    for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md',
+                  'skills', 'sync.sh'):
+        if ((root / stale).exists()
+                or stale in ('skills', 'sync.sh') and (root / stale).is_symlink()):
             errors.append(f'obsolete source must be removed: {stale}')
     return errors
 
@@ -289,7 +291,7 @@ def _markdown_links(context):
 
 
 def _link_anchors(context):
-    """A #fragment into a skill, template or top-level doc must name a heading there."""
+    """A #fragment into an agent document, template or top-level doc must name a heading there."""
     import posixpath
     from check_docs import LINK, read
     root, fence = context.root, r"(?ms)^\s*```.*?^\s*```[^\n]*$"
@@ -306,7 +308,7 @@ def _link_anchors(context):
             if not fragment or re.match(r"^([a-z][\w+.-]*:|/)", address, re.I):
                 continue
             target = posixpath.normpath((path.parent / (address or path.name)).as_posix())
-            if (re.fullmatch(r"(?:agent|skills|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
+            if (re.fullmatch(r"(?:agent|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
                     and fragment not in anchors(Path(target))):
                 errors.append(f"{path.as_posix()}: link to {target}#{fragment} matches no heading in that file; point the link at a heading that exists")
     return errors
@@ -323,9 +325,10 @@ def _public_vision(context):
 
 
 def _workstream_structure(context):
-    from workstreams import validate
     from agent_documents import validate_documents
-    return [*validate(context.root), *validate_documents(context.root)]
+    from views import agent_index_errors
+    errors = validate_documents(context.root)
+    return errors if errors else agent_index_errors(context.root)
 
 
 def _generated_views(context):
@@ -491,9 +494,9 @@ REGISTRY: tuple[Check, ...] = (
     Check('obsolete-templates', 'always', 'Validate obsolete templates', _obsolete_templates),
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
-    Check('link-anchors', 'always', 'Validate links to headings in skills, templates and top-level docs', _link_anchors),
+    Check('link-anchors', 'always', 'Validate links to headings in agent documents, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
-    Check('workstream-structure', 'always', 'Validate common workstream contracts and skill or document packaging', _workstream_structure),
+    Check('workstream-structure', 'always', 'Validate canonical agent contracts, routing ownership and declared indexes', _workstream_structure),
     Check('project-delivery', 'always', 'Validate authored project-delivery relationships', _project_delivery),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),

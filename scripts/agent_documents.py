@@ -24,6 +24,46 @@ _SECTION_NAMES = {
 }
 
 
+def routing_table_headers(text: str) -> tuple[int, ...]:
+    """Locate real route-to-model-family tables, not role/mode tables or examples.
+
+    Column names identify the contract; model-family values stay in the authored
+    policy. Offsets let generated-view validation distinguish an owned copy from
+    another authored table elsewhere in the same document.
+    """
+    found: list[int] = []
+    previous: tuple[int, list[str]] | None = None
+    fence: str | None = None
+    fence_size = 0
+    offset = 0
+    family_columns = {"claude", "codex", "model", "models", "family", "model family", "model families"}
+    for line in text.splitlines(keepends=True):
+        start, offset = offset, offset + len(line)
+        plain = line.rstrip("\r\n")
+        if fence is not None:
+            if re.fullmatch(r"[ ]{0,3}" + re.escape(fence) + "{" + str(fence_size) + r",}[ \t]*", plain):
+                fence, fence_size = None, 0
+            previous = None
+            continue
+        opening = re.match(r"^[ ]{0,3}(`{3,}|~{3,})", plain)
+        if opening:
+            marker = opening.group(1)
+            fence, fence_size = marker[0], len(marker)
+            previous = None
+            continue
+        if plain.startswith(("    ", "\t")) or "|" not in plain:
+            previous = None
+            continue
+        cells = [cell.strip() for cell in re.split(r"(?<!\\)\|", plain.strip().strip("|"))]
+        if (previous is not None and len(cells) == len(previous[1])
+                and all(re.fullmatch(r":?-+:?", cell) for cell in cells)):
+            columns = {re.sub(r"[`*_]", "", cell).strip().casefold() for cell in previous[1]}
+            if "route" in columns and columns.intersection(family_columns):
+                found.append(previous[0])
+        previous = (start, cells)
+    return tuple(found)
+
+
 @dataclass(frozen=True)
 class AgentDocument:
     path: Path
@@ -98,8 +138,11 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
             pos = actual.index(required, cursor)
         except ValueError as exc:
             raise ValueError(f"missing or out-of-order section '## {required}'") from exc
-        if not section(body, required):
+        instructions = section(body, required)
+        if not instructions:
             raise ValueError(f"section '## {required}' must contain actual instructions")
+        if kind == "workstream" and (len(instructions) < 12 or instructions in ("TBD", "TODO")):
+            raise ValueError(f"section '## {required}' needs substantive instructions (at least 12 characters)")
         cursor = pos + 1
 
     return AgentDocument(path, relative, title[2:].strip(), description,
@@ -142,12 +185,18 @@ def discover_documents(root: Path) -> tuple[AgentDocument, ...]:
                 )
             names[name] = document.relative
         documents.append(document)
+    titles: dict[str, set[str]] = {}
     for document in documents:
         if (document.kind == "workstream" and
                 document.relative.parts[0] == "roles"):
             role = document.relative.parts[1]
             if not (agent_root / "roles" / f"{role}.md").is_file():
                 raise ValueError(f"{document.relative}: role {role!r} has no definition")
+            title = document.title[0].upper() + document.title[1:]
+            seen = titles.setdefault(role, set())
+            if title in seen:
+                raise ValueError(f"{document.relative}: duplicate workstream title {title!r} under roles/{role}.md")
+            seen.add(title)
     return tuple(documents)
 
 

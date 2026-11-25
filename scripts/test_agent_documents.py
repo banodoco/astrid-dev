@@ -254,6 +254,102 @@ class AgentDocumentTests(unittest.TestCase):
         self.assertEqual(document.relative, Path("roles/leader.md"))
         self.assertEqual(document.skill_name, "astrid-dev-leader")
 
+    def test_invalid_descriptions_and_missing_title_are_refused(self):
+        original = "description: Plan an independently useful outcome."
+        file = self.write("shared/workstreams/plan.md", STREAM)
+        for description in ("", "No terminal punctuation", "x" * 240 + ".",
+                            "\tLeading tab.", "Trailing space. ", "A [linked] sentence.",
+                            "A | table.", "A\ttab.", "First line.\n  Second line."):
+            with self.subTest(description=description):
+                file.write_text(STREAM.replace(original, "description: " + description), encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "description|frontmatter"):
+                    parse_document(self.root, file)
+        file.write_text(STREAM.replace("# Plan\n", "Plan\n", 1), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "nonempty # title"):
+            parse_document(self.root, file)
+
+    def test_required_role_and_workstream_sections_are_unique_even_after_paragraphs(self):
+        for path, original, heading in (("roles/leader.md", ROLE, "Authority"),
+                                        ("shared/workstreams/plan.md", STREAM, "Outcome")):
+            with self.subTest(path=path):
+                file = self.write(path, original + f"\nExtra paragraph.\n\n## {heading}\n\nAnother instruction.\n")
+                with self.assertRaisesRegex(ValueError, "exactly one"):
+                    parse_document(self.root, file)
+                for fence in ("```", "~~~"):
+                    file.write_text(original + f"\n{fence}\n## {heading}\nExample only.\n{fence}\n", encoding="utf-8")
+                    self.assertEqual(parse_document(self.root, file).title,
+                                     "Leader" if path.startswith("roles/") else "Plan")
+
+    def test_required_sections_cannot_be_missing_out_of_order_or_empty(self):
+        from document_structure import section
+        cases = (("roles/leader.md", ROLE, ("Responsibility", "Authority", "Responsibilities", "Handoff")),
+                 ("shared/workstreams/plan.md", STREAM, ("When to use", "Outcome", "Inputs", "Procedure", "Completion")))
+        for path, original, headings in cases:
+            file = self.write(path, original)
+            for heading in headings:
+                for bad in (original.replace(f"## {heading}\n", f"## Missing {heading}\n", 1),
+                            original.replace(section(original, heading), "", 1)):
+                    with self.subTest(path=path, heading=heading, bad=bad):
+                        file.write_text(bad, encoding="utf-8")
+                        with self.assertRaisesRegex(ValueError, "missing or out-of-order|actual instructions"):
+                            parse_document(self.root, file)
+            first, second = headings[:2]
+            swapped = original.replace(f"## {first}\n", "## Temporary\n", 1)
+            swapped = swapped.replace(f"## {second}\n", f"## {first}\n", 1).replace("## Temporary\n", f"## {second}\n", 1)
+            file.write_text(swapped, encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "out-of-order"):
+                parse_document(self.root, file)
+
+    def test_required_workstream_sections_keep_the_legacy_substance_minimum(self):
+        from document_structure import section
+        file = self.write("shared/workstreams/plan.md", STREAM)
+        for heading in ("When to use", "Outcome", "Inputs", "Procedure", "Completion"):
+            for value in ("short", "TBD", "TODO", "12345678901"):
+                with self.subTest(heading=heading, value=value):
+                    file.write_text(STREAM.replace(section(STREAM, heading), value, 1), encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, "substantive instructions"):
+                        parse_document(self.root, file)
+            file.write_text(STREAM.replace(section(STREAM, heading), "123456789012", 1), encoding="utf-8")
+            self.assertEqual(parse_document(self.root, file).kind, "workstream")
+
+    def test_duplicate_titles_under_one_role_are_refused_without_a_skill_flag(self):
+        self.write("roles/leader.md", ROLE)
+        first = STREAM.replace("skill: true\n", "").replace("# Plan\n", "# same title\n")
+        self.write("roles/leader/first.md", first)
+        second = self.write("roles/leader/second.md", first.replace("# same title\n", "# Same title\n"))
+        self.assertIn("duplicate workstream title", str(validate_documents(self.root)))
+        second.unlink()
+        self.write("roles/manager.md", ROLE.replace("skill: true\n", ""))
+        self.write("roles/manager/second.md", first)
+        self.write("roles/leader/setup/README.md", REF.replace("# Glossary", "# Same title"))
+        self.assertEqual(validate_documents(self.root), [])
+        self.assertEqual(len([doc for doc in discover_documents(self.root) if doc.kind == "workstream"]), 2)
+
+    def test_real_workstreams_all_keep_five_substantive_sections(self):
+        from document_structure import section
+        root = Path(__file__).resolve().parents[1]
+        streams = [doc for doc in discover_documents(root) if doc.kind == "workstream"]
+        self.assertGreaterEqual(len(streams), 15)
+        for document in streams:
+            for heading in ("When to use", "Outcome", "Inputs", "Procedure", "Completion"):
+                with self.subTest(source=document.relative, heading=heading):
+                    self.assertGreaterEqual(len(section(document.body, heading)), 12)
+
+    def test_routing_table_detection_ignores_fences_role_routes_and_mode_tables(self):
+        from agent_documents import routing_table_headers
+        table = "| Route | Work | Claude | Codex |\n| --- | --- | --- | --- |\n| N | Work | First | Second |\n"
+        self.assertEqual(len(routing_table_headers(table)), 1)
+        for fence in ("```", "~~~", "````"):
+            with self.subTest(fence=fence):
+                self.assertEqual(routing_table_headers(fence + "markdown\n" + table + fence + "\n"), ())
+        self.assertEqual(routing_table_headers(
+            "| Route | The manager's own work |\n| --- | --- |\n| X | Decisions |\n\n"
+            "| Route | ChatGPT mode |\n| --- | --- |\n| X | Extra High |\n"), ())
+        self.assertEqual(len(routing_table_headers(
+            "Route | Model family\n:--- | ---:\nS | A chosen family\n")), 1)
+        self.assertEqual(len(routing_table_headers(
+            "| **Route** | `Claude` | Codex |\n| - | :-: | -: |\n| S | First | Second |\n")), 1)
+
 
 
 if __name__ == "__main__":
