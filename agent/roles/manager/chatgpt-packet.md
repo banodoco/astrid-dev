@@ -26,7 +26,7 @@ Every assigned task or question has a traceable disposition, exact source and a 
 
 Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). For engineering follow [Manage](../manager.md) and the existing implementation path below; the Lead owns review. For a commissioned research or review packet use the evidence-only path. **You do your own packet's work**; take no second packet and commission no other sessions unless explicitly authorized.
 
-## Receive → implement → submit (engineering)
+## Receive → implement → submit
 
 0. **Check your mode** against your packet's Route ([ChatGPT session modes](../../shared/run-contract.md#chatgpt-session-modes)); if it differs, say so in your first STATUS.
 1. **Receive.** Read your board and the Lead board ([rules](../../shared/run-contract.md#coordination-boards-and-check-ins)) for messages to you; do so again on every resume and before finishing. Then read the start message, the packet and its `tasks.md` rows, on astrid-dev `main` unless the packet names a branch. Confirm scope, proof, dependencies, working repository, base and **PR target**, limits and authorization. Startup confirms only what the connector does: read files, push a branch, open a draft PR, comment. The start message is the owner's; the board's Authority section bounds it and its Standing rulings bind you ([run contract](../../shared/run-contract.md#who-answers-for-a-run)).

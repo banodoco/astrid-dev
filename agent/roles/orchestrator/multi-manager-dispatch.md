@@ -30,7 +30,7 @@ For engineering the [Release Lead](../leader.md) prepares the [packet queue](../
 
 **One packet, one fresh ChatGPT session.** The session writes and pushes its own result. For engineering, **you** run proof and keep sessions moving; **the Lead** reviews and integrates. For evidence-only work, use the variant below; the coordinator verifies and links the original report rather than running product proof or transcribing the chat.
 
-## Start (engineering)
+## Start
 
 1. Read the board, its packets, their `tasks.md` rows and your board. Confirm each packet's dependencies, repository, PR destination, proof and authority.
 2. Do the board's startup checks: the mailbox both ways ([protocol](../../guides/codex-cloud/README.md#establish-the-mailbox)), how sessions start and resume (a comment or session URL cannot wake one), how many ChatGPT sessions this account's subscription can run at once, and that **you** can clone, build the environment and run one focused test on a network-capable machine (packet sessions never do).
