@@ -1,5 +1,7 @@
 # One place to measure
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** One place to measure
 
 **Goal:** Anyone working on Astrid can measure how fast a part of it is, the same way every time and on what a person actually runs, and can see how each release compares with the one before.
@@ -12,7 +14,7 @@
 
 **Waiting on:** a release; the owner's decision D1 in [inputs.md](inputs.md#owner-decisions).
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary): a speed that is not measured the same way twice cannot be held, and on 22 November 2026 two plans each lost most of a day measuring something users do not run. F-001's route does not name this plan, so there is no `Contributes to closure` line.
 
@@ -60,3 +62,9 @@ The inventory is in [inputs.md](inputs.md#what-exists-today). In short: Plan 81'
 - **The same answer twice:** an independent re-run of Plan 81's before-and-after from the new home reproduces its direction and rough size.
 - **Numbers are kept honest:** each listed result names its exact commits, build, project, machine and load, links its raw output, and is compared only with results taken in the same session on the same machine, project, build and cache state.
 - **Limits of the proof:** scenarios run on a CPU container with a stand-in ComfyUI unless a row says otherwise; what a real ComfyUI or a GPU adds is outside this plan. Landing remains the owner's.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+one comparable measurement method and index over existing machinery, early enough to guide cuts. Keep common results schema/dashboard/generated table framework deferred. No second benchmark engine.

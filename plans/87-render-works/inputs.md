@@ -1,5 +1,7 @@
 # Inputs — The renderer works end to end
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
@@ -157,3 +159,9 @@ See [evidence/INDEX.md](evidence/INDEX.md) for every included file's purpose/tas
 
 
 **Filing verification (verified):** The archive head is `221e50033`, the original candidate remains `ad10ff6de`, and the archive library diff is byte-identical to the retained original/live difference. Six captured source/test files match the read-only source exactly; the other changes are the documented dump removal and alias adaptation. Changed Python parses and `node --check remotion/webpack-alias.mjs` passes. The 132 source payload hashes/text transformations were checked independently; all 134 evidence files are indexed, totalling 1,991,841 bytes, with zero skipped/refused/missing source files and nine decodable JPEGs below 300 KB. The scope branch merged main at `ed8fd7079305488b7e829e0618533a83828a6f8e`, then refreshed to `329ae89d97388a0c8a35ba205686c93e2184e3ba` before filing completed, retaining the intervening Plan 77/84 updates. The document check with `--base origin/main --body-file ../pr-body.md` passes. The complete 454-test script suite has 451 passes and three failures reproduced on untouched main: the two skill-installer cases encounter BSD sed behavior, and the atomic-write test compares `/var` against resolved `/private/var`. The three affected document tests pass again after the merge. These are filing/static checks, not a product-render or integrated-tuple qualification.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+preserve all R15 evidence with exact tuples and limitations; add latest §9 delta. Distinguish standard 616, film-shaped 621, large-shots and explicitly deferred P88 2.6 MB parity. Fresh installer pack provision is separate from manual pack proof. State the source-supported potential selected-parent race and verify any existing binding fence before declaring it unsafe; do not claim all child heads remain mutable.

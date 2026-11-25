@@ -141,3 +141,18 @@ Open, each with a recommendation:
   - the Runtime diag branch `origin/diag/darwin-custody-spawn` (`d299966c6edcf931236a976f7978ae74259f38a7`) for `tests/test_diag_host_spawn.py`;
   - `fix/darwin-custody-spawn-harness` (`458784af`, as reported) for the harness fix, if release 12 does not already carry it.
 - **Integration:** `int/38-one-process-identity` in the Runtime and the Agent. Only the Release skill moves either branch to `main`.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+**D-SYN-4 — proposed, not accepted:**
+
+Keep Windows, macOS, Linux and genuine Pinokio hosted/local; RunPod remains experimental with mandatory consent, cost and cleanup safety. Use the [proposed SYN support and negative matrix](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md#7-exact-support-negative-and-preservation-matrix) with the task/owner mapping in [the release acceptance record](../../releases/16.md#proposed-support-and-negative-acceptance). Select one maintainable managed Windows route after ER-0 compares the existing Portable adapter and recipe by actual provenance, custody and rollback work. Linux stays; existing Apple Silicon/MPS support does not promise managed macOS provisioning. No universal BF16 or literal `sm_89` requirement; prove the actual operator/dtype and compatible wheel on each representative cell.
+
+Retain P38's minimal common role ABI C1/C2/R2 because one-home role authority is in the requested outcome and owner-requested source history. Reconcile the still-open D1 wording explicitly. Design/inventory can start early; landing follows the internal phase-one checkpoint. If the reviewed source proves that outcome requires a substantially larger redesign, request an owner scope decision before dispatching that expansion. It never gates independent lanes merely to create concurrency.
+
+Carry P52/P53's recorded R16 move explicitly. Recommendation: complete bounded existing product-facing residuals and their prepublication proof in this shipment, while owner issue-transfer administration and genuinely post-live observation remain separately named closure tasks. Do not claim all adjunct tasks complete or silently call them nonproduct. If the owner intends every administrative closure to block the product go, add that specific gate and owner availability; do not create a circular “live page before publication” dependency. §4.17 gives exact rows.
+
+reconcile owner-requested role work with open D1 wording under D-SYN-4; retain D5 review limits and E1.1 conditional Windows transport effort. Replace “after31/30” whole-plan start recommendation with exact consumer/proof edges. No weaker native predicate, timeout allowance or strict-xfail removal without actual evidence.

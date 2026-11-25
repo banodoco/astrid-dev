@@ -1,5 +1,7 @@
 # Inputs — Local media of any size
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
@@ -66,3 +68,9 @@ Pending — no code work has started. At run start record, for astrid-runtime, a
 - [#1235](https://github.com/banodoco/astrid-dev/issues/1235), [#1237](https://github.com/banodoco/astrid-dev/issues/1237), [astrid-app #255](https://github.com/banodoco/astrid-app/issues/255), [astrid-app #252](https://github.com/banodoco/astrid-app/issues/252).
 - [#1222](https://github.com/banodoco/astrid-dev/issues/1222): the Runtime's verify-once rule, which in-place reference would break.
 - [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), [Plan 63](../63-dependable-saving/plan.md) and [Plan 75](../75-fast-saving/plan.md): the saving plans this must not disturb.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+bind configured cap, source-change detection, scratch/disk/memory accounting, zero/one/many handle cases, accepted import versus pending placement and D4 crash/reselect policy. Distinguish source-supported duplicate-import risk from a reproduced incident.

@@ -1,5 +1,7 @@
 # Inputs — ComfyUI Desktop and existing environments
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
@@ -67,3 +69,9 @@ Each is a recommendation until the owner confirms it in writing.
 - [#733](https://github.com/banodoco/astrid-dev/issues/733), [#1380](https://github.com/banodoco/astrid-dev/issues/1380), [#683](https://github.com/banodoco/astrid-dev/issues/683): diagnostics.
 - [#816](https://github.com/banodoco/astrid-dev/issues/816): capability readiness.
 - [Release 16](../../releases/16.md); [Plan 20](../20-zero-to-first-image/plan.md); [Plan 56](../56-workflow-setup/plan.md); [Plan 38](../38-one-process-identity/plan.md).
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+D2 proposes the [existing-environment cells in the SYN matrix](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md#7-exact-support-negative-and-preservation-matrix) and [release acceptance mapping](../../releases/16.md#proposed-support-and-negative-acceptance), with final limits pending owner agreement; D3 manual open/no takeover; D4 shared consumed interfaces, not blanket foundations. Match selection precedence in list/inspect/plan/apply/run; distinguish timeout/denied/wrong responder from missing dependencies. Unknown discovery is not refusal of a separately verified explicit endpoint.

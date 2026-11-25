@@ -1,5 +1,7 @@
 # Inputs: refined concurrent editing
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Starting code and branch policy
@@ -12,7 +14,7 @@ The following are retained historical donor/checkpoint commits, not live bases o
 | App | `438159b030cd3b0b81653415f1018f9a1349f0c5` | Branch and current SHA TBD | Fresh isolated candidate; promote reviewed head to `pre-main` |
 | Runtime | `33e9195a8ac57c4ba61f372ef6f25139c37eaa97` | Branch and current SHA TBD | Fresh isolated candidate; promote reviewed head to `pre-main` |
 
-The integration consumes the exact Agent/App/Runtime tuple promoted by Plan 02 integration (consistent generation), then the retained CE work. The concrete base is that promoted tuple plus then-current destination refs; freeze actual current `pre-main` heads when integration starts. The audit did not freeze Plan 04's merge base or target heads. Do not reuse historical `lane/M-GPU/integrated`; use fresh isolated candidate branches and promote the exact independently reviewed heads. Follow the [shared run contract](../../agent/shared/run-contract.md) and the product repositories' actual branch/release controls for moved targets and publication authority.
+The integration consumes the exact Agent/App/Runtime tuple promoted by Plan 02 integration (consistent generation), then the retained CE work. The concrete base is that promoted tuple plus then-current destination refs; freeze actual current `pre-main` heads when integration starts. The audit did not freeze Plan 04's merge base or target heads. Do not reuse historical `lane/M-GPU/integrated`; use fresh isolated candidate branches and promote the exact independently reviewed heads. Follow the [shared run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md) and the product repositories' actual branch/release controls for moved targets and publication authority.
 
 ## References and evidence
 
@@ -26,4 +28,10 @@ The SDK selectors and hosted wrapper requirements are recorded in [CE-FINAL](tas
 
 ## Constraints
 
-Execution requires the initiative's explicit start and the accepted run controls. Preserve the existing END review scope, stage, and remaining-round budget; the migration source does not specify their exact values. No full SDK/UI suite. Publication follows the existing project and [shared run contract](../../agent/shared/run-contract.md); this plan adds no authorization or review stage.
+Execution requires the initiative's explicit start and the accepted run controls. Preserve the existing END review scope, stage, and remaining-round budget; the migration source does not specify their exact values. No full SDK/UI suite. Publication follows the existing project and [shared run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md); this plan adds no authorization or review stage.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+record original SDK/hosted claims and missing selector/fixture evidence explicitly, current source corrections and ET-5/D17 disposition. Evidence mapping, not source presence, establishes equivalence.

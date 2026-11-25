@@ -21,3 +21,10 @@ This plan holds Plan 29's second phase, split out so it can have its own priorit
 ## Source identities
 
 Record the exact base SHAs when each task starts.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+record actual old and modern manager capability evidence; preserve no-manager/autostart-off direct foreground behavior where supported, special-character paths and exact worker receipt. Adopt P10's engine proof and P09/P38 ownership boundaries. Disposition recovered closed/unmerged PR#178 as historical task source, not automatic implementation.

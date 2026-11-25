@@ -1,5 +1,7 @@
 # One home for user state
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** One home for user state
 
 **Goal:** User choices, project choices and project work live in the Runtime (app-state and project documents), not in side files, env variables or browser storage; machine bootstrap state stays local.
@@ -14,7 +16,7 @@
 
 **Vision gaps:** [Local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary) · [User control and recovery](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
-**Contributing:** [Astrid development skill](../../agent/start.md).
+**Contributing:** [Astrid development skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md).
 
 **Draft; not ready for execution.** User choices, project choices and project work have one home: the Runtime. Today they are spread over side files, environment variables and browser storage. A read-only audit on 9 Nov (three code-read sweeps, not runtime-verified) listed the candidates. [inputs.md](inputs.md) records them.
 
@@ -53,3 +55,9 @@ See [tasks.md](tasks.md) and [inputs.md](inputs.md).
 ## Completion
 
 Every user choice and every piece of project work in the audit's MOVE list is read from and written to the Runtime, with its old location imported once and then ignored. The keep list is documented. The check fails on a new side store.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+The authority table identifies an owner for each object and custody phase; import-once deletion is not sufficient. Runtime may own portable preferences/grants; project state, hidden personal choices, URL intent, device bootstrap/receipts/locks, unique pending drafts/imports and secrets remain distinct. Known bounded app state is not a giant outbox. Retiring a store requires proof its unique work is migrated and recoverable.

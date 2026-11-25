@@ -12,7 +12,7 @@
 
 **Waiting on:** release 12 published, then Plan 20's Agent `main` group landed (owner's order, 9 Nov)
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
@@ -112,3 +112,10 @@ Limits:
 - Backend-specific tests run on their own OS (decision D4).
 - Windows host-only start may need more than the provider; E1 shows whether it does (D6).
 - Upgrade-time journals with the old Agent birth format fail closed (D3).
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+retain one identity/custody/closure and minimal common role ABI; change two-publication sequence into one R16 shipment with an internal phase-one checkpoint. State that duplication removal must preserve product-specific role extensions, wire framing, native retained handles and independent pre-import verification; it is not a generalized broker rewrite.
