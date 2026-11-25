@@ -904,14 +904,15 @@ class RootStatementTests(unittest.TestCase):
         title = intro.splitlines()[0].removeprefix("# Astrid — ")
         readme = (root / "README.md").read_text(encoding="utf-8")
         statement = f"**{title}.**"
-        sentence = ("Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) "
-                    "with an agent equipped with tools for creative work and open-source AI.")
+        sentence = "We're building an open creative environment that people and agents can shape together."
         self.assertEqual(readme.count(statement), 1)
         region = readme.split("<!-- vision-statement:start -->", 1)[1].split("<!-- vision-statement:end -->", 1)[0]
         self.assertIn(statement, region)
         self.assertNotIn(sentence, region)
-        self.assertIn(f"## What we're building\n\n<!-- vision-statement:start -->", readme)
-        self.assertIn(f"<!-- vision-statement:end -->\n\n{sentence}\n\n<!-- vision-summary:start -->", readme)
+        self.assertTrue(readme.startswith("# Astrid Dev\n\n<!-- vision-statement:start -->"))
+        self.assertIn(f"<!-- vision-statement:end -->\n\n{sentence}\n\n", readme)
+        self.assertIn("## Explore what we're building\n\n<!-- vision-summary:start -->", readme)
+        self.assertEqual(readme.count(sentence), 1)
 
 
 class StrategyViewTests(unittest.TestCase):
