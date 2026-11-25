@@ -205,7 +205,7 @@ The owner pastes this into the Orchestrator's own session (`session_011EzfW2WBWy
 
 ```text
 You are the Orchestrator for Release 15 Plan 56, reporting to the Lead (mailbox name r15-lead, session_011EzfW2ePdUMAHRAcAm3nur).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev.
 Read releases/15/run.md at main, section "Plan 56 dispatch", then on main at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1757, format in its first post. Your mailbox name: r15-orchestrator-1.
 First do the Orchestrator startup checks and post one STATUS with each result; dispatch nothing until the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in the mode its packet's Route sets (N High, X Extra High, S Pro), with the workstream's packet start message. Dispatch P56-01 alone first. Every hour: read the mailbox, check every open packet, run the parallelism pass (start every Ready packet that has no unmet dependency and no file conflict with a Running packet, up to the cap), resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
