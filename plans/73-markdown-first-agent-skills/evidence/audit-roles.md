@@ -1092,4 +1092,228 @@ Source: `skills/roles/astrid-dev-manage/workstreams/whole-project.md` at M. Dest
 
 Count: 248 found; 248 kept; 0 restored; 0 moved; 0 superseded.
 
-*Draft in progress: remaining 11 document audits follow before READY-PROOF.*
+
+## agent/roles/manager/ai-studio-packet.md
+
+Source: `skills/roles/astrid-dev-manage/workstreams/ai-studio-packet.md` at INT source fd8a9a04 (latest ported source). Destination: `agent/roles/manager/ai-studio-packet.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: One lab packet executed by a fresh AI Studio session and pushed to its own lab/&lt;id&gt; branch with a result note, ready for the | 9 | 13 | kept |
+| reflection gate. | 9 | 13 | kept |
+| When to use: When an operator (normally a Codex agent with browser control of the owner's AI Studio account) is given a Ready packet from | 10 | 9 | kept |
+| a lab run board for the specified active lab run. | 10 | 9 | kept |
+| Inputs: The run board, the packet brief and LAB_RULES.md at the lab's main head, the owner's latest instructions, the AI Studio workspace linked to the | 11 | 17 | kept |
+| lab repository. | 11 | 17 | kept |
+| Procedure: Check the packet is Ready, open a fresh AI Studio session on main, paste the start prompt, supervise to the result note, push lab/&lt;id&gt;, | 12 | 21 | kept |
+| then report to the owner. | 12 | 21 | kept |
+| Completion: The branch exists at a recorded commit with packets/&lt;id&gt;.result.md, and the owner has a short report (or a blocker) naming the packet, branch, commit | 13 | 25 | kept |
+| and AI Studio's own check output. | 13 | 25 | kept |
+| Use for a lab repository built to be developed in Google AI Studio and imported into an Astrid product repository at the end, where a | 15 | 27 | kept |
+| project explicitly selects this route and provides a current run board. | 15 | 27 | kept |
+| You are the operator, not the engineer. | 15 | 27 | kept |
+| AI Studio writes the code | 15 | 27 | kept |
+| you give it the packet, keep it inside the packet, and move its work to GitHub. | 15 | 27 | kept |
+| You do not review it: a fresh Astra reviewer does (Astra reflection), and a packet is merged into the lab's main only on that reviewer's | 15 | 27 | kept |
+| accept verdict. | 15 | 27 | kept |
+| When you are also the run's manager, you commission that reviewer and do the merge. | 15 | 27 | kept |
+| Check. | 19 | 31 | kept |
+| Reread the owner's latest messages, on every resume too. | 19 | 31 | kept |
+| On the run board, the packet must be Ready and every packet it depends on Accepted. | 19 | 31 | kept |
+| Note the lab's main head commit. | 19 | 31 | kept |
+| Open a fresh session. | 20 | 32 | kept |
+| One packet, one new AI Studio Build session. | 20 | 32 | kept |
+| Bring the lab's main into it at that commit (AI Studio's GitHub import or sync). | 20 | 32 | kept |
+| Do not reuse a session from another packet | 20 | 32 | kept |
+| a rework round may reuse its own packet's session if it is still open. | 20 | 32 | kept |
+| Start it. | 21 | 33 | kept |
+| Paste the start prompt with the packet ID and commit filled in. | 21 | 33 | kept |
+| Add nothing else. | 21 | 33 | kept |
+| Supervise. | 22 | 34 | kept |
+| Answer AI Studio's questions only from the brief and LAB_RULES.md. | 22 | 34 | kept |
+| If it wants to do something the brief does not ask for, the answer is "not in this packet". | 22 | 34 | kept |
+| If it asks something the brief cannot answer, have it write the question in its result note and stop. | 22 | 34 | kept |
+| Make sure it runs npm run check and npm run build and reports their output. | 22 | 34 | kept |
+| Do not write or edit code yourself. | 22 | 34 | kept |
+| Push. | 23 | 35 | kept |
+| When the result note exists and the checks pass, push to the branch lab/&lt;id&gt; (never main). | 23 | 35 | kept |
+| Confirm on GitHub that the branch head matches, and that the result note is in it. | 23 | 35 | kept |
+| Report. | 24 | 36 | kept |
+| Tell the owner, in your own chat, in a few lines: packet ID | 24 | 36 | kept |
+| branch and commit | 24 | 36 | kept |
+| AI Studio's check and build output as reported | 24 | 36 | kept |
+| time taken | 24 | 36 | kept |
+| anything it was unsure of. | 24 | 36 | kept |
+| Mark the packet Gate on the board, then hand it to the reflection gate. | 24 | 36 | kept |
+| Rework. | 25 | 37 | kept |
+| If the gate sends rework, paste the gate's rework prompt into the same packet's session (or a fresh one at the branch head), then push | 25 | 37 | kept |
+| and report again. | 25 | 37 | kept |
+| After two rework rounds the gate splits the packet instead. | 25 | 37 | kept |
+| If blocked (AI Studio cannot import, run tests, push, or keeps failing the same check after two attempts), tell the owner what happened, with a | 26 | 38 | kept |
+| screenshot or copied output, and what you need. | 26 | 38 | kept |
+| Do not work around a rule in LAB_RULES.md. | 26 | 38 | kept |
+| You are working in the Astrid planet lab (banodoco/planet), at commit &lt;main SHA&gt;. | 31 | 43 | kept |
+| Read LAB_RULES.md and packets/&lt;ID&gt;.md completely before changing anything. | 32 | 44 | kept |
+| Do packet &lt;ID&gt; exactly as written, and nothing in its "Not in this packet" list. | 33 | 45 | kept |
+| Run npm run check and npm run build, and fix failures within the packet's scope. | 34 | 46 | kept |
+| Write packets/&lt;ID&gt;.result.md as described in packets/README.md. | 35 | 47 | kept |
+| Commit with messages starting "&lt;ID&gt;:" and push to the branch lab/&lt;ID&gt;. | 36 | 48 | kept |
+| Never push to main. | 36 | 48 | kept |
+| If anything in the brief is unclear or looks wrong, stop and write that in the result note instead of guessing. | 37 | 49 | kept |
+| Do not merge without an accept verdict, edit briefs yourself, change LAB_RULES.md, run two packets in one session or write a verdict: verdicts and briefs | 40 | 52 | kept |
+| belong to the reflection reviewer, and the look to the owner. | 40 | 52 | kept |
+
+Count: 63 found; 63 kept; 0 restored; 0 moved; 0 superseded.
+
+
+## agent/roles/manager/astra-reflection.md
+
+Source: `skills/roles/astrid-dev-manage/workstreams/astra-reflection.md` at INT source fd8a9a04 (latest ported source). Destination: `agent/roles/manager/astra-reflection.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: Every pushed lab packet has a recorded verdict (accept, rework or split), and the queue ahead matches what has actually been learned. | 9 | 13 | kept |
+| When to use: When the run's manager hands you a lab packet at Gate, at each RF row of a lab run board, and at | 10 | 9 | kept |
+| the owner's daily look, for a current lab run with an explicit run board. | 10 | 9 | kept |
+| Inputs: The run board, the lab repository and its LAB_RULES.md and packets/, the pushed branch and result note, the owner's notes the manager passes on, | 11 | 17 | kept |
+| and the run's authority. | 11 | 17 | kept |
+| Procedure: Gate each packet by rerunning its proof and reading its diff | 12 | 21 | kept |
+| at RF rows, re-estimate and rewrite the next briefs | 12 | 21 | kept |
+| draft the daily look | 12 | 21 | kept |
+| return everything to the manager. | 12 | 21 | kept |
+| Completion: Each reviewed packet has a verdict returned to the manager naming its commit, every rework names what done looks like, and the next Ready | 13 | 25 | kept |
+| packets have current briefs. | 13 | 25 | kept |
+| Runs on the high-judgment role (Astra on Codex, Opus on Claude | 15 | 27 | kept |
+| routing). | 15 | 27 | kept |
+| AI Studio cannot take screenshots, so the proof you can check is tests and the diff | 15 | 27 | kept |
+| the look is the owner's, at the daily look. | 15 | 27 | kept |
+| A packet that changes what a visitor sees is not finished until the owner has seen it, but it may be merged into the lab | 15 | 27 | kept |
+| before then. | 15 | 27 | kept |
+| Pull lab/&lt;id&gt; at the commit the manager gives you. | 19 | 31 | kept |
+| Merge the lab's current main into it locally if main moved. | 19 | 31 | kept |
+| Rerun npm install, npm run check and npm run build yourself. | 20 | 32 | kept |
+| AI Studio's own report is not proof. | 20 | 32 | kept |
+| Read the whole diff against the brief and LAB_RULES.md. | 21 | 33 | kept |
+| Check especially: nothing from *Not in this packet* | 21 | 33 | kept |
+| the engine invariants (one seeded random in the same order, one clock, every allocation through own(), no module-level mutable state, the same build and update | 21 | 33 | kept |
+| order, no allocation in the frame loop) | 21 | 33 | kept |
+| no existing test edited or weakened | 21 | 33 | kept |
+| for parity packets, sceneFingerprint snapshot untouched | 21 | 33 | kept |
+| no new dependency | 21 | 33 | kept |
+| files under 1,200 lines. | 21 | 33 | kept |
+| If you have a browser, open the preview at the brief's *Look at* settings and say what you saw | 22 | 34 | kept |
+| this is a sanity check, not the owner's verdict. | 22 | 34 | kept |
+| Decide: | 23 | 35 | kept |
+| - Accept: say ACCEPT with the reviewed commit. | 24 | 36 | kept |
+| The run's manager merges lab/&lt;id&gt; into the lab's main with a merge commit (or you do, if the run gives you that access), marks the | 24 | 36 | kept |
+| packet Accepted on the board with the merge commit, and makes the next packets Ready. | 24 | 36 | kept |
+| - Rework: write a short rework prompt naming each failure and what done looks like, for the manager to paste into AI Studio | 25 | 37 | kept |
+| mark Rework. | 25 | 37 | kept |
+| At most two rounds. | 25 | 37 | kept |
+| - Split: if the packet was too big or two things at once, accept what is sound (or nothing), write the new briefs in packets/, | 26 | 38 | kept |
+| and update the queue. | 26 | 38 | kept |
+| Return the verdict to the manager, one line per finding, sorted BLOCKING / FOLLOW-UP / NOTE. | 27 | 39 | kept |
+| File follow-ups as later packets, not as silent fixes. | 27 | 39 | kept |
+| Once a day, draft the daily look for the manager to give the owner: what was accepted since the last one, the lab main commit | 31 | 43 | kept |
+| to open in AI Studio's preview, and for each visible change the exact sizes, address options (?planet-test-pose=fixed, ?sky=HH:MM) and landmarks to look at. | 31 | 43 | kept |
+| The owner replies to the manager with notes. | 31 | 43 | kept |
+| Each note becomes a rework, a new packet or a ruling on the board | 31 | 43 | kept |
+| the owner's verdict on the look is final. | 31 | 43 | kept |
+| At each RF row on the board: compare actual effort, rework rounds and AI Studio's failures with the estimates | 35 | 47 | kept |
+| read the owner's notes since the last RF | 35 | 47 | kept |
+| re-cut, merge or split the packets ahead and rewrite their briefs against the lab's current code (line ranges move as the engine is split) | 35 | 47 | kept |
+| restate the remaining estimate. | 35 | 47 | kept |
+| Record what changed and why on the board. | 35 | 47 | kept |
+| Ask a second high-judgment reviewer for a zoomed-out opinion at RF-B and RF-D. | 35 | 47 | kept |
+| Do not merge anything into the product repository, change the lab's upstream.json base, relax LAB_RULES.md or a test, or start integration (IN rows) without the | 37 | 49 | kept |
+| owner's go. | 37 | 49 | kept |
+
+Count: 55 found; 55 kept; 0 restored; 0 moved; 0 superseded.
+
+
+## agent/roles/manager/live-loop.md
+
+Source: `skills/roles/astrid-dev-manage/workstreams/live-loop.md` at M. Destination: `agent/roles/manager/live-loop.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: A plan whose end state holds on two consecutive live rounds, with every round, fix and plan delta recorded. | 9 | 13 | kept |
+| When to use: When an accepted plan's end state is clear but its tasks can only be found by measuring the live product round by | 10 | 9 | kept |
+| round. | 10 | 9 | kept |
+| Inputs: The accepted loop plan and its scenario set, a running stack built from the plan branches, the run's bindings in run.yaml, and the floors | 11 | 17 | kept |
+| to stop at. | 11 | 17 | kept |
+| Procedure: Run the scenarios live, record the round, ask the strategist, pick the smallest fixes, land each as an Iterate PR into the plan branch, | 12 | 21 | kept |
+| rebuild and rerun. | 12 | 21 | kept |
+| Completion: The plan's end state holds on two consecutive rounds, or the loop stops at a recorded reason and the owner has the open question. | 13 | 25 | kept |
+| Use when the plan is a loop plan: its end state is known, its tasks can't be written up front, and its tasks.md ends in | 15 | 27 | kept |
+| one standing loop card. | 15 | 27 | kept |
+| Everything in whole project still applies (progress, decisions, dispatch) | 15 | 27 | kept |
+| this adds the round. | 15 | 27 | kept |
+| The run contract governs routes, proof and review | 15 | 27 | kept |
+| it is not restated here. | 15 | 27 | kept |
+| Coordinator (the manager session): keeps the judgment. | 19 | 31 | kept |
+| Reads every round row and picks the fixes. | 19 | 31 | kept |
+| Treats what Codex and the strategist return as evidence to check. | 19 | 31 | kept |
+| Execution runs on Codex: the heavy lifting, N normally and X for a hard fix, each bound to a model and effort in the run's | 20 | 32 | kept |
+| run.yaml. | 20 | 32 | kept |
+| Run in the background, one worktree per fix: | 20 | 32 | kept |
+| codex exec -m &lt;model from run.yaml&gt; --skip-git-repo-check -C &lt;dir&gt; -s workspace-write -o &lt;scratch&gt;/&lt;name&gt;.txt "&lt;brief&gt;" &lt; /dev/null | 21 | 33 | kept |
+| Add -c model_reasoning_effort='"&lt;effort from run.yaml&gt;"'. | 22 | 34 | kept |
+| Strategist: the run's high-judgment advisor binding, read-only (-s read-only), consulted on strategy each round. | 23 | 35 | kept |
+| Its advice is evidence, not a verdict | 23 | 35 | kept |
+| it tends to over-engineer, so ask it what to remove first. | 23 | 35 | kept |
+| Run the scenario set live, against the real installed stack, over its public interface only (the browser or the public API), never in-process. | 27 | 39 | kept |
+| Record a round row in the plan's rounds.md: what saved | 28 | 40 | kept |
+| what was refused, with the reason shown | 28 | 40 | kept |
+| timings | 28 | 40 | kept |
+| anything that vanished | 28 | 40 | kept |
+| the stack's versions. | 28 | 40 | kept |
+| Ask the strategist: give it the row and the previous rows, not your conclusion. | 29 | 41 | kept |
+| Pick the fixes. | 30 | 42 | kept |
+| Each is one failing scenario, a cause, and the smallest change at its source. | 30 | 42 | kept |
+| Fix each as an ordinary Iterate run, a PR into the plan branch, with the failing live scenario as its red test. | 31 | 43 | kept |
+| Rebuild the stack and rerun from step 1. | 32 | 44 | kept |
+| Append each round's rows, picks and PRs under the loop card in tasks.md | 34 | 46 | kept |
+| progress PRs follow whole project. | 34 | 46 | kept |
+| Stop when the plan's end state holds on two consecutive rounds, or when a round finds nothing new and the remaining refusals are real clashes. | 38 | 50 | kept |
+| Stop and ask the owner when three rounds in a row fix nothing, a floor below (disk) is reached, or the end state needs a | 38 | 50 | kept |
+| design change bigger than a card. | 38 | 50 | kept |
+| Each round also writes plan deltas: what the live evidence changes in the follow-up plans (a task to drop, add, re-estimate or renumber). | 40 | 52 | kept |
+| They go in rounds.md, one list per round, and the manager carries them into those plans' PRs at the end. | 40 | 52 | kept |
+| A fresh browser profile for every run, deleted afterwards. | 44 | 56 | kept |
+| Headless profiles and stack copies are what filled the disk twice on 18 November. | 44 | 56 | kept |
+| Check free disk before each round and stop below the floor the plan names. | 45 | 57 | kept |
+| Never edit the owner's timelines or projects: scenarios run on a fixture built in a sandbox project. | 46 | 58 | kept |
+
+Count: 47 found; 47 kept; 0 restored; 0 moved; 0 superseded.
+
+
+## agent/roles/orchestrator/codex-cloud-sessions.md
+
+Source: `skills/roles/astrid-dev-orchestrate/workstreams/codex-cloud-sessions.md` at M. Destination: `agent/roles/orchestrator/codex-cloud-sessions.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+
+| Rule (source excerpt) | Source line | Agent line | Status |
+| --- | --- | --- | --- |
+| Outcome: Separate Codex Cloud sessions coordinated through one durable mailbox, with ownership and handoffs preserved. | 9 | 13 | kept |
+| When to use: When an authorized Orchestrator and plan manager work in different Codex Cloud chats. | 10 | 9 | kept |
+| Inputs: An accepted plan, named accountable manager, permitted session identities, mailbox, task boundaries and tested resume mechanism. | 11 | 17 | kept |
+| Procedure: Register sessions, send bounded briefs, reconcile their evidence and recover stalled work using the linked Codex Cloud guide. | 12 | 21 | kept |
+| Completion: The manager has a complete session handoff and traceable task evidence | 13 | 25 | kept |
+| unwakeable sessions are reported rather than assumed active. | 13 | 25 | kept |
+| Choose this when the orchestrator and plan managers work in different Codex Cloud chats. | 15 | 27 | kept |
+| For the actual mailbox commands, session registration, authentication limits, acknowledgments, polling and recovery use the existing Codex Cloud guide | 15 | 27 | kept |
+| its scripts remain in that directory. | 15 | 27 | kept |
+| Start from an accepted plan and its authorized Run start | 17 | 29 | kept |
+| name one accountable plan manager. | 17 | 29 | kept |
+| Use the plan's board (rules) and agree durable per-session identities and cursors. | 17 | 29 | kept |
+| Give each session the plan/task links, exact proof, branches, limits and its manager/advisor roles. | 18 | 30 | kept |
+| Follow Manage inside the accountable manager session. | 18 | 30 | kept |
+| Follow the agreed check-in cadence to reconcile GitHub evidence and recover stalled sessions | 19 | 31 | kept |
+| a GitHub comment or timer alone cannot wake an idle Codex Cloud chat. | 19 | 31 | kept |
+| Do not promise unattended progress without a verified resume mechanism. | 19 | 31 | kept |
+| When a Release Lead has prepared multiple packet briefs, combine this environment workstream with multi-manager dispatch. | 21 | 33 | kept |
+| The dispatch board and packet files still live under the release, not in GitHub issue bodies. | 21 | 33 | kept |
+
+Count: 19 found; 19 kept; 0 restored; 0 moved; 0 superseded.
+
+*Draft in progress: remaining 7 document audits follow before READY-PROOF.*
