@@ -1,0 +1,16 @@
+{
+  "runtime_fixed_by_argument": true,
+  "retained_runtime": "77c38d037f98f744bd8f41c15d95429c124a8003",
+  "retained_generation": "4b62ab1a6521",
+  "browser_tooling": "a0339fe76048857cc11218ee766016d987a438a7",
+  "trace_schema": "timeline-memo-provenance-v1",
+  "old_public_head": {
+    "revision": "authoring-parent-revision-5357f6c0f85f6b1edbe53275043432abf63a33f56582ae6f300b06519436acaa",
+    "publication": "txn-45427064f4d34b9a840005c774956763",
+    "content_digest": "sha256:75f9d65814ba3b48ca0d0422bf04f28a07178f25931a8c3bd57d582ff06cbaae",
+    "active_heads": 1,
+    "clips": 300,
+    "occurrences": 10
+  },
+  "trace_helpers": "c027946e3bf77a187a88e981183486b9dfd1638f"
+}
