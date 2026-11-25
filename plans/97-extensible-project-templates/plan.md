@@ -1,16 +1,18 @@
 # Extensible project templates
 
+> **Cancelled on 24 November 2026: absorbed into [Plan 95](../95-composable-agentic-workspaces/plan.md).** The owner chose to build the template seam once, in Otto, instead of in astrid-dev first and then extracting it ([Plan 95 inputs](../95-composable-agentic-workspaces/inputs.md#owner-direction-24-november-2026)). Plan 95's OT-11 and OT-12 carry this design: the `**Template:**` field (absent means `standard`), `template.toml` manifests, `standard` and `loop`, and a third template with no code change. Only real loop plans opt in. Everything below is kept as history; dispatch nothing from it.
+
 **Project:** Extensible project templates
 
 **Goal:** A person or agent chooses a project template that supplies its extra documents and execution workstream, and can introduce a new template without changing the common project machinery.
 
-**Status:** queued
+**Status:** cancelled
 
 **Owner:** Unassigned
 
-**Estimate:** 2–4 engineering days provisional, including classification and safe migration of existing canonical records; re-estimate after the live project inventory.
+**Estimate:** None; cancelled.
 
-**Waiting on:** [Plans 71](../71-gap-definition-reconciliation/plan.md), [72](../72-composable-project-delivery/plan.md) and [73](../73-markdown-first-agent-skills/plan.md) accepted and integrated; verify Plan 53's goal contract; independent scope critique, owner approval of template contract and migration boundary, named manager.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six fields above define the catalog row. Leave [priority](../priority.md), release membership and run authority unchanged until separately decided.
 
