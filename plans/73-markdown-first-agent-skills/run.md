@@ -87,6 +87,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | [P73-RV](packets/P73-RV.md) High-judgment review (read-only, Pro) | P73-07 (route S) and the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | [P73-R1-1](packets/P73-R1-1.md) Refuse a skill name over 64 characters (+ guide fix) | R1.1 | Ready (project head `c7cbf07a`) | — | Extra High. In parallel with P73-R1-2; its READY-PROOF gets a Pro read-only review on the orchestrator's REQUEST |
 | [P73-R1-2](packets/P73-R1-2.md) Live launch messages point at `agent/` | R1.2 | Ready (project head `c7cbf07a`) | — | Extra High. In parallel with P73-R1-1 |
+| [P73-R1-3](packets/P73-R1-3.md) Fix the link-pattern ReDoS CodeQL flagged (late finding R1.3) | R1.3 | Ready (project head named in the DECISION) | — | Extra High. Alone |
 | [P73-SC](packets/P73-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R1.1 and R1.2 (then R round 2, then SC) | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** `agent/**` files are split between P73-02 and P73-03 by file (each packet lists its own); P73-04 and P73-05 split the audit by document group and may each fix only their own group's files. P73-01 writes `scripts/` and `.github/workflows/docs.yml`; P73-06 writes `README.md`, `CONTRIBUTING.md`, `docs/**`, `templates/**`, `env/**` and active release and plan documents; P73-07 deletes `skills/**` and `sync.sh`.
