@@ -25,7 +25,7 @@ Integrate accepted changes, rehearse the freeze, freeze the candidate in depende
 
 The release records exact sources, every difference from the served release with its disposition, and either an authorized publication receipt or an explicit blocked state.
 
-Use this workflow for cross-repository integration, qualification and explicitly authorized publication. [Iterate](iterate.md) owns assigned implementation and repair; [Plan](plan.md) prepares a new plan. Release consumes accepted work and owns integration and publication. The shared run contract is the authority for source identity, proof policy, and review budgets; do not restate or reset those choices here. Use the [domain map](../domains.md) to locate current product-owned release runbooks; verify the actual source SHAs before integration.
+Use this workflow for cross-repository integration, qualification and explicitly authorized publication. [Iterate](iterate.md) owns assigned implementation and repair; [Plan](plan.md) prepares a new plan. [Scope release](scope-release.md) prepares substantial release proposals and their sequence. Release consumes accepted work and owns integration and publication. The shared run contract is the authority for source identity, proof policy, and review budgets; do not restate or reset those choices here. Use the [domain map](../domains.md) to locate current product-owned release runbooks; verify the actual source SHAs before integration.
 
 ## What a release must show
 

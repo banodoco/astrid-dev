@@ -1,30 +1,30 @@
 ---
-description: Implement one bounded packet in a fresh ChatGPT session and return task pull requests and evidence for Lead review.
+description: Execute one bounded engineering, research or review packet in a fresh ChatGPT session and push the authorized result for its accountable coordinator.
 ---
 
 # execute one packet in ChatGPT
 
 ## When to use
 
-When a fresh ChatGPT session is assigned an accepted packet with explicit scope and authority by the release dispatch.
+When a fresh ChatGPT session receives one engineering, research or review packet with explicit scope, authority and destination from its authorized dispatch.
 
 ## Outcome
 
-One bounded packet implemented on draft task pull requests, ready for orchestrator proof and Lead review.
+One bounded packet with its implementation or original evidence pushed to the assigned branch and handed off by exact commit.
 
 ## Inputs
 
-The exact packet, assigned task rows, board and current rulings, target repository and base, accepted proof and permissions.
+The exact packet, applicable task rows or research/review question, board and current rulings, target repository, base, permitted paths, handoff and permissions.
 
 ## Procedure
 
-Receive and verify the assignment, implement code and tests directly on the permitted branch, and submit the draft PR and exact-head proof handoff to the orchestrator.
+Receive and verify the assignment, follow the engineering path or the evidence-only path below, and push the result with an exact-head mailbox handoff.
 
 ## Completion
 
-Every assigned task has a traceable disposition, exact candidate source and proof selectors, and a Lead-visible handoff without unauthorized merging.
+Every assigned task or question has a traceable disposition, exact source and a remotely readable result, with no unauthorized merging or scope changes.
 
-Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). Follow [Manage](../manager.md) for scoped engineering and proof; the review is the Lead's, so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.
+Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). For engineering follow [Manage](../manager.md) and the existing implementation path below; the Lead owns review. For a commissioned research or review packet use the evidence-only path. **You do your own packet's work**; take no second packet and commission no other sessions unless explicitly authorized.
 
 ## Receive → implement → submit
 
@@ -41,3 +41,12 @@ Use when a fresh ChatGPT session receives **one** accepted packet from the [Orch
 4. **If blocked**, post `BLOCKED` with the failure, what you tried and the action needed; continue independent work.
 
 **Do not merge, update `tasks.md` or claim the plan is finished:** those are the Lead's. A row the plan lacks goes in STATUS as a proposal.
+
+## Receive → investigate or judge → submit (evidence only)
+
+Use when the assignment explicitly authorizes writing a report, not changing the product or the records being assessed. Apply [Scope a release](../../shared/workstreams/scope-release.md) or [Sense check](../../shared/workstreams/sense-check.md) as commissioned. The same one-packet, mode, source identity, mailbox, resume and authority rules apply; engineering-specific steps and READY-PROOF do not.
+
+1. **Receive.** Read the pinned brief and applicable board authority, rulings, source register and prerequisite reports; verify the actual mode, question, report path, packet branch, exact starting commit and proposal PR destination. Keep the reviewed source/head distinct from the branch used to submit evidence. If a verdict is read-only with no report-write authority, do not infer it; ask for the authorized evidence destination or return the original through the named fallback.
+2. **Investigate or judge.** Read actual sources and original evidence. Write one full original Markdown report answering the packet, including identities, limitations, findings and verification. Keep fact, inference and unverified claims distinct. A reviewer must not amend the proposed records, patch the candidate or approve execution. Only the named evidence file(s) are writable; no adjacent-edit exception. Do not test, build, clone, spend or dispatch CI unless separately authorized.
+3. **Push your own report.** Use the GitHub connector on the packet's dedicated branch in astrid-dev. Open or continue the assigned draft evidence PR into the scoping proposal branch (not main, a product branch or an active delivery branch). Before a pause push genuine progress and post STATUS; never claim incomplete work is final. Post the early STATUS as soon as the first real report content and draft PR are pushed. Verify the exact remote head and report path by readback. Do not overwrite prior findings; a rework or superseding verdict is a new linked revision. Do not rebase, force-push or share a writable packet branch. Follow the named restricted-evidence path for confidential inputs; do not publish secrets, personal material or raw chats.
+4. **Submit and stop.** Post `READY-REPORT <repo> <PR> <head> <report-path>` in the existing STATUS format, to the coordinator, naming the exact reviewed identities, limitations and any blocking finding. The report must be complete and readable at that head. This is delivery of evidence, not acceptance of its claims. The coordinator verifies the pushed report and makes it available to dependent sessions through immutable links; no chat transcript or coordinator transcription is required. Never merge the evidence PR yourself or change the shared evidence index, accepted scope, task progress or release authority. If connector write/readback or the mailbox fails, post BLOCKED with the exact failure and preserved report location; the coordinator may use an explicitly recorded manual intake of the complete original as a fallback.

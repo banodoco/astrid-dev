@@ -18,6 +18,8 @@ skill: true
 | New independent outcome | Check [catalog](../plans/index.md) and [gaps](../vision/README.md), then use [Plan](shared/workstreams/plan.md). A difficult bug still needn't become a project |
 | What we're doing now, next and later | [Strategy](../strategy.md): read it first for release and version direction; see [the hierarchy](../docs/contribution-workflow.md#review-the-strategy) |
 | A gap, or the strategy across several plans | [Gap](shared/workstreams/gap.md): define or reassess the outcome, write its closure approach and route to closure |
+| Composing a substantial release | [Scope release](shared/workstreams/scope-release.md): investigate, reconcile, sequence and independently challenge the proposed release |
+| Holistic design or completion judgment | [Sense check](shared/workstreams/sense-check.md): challenge the whole project or release |
 | Planning a new project | [Planner](shared/workstreams/plan.md): define the accepted scope and tasks |
 | Leading release delivery, including setting up a Codex orchestrator to farm tasks out to ChatGPT managers | [Lead](roles/leader.md): own the overall outcome; select the [multi-manager workstream](roles/leader/multi-manager-release.md) when applicable |
 | Supervising managers or dispatching work sessions | [Orchestrate](roles/orchestrator.md): keep manager runs and handoffs moving, advise and check in |
