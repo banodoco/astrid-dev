@@ -121,4 +121,4 @@ Draft pending independent review and owner scope agreement; preserve existing ta
 
 | Canonical home | Proposed bounded amendment |
 | --- | --- |
-| `plans/75-fast-saving/plan.md`, `inputs.md`, `tasks.md`; `plans/76-editing-together/plan.md`, `inputs.md`, `tasks.md`; `plans/89-heavy-saves-in-seconds/plan.md`, `inputs.md`, `tasks.md` | Record only exact handoff/timing cross-references for CC-17, CC-5c, ET-5, and ET-1+ET-4b together; preserve later scope, checked no-gain history and original IDs. Do not mark donor or receiving tasks complete by this amendment. |
+| P75 broad performance | P63 CC-17 owns only the measured R16 save/burst/undo/reopen residual and conditional watermark; P75 retains the broader performance programme. CC-5c receives only the needed SV-L7 batching semantics. |

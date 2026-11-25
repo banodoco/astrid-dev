@@ -42,11 +42,11 @@ The Runtime already does the hard part: its `media-imports` route streams the re
 
 1. **LM-1** (astrid-runtime): the generated client can send a sized file stream on `media-imports`. Then the Agent's pin moves to it.
 2. **LM-2** (the Agent): no limit of its own, and streaming on every path that reads local media.
-3. **LM-3** (the Agent), in parallel once LM-2's streaming call exists: the import handle.
-4. **LM-4 and LM-5** (the editor), once Plan 77 has landed in `release/15/main`: a large dropped clip is placed and stays placed, and a reload cannot silently lose an upload.
+3. **LM-3** (the Agent): catalog and existing-object inventory can start independently; the affected stream consumer lands after the LM-2 contract and pin.
+4. **LM-4 and LM-5** (the editor): drop/guard inventory starts independently; affected landings consume the verified child builder and relevant shared-function and custody contracts. A large dropped clip is placed and retained, and reload cannot silently lose an upload.
 5. **LM-6, the live proof,** on the combined result, then **R**.
 
-**Real dependencies:** `release/15/plan-77` edits `astrid/sdk/timeline/media_add.py` and the client's timeout in the Agent, and the drop handling in the App. This plan's branches are cut from `release/15/main` after Plan 77 lands there; the manager records the commits in [inputs.md](inputs.md#source-identities). On `release/15/main` today the editor's save handoff refuses an ordinary dropped video ([astrid-app #252](https://github.com/banodoco/astrid-app/issues/252)), so the editor half cannot be proven until that is fixed, by Plan 77 or by LM-4.
+**Historical branch conflict (not a whole-plan start gate):** `release/15/plan-77` edits `astrid/sdk/timeline/media_add.py` and the client's timeout in the Agent, and the drop handling in the App. Reconcile the actual base and shared functions before affected landings; catalog, drop and guard inventory may start independently. The manager records the commits in [inputs.md](inputs.md#source-identities). On `release/15/main` today the editor's save handoff refuses an ordinary dropped video ([astrid-app #252](https://github.com/banodoco/astrid-app/issues/252)), so the editor half cannot be proven until that is fixed, by Plan 77 or by LM-4.
 
 **Must not disturb:** Plan 63's import outcomes and replay, Plan 75's concurrent-commit timing and Plan 77's parked-drop retry.
 

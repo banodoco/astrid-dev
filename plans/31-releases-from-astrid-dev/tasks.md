@@ -115,14 +115,9 @@ Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run cont
 
 ### RL-2c `release-sync`
 - **Why a copy:** at least six consumers read `public/install-manifest.json` from an App checkout or image, among them Docker, `build.json`, fully local, the local-update checkout and Pinokio. Keeping one generated copy means none of them change.
-- **What it does:** it runs every 30 minutes and can be started by hand. Its code comes from App `main`, and it does nothing unless `vars.RELEASE_SYNC_ENABLED == 'true'`, like the claim bot's switch. It:
-  - fetches `release-published`;
-  - checks that `source` is an ancestor of astrid-dev `main` and holds `releases/<release>.md`;
-  - runs `manifest-check`;
-  - copies the bootstraps from `app` (from `scripts/installer/bootstrap/`, or `public/` for a SHA from before RL-2b, which only the legacy record has);
-  - commits only `public/install*` and pushes.
-- **Checks on its own pushes:** a push made with the workflow token starts no other workflow, so the sync runs the App's manifest and bootstrap checks itself before pushing. The canary checks the deployed result.
-- **`install-copy-guard`** fails any PR that changes `public/install*`. The sync never opens a PR.
+- **Proposed protected writer:** derive only the exact generated `public/install*` diff from a validated owner-approved Final and route it through a protected generated-only bot PR and every effective required check, unless the owner selects a demonstrably equivalent mechanism with the same enforcement. Validate source/App ancestry, manifest, bootstraps, correct tuple and stale approval before write; hold or prove a safe deployment interval, then verify complete served bytes and deployment identity. The old writer and guard remain until replacement enforcement is effective.
+- **Guard examples:** a hand-edited installer or unauthorized generated diff fails; a correctly generated exact diff passes the required checks; stale/wrong source, absent Final, unauthorized actor or failed check refuses. Workflow-token self-checks are not substitutes for required checks.
+- **Historical direct-push proposal:** the earlier draft relied on workflow-token self-checks and did not open a PR; it remains historical and is superseded for this proposed scope, not an authorization to bypass protection.
 - **Burn down:** the sync replaces `pin.mjs` write mode and `release-guard`, so they're deleted in this same change. Plan 29 already deleted `release-check.mjs`, `update-manifest.mjs`, the release-0 and baseline files and `check-public-updater-candidate.*`. Confirm that against App `main` at start.
 - **App PR #208** (version helper) closes unmerged. Nothing from it is needed.
 - **Route note (X, could be S):** this job writes installer code to App `main`. The gate in RL-1c is the trust root, and the review round covers this job. Raise it to S if the push identity needs a new credential (see inputs, open decision 1).

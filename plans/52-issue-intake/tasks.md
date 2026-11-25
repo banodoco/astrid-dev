@@ -206,4 +206,4 @@ The existing Lead must confirm the carried R16 custodian before dispatch; no new
 | II-8 | Reconcile live App, Runtime and Pinokio redirect changes with the landed Agent half; prove both doors without merging the obsolete divergent Agent branch. | Unchanged; reopened |
 | II-9 | Obtain existing owner wording approval and verify installed source root before the guidance patch. | Unchanged; reopened |
 | II-10 | Owner-only issue transfers remain administrative closure. | Unchanged |
-| II-11 / II-13 | Prove both doors/redirects and six searches; preserve pending browser and duplicate limits. | Unchanged; not complete |
+| II-11 / II-13 | Prove both doors/redirects and all seven D14 states/searches, including Claimed (branch, PR or dispatched packet); the older six-search receipt remains partial. Preserve browser and duplicate limits. | Unchanged; not complete |
