@@ -94,7 +94,7 @@ On 24 November 2026 the owner chose Otto, its two consumers, and multiple pipeli
 2. The owner settles D2 (repository) and D3 (run route); the orchestrator creates the repository (OT-2).
 3. The contract design (OT-4) and the mechanical lifts (OT-3, OT-5, OT-6) run in parallel; the guidance map (OT-15) starts at the same time. RS1 reviews the config, record, relation, pipeline and template contract, before any card builds on it.
 4. Config, relations, pipelines, templates and `otto check` (OT-7 to OT-13) are built on the reviewed contract. The Marketing fixture (OT-14) and the guidance documents (OT-16 to OT-18) are written alongside.
-5. Dev migrates on its project branch (OT-19 to OT-21), and OT-22 proves parity. OT-23 tags Otto v0.1.0, which unblocks Plan 96. Then the final review R, the owner's sense check SC, and the completion PR (OT-24) follow.
+5. Dev migrates on its project branch (OT-19 to OT-21), and OT-22 proves parity. OT-23 tags Otto v0.1.0, which unblocks Plan 96. Then the final review R and the completion PR (OT-24) follow.
 
 The run uses the fresh-session ChatGPT packet workstream: an orchestrator, a manager for this plan, and packets in High, Extra High or Pro by route. [Tasks](tasks.md) marks which cards are orchestrator-lane (proofs, repository and branch operations, migrations needing clones or network, reviews) and which are packet-able (code and document writing). Recording this plan authorizes no run.
 

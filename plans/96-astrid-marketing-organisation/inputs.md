@@ -28,10 +28,10 @@ Alternatives: clone Dev (wrong release, numbering and approval rules); an elabor
 ## Owner decisions
 
 - **D1 (decided, 24 November 2026):** a simple independent Astrid Marketing on Otto, with projects, tasks, issues, the `standard` and `loop` templates, optional campaigns, local skills and declared pipelines.
-- **D2 (open):** strategy, brand voice and audience sources, and which two small real projects and which campaign prove the workspace. Recommend a useful standard deliverable and a bounded loop, not a speculative growth target.
-- **D3 (open):** repository name and visibility, and permitted product sources. Recommend `banodoco/astrid-marketing`, private while strategy is unpublished, with slug IDs; Otto itself is public, so a private workspace still installs it without tokens.
-- **D4 (open):** external permissions: actor, item, channel, time, spend and contact limits. Recommend none by default; live publication and market metrics are not needed to finish.
-- **D5 (open):** review budget, manager and handoff. Recommend one final R.
+- **D2 (decided, 25 November 2026): scope, brand, voice and audience.** One project only: announcement videos for Reddit (`projects/reddit-announcement-videos/`), audience Reddit users. Brand and voice are taken from the Astrid video skill in `banodoco/poms_packs`: branch `pack/astrid-video-v0.12`, commit `0d25d41821e02d26314277813e947f2d926b8f31`, entry `astrid_video/docs/SKILL.md` and `astrid_video/docs/skills/directing-astrid-videos/SKILL.md` (visual language in `astrid_video/docs/references/visual-language.md`: "Sophisticated editorial design. Playful pixelated physics."). That skill states no product positioning, no tone guide and no announcement structure, and its own catalogue calls the pack a review candidate that is not admitted; the owner said to leave such fields empty rather than invent them. The workspace references that skill at the pinned commit; it does not copy it. No second project, no loop project and no campaign.
+- **D3 (decided, 25 November 2026): repository.** `banodoco/astrid-marketing`, private, owned by the `banodoco` organisation, slug IDs; Otto is public, so a private workspace installs it by git tag without tokens. Product sources: Astrid's public repositories only. Creating the repository needs repository administration: the owner (or an organisation admin) creates it empty when card MK-1 asks.
+- **D4 (decided, 25 November 2026): external permissions.** None. No publication, contact or spend; the video is a draft or review deliverable until the owner separately authorizes posting.
+- **D5 (decided, 25 November 2026): review budget and manager.** No review budget is set; the manager arrangement is the same as every other run. No formal review stop: the owner accepts the deliverable (owner direction on 25 November 2026).
 
 ## Source identities
 
