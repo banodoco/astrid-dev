@@ -57,7 +57,7 @@ Post one STATUS with each as passed or failed; dispatch nothing until the orches
 
 ## Dispatch queue
 
-Cap: three Running or Review at once (ruling 6). Priority: P95-08, then P95-16, P95-11, P95-17.
+Cap: three Running or Review at once (ruling 6). Priority: P95-09 (critical path), then P95-17, P95-12.
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
@@ -71,6 +71,8 @@ Cap: three Running or Review at once (ruling 6). Priority: P95-08, then P95-16, 
 | [P95-17](packets/P95-17.md) Otto guidance: generic roles and workstreams | OT-17 | Ready (OT-15 merged; merges after P95-16) | — | High. Beside P95-16 and P95-07 |
 | [P95-08](packets/P95-08.md) Relation kinds and cardinality as data | OT-8 | Ready (OT-7 merged; Otto main `608ef135`) | — | Extra High. Critical path; first priority |
 | [P95-11](packets/P95-11.md) Template selection and manifests | OT-11 | Ready (OT-7 merged; Otto main `608ef135`) | — | Extra High. Beside P95-08 within the cap |
+| [P95-09](packets/P95-09.md) Pipeline declarations, listing and traversal | OT-9 | Ready (OT-8 merged; Otto main `cefbfc1e`) | — | Extra High. Critical path (then OT-10, OT-13) |
+| [P95-12](packets/P95-12.md) Standard and loop templates; a third with no code change | OT-12 | Ready (OT-11 merged; Otto main `cefbfc1e`) | — | High |
 | [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
 
