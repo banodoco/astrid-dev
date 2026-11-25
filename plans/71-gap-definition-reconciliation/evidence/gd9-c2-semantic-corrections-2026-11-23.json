@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "EVIDENCE_ONLY_C2_SOURCE_SEMANTIC_CORRECTIONS",
+  "authority": "PROPOSED_AND_SOURCE_GROUNDED_NOT_OWNER_APPROVED",
+  "frozen_source": "ca97096ba6893108c90a932479e7473f679c724e",
+  "original_c2_blob": "bba487a5357c5c405b266421af6d49e4c5a2f481",
+  "reviewer_acceptance": "NO-RESULT",
+  "outcome_proof": "NO-RESULT",
+  "proof_owner": "NO-RESULT",
+  "corrections": [
+    {
+      "id": "CA-005-C03",
+      "old": "CA-005-C03 — Ten concurrent contributors add different plans without conflicts",
+      "replacement": "CA-005-C03 — Ten contributors add or update different projects from the same starting point and merge without conflict",
+      "gap_path": "vision/gaps/CA-005-parallel-contribution.md",
+      "gap_line": 23,
+      "gap_exact": "Ten contributors adding or updating different projects from the same starting point all merge without conflict.",
+      "category": "UNPLANNED",
+      "reason": "Frozen closure requires contributor changes to distinct projects, including updates, from the same starting point; calling them plans omits updates and can substitute a narrower source object.",
+      "independent_decision": "NO-RESULT"
+    },
+    {
+      "id": "CI-003-C03",
+      "old": "CI-003-C03 — Refresh, deduplicate, remove and handle conflicts, rate limits, permissions, prompt injection",
+      "replacement": "CI-003-C03 — Handle updates, conflicting claims, rate limits, removals, permission failures and prompt injection without treating source text as action authority",
+      "gap_path": "vision/gaps/CI-003-public-source-ingestion.md",
+      "gap_line": 19,
+      "gap_exact": "Show updates, conflicting claims, rate limits, removals, permission failures and prompt injection never becoming action authority.",
+      "plan_path": "plans/42-hivemind-public-sources/plan.md",
+      "plan_line": 23,
+      "plan_exact": "incremental refresh, revisions, deduplication, attribution, source removal",
+      "category": "PLAN_SCOPE",
+      "reason": "Deduplication is authored by Plan 42 as plan-scoped implementation work, not named in CI-003's canonical Closure evidence. Keep the plan's deduplication test, but do not silently add it as a distinct gap-closure mandate.",
+      "independent_decision": "NO-RESULT"
+    }
+  ],
+  "invariants": {
+    "original_c2_preserved": true,
+    "category_counts": "47 PLAN_SCOPE / 15 SPECIFIC_EVIDENCE_MISSING / 7 UNPLANNED inclusive adjacent",
+    "true_criteria": 68,
+    "adjacent_noncriterion": "F-008-C09",
+    "no_merges": true
+  }
+}

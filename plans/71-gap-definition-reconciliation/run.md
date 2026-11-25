@@ -2,9 +2,9 @@
 
 The live state of Plan 71's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (21:30 UTC, Tue 24 Nov)
+## Now (22:30 UTC, Tue 24 Nov)
 
-Set up, not started. The orchestrator starts with the lane's integration card once the owner merges the setup PR; packets become Ready as their dependencies merge.
+The integration card has landed: the project branch is at `901e2c3d76155341a69df2b57af9cc02a4bda9ef`. Ready: P71-01. The first packet goes alone until its early STATUS proves a packet session can push, open a draft PR and comment.
 
 ## Authority
 
@@ -22,7 +22,7 @@ On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`,
 2. **Proof runs where the network is.** Packet sessions write code and tests and end with `READY-PROOF <repo> <PR> <head> <selectors>`; the orchestrator runs `python3 scripts/astrid_dev.py check`, `python3 -m unittest discover -s scripts -p "test_*.py"` and the packet's focused selectors on the exact head, and posts the result.
 3. **The destination is the project branch.** Where the packet workstream says `release/<N>/plan-<P>`, read `project/71-gap-definition-reconciliation`. Cut each task branch from its current head; merge it in, never rebase; post BLOCKED if the board lists a different head for an existing draft.
 4. **Dependants wait only for the cards they depend on,** not for a whole packet.
-5. **Reviews are the orchestrator's.** It reviews each submission itself on the run contract's routes (high-judgment for S cards and for any change to what a check accepts or refuses). It never asks a packet to review another packet. The one exception is the owner's project-wide sense check: a read-only session the manager starts only on the orchestrator's REQUEST, in GPT-6.2 Astra at High as the owner asked, at most two rounds. If that mode is not offered, the manager says so and the orchestrator asks the owner.
+5. **Reviews.** The orchestrator runs every proof and reviews ordinary submissions itself. A high-judgment verdict goes to a fresh, read-only ChatGPT session in **Pro** (owner, 24 November 2026), using the review packet [P71-RV](packets/P71-RV.md). That covers S packets, any change to what a check accepts or refuses, and the final review R; in this plan, the final review R. The manager starts it only on the orchestrator's REQUEST, which names the review kind, the pull request, the exact head and the proof results, and it starts a fresh session for each REQUEST. No packet session reviews its own work. The owner's project-wide sense check is separate: a read-only session in **Pro** in normal ChatGPT Chat (owner, 24 November 2026; it replaces GPT-6.2 Astra at High), at most two rounds, also started only on the orchestrator's REQUEST. Astra is not substituted. If Pro is not offered, the manager says so and the orchestrator asks the owner, who starts the review manually in Pro.
 6. **Cap:** at most two packets Running or Review in this plan at once. The first packet goes alone, until its early STATUS shows a session can push, open a draft PR and comment.
 7. **Sessions:** packet sessions run in a normal ChatGPT Chat, not Work. One writer per branch: replace a stopped session only after its branch has been still for 30 minutes, naming the head in the replacement's first message.
 8. **Plan records:** `plans/71-gap-definition-reconciliation/*.md` change on `main` only through the orchestrator's progress PRs. A packet may add only the evidence file its packet names.
@@ -57,7 +57,7 @@ The manager does these first, posts one STATUS with each as passed or failed, an
 5. **The hour:** a reminder that fires every hour, verified by one firing.
 6. **GitHub from a packet session:** proved by the first packet's early STATUS: it pushed a `p71/<card id>` branch, opened a draft PR into `project/71-gap-definition-reconciliation` and commented on #1880.
 7. **GitHub for the manager:** it can read pull requests, commits and workflow runs in astrid-dev, and comment on #1880.
-8. **Capacity:** how many ChatGPT sessions the account can run at once, and whether Extra High, Pro and GPT-6.2 Astra at High are offered.
+8. **Capacity:** how many ChatGPT sessions the account can run at once, and whether Extra High and Pro are offered.
 
 The orchestrator's own check (it runs the proofs): it can clone astrid-dev, run both checks and one focused test. Passed on 24 November 2026.
 
@@ -67,8 +67,9 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
-| [P71-01](packets/P71-01.md) The accepted rubric in its canonical home | GDC-2 | Blocked on GDC-1 (orchestrator's lane) | — | Extra High. First packet, alone |
-| [P71-SC](packets/P71-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | GPT-6.2 Astra, High. Started only on the orchestrator's REQUEST |
+| [P71-01](packets/P71-01.md) The accepted rubric in its canonical home | GDC-2 | Ready (project head `901e2c3d`) | — | Extra High. First packet, alone |
+| [P71-RV](packets/P71-RV.md) High-judgment review (read-only, Pro) | the final review R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
+| [P71-SC](packets/P71-SC.md) Project-wide sense check, round 1 (read-only) | SC | R accepted at `ff119a09`; starts only on the orchestrator's REQUEST | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
 **Conflicts:** P71-01 alone writes `docs/contribution-workflow.md`, the gap workstream and `templates/gap.md`. Plan 73's P73-02 to P73-05 also write the gap workstream's `agent/` copy: whichever lands on `main` second carries the edit (orchestrator rules the order).
 
