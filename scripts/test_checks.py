@@ -474,5 +474,41 @@ class RetiredAgentSourcesTests(unittest.TestCase):
                 self.assertEqual(checks._obsolete_sources(checks.Context(root)), [])
 
 
+class GeneratedSkillsUntrackedTests(unittest.TestCase):
+    def run_rule(self, root):
+        entry = next(entry for entry in checks.REGISTRY if entry.id == "generated-skills-untracked")
+        self.assertEqual(entry.trigger, "always")
+        return entry.run(checks.Context(root))
+
+    def repo(self, files, tracked):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        root = Path(temp.name)
+        subprocess.run(["git", "-C", str(root), "init", "-q"], check=True)
+        for name in files:
+            path = root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("x\n", encoding="utf-8")
+        for name in tracked:
+            subprocess.run(["git", "-C", str(root), "add", "-f", name], check=True)
+        return root
+
+    def test_passes_when_no_skill_or_generated_file_is_tracked(self):
+        # An untracked, ignored-style generated package does not count.
+        root = self.repo(["agent/start.md", ".generated/skills/astrid-dev-start/SKILL.md"],
+                         tracked=["agent/start.md"])
+        self.assertEqual(self.run_rule(root), [])
+
+    def test_fails_for_tracked_generated_and_skill_files(self):
+        root = self.repo(["agent/start.md", ".generated/skills/astrid-dev-start/SKILL.md",
+                          "docs/tools/SKILL.md"],
+                         tracked=["agent/start.md", ".generated/skills/astrid-dev-start/SKILL.md",
+                                  "docs/tools/SKILL.md"])
+        errors = self.run_rule(root)
+        self.assertEqual(len(errors), 2)
+        self.assertTrue(any(error.startswith(".generated/skills/astrid-dev-start/SKILL.md:") for error in errors))
+        self.assertTrue(any(error.startswith("docs/tools/SKILL.md:") for error in errors))
+
+
 if __name__ == "__main__":
     unittest.main()

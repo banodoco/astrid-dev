@@ -51,6 +51,8 @@ Each workstream has a defined, independently verifiable outcome. Keep its full e
 
 ## Build and install
 
+Generated SKILL.md files carry a do-not-edit header naming their source; always edit the source under agent/.
+
 From the repository checkout:
 
 ~~~sh
