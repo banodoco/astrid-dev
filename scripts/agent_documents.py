@@ -1,6 +1,6 @@
 """Canonical Markdown-first agent document discovery and validation.
 
-Only \`skill: true\` opts a source document into packaging. Directories describe
+Only `skill: true` opts a source document into packaging. Directories describe
 ownership, not its skill name; the stem supplies a stable astrid-dev-* name.
 This source reader intentionally has no knowledge of legacy SKILL.md packages.
 """
@@ -13,6 +13,9 @@ import os
 
 from document_structure import frontmatter, headings, section
 
+
+SKILL_PREFIX = "astrid-dev-"
+AGENT_SOURCE_ROOT = "agent"
 
 _NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 _SECTION_NAMES = {
@@ -33,7 +36,7 @@ class AgentDocument:
 
     @property
     def skill_name(self) -> str | None:
-        return "astrid-dev-" + self.path.stem if self.skill else None
+        return SKILL_PREFIX + self.path.stem if self.skill else None
 
 
 def _kind(relative: Path) -> str:
@@ -57,12 +60,12 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
     # Resolve the source as well as root: /var and /private/var alias on macOS.
     path = path.resolve()
     try:
-        relative = path.relative_to(root / "agent")
+        relative = path.relative_to(root / AGENT_SOURCE_ROOT)
     except ValueError as exc:
         raise ValueError("source must be under agent/") from exc
     if not relative.parts or ".." in relative.parts or path.suffix != ".md":
         raise ValueError("source must be a regular .md document under agent/")
-    if not path.resolve().is_relative_to(root / "agent"):
+    if not path.resolve().is_relative_to(root / AGENT_SOURCE_ROOT):
         raise ValueError("source resolves outside agent/")
 
     metadata, body = frontmatter(path.read_text(encoding="utf-8"))
@@ -106,7 +109,7 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
 def discover_documents(root: Path) -> tuple[AgentDocument, ...]:
     """Discover all Markdown sources with no manually maintained package list."""
     root = Path(root).resolve()
-    agent_root = root / "agent"
+    agent_root = root / AGENT_SOURCE_ROOT
     # A dangling directory symlink has exists() == False; refuse it before
     # treating an absent agent source tree as an empty, removable package set.
     if agent_root.is_symlink():
