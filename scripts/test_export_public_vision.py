@@ -15,6 +15,44 @@ FIXTURE_FILES = Path(__file__).parent / "fixtures" / "vision"
 
 class PublicVisionProjectionTests(unittest.TestCase):
 
+    def test_gap_filename_and_heading_validation_keeps_export_behavior(self):
+        # Work on a private copy: other projection tests share the class fixture.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "checkout"
+            shutil.copytree(self.fixture_root, root)
+            gaps = root / "vision/gaps"
+            source = sorted(gaps.glob("*.md"))[0]
+            original = source.read_text(encoding="utf-8")
+            old_id = self.page["gaps"][0]["id"]
+            new_id = "ZZZ-999"
+            text = original.replace(f"# {old_id} —", f"# {new_id} —", 1)
+            self.assertNotEqual(text, original)
+
+            valid = gaps / "ZZZ-999-packet-filename.md"
+            valid.write_text(text, encoding="utf-8")
+            page = build(root, SHA)
+            self.assertEqual(page["schemaVersion"], 1)
+            entry = next(gap for gap in page["gaps"] if gap["id"] == new_id)
+            self.assertEqual(entry["title"], self.page["gaps"][0]["title"])
+            self.assertEqual(entry["githubUrl"],
+                             "https://github.com/banodoco/astrid-dev/blob/"
+                             + SHA + "/vision/gaps/" + valid.name)
+            valid.unlink()
+
+            for name in ("ZZZ-999-Invalid.md", "ZZZZ-999-filename.md",
+                         "ZZZ-999-.md", "ZZZ-998-filename.md"):
+                with self.subTest(name=name):
+                    invalid = gaps / name
+                    invalid.write_text(text, encoding="utf-8")
+                    try:
+                        with self.assertRaises(ValueError) as caught:
+                            build(root, SHA)
+                        self.assertEqual(str(caught.exception),
+                                         f"{invalid.relative_to(root)}: invalid gap heading/name")
+                    finally:
+                        invalid.unlink()
+
+
     def test_every_gap_resolves_to_an_aspiration_and_preserves_element_projection(self):
         page = self.page
         known = {f"{kind}:{subject['id']}/{item['id']}": item
