@@ -31,7 +31,7 @@ Choose a procedure for an already-authorized task; selecting a workstream never 
 
 ## Author a document
 
-Write one Markdown file with a useful first-level heading and one plain-text description in frontmatter. Add the optional line shown below if independently discovering the document as a skill is useful.
+Write one Markdown file with a useful first-level heading and one plain-text description in frontmatter: a nonempty single line of at most 240 characters, ending in punctuation. Add the optional line shown below if independently discovering the document as a skill is useful.
 
 ~~~yaml
 ---
