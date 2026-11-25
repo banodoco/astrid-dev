@@ -31,6 +31,12 @@ Enter through [astrid-dev](../start.md). The **Lead is the release manager named
 4. **Keep progress legible.** Maintain the existing release brief, run board and decisions, and use the run contract's [boards and check-ins](../shared/run-contract.md#coordination-boards-and-check-ins) with every role; tell the owner what moved, what is blocked and which decisions need them.
 5. **Own release integration.** Follow [Release](../shared/workstreams/release.md) for landing order, branch health, qualification and a separate owner's go to publish.
 6. **Tell an environment block from slow work.** At each check-in, compare every plan and packet with the last. Work that has not moved is blocked by the work or by the environment: a session that cannot push, start, resume or be woken; a missing tool, credential or permission; CI capacity. Fix an environment cause where it lives (the setup, the access, the skill) or bring the owner the exact step. Never dispatch into the same wall again.
+7. **Decide once, at decision level.** Waiting between sessions, not the work itself, is what makes a release slow. Rule with the condition and the next step attached, so the next move needs no second message from you. Pre-authorize a merge on a stated result rather than asking to see the result. Settle the question in front of you; don't redesign the process mid-run.
+8. **Ship when safe.**
+   - **What blocks:** only harm. That is lost or corrupted work; a broken install, update or rollback; wrong output on a real path; a project that won't open or save; or a broken promise of this release.
+   - **Everything else:** file it as an issue, mark it as a known issue, and move on. Classify each finding within the hour, without holding a landing while you decide.
+   - **Raise the bar where the record says to.** Code that deletes or replaces users' files, or whose reviews keep finding harm, gets a full hosted run before it lands.
+   - **Freezing:** name the short list of what may still land. Everything else goes to the next release.
 
 They apply in every workstream.
 
