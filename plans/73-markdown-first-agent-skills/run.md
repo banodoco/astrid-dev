@@ -2,9 +2,18 @@
 
 The live state of Plan 73's completion run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md#completion-run-owner-go-24-november-2026) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (15:45 UTC, Wed 25 Nov)
+## Now (17:45 UTC, Wed 25 Nov)
 
-The project branch is at `c7cbf07ab221344cb91806bf42afc6663b657a40`: P73-01 to P73-07 and both INT rounds are merged, and MSC-7 and MSC-8 are done. The final review R (round 1) returned REWORK with two blocking findings ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7166533493)). Ready: P73-R1-1 (cards R1.1) and P73-R1-2 (R1.2), in parallel, both on that head. After they merge: R round 2 (it verifies only round 1's fixes), then SC, then MSC-10.
+All cards are done: R round 2 accepted ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7168681648)) and the sense check SC returned SOUND WITH FOLLOW-UPS with no blocking finding ([verdict](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7169258491)). The completion pull request carries the evidence; the owner gave the go to merge on 25 November. Nothing is Ready.
+
+## Cutover handoff (SC follow-up 2)
+
+Reverting the merge commit restores tracked source only. It does not restore installed symlinks or what a running client has already loaded. The old `sync.sh` and the old `skills/` tree are gone after the merge, and the old `sync.sh` rejects generated installations, so it is not a rollback tool.
+
+- **Who is affected:** every contributor or session owner who installed these skills from a checkout (links under their agent skills folders that point into `<checkout>/skills/`). After the merge those links dangle until the checkout is updated.
+- **To move to the new layout:** in the checkout, pull `main`, then run `python3 scripts/astrid_dev.py skills build` and `python3 scripts/astrid_dev.py skills install`. The installer recognises this checkout's earlier links and retargets them; foreign entries are left alone. A running session keeps its old instructions until it is restarted or reloaded; a new session discovers `astrid-dev-start` from the generated package.
+- **Sessions finishing on the old checkout:** a session already running on a pre-merge checkout may finish there. It must not edit `skills/` on `main` after the merge; the file no longer exists.
+- **Rolling back:** revert the one merge commit on `main` (source), then in each affected checkout run the previous revision's own install step, because the generated links point at `.generated/skills/` and do not return to `skills/` by themselves. Record each destination before moving it.
 
 ## Authority
 
