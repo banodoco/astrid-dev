@@ -1,6 +1,6 @@
 # MSC-4 rule-preservation audit — roles (P73-04)
 
-Approved scope and method: [Step 1 decision](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7154905027). Source main M: `2761114f93452d7c3110b71a9b55a5d4dc36490d`; INT pair source: `fd8a9a04accc2634e2cd9f7ba4916da3679f0da8`. Candidate base: `090c3f87a0b40cadd6b7587847ff9b57a277407b`. Source/target paths below are repository-relative; line numbers are one-based. Quoted excerpts identify individual consequential obligations; consult the cited full line for its context. Layout-only replacements are superseded, not new execution authority. No proof run by packet session.
+Approved scope and method: [Step 1 decision](https://github.com/banodoco/astrid-dev/issues/1882#issuecomment-7154905027). Source main M: `2761114f93452d7c3110b71a9b55a5d4dc36490d`; INT pair source: `fd8a9a04accc2634e2cd9f7ba4916da3679f0da8`. Candidate base: `090c3f87a0b40cadd6b7587847ff9b57a277407b`. Source/target paths below are repository-relative; line numbers are one-based. The audit uses the approved 45-unit hand-counted entry-point sample, then a conservative clause/excerpt inventory of the rest: sentence and semicolon boundaries are separated, and long clauses may occupy consecutive short excerpts. Counts are evidence rows (not a claim that every excerpt is a distinct independent obligation); contextual clauses and operational template text are intentionally included rather than risk missing an authority or proof restriction. Source excerpt typography and link destinations are omitted for legibility; consult the cited full line for its context. For verbatim procedures the entire source line, not just its excerpt, matches the target line after Markdown link destination/formatting normalization; non-identical lines are individually mapped. Moved routing rows refer to the shared document on the pinned project base; the combined MSC-4 review should recheck their line positions if P73-05 edits that document. Layout-only replacements are superseded, not new execution authority. No proof run by packet session.
 
 ## agent/start.md
 
@@ -88,7 +88,7 @@ Source: `skills/shared/workstreams.md` at M. Destination: `agent/README.md`. Rep
 | Standalone skills add `name: astrid-dev-<name>` to frontmatter, use a matching directory | 25 | 34, 43; scripts/agent_documents.py:71–87, 135–143; test_invalid_skill_value_and_manual_name_refused; test_duplicate_skill_stems_fail_without_name_override | superseded |
 | may give their H1 a natural title. | 25 | 34; scripts/agent_documents.py:89–92 | kept |
 | Role-specific documents use only `description:` in frontmatter and start with `# Workstream: <title>` | 25 | 34, 43, 45; scripts/agent_documents.py:71–82, 89–103; test_roles_workstreams_and_references_share_one_document_format | superseded |
-| Both have a one-line description of at most 240 characters, ending in punctuation. | 25 | 34; scripts/agent_documents.py:74–79; test_missing_description_and_invalid_filename_fail (missing description); max length and punctuation directly enforced by parser | kept |
+| Both have a one-line description of at most 240 characters, ending in punctuation. | 25 | 34; scripts/agent_documents.py:74–79; test_missing_description_and_invalid_filename_fail (missing description); max length and punctuation directly enforced by parser | restored |
 | Supporting guides inside nested workstream directories are not workstreams and do not need this contract. | 25 | 16, 43; scripts/agent_documents.py:42–49; test_roles_workstreams_and_references_share_one_document_format | superseded |
 | A shared workstream skill inherits the invoking role's and run's authority; a role-specific document inherits its parent's. | 27 | 13–14, 20, 45 | kept |
 | Neither can authorize its own execution, merges, spending or publication. | 27 | 20, 45, 60 | kept |
@@ -120,12 +120,12 @@ Source: `skills/shared/workstreams.md` at M. Destination: `agent/README.md`. Rep
 | The CI write-back allowlist remains explicit | 43 | 20; .github/workflows/docs.yml:117–156 still verifies declared generated-view paths; scripts/test_views.py test_target_symlink_inside_repository_is_refused_before_any_write, test_sync_reports_shared_target_once_when_both_regions_are_stale | kept |
 | a new parent skill with workstreams must first be registered in `scripts/workstreams.py`'s `PARENT_SKILLS`. | 43 | 20, 43; scripts/agent_documents.py:109–151; test_valid_workstream_extension_adds_a_skill_without_removing_any, test_orphan_role_workstream_is_refused; intentional no manual registry | superseded |
 | Every independently discoverable role or shared workstream skill retains its namespaced `name: astrid-dev-*` and matching leaf directory name. | 46 | 43; test_real_repository_markdown_catalog; test_canonical_agent_source_root_and_skill_prefix_are_stable; name now from filename stem, intentional original role renames | superseded |
-| installs **flat symlinks** to the canonical packages for Claude/Codex discovery | 46 | 60; skills install; test_existing_install_symlink_survives_exchange; test_generate_canonical_metadata_and_links | superseded |
+| installs **flat symlinks** to the canonical packages for Claude/Codex discovery | 46 | 60; skills install; test_existing_install_symlink_survives_exchange; test_generate_canonical_metadata_and_links; scripts/test_generated_skill_installer.py::test_old_owned_install_retargets_to_generated_package | superseded |
 | the extra grouping directory does not appear in installed skill names. | 46 | 43; test_location_does_not_determine_skill_status | kept |
 | Do not duplicate instructions or add folders for workstreams that need no variant. | 46 | 47 | restored |
 | Follow the run contract. | 46 | 15, 20, 45, 47 | kept |
 
-Count: 61 found; 22 kept; 11 restored; 0 moved; 28 superseded.
+Count: 61 found; 21 kept; 12 restored; 0 moved; 28 superseded.
 
 
 ## agent/roles/leader.md
@@ -2042,3 +2042,31 @@ Source: `skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/m
 
 Count: 105 found; 87 kept; 0 restored; 18 moved; 0 superseded.
 
+## Audit totals and disposition
+
+| Destination document | Found | Kept | Restored | Moved | Superseded |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `agent/start.md` | 45 | 45 | 0 | 0 | 0 |
+| `agent/README.md` | 61 | 21 | 12 | 0 | 28 |
+| `agent/roles/leader.md` | 54 | 54 | 0 | 0 | 0 |
+| `agent/roles/orchestrator.md` | 210 | 193 | 0 | 17 | 0 |
+| `agent/roles/manager.md` | 48 | 48 | 0 | 0 | 0 |
+| `agent/roles/worker.md` | 16 | 16 | 0 | 0 | 0 |
+| `agent/roles/leader/multi-manager-release.md` | 152 | 134 | 0 | 18 | 0 |
+| `agent/roles/leader/lane-orchestrators.md` | 98 | 98 | 0 | 0 | 0 |
+| `agent/roles/manager/chatgpt-packet.md` | 59 | 59 | 0 | 0 | 0 |
+| `agent/roles/manager/whole-project.md` | 248 | 248 | 0 | 0 | 0 |
+| `agent/roles/manager/ai-studio-packet.md` | 63 | 63 | 0 | 0 | 0 |
+| `agent/roles/manager/astra-reflection.md` | 55 | 55 | 0 | 0 | 0 |
+| `agent/roles/manager/live-loop.md` | 47 | 47 | 0 | 0 | 0 |
+| `agent/roles/orchestrator/codex-cloud-sessions.md` | 19 | 19 | 0 | 0 | 0 |
+| `agent/roles/orchestrator/codex-in-claude-cloud.md` | 58 | 58 | 0 | 0 | 0 |
+| `agent/roles/orchestrator/multi-manager-dispatch.md` | 76 | 76 | 0 | 0 | 0 |
+| `agent/roles/orchestrator/lane-orchestrator.md` | 56 | 56 | 0 | 0 | 0 |
+| `agent/guides/measurement-box/README.md` | 40 | 40 | 0 | 0 | 0 |
+| `agent/guides/codex-cloud/README.md` | 142 | 135 | 0 | 0 | 7 |
+| `agent/guides/codex-in-claude-cloud/README.md` | 179 | 159 | 0 | 18 | 2 |
+| `agent/guides/codex-in-claude-cloud/manager-brief.md` | 105 | 87 | 0 | 18 | 0 |
+| **Total (21 documents)** | **1831** | **1711** | **12** | **71** | **37** |
+
+No missing rule rows remain; all restorations are confined to the authoring guide. The old field uniqueness check has no equivalent duplicate-heading refusal, and generated role-description/index consistency is not checked automatically by the new human navigation index (the nine original shared links are checked); flagged for the orchestrator under the Step 1 decision. No code/check change is requested by this packet, nor are the old mechanics restored. Existing link targets are unchanged. No clone, build, tests or proof execution by this packet; the orchestrator runs the specified proofs on the exact PR head.
