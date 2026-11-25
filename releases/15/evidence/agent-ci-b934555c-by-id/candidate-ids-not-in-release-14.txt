@@ -1,0 +1,50 @@
+tests/core/generation/test_readiness_missing_models.py::test_defaults_is_ready_once_the_files_are_listed
+tests/core/generation/test_readiness_missing_models.py::test_list_and_defaults_agree_when_files_are_missing
+tests/integrations/test_managed_media_saved_visualize.py::test_saved_revision_with_managed_media_visualizes_a_frame
+tests/packs/rendering/test_remotion_render_contract.py::RemotionTypecheckSmokeTest::test_remotion_typecheck_when_dependencies_present
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[0-None]
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-0]
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-4294967296]
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-None]
+tests/packs/rendering/test_timeline_visualize_motion_views.py::test_a_real_v6_push_comes_from_the_element
+tests/packs/rendering/test_timeline_visualize_motion_views.py::test_the_fallback_mirror_still_matches_the_element_on_v6_pushes
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='editorial')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='fal')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='foley')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='moirae')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='understanding')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='video_editing')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='youtube')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='editorial')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='fal')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='foley')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='moirae')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='understanding')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='video_editing')
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='youtube')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.editorial.actions.boundary_candidates.run', parser_path=(), dest='kind')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.editorial.actions.transcribe.run', parser_path=(), dest='diarize')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.foley.actions.foley_map.run', parser_path=(), dest='stop_after')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.rendering.actions.sprite_sheet.run', parser_path=(), dest='ai_upscale_provider')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.audio_understand.run', parser_path=(), dest='audition_reel')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.audio_understand.run', parser_path=(), dest='mode')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.understand.run', parser_path=(), dest='mode')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.video_understand.run', parser_path=(), dest='mode')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.visual_understand.run', parser_path=(), dest='detail')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.visual_understand.run', parser_path=(), dest='mode')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.cut.run', parser_path=(), dest='renderer')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.logo_ideas.run', parser_path=(), dest='output_format')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.logo_ideas.run', parser_path=(), dest='provider')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='output_format')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='quality')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='reference_mode')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='visual_mode')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.vary_grid.run', parser_path=(), dest='output_format')
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.vary_grid.run', parser_path=(), dest='quality')
+tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[interrupted]
+tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[stale]
+tests/test_core_pack_boundary_guard.py::test_core_pack_boundary_ratchet_holds
+tests/test_pinokio_platform_adapter.py::test_cli_help_and_local_receipt_is_never_hosted
+tests/test_pinokio_platform_adapter.py::test_real_local_start_http_readiness_snapshot_stop_and_port_free
+tests/test_provider_route_grant.py::test_provider_route_grant_reads_runtime_nested_task_inputs
+tests/test_provider_route_grant.py::test_provider_run_requires_explicit_grant

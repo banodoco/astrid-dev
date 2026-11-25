@@ -1,0 +1,6 @@
+test_id	edfc2dc9	23ace564	89768ef9	b934555c	R15 baseline	R14 baseline
+tests/core/generation/test_readiness_missing_models.py::test_a_partly_installed_default_names_only_what_is_missing	YES	no	no	no	no	YES
+tests/core/generation/test_readiness_missing_models.py::test_defaults_is_ready_once_the_files_are_listed	YES	no	YES	YES	no	no
+tests/core/generation/test_readiness_missing_models.py::test_the_download_plan_and_readiness_agree[True]	YES	no	no	no	no	no
+tests/test_installer_source_ownership.py::test_unverifiable_discovery_fails_closed[stale]	YES	no	no	no	no	no
+tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output	YES	YES	no	no	no	no
