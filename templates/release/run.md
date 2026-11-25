@@ -8,7 +8,7 @@ One or two sentences: where the release stands, and the next thing that matters.
 
 ### Boards
 
-Every project's board is the astrid-dev issue titled `board: release NN ...` ([rules](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)); [list them](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22board%3A+release+NN%22).
+Every project's board is the astrid-dev issue titled `board: release NN ...` ([rules](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)); [list them](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22board%3A+release+NN%22).
 
 ### Timeline to publish: <day DD Mon, HH:MM UTC>
 
@@ -21,7 +21,7 @@ Every project's board is the astrid-dev issue titled `board: release NN ...` ([r
 
 ### Qualification
 
-The Qualifier's bar and coverage map are `releases/NN/qualification.md` ([workstream](../../skills/shared/workstreams/astrid-dev-release/qualification.md)).
+The Qualifier's bar and coverage map are `releases/NN/qualification.md` ([workstream](../../agent/shared/release-qualification.md)).
 
 ### Issue list
 

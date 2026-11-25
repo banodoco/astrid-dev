@@ -12,7 +12,7 @@
 
 **Waiting on:** Independent critique and owner decisions; [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md)'s existing-target outcome for the final loop; Release 16 start, matching qualified build and consented Windows GPU proof. Coordinate with Plans 09/29/30/38, 56 and 90 without assuming unlanded work.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary); [Platform reliability](../../vision/gaps/F-001-platform-reliability.md), [Portable generation](../../vision/gaps/F-008-portable-generation.md) and [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
@@ -53,7 +53,7 @@ In the Nov 24 [exploratory Windows report #1848](https://github.com/banodoco/ast
 
 ## Sequence and readiness
 
-First reconcile Plan 20 evidence and independently trace existing engine/GPU, installer and approval surfaces. Freeze the scenario set, supported matrix and smallest local provisioning decision. Use Plan 93's verified existing-target handoff; independent source inventory may proceed alongside it. Reuse existing lifecycle and workflow work as it lands, resolving actual shared functions/contracts before dispatch. Run the [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md) on an approved matching installed stack: record a round, get strategist advice, fix root causes at owners, rebuild, rerun. Two consecutive satisfying live rounds or a recorded stop requiring owner judgment. [Tasks](tasks.md) remains draft until critique, actual task scopes, bases and authorization.
+First reconcile Plan 20 evidence and independently trace existing engine/GPU, installer and approval surfaces. Freeze the scenario set, supported matrix and smallest local provisioning decision. Use Plan 93's verified existing-target handoff; independent source inventory may proceed alongside it. Reuse existing lifecycle and workflow work as it lands, resolving actual shared functions/contracts before dispatch. Run the [live-loop workstream](../../agent/roles/manager/live-loop.md) on an approved matching installed stack: record a round, get strategist advice, fix root causes at owners, rebuild, rerun. Two consecutive satisfying live rounds or a recorded stop requiring owner judgment. [Tasks](tasks.md) remains draft until critique, actual task scopes, bases and authorization.
 
 ## Interfaces and handoff
 

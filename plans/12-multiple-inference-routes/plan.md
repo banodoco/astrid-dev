@@ -16,7 +16,7 @@
 
 **Contributes to closure:** F-008 step 3: a second engine (Wan2GP) on the same path. Milestone C.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 **Draft; not ready for execution.** Wan2GP becomes the **second engine on the one generation path** that [Plan 32](../32-generation-placement-targets/plan.md) builds. It shares the same Placement, lease and remote-machine route as ComfyUI through VibeComfy, which stays primary, and adds only its own `align` and `execute`. Current status and owner remain in the [project queue](../../README.md).
 
@@ -48,4 +48,4 @@ See [tasks.md](tasks.md) for the draft work outline and [inputs.md](inputs.md) f
 
 ## Completion
 
-Wan2GP runs a real generation through the same path as ComfyUI, locally and on RunPod, chosen only by `manifest.engine`; VibeComfy remains primary. Focused lifecycle evidence covers failure, cancellation, cleanup/release, and contention. Existing external instances and unrelated loaded models remain untouched, and unsupported hardware, model, or environment combinations are recorded. This draft does not yet define executable tasks, routes, exact selectors, or source identities; those must be scoped before dispatch. Follow the existing [shared run contract](../../skills/shared/run-contract.md) and its execution/publication authority limits.
+Wan2GP runs a real generation through the same path as ComfyUI, locally and on RunPod, chosen only by `manifest.engine`; VibeComfy remains primary. Focused lifecycle evidence covers failure, cancellation, cleanup/release, and contention. Existing external instances and unrelated loaded models remain untouched, and unsupported hardware, model, or environment combinations are recorded. This draft does not yet define executable tasks, routes, exact selectors, or source identities; those must be scoped before dispatch. Follow the existing [shared run contract](../../agent/shared/run-contract.md) and its execution/publication authority limits.

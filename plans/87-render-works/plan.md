@@ -12,7 +12,7 @@
 
 **Waiting on:** —
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
 **Vision role:** Foundational enabler — rendering is how finished work leaves Astrid. [Plan 27](../27-video-render-options/plan.md) keeps export choices; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline-editing fixes found in the same session; everything else found that day is an issue, listed in [inputs.md](inputs.md#moved-to-issues).
 

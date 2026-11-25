@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-Draft [loop plan](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md). The end state is known; detailed fix cards come from each measured real round, not speculative architecture. Before dispatch settle scope/critique, exact source and existing test inventory; the accountable manager must record actual fixtures, constraints and overlap. No hardware or paid work without specific consent.
+Draft [loop plan](../../agent/roles/manager/live-loop.md). The end state is known; detailed fix cards come from each measured real round, not speculative architecture. Before dispatch settle scope/critique, exact source and existing test inventory; the accountable manager must record actual fixtures, constraints and overlap. No hardware or paid work without specific consent.
 
 **Task ids:** ER-0–ER-3, optional RS1, ER-L, R. **Critical path:** ER-0 → ER-1 → ER-2 → ER-L → R; ER-3 and Plan 93 feed ER-L, RS1 if needed before consumers. **Test inventory:** Agent `tests/core/generation/test_attached_model_download.py`, `test_generate_align.py`, `test_readiness_missing_models.py`, `tests/test_engine_recipe.py`, `tests/test_engine_cli.py`, `tests/test_setup_skill_branches.py`, `tests/test_installer_maintained_guides.py`; inventory runner, GPU, custody, placement, CLI and installer tests and App connection/update tests at ER-0. Confirm names and exact selectors at dispatch; use shared worker environment per `env/README.md`. Do not change existing assertions without applicable approval.
 

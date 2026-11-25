@@ -2,7 +2,7 @@
 
 [Release 15](../../15.md) · [Run board](../run.md)
 
-You are the **manager** for two Release 15 plans, run back to back by you alone: first [Plan 69](../../../plans/69-project-elements/plan.md), then [Plan 77](../../../plans/77-saving-holds-on-a-heavy-timeline/plan.md). Use the [Manage skill](../../../skills/roles/astrid-dev-manage/SKILL.md): its [whole-project workstream](../../../skills/roles/astrid-dev-manage/workstreams/whole-project.md) for Plan 69 and its [live-loop workstream](../../../skills/roles/astrid-dev-manage/workstreams/live-loop.md) for Plan 77. The owner set this order on 21 November 2026 ([decision](https://github.com/banodoco/astrid-dev/issues/1224#issuecomment-7067275617)).
+You are the **manager** for two Release 15 plans, run back to back by you alone: first [Plan 69](../../../plans/69-project-elements/plan.md), then [Plan 77](../../../plans/77-saving-holds-on-a-heavy-timeline/plan.md). Use the [Manage skill](../../../agent/roles/manager.md): its [whole-project workstream](../../../agent/roles/manager/whole-project.md) for Plan 69 and its [live-loop workstream](../../../agent/roles/manager/live-loop.md) for Plan 77. The owner set this order on 21 November 2026 ([decision](https://github.com/banodoco/astrid-dev/issues/1224#issuecomment-7067275617)).
 
 ## The two plans
 

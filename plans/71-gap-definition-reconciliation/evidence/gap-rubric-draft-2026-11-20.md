@@ -2,7 +2,7 @@
 
 **Status:** v1 was accepted at GD-5 ([owner decision](https://github.com/banodoco/astrid-dev/pull/1194#issuecomment-7071483162); [D8](https://github.com/banodoco/astrid-dev/blob/d9ca73c6ab9de4927d8de0fa7950e170c15a8c30/plans/71-gap-definition-reconciliation/inputs.md#owner-decisions)). This is the historical accepted source, not a second policy. The body below is preserved verbatim, including its draft-time status and progress statements. The original v0 evaluated at project merge `e03d09caf7ff84f2361de7b92eee9a00621bc3b5` remains immutable in Git history, with the two assessment passes and discrepancies retained under [GD-4 comparison](gd4-comparison-2026-11-20.md). No HOLD source was read to revise this wording.
 **Source snapshot:** `banodoco/astrid-dev` `main` `4b3e3841af3921d9846389a4cd744f027c1db0b3`, read 20 November 2026; [GD-1 source audit](../inputs.md#gd-1--source-and-authority-audit-20-november-2026).
-**Canonical home:** [Define or reassess a vision gap](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap), consumed by the [Gap workstream](../../../skills/shared/workstreams/astrid-dev-gap/SKILL.md) and [gap template](../../../templates/gap.md). The historical holdout is consumed; this record does not authorize another assessment or introduce a new record type or workstream.
+**Canonical home:** [Define or reassess a vision gap](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap), consumed by the [Gap workstream](../../../agent/shared/workstreams/gap.md) and [gap template](../../../templates/gap.md). The historical holdout is consumed; this record does not authorize another assessment or introduce a new record type or workstream.
 
 ## Definition
 

@@ -12,7 +12,7 @@
 
 **Waiting on:** the owner's mark-up (VA-3, VA-4), her supporting-aspirations table (VA-5) and her look at the page (VA-10)
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [CA-003 — Our vision and execution aren't yet fully connected](../../vision/gaps/CA-003-vision-experiments-progress.md) (primary): this plan makes each gap point at one stated aspiration, so a reader can follow vision, aspiration, gap and plan in one line. CA-003 has no route to closure and none of its closure-evidence items is delivered here, so there is no `Contributes to closure` line.
 

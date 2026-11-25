@@ -17,9 +17,9 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 
 ## run.yaml
 
-`.otto/` is gitignored, so create the run's `run.yaml` on the new machine from [`skills/shared/templates/run.yaml`](../../skills/shared/templates/run.yaml), under `plans/77-saving-holds-on-a-heavy-timeline/.otto/runs/<run-id>/`.
+`.otto/` is gitignored, so create the run's `run.yaml` on the new machine from [`skills/shared/templates/run.yaml`](../../agent/shared/templates/run.yaml), under `plans/77-saving-holds-on-a-heavy-timeline/.otto/runs/<run-id>/`.
 
-**Bindings.** These follow the [run contract's routing table](../../skills/shared/run-contract.md#routing-and-bindings) (`N` Luna, `X` Terra, `S` Sol, `T` Astra; reviews, plan judgment and advice on Astra) with the newest IDs a ChatGPT-login Codex accepted on 21 November 2026, each answering a one-line `codex exec` with that effort. Fill them in as below; if the owner gives other bindings, theirs win. Before dispatch, re-check each with `codex exec -m <id> -c model_reasoning_effort='"<effort>"' --skip-git-repo-check -s read-only "Reply with just OK." < /dev/null`, and set `availability: verified` only for those that answer. Refused on that login: `gpt-6.2-luna`, `gpt-6.1-luna`, `gpt-6.2-terra`, `gpt-6-terra`, `gpt-6.1-astra`.
+**Bindings.** These follow the [run contract's routing table](../../agent/shared/run-contract.md#routing-and-bindings) (`N` Luna, `X` Terra, `S` Sol, `T` Astra; reviews, plan judgment and advice on Astra) with the newest IDs a ChatGPT-login Codex accepted on 21 November 2026, each answering a one-line `codex exec` with that effort. Fill them in as below; if the owner gives other bindings, theirs win. Before dispatch, re-check each with `codex exec -m <id> -c model_reasoning_effort='"<effort>"' --skip-git-repo-check -s read-only "Reply with just OK." < /dev/null`, and set `availability: verified` only for those that answer. Refused on that login: `gpt-6.2-luna`, `gpt-6.1-luna`, `gpt-6.2-terra`, `gpt-6-terra`, `gpt-6.1-astra`.
 
 ```yaml
 models:
@@ -39,14 +39,14 @@ models:
 | Work | Runs on | Notes |
 | --- | --- | --- |
 | The coordinator (this plan's manager) | the session the plan is handed to | Keeps every judgment: picks fixes, checks each result against its diff and proof, writes `rounds.md`, merges into the plan branches. Never delegates a decision down. Best on a high-judgment model. |
-| SL-0 fixture, SL-1 stack, SL-3a and SL-3b recovery | `N` | One worktree each, background `codex exec -s workspace-write` (command in the [workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#roles)). |
+| SL-0 fixture, SL-1 stack, SL-3a and SL-3b recovery | `N` | One worktree each, background `codex exec -s workspace-write` (command in the [workstream](../../agent/roles/manager/live-loop.md#roles)). |
 | SL-2 harness, SL-3c validation trim | `X` | Writes its `N` split first and runs the helpers in parallel, then merges their work ([tasks](tasks.md)). |
 | A round's fix | `N` by default; `X` when the cause is coupled or unclear | The coordinator tags it when picking. |
 | The strategist, once per round | `advisor`, read-only | Gets the round tables, not the coordinator's conclusion; asked what to remove first. Evidence, not a verdict. |
 | R, the final review | `completion_reviewer` | Up to five rounds after the loop stops. |
 | Fact-finding for anyone (status, logs, diffs) | `N` | Never gives a verdict. |
 
-**Moving up a tier** follows the contract's [cheapest model first](../../skills/shared/run-contract.md#cheapest-model-first): move `N` to `X` after two misses or 20 minutes without progress, or when the work is wrong in a way a better brief would not fix, and `X` to `S` on the same test; pass the previous attempt's diff, output and best guess up; drop back to `N` once the cause is known. A worker stops after three attempts or 45 minutes on one failure and hands back what it has.
+**Moving up a tier** follows the contract's [cheapest model first](../../agent/shared/run-contract.md#cheapest-model-first): move `N` to `X` after two misses or 20 minutes without progress, or when the work is wrong in a way a better brief would not fix, and `X` to `S` on the same test; pass the previous attempt's diff, output and best guess up; drop back to `N` once the cause is known. A worker stops after three attempts or 45 minutes on one failure and hands back what it has.
 
 ## How to work
 
@@ -68,7 +68,7 @@ The Runtime first-cut focused proof missed a duplicate canonical-mismatch refusa
 
 ## A round, step by step
 
-The [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round) is the rule; this is the order on the machine.
+The [live-loop workstream](../../agent/roles/manager/live-loop.md#the-round) is the rule; this is the order on the machine.
 
 1. **Disk:** `df -h`; stop below 15 GB. Delete leftover browser profiles.
 2. **Stack:** if the last round merged an Agent or Runtime fix (after a Runtime fix, regenerate the Agent's pins first), delete the stack root and install fresh by SL-1's route; if it merged only App fixes, check out the new App head and restart the editor. Confirm the stack's App and Agent commits are the plan branch heads.

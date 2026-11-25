@@ -48,7 +48,7 @@ Observed, not execution pins: astrid-dev `main` at `0b1c9fd0e3bd063caa4b412e8bf3
 - [Astrid Vision page source](https://github.com/banodoco/astrid-app/blob/release/15/main/src/pages/Home/PublicAstridVision.tsx).
 - [Planet authoring study](https://github.com/banodoco/planet).
 - [Astrid app Vision checks](https://github.com/banodoco/astrid-app/blob/release/15/main/.github/workflows/public-vision.yml).
-- [Release 15](../../releases/15.md), [run contract](../../skills/shared/run-contract.md), and [project-format rules](../../docs/project-format.md).
+- [Release 15](../../releases/15.md), [run contract](../../agent/shared/run-contract.md), and [project-format rules](../../docs/project-format.md).
 
 ## Full source-context inventory (24 November 2026)
 

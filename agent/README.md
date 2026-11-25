@@ -4,7 +4,7 @@ description: Write Astrid agent instructions once as Markdown and publish select
 
 # Astrid agent documents
 
-This directory stages the Markdown-first agent instructions for the planned migration. During the transition, the existing authored [`skills/`](../skills/) tree and its current consumers remain authoritative. The new `agent/` documents and their generated packages are a candidate until the coordinated MS-7–MS-9 cutover is verified and accepted.
+This directory holds the authored Markdown-first agent instructions: the one source of Astrid's agent roles, procedures and run policy. Documents with `skill: true` are published as generated skills named `astrid-dev-<filename stem>`; the generated packages live in the ignored `.generated/skills/` and are built and installed with `python3 scripts/astrid_dev.py skills`.
 
 ## Where instructions live
 

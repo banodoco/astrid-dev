@@ -74,4 +74,4 @@ Planning snapshot: astrid-dev `main` `0b1c9fd0e3bd063caa4b412e8bf3e90bf02ab2c4` 
 
 ## References
 
-[Plan 48](../48-one-record-model/plan.md) · [Plan 72](../72-composable-project-delivery/plan.md) · [Plan 73](../73-markdown-first-agent-skills/plan.md) · [Plan 96](../96-astrid-marketing-organisation/plan.md) · [Plan 97](../97-extensible-project-templates/plan.md) · [Plan 98](../98-project-identity-and-vocabulary/plan.md) · [Planning skill](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) · [Run contract](../../skills/shared/run-contract.md) · [Dispatch workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md).
+[Plan 48](../48-one-record-model/plan.md) · [Plan 72](../72-composable-project-delivery/plan.md) · [Plan 73](../73-markdown-first-agent-skills/plan.md) · [Plan 96](../96-astrid-marketing-organisation/plan.md) · [Plan 97](../97-extensible-project-templates/plan.md) · [Plan 98](../98-project-identity-and-vocabulary/plan.md) · [Planning skill](../../agent/shared/workstreams/plan.md) · [Run contract](../../agent/shared/run-contract.md) · [Dispatch workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md).

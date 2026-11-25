@@ -12,7 +12,7 @@
 
 **Waiting on:** Release 15. On 22 November 2026 the owner moved the under-a-second work into separate plans: [Plan 81](../81-once-per-command/plan.md) starts from this plan’s meter, and [Plan 82](../82-reuse-across-commands/plan.md) follows it. This plan’s resident-session redesign remains deferred.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): a person who already runs ComfyUI will only route work through Astrid if Astrid costs them nothing they can feel.
 

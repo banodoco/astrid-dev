@@ -12,9 +12,9 @@ Any ComfyUI workflow, on the person's own ComfyUI, a managed one or a rented mac
 
 | Role | Who | Does |
 | --- | --- | --- |
-| Accountable agent (Plan 56) | `session_011EzfW2ePdUMAHRAcAm3nur`, for the Release 15 Lead `session_011EzfW1gtAhRQwk8pgJMzhG`; mailbox name `r15-lead` | Reads, decides and rules; writes and orders packets; reviews and merges packet PRs into `release/15/plan-56`; runs RS1 and R with Codex Astra; confirms the landing gate; gives CI slots. Sends route `N` workers (Luna, or Haiku) to explore and runs the hourly parallelism pass; never gives them a verdict ([workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md)). |
-| Orchestrator | `session_011EzfW2WBWyoHTBJggpfEDm`, Codex | Starts one fresh ChatGPT session per packet in the owner's account, in the mode its Route sets (N High, X Extra High, S Pro); checks every open packet hourly; resumes or replaces stalled sessions; relays between Lead and packet sessions; posts one STATUS an hour. Does not merge or edit the repository ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md)). |
-| Packet session | a fresh ChatGPT session per packet | Implements and proves one packet ([chatgpt-packet workstream](../../skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md)); opens PRs; posts STATUS and BLOCKED; never merges, ticks `tasks.md` or takes a second packet. |
+| Accountable agent (Plan 56) | `session_011EzfW2ePdUMAHRAcAm3nur`, for the Release 15 Lead `session_011EzfW1gtAhRQwk8pgJMzhG`; mailbox name `r15-lead` | Reads, decides and rules; writes and orders packets; reviews and merges packet PRs into `release/15/plan-56`; runs RS1 and R with Codex Astra; confirms the landing gate; gives CI slots. Sends route `N` workers (Luna, or Haiku) to explore and runs the hourly parallelism pass; never gives them a verdict ([workstream](../../agent/roles/leader/multi-manager-release.md)). |
+| Orchestrator | `session_011EzfW2WBWyoHTBJggpfEDm`, Codex | Starts one fresh ChatGPT session per packet in the owner's account, in the mode its Route sets (N High, X Extra High, S Pro); checks every open packet hourly; resumes or replaces stalled sessions; relays between Lead and packet sessions; posts one STATUS an hour. Does not merge or edit the repository ([workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md)). |
+| Packet session | a fresh ChatGPT session per packet | Implements and proves one packet ([chatgpt-packet workstream](../../agent/roles/manager/chatgpt-packet.md)); opens PRs; posts STATUS and BLOCKED; never merges, ticks `tasks.md` or takes a second packet. |
 | Owner | Hannah | Pastes the Orchestrator launch message; WS-L, publishing, paid or personal-machine actions; D10–D12 before landing. |
 
 The board, mailbox ([#1757](https://github.com/banodoco/astrid-dev/issues/1757)), startup checks and dispatch queue are in [releases/15/run.md](../../releases/15/run.md#plan-56-dispatch); the packets are in [releases/15/packets/](../../releases/15/packets/).
@@ -39,7 +39,7 @@ The waves and the conflict map are in [tasks.md](tasks.md) (Parallel note) and c
 
 ## Every hour
 
-The Orchestrator reads the mailbox, checks every open packet, runs the parallelism pass ([orchestrator rule](../../skills/roles/astrid-dev-orchestrate/workstreams/lane-orchestrator.md); here the unit is the packet: start every Ready packet with no unmet dependency and no file conflict with a Running one, up to the cap), resumes or replaces stalled sessions, and posts one STATUS. The Lead does the same pass with `N` workers each check-in and rules on the result.
+The Orchestrator reads the mailbox, checks every open packet, runs the parallelism pass ([orchestrator rule](../../agent/roles/orchestrator/lane-orchestrator.md); here the unit is the packet: start every Ready packet with no unmet dependency and no file conflict with a Running one, up to the cap), resumes or replaces stalled sessions, and posts one STATUS. The Lead does the same pass with `N` workers each check-in and rules on the result.
 
 ## Traps
 

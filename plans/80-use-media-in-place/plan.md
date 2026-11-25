@@ -12,7 +12,7 @@
 
 **Waiting on:** [Plan 79](../79-local-media-any-size/plan.md) landing, whose streaming copy is the fallback, then a manager for phase 1. Phase 2 waits on the owner's decision D7, taken after she has used the clone, and on the saving plans ([63](../63-dependable-saving/plan.md), [75](../75-fast-saving/plan.md), [77](../77-saving-holds-on-a-heavy-timeline/plan.md)). Decisions are in [inputs.md](inputs.md#owner-decisions).
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [F-003 — Creative execution isn't yet dependable end to end](../../vision/gaps/F-003-creative-execution.md) (primary): a creator's footage is usable where it already lives. [F-002 — User control and recovery aren't fully proven](../../vision/gaps/F-002-safe-user-control.md) (supporting): the creator decides what Astrid may read. Neither route names this plan, so there is no `Contributes to closure` line.
 

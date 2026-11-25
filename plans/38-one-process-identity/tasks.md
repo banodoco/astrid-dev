@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-Routes, per the [run contract](../../skills/shared/run-contract.md):
+Routes, per the [run contract](../../agent/shared/run-contract.md):
 - **N:** normal, the default.
 - **X:** very hard.
 - **S:** super hard, used here for security and custody.

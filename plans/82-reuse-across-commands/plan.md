@@ -12,7 +12,7 @@
 
 **Waiting on:** nothing from the owner: she gave the go and decided D2 (yes) on 24 November 2026 ([inputs.md](inputs.md#owner-decisions)). RA-0b also waits on Plan 87's RN-4 reaching `release/15/main`.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [F-008 — Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary). Its route does not name this plan.
 

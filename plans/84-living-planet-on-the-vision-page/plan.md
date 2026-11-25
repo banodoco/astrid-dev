@@ -12,7 +12,7 @@
 
 **Waiting on:** The owner to launch the fresh ChatGPT/Codex run with one accountable Lead and an authorized release base. Routine feedback never blocks; four major artistic direction gates and final publication require explicit decisions.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md); its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md); its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [CA-003 — Our vision and execution aren't yet fully connected](../../vision/gaps/CA-003-vision-experiments-progress.md) (primary). The page should *show* the shared creative ecosystem, not merely describe it.
 

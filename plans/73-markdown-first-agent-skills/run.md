@@ -10,9 +10,9 @@ The integration card has landed: the project branch is at `4584a138162eb6ea2b7e2
 
 On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`, the owner asked for Plans 71, 72 and 73 to be finished with that session as orchestrator and one manager per plan, using the fresh ChatGPT packet workstream the way Release 15's Plans 87 and 89 do ([release 15 run board](../../releases/15/run.md#plans-87-and-89-dispatch)). This is an astrid-dev-only run: there is no release, release branch or Release Lead.
 
-- **Orchestrator** (`p71-73-orchestrator`, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d`): the accountable agent for this plan. It takes the Lead's part of the [packet workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `project/73-markdown-first-agent-skills`, merges `main` into it, runs every proof, keeps `tasks.md` true through progress PRs, commissions the final review R, requests the owner's sense check and opens the completion PR. Its DECISIONs bind the manager and the packet sessions, within this section.
-- **Manager** (`p73-manager-1`): a session in the owner's ChatGPT account, started by her own launch message and acting at her request. It takes the Orchestrator's part of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md), with this plan's orchestrator as "the Lead". It may start, resume, stop and replace this plan's packet sessions and comment on the mailbox. It does not edit the repository, merge, approve or dispatch hosted CI.
-- **Packet sessions** (`p73-<packet>-<n>`): may push to the `p73/<card id>` branch their packet names, open pull requests into `project/73-markdown-first-agent-skills`, and comment on the mailbox. They never merge, never edit `tasks.md` or this board, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
+- **Orchestrator** (`p71-73-orchestrator`, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d`): the accountable agent for this plan. It takes the Lead's part of the [packet workstream](../../agent/roles/leader/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `project/73-markdown-first-agent-skills`, merges `main` into it, runs every proof, keeps `tasks.md` true through progress PRs, commissions the final review R, requests the owner's sense check and opens the completion PR. Its DECISIONs bind the manager and the packet sessions, within this section.
+- **Manager** (`p73-manager-1`): a session in the owner's ChatGPT account, started by her own launch message and acting at her request. It takes the Orchestrator's part of [multi-manager dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), with this plan's orchestrator as "the Lead". It may start, resume, stop and replace this plan's packet sessions and comment on the mailbox. It does not edit the repository, merge, approve or dispatch hosted CI.
+- **Packet sessions** (`p73-<packet>-<n>`): may push to the `p73/<card id>` branch their packet names, open pull requests into `project/73-markdown-first-agent-skills`, and comment on the mailbox. They never merge, never edit `tasks.md` or this board, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro ([run contract](../../agent/shared/run-contract.md#chatgpt-session-modes)).
 - **Stays in the orchestrator's lane:** MSC-1 (integration), MSC-7 (the fresh-agent exercise, which the orchestrator arranges in a fresh Claude Code session), MSC-8 (cold start), R (final review), MSC-10 (completion PR and cutover) and every proof, build and install.
 - **Needs the owner:** the cutover time and the final merge of the project branch into `main`; installing generated skills on anyone's real machine or session; publishing; anything paid; changing an existing test's assertion.
 
@@ -39,9 +39,9 @@ On 24 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`,
 
 ## When a session goes quiet
 
-A branch, not a chat, shows health ([liveness](../../skills/shared/run-contract.md#coordination-boards-and-check-ins)).
+A branch, not a chat, shows health ([liveness](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)).
 
-- **A packet session:** the manager resumes it after 3 hours with no commit or STATUS, and replaces it as the [dispatch workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md) says; the replacement is `p73-<packet>-<n+1>`.
+- **A packet session:** the manager resumes it after 3 hours with no commit or STATUS, and replaces it as the [dispatch workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md) says; the replacement is `p73-<packet>-<n+1>`.
 - **The manager:** the orchestrator nudges it on the mailbox at 2 hours; at 3 hours it tells the owner, who starts a fresh manager from the launch message below as `p73-manager-2`.
 - **The orchestrator:** the manager keeps running packets going, starts nothing that needs a ruling, and tells the owner at 3 hours.
 - **A READY-PROOF** unanswered for 45 minutes, or a Review for 4 hours: the manager sends the orchestrator a REQUEST and tells the owner.
@@ -106,7 +106,7 @@ If a check fails, say which manual step the owner must do instead of promising a
 
 ## Packet start message
 
-The manager sends this, filled in, as the first message of each fresh packet session ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md#packet-start-message)).
+The manager sends this, filled in, as the first message of each fresh packet session ([workstream](../../agent/roles/orchestrator/multi-manager-dispatch.md#packet-start-message)).
 
 ```text
 You are the ChatGPT manager implementing ONE packet for the Plan 73 completion run.

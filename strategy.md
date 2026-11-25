@@ -194,6 +194,6 @@ Past releases are documented in the [existing release log](plans/releases.md) an
 
 **Words and decisions.** Keep the major aim, each version's sentence and paragraph, the candidates and the decisions here. Change them when the owner's direction changes. The [catalog](plans/index.md) carries plan status and ownership; [vision gaps](vision/README.md) retain their own assessments and routes.
 
-**Generated parts.** Edit a release's kind, state, highlight and included plans in its release brief, then run `python3 scripts/astrid_dev.py sync` to see the result here. Do not edit between the strategy markers. On `main`, the refresh job updates these parts after a source change, so they may be stale for one CI run. The [Release skill](skills/capabilities/astrid-dev-release/SKILL.md) covers pulling and freezing issue lists; the page shows counts only for frozen lists.
+**Generated parts.** Edit a release's kind, state, highlight and included plans in its release brief, then run `python3 scripts/astrid_dev.py sync` to see the result here. Do not edit between the strategy markers. On `main`, the refresh job updates these parts after a source change, so they may be stale for one CI run. The [Release skill](agent/shared/workstreams/release.md) covers pulling and freezing issue lists; the page shows counts only for frozen lists.
 
 **The next major version.** When 1.0 ships, preserve this page as `strategy-1.0.md` beside it and begin a new `strategy.md`. Publication remains a separately authorized release step.

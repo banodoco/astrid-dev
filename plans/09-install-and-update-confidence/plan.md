@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Make supported install, update, rollback, repair, and uninstall routes dependable on Linux, macOS, and Windows. Qualify them with real hosted evidence and a single update transaction while preserving the previous working version and user data on failure or refusal.
 

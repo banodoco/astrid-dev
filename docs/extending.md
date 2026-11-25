@@ -73,7 +73,7 @@ The project field list is a contract shared by the plan, catalog, feed, and chec
 
 ## Add or edit a workstream
 
-Write the instruction once as a regular Markdown document in `agent/`. The [workstream authoring convention](../skills/shared/workstreams.md) describes the shared purpose; the steps below are the Markdown-first authoring procedure. The source reader is `scripts/agent_documents.py`, backed by reusable [Markdown structure checks](../scripts/document_structure.py). The former dual-format parser is [`workstreams.py`](../scripts/workstreams.py) (migration history, not the new authoring format).
+Write the instruction once as a regular Markdown document in `agent/`. The [workstream authoring convention](../agent/README.md) describes the shared purpose; the steps below are the Markdown-first authoring procedure. The source reader is `scripts/agent_documents.py`, backed by reusable [Markdown structure checks](../scripts/document_structure.py). The former dual-format parser is [`workstreams.py`](../scripts/workstreams.py) (migration history, not the new authoring format).
 
 **1. Choose the document's home.**
 

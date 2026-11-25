@@ -12,7 +12,7 @@
 
 **Waiting on:** [Plan 82](../82-reuse-across-commands/plan.md) (RA-2, RA-6), Release 16, and D3 ([inputs.md](inputs.md#owner-decisions)).
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [F-008 — Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary). Its route does not name this plan.
 

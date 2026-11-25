@@ -39,4 +39,4 @@ Planning snapshot: astrid-dev `main` `0b1c9fd0e3bd063caa4b412e8bf3e90bf02ab2c4` 
 
 ## References
 
-[Plan 95](../95-composable-agentic-workspaces/plan.md) · [Plan 48](../48-one-record-model/plan.md) · [Plan 51](../51-astrid-dev-clean-up/plan.md) · [Planning skill](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) · [Run contract](../../skills/shared/run-contract.md) · [Design principles](../../docs/contribution-design-principles.md).
+[Plan 95](../95-composable-agentic-workspaces/plan.md) · [Plan 48](../48-one-record-model/plan.md) · [Plan 51](../51-astrid-dev-clean-up/plan.md) · [Planning skill](../../agent/shared/workstreams/plan.md) · [Run contract](../../agent/shared/run-contract.md) · [Design principles](../../docs/contribution-design-principles.md).

@@ -16,7 +16,7 @@
 
 **Contributes to closure:** F-008 step 3: the pack extension protocol switched on and proven with non-h3 workflow families (an image family and sound on video). Milestone C.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 A pack can extend another pack. A pack declares a named **extension point** with a versioned schema. Another pack **contributes** to it. A composite pack contributes to several points at once, for example a VibeComfy workflow, a generation engine, a timeline effect and a UI panel, and it all works together through one install, trust and discovery path. This remains a draft; queue status, owner and estimate are in the [project queue](../../README.md).
 
@@ -163,7 +163,7 @@ All of it is CPU only; the live runs are [Plan 34](../34-real-gpu-proof/plan.md)
 - `astrid packs extensions` lists points, contributions and problems.
 - The sound-on-video plugin produces a video with the generated audio, locally and through the RunPod CPU fake.
 - The protocol, its points and how to write a family are documented.
-- **Not proven here:** real inference (Plan 34), including inpaint and outpaint quality. Record any extension needs the two families do not cover. Destination and publication authority follow the shared [run contract](../../skills/shared/run-contract.md); verify the intended `pre-main` destination at setup rather than assuming it.
+- **Not proven here:** real inference (Plan 34), including inpaint and outpaint quality. Record any extension needs the two families do not cover. Destination and publication authority follow the shared [run contract](../../agent/shared/run-contract.md); verify the intended `pre-main` destination at setup rather than assuming it.
 
 ## Read next
 

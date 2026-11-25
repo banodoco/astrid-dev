@@ -14,7 +14,7 @@
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Prepare Astrid's execution host to be separated into cohesive modules, and make the first move, while preserving its existing execution behavior. This plan ends in Release 15; on 22 November 2026 the moves after the first became [Plan 83](../83-execution-host-in-modules/plan.md), so that each plan sits wholly in one release. Current status, owner, and estimate remain in the [project queue](../../README.md).
 

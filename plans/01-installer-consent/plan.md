@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Deliver the accepted installer consent increment on Agent and App, with clear choices, saved preferences, and predictable installation behavior. Preserve the accepted nonblocking skills-off rendering limitation; this increment does not claim to fix it.
 

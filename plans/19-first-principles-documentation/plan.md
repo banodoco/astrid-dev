@@ -14,7 +14,7 @@
 
 **Vision role:** Foundational enabler — makes existing tools and contracts discoverable without claiming new capabilities.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Make Astrid understandable from its purpose to its working contracts: readers should find the central Astrid skill, choose a workflow or pack, and learn to extend it through concrete examples. The documentation should support a small composable foundation, with control at every level.
 
@@ -40,7 +40,7 @@ The executable task breakdown, routes, and focused selectors remain to be scoped
 
 ## Completion
 
-The path is navigable from a clear entry point to canonical sources, explains key purpose and contracts at the right level, and supports the selected bounded journeys. Record remaining gaps without creating a second mandatory manual. Any source changes and publication follow the repository's [shared run contract](../../skills/shared/run-contract.md); this draft does not authorize execution.
+The path is navigable from a clear entry point to canonical sources, explains key purpose and contracts at the right level, and supports the selected bounded journeys. Record remaining gaps without creating a second mandatory manual. Any source changes and publication follow the repository's [shared run contract](../../agent/shared/run-contract.md); this draft does not authorize execution.
 
 ## Read next
 
