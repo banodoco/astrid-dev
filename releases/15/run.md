@@ -119,6 +119,10 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 11. **Owner decisions are delegated (24 November 2026)** to Plan 56's accountable agent, except the reserved items under Authority. An assertion change that implements an accepted plan outcome is decided by that agent and recorded with its reason (mailbox 9c75f07b).
 12. **Stage 1 lands from snapshots.** P56-01 to -05 and -07 land into `release/15/main` from `p56/landing-s1` in each repo (VibeComfy `033473ff` as a fast-forward; Agent `3956bc41` + merge of `release/15/main` + pin), never from the moving plan-56 tip. Only the `release/15/main` merge, the pin, the coherence fixes and the RS1 fix packets go on the snapshot, each covered by a focused fresh RS1. The gate request carries the three-dot diff comparison command and output. Release Lead decision of 24 Nov; RS1 fresh pass due by 25 Nov 18:00 UTC or Plan 56 goes to Release 16 whole.
 13. **Release-wide rulings live on astrid-dev #1836** (read to the last page hourly). Release ruling 11: never cancel a `release/*/main` CI run. Hourly reports go as a STATUS on #1757 `to: r15-release-lead`.
+14. **Stage 1 gate, r15-lead-p56-0008:** conditional PASS (astrid-dev #1757).
+15. **Stage 1 CI, r15-lead-p56-0009:** the first pair is enough (astrid-dev #1757).
+16. **Stage 1 N14, r15-lead-p56-0010:** N14 is non-blocking (astrid-dev #1757).
+17. **Stage 1 gate PASS, r15-lead-p56-0011:** stage 1 ships in Release 15; stage 2 is Release 16 (r15-lead-0017).
 
 ### Mailbox
 
@@ -172,13 +176,28 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Running | `r15-P56-09-1` (Extra High) | LE-10 then LE-8; target_schema after #591; LE-14 after P56-10; LE-17 after RS1. Extra High |
 | [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | On hold until the fresh RS1 passes (RS1 failed 11:00Z, 3150d425). Extra High |
 | [R15-P56-11](packets/R15-P56-11.md) Renderer, wording, skill proof | LE-18b, LE-11, WS-6b | Blocked | — | After every other packet. Extra High |
-| [R15-P56-12](packets/R15-P56-12.md) Restore checkout (F1) | RS1.2, RS1.4 | Ready | — | Extra High. Base: `p56/landing-s1` in each repo. |
-| [R15-P56-13](packets/R15-P56-13.md) Lock trust (F2) | RS1.3, RS1.5, RS1.11 | Ready | — | Extra High. Merges after P56-12. |
+| [R15-P56-12](packets/R15-P56-12.md) Restore checkout (F1) | RS1.2, RS1.4 | Done | — | Landed in stage 1 (see Stage 1 landed below). Extra High. |
+| [R15-P56-13](packets/R15-P56-13.md) Lock trust (F2) | RS1.3, RS1.5, RS1.11 | Done | — | Landed in stage 1 (see Stage 1 landed below). Extra High. |
 | R15-P56-14 Selection keeps the authored recipe (F3) | RS1.6 | Done | — | VibeComfy #211 merged into `p56/landing-s1`. Extra High. |
 | R15-P56-15 Pip boundary (F4) | RS1.7, RS1.8, RS1.9, RS1.1 if it fits | Done | — | VibeComfy #212 merged into `p56/landing-s1`. Pro. |
-| [R15-P56-16](packets/R15-P56-16.md) Publish only after approvals (F5) | RS1.10 | Ready | — | Extra High; Agent and VibeComfy. |
+| [R15-P56-16](packets/R15-P56-16.md) Publish only after approvals (F5) | RS1.10 | Done | — | Landed in stage 1 (see Stage 1 landed below). Extra High; Agent and VibeComfy. |
 | Conflicts (one task branch at a time writes each) | — | — | — | `cli.py:_workflow_command`: P56-02 (WS-0d, WS-0a), 06, 07, 08, 10; P56-07 goes first of 06, 07, 08 and 10 (critical path) and starts once P56-02's WS-0a has merged. `entries.py:target_schema`: P56-02 (WS-0g), 06 (LE-1b), 08, 09. VibeComfy `_install.py` in the order P56-03, 05, 07, 10, then P56-09's LE-14. `managed_preparation.py:native_failure_diagnostic`: P56-04 (LE-6), then P56-09 (LE-14). P56-01 and P56-04 share `comfyui_engine.py` and `managed_preparation.py` in different functions and may run together (ruling 1). |
 | RS1 and R | Review stops | Lead | — | Codex Astra, commissioned by the Lead: RS1 after P56-07; R after P56-11 (up to two rounds) |
+
+### Stage 1 landed (25 November 2026)
+
+Stage 1 is in `release/15/main`; the Release Lead's gate decisions are on [astrid-dev #1757](https://github.com/banodoco/astrid-dev/issues/1757).
+
+- **astrid-agent:** [#656](https://github.com/banodoco/astrid-agent/pull/656) merged as `b2155fdc` (head `643fbfaf`) at about 15:02 UTC.
+- **VibeComfy:** `release/15/main` fast-forwarded by the Release Lead to `55c39482`; the Agent pins it (runtime `686ca695`).
+- **Gate:** r15-lead-p56-0008 (conditional PASS), r15-lead-p56-0009 (the first pair is enough), r15-lead-p56-0010 (N14 non-blocking), r15-lead-p56-0011 (gate PASS). Stage 1 ships in Release 15.
+- **Packets:** P56-01 to -05 and -07; the RS1 fix packets F1 to F5 (P56-12 to -16); P56-17 to -24. P56-17 to -21 are VibeComfy #219, #218, #220, #221 and #222 (patch authority, ignored data, local work, submodule history and flags, deinitialised submodules and source-less bytecode). P56-22 to -24 are Agent #658, #659 and #660 (Execution size, managed-preparation test, ruff/mypy and installer fixture).
+- **Merges of `release/15/main` into the landing:** Agent #638, #651, #653; VibeComfy #214, #216. **Pins:** Agent #652, #654, #655, #657.
+- **Reviews:** RS1 (Codex); RS1B (Opus and Codex); RS1C (Opus: H1, then delta HC1 to HC3; Codex: submodule case, source-less bytecode, loose pyc N14); final delta Opus PASS.
+- **CI:** second pair on `643fbfaf`: `ci.yml` run 45604052810 and `lanes.yml` run 45604059080. No Plan 56 failures. By-id table at [#1757 comment 7166147201](https://github.com/banodoco/astrid-dev/issues/1757#issuecomment-7166147201).
+- **Known issues:** astrid-dev #1861, #1910, #1928 (RS1B.4 to RS1B.9, RS1C.N1 to N18).
+- **Stage 2 is Release 16:** P56-06, -08, -09, -10, -11 and R (Agent #606, #607, #614, #615, #629, #644; VibeComfy #213, #217) are not in this landing (r15-lead-0017, r15-lead-p56-0011).
+- **Owner-reserved:** the live SAM run (WS-L, after R) stays with the owner.
 
 ### Orchestrator launch message
 
