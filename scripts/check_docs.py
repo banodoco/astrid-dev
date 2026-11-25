@@ -9,6 +9,7 @@ from urllib.parse import unquote
 from gap_relationships import parse_gap_relationships
 import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
+from project_delivery import GAP_FILE as GAP_NAME
 from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
                      is_placeholder, key_value_lines, read_text, release_brief, release_branch_errors, release_fix_issue_errors, BRANCH_FIRST_RELEASE, section as record_section)
 from vision_subject import parse_subject
@@ -17,7 +18,6 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
 README = Path('README.md')
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
-GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
 
 
 def read(root: Path, path: Path) -> str:

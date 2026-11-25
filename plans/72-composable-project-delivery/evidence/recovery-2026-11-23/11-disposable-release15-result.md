@@ -1,0 +1,33 @@
+# Plan 72 — disposable Release 15 parser + authored-record rehearsal receipt
+
+**Executed 23 November 2026, on an isolated draft source branch.** This is evidence for the Release 15 Lead's eventual decision, **not GO**, release integration, an accepted owner scope decision, RS1, final review, a release-branch cut, publication or protected-branch qualification.
+
+## Exact checked inputs and execution
+
+- Recovery PR: [#1624](https://github.com/banodoco/astrid-dev/pull/1624), preserved base #1212 `f13a584a31cb1d29b335533563420e1de35e3481`. Native scratch-rehearsal test source head `d0751de241d8c14cc2d7fdbf1f1fb1818ff09456`, new [`scripts/test_project_delivery_release15_scratch.py`](https://github.com/banodoco/astrid-dev/blob/c29908e587b59dc1ba8fc3891cce7ee94480412d/scripts/test_project_delivery_release15_scratch.py), blob `7e6f39e3655a2f0ded19d5bd767fadb5854b9036`.
+- Disposable checkout: `git worktree add --detach <temporary-location> 321523e52bddbbd13477634b05974a16b54b825b` inside the existing GitHub-hosted documentation job. The test verifies the exact frozen Release15 HEAD and then cleans up via `git worktree remove --force` and temporary-directory cleanup. **No GitHub ref is written.**
+- Source selection: native `git diff --binary <pinned donor>...`, followed by `git apply --check -` and `git apply -`, executed sequentially for the existing 01-core (#1074), 02-reader (#1076), 03-negative tests (#1199), 04-guards (#1201), 05-source-ownership (#1212), then the already stored [08 Plan72 source-boundary patch](08-source-boundaries.patch), and the **proposed owner-gated** [09 generic Release15 branch-parser patch](09-release15-branch-parser-compat.patch). No #1161 composed merge, unbounded cherry-pick, main-history merge or PD10 guide import.
+- Pinned canonical authored Plan72 pack copied **only into the disposable worktree** using verified Git blobs: `plan.md=9066011c5547ce6ec62944f85a5847f2858409ac`, `inputs.md=5caae0ebc3dec1748251677b18c2ec1b38663d59`, `tasks.md=0ecdcca32053cd124f2bf07293e264e1a73ed6b1`.
+- The scratch release brief starts with **frozen** `releases/15.md`, NOT a wholesale newer-main replacement. It adds the exact canonical Plan72 included-plan line and only **five verbatim rows** from pinned canonical main brief blob `e53f0fd53aea5d48b0387a9d7fb6c7cce0351bb1`: Astrid-dev's release row, Astrid-dev plan 39, plan 50 and plan 72 rows, and Agent plan 40 row. All four included plans (**39, 50, 40, 72**) then have branch rows. No row's `not yet cut` field is treated as evidence that a branch exists.
+- Python imports for structural checks occur in a separate process with `sys.path` pointing to the **patched frozen checkout's scripts**, not to the source PR. The checks assert exact expected source blob hashes, untouched Plan72 record blobs, original frozen brief refusal of **three missing plan rows**, complete new draft row validation, missing-row/refusal negatives, and **Plan72's foundational-enabler role with no invented gap relationship**.
+
+## Hosted RED → GREEN proof, same source scope
+
+| Revision | Native workflow | Original suite and result |
+| --- | --- | --- |
+| First scratch-test head `723be90a7dd26b5dc93bb711ce7dd96d30434904` | [45223874394](https://github.com/banodoco/astrid-dev/actions/runs/45223874394), documentation job `137865226943` | **523 run, 2 failures**: scratch test inadvertently placed the five new branch rows after a blank separator, creating a second Markdown table. Original parser correctly returned `Branches must contain exactly one table`. The native worktree and all source patch applications succeeded. |
+| Corrected head `d0751de241d8c14cc2d7fdbf1f1fb1818ff09456` | [45224372555](https://github.com/banodoco/astrid-dev/actions/runs/45224372555), documentation job `137866802854`, App job `137867477972` | **COMPLETED SUCCESS**: **523/523 Python tests**, repository checks successful, generated views current; actual App `vision-consumer-contract` **13/13 tests PASS**. |
+
+The only code correction between those heads was to keep the five selected branch rows **adjacent to the existing frozen release table rows** in the disposable fixture. **No shared parser, Plan48/53 source, original test, test oracle, fixture, release brief, protection rule or previous Plan72 candidate branch was changed.** The print receipt in GREEN explicitly states that native worktree patch 01–05, 08, 09, three canonical source records and five canonical branch rows were assembled.
+
+## What was proven — and what is still blocked
+
+**Proven on the frozen snapshot with real native Git:** all selected patch stages can be applied in a disposable Release 15 checkout; generic parser patch 09 and canonical Plan72 authored files/selected existing branch rows form a structurally valid source pair. The frozen pre-migration brief's 39/50/40 missing rows are rejected as required. The Plan72 plan remains a **Foundational enabler**, never a synthetic goal-gap delivery claim. Source-only hosted full Python and App checks are green at the stated revision.
+
+**Not yet claimed:** The full release/15 integrated branch has **not** been cut or compiled; the eventual actual Release 15 run needs *all* Lead-approved included plans/branch rows, Plan72's full final authored pack and all selected original tests on that actual combined tree. The native scratch tests verify parser+records compatibility; they do not certify that the **full historical release repository** passes the original real-world `load_delivery` query, generated-file byte parity on identical authored inputs, or the original release acceptance suite. Those remain explicit future proof gates. This rehearsal made no remote branch or release record changes.
+
+The current live [Release 15 run board](https://github.com/banodoco/astrid-dev/blob/main/releases/15/run.md) still says Plan72 **HOLD**. The named Lead `session_011EzfW1gtAhRQwk8pgJMzhG` has **no recorded answer on the #1245 comments** to the [parser/records/protection owner request](https://github.com/banodoco/astrid-dev/pull/1245#issuecomment-7106544471) as of this receipt. The old manager retirement and historical reviewer-round counters remain UNKNOWN. Existing `release/15/main` branch protections are not yet qualified; do not alter them from this PR.
+
+For the conditional Lead owner-routing, exact source blobs and full future test order, use [10-release15-authored-records.md](10-release15-authored-records.md) and the [recovery README](README.md). The generic parser/brief owner must decide the combined migration; an off-release green does not authorize merging patch 09.
+
+**Final disposition: prepared/validated in a disposable checkout; Release HOLD retained; no Lead GO, formal RS1, merge, branch cut or release integration.**

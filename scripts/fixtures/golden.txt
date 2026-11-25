@@ -15,13 +15,16 @@ missing-project-field: plans/99-fixture/plan.md: Status missing; add a **Status:
 missing-project-field: public vision content: plans/99-fixture/plan.md: Status missing; add a **Status:** line before the first ## heading
 obsolete-project-path: docs/project-format.md: obsolete strategy/projects path; use plans/
 priority-unknown-id: plans/priority.md: unknown 98-no-such-folder under ## Order (there is no plans/98-no-such-folder/plan.md); fix the name or delete the line
+release-included-plans-unlinked: releases/12.md (release:12): Included plans must contain linked plan bullets with a dash and sentence
 release-included-plans-unlinked: releases/12.md: Included plans must contain linked plan bullets with a dash and sentence
 release-missing-sections-and-plans: releases/12.md: missing or empty ## Approach
+release-no-plan-links: releases/12.md (release:12): Included plans must contain linked plan bullets with a dash and sentence
 release-no-plan-links: releases/12.md: Included plans must link project plan.md files
 route-missing-closure-approach: F-008-portable-generation.md: Route to closure needs a non-empty Closure approach section before it
 route-missing-plan: F-008-portable-generation.md: route names missing plan 99-missing-plan
 route-missing-plan: vision/gaps/F-008-portable-generation.md: missing link target ../../plans/99-missing-plan/plan.md
 route-plan-backlink-mismatch: F-008-portable-generation.md: routed plan 32-generation-placement-targets does not name F-008 in its Vision gaps line
+route-plan-backlink-mismatch: plans/32-generation-placement-targets/plan.md (project:32): duplicate gap IDs in plan declaration
 route-plan-backlink-mismatch: plans/32-generation-placement-targets/plan.md: duplicate gap IDs in plan declaration
 route-plan-backlink-mismatch: public vision content: duplicate gap IDs in plan declaration
 route-status-word: F-008-portable-generation.md: route row carries status/ownership word 'active'; the catalog owns it

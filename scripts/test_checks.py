@@ -275,6 +275,96 @@ class ProjectCatalogContractTests(unittest.TestCase):
             self.assertIn("unique-project-numbers always", listing)
 
 
+class ProjectDeliveryCheckTests(unittest.TestCase):
+    """Exercise the actual registered rule through the check command."""
+
+    def setUp(self):
+        import gap_relationships as goal_links
+        from test_project_delivery import GAP, PLAN, PILLAR, RELEASE
+        from vision_subject import SECTIONS
+
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.plan_path = "plans/72-demo/plan.md"
+        self.gap_path = "vision/gaps/CA-001-finish-work.md"
+        self.plan = PLAN
+        self.gap = (GAP.replace("**Aspiration:**", "**Goal:**")
+                    if hasattr(goal_links, "parse_gap_goals") else GAP)
+        self.write("vision/pillars/shared.md",
+                   PILLAR.replace("## Aspirations", f"## {SECTIONS[2]}"))
+        self.write(self.gap_path, self.gap)
+        self.write(self.plan_path, self.plan)
+        self.write("releases/15.md", RELEASE)
+        entries = [entry for entry in checks.REGISTRY if entry.id == "project-delivery"]
+        self.assertEqual(len(entries), 1)
+        self.entry = entries[0]
+
+    def write(self, relative, contents):
+        path = self.root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(contents, encoding="utf-8")
+
+    def assert_delivery_failure(self, *fragments):
+        code, output = invoke(["check"], root=self.root, registry=(self.entry,))
+        self.assertEqual(code, 1, output)
+        lines = output.splitlines()
+        self.assertEqual(len(lines), 1, output)
+        self.assertTrue(lines[0].startswith("ERROR project-delivery: "), output)
+        for fragment in fragments:
+            self.assertIn(fragment, lines[0])
+
+    def test_registered_once_as_always_and_listed(self):
+        self.assertEqual(self.entry.trigger, "always")
+        code, listing = invoke(["list"])
+        self.assertEqual(code, 0)
+        self.assertEqual(
+            [line for line in listing.splitlines() if line.startswith("project-delivery ")],
+            ["project-delivery always Validate authored project-delivery relationships"])
+
+    def test_valid_authored_delivery_passes(self):
+        self.assertEqual(invoke(["check"], root=self.root, registry=(self.entry,)),
+                         (0, ""))
+
+    def test_real_repository_passes_delivery_check(self):
+        root = Path(__file__).resolve().parent.parent
+        self.assertEqual(invoke(["check"], root=root, registry=(self.entry,)), (0, ""))
+
+    def test_duplicate_project_identity_fails_at_both_sources(self):
+        self.write("plans/72-copy/plan.md", self.plan)
+        self.assert_delivery_failure("plans/72-copy/plan.md", self.plan_path,
+                                     "duplicate project number 72")
+
+    def test_unknown_gap_target_fails_at_plan_source(self):
+        self.write(self.plan_path, self.plan.replace("CA-001", "CA-999"))
+        self.assert_delivery_failure(self.plan_path, "unknown gap:CA-999")
+
+    def test_wrong_endpoint_kind_fails_at_gap_source(self):
+        # The link names a real gap, not an aspiration in a pillar/principle.
+        self.write(self.gap_path, self.gap.replace(
+            "../pillars/shared.md#finish-work",
+            "../gaps/CA-001-finish-work.md#desired-state"))
+        self.assert_delivery_failure(self.gap_path, "invalid gap",
+                                     "../gaps/CA-001-finish-work.md#desired-state")
+
+    def test_two_distinct_primary_goals_fail_at_gap_source(self):
+        supporting = self.gap.replace(
+            "(primary) · **Assessment:**",
+            "(primary) · [Keep edits](../pillars/shared.md#keep-edits) (supporting)"
+            " · **Assessment:**")
+        # Both endpoints are valid; only the second primary makes it fail.
+        self.write(self.gap_path, supporting)
+        self.assertEqual(invoke(["check"], root=self.root, registry=(self.entry,)),
+                         (0, ""))
+        self.write(self.gap_path, supporting.replace("(supporting)", "(primary)"))
+        self.assert_delivery_failure(self.gap_path, "exactly one primary", "found 2")
+
+    def test_contradictory_roles_fail_at_plan_source(self):
+        self.write(self.plan_path, self.plan.replace("(primary)", "(supporting) (primary)"))
+        self.assert_delivery_failure(self.plan_path, "gap CA-001",
+                                     "contradictory primary/supporting roles")
+
+
 class LinkAnchorTests(unittest.TestCase):
     def run_rule(self, files):
         with tempfile.TemporaryDirectory() as directory:

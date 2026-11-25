@@ -12,6 +12,36 @@ def example(status='active', key='01-alpha'):
 
 
 class CatalogTests(unittest.TestCase):
+
+    def test_gap_filename_fullmatch_contract_is_shared(self):
+        from check_docs import GAP_NAME
+        from export_public_vision import GAP_ID
+        from project_delivery import GAP_FILE
+
+        self.assertIs(GAP_NAME, GAP_FILE)
+        self.assertIs(GAP_ID, GAP_FILE)
+        cases = (
+            ("F-005-test.md", "F-005"),
+            ("CA-001-finish-work.md", "CA-001"),
+            ("ABC-999-a0-b.md", "ABC-999"),
+            ("A-000--.md", "A-000"),
+            ("ca-001-test.md", None),
+            ("ABCD-001-test.md", None),
+            ("CA-01-test.md", None),
+            ("CA-0001-test.md", None),
+            ("CA-001-.md", None),
+            ("CA-001-Test.md", None),
+            ("CA-001-a_b.md", None),
+            ("CA-001-test.MD", None),
+            ("CA-001-test.md.bak", None),
+            ("CA-001-test.md\n", None),
+            ("vision/gaps/CA-001-test.md", None),
+        )
+        for name, expected in cases:
+            with self.subTest(name=name):
+                match = GAP_NAME.fullmatch(name)
+                self.assertEqual(match.group(1) if match else None, expected)
+
     def record_errors(self, *, status="active", owner="Owner", folders=None, priority=""):
         import checks
         with tempfile.TemporaryDirectory() as directory:
@@ -125,6 +155,15 @@ class StrategyTests(unittest.TestCase):
         self.assertEqual(strategy_errors((ROOT / 'strategy.md').read_text(encoding='utf-8'), docs), [])
         for name, body in docs.items():
             self.assertEqual(release_errors(name, body), [])
+
+    def test_duplicate_release_metadata_is_rejected_by_canonical_validator(self):
+        for second in ("13", "16"):
+            with self.subTest(second=second):
+                duplicate = self.RELEASE.replace(
+                    "**Release:** 13", "**Release:** 13\n**Release:** " + second)
+                errors = release_errors("13.md", duplicate)
+                self.assertTrue(any("Release" in e and "duplicat" in e
+                                    for e in errors), errors)
 
     def test_valid_release_brief_passes(self):
         self.assertEqual(release_errors('13.md', self.RELEASE), [])

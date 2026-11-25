@@ -51,6 +51,40 @@ Evidence: https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist
 
 
 class GapBoundaryGateTests(unittest.TestCase):
+
+    def test_historical_gap_path_preserves_basename_contract_and_prefixes(self):
+        from check_gap_boundaries import GAP_PATH
+        from project_delivery import GAP_FILE
+
+        cases = (
+            ("F-005-test.md", "F-005"),
+            ("CA-001-finish-work.md", "CA-001"),
+            ("ABC-999-a0-b.md", "ABC-999"),
+            ("A-000--.md", "A-000"),
+            ("ca-001-test.md", None),
+            ("ABCD-001-test.md", None),
+            ("CA-01-test.md", None),
+            ("CA-0001-test.md", None),
+            ("CA-001-.md", None),
+            ("CA-001-Test.md", None),
+            ("CA-001-a_b.md", None),
+            ("CA-001-test.MD", None),
+            ("CA-001-test.md\n", None),
+            ("nested/CA-001-test.md", None),
+        )
+        for name, expected in cases:
+            for prefix in ("vision/gaps/", "visions/gaps/"):
+                with self.subTest(prefix=prefix, name=name):
+                    basename = GAP_FILE.fullmatch(name)
+                    path = GAP_PATH.fullmatch(prefix + name)
+                    self.assertEqual(basename.group(1) if basename else None, expected)
+                    self.assertEqual(path.group(1) if path else None, expected)
+        for path in ("CA-001-test.md", "other/gaps/CA-001-test.md",
+                     "vision/CA-001-test.md", "vision/gaps//CA-001-test.md",
+                     "prefix/vision/gaps/CA-001-test.md"):
+            with self.subTest(path=path):
+                self.assertIsNone(GAP_PATH.fullmatch(path))
+
     def test_empty_applies_to_does_not_swallow_next_line(self):
         text = ORIGINAL.replace(
             "**Applies to:** [Local-first](../principles/local-first-cloud-capable.md) · **Assessment:** Open (evidence under review).",

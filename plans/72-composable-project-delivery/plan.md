@@ -4,13 +4,13 @@
 
 **Goal:** An agent can trace Astrid's existing project-delivery records through one validated relationship model and reuse them for a second read-only path, without duplicating sources or changing current outputs.
 
-**Status:** active
+**Status:** done
 
 **Owner:** The orchestrator, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d` (accountable), with ChatGPT manager `p72-manager-1` dispatching fresh packet sessions; owner-authorized 24 November 2026
 
 **Estimate:** About 2–3 engineering days remain for the completion run; the candidate code exists and passes on current `main`.
 
-**Waiting on:** nothing to start: the completion run's cards are in [tasks.md](tasks.md#completion-run-owner-go-24-november-2026). Then the final review R, the owner's project-wide sense check and the owner's go to merge the project branch into `main`. On 24 November the owner moved this plan from Release 16 to the astrid-dev-only route ([D6](inputs.md#owner-decisions)).
+**Waiting on:** nothing.
 
 **Run route:** astrid-dev-only
 
