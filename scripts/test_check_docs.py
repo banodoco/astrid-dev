@@ -138,11 +138,11 @@ class StrategyTests(unittest.TestCase):
     )
     GOOD = (
         "# Strategy\n\n**Last reviewed:** 2026-11-10\n\n## Focus now\n\n## Versions\n\n"
-        "### Version 1.0\n\n**Aim:** Finished work.\n\n"
-        "<!-- strategy-1.0:start -->\n<!-- strategy-1.0:end -->\n\n"
-        + "".join(f"#### Version 0.{n}\n\n**Aim:** {'Fast.' if n == 1 else 'Open'}\n\n"
+        + "".join(f"### Version 0.{n}\n\n**Aim:** {'Fast.' if n == 1 else 'Open'}\n\n"
                   f"<!-- strategy-0.{n}:start -->\n<!-- strategy-0.{n}:end -->\n\n" for n in range(1, 10))
-        + "## Not now\n\n## Decisions\n"
+        + "### Version 1.0\n\n**Aim:** Finished work.\n\n"
+        "<!-- strategy-1.0:start -->\n<!-- strategy-1.0:end -->\n\n"
+        "## Not now\n\n## Decisions\n"
     )
 
     def test_valid_strategy_passes(self):
@@ -300,8 +300,20 @@ class StrategyTests(unittest.TestCase):
         self.assertTrue(any('JSON payload' in e for e in release_errors('13.md', final)))
 
     def test_versions_must_reach_the_major_version_without_gaps(self):
-        bad = self.GOOD.replace('#### Version 0.5', '#### Version 0.6', 1)
+        bad = self.GOOD.replace('### Version 0.5', '### Version 0.6', 1)
         self.assertTrue(any('expected version 0.5' in e for e in strategy_errors(bad)))
+
+    def test_major_is_last_and_all_milestones_are_peers(self):
+        start = self.GOOD.index('### Version 1.0')
+        end = self.GOOD.index('## Not now', start)
+        major = self.GOOD[start:end]
+        first = self.GOOD.index('### Version 0.1')
+        bad = self.GOOD[:first] + major + self.GOOD[first:start] + self.GOOD[end:]
+        self.assertTrue(any('expected version 0.1' in e for e in strategy_errors(bad)))
+        nested = self.GOOD.replace('### Version 0.1', '#### Version 0.1')
+        self.assertTrue(any('level-three heading' in e for e in strategy_errors(nested)))
+        missing = self.GOOD.replace('### Version 0.9\n\n**Aim:** Open\n\n', '')
+        self.assertTrue(any('expected version 0.9' in e for e in strategy_errors(missing)))
 
     def test_version_needs_an_aim_and_major_cannot_be_open(self):
         bad = self.GOOD.replace('**Aim:** Fast.', '')
@@ -313,7 +325,7 @@ class StrategyTests(unittest.TestCase):
 
     def test_only_one_major_version_is_allowed(self):
         extra = "\n### Version 2.0\n\n**Aim:** Later.\n\n" + "".join(
-            f"#### Version 1.{n}\n\n**Aim:** Open\n\n" for n in range(1, 10))
+            f"### Version 1.{n}\n\n**Aim:** Open\n\n" for n in range(1, 10))
         bad = self.GOOD.replace('## Not now', extra + '## Not now')
         self.assertTrue(any('exactly one major' in e for e in strategy_errors(bad)))
 

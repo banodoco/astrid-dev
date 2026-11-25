@@ -921,8 +921,6 @@ class StrategyViewTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'releases').mkdir()
-            from test_records import ProjectRecordTests
-            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
             (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
             def brief(n, kind, sentence):
                 return (StrategyTests.RELEASE.replace('Release 13', f'Release {n}').replace('**Release:** 13', f'**Release:** {n}')
@@ -938,30 +936,29 @@ class StrategyViewTests(unittest.TestCase):
                 text = (root / 'strategy.md').read_text(encoding='utf-8')
                 first = text.split('<!-- strategy-0.1:start -->')[1].split('<!-- strategy-0.1:end -->')[0]
                 second = text.split('<!-- strategy-0.2:start -->')[1].split('<!-- strategy-0.2:end -->')[0]
-                self.assertIn('Release 1 — GPU control', first)
-                self.assertIn('Release 2](releases/2.md)', first)
-                self.assertIn('[Release 1](releases/1.md): Contribution 1; [Release 2](releases/2.md): Contribution 2.', first)
-                self.assertEqual(first.count('[Plan 40 — Machine lifetime controls]'), 1)
-                self.assertIn('[Release 3](releases/3.md): Contribution 3; [Release 4](releases/4.md): Contribution 4.', second)
+                self.assertIn('**Releases:** [Release 1](releases/1.md) · [Release 2 — GPU control](releases/2.md) (Draft)', first)
+                self.assertIn('**Releases:** [Release 3](releases/3.md) · [Release 4 — GPU control](releases/4.md) (Draft)', second)
+                for region in (first, second):
+                    self.assertNotIn('Contribution ', region)
+                    self.assertNotIn('[Plan 40', region)
+                    self.assertNotIn('Creators can control', region)
                 self.assertIn('**Aim:** Fast.', text)
-                (root / 'strategy.md').write_text(text.replace('Contribution 1;', 'Edited;'), encoding='utf-8')
+                (root / 'strategy.md').write_text(text.replace('[Release 1]', '[Edited]'), encoding='utf-8')
                 self.assertTrue(check_view(views.VIEWS[0], root))
                 (root / 'strategy.md').write_text(text.replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
                 self.assertIn('restore', check_view(views.VIEWS[0], root)[0])
             finally:
                 views.VIEWS = prior
 
-    def test_frozen_issue_counts_use_reader_fields(self):
+    def test_release_details_and_frozen_issue_counts_stay_in_briefs(self):
         from unittest.mock import patch
         import records
         import views
         from test_check_docs import StrategyTests
-        from test_records import ProjectRecordTests
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'releases').mkdir()
             (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
-            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
             (root / 'releases/13.md').write_text(StrategyTests.RELEASE, encoding='utf-8')
             original = records.release_brief
             def reader(text, **kwargs):
@@ -971,9 +968,10 @@ class StrategyViewTests(unittest.TestCase):
                 return brief
             with patch.object(records, 'release_brief', side_effect=reader):
                 rendered = views._strategy(root, '0.1')
-            self.assertIn('[Release 13 issues](releases/13.md#issues): 2', rendered)
-            # A blank line separates the counts from the plan bullets above them.
-            self.assertIn('.\n\n[Release 13 issues](releases/13.md#issues): 2', rendered)
+            region = rendered.split('<!-- strategy-0.1:start -->')[1].split('<!-- strategy-0.1:end -->')[0]
+            self.assertEqual(region.strip(), '**Releases:** [Release 13](releases/13.md)')
+            self.assertNotIn('#issues', region)
+            self.assertNotIn('Include spend control.', region)
 
     def test_normal_check_reports_missing_marker_before_sync(self):
         import astrid_dev
@@ -1023,18 +1021,17 @@ class StrategyViewTests(unittest.TestCase):
             self.assertEqual([b['number'] for b in membership['1.0']], [b['number'] for b in tail])
             self.assertNotIn('0.10', membership)
 
-    def test_major_renders_all_contributions_and_frozen_counts(self):
+    def test_major_renders_only_its_release_links(self):
         from unittest.mock import patch
         import records
         import views
         from test_check_docs import StrategyTests
-        from test_records import ProjectRecordTests
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'releases').mkdir()
             (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
-            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
-            self.assertIn('No release yet.', views._strategy(root, '1.0'))
+            empty = views._strategy(root, '1.0').split('<!-- strategy-1.0:start -->')[1].split('<!-- strategy-1.0:end -->')[0]
+            self.assertEqual(empty.strip(), '')
             for n, kind in ((1, 'minor'), (2, 'patch'), (3, 'major')):
                 brief = (StrategyTests.RELEASE.replace('Release 13', f'Release {n}')
                          .replace('**Release:** 13', f'**Release:** {n}')
@@ -1048,15 +1045,11 @@ class StrategyViewTests(unittest.TestCase):
                 return brief
             with patch.object(records, 'release_brief', side_effect=reader):
                 rendered = views._strategy(root, '1.0').split('<!-- strategy-1.0:start -->')[1].split('<!-- strategy-1.0:end -->')[0]
-            self.assertIn('[Release 3](releases/3.md) — GPU control (Draft): Creators can control rented GPU machine lifetime.', rendered)
-            self.assertIn('On the way: [Release 2 — GPU control](releases/2.md)', rendered)
-            self.assertEqual(rendered.count('[Plan 40 — Machine lifetime controls]'), 1)
-            self.assertIn('[Release 2](releases/2.md): Contribution 2; [Release 3](releases/3.md): Contribution 3.', rendered)
-            self.assertEqual(rendered.count('Contribution 2'), 1)
-            self.assertEqual(rendered.count('Contribution 3'), 1)
-            self.assertNotIn('Contribution 1', rendered)
-            self.assertIn('[Release 2 issues](releases/2.md#issues): 2', rendered)
-            self.assertIn('[Release 3 issues](releases/3.md#issues): 2', rendered)
+            self.assertEqual(rendered.strip(), '**Releases:** [Release 2](releases/2.md) · [Release 3 — GPU control](releases/3.md) (Draft)')
+            self.assertNotIn('Release 1', rendered)
+            self.assertNotIn('Contribution ', rendered)
+            self.assertNotIn('[Plan 40', rendered)
+            self.assertNotIn('#issues', rendered)
 
 
 if __name__ == "__main__":
