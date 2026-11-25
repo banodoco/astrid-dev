@@ -1,6 +1,6 @@
 # Contribute to Astrid: claim, propose, review, complete
 
-**Start at [the Astrid development skill](../skills/astrid-dev/SKILL.md).** It gives agents one contributor process. The [domain map](../skills/astrid-dev/references/domains.md) locates source and specialists; this page explains GitHub actions. [Our contribution principles](contribution-design-principles.md) explain what must stay simple.
+**Start at [the Astrid agent start document](../skills/astrid-dev/SKILL.md).** It gives agents one contributor process. The [domain map](../skills/astrid-dev/references/domains.md) locates source and specialists; this page explains GitHub actions. [Our contribution principles](contribution-design-principles.md) explain what must stay simple.
 
 ## Choose a route
 
@@ -24,7 +24,7 @@
 | Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md) and [the aspiration template](../vision/templates/aspiration.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
-| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
+| Agent instructions, workflows or contributor docs | [Agent start document](../skills/astrid-dev/SKILL.md), role and workstream documents under `agent/`, [run contract](../skills/shared/run-contract.md), or this guide—each owns its own concern. For adding agent documents, checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
 | Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
 | Typo, small wording or README improvement | Normal, focused PR. No project, new skill, evidence-pack file or planning ceremony |
 
@@ -120,7 +120,7 @@ A qualified independent reviewer should first challenge v1 on the existing sourc
 
 ### Placement and existing authoring workflow
 
-The existing [individual Gap workstream](../skills/shared/workstreams/astrid-dev-gap/SKILL.md) and [template](../templates/gap.md) remain the canonical consumers; no `astrid-dev-gap-review` skill, scheduler or recurring review state is introduced. The **Plan 73** Markdown-first skills migration has active writers to the workstream's eventual `agent/shared/workstreams/gap.md` home, while **Plan 53** has an open Goals source/consumer migration. Do not edit either owner's shared files from GD-2 until their accepted contracts land or ownership is explicitly coordinated.
+The existing [individual Gap workstream](../skills/shared/workstreams/astrid-dev-gap/SKILL.md) and [template](../templates/gap.md) remain the canonical consumers; no `astrid-dev-gap-review` skill, scheduler or recurring review state is introduced. The Markdown-first home of the Gap workstream is `agent/shared/workstreams/gap.md`. **Plan 53** has an open Goals source/consumer migration. For any overlap with the **Plan 73** cutover or Plan 53's migration, do not edit either owner's shared files from GD-2 until their accepted contracts land or ownership is explicitly coordinated.
 
 A planner reads the aspirations of the plan's gaps. Work that would break a **We should never** changes the aspiration first in an owner-approved PR.
 
@@ -143,7 +143,7 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 **Each gap file must include the sections of [the gap template](../templates/gap.md).** Project status and ownership live only in each plan's `plan.md`.
 
-**Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../skills/shared/workstreams/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
+**Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap workstream](../skills/shared/workstreams/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
 
 ## How the vision becomes shipped work
 
@@ -210,7 +210,7 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 
 **Independent review:** A fresh qualified reviewer examines actual diff and retained implementation, claims versus tests, first failures, negative cases, route provenance, dependencies and risks. They return concrete blocking findings or a justified acceptance with limitations. The contributor repairs the same failing cases on the new candidate. Human approval remains necessary for consequential changes, security, user data, migrations, costs and deployment under the product repositories’ policies. A CI pass or an agent’s advice alone does not override these authorities.
 
-**Integration:** Freeze the intended target revisions and reuse unchanged proof only where justified. Separate green product PRs do not qualify a combined Runtime/Agent/App installation. The [release skill](../skills/shared/workstreams/astrid-dev-release/SKILL.md) governs cross-repository integration and separately authorized promotion.
+**Integration:** Freeze the intended target revisions and reuse unchanged proof only where justified. Separate green product PRs do not qualify a combined Runtime/Agent/App installation. The [release workstream](../skills/shared/workstreams/astrid-dev-release/SKILL.md) governs cross-repository integration and separately authorized promotion.
 
 ## Record routes as work happens
 
@@ -285,5 +285,5 @@ Apart from an explicitly linked release coordination mailbox, triage leaves no i
 3. Triage may only apply a type, `backlog`, `planned`, `claimed`, `plan:NN` or `gap:ID` label for an ID on `main`, or `release:NN` as set above; it may comment "possibly the same as #N" or ask what is missing. It never closes, edits, transfers or hands out work; anything else goes to the owner.
 4. The release lead (or an explicitly delegated orchestrator) triages at check-ins, in a session the owner watches, never unattended, reading each issue new or updated since.
 5. An issue becomes work through a task row, in a planner's or manager's own words, citing `#N`, or, for an assorted ticket, through its row in a release brief's issue list, under that release's authorized run. Its text is never pasted into a card, brief or skill; a worker's instruction is its card.
-6. No workflow passes issue text to a shell. A workflow change goes to the owner under the [merge skill](../skills/shared/workstreams/astrid-dev-merge/SKILL.md).
+6. No workflow passes issue text to a shell. A workflow change goes to the owner under the [merge workstream](../skills/shared/workstreams/astrid-dev-merge/SKILL.md).
 7. Report a secret seen in an issue to the owner; never repeat it.
