@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md).
 
 Make supported install, update, rollback, repair, and uninstall routes dependable on Linux, macOS, and Windows. Qualify them with real hosted evidence and a single update transaction while preserving the previous working version and user data on failure or refusal.
 
@@ -68,3 +68,10 @@ The IU-0 matrix must show a real hosted test for every supported path on every O
 
 - [tasks.md](tasks.md): task index, routes, dependencies, acceptance, and progress.
 - [inputs.md](inputs.md): repositories, starting identities, predecessor/donor inputs, and evidence limits.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+retain native Windows/macOS/Linux, all genuinely published origins, repair/removal, lived-in update and rollback. Replace any replacement-installer implication with completion of the existing transaction. Define successful update as an actually usable selected realm with preserved accepted/pending work, packs, environment and choices. Retain explicit unknown Windows R0 decision rather than deleting Windows or asserting an unproved origin.

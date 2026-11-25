@@ -1,5 +1,7 @@
 # Workflow set-up: one exact plan and one approval
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** Workflow set-up: one exact plan and one approval
 
 **Goal:** A person or agent sees one plan of every node pack and model a workflow lacks, approves exactly that plan once, and the saved workflow remembers it; packs they have trusted before install without asking again.
@@ -12,7 +14,7 @@
 
 **Waiting on:** [Plan 56](../56-workflow-setup/plan.md) (its approval record and `--consent code`); Plan 32 F4 for the single fetch path; Plan 35 for where trust lives; the owner's go
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): a workflow is only portable if the place it lands can be made ready for it without a person hunting for files. [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting): nothing runs another person's code without an informed yes.
 
@@ -49,3 +51,9 @@ After Plan 56: the plan function and an RS1 review stop on its JSON and approval
 - With SAM-Audio in no list, `generate requirements ... --add <url> --placement runpod --dry-run --json` returns `needs_approval` with the pinned commit, dependencies, `install.py` reported not run and the digest, without a machine; `--apply DIGEST --consent code` installs exactly that; a second plan is `ready` with no flag.
 - Negative cases: a changed target state invalidates the digest; a stale digest is refused; a failure after two of five actions reports two done, one failed, two pending and the next run does the three; a model that does not match its hash leaves no file.
 - Limits: an agent can type the consent flag; approved code runs with the target's access.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+One exact dependency plan, applicable approval and resumable apply consume integrated Plan 56 Stage 1 and its individually mapped residuals; valid grant is not target readiness. A no-machine preview cannot authorize mutation on an unspecified future target.

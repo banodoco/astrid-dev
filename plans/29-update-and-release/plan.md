@@ -14,7 +14,7 @@
 
 **Resuming Release 12 on a new machine?** Start at [handoff.md](handoff.md).
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
@@ -109,3 +109,10 @@ On the published release 10 tuple:
 - Pinokio never sees the installer command;
 - "Astrid on this computer" has no actions;
 - an installed version newer than astrid.haus shows no command.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+retain one understandable update decision across hosted/local, selected installation, installed-ahead, optional/required and unknown states. Replace historical “P31 after all P29 on main” with the specific status/manifest consumer landing seam. P09 owns the transaction; P31 owns publication; P30 owns route residuals. Distinguish Runtime release from App source/deployment and served manifest.

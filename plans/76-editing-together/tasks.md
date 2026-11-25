@@ -1,5 +1,7 @@
 # Tasks — Editing together
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Inputs](inputs.md)
 
 A draft can use a short outline with unknowns. Before dispatch, every task needs one bounded outcome, its input and deliverable, dependencies, a suitable route, and focused proof. Name source identity where one task consumes another project's output. Reuse the prior-art and source identities in [inputs.md](inputs.md); don't repeat them.
@@ -18,7 +20,7 @@ Paths: Agent is astrid-agent, Runtime is astrid-runtime, App paths are under `sr
 | ET-4b **Undo the agent's change from the line** (1 day; **promoted from a nice-to-have to a must**: it is the safety valve for narrow default reads, whose accepted risk is a valid edit made on slightly old information). The same `timeline.inverse` command, from the "who and what" line. **First check, unverified: that the server lets one actor invert another's commit.** | N | ET-3, ET-4 | App `components/` (the line), `hooks/useTimelineHistory.ts` | App test: one click on the line inverts the agent's commit through the queue; a same-address change since parks | [ ] |
 | ET-5 **A bundle publish survives `moved`** (2 days). The authoring writer has no outbox and no pending record (`authoring_bundle.py:1923-1924`, reported): a reply that is not accepted raises, and a lost reply with a random key leaves nothing to replay. Make it keep its request and key until it has an answer and, if `moved`, re-read and re-attach without generating anything again (a bundle is an addition with narrow reads: it relies only on what it attaches to). **First step: trace which path the Almost Ready animation bundle took** (the Runtime's publish route is retired; a bundle now goes through the authoring-bundle writer to the commit route, `authoring_bundle.py:1916`; Plan 63's CC-4b has the same first step and records the answer). **No third queue:** this reuses the one pending-record mechanism, and sending bundles through Plan 18's one verb is the later form. | X | Plan 63 CC-4b | Agent `authoring_bundle.py`, `authoring_remote.py`, `authoring_commit.py:24-81` | Agent test: a bundle whose reply is lost is sent again with the same key and lands once; a `moved` bundle re-attaches without re-generating | [ ] |
 | ET-6 **A test with both writers on a real stack** (2 days). A burst in the editor, an agent function and a bundle on one timeline: cases (a) to (e) of [plan.md](plan.md#outcome-and-scope) as rows, on the staging stack (never the timeline the owner views; a sandbox timeline). Includes the editor and an agent on one head, disjoint and clashing (Plan 63's model test has the editor-side rows). | N | ET-1 to ET-5 | staging stack tests | One test file with rows (a) to (e); the person's screen never jumps, no change is refused for an unrelated edit, and a clash parks one change with the clip named | [ ] |
-| R Review round (one round; recommended: it changes what writers declare on every route). Read-only review of the integrated candidate against the cases and the negatives. **Starting N split (3):** one reader per repository. | S | ET-1 to ET-6 | read-only | Rounds per the [run contract](../../skills/shared/run-contract.md#review-and-promotion-boundaries): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; closing waits for them | [ ] |
+| R Review round (one round; recommended: it changes what writers declare on every route). Read-only review of the integrated candidate against the cases and the negatives. **Starting N split (3):** one reader per repository. | S | ET-1 to ET-6 | read-only | Rounds per the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md#review-and-promotion-boundaries): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; closing waits for them | [ ] |
 
 ## Start here
 
@@ -62,3 +64,11 @@ python3 scripts/astrid_dev.py check && python3 -m unittest discover -s scripts -
 | ET-C4 | A bundle whose reply is lost is sent again with the same key and lands once | ET-5 Agent test |
 
 Negative cases: a writer that omits its reads is `atomic` by request, not by default; a ripple intent keeps `reads="timeline"`. Limits: see [plan.md](plan.md#completion).
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+| Canonical home | Proposed bounded amendment |
+| --- | --- |
+| `plans/75-fast-saving/plan.md`, `inputs.md`, `tasks.md`; `plans/76-editing-together/plan.md`, `inputs.md`, `tasks.md`; `plans/89-heavy-saves-in-seconds/plan.md`, `inputs.md`, `tasks.md` | Record only exact handoff/timing cross-references for CC-17, CC-5c, ET-5, and ET-1+ET-4b together; preserve later scope, checked no-gain history and original IDs. Do not mark donor or receiving tasks complete by this amendment. |

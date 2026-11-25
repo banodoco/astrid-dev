@@ -1,5 +1,7 @@
 # Vision aspirations
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** Vision aspirations
 
 **Goal:** Anyone deciding how a part of Astrid should work, such as packs or generation, finds one short reference under the vision that says what we should do and what we should never do, and every gap is measured against it.
@@ -10,9 +12,9 @@
 
 **Estimate:** about 4.5 (Phase 1 about 2.7; Phase 2 about 1.8)
 
-**Waiting on:** the owner's mark-up (VA-3, VA-4), her supporting-aspirations table (VA-5) and her look at the page (VA-10)
+**Waiting on:** Reconcile the 13 November implementation against the still-unticked VA cards; owner's mark-up, supporting-aspirations table and physical-device look remain outstanding, along with independent review. The prior Release 14 Lead remains the recorded owner; the Release 15 Lead must confirm handoff or disposition.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [CA-003 — Our vision and execution aren't yet fully connected](../../vision/gaps/CA-003-vision-experiments-progress.md) (primary): this plan makes each gap point at one stated aspiration, so a reader can follow vision, aspiration, gap and plan in one line. CA-003 has no route to closure and none of its closure-evidence items is delivered here, so there is no `Contributes to closure` line.
 
@@ -112,3 +114,9 @@ The gap line's anchor check is part of `python3 scripts/astrid_dev.py check`, wh
 Phase 2 is done when, on the deployed App, a visitor opens a pillar and, without opening anything further, sees under each aspiration one line per gap with its name, its number of projects and its top project (a Playwright spec asserts that line against a fixture feed); opening an aspiration adds its paragraph and lists; opening a gap adds its description and all its projects; the lists are marked and indented; the old element-level "Gaps preventing this" list is gone; and the page still loads a feed that has no `aspiration` field.
 
 **Limits of this proof:** it shows the structure holds and the page shows it. It does not show that planners read the aspirations, or that the bullets settle arguments; the first plan that touches packs or generation after this is the real test. Publishing the App change belongs to a release and its owner, not to this plan.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+Owner directed the existing Plan 53 handoff into Release 16. Carry the bounded product residual and existing authority; no new lane or reset is authorized. The proposed reconciliation is recorded in tasks.md.

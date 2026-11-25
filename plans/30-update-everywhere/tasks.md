@@ -2,14 +2,14 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run contract](../../skills/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change.
+Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
 | UR-15 Remove the systemd 254 floor | S | Plan 29 | agent `update_job*.py`, journey matrix; contract update helper | On systemd 249, the Linux worker runs from an owner-only file with no `$` or `%` expansion. An update started before the change still reconciles. An Ubuntu 22.04 row passes | [ ] |
 | UR-16a Helper-protocol schema owned by the Runtime | X | Plan 29 UR-10 | runtime helper-protocol schema; agent helper tests | A JSON Schema (Python on both sides) under `astrid_runtime/`, outside `contract/`; both repos test against it | [ ] |
 | UR-16b Update-status schema, kept outside the versioned contract | N | Plan 29 UR-11 | app `client.ts`; update-status schema | The App validates against it, and `schema_digest` is unchanged | [ ] |
-| UR-17 Refusal rule | N | Plan 29 UR-1 | app `CopyRefusedInstructions.tsx`, `RuntimeConnectionPanel.tsx`, `RuntimeConnectionPill.tsx`, `copy.ts` | A separate `resolveRefusal`; refused cards show update wording only when the installed release is behind | [ ] |
+| UR-17 Refusal rule | N | Plan 29 UR-1 | app `CopyRefusedInstructions.tsx`, `RuntimeConnectionPanel.tsx`, `RuntimeConnectionPill.tsx`, `copy.ts` | Use the existing shared update decision meanings and reason table; refused cards show update wording only when the installed release is behind | [ ] |
 | UR-18a Pinokio update proof | N | — | agent `scripts/pinokio_row_driver.py` (coordinate with Plan 10) | The Pinokio row runs the launcher's own Update action (`update.js`), not a direct installer re-run | [ ] |
 | UR-18b Fully local update proof | X | Plan 29 UR-9 | app local-update control tests | A dev:local test drives the in-page updater (no new hosted row) | [ ] |
 | LA-1 The launcher asks the Agent where Astrid lives (local review mechanism 1) | X | Plan 29 UR-15, a1 | agent `installation.py` (`--json` entry), app `dev-local-workspace-options.mjs`, `local-update-backend.mjs` | One resolver answers the launcher; the launcher's own path logic is deleted | [ ] not started (Plan 30) |
@@ -19,7 +19,7 @@ Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run cont
 | LA-5 Hosted Update now vs a running local launcher | X | LA-1 | runtime `update.py` status (local launcher reason `local-launcher`), app `resolveUpdate.ts` | With dev:local running, astrid.haus shows the local-launcher reason and the `npm run update` line | [ ] not started (Plan 30) |
 | LA-6 Define local repair | N | LA-1 | app `AstridUpdatesSection.tsx:159`, `copy.ts`, `dev-local-workspace.mjs:61-73` | A degraded Runtime under dev:local shows one repair line, then restart dev:local | [ ] not started (Plan 30) |
 | LA-7 App-half update log | N | UR-15l-2 | app `local-update-checkout.mjs`, `local-update-runner.mjs`, runtime `diagnostics.py` | A failed `npm ci` in prepare appears in Download diagnostics under its own label | [ ] not started (Plan 30) |
-| UR-R Up to two independent reviews before closing | S | UR-15–UR-18b | all Plan 30 scopes (read-only review) | Same review rounds as [Plan 29](../29-update-and-release/tasks.md#ur-r-review-rounds); findings become rows `UR-R<round>.<n>` directly below this one, done before the next round | [ ] |
+| UR-R Up to two independent reviews before closing | S | UR-15–UR-18b and LA-1–LA-7 | all Plan 30 scopes (read-only review) | Same review rounds as [Plan 29](../29-update-and-release/tasks.md#ur-r-review-rounds); findings become rows `UR-R<round>.<n>` directly below this one, done before the next round | [ ] |
 
 ## Task details
 
@@ -32,3 +32,10 @@ Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run cont
 ### UR-16 Contracts
 `/v1/update/status` is not in `contract/` today. Adding it there would change `SCHEMA_DIGEST` and switch off `supportsFullV2Commit` in the App (`contract-metadata.ts:22-27`). Keep both schemas outside `contract/`.
 
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+preserve unchecked rows and LA “not started.” UR-15 accepts P29 UR-R2.5: both launch flags and query/settlement on systemd 249/252, not just one flag removal. UR-16a produces one shared helper schema; UR-16b, LA-2 and LA-4 consume normalized statuses and exact reason mapping. UR-17 uses existing decision meanings for truthful action/refusal, including installed-ahead and unknown; no second `resolveRefusal`. UR-18a discovery starts now, final proof depends on P10 PIN-2/3 and the frozen tuple; UR-18b reuses page→endpoint→launcher fixture. LA-1 read-only selected installation can start now; LA-3 no-op requires **both** actual halves current; LA-5 refuses service takeover; LA-6 repairs the existing route; LA-7 includes redacted App-preparation failures. Qualify ambiguous P29 suffix references, and extend UR-R dependencies from UR-15–18b to **all LA-1–7**. Historical UR19→P09 retained-root policy; UR20→autostart/capability; UR21/22→shared decision; UR23/24/26/28→copy; UR25→Windows proof; UR27/29→bounded readiness; UR30→tuple provenance; broad UR31 CI expansion stays later absent a minimal required witness. Evidence: [SC-30](../../releases/16/evidence/scoping/README.md#receipts), [INV-01](../../releases/16/evidence/scoping/README.md#receipts), [AUD-01](../../releases/16/evidence/scoping/README.md#receipts).

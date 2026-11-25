@@ -1,5 +1,7 @@
 # Local media of any size
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** Local media of any size
 
 **Goal:** A creator or agent adds a clip from their own computer at any size the Runtime accepts, with one limit, one message and no extra step, and the original file is never touched.
@@ -12,7 +14,7 @@
 
 **Waiting on:** a manager, in **Release 16** (the owner moved it from Release 15 on 24 November 2026; its branches become `release/16/plan-79`, cut from `release/16/main`), and Plan 77 landing: it edits the same Agent and App files, and the editor half needs its drop handling ([sequence](#sequence-and-readiness)). The interim 1 GiB limit (D2) does not wait.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [F-003 — Creative execution isn't yet dependable end to end](../../vision/gaps/F-003-creative-execution.md) (primary): a creator who cannot put their own footage on a timeline cannot start. F-003's route does not name this plan, so there is no `Contributes to closure` line.
 
@@ -64,3 +66,9 @@ The Runtime already does the hard part: its `media-imports` route streams the re
 - **The handle:** a handle from `astrid media import` is placed on a timeline; two catalog entries for one digest are still refused as ambiguous.
 - **Untouched original:** after each case the source file's bytes, path and modified time are unchanged.
 - **Limits of the proof:** one operating system for the live run unless the owner asks for more; Windows long paths and network drives are not proven here. Landing in `release/15/main` and publishing remain the owner's.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+stream substantial local image/audio/video up to actual configured Runtime authority (currently default 5 GiB, not unlimited), preserving originals and bounded memory. Exact project/catalog selection, duration/resolution and whole upload→placement lifetime are part of dependable import. No giant browser-byte persistence promise.

@@ -1,5 +1,7 @@
 # Tasks — Dependable saving
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Inputs](inputs.md) · [Statements](statements.md)
 
 A draft can use a short outline with unknowns. Before dispatch, every task needs one bounded outcome, its input and deliverable, dependencies, a suitable route, and focused proof. Name source identity where one task consumes another project's output. Reuse the prior-art and source identities in [inputs.md](inputs.md); don't repeat them.
@@ -119,3 +121,30 @@ These are true before Plan 18's RS1 closes and before Plan 76's editor half star
 | P0-7 | **Every edit kind is accepted, one record shape, a read is an address.** Every row of the edit-kind matrix (a gesture kind x a target kind, encoded by the shipped save path, from the document as the App really holds it) is accepted through the real Runtime route, equals the App's own `after`, and undoes; the Runtime accepts one record shape per effect kind; no refusal anywhere compares a value the writer declared (a request whose declared value is wrong is still accepted; a foreign commit between the base and the head is still a clash); `invalid_records` is unreachable from any row; a new op literal with no row fails to compile. | App `EDIT_KINDS` test, the pinned request file in the Runtime's `conformance/requests/`, the Runtime's real-provider test, the nightly run |
 
 Negative cases: a refused commit followed by an unrelated edit; a refused batch parks only the bad edit and what follows it; a deliberately added inline `_fail(` fails P0-2 by the count; a writer that stores one half of an association fails P0-4; a new status or save surface added without the model test failing is the case P0-3 exists to prevent. Limits: this proves the save path is consistent on the corpus and under the model test, not on every document a creator can make; an upload interrupted by a reload is not resumed (Plan 18's TL-10); the week of the owner's editing is recorded as evidence, not gated.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+The existing CC/R0 statuses remain unchanged. These proposed task-specific outcomes and dependencies supersede conflicting historical wording; CC-17 is a new, uncompleted proposal:
+
+| Task | Concrete amendment and dependency |
+| --- | --- |
+| CC-5a | Finite queue/model scenarios for bursts, two same-actor writers, late callbacks, all four outcomes, park/discard and migration. Start with CC-7/13; no global foundation gate. |
+| CC-7 | One generated corpus/manifest, 300/616/film/large-shots, history and closure dimensions, malformed/legacy controls; no private creator project required. |
+| CC-3 | Existing correctness/native admission inventory and supported delta gate; hard shape/security/custody violations are not grandfathered. **Remove blanket acceptance of equal base/candidate rule-error signatures: exceptions or incomplete validation do not establish delta safety. Refuse the affected edit unless a specific independently proved narrow baseline policy permits it.** No new extensibility registry. |
+| CC-4 | One outcome constructor and shared vector table for commit/import: authoritative success identity, moved conflict, definitive refusal, unknown unavailable. Compatible older response behavior. |
+| CC-4b | Same vectors for SDK/CLI/MCP/bundle and recovery; exact request/key/fence durable before send; same-attempt retry versus changed-basis fresh attempt; distinct-writer custody; minimal ET-5 in existing outbox. Preserve already-correct current v2 route. |
+| CC-12 | Installed guidance after CC-4b, matching actual command/skill source layout; no wording that implies deferred ET-1 is already enabled. |
+| CC-13 | Actual App capture and Runtime replay in separate writer scopes now; raw supported kinds, exact final bytes/inverse/selection. Real multi-step individual inverse proof before CC-5c landing. #1657 availability/submission distinction and #2002 unknown-cause rows included. |
+| CC-14 | Repair supported red corpus rows at their cause; keep unknown/untouched item, ordering/anchor, preview/render semantics and assertions. Re-estimate actual residuals, not a broad rewrite mandate. |
+| CC-15 | One forward-emitted shape per supported kind; inventory remove/move/insert, retain historical reads/replay/inverse/rollback. If universal removal needs future TL-3r migration, narrow this change. |
+| CC-16 | Retain current auth check; prove accepted-base/chained-step dependency derivation and disjoint/same-address behavior with exact provider pair. New ET-1 + required ET-4b remain together under explicit timing decision. |
+| CC-5b | Existing optimistic view plus bounded logical custody per realm/actor/writer/project/timeline; owner fencing, unknown replay, park failed edit + dependent suffix, Keep mine/scoped Discard. Retain placementService.ts, shotTimelineDataProvider.ts and bootstrapInitialization.ts consumers, no full document per edit, and original real-browser 50 ms local “kept” criterion (distinct from server Saved). Relevant S35 migration before deleting old persistence. |
+| CC-5c | One flight plus one bounded accumulating batch, per-edit order/receipt/inverse preserved; spec starts now, landing after CC-13 feasibility and CC-5b. Absorb only needed SV-L7 semantics, not silent same-field collapse. |
+| CC-6 | Reuse admit/registry/admission machinery and exact verified selections for App/Agent duplicate/fork/shot/import. #2002 descriptor group joins P87 projection owner, current authenticated reader/render must see same accepted bytes. |
+| CC-10 | Preserve small import operation/key/receipt/placement metadata, truthful storage failure, unknown query/replay, placement-only retry after import acceptance. Same whole-lifetime guard as LM-5/P29. No blind removal of persistMediaImportOperation. |
+| **CC-17 (new)** | P63 Runtime/Agent/App bounded P89 usability residual with P85 method: baseline/profile first, fix demonstrated burst/undo/reopen/save costs, retain 2 s / 4 s gate; no false feasibility promise. Conditional watermark must bind realm/store epoch, DB/schema/guard/history prefix and invalidate on restore/replacement/migration. |
+| R0 | Extend dependency inventory to all retained/touched CC-3/4/4b/5a/5b/5c/6/7/10/12/13/14/15/16/17, **P04 CE-FINAL proof/mapping and cooperative-limit evidence**, P79 custody and S35 migration. The named CE-END/CE-REVIEW verdict is an **output** of this one exact-tuple independent review, not its prerequisite. Changed relevant pins re-review affected cases. |
+
+The [P89 handoff](../89-heavy-saves-in-seconds/tasks.md) retains SV-L4/7/7a/9b and the checked no-gain SV-L11 history; CC-17/CC-5c receive only the bounded save residual. SV-L12 remains unfunded absent new measurement.

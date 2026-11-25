@@ -1,5 +1,7 @@
 # Inputs — One place to measure
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
@@ -74,4 +76,10 @@ No work has started. Read on 22 November 2026: astrid-dev `main` at `3db0fc91`; 
 
 - [Plan 81](../81-once-per-command/plan.md) and [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md): where the tools and the lessons came from.
 - [Plan 82](../82-reuse-across-commands/plan.md) and [Plan 86](../86-the-timeline-feels-fast/plan.md): the next two users of this.
-- [Release workstream](../../skills/shared/workstreams/astrid-dev-release/SKILL.md): where the comparison is added.
+- [Release workstream](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/workstreams/release.md): where the comparison is added.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+name tuple/install-overlay/fixture/history/closure/cold-warm/load/clock dimensions, exact raw evidence and access gaps. D1 threshold remains an owner decision;20% is a provisional alert, not a fabricated pass gate. P89's explicit gate is separate. Keep original private content off public proof.
