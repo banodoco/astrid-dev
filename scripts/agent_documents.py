@@ -15,6 +15,7 @@ from document_structure import frontmatter, headings, section
 
 
 SKILL_PREFIX = "astrid-dev-"
+SKILL_NAME_MAX_LENGTH = 64
 AGENT_SOURCE_ROOT = "agent"
 
 _NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
@@ -125,6 +126,13 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
         raise ValueError("skill source directory cannot be represented by an ownership marker")
     if flag == "true" and not _NAME.fullmatch(path.stem):
         raise ValueError("skill filename must be a lowercase kebab-case name")
+    if flag == "true":
+        skill_name = SKILL_PREFIX + path.stem
+        if len(skill_name) > SKILL_NAME_MAX_LENGTH:
+            raise ValueError(
+                f"{(Path(AGENT_SOURCE_ROOT) / relative).as_posix()}: generated skill name "
+                f"'{skill_name}' is {len(skill_name)} characters; limit is {SKILL_NAME_MAX_LENGTH}"
+            )
 
     lines = [line for line in body.splitlines() if line.strip()]
     title = lines[0] if lines else ""

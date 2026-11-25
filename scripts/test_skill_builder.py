@@ -108,6 +108,67 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(build_packages(self.root), [])
         self.assertEqual(check_packages(self.root), [])
 
+    def test_skill_name_length_limit_builds_53_character_stem(self):
+        stem = "check-generated-workstream-and-shared-policy-discover"
+        name = f"astrid-dev-{stem}"
+        self.assertEqual(len(name), 64)
+        path = self.root / "agent" / "shared" / "workstreams" / f"{stem}.md"
+        path.write_text(STREAM, encoding="utf-8")
+        build_packages(self.root)
+        skill = self.package(name) / "SKILL.md"
+        self.assertIn(f"name: {name}", skill.read_text(encoding="utf-8").splitlines())
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_overlong_skill_name_refuses_cold_build(self):
+        stem = "check-generated-workstream-and-shared-policy-discovery"
+        path = self.root / "agent" / "shared" / "workstreams" / f"{stem}.md"
+        path.write_text(STREAM, encoding="utf-8")
+        message = (f"agent/shared/workstreams/{stem}.md: generated skill name "
+                   f"'astrid-dev-{stem}' is 65 characters; limit is 64")
+        with self.assertRaises(ValueError) as raised:
+            build_packages(self.root)
+        self.assertEqual(str(raised.exception), message)
+        self.assertFalse((self.root / ".generated" / "skills").exists())
+
+    def test_overlong_skill_name_preserves_existing_generation(self):
+        build_packages(self.root)
+        output = self.root / ".generated" / "skills"
+
+        def snapshot():
+            return {str(p.relative_to(output)): (("link", os.readlink(p)) if p.is_symlink()
+                    else ("file", p.read_bytes()) if p.is_file() else ("dir",))
+                    for p in sorted(output.rglob("*"))}
+
+        before = snapshot()
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text(encoding="utf-8") + "\nChanged.\n",
+                          encoding="utf-8")
+        workstreams = self.root / "agent" / "shared" / "workstreams"
+        (workstreams / "new-workstream.md").write_text(STREAM, encoding="utf-8")
+        stem = "check-generated-workstream-and-shared-policy-discovery"
+        (workstreams / f"{stem}.md").write_text(STREAM, encoding="utf-8")
+        message = (f"agent/shared/workstreams/{stem}.md: generated skill name "
+                   f"'astrid-dev-{stem}' is 65 characters; limit is 64")
+        with self.assertRaises(ValueError) as raised:
+            build_packages(self.root)
+        self.assertEqual(str(raised.exception), message)
+        self.assertEqual(snapshot(), before)
+        self.assertFalse(self.package("astrid-dev-new-workstream").exists())
+        self.assertFalse(self.package(f"astrid-dev-{stem}").exists())
+
+    def test_overlong_skill_name_refused_by_validator_after_clean_build(self):
+        from agent_documents import validate_documents
+
+        build_packages(self.root)
+        self.assertEqual(check_packages(self.root), [])
+        self.assertEqual(validate_documents(self.root), [])
+        stem = "check-generated-workstream-and-shared-policy-discovery"
+        path = self.root / "agent" / "shared" / "workstreams" / f"{stem}.md"
+        path.write_text(STREAM, encoding="utf-8")
+        message = (f"agent/shared/workstreams/{stem}.md: generated skill name "
+                   f"'astrid-dev-{stem}' is 65 characters; limit is 64")
+        self.assertEqual(validate_documents(self.root), [f"agent documents: {message}"])
+
     def test_turning_skill_flag_off_retires_only_owned_output(self):
         build_packages(self.root)
         file = self.root / "agent" / "roles" / "leader.md"
