@@ -23,7 +23,7 @@ On 25 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`,
 3. **Destinations.** Otto cards: `p95/<card id>` into Otto `main`. astrid-dev cards: `p95/<card id>` into `project/95-otto` (cut from `main`). Merge, never rebase; post BLOCKED if the board lists a different head for an existing draft.
 4. **Dependants wait only for the cards they depend on.**
 5. **Reviews.** The orchestrator reviews ordinary submissions itself. RS1 (the contract, after OT-4, one round) and R (the end, one round) are read-only **Pro** sessions in normal ChatGPT Chat on the orchestrator's REQUEST (packet [P95-RV](packets/P95-RV.md)); the manager starts a fresh session for each REQUEST. There is no sense check SC (owner, 25 November 2026).
-6. **Cap:** at most two packets Running or Review at once. The first packet goes alone until its early STATUS shows a session can push to Otto, open a draft PR and comment.
+6. **Cap:** at most three packets Running or Review at once (raised from two on 25 November 2026: the critical-path packets P95-04, P95-05 and P95-06 touch disjoint files and repositories). The first packet went alone and proved a session can push to Otto, open a draft PR and comment.
 7. **Sessions:** packet sessions run in a normal ChatGPT Chat, not Work. One writer per branch: replace a stopped session only after its branch has been still for 30 minutes.
 8. **Plan records:** `plans/95-composable-agentic-workspaces/*.md` change on `main` only through the orchestrator's progress PRs. A packet may add only the evidence file its packet names.
 9. **Otto is public:** nothing private goes into it, and no secret is configured in its CI. Plan 96's Marketing data never goes into Otto.
@@ -57,15 +57,17 @@ Post one STATUS with each as passed or failed; dispatch nothing until the orches
 
 ## Dispatch queue
 
-Cap: two Running or Review at once (ruling 6). The first packet goes alone.
+Cap: three Running or Review at once (ruling 6). Priority: P95-04, P95-06, P95-05, then P95-15.
 
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
 | [P95-03](packets/P95-03.md) Otto package skeleton and CLI | OT-3 | Ready after OT-2 | — | High. First packet, alone; Otto repository |
 | [P95-04](packets/P95-04.md) Contract design | OT-4 | Ready after OT-1 | — | Pro. After P95-03's early STATUS |
 | [P95-15](packets/P95-15.md) Rule-preservation map | OT-15 | Ready after OT-1 | — | Pro. Beside P95-04 within the cap |
+| [P95-05](packets/P95-05.md) Lift the Markdown, Git, check and view engines | OT-5 | Ready (OT-3 merged; Otto main `ef946b9d`) | — | High. Beside P95-04 and P95-06 |
+| [P95-06](packets/P95-06.md) Lift the skill reader, builder and installer | OT-6 | Ready (OT-3 merged; Otto main `ef946b9d`) | — | Extra High. Beside P95-04 and P95-05 |
 | [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
-| Other cards (OT-5 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
+| Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
 
 ## Manager launch message
 
