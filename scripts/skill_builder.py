@@ -20,7 +20,9 @@ from document_structure import markdown_heading_anchors
 OUTPUT = Path(".generated/skills")
 MARKER = f".{SKILL_PREFIX}generated"
 REPO_LINK = "../../../"
-_LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|\((?:\\[^\n]|[^()\\\n])*\)|[^()\\\n])+?)\)")
+# The angle form is a destination only when it starts one (CommonMark); elsewhere "<" and ">" are ordinary
+# characters. Keeping the alternatives disjoint means no input can backtrack exponentially.
+_LINK = re.compile(r"(!?\[[^\]\n]*\])\((<[^>\n]*>|(?:\\[^\n]|\((?:\\[^\n]|[^()\\\n])*\)|[^()\\\n])+?)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
 _REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3})\[([^\]\n]+)\]:[ \t]*(.*)$")
 _REFERENCE_USE = re.compile(r"(?<!\\)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")

@@ -1,5 +1,6 @@
 """Focused generated-skill packaging, reference and refusal tests."""
 import os
+import re
 import subprocess
 import select
 import sys
@@ -1465,6 +1466,57 @@ b.build_packages(root)
         self.assertTrue(build_packages(self.root))
         self.assertEqual(skill.read_bytes(), original)
         self.assertEqual(check_packages(self.root), [])
+
+
+_OLD_LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|\((?:\\[^\n]|[^()\\\n])*\)|[^()\\\n])+?)\)")
+
+
+class LinkPatternTests(unittest.TestCase):
+    """The link pattern must not backtrack catastrophically and must keep matching ordinary links as before."""
+
+    SAME = (
+        "[x](../a.md)", '[x](../a.md "title")', "[x](<a b.md>)", "[x](<a(b).md>)", "[x](a(b).md)",
+        "[x](a(b(c)).md)", "[x](a\\(b\\).md)", "![x](image.png)", "[x](https://example.test/a<b)",
+        "[x](https://example.test/a>b)", "[x](https://example.test/a<>b)", "[x](https://example.test/a<b) >",
+        "[x](a) [y](b)", "[x]()", "[x](<>)", "[x](<a>b)",
+    )
+
+    def test_unclosed_destinations_are_matched_in_bounded_time(self):
+        code = (
+            "import sys, time\n"
+            "from skill_builder import _LINK\n"
+            "for suffix, count in (('<>', 5000), ('<', 5000), ('(<>', 3000), ('<>', 50000)):\n"
+            "    text = '[](' + suffix * count\n"
+            "    start = time.perf_counter()\n"
+            "    match = _LINK.search(text)\n"
+            "    elapsed = time.perf_counter() - start\n"
+            "    print(match is None, elapsed < 1.0)\n"
+        )
+        result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=30,
+                                cwd=Path(__file__).resolve().parent)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.split("\n")[:4], ["True True"] * 4)
+
+    def test_ordinary_links_match_exactly_as_the_previous_pattern_did(self):
+        from skill_builder import _LINK
+
+        for text in self.SAME:
+            for name in ("search", "fullmatch"):
+                with self.subTest(text=text, method=name):
+                    old, new = getattr(_OLD_LINK, name)(text), getattr(_LINK, name)(text)
+                    self.assertEqual(None if old is None else (old.group(0), old.groups(), old.span()),
+                                     None if new is None else (new.group(0), new.groups(), new.span()))
+
+    def test_angle_form_is_a_destination_only_at_its_start(self):
+        from skill_builder import _LINK
+
+        mid = _LINK.search("[x](a<b)c>d)")
+        self.assertEqual(mid.group(0), "[x](a<b)")
+        self.assertIsNone(_LINK.fullmatch("[x](a<b)c>d)"))
+        raw = "[x](https://example.test/a<(`>x`)y)"
+        self.assertEqual(_LINK.fullmatch(raw).group(0), raw)
+        self.assertEqual(_OLD_LINK.fullmatch(raw).group(0), raw)
+        self.assertEqual(_LINK.search(raw).group(0), raw)
 
 
 
