@@ -2,15 +2,15 @@
 
 **Project:** ComfyUI Desktop and existing environments
 
-**Goal:** A creator or their agent can discover, connect to and safely recover their own supported ComfyUI installation, including Desktop, even when it is stopped or broken, and use the ordinary Astrid generation path.
+**Goal:** A creator who already has ComfyUI, including ComfyUI Desktop on Windows, gets an image from Astrid through it, and when it is closed or broken is told exactly what is true and the one thing to do next.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** TBD — re-estimate after the exact-head discovery and lifecycle inventory; do not assume native Desktop launch is already implemented.
+**Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, the installed Desktop witness and review 1–1.5. Assumes an approved Windows NVIDIA machine and a matching editor; re-estimate if CD-0 cannot tie a Desktop install to its endpoint.
 
-**Waiting on:** Independent scope critique, owner decisions on supported layouts and launch authority, Release 16 start and a consented Windows Desktop test environment; coordinate with Plan 38 before any shared process-identity changes.
+**Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; an approved Windows NVIDIA machine with ComfyUI Desktop, or a consented tester, and a matching editor build; Release 16's base for the branch.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -18,32 +18,100 @@
 
 ## Outcome and scope
 
-A person who already uses ComfyUI should not need to install another copy to use Astrid. First-class Desktop support is an outcome, not a fallback to Portable.
+A person who already uses ComfyUI shouldn't need another copy to use Astrid. They should never need to know which plan they are in: they see what is true and what happens next.
 
-- Discover a running or stopped supported local ComfyUI, including Desktop on Windows, and distinguish no installation, a broken registration or missing paths, a stopped installation, a reachable but incompatible target, and a ready target. Reuse the existing scan and typed target evidence; report unknown or denied observations honestly.
-- Identify the layout, endpoint, verified executable/interpreter or launcher, model/workflow locations and ownership when observable. A registered path is not proof it exists; a guessed Python path is not launch authority.
-- Give a supported start/repair instruction or, where verified and authorized, invoke the existing safe launch boundary. Desktop and Pinokio retain lifecycle ownership; never kill, replace, restart or bypass their updater without an independently approved operation. Preserve models, workflows and unrelated jobs. Do not silently choose among multiple candidates.
-- Hand the reachable selected endpoint to the existing Runtime generation settings and Plan 32 path. Use Plan 56's readiness and named next steps for workflow dependencies; existing digest-bound model preparation remains the same path. Do not add another workflow runner or a second default-placement store.
-- A real Windows Desktop installation must generate and deliver a usable image in the matching editor; success on Portable alone cannot qualify Desktop. Portable, manual Git and Pinokio existing-install layouts are regression/compatibility cases; declare the supported matrix and limitations rather than imply all combinations are qualified.
+### What the person sees
 
-Not included: fresh engine provisioning or a general Windows managed-engine adapter (Plan 94); arbitrary third-party repair/patching; new inference engine; a second environment registry; remote ComfyUI, Wan2GP or changes to paid-machine policy.
+- **Running:** "Using your ComfyUI Desktop." The image arrives in the editor.
+- **Closed:** "Found your ComfyUI Desktop. It's closed. Open it and I'll carry on." Once it is open, Astrid checks again and continues.
+- **Broken:** "Your Desktop install points at a folder that no longer exists. Reinstall Desktop, or I can set up a separate copy." The second option is [Plan 94](../94-dependable-environment-setup-and-recovery/plan.md)'s, with its own consent.
+- **More than one install, or one it can't tell apart:** it names them and asks which, never choosing silently.
+- **Not supported here:** it says so, and says what works.
+
+Their install stays theirs. Astrid never starts, restarts, patches, updates or replaces ComfyUI Desktop or Pinokio by itself; it asks the person to open it. "Done" means an image they can open in the editor, never "found an install" or "port answered".
+
+### The readiness ladder (the contract this plan defines, and Plan 94 extends)
+
+One existing command answers "can I make an image here?" for the agent: `generate targets` and the readiness envelope it returns (`astrid/core/generation/preflight.py:readiness_envelope`). Each rung is a verified fact with one owner, checked in this order:
+
+1. **installed:** an install is recorded and its files exist;
+2. **reachable:** something answers on its endpoint;
+3. **identified:** what answers is ComfyUI, and the same install that was found;
+4. **compatible:** its version and API are ones Astrid supports;
+5. **computes:** the selected environment ran a real GPU computation (Plan 94 adds this rung's check);
+6. **workflow ready:** the entry's nodes and models are present (Plans 56 and 90 own this);
+7. **delivered:** an image reached the editor.
+
+The answer stops at the first rung that fails or wasn't checked, naming the rung, the reason, and exactly one next action. That action is either something the person does (open Desktop) or one Astrid command the agent runs. `ready` means every rung up to `workflow ready` was positively observed. Today the envelope reads `ready` whenever no issue was raised (`preflight.py:98-99`), so an unchecked target can read ready. And `generate targets` inspects selection without probing (`astrid/sdk/generation.py:1335`). Both change here.
+
+The agent's skills reduce to: run `generate targets`, and do what its next action says. The agent never writes an install script or researches a setup problem itself.
+
+**Included:**
+- the ladder in the existing readiness envelope and `generate targets`, with no second command, registry or preference store;
+- the existing-install rungs for ComfyUI Desktop on Windows: a running install, a closed one, a stale registration whose recorded files are gone (#1848), a wrong responder on the install's port, a denied or ambiguous observation, and several installs;
+- next actions: the person-side start instruction, re-probing after it, and attaching the chosen endpoint through the existing consented placement (Plan 20's `settings set placement`, Plan 32's path);
+- the setup and VibeComfy skills and the editor's connection copy, saying the same states;
+- one installed Desktop witness on a real Windows NVIDIA machine, with the existing Portable, Git and Pinokio cases checked for regressions where available.
+
+**Not included:**
+- Astrid launching Desktop itself (the native launch boundary is Linux-only today and needs Desktop's own launcher; see D3);
+- installing ComfyUI anywhere, which is Plan 94's;
+- repairing or patching a third-party install;
+- remote ComfyUI or other engines;
+- workflow dependencies (Plans 56 and 90);
+- process identity (Plan 38).
 
 ## Existing work and decision
 
-Plan 20 phase 4 shipped most of the first-image flow but expressly excluded Desktop discovery and adoption of a stopped server. Its task record still lacks final completion proof. The tested setup and VibeComfy skills say to start the person's ComfyUI manually. Existing `local.py:scan` only finds answering endpoints and bounded Pinokio evidence; `targets.py:TargetRecord` already names Desktop/Portable/Git/Pinokio layouts. `target_launch.py` has verified argv/path and consent boundaries, but the native observer refuses non-Linux platforms. The November 24 [exploratory Windows report #1848](https://github.com/banodoco/astrid-dev/issues/1848) found a registered Desktop 0.7.2 whose recorded executable and data directory were missing; scan returned no servers and no errors. Portable succeeded only after separate provisioning. A missing listener is not equivalent to no installation, and an empty error list must not erase stale registration evidence.
+- **Plan 20 phase 4** shipped the first-image flow but left out Desktop discovery and stopped installs.
+- **The scan** (`astrid/packs/vibecomfy/local.py:scan`) finds answering endpoints only, and skips the ComfyUI-shape check on ordinary ports (`:282`).
+- **The target record** (`astrid/core/generation/targets.py:TargetRecord`) already names the Desktop, Portable, Git and Pinokio layouts.
+- **The VibeComfy guide** already covers denied loopback access, changed ports and several servers.
+- **The tester run** (#1848) found Desktop 0.7.2 still registered after its executable and data folder had gone. The scan returned no servers and no errors, and the image came from Portable.
 
-Reuse and extend those boundaries; see exact sources, alternatives and outstanding critique in [inputs.md](inputs.md#planning-evidence). The owner requested Desktop support and Release 16 inclusion; the two-project split is the planner's proposed boundary, not an accepted implementation design.
+The plan reuses all of these and changes only what makes an unchecked target look ready. An independent Astra review checked the draft against the code ([critique](evidence/critique.md)). It cut native launch and broad layout discovery, and asked for the responder to be tied to the install; [inputs.md](inputs.md#planning-evidence) records each answer.
 
 ## Sequence and readiness
 
-Reconcile Plan 20's shipped record and inspect the current Agent/Runtime/Pinokio ownership boundaries; map real Desktop discovery and supported lifecycle actions before specifying writes. First deliver read-only discovery plus supported manual recovery, then implement a native verified launch only if it is needed and approved. Use a real installed Windows test and a matching editor. Coordinate overlapping functions/contracts with Plans 38, 56 and 94; land or stack in the order established by the release manager. [Tasks](tasks.md) are draft until the critique, exact bases, test inventory and run authority are settled.
+1. **CD-0:** capture the real Desktop states on the approved machine and inventory the code and tests.
+2. **CD-1:** the ladder contract, then **RS1** reviews it, because Plan 94 and the rest of this plan build on it.
+3. **CD-2 and CD-3:** the existing-install rungs and the next actions, in parallel.
+4. **CD-4:** the wording.
+5. **CD-5:** the installed witness.
+6. **R:** the final review.
+
+Plan 94 starts its install branch once RS1 accepts the ladder. The details are in [tasks.md](tasks.md). Recording this plan authorizes no implementation.
 
 ## Interfaces and handoff
 
-Consumes Plan 20's setup skill and Plan 32's placement/generation, the existing target record and discovery/launch primitives, Plan 56's landed workflow readiness contract when available, and Plan 38's native process-identity output where needed. Pin exact landed commits at dispatch.
+- **Consumes:**
+  - Plan 20's setup skill;
+  - Plan 32's placement and generation path;
+  - the target record, scan and readiness envelope;
+  - Plan 56's workflow readiness when it lands;
+  - Plan 34's GPU evidence format.
 
-Produces a verified or explicitly blocked existing-target selection with an actionable next step and ownership facts, usable by Plan 94 and the existing setup skill without a parallel registry. Supply the exact installed tuple, positive/negative witnesses and integrated PR links. A found installation is not a ready target; a ready target is not proof of inference.
+  Exact commits are pinned at dispatch.
+- **Produces:**
+  - the readiness ladder in `generate targets`;
+  - a verified or explicitly blocked existing-install disposition (installed, reachable, identified, compatible, with the owning layout and the one next action), which Plan 94 consumes and does not re-derive;
+  - the updated skills and editor copy;
+  - the installed Desktop witness.
 
 ## Completion
 
-On the declared Windows Desktop version/GPU, prove running Desktop is discovered and reused, stopped Desktop is discovered and brought up through the supported route, stale/broken registration is diagnosed without deleting data, and a real Desktop image appears in the matching editor. Exercise multiple installations, changed port, denied loopback access, missing paths, refused consent and an unrelated queued job; no unapproved changes or duplicate process. Regression-check existing running Portable/Git/Pinokio as available and explicitly mark unqualified cases. Run focused CPU negative tests and the real GPU witness through Plan 34's protocol. Reconcile Plan 20's completion evidence without marking its whole outcome complete by assumption. No implementation, hardware use, spending or publication is authorized by this draft.
+On the declared Windows NVIDIA machine and Desktop version, through the installed CLI and the matching editor:
+- **A running Desktop** is found, identified as that install, attached, and produces an image in the editor.
+- **A closed Desktop** gets "open it", and once the person opens it, the next check continues to an image.
+- **A stale registration** is diagnosed as broken, with no data deleted, and the next action offers Desktop's reinstall or Plan 94's separate copy.
+- **These each stop at the right rung with the right next action, and leave placement unchanged:**
+  - another server answering on Desktop's old port, which is never reported as Desktop;
+  - denied access;
+  - two installs;
+  - a declined consent.
+- **An unrelated queued job** in Desktop survives.
+- **Nothing reads `ready`** without the observations behind it.
+- **The agent follows next actions only,** with zero off-script steps in the witness.
+- **The time from intent to an image is recorded,** for the running and the closed cases.
+
+Running Portable, Git and Pinokio installs are checked for regressions where available; anything not qualified is labelled so. CPU fixtures prove classification and refusal only. No hardware use, spending or publication is authorized by this plan.
