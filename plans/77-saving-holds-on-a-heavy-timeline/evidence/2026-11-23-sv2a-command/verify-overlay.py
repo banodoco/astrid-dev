@@ -12,7 +12,12 @@ from urllib.parse import urlsplit
 
 def digest_file(path):
     with path.open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
+        if sys.version_info >= (3, 11):
+            return hashlib.file_digest(stream, "sha256").hexdigest()
+        digest = hashlib.sha256()
+        for block in iter(lambda: stream.read(1 << 20), b""):
+            digest.update(block)
+        return digest.hexdigest()
 
 
 def write_json(path, body):
@@ -173,6 +178,156 @@ def preflight(support, realm, archive, interpreter, out):
     print(json.dumps(exact))
 
 
+def owner_exited(out):
+    witness = read_json(out / "candidate-daemon-module.json")
+    process = Path(f"/proc/{witness['pid']}/stat")
+    try:
+        fields = process.read_text().rsplit(")", 1)[1].split()
+        start = fields[19] if fields[0] not in {"Z", "X"} else None
+    except FileNotFoundError:
+        start = None
+    if start == witness["start"]:
+        raise ValueError("the exact instrumented Runtime owner is still present")
+
+
+def process_stat(pid):
+    try:
+        text = Path(f"/proc/{pid}/stat").read_text()
+        rest = text.rsplit(")", 1)[1].split()
+        return {"pid": int(pid), "comm": text[text.index("(") + 1:text.rindex(")")], "state": rest[0],
+                "ppid": int(rest[1]), "pgid": int(rest[2]), "start": rest[19]}
+    except (OSError, IndexError, ValueError):
+        return None
+
+
+def group_members(pgid):
+    """Live (non-zombie) processes in one process group."""
+    members = []
+    for entry in os.listdir("/proc"):
+        info = process_stat(entry) if entry.isdigit() else None
+        if info and info["pgid"] == pgid and info["state"] not in {"Z", "X"}:
+            members.append(info)
+    return sorted(members, key=lambda item: item["pid"])
+
+
+def listener_pids(port):
+    inodes = set()
+    for name in ("tcp", "tcp6"):
+        try:
+            lines = Path(f"/proc/net/{name}").read_text().splitlines()[1:]
+        except OSError:
+            continue
+        for line in lines:
+            fields = line.split()
+            if fields[3] == "0A" and int(fields[1].rsplit(":", 1)[1], 16) == port:
+                inodes.add(fields[9])
+    owners = set()
+    for entry in os.listdir("/proc") if inodes else ():
+        try:
+            names = os.listdir(f"/proc/{entry}/fd") if entry.isdigit() else ()
+        except OSError:
+            continue
+        for name in names:
+            try:
+                target = os.readlink(f"/proc/{entry}/fd/{name}")
+            except OSError:
+                continue
+            if target.startswith("socket:[") and target[8:-1] in inodes:
+                owners.add(int(entry))
+    return sorted(owners)
+
+
+def stop_preview_listeners():
+    """Plain fallback: TERM, then KILL, whatever still listens on the preview ports 2400 and 17500."""
+    import signal
+    import time
+    for sig, tries in ((signal.SIGTERM, 100), (signal.SIGKILL, 50)):
+        pids = sorted(set(listener_pids(2400)) | set(listener_pids(17500)))
+        if not pids:
+            return
+        for pid in pids:
+            try:
+                os.kill(pid, sig)
+            except OSError:
+                pass
+        for _ in range(tries):
+            if not (listener_pids(2400) or listener_pids(17500)):
+                return
+            time.sleep(0.1)
+
+
+def preview_after(leader, out):
+    # Plain record: what is still alive in the preview's group and on port 2400 after the stop. Only a live
+    # listener on port 2400 fails the run; process-group ownership is not asserted.
+    members = group_members(leader)
+    listeners = listener_pids(2400)
+    proxy = listener_pids(17500)
+    write_json(out / "preview-after.json", {"pgid": leader, "live_group_members": members,
+                                            "port_2400_listener_pids": listeners,
+                                            "port_17500_listener_pids": proxy,
+                                            "ports_closed": not listeners and not proxy})
+    if listeners or proxy:
+        raise ValueError("port 2400 or 17500 is still listening after stop")
+
+
+def trace_verdict(trace, out):
+    preflight = read_json(out / "browser-preflight.json")
+    info = trace.lstat()
+    failures = []
+    if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077 or not 0 < info.st_size <= 2_100_000:
+        failures.append("trace file is not a private regular file within bounds")
+    envelopes = [json.loads(line) for line in trace.read_text(encoding="utf-8").splitlines() if line]
+    events = [event for item in envelopes for event in item["events"]]
+    if any(item.get("schema") != "timeline-memo-provenance-v1" or item["overflow"] or item["unknown"]
+           for item in envelopes):
+        failures.append("an envelope has a wrong schema, overflow or unknown")
+    bad = {"trace_connection_rebound", "bounded_output_overflow", "trace_output_failure", "transaction_scope_mismatch",
+           "unknown_sql_attempt", "unknown_trace_event", "http_error"}
+    if any(event.get("kind") in bad for event in events):
+        failures.append("trace holds a rebound, overflow, output failure, unknown or error event")
+    sequence = [event["seq"] for event in events if "seq" in event]
+    if sequence != sorted(set(sequence)):
+        failures.append("event sequence is not strictly increasing")
+    marker = events[0] if events else {}
+    if (marker.get("kind") != "trace_runtime_source" or marker.get("pid") != preflight["pid"]
+            or marker.get("module_file") != str(Path(preflight["archive"]) / "runtime_protocol/__init__.py")):
+        failures.append("runtime source witness does not match the live candidate owner")
+    started = [event for event in events if event.get("kind") == "request_scope_started"]
+    posts = [event for event in started if event["route"] == "timeline_commit_post"]
+    if not any(event["route"] == "timeline_history_get" for event in started):
+        failures.append("no history request scope")
+    committed = False
+    if len(posts) != 1:
+        failures.append("expected exactly one timeline_commit_post scope")
+    else:
+        request = posts[0]["request_id"]
+        if not any(event.get("kind") == "request_scope_finished" and event["request_id"] == request for event in events):
+            failures.append("the commit request scope did not finish")
+        transactions = {event["transaction_id"] for event in events
+                        if event.get("kind") in {"sql_attempt", "transaction_statement_attempt"}
+                        and event.get("request_id") == request and event.get("transaction_id") is not None}
+        outcomes = [event for event in events if event.get("kind") == "transaction_outcome"
+                    and event["transaction_id"] in transactions]
+        acceptance = [event for event in events if event.get("kind") == "acceptance_transaction_outcome"
+                      and event.get("request_id") == request]
+        committed = any(event["outcome"] == "committed" for event in outcomes)
+        if not committed:
+            failures.append("no committed transaction outcome attributed to the commit request")
+        if any("rolled_back" in str(event["outcome"]) or "failed" in str(event["outcome"])
+               for event in outcomes + acceptance):
+            failures.append("a rolled back or failed transaction outcome is attributed to the commit request")
+        if not acceptance:
+            failures.append("no acceptance transaction outcome for the commit request")
+    kinds = {}
+    for event in events:
+        kinds[event.get("kind")] = kinds.get(event.get("kind"), 0) + 1
+    write_json(out / "trace-verdict.json", {"ok": not failures, "failures": failures, "envelopes": len(envelopes),
+                                            "event_kinds": kinds, "commit_post_scopes": len(posts),
+                                            "committed_outcome": committed})
+    if failures:
+        raise ValueError("trace verdict failed: " + "; ".join(failures))
+
+
 action, *raw = sys.argv[1:]
 if action == "archive":
     mirror, commit, archive, out = raw
@@ -189,15 +344,20 @@ elif action in {"prepare", "preflight", "postflight"}:
     else:
         check_published(*args)
         ports_closed()
-        witness = read_json(args[-1] / "candidate-daemon-module.json")
-        process = Path(f"/proc/{witness['pid']}/stat")
-        try:
-            start = process.read_text().rsplit(")", 1)[1].split()[19]
-        except FileNotFoundError:
-            start = None
-        if start == witness["start"]:
-            raise ValueError("the exact instrumented Runtime owner is still present")
+        owner_exited(args[-1])
+elif action == "owner-exited":
+    owner_exited(Path(raw[0]))
 elif action == "ports-closed":
     ports_closed()
+elif action == "group-live":
+    live = group_members(int(raw[0]))
+    print(" ".join(str(item["pid"]) for item in live))
+    sys.exit(1 if live else 0)
+elif action == "stop-preview-listeners":
+    stop_preview_listeners()
+elif action == "preview-after":
+    preview_after(int(raw[0]), Path(raw[1]))
+elif action == "trace-verdict":
+    trace_verdict(*map(Path, raw))
 else:
     raise ValueError(f"unknown proof operation {action}")
