@@ -68,7 +68,7 @@ Cap: two Running or Review at once (ruling 6). Dispatch the next as slots free a
 | Packet brief | Source tasks | Handoff | Session | Mode and next action |
 |---|---|---|---|---|
 | [P72-01](packets/P72-01.md) Delivery integrity as a registered check | PDC-3 | Ready (project head `c29908e5`) | — | Extra High. First packet, alone |
-| [P72-02](packets/P72-02.md) Duplicate interpretation and the extension guide | PDC-4 | Blocked on P72-01 merging | — | Extra High. Investigation STATUS first |
+| [P72-02](packets/P72-02.md) Duplicate interpretation and the extension guide | PDC-4 | Ready (project head `23e74d34`, P72-01 merged) | — | Extra High. Investigation STATUS first |
 | [P72-RV](packets/P72-RV.md) High-judgment review (read-only, Pro) | P72-01 (it changes what `check` refuses) and the final review R (up to two rounds) | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | [P72-SC](packets/P72-SC.md) Project-wide sense check, round 1 (read-only) | SC | Blocked on R | — | Pro (normal Chat), read-only. Started only on the orchestrator's REQUEST |
 
