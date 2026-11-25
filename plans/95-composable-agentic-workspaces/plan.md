@@ -4,13 +4,15 @@
 
 **Goal:** A person or agent can pin Otto in a Markdown-first workspace, declare its records, relations, pipelines, project templates and skills in a few small files, follow Otto's guidance to stand up an organisation, and have `otto check` prove the workspace keeps to its declared pipelines, without changing Otto or another workspace.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** The orchestrator, Claude session `session_011EzfW1Urc5P4hpm2SvVy5d` (accountable), with ChatGPT manager `p95-manager-1` dispatching fresh packet sessions; owner-authorized 25 November 2026
 
 **Estimate:** About 12 engineering days (10–14) after Plans 71–73 land: pipelines about 2.5, organisation guidance about 3, project templates about 1.5, extraction and config about 3, Dev migration about 2, reviews about 1. The critical path to the tagged Otto v0.1.0 that Plan 96 waits on is about 7 days of elapsed work.
 
-**Waiting on:** [Plans 71](../71-gap-definition-reconciliation/plan.md), [72](../72-composable-project-delivery/plan.md) and [73](../73-markdown-first-agent-skills/plan.md) landed on `main`; owner decisions D2 (repository and distribution) and D3 (run route); a named orchestrator.
+**Waiting on:** nothing: the run is started ([run board](run.md)); astrid-dev `main` merges of the project branch need the owner's go at the end (OT-24).
+
+**Run route:** astrid-dev-only
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
