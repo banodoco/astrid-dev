@@ -42,11 +42,13 @@ Own the engineering quality of **the assignment you were given**. Work from its 
 Choose the specific operating pattern. Every workstream inherits the responsibilities above ([convention](../README.md)). **Whole project** is the default for an accountable plan manager; use a fresh ChatGPT packet only for Lead-assigned bounded work.
 
 
+<!-- workstreams:start -->
 - [Run one packet in AI Studio](manager/ai-studio-packet.md) — Drive one planet-lab packet through a fresh Google AI Studio session, push its branch and report it for the reflection gate.
 - [Reflect on AI Studio lab packets](manager/astra-reflection.md) — Gate each AI Studio lab packet and periodically replan the lab queue, merging accepted work into the lab and keeping the run board current.
 - [Execute one packet in ChatGPT](manager/chatgpt-packet.md) — Implement one bounded packet in a fresh ChatGPT session and return task pull requests and evidence for Lead review.
 - [Run a loop plan](manager/live-loop.md) — Run a loop plan whose end state is known but whose tasks come from each live round of scenarios, strategist advice and fixes.
 - [Manage a whole project](manager/whole-project.md) — Manage a complete accepted plan, including worker coordination, tested integration, progress records and project closure.
+<!-- workstreams:end -->
 
 
 ## Decide

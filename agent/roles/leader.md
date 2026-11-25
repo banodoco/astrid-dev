@@ -68,8 +68,10 @@ A [workstream](../README.md) adds situation-specific steps **under this role**, 
 **Direct release leadership** is the default when a separate dispatcher is unnecessary: use [Release](../shared/workstreams/release.md) and work directly with the relevant managers. For lane orchestration or fresh-session dispatch, choose the appropriate workstream below.
 
 
+<!-- workstreams:start -->
 - [Lane orchestrators in Claude cloud](leader/lane-orchestrators.md) — Launch and steer one Claude-hosted orchestrator per lane, each running a Codex manager through a carded plan, with the Lead as strategist and gatekeeper rather than dispatcher.
 - [Fresh-session ChatGPT packet dispatch](leader/multi-manager-release.md) — Prepare and lead fresh-session packet delivery across accepted release work without delegating the Lead's review or integration authority.
+<!-- workstreams:end -->
 
 
 Follow the [run contract](../shared/run-contract.md) and existing owner permissions throughout.

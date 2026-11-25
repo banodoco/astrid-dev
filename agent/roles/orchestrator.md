@@ -123,10 +123,12 @@ Choose the workstream that fits the environment and assignment; these are **path
 **Standard project handoff** is the default: [start and advise one accepted plan manager](#path-1-start-a-project).
 
 
+<!-- workstreams:start -->
 - [Separate Codex Cloud sessions](orchestrator/codex-cloud-sessions.md) — Coordinate separate Codex Cloud sessions through the shared GitHub mailbox and durable session handoffs.
 - [Codex hosted inside Claude Cloud](orchestrator/codex-in-claude-cloud.md) — Host Codex workers or a manager inside Claude Cloud while preserving explicit ownership, permissions and recovery.
 - [Run a lane for the Release Lead](orchestrator/lane-orchestrator.md) — Run one lane of a release for the Release Lead end to end, deciding inside the plan and coming to the Lead only at anchor points.
 - [Dispatch to fresh ChatGPT sessions](orchestrator/multi-manager-dispatch.md) — Dispatch and supervise Lead-approved packets in fresh ChatGPT sessions while leaving review and integration to the Lead.
+<!-- workstreams:end -->
 
 
 The Codex Cloud environment workstreams select **how sessions run** and can accompany fresh-session packet dispatch. The [Codex Cloud guide](../guides/codex-cloud/README.md) and [Codex-in-Claude guide](../guides/codex-in-claude-cloud/README.md) retain their technical commands and scripts. Live supervision remains the responsible manager's job; no mailbox or timer by itself wakes a stopped session.

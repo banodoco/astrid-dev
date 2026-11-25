@@ -19,6 +19,7 @@ This directory holds the authored Markdown-first agent instructions: the one sou
 
 Choose a procedure for an already-authorized task; selecting a workstream never grants a new role, approval, or permission. This is the human navigation index for the nine original shared workstreams; role-specific procedures remain linked from their roles. It is not a package allowlist: a new valid workstream with `skill: true` is discovered and packaged from its Markdown source without an entry here. Add a navigation link when that workstream is accepted for general use.
 
+<!-- shared-workstreams:start -->
 - [Bugfix](shared/workstreams/bugfix.md) — Investigate incidents, reproduce failures and record safe recovery.
 - [Gap](shared/workstreams/gap.md) — Define vision gaps and evidence for closure.
 - [GPU validate](shared/workstreams/gpu-validate.md) — Run authorized hardware probes with spend and cleanup controls.
@@ -28,6 +29,7 @@ Choose a procedure for an already-authorized task; selecting a workstream never 
 - [Merge](shared/workstreams/merge.md) — Review and dispose of a contributor PR under its authority.
 - [Plan](shared/workstreams/plan.md) — Define an independently useful, testable project.
 - [Release](shared/workstreams/release.md) — Integrate and qualify a release; publish only on the owner's GO.
+<!-- shared-workstreams:end -->
 
 ## Author a document
 
