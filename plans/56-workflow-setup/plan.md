@@ -6,13 +6,13 @@
 
 **Goal:** Any ComfyUI workflow, on your own ComfyUI, a managed one or a rented machine, either runs or stops with a named next step; a pack Astrid has not reviewed installs after one informed yes, and the saved workflow remembers it.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Release 15 Lead (`session_011EzfW1gtAhRQwk8pgJMzhG`); accountable agent `session_011EzfW2ePdUMAHRAcAm3nur`
 
 **Estimate:** About 18.5 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8, and 6.5 from the UX review (LE-12 to LE-18 and consent hardening in LE-2), of which 3.75 (LE-12 to LE-15, LE-2 hardening) are needed for the SAM run to pass; a plain 90/10 without the loose-end tasks is about 6.
 
-**Waiting on:** Reconcile the Release 15 first-slice landing and pins against the freeze; the remaining cards and final review are marked Release 16 in [tasks](tasks.md), including the owner-run live SAM check after R. Do not close the whole plan.
+**Waiting on:** Release 15 first-slice landing and publication are complete; the Lead stood down the Release 15 lane. Release 16 continuation needs the agreed residual scope, accountable run start and final review, including the owner-run live SAM check. Preserve [known-issue handoff #1928](https://github.com/banodoco/astrid-dev/issues/1928) and the remaining cards in [tasks](tasks.md); do not close the whole plan.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -56,3 +56,7 @@ The parts exist: VibeComfy's resolver, lock, controlled installer and fetch rece
 Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
 
 Completed Stage 1 remains historical. Proposed residual handoff maps each retained R16 item into Plan 90, with the owner-reserved WS-L after Plan 90 review; no competing delivery lane. See the full mapping in tasks.md.
+
+## Status reconciliation — 26 November 2026
+
+17 recorded completed rows are first-slice evidence, not whole-plan completion. Sixteen other rows are explicitly carried forward. The scope proposal is not itself new run authority. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

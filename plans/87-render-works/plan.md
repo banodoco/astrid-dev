@@ -6,13 +6,13 @@
 
 **Goal:** A heavy real timeline renders from first frame to last in one product render on a build of `release/15/main` with no local patches, and the file matches what the editor shows.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Orchestrator session `session_011EzfW2YgL2GSmbJMr9r9SG`, hosting one manager
 
 **Estimate:** Provisional, about 9 engineering days: 1 to port the sound fixes, 5 for the proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check. Re-estimate after the lease measurement and the first whole-fixture attempt.
 
-**Waiting on:** Recorded core and staged follow-ups landed in Release 15; RN-0 and R still have open Progress rows. Reconcile their exact proof and the remaining rendering scope with the Lead against frozen-candidate qualification and the Release 16 handoff #1938.
+**Waiting on:** Release 15 core and follow-ups published; the Lead stood down the completed release lane. Whole-plan residual scope remains: [Release 16 handoff #1938](https://github.com/banodoco/astrid-dev/issues/1938), RN-0/R evidence, large-shots fixture, RN-14 fresh-pack handling, and remaining output/recovery proof. Await authorized continuation; no claim of complete original scope.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
@@ -135,3 +135,7 @@ A first version of this plan ported all sixteen commits before fixing anything. 
 Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
 
 only residual R15 delivery, exact pack/projection/output, native custody/recovery and representative final proof. No new render architecture or expanded authoring feature scope. Correct authored background/easing/source phase and next-render recovery are supported-path correctness.
+
+## Status reconciliation — 26 November 2026
+
+The qualification verdict supports the accepted shipped render scope. It does not establish unrun large-shots proof or universal frame parity. The observed color discrepancy and the handoff remain visible. The Lead's completion of a release lane is not an instruction to mark the residual project done. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

@@ -12,7 +12,7 @@
 
 **Estimate:** About a day of engineering, plus one real run.
 
-**Waiting on:** Release 15 for the remaining real-stack run and follow-up work; the single-branch tool shipped with Release 14.
+**Waiting on:** Single-branch tool shipped with Release 14. Release 15 has since published; remaining RB-7 post-landing fresh-clone evidence and RB-9 first-start failure disposition need reconciliation against [tasks](tasks.md). Await an authorized real-stack run or an explicit accepted disposition.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -211,3 +211,7 @@ Negative cases:
 - If the branch's Runtime refuses the copied realm's schema, the run stops and reports it. Nothing is hand-migrated.
 
 The plan lands in `release/14/main` through its plan branches in astrid-app and astrid-dev. It reaches `main` only when Release 14 is published.
+
+## Status reconciliation — 26 November 2026
+
+RB-6 installed proof and independent review passed, but the recorded RB-7 C11 post-landing fresh start and RB-9 remain open. Do not mark either complete on the basis of pre-landing proof. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.
