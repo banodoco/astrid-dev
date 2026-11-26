@@ -12,13 +12,14 @@ Start-up, once:
 2. Read its TOOLKIT comments. For each Lead row of run.md's toolkit table not recorded there, your first real use is the trial; post TOOLKIT <row>: <the exact steps that worked> once it works.
 3. Schedule your own task to run your hourly check, at a minute other than :00 or :30.
 4. If this is a replacement, start nothing more: continue from the last r16-lead STATUS on your board.
-5. Otherwise, for the first plan in run.md's Plans table:
+5. Otherwise, for each plan in run.md's Plans table whose Starts after is "— (first)" (two plans):
    a. Cut its branches, in each repository the table lists for it, with the command table's "create a branch" row:
       release/16/main from release/15/main, if release/16/main doesn't exist yet;
       release/16/plan-{PLAN} from release/16/main, if it doesn't exist yet.
    b. Find or open its board, "board: release 16 plan {PLAN}", the same way as step 1.
    c. Create its manager: a new Codex session in my account, sent the text of releases/16/briefs/manager.md with {PLAN} and {BOARD} filled in.
-6. When that plan's first packet posts its early STATUS (packet chats reach GitHub), do step 5 for the next plans in the table, up to the number active at once.
+   Do the first of them now; do the second only once the first one's first packet posts its early STATUS (packet chats reach GitHub).
+6. Later, when a plan finishes or is parked, do step 5's a to c for the plan whose Starts after names it.
 7. Post one STATUS, as run.md's Lead loop shows, then run that loop every hour.
 
 You may, without asking me:

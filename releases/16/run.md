@@ -137,16 +137,19 @@ A planning session prepares this with the owner; no running role does it, and pr
    - **Files to load:** everything the chat needs to run the proof;
    - one **Proof:** command that runs only the narrow tests of the code this packet changes: its own module's tests and the new ones it writes, never a broad suite or an external or integration test. The tests need no network and run on CPU, inside the chat, in under 10 minutes.
    Packets that touch the same file get a Depends link. Plans in one run touch no file in common. Review stops (RS, R) are packets too.
-3. Fill in the Plans table and each plan's queue table below, in dispatch order, and the chat limit.
+3. Fill in the Plans table and each plan's queue table below, in dispatch order.
 4. The owner pastes [briefs/lead.md](briefs/lead.md) into a new Codex session. The earlier Release 16 Lead (`session_011EzfW1C63rxLXsL6TkHHVV`) stands down.
 
 ### Plans
 
-**Chats at once:** — (the owner's ChatGPT plan limit, prepared in advance). **Active at once:** the smaller of four and that number divided by three, rounded down, and at least one; with fewer than three chats, one plan runs with that many slots. When a plan finishes or is parked, the Lead starts the next one in this table that isn't in its STATUS as done or parked.
+**Active at once:** two plans (owner, 26 November 2026), so at most six ChatGPT chats. When a plan finishes or is parked, the Lead starts the next plan in this table whose **Starts after** plan is done or parked.
 
-| Order | Plan | Repositories for its branches | Queue |
-|---|---|---|---|
-| — | prepared in advance | — | — |
+| Order | Plan | Starts after | Repositories for its branches | Queue |
+|---|---|---|---|---|
+| 1 | 93 ComfyUI Desktop and existing environments | — (first) | — | — |
+| 2 | 35 One home for user state | — (first) | — | — |
+| 3 | 94 Dependable environment setup and recovery | 93 | — | — |
+| 4 | 38 One process identity (its CPU half) | 35 | — | — |
 
 ### Queues
 
@@ -162,7 +165,7 @@ One table per plan, prepared in advance: Packet, Repository, Route, Depends, Pro
    - `SOL <packet>: <reason>` → post `SOL <packet>` on the plan's board, then send one Sol [briefs/sol.md](briefs/sol.md) with that reason;
    - `NO-CHATS <PP>` → add it to "for the owner", and do nothing else;
    - `REPLACE manager <PP>` → replace that manager, once, and add `manager replaced` to its line; if it was already replaced, park the plan;
-   - `FINISHED <PP>` → merge `release/16/main` into the plan branch, then the plan branch into `release/16/main`. If either won't merge cleanly, park the plan. Then start the next plan in the Plans table, as step 5 of [briefs/lead.md](briefs/lead.md) says.
+   - `FINISHED <PP>` → merge `release/16/main` into the plan branch, then the plan branch into `release/16/main`. If either won't merge cleanly, park the plan. Then start the plan whose Starts after names it, as step 6 of [briefs/lead.md](briefs/lead.md) says; do the same when a plan is parked.
 4. **Parked:** copy any new Parked lines into your STATUS, under "for the owner". Don't solve them.
 5. **Post** one STATUS on your board, then stop until the next check:
 
