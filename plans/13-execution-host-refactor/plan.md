@@ -4,13 +4,13 @@
 
 **Goal:** The oversized execution host is mapped, its behaviour is pinned by tests, it can no longer grow, and one measured move out of it shows what splitting it into modules will cost.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
-**Estimate:** About 5 to 6 engineering days, all in Release 16 (moved from Release 15 on 24 November 2026): the growth guard, the safety net and the first, measured extraction. HM1 to HM3 are done. The rest of the extraction is [Plan 83](../83-execution-host-in-modules/plan.md).
+**Estimate:** 0
 
-**Waiting on:** a manager, in **Release 16**: the owner moved it from Release 15 on 24 November 2026, before its Release 15 tasks started; its branches become `release/16/plan-13`. The owner chose the Release 15 scope and who may let the file grow on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)). It no longer waits for Plan 55, which left Release 15 the same day.
+**Waiting on:** —
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 
@@ -65,3 +65,9 @@ The guard rejects growth in the execution package, the characterisation tests pa
 
 - [tasks.md](tasks.md): draft work outline and focused proof requirements.
 - [inputs.md](inputs.md): historical evidence, source identity fields, and constraints.
+
+## Completion reconciliation — 26 November 2026
+
+The smaller agreed characterization, growth guard and extraction scope has landed. [Agent #511](https://github.com/banodoco/astrid-agent/pull/511) records the independent review repairs, 30 characterization cases, unchanged Ruff gate (2,008/2,008), measured reduction from 18,888 to 18,446 lines, and the owner's landing approval with the CI caveat. Its merge `9811dc3870f4dd1f98793cb4409cad5e9c6b62e0` is an ancestor of published Agent `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5` (GitHub compare verified 26 November). All 16 task rows are recorded complete. The later header saying the Release 15 tasks had not started and were moved to Release 16 was stale against this landing; preserve the historical decisions but do not rerun the completed extraction. The remaining modular decomposition belongs to [Plan 83](../83-execution-host-in-modules/plan.md). Exact plan-head full CI was cancelled; completion relies on the accepted scoped proof and subsequent integrated Release 15 gate, not a claim of all-green CI. Reconcile any later draft release allocation with the Lead; this record does not allocate or publish a release.
+
+Release 15 was [qualified](https://github.com/banodoco/astrid-dev/issues/1834#issuecomment-7172606069) under the owner's approved conditional gate and [published](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) on 25 November. The [Lead's stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) confirms delivery is over. The owner's long-lived-install check and formal release finalization remain separate; no release status or gap is closed by this metadata reconciliation.
