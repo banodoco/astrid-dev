@@ -89,7 +89,7 @@ The owner does this with a planning session she chooses, such as the one that wr
    - **Route** and **Depends** (earlier packets of the same plan only);
    - **May touch** and **Must not touch**;
    - **Files to load:** everything the chat needs to run the proof;
-   - one **Proof:** command that runs in a chat with no network, on CPU, in under 10 minutes.
+   - one **Proof:** command that runs only the narrow tests of the code this packet changes: its own module's tests and the new ones it writes, never a broad suite or an external or integration test. It runs in a chat with no network, on CPU, in under 10 minutes.
    Packets that touch the same file get a Depends link. Plans in one run touch no file in common.
 3. Write each plan's queue table below, in dispatch order, and order the Plans table.
 4. Cut the branches, open one board per plan (`board: release 16 plan <PP>`) and the Lead's board, and record each plan's Run start naming the Lead.
@@ -203,7 +203,7 @@ Everything else is parked for me.
 You are the manager for Release 16 Plan <PP> (mailbox r16-p<PP>-manager). Your board is <issue URL>, and the Lead is r16-lead. Your whole job is the manager loop in releases/16/run.md, section "Delivery: Lead and managers", on astrid-dev main, over the Plan <PP> queue in that section. Run it every hour with your own scheduled task, at a minute other than :00 or :30, and never do anything that section doesn't list.
 Startup: post one STATUS saying how many ChatGPT chats the account can run at once, and whether High, Extra High and Pro are offered.
 Start each packet in a new ChatGPT chat with this message, filled in:
-"You are implementing ONE packet for Release 16: releases/16/packets/<id>.md on astrid-dev main. Board: <issue URL>; you are r16-<id>-<n>. Load the packet's Files to load. Branch p<PP>/<id> from release/16/plan-<PP>'s head, or continue on it and its draft PR from their head if they already exist, and edit only files in the packet's May touch. Push to the branch after each task. Open a draft PR into release/16/plan-<PP> and post an early STATUS once it's open. Run the packet's Proof command here in this chat. When it passes, merge the plan branch's head in, run it again, push a commit whose last line is `Proof: <command> — PASS <summary>`, post READY <repo> <PR> <head>, and stop. If you can't run the Proof here, or can't do the packet inside May touch, post BLOCKED once with the reason and stop. Do not merge or start another packet."
+"You are implementing ONE packet for Release 16: releases/16/packets/<id>.md on astrid-dev main. Board: <issue URL>; you are r16-<id>-<n>. Load the packet's Files to load. Branch p<PP>/<id> from release/16/plan-<PP>'s head, or continue on it and its draft PR from their head if they already exist, and edit only files in the packet's May touch. Push to the branch after each task. Open a draft PR into release/16/plan-<PP> and post an early STATUS once it's open. Run the packet's Proof command here in this chat: only the narrow tests of the code you changed, never a broad suite. When it passes, merge the plan branch's head in, run it again, push a commit whose last line is `Proof: <command> — PASS <summary>`, post READY <repo> <PR> <head>, and stop. If you can't run the Proof here, or can't do the packet inside May touch, post BLOCKED once with the reason and stop. Do not merge or start another packet."
 You may start, resume and replace packet chats as the section says, and comment on the board. Nothing else.
 ```
 
