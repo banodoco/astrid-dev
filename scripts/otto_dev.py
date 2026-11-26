@@ -22,7 +22,9 @@ from otto.relationships import Relationship as _Relationship
 
 import gap_relationships as goal_links
 from gap_relationships import gap_metadata
-from project_contract import GAP_LINK, PLAN_FOLDER, VISION_GAPS, VISION_ROLE, plan_gap_links, project_number
+from project_contract import (
+    GAP_LINK, PLAN_FOLDER, VISION_GAPS, VISION_ROLE, plan_gap_links, project_number,
+)
 from records import ISSUE_ROW, RELEASE_PLAN_LINE, release_brief
 from relationships import RecordRef, Relationship, RelationshipError
 from vision_subject import CHARACTERISTIC, SECTION, parse_subject
@@ -214,7 +216,7 @@ def _collect_delivery(root: Path) -> tuple[
                     raise RelationshipError(
                         f"{provenance} ({project}): gap:{gap_id} link {href!r} "
                         f"does not name canonical source {canonical_path}")
-            # Locate the already parsed links using the canonical reader\'s
+            # Locate the already parsed links using the canonical reader's
             # match spans, including any leading whitespace in its value.
             positions = GAP_LINK.finditer(declaration.group(1))
             for (gap_id, role, _), match in zip(declared_links, positions, strict=True):
@@ -244,8 +246,9 @@ def _collect_delivery(root: Path) -> tuple[
                 f"Release {path.stem} from the filename")
         # The strict reader accepted one matching release title and field.
         heading = re.search(r"^# Release ([1-9]\d*) — (\S.+)$", text, re.M)
-        records.append(Record(release, SourceLocation(provenance, _line(text, heading.start())),
-                              title=brief["title"], status=brief["state"]))
+        records.append(Record(
+            release, SourceLocation(provenance, _line(text, heading.start())),
+            title=brief["title"], status=brief["state"]))
         membership_lines = _section_lines(text, "Included plans", RELEASE_PLAN_LINE)
         for membership, line in zip(brief["plans"], membership_lines, strict=True):
             number, folder = membership["number"], membership["folder"]

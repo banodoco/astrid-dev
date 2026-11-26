@@ -9,7 +9,9 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 
-from otto.relationships import RecordRef as _RecordRef, RelationshipIndex as _RelationshipIndex
+from otto.relationships import (
+    RecordRef as _RecordRef, RelationshipIndex as _RelationshipIndex,
+)
 from otto_dev import GAP_FILE, _collect_delivery
 from relationships import RecordRef, RelationshipError, RelationshipIndex
 
@@ -31,7 +33,6 @@ def load_delivery(root: Path = ROOT) -> _RelationshipIndex:
     """Collect canonical Dev records, then build Otto's configured graph."""
     records, links, enablers = _collect_delivery(root)
     return RelationshipIndex(records, links, enablers=enablers)
-
 
 
 def deliveries_for_goal(
