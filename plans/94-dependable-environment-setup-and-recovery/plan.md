@@ -1,5 +1,7 @@
 # Dependable environment setup and recovery
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** Dependable environment setup and recovery
 
 **Goal:** When a creator has no usable ComfyUI, Astrid offers one separate install with its real cost stated, sets it up safely and resumably after one consent, proves the GPU computes, and delivers an image in the editor, with the agent never improvising.
@@ -12,7 +14,7 @@
 
 **Waiting on:** the owner's decisions D2–D6 in [inputs.md](inputs.md#owner-decisions) and the Run start; [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md)'s readiness ladder (its RS1) for ER-2 to ER-5; a tester taking [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on a matching tester build; Release 16's base for the branch.
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary); [Platform reliability](../../vision/gaps/F-001-platform-reliability.md), [Portable generation](../../vision/gaps/F-008-portable-generation.md) and [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
@@ -91,7 +93,7 @@ The plan reuses Plan 20's setup flow, Plan 32's placement, Plan 34's GPU evidenc
 
 ## Sequence and readiness
 
-A [loop plan](../../agent/roles/manager/live-loop.md):
+A [loop plan](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/roles/manager/live-loop.md):
 1. **ER-0 and ER-1:** the inventory and route choice, and the baseline, beside Plan 93's CD-0 and CD-1.
 2. **ER-2 to ER-5:** once Plan 93's RS1 accepts the ladder, the install branch, the GPU rung, resumable downloads and skill wiring. RS1 reviews the install's write and consent boundary.
 3. **ER-L:** the live loop, each round one run of [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) by a tester, until two consecutive passing rounds or a recorded stop. No lane tests on the owner's machine.
@@ -138,3 +140,9 @@ Negative cases, each ending truthfully with nothing unconsented written:
 - an older editor, which never recommends an impossible update.
 
 Generated project data only, with cleanup recorded.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+one consented/recoverable managed route per supported managed platform, **Windows/Linux**, reusing the existing Linux installer and current downloader; Mac remains compatible existing MPS. Distinguish static platform support before install, actual compute after minimum environment, workflow memory/model readiness, and delivered result. No bulk model transfer before necessary compute passes; result delivery is not a pre-install gate. External environments receive no unapproved/destructive changes; accepted D1 additive-only approved pack installation remains possible. Ordinary local setup is zero-cost and does not depend on provider keys or paid permission.

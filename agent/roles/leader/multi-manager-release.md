@@ -45,7 +45,7 @@ Use when the Lead prepares accepted plan work for an Orchestrator to assign to *
 
 ## At each Lead check-in
 
-**Inputs:** your boards since your cursor, including every packet the Orchestrator's STATUS marks Review; open packet PRs; and `python3 scripts/release_branches.py check <N>`.
+**Inputs:** your boards since your cursor, including every packet the Orchestrator's STATUS marks Review; open packet PRs; `python3 scripts/release_branches.py check <N>`; and [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status). As accountable plan agent, correct plan and task records on `main`, refresh the release snapshot, and use it to choose the next dispatch or completion.
 
 **Each Review:** accept, merge, open the `tasks.md` progress PR and post DONE; or list the rework on the PR and post a DECISION. Accept a gate only after the reviewer injects the realistic failures in its brief and sees the gate reject them. Judge against that threat model and leave crafted bypasses out of the findings. Route each reviewer by the run contract:
 

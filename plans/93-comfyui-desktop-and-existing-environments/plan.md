@@ -1,5 +1,7 @@
 # ComfyUI Desktop and existing environments
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** ComfyUI Desktop and existing environments
 
 **Goal:** A creator who already has ComfyUI, including ComfyUI Desktop on Windows, gets an image from Astrid through it, and when it is closed or broken is told exactly what is true and the one thing to do next.
@@ -12,7 +14,7 @@
 
 **Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; a tester taking [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on a matching tester build; Release 16's base for the branch.
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary); [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) and [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
@@ -115,3 +117,9 @@ On the declared Windows NVIDIA machine and Desktop version, run by a tester thro
 - **The time from intent to an image is recorded,** for the running and the closed cases.
 
 Running Portable, Git and Pinokio installs are checked for regressions where available; anything not qualified is labelled so. CPU fixtures prove classification and refusal only. No hardware use, spending or publication is authorized by this plan.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+one selected existing Placement and scoped observations, not another target token or universal readiness ladder. Explicit compatible endpoint may be usable with unknown filesystem identity; no guessed interpreter or lifecycle takeover. Person opens closed Desktop. Readiness distinguishes observation, dependency, compute, workflow and actual delivery.

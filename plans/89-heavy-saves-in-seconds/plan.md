@@ -10,9 +10,9 @@
 
 **Estimate:** About 4 engineering days (SV-L1 to SV-L5), plus whatever the measure-and-fix loop funds
 
-**Waiting on:** Plan 77 save run card SV-4 (the copy and compare removal) landing on `release/15/plan-77-save`
+**Waiting on:** Recorded landed slices and installed timing measurements in [tasks](tasks.md); SV-L4, SV-L7, SV-L7a, SV-L8, SV-L8b, SV-L9b and R still have open Progress rows. Reconcile parked/funded scope and independent review against freeze and qualification.
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** [F-001 — Reliability isn't proven across supported setups](../../vision/gaps/F-001-platform-reliability.md) (primary): a save that takes tens of seconds is where a person stops trusting the editor.
 

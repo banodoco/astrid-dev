@@ -20,6 +20,7 @@
 - `workstream-structure always Validate canonical agent contracts, routing ownership and declared indexes`
 - `project-delivery always Validate authored project-delivery relationships`
 - `generated-views pr Validate generated views that a pull request changes`
+- `generated-skills-untracked always Refuse tracked SKILL.md files and .generated/ output`
 - `completion-assessment pr Require evidence for plans newly marked done`
 - `gap-boundary-assessment pr Require a first-principles assessment for redefined gaps`
 - `project-planning-evidence pr Validate planning evidence for new or opted-in projects`

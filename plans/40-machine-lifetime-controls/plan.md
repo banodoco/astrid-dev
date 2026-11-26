@@ -10,7 +10,7 @@
 
 **Estimate:** 1.5–2
 
-**Waiting on:** ships in [Release 15](../../releases/15.md) (Release 13 did not carry it). Most of its code is already on Agent `release/15/main` through the Release 13 machines work; what remains is listed in [tasks](tasks.md#reconciled-against-release15main-22-november-2026). Plan 81 edits `astrid/sdk/generation.py` too: `release/15/main` is merged into `release/15/plan-40` after it lands, before the final proof. Landing in `release/15/main` needs the owner's go.
+**Waiting on:** Recorded landed in Release 15; all task Progress rows ticked, including the Lead's hosted gate and bounded CPU-fake checks. Await release qualification/publication and the completion assessment; no real paid RunPod run is claimed.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 

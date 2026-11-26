@@ -1,0 +1,61 @@
+{
+  "video": "run/stack/data/media-view/bd868d797a474be0b63b5fba9249f89f/c1a7c40f451b-ht24-standard-616.mp4",
+  "checks": [
+    {
+      "check": "decode",
+      "ok": true,
+      "detail": "whole file decoded"
+    },
+    {
+      "check": "probe.duration",
+      "ok": true,
+      "detail": "233.000s vs expected 233.0s \u00b11.0"
+    },
+    {
+      "check": "probe.video_stream",
+      "ok": true,
+      "detail": "present"
+    },
+    {
+      "check": "probe.width",
+      "ok": true,
+      "detail": "1920 vs 1920"
+    },
+    {
+      "check": "probe.height",
+      "ok": true,
+      "detail": "1080 vs 1080"
+    },
+    {
+      "check": "probe.fps",
+      "ok": true,
+      "detail": "30.000 vs 30.0"
+    },
+    {
+      "check": "frames",
+      "ok": true,
+      "detail": "6990 frames vs about 6990"
+    },
+    {
+      "check": "probe.audio_stream",
+      "ok": true,
+      "detail": "present"
+    },
+    {
+      "check": "audio.level",
+      "ok": true,
+      "detail": "mean -7.3 dB, floor -50.0 dB"
+    },
+    {
+      "check": "color@0.5s",
+      "ok": true,
+      "detail": "got (252, 2, 2) want (255, 0, 0)"
+    },
+    {
+      "check": "color@8s",
+      "ok": true,
+      "detail": "got (242, 7, 2) want (244, 8, 0)"
+    }
+  ],
+  "ok": true
+}

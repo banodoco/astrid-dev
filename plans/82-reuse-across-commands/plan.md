@@ -10,7 +10,7 @@
 
 **Estimate:** About 3 to 4 engineering days.
 
-**Waiting on:** nothing from the owner: she gave the go and decided D2 (yes) on 24 November 2026 ([inputs.md](inputs.md#owner-decisions)). RA-0b also waits on Plan 87's RN-4 reaching `release/15/main`.
+**Waiting on:** Recorded merged branches, but RA-0a, RA-0b, RA-2 and R are still open in [tasks](tasks.md). Reconcile stage-one proof and the stage-two disposition at the freeze; the real ComfyUI timing is assigned to Plan 92. Do not infer whole-plan completion.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
 

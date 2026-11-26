@@ -1,0 +1,20 @@
+Film render/editor visual comparison
+
+Source output: ../run/stack/data/media-view/d13502407d05407a90e0ab9543ce6723/e14befb2bb55-ht24-plan87-film.mp4
+Editor route: http://127.0.0.1:2400/tools/video-editor?project=d13502407d05407a90e0ab9543ce6723&timeline=film-shaped-7858751e
+Generated-source inventory: two testsrc2 still images, two testsrc2 videos, one sine audio source; no solid-color media spans are present in the fixture manifest. The generated fixture has no blue source alternate to use for a known-solid check.
+
+Comparison process: loaded the editor route in headless Google Chrome via Playwright, clicked the editor ruler to timeline times 0s, 1s, and 3s, captured the preview panel, extracted output frames with ffmpeg at the same timeline timestamps, resized the editor preview image from 902x507 to 1280x720, and measured RGB absolute differences over crop x=70..1209, y=80..639. Side-by-side files are compare-0s.png, compare-1s.png, compare-3s.png; original editor screenshots and output frames are retained alongside them.
+
+Results (preview scaling and UI controls add some pixel difference):
+- 0s: rendered bars/diagonal/checkerboard visually align; safe-crop mean/p50/p95/max RGB absolute difference = 7.30/1/46/255.
+- 1s: rendered bars/diagonal/checkerboard visually align; 8.74/1/56/255.
+- 3s: visible color-pattern difference in comparison (output testsrc2 timestamp indicates source frame 0.867); 27.68/34/75/255. This point does not pass a visual match assessment and needs follow-up by the parent.
+
+Additional points checked: 8s and 20s output/editor previews were both solid blue empty-background frames, with safe-crop mean absolute RGB differences 0.8 for each; these do not provide independent moving-media coverage.
+
+Concurrent-load limitation: standard render task 1cf9ba356beb47c181d9804b2f3f3f5d was active. The headless editor session ran for about 16 seconds, then frame extraction/statistics took about 1 second. No system-wide CPU/RSS sample was captured during the editor session; the standard Runtime+render-tree sampler at 244.7 seconds showed 5,292,280 KiB.
+
+Seek precision follow-up: the Editor TimeRuler converts client X to `(clientX - ruler.left + scrollLeft)` then timeline scale pixel-to-time, and its click handler calls `previewRef.seek(time)` plus updates the cursor. In the captured page, ruler x=253 with ruler left=13, scrollLeft=0, left gutter/startLeft=144, and 32 px/s maps exactly to 3.000s; the UI readout showed 0:03.00. The preview was recaptured after additional 1s + 3s + 5s waits; the same image persisted. The t=3 difference is therefore not explained by the ruler coordinate being off by a fraction of a second; the editor capture may still represent a stale preview frame or there may be a real preview/render content discrepancy. Further resolution needs an editor preview frame export or a direct pixel-read from the Player surface.
+
+Direct Player-surface check: captured the four Remotion layer canvases directly with canvas.toDataURL() at 3.000s. The active video canvas (`editor-3s-layer0.png`, media object sha256:338024e0127e597a9eadb13b6c7af9653820b23decf22854ecd10cb564bc0e2f) shows the generated testsrc2 clock `00:00:00.867`, matching the clock in the whole-render frame at timeline 3.000s. Thus the ruler click and preview seek reached the correct active source frame; the mismatch is not caused by a mispositioned ruler click. Comparing the full-resolution editor video layer to the output frame gives mean/p50/p95/max absolute RGB difference 23.72/34/43/255. The editor preview and rendered output therefore remain visibly different in color/value at this point; available evidence does not isolate whether this comes from color conversion or composition/render behavior. Other direct canvas captures: `editor-3s-layer1.png`, `editor-3s-layer2.png`, `editor-3s-layer3.png`.

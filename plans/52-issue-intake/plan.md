@@ -1,5 +1,7 @@
 # Issue intake
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 **Project:** Issue intake
 
 **Goal:** Anyone using or building Astrid, and their agent, reports what they noticed in one command or one form on astrid-dev's GitHub Issues, where others can say "me too" and nothing is lost or filed twice.
@@ -10,11 +12,11 @@
 
 **Estimate:** about 2.5
 
-**Waiting on:** the owner's issue transfers (II-10), her two minutes for II-11, and her approval of the reporting rules (II-9)
+**Waiting on:** Reconcile II-8, II-9, II-11 and II-13 against the remaining product redirect/reporting patches and packet evidence; II-10 needs the owner's issue transfers, II-11 her browser proof, and II-9 her approval. The prior Release 14 Lead remains the recorded owner; the Release 15 Lead must confirm handoff or disposition.
 
-**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): what one person or run notices reaches everyone else without a conversation. CA-005's route does not name this plan, and none of its closure-evidence items is about intake, so there is no `Contributes to closure` line; adding one is a [Gap](../../agent/shared/workstreams/gap.md) step for the owner to ask for.
+**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): what one person or run notices reaches everyone else without a conversation. CA-005's route does not name this plan, and none of its closure-evidence items is about intake, so there is no `Contributes to closure` line; adding one is a [Gap](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/workstreams/gap.md) step for the owner to ask for.
 
 ## Outcome and scope
 
@@ -113,3 +115,9 @@ No budget and no paid service. Tasks are in [tasks.md](tasks.md); recording this
 - The word count of the skills and guides rises by no more than the amount the owner agreed for II-5, and by nothing if the cuts are found.
 
 **Limit of this proof:** it shows both doors work and that one reader ignored instructions in three planted issues. It does not show people use it, or that a reader resists an attack nobody thought of. The bot's token can only touch issues; the session that triages holds more, which is why triage stays with a session the owner already watches. The real test is the next release: whether its findings are issues or loose notes.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+Owner directed the existing Plan 52 handoff into Release 16. Carry the bounded product residual and existing authority; no new lane or reset is authorized. The proposed reconciliation is recorded in tasks.md.

@@ -71,6 +71,8 @@ def _unique_project_numbers(context):
 
 def _release_documents(context):
     from check_docs import read, release_errors
+    from records import git_show
+    from release_status import validate_change
     root = context.root
     if not _catalog_ready(context):
         return []
@@ -82,6 +84,11 @@ def _release_documents(context):
                     for p in release_folder.glob('[0-9]*.md') if p.stem.isdigit()}
     for filename, body in release_docs.items():
         errors.extend(release_errors(filename, body))
+        if context.base:
+            path = f"releases/{filename}"
+            before = git_show(root, context.base, path, missing="none")
+            errors.extend(f"{path}: {message}" for message in
+                          validate_change(root, int(Path(filename).stem), before, body))
     return errors
 
 
@@ -356,6 +363,28 @@ def _generated_views(context):
     return errors
 
 
+def _tracked_generated_skills(context):
+    """Refuse tracked generated skill output: SKILL.md anywhere, or anything under .generated/."""
+    try:
+        result = subprocess.run(["git", "-C", str(context.root), "ls-files", "-z"], capture_output=True)
+    except OSError as exc:
+        return [f"cannot list tracked files with git ls-files: {exc}"]
+    if result.returncode != 0:
+        if b"not a git repository" in result.stderr:
+            return []  # A tree outside git has no tracked files to refuse.
+        return [f"cannot list tracked files with git ls-files: {result.stderr.decode('utf-8', 'replace').strip()}"]
+    listed = result.stdout
+    errors = []
+    for raw in listed.split(b"\0"):
+        path = raw.decode("utf-8", "surrogateescape")
+        parts = path.split("/")
+        if not path or not (parts[-1] == "SKILL.md" or parts[0] == ".generated"):
+            continue
+        errors.append(f"{path}: generated skill packages must not be tracked; "
+                      "edit the agent/ source and rebuild with python3 scripts/astrid_dev.py skills build")
+    return errors
+
+
 def _body(context):
     if context.body_file:
         return context.body_file.read_text(encoding='utf-8')
@@ -499,6 +528,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('workstream-structure', 'always', 'Validate canonical agent contracts, routing ownership and declared indexes', _workstream_structure),
     Check('project-delivery', 'always', 'Validate authored project-delivery relationships', _project_delivery),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
+    Check('generated-skills-untracked', 'always', 'Refuse tracked SKILL.md files and .generated/ output', _tracked_generated_skills),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),

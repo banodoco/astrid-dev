@@ -24,3 +24,10 @@ If composed into the Astrid product tuple, freeze then-current reviewed Agent, R
 ## Constraints
 
 Native Stop/Quit refusal veto remains unproven. Adapter-side lifecycle ordering, fake kernel tests, POSIX child fixtures, and pinned historical engine source cannot establish deployed veto behavior. Historical local paths in copied material are sanitized; these references are not current evidence.
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+record exact supported deployed engine/version/action API, action/session/incarnation identity, authenticated custody and loss-detecting observation; name concrete NEEDS if Stop/Quit cannot veto or settle an owned live task. Capture feasibility before committing the whole implementation estimate. Existing engine authority is not inferred from a custom stop script.

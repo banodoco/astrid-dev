@@ -1,0 +1,41 @@
+{
+  "video": "/tmp/claude-0/-home-user/b52ffc6b-f15e-58ff-8684-2a52992c6d1e/scratchpad/work/ht24/run/stack/data/runtime/realms/aedf58d1-f899-4475-b66b-ffb1995f5fba/presentations/renders/0b194ea4b8f2d3c8-ht24-one-second.png.mp4",
+  "checks": [
+    {
+      "check": "decode",
+      "ok": true,
+      "detail": "whole file decoded"
+    },
+    {
+      "check": "probe.duration",
+      "ok": true,
+      "detail": "1.000s vs expected 1.0s \u00b11.0"
+    },
+    {
+      "check": "probe.video_stream",
+      "ok": true,
+      "detail": "present"
+    },
+    {
+      "check": "probe.width",
+      "ok": true,
+      "detail": "1920 vs 1920"
+    },
+    {
+      "check": "probe.height",
+      "ok": true,
+      "detail": "1080 vs 1080"
+    },
+    {
+      "check": "probe.fps",
+      "ok": true,
+      "detail": "30.000 vs 30.0"
+    },
+    {
+      "check": "frames",
+      "ok": true,
+      "detail": "30 frames vs about 30"
+    }
+  ],
+  "ok": true
+}

@@ -1,0 +1,25 @@
+Release 15 Qualifier — APP Tier 1 row 1 by-id comparison
+Final head cc1d48f0; Tests run 45668919908, Lanes 45668919952, E2E 45668919978.
+
+Vitest (strict diff vs R14 e0da794a): final 1,460 files / 21,548 tests (1 failed, 21,547 passed); R14 1,453 files / 21,384 main tests plus separate SDK 335. SDK boundary is 335/335 expected in final run.
+Fail: amSprite.phase > preserves fractional source phase and held poses across a chapter cut; first error frame 0, expected sprite img left -8px, received 0px (known issue #1931).
+No other failing tests. Two missing R14 files, accepted removed with their code: element-admission-build.test.ts; project-element-selection.test.ts. Fewer-test files: 0. New files: 9; files with more tests: 18.
+Against previous dca367cb (ht17): same 1,460/21,548 totals, same failure and same strict diff; zero changed IDs/counts.
+Node tests: installer/release.test.mjs 18/18; installer lane jobs 133/133 (macOS 35, Ubuntu 35, PowerShell 63); release-tooling-macos 66/66. Boundary job 9/9 (SDK boundary test file remains 335 Vitest tests).
+
+Lanes vs R14 and previous dca367cb:
+checkout-lanes 1 failed / 89 passed; same failing ID: runtimePackRefresh.integration.test.ts > renders a real M1-installed effect in the open editor and retains the working revision through refused updates. First error: missing Playwright chromium_headless_shell-1223 executable.
+quick-journey 1 failed / 0 passed; same ID/title moved line 3435 -> 3436: three-products.spec.ts > quick: Astrid edit then App edit are visible and readable on the adopted timeline. First assertion at line 196: revisionSet() != journey.sources. No new/fixed Lanes IDs.
+
+E2E counts f/p/skipped; each job vs R14: new/fixed/moved (and same as previous dca):
+Job | R14 = final | new/fixed/moved
+extension-visual | 1/0/4 = 1/0/4 | 0/0/0
+extension-cross-browser | 6/3/0 = 6/3/0 | 0/0/0
+playwright-timeline-chrome-export | 3/0/0 = 3/0/0 | 0/0/0
+playwright-default | 30/552/0 = 30/552/0 | 0/0/0
+extension-accessibility | 9/6/0 = 9/6/0 | 0/0/0
+playwright-timeline | 36/3/0 = 36/3/0 | 0/0/0
+E2E reconciliation: final 85 failed results across jobs / 80 distinct numbered project-file-title IDs; R14 85/80; previous dca 85/80. No new E2E ID, so no new-ID first error.
+
+Artifacts: app-vitest-diff.txt, app-vitest-prev-diff.txt, lanes-by-test-id.txt, e2e-summary.txt, e2e-by-test-id.txt. Logs: /tmp/claude-0/-home-user/b52ffc6b-f15e-58ff-8684-2a52992c6d1e/scratchpad/work/ci/astrid-app-{45668919908,45668919952,45668919978}/INDEX.tsv. E2E numbered failure lines parsed; annotation lines excluded.
+RUN-STATUS: DONE

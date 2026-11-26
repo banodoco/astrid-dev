@@ -10,7 +10,7 @@
 
 **Estimate:** TBD after eight individually scoped scene briefs, four flight concepts and the two camera treatments are sized; the previous 18–28-day estimate only allowed for three scenes.
 
-**Waiting on:** The owner to launch the fresh ChatGPT/Codex run with one accountable Lead and an authorized release base. Routine feedback never blocks; four major artistic direction gates and final publication require explicit decisions.
+**Waiting on:** Fresh owner-authorized run and named delivery owner; the plan branch is recorded open but no creative run has started in the task record. Four artistic direction gates and final publication still require explicit decisions.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md); its priority is its place in [priority.md](../../plans/priority.md).
 

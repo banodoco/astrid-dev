@@ -49,6 +49,8 @@ Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-rel
 - **Hosted App deploys** are not releases.
 - **Source:** astrid-dev defines and publishes each release. This replaces Plan 29 decision 9's "App manifest stays the source".
 
+**Owner direction, 25 November 2026:** contributors and their agents must independently prepare a coherent tentative manifest and matching installers from the active release branches, without waiting for a Release Lead or a pre-created artifact. Fresh sessions resolve the latest coherent snapshot; replay uses its receipt. Update the existing tester documents now for Release 15 and make them the reusable Windows/Linux testing workflow in RL-1e. The trigger was a Release 15 tester finding only Release 13 manifests on the old tester branches. Keep production publication authority, release ordering and safety intact; same-release updates require focused proof.
+
 Open, each with a recommendation:
 1. **Sync trigger and push identity:** a scheduled pull plus a manual run, or an instant push from astrid-dev. Recommend the scheduled pull. Either way, the sync pushes to App `main`, which will be protected. The workflow token probably can't be put on a ruleset bypass list (unconfirmed; confirm at start). If so, the sync needs a GitHub App or deploy key that can write only to the App. That is a new credential, the owner sets it up, and RL-2c becomes S.
 2. **Who can approve a release:** only the owner in `CODEOWNERS`, or any maintainer. Recommend only the owner.
@@ -59,3 +61,18 @@ Open, each with a recommendation:
 ## Source identities
 
 Record exact base SHAs when each task starts. Land all work on `int/31-releases-from-astrid-dev`, in astrid-dev and the App, cut from each `main` when the run starts. Only the Release skill moves either branch to `main` (RL-G).
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+**D-SYN-1 — proposed, not accepted:**
+
+Adopt a bounded R16 gate: every **effective required status on the exact candidate** must pass; every retained positive/negative release journey must pass; no known harm, supported-path failure, new/lost failure, or unclassified failure may be accepted. Build a complete executed inventory against the actually served predecessor, with repository, job family, OS/architecture, selector/configuration and full test identity. Combine shards within each job family; shard is provenance, not identity. Preserve duplicate/subtest accounting explicitly. Missing/skipped/cancelled/not-collected cases, newly quarantined cases and absent proof are not passes. Formerly-red disappearing cases need a documented removal/equivalence decision, just as formerly-green missing cases do.
+
+An **actually executed, nonrequired inherited red** may remain only with a named, evidence-backed nonharm classification, owner acceptance, and a later owner/task. Candidate-equal or old does not mean harmless. In particular, the latest #2002 descriptor and occurrence-precondition groups remain unclassified until investigated. No change to assertions, required names, gates, bypass rules or job selection merely to produce this result. P91's full green cleanup remains R17. If the actual protection or owner policy instead demands all jobs green, that is binding: fund the minimum required repairs or hold R16. Record this choice in P31 inputs and remove contradictory literal all-green wording only through the approved canonical amendment.
+
+P31 stays in R16. RL-3 visible 0.1.0 and final review precede the first authorized Final transition. Keep the legacy integer for order and required floor; semantic display is a validated mapping. Carry forward the **actual published floor** (15 if the present R15 candidate publishes, otherwise the then-served floor); minor does not mean required. Floor 16 needs an explicit reason and mixed-version/migration proof. Preserve RL-3's primary-UI fallback **“an earlier version”** for unmapped legacy releases, with exact legacy integer in diagnostics/records; do not invent public semantic versions. P58's existing record reader/generator is the only strategy/publication record home.
+
+Proposed D-SYN-1 requires an exact legacy anchor and display policy, actual published floor, generated-only sync, protected owner transition, safe deployment interval and approval invalidation. Retain any stricter owner rule until explicitly amended. Effective protection is a required fact, not an assumption from checked-in YAML.

@@ -1,5 +1,7 @@
 # Inputs: one home for user state
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Audit, 9 Nov 2026 (code-read, unverified)
@@ -20,3 +22,11 @@ Three read-only sweeps covered astrid-agent (core and packs), VibeComfy, astrid-
 | Keep | install records, data root, realm catalog, discovery, process control, source profiles, locks, engine receipts, `vibecomfy.toml`, `custom_nodes.lock`, harness-owned files | Stay files |
 
 Also reported, and sent to Plan 29 on 9 Nov: the saved-autostart guard reads `preferences.autostart`, but no code in astrid-agent or astrid-runtime writes that key (installer writes `choices.autostart`), and `ASTRID_ALLOW_UNQUALIFIED_GPU` is a no-op.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+Preservation covers the SC-35 correction, proposed D-SYN-3 grant revoke/restore, identity/actor/writer scope, current-host credential references and explicit default/tombstone policy. Keep acquisition journal before activation; do not equate lease intent, process custody and Runtime activation ownership. Explicit environment override remains an override, not a preference copied globally.
+
+**D-SYN-3 — proposed, owner decision pending:** reusable grant revocation and restore must preserve current authorization and prevent revoked approvals from being revived. P35 owns the protected grant seam consumed by P90; do not treat a persisted hint as current consent.

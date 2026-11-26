@@ -1,5 +1,7 @@
 # Tasks — One acceptor (Fast saving)
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Inputs](inputs.md)
 
 A draft can use a short outline with unknowns. Before dispatch, every task needs one bounded outcome, its input and deliverable, dependencies, a suitable route, and focused proof. Name source identity where one task consumes another project's output. Reuse the prior-art and source identities in [inputs.md](inputs.md); don't repeat them.
@@ -93,7 +95,7 @@ Negative cases: a same-size rewrite of a CAS object, a replaced file and a resto
 
 Set out by the Release 15 Lead on 23 November 2026, after [Plan 89](../89-heavy-saves-in-seconds/plan.md) took FS-0, FS-1, a narrow CC-1 and CC-11, and Plan 77's save run the verified-base part of CC-2 ([inputs](inputs.md#taken-on-by-plan-89-23-november-2026)). **Start only after Plan 89's final installed measurement**, and re-cut this list against its residual: a card whose cost the measurement does not show is dropped, not built. The prerequisites from [Plan 63](../63-dependable-saving/tasks.md) are pulled in here so that one run owns the whole path; Plan 63 keeps everything else.
 
-**Routes** follow the [run contract](../../agent/shared/run-contract.md#routing-and-bindings): N (Luna or Haiku) for ordinary work, X (Terra or Sonnet) for intricate changes, S (Sol or Opus) only where a wrong call silently accepts a bad document. Reviews go to Astra (or Opus). Every card proves its speed on the installed build before any hosted CI.
+**Routes** follow the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md#routing-and-bindings): N (Luna or Haiku) for ordinary work, X (Terra or Sonnet) for intricate changes, S (Sol or Opus) only where a wrong call silently accepts a bad document. Reviews go to Astra (or Opus). Every card proves its speed on the installed build before any hosted CI.
 
 | Card | Route | Days | Depends on | Why this route |
 | --- | --- | ---: | --- | --- |
@@ -112,3 +114,11 @@ Set out by the Release 15 Lead on 23 November 2026, after [Plan 89](../89-heavy-
 | FS-4 replay against the net difference | X | 2 | FS-3b, FS-5 | conditional on FS-0's spans |
 
 About 32.5 days if every card stays (29 without the deferred FS-2 and the conditional FS-4); the measurement after the save run is expected to drop some. Each S card gets its own independent review before anything builds on it.
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+| Canonical home | Proposed bounded amendment |
+| --- | --- |
+| P75 broad performance | P63 CC-17 owns only the measured R16 save/burst/undo/reopen residual and conditional watermark; P75 retains the broader performance programme. CC-5c receives only the needed SV-L7 batching semantics. |

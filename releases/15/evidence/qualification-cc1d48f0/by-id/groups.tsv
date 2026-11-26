@@ -1,0 +1,9 @@
+workflow	root cause	issue label	count	user-visible observation
+CI	readiness fixture/timing group	#1920 / #1941 item 2 / #1928 RS1C.N15	2	Readiness assertions fail around a 2-second fake-server probe; test fixture/timing effect, no user-visible effect known.
+CI	Pinokio platform adapter listener ownership	#1920 item 5 / #1938 item 9	3	Adapter reports “active process is not the configured listener owner”; CLI/adapter tests fail.
+CI	core pack boundary ratchet	Listed new on Release 15 baseline README	1	Guard reports additional runpod pack-name literals in three core files.
+Lanes	timeline publication runtime tests	unmapped	15	Legacy reselection, retry, and publication scenarios fail with invalid compiled-element descriptors or related assertions; user-facing behavior is not established by the test logs.
+Lanes	CLI/native batch ingress tests; runtime shim keyword mismatch	unmapped	19	Fixture/runtime shim rejects keyword timeout and surfaces ServiceUnavailableError; test-only harness effect, no user-visible effect known.
+Lanes	opaque item patch precondition	unmapped	1	Patch fails because the previous value does not match; test-only integration case, no user-visible effect known.
+Lanes	command-count capture timeout (>120s)	#1941 item 2	1	Fresh-process command-count test times out; test-only timing, no user-visible effect known.
+Lanes	installed captured-command render lane selection/dependency	#1941 item 1	1	Installed-lane dependency/project is missing, so the host render test errors before rendering.

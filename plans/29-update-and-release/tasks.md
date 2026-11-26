@@ -135,7 +135,7 @@ One line per finding, ruled by the Release 12 manager. Agent candidate `cand/29-
 - **A4 source ownership:** A [source-only Chromium 148 note](evidence/r12/a4-chromium-source.md) identifies interceptor disconnect, completion and CDP ownership with exact upstream links. It does not prove CI took that path or that no terminal can be emitted elsewhere. The documented interfaces examined do not establish a behavior-preserving mechanism for both missing terminal and incomplete body; no scope waiver or fix is claimed.
 - **A4 decision record:** The [capture guarantee, observed browser boundary, viable paths and consequences](evidence/r12/a4-decision.md) are summarized for orchestration. A browser/DevTools mechanism is the recommended behavior-preserving path; an App-owned lifecycle contract requires product-behavior disposition. No evidence contract has been relaxed and A4 remains blocked even if the release is split.
 
-Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = super hard (see the [run contract](../../agent/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. Start each task from the live heads, recorded when it starts. The SHAs here only locate the cited lines: App `915bfa84`, Agent `a2c4ab7d` (the same product code as `709492fa` in inputs.md, plus test-harness commits), Runtime `61e2c301`. Re-check those lines against the branch being built.
+Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = super hard (see the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. Start each task from the live heads, recorded when it starts. The SHAs here only locate the cited lines: App `915bfa84`, Agent `a2c4ab7d` (the same product code as `709492fa` in inputs.md, plus test-harness commits), Runtime `61e2c301`. Re-check those lines against the branch being built.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
@@ -340,7 +340,7 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
 
 ### UR-R Review rounds
 
-This plan sets its own review policy, as the [run contract](../../agent/shared/run-contract.md) allows.
+This plan sets its own review policy, as the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md) allows.
 
 1. **Run a round.** An independent S reviewer (Opus) reviews the integrated candidate across App, Agent, Runtime and launcher. It reviews against [the completion criteria and negative cases](plan.md#completion) and the recorded owner decisions. It returns each finding as a task card, with these fields:
    - outcome;
@@ -372,7 +372,7 @@ Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; se
 - **Route:** X.
 - **Dependencies and inputs:**
   - [decision 17](inputs.md);
-  - the [Release skill](../../agent/shared/workstreams/release.md) Patch release section, written 12 Nov;
+  - the [Release skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/workstreams/release.md) Patch release section, written 12 Nov;
   - Plan 09 IU-15 for the update rows from every published release.
 - **Work:**
   - Make `release-guard` and the release record recognise a patch: the tuple diff is limited to the patched component, and the record lists the fix commits and the carried-over evidence by run and SHA.
@@ -549,3 +549,10 @@ Rows below are recorded as reported at 17:00Z. A row marked `[ ]` is not yet pro
 | **Final round** | | | | | |
 | One re-pin commit (pin, vendor lock, checks), then App Tests, Direct Journey, App lanes, full matrix on `b550ecadf`, Agent `ci.yml`/`lanes.yml` vs R10 | — | Final Agent sha; Direct Journey 0 failures | All | — | [ ] pending |
 
+
+
+## Proposed Release 16 scope reconciliation (25 November 2026)
+
+This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+
+preserve checked UR-1/1b/3/4/5/6/7/8/9/10/11/12, recorded UR-13 variants/corrections and UR-14 historical publication. Reconcile open UR-0, UR-13b/e/o/p/m, M4 remainder and review residuals against current source/proof rather than redispatching historical fixes. P29 UR-15 is the selected-install resolver/storage handoff, distinct from P30 UR-15. Preserve its actual suffixes UR-15a/b/c/d/e/f/g/h/i/j, UR-15l-1/l-2/l-3/l-a5, UR-15k and their owner/proof caveats; update exact interface edges, do not invent a generic replacement `UR-15l` status. UR-8b/c/d already live under **Moved** history to P31; retain that record, not a second unfinished publisher. P29 UR-R2.5 remains the old-systemd handoff, accepted by P30 UR-15. Shared reload/update controls join CC-10/LM-5 before accepted pending-data transitions. Evidence: [SC-29](../../releases/16/evidence/scoping/README.md#receipts), [SC-30](../../releases/16/evidence/scoping/README.md#receipts), [SC-31](../../releases/16/evidence/scoping/README.md#receipts), [INV-01](../../releases/16/evidence/scoping/README.md#receipts), [INV-06](../../releases/16/evidence/scoping/README.md#receipts), [AUD-01](../../releases/16/evidence/scoping/README.md#receipts).

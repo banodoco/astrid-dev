@@ -1,5 +1,7 @@
 # Inputs — Dependable saving
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md) · [Statements](statements.md)
 
 ## Planning evidence
@@ -212,3 +214,11 @@ Release 14 fix branches, as recorded on 18 November (identities to be recorded a
 ## Plan 77 evidence for CC-5
 
 The reduced Round 5 move entered Saving at 0.421 s and showed an unconfirmed result at 30.960 s with Try again and Discard. The recorder saw no scoped POST before public verification. Immediate reads failed, and independent postflight recovered exact v30. Round 2 had a separate unconfirmed editor outcome followed by a single accepted late write. The CC-5 browser measure should observe durable local queue ownership, first dispatch, the authoritative receipt and the Saved transition separately, and distinguish the two outcomes. [Plan 77 Round 5 and loop closure](../77-saving-holds-on-a-heavy-timeline/rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap)
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+correct D11 to unknown unavailable/ACK semantics and fresh key on changed attempt; retain D12/D15/D16 keep/park/discard intent. D-SYN-2 below records the proposed save gate. The owner's accepted D17 risk remains: narrow reads rely on actual reads/writes and the whole timeline is opt-in; its R16 timing is a pending decision, and ET-1 must not land without the ET-4b inverse safety valve. Explicitly separate forward emitted shape from historical read/inverse compatibility, same actor from same writer, and durable local capture from authoritative Saved receipt. Preserve all existing accepted constraints.
+
+**D-SYN-2 — proposed, owner decision pending:** retain the historical comparable 300-clip save target of median at most 2 seconds and no observation above 4 seconds, with a measured bounded P89 residual under CC-17. A missed target is not waived by moving the broader performance programme; return an evidence-backed scope decision to the owner.

@@ -10,7 +10,7 @@
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
-**Waiting on:** the Plan 77 Runtime checkpoint repair and regenerated pins, then a practical public seed for the heavy fixture. Qualify the fixture and run Round 1 on the current plan branches.
+**Waiting on:** First cut landed with the restart limit accepted; startup slice parked, and the save follow-up is carried by Plan 89. Reconcile outstanding SL/SV cards and remaining Release 15 scope with the Lead against the freeze and qualification; see [tasks](tasks.md).
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

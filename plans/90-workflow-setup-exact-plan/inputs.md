@@ -1,5 +1,7 @@
 # Inputs — Workflow set-up: one exact plan and one approval
 
+> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
@@ -31,3 +33,11 @@ Planning read: as in [Plan 56](../56-workflow-setup/inputs.md#source-identities)
 
 - [Plan 56](../56-workflow-setup/plan.md) and its [inputs](../56-workflow-setup/inputs.md)
 - [Issue 1731](https://github.com/banodoco/astrid-dev/issues/1731)
+
+## Proposed Release 16 reconciliation — 25 November 2026
+
+Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+
+Preserve P56 D1/D6/D7/D8/D12 and reconcile current sources and the proposed P35 grant revoke/restore seam. Full donor mapping and proof joins are in tasks.md; consent is not a new human-authentication service.
+
+**D-SYN-3 — proposed, owner decision pending:** preserve the existing P56 D7 terminal consent rule and accepted D1/D6/D8/D12. Bind plan and apply to exact source, target, writes and current grant; restore or revoke decisions require the P35 seam. No claim of new human authentication or authorization for unspecified targets.
