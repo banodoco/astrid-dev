@@ -13,116 +13,111 @@ skills_output = ".generated/skills"
 pipelines = "pipelines"
 templates = "templates"
 pack_templates = "templates/project"
+projects = "plans"
+vision = "vision"
+gaps = "vision/gaps"
+releases = "releases"
 
-# restored by 19c/19d/OT-20 as their readers land
-# Merge the following path entries into [paths] above, then restore the
-# remaining declarations with their real adapters. Until then no records,
-# relations or registrations are declared and Dev keeps its existing readers.
-# [paths]
-# projects = "plans"
-# vision = "vision"
-# gaps = "vision/gaps"
-# releases = "releases"
-#
-# [ids.goal]
-# policy = "regex"
-# source = "adapter"
-# pattern = '(?:pillar|principle):[a-z0-9-]+/[a-z0-9-]+'
-#
-# [ids.gap]
-# policy = "XX-NNN"
-# source = "adapter"
-#
-# [ids.project]
-# policy = "NN-slug"
-# source = "adapter"
-#
-# [ids.release]
-# policy = "regex"
-# source = "adapter"
-# pattern = '\d+'
-#
-# [ids.issue]
-# policy = "regex"
-# source = "adapter"
-# pattern = '[1-9]\d*'
-#
-# [[record_kinds]]
-# name = "goal"
-# root = "vision"
-# files = ["pillars/*.md", "principles/*.md"]
-# reader = "adapter"
-#
-# [[record_kinds]]
-# name = "gap"
-# root = "gaps"
-# files = ["*.md"]
-# reader = "adapter"
-#
-# [[record_kinds]]
-# name = "project"
-# root = "projects"
-# files = ["*/plan.md"]
-# reader = "adapter"
-# pack = true
-#
-# [[record_kinds]]
-# name = "release"
-# root = "releases"
-# files = ["[0-9]*.md"]
-# reader = "adapter"
-#
-# [[record_kinds]]
-# name = "issue"
-# root = "releases"
-# files = ["[0-9]*.md"]
-# reader = "adapter"
-#
-# [[relation_kinds]]
-# name = "measures"
-# sources = ["gap"]
-# targets = ["goal"]
-# roles = ["primary", "supporting"]
-# per_source = "any"
-# per_target = "any"
-#
-# [relation_kinds.by_role.primary]
-# per_source = "exactly-one"
-# per_target = "any"
-#
-# [relation_kinds.by_role.supporting]
-# per_source = "any"
-# per_target = "any"
-#
-# [[relation_kinds]]
-# name = "addresses"
-# sources = ["project"]
-# targets = ["gap"]
-# roles = ["primary", "supporting"]
-# # dev-project-addresses owns the non-enabler primary rule and enabler prohibition.
-# per_source = "any"
-# per_target = "any"
-#
-# [[relation_kinds]]
-# name = "includes"
-# sources = ["release"]
-# targets = ["project"]
-# roles = ["included"]
-# per_source = "any"
-# per_target = "any"
-#
-# [[relation_kinds]]
-# name = "listed-in"
-# sources = ["issue"]
-# targets = ["release"]
-# roles = ["frozen"]
-# per_source = "any"
-# per_target = "any"
-#
-# [adapters]
-# module = "scripts/otto_dev.py"
-# records = "load_dev_records"
-#
+[ids.goal]
+policy = "regex"
+source = "adapter"
+pattern = '(?:pillar|principle):[a-z0-9-]+/[a-z0-9-]+'
+
+[ids.gap]
+policy = "XX-NNN"
+source = "adapter"
+
+[ids.project]
+policy = "NN-slug"
+source = "adapter"
+
+[ids.release]
+policy = "regex"
+source = "adapter"
+pattern = '\d+'
+
+[ids.issue]
+policy = "regex"
+source = "adapter"
+pattern = '[1-9]\d*'
+
+[[record_kinds]]
+name = "goal"
+root = "vision"
+files = ["pillars/*.md", "principles/*.md"]
+reader = "adapter"
+
+[[record_kinds]]
+name = "gap"
+root = "gaps"
+files = ["*.md"]
+reader = "adapter"
+
+[[record_kinds]]
+name = "project"
+root = "projects"
+files = ["*/plan.md"]
+reader = "adapter"
+pack = true
+
+[[record_kinds]]
+name = "release"
+root = "releases"
+files = ["[0-9]*.md"]
+reader = "adapter"
+
+[[record_kinds]]
+name = "issue"
+root = "releases"
+files = ["[0-9]*.md"]
+reader = "adapter"
+
+[[relation_kinds]]
+name = "measures"
+sources = ["gap"]
+targets = ["goal"]
+roles = ["primary", "supporting"]
+per_source = "any"
+per_target = "any"
+
+[relation_kinds.by_role.primary]
+per_source = "exactly-one"
+per_target = "any"
+
+[relation_kinds.by_role.supporting]
+per_source = "any"
+per_target = "any"
+
+[[relation_kinds]]
+name = "addresses"
+sources = ["project"]
+targets = ["gap"]
+roles = ["primary", "supporting"]
+# dev-project-addresses owns the non-enabler primary rule and enabler prohibition.
+per_source = "any"
+per_target = "any"
+
+[[relation_kinds]]
+name = "includes"
+sources = ["release"]
+targets = ["project"]
+roles = ["included"]
+per_source = "any"
+per_target = "any"
+
+[[relation_kinds]]
+name = "listed-in"
+sources = ["issue"]
+targets = ["release"]
+roles = ["frozen"]
+per_source = "any"
+per_target = "any"
+
+[adapters]
+module = "scripts/otto_dev.py"
+records = "load_dev_records"
+
+# restored by 19d/OT-20 as their registrations land
 # [checks]
 # register = "register_dev_checks"
 #

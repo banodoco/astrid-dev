@@ -6,208 +6,36 @@ graph, new authoring format, live GitHub calls or workflow execution.
 from __future__ import annotations
 
 import argparse
-import re
 from dataclasses import dataclass
 from pathlib import Path
 
-import gap_relationships as goal_links
-from gap_relationships import gap_metadata
-from project_contract import PLAN_FOLDER, plan_gap_links, project_number
-from records import release_brief
-from relationships import RecordRef, Relationship, RelationshipError, RelationshipIndex
-from vision_subject import parse_subject
+from otto.relationships import RecordRef as _RecordRef, RelationshipIndex as _RelationshipIndex
+from otto_dev import GAP_FILE, _collect_delivery
+from relationships import RecordRef, RelationshipError, RelationshipIndex
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GAP_FILE = re.compile(r"^([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
 
 
 @dataclass(frozen=True)
 class DeliveryPath:
-    goal: RecordRef
-    gap: RecordRef
-    project: RecordRef
-    release: RecordRef
+    goal: _RecordRef
+    gap: _RecordRef
+    project: _RecordRef
+    release: _RecordRef
     gap_role: str
     project_role: str
 
 
-def load_delivery(root: Path = ROOT) -> RelationshipIndex:
-    """Collect only canonical, authored records and validated links.
-
-    Read-only: draft release issue pulls are *not* proof of release membership.
-    No unlabeled GitHub API result is silently given a relationship.
-    """
-    root = Path(root)
-    if not root.is_dir():
-        raise RelationshipError(f"delivery root is not an existing directory: {root}")
-    # A real (possibly partial) authored tree needs at least one canonical
-    # source area; an unrelated existing directory is not a valid empty graph.
-    if not any((root / name).is_dir() for name in ("vision", "plans", "releases")):
-        raise RelationshipError(
-            f"delivery root contains no canonical vision/, plans/, or releases/ "
-            f"directories: {root}")
-    canonical_root = root.resolve()
-
-    # An empty symlinked source area may contain no files for the per-file
-    # containment check to examine; refuse escaped and dangling directories.
-    for source_name in ("vision", "vision/pillars", "vision/principles",
-                        "vision/gaps", "plans", "releases"):
-        source_area = root / source_name
-        if source_area.is_symlink():
-            if not source_area.is_dir():
-                raise RelationshipError(
-                    f"{source_name}: source directory symlink has no directory target")
-            if not source_area.resolve().is_relative_to(canonical_root):
-                raise RelationshipError(
-                    f"{source_name}: source directory resolves outside delivery root")
-
-    def require_authored_source(path: Path) -> None:
-        # Authored facts may be aliased within this tree but not loaded from
-        # an external symlink destination masquerading as a canonical path.
-        if not path.resolve().is_relative_to(canonical_root):
-            raise RelationshipError(
-                f"{path.relative_to(root).as_posix()}: "
-                "authored source resolves outside delivery root")
-
-    records: list[RecordRef] = []
-    links: list[Relationship] = []
-    enablers: list[RecordRef] = []
-    gap_sources: dict[str, Path] = {}
-
-    # The existing subject reader owns goal parsing, including stable slug IDs.
-    for directory, kind in (("pillars", "pillar"), ("principles", "principle")):
-        for path in sorted((root / "vision" / directory).glob("*.md")):
-            require_authored_source(path)
-            subject = parse_subject(path.read_text(encoding="utf-8"), path.as_posix())
-            for item in subject.get("goals", subject.get("characteristics", ())):
-                records.append(RecordRef("goal", f"{kind}:{path.stem}/{item['id']}"))
-
-    # The existing gap parser validates the *actual* subject and heading,
-    # and determines the unique primary aspiration.
-    for path in sorted((root / "vision/gaps").glob("*.md")):
-        require_authored_source(path)
-        matched = GAP_FILE.fullmatch(path.name)
-        if not matched:
-            raise RelationshipError(f"{path}: gap filename lacks stable ID")
-        text = path.read_text(encoding="utf-8")
-        gap = RecordRef("gap", matched.group(1))
-        provenance = path.relative_to(root).as_posix()
-        # Mirror the canonical gap-structure title contract before emitting
-        # any edge; a CA-001 filename cannot author a CA-002 relationship.
-        required_heading = f"# {gap.id} —"
-        if not text.startswith(required_heading):
-            heading = text.splitlines()[0] if text else "<empty>"
-            raise RelationshipError(
-                f"{provenance} ({gap}): heading {heading!r} must start "
-                f"{required_heading!r} to match the canonical gap filename")
-        previous = gap_sources.get(gap.id)
-        if previous is not None:
-            raise RelationshipError(
-                f"{gap}: duplicate authored sources "
-                f"{previous.relative_to(root).as_posix()} and {provenance}")
-        gap_sources[gap.id] = path
-        records.append(gap)
-        parse_goals = getattr(goal_links, "parse_gap_goals", None)
-        if parse_goals is None:
-            parse_goals = goal_links.parse_gap_aspirations  # Pending PR #1059
-        try:
-            aspirations, primary = parse_goals(gap_metadata(text), root / "vision")
-        except ValueError as exc:
-            raise RelationshipError(f"{provenance} ({gap}): {exc}") from exc
-        for goal_id in aspirations:
-            links.append(Relationship(
-                gap, "measures", RecordRef("goal", goal_id),
-                "primary" if goal_id == primary else "supporting",
-                path.relative_to(root).as_posix()))
-
-    # Plan number is stable even when the folder's title changes.
-    # Its own plan.md owns the gap relationship and enabler exception.
-    project_folders: dict[str, str] = {}
-    for path in sorted((root / "plans").glob("*/plan.md")):
-        if not PLAN_FOLDER.fullmatch(path.parent.name):
-            continue  # Existing catalog-path check owns malformed folder names.
-        require_authored_source(path)
-        project = RecordRef("project", project_number(path))
-        provenance = path.relative_to(root).as_posix()
-        first_folder = project_folders.get(project.id)
-        if first_folder is not None:
-            raise RelationshipError(
-                f"{provenance} ({project}): duplicate project number {project.id}: "
-                f"plans/{first_folder}/plan.md and {provenance}")
-        records.append(project)
-        project_folders[project.id] = path.parent.name
-        plan_text = path.read_text(encoding="utf-8")
-        try:
-            declared_links = plan_gap_links(plan_text)
-        except ValueError as exc:
-            raise RelationshipError(f"{provenance} ({project}): {exc}") from exc
-        if not declared_links:
-            enablers.append(project)
-        else:
-            # The canonical project parser owns relation role and raw link.
-            # Validate the authored target, not just its numeric gap ID.
-            for gap_id, role, href in declared_links:
-                target = (path.parent / href).resolve()
-                canonical = gap_sources.get(gap_id)
-                if canonical is None:
-                    raise RelationshipError(
-                        f"{provenance} ({project}): unknown gap:{gap_id} "
-                        f"linked as {href!r}")
-                canonical_path = canonical.relative_to(root).as_posix()
-                if not target.is_file():
-                    raise RelationshipError(
-                        f"{provenance} ({project}): gap:{gap_id} link {href!r} "
-                        f"does not exist; canonical source is {canonical_path}")
-                if target != canonical.resolve():
-                    raise RelationshipError(
-                        f"{provenance} ({project}): gap:{gap_id} link {href!r} "
-                        f"does not name canonical source {canonical_path}")
-            for gap_id, role, _ in declared_links:
-                links.append(Relationship(
-                    project, "addresses", RecordRef("gap", gap_id),
-                    role, provenance))
-
-    # A release explicitly includes projects; a project marked done doesn't
-    # imply a release. Draft issue snapshots are deliberately *not* proof.
-    for path in sorted((root / "releases").glob("*.md")):
-        if not path.stem.isdigit():
-            continue
-        require_authored_source(path)
-        provenance = path.relative_to(root).as_posix()
-        release = RecordRef("release", path.stem)
-        try:
-            brief = release_brief(path.read_text(encoding="utf-8"))
-        except ValueError as exc:
-            raise RelationshipError(f"{provenance} ({release}): {exc}") from exc
-        if brief["number"] != path.stem or brief["title_number"] != path.stem:
-            raise RelationshipError(
-                f"{provenance} ({release}): heading "
-                f"'# Release {brief['title_number'] or '<missing>'}' and "
-                f"**Release:** {brief['number'] or '<missing>'} must match "
-                f"Release {path.stem} from the filename")
-        records.append(release)
-        for membership in brief["plans"]:
-            number, folder = membership["number"], membership["folder"]
-            if project_folders.get(number) != folder:
-                raise RelationshipError(
-                    f"{provenance}: Plan {number} names unknown folder {folder}")
-            links.append(Relationship(
-                release, "includes", RecordRef("project", number),
-                "included", provenance))
-        if brief["issues_frozen"]:
-            for row in brief["issues"]:
-                issue = RecordRef("issue", str(row["number"]))
-                if issue not in records:
-                    records.append(issue)
-                links.append(Relationship(
-                    issue, "listed-in", release, "frozen", provenance))
-
+def load_delivery(root: Path = ROOT) -> _RelationshipIndex:
+    """Collect canonical Dev records, then build Otto's configured graph."""
+    records, links, enablers = _collect_delivery(root)
     return RelationshipIndex(records, links, enablers=enablers)
 
 
+
 def deliveries_for_goal(
-    graph: RelationshipIndex, goal: RecordRef
+    graph: _RelationshipIndex, goal: _RecordRef
 ) -> tuple[DeliveryPath, ...]:
     """Prove authored goal → gap → project → release links, not gap closure."""
     if goal.kind != "goal":
@@ -223,8 +51,8 @@ def deliveries_for_goal(
 
 
 def frozen_releases_for_issue(
-    graph: RelationshipIndex, issue_number: str | int
-) -> tuple[RecordRef, ...]:
+    graph: _RelationshipIndex, issue_number: str | int
+) -> tuple[_RecordRef, ...]:
     """Return only release membership proved by its *frozen* issue ledger."""
     issue = RecordRef("issue", str(issue_number))
     return tuple(link.target for link in graph.outgoing(issue, "listed-in"))
