@@ -22,7 +22,7 @@ Establish powerful, deeply extensible image, 3D and writing editor foundations s
 
 **Included:** Longer-term staged foundations: a strong editable image surface first, then native 3D editing and writing surfaces, each with agent/tool extension, saved projects and real creator work.
 
-**Boundary:** Don't attempt full pro-suite parity in one project. Split implementation into independent modality plans once scoped and owned.
+**Boundary:** Don't attempt full pro-suite parity in one project. Split implementation into independent modality plans once scoped and owned. Use [the proposed shared creative-resource contract](../100-language-independent-foundation/architecture.md#creative-domains-one-resource-contract-separate-engines) rather than duplicating revision, permission, task or storage infrastructure; domain-specific editing and rendering remain specialized. Plan 100's small non-video witness proves the abstraction early, not the mature image/3D product. Plan 102 is the first substantial domain. Reuse existing Three.js scene packages and authoring where appropriate; Plan 24/45/46 own portable components, explicit bindings and agent-opened tools. Proposed milestones: image 0.5, 3D/writing/music/sound primitives 0.6; no release assignment or scope authorization.
 
 ## What this builds on
 

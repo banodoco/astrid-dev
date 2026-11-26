@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** Provisional 30–60 engineering days; re-estimate against exact accepted command corpus and reference.
 
 **Waiting on:** Plan 100's reviewed authoring seam; independent scope and release placement; pin accepted Plans 63/75/76/77/89 and Plan 88 reference.
 
@@ -22,7 +22,7 @@
 
 **Draft proposal — owner agreed the direction on 26 November 2026, but detailed project scope, independent challenge and release placement are pending. No implementation authorized.**
 
-Extract deterministic timeline operations into a cohesive Rust library, separate from storage, rendering, provider calls and UI. Establish a versioned typed command corpus for trim/move/split/insert, nested composition, time/frame/rational rounding, edit validation, dependency updates, inverse operations, history/revisions and deterministic projections. Preserve existing schemas and open extension payloads, media identity, custom elements and renderer inputs. Do not require future modalities to inherit video semantics.
+Extract deterministic timeline operations into a cohesive Rust library, separate from storage, rendering, provider calls and UI. Establish a versioned typed command corpus for trim/move/split/insert, nested composition, time/frame/rational rounding, edit validation, dependency updates, inverse operations, history/revisions and deterministic projections. Preserve existing schemas and open extension payloads, media identity, custom elements and renderer inputs. Do not require future modalities to inherit video semantics. Timeline is the first substantial domain of Plan 100's common creative-resource contract. Expose typed operations and resource/view bindings to both SDKs and the Plan 24/45/46 workspace; a timeline engine must not own window layout, generic component mounting or the data model for canvas, 3D, writing or audio. The thin second-domain witness may proceed with Plan 100; do not fold full canvas implementation into this plan.
 
 Python SDK/CLI/MCP and React/TS SDK submit the same typed batch (project/timeline IDs, expected revision, idempotency and authority context). The authoritative Runtime admits, checks permission/conflict, computes or verifies the result, atomically commits one revision and emits a receipt/event. During transition the Python runtime may call the pure Rust kernel via a bounded binding; explicit immutable input/output or in-process native binding avoids per-leaf IPC. WASM/PyO3 pure previews/calculations are optional where measured useful; a preview never writes canonical state. Browser optimistically updates and reconciles authoritative outcomes, not a separate implementation of editing rules.
 

@@ -22,6 +22,7 @@
 
 - **D1 — Pending (26 November 2026):** Which cross-repo boundaries and compatibility floor are in the first independently useful scope? Recommend current supported release plus next candidate; no historical versions by default.
 - **D2 — Pending (26 November 2026):** Worker and timeline ABI: use versioned typed command/receipt contracts; retain local handle transfer via minimal reviewed OS-specific ABI. Reject direct DB access.
+- **D4 — Pending (26 November 2026):** Select one minimal independent non-video resource witness and decide the actual common resource/operation boundary; do not authorize a full canvas or universal engine. Coordinate Plan 46 session-targeted UI operations and Plan 57 extension storage.
 - **D3 — Pending (26 November 2026):** Whether already planned work should absorb any slice: require an ownership/reuse disposition for Plans 38, 50 and 83 before changing their scope.
 
 ## Source identities

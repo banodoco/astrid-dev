@@ -22,7 +22,7 @@ The foundation should be fast, independently operable and recoverable: it can in
 
 Creators and agents should be able to reshape their tools without interrupting creative work.
 
-Every interface component should be dockable, floatable, nestable, or spatially arrangeable, while keeping its bindings to the right timeline, selection, playback, and task. Agents should be equally free to reorganize and extend their own tools to accomplish a creative goal, within the creator's permissions. Neither a human nor an agent should lose project state simply because a tool has been rearranged.
+Every interface component should be dockable, floatable, nestable, or spatially arrangeable, while keeping its bindings to the right timeline, selection, playback, and task. Agents should be equally free to reorganize and extend their own tools to accomplish a creative goal, within the creator's permissions. Neither a human nor an agent should lose project state simply because a tool has been rearranged. People should be able to ask their agents to open a specific creative resource, show the right tool, arrange and connect views and restore the previous workspace through the same supported operations as a human, with explicit target and bindings and without having to rewrite the interface for ordinary changes.
 
 ### Real-time functionality
 

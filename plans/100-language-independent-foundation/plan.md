@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** Provisional 20–40 engineering days, including a thin second-domain witness; re-estimate after source inventory and independent scope review.
 
 **Waiting on:** Independent architecture and gap-boundary review, owner scope decision and release placement; pin the current integrated reference and coordinate Plans 38 and 83.
 
@@ -25,6 +25,8 @@
 Make the real product boundaries language-independent, not merely the public HTTP surface. Inventory and classify every private Runtime import from Agent, dynamic authoring-provider callback, OS custody handoff, installed source identity, worker/session protocol and lifecycle/manifest assumption. Include App and Pinokio entry points where they depend on implementation detail. Reuse workspace.v1, generated Python/TypeScript clients, current schemas, service declarations, scoped credentials, process identity and worker lease/fence invariants. Split genuine local platform support from authoritative Runtime operations; preserve retained native handles and pre-import source verification.
 
 Deliver one versioned client/worker contract, a separately implemented client and simple worker that exercise real state/task/receipt operations, and a differential conformance harness usable against Python and a later Rust implementation. Define observable contract errors, idempotency, canonical serialization/digests, opaque revisions, permission scopes, cancellation, events and crash/expiry behavior. Characterize the timeline provider seam and design a batched immutable-input/pure-result boundary for Plan 102; do not port timeline semantics here. Define machine-level ownership and handoff contract with Plan 101; no competing launch or update path.
+
+Define a minimal shared creative-resource and operation envelope from real timeline behavior and one bounded, genuinely different resource witness (canvas layers or structured 3D scene). Resource identity, revision/receipt, grants, storage and events are shared; each domain owns data representation, validation, edit and undo/conflict rules, renderer and extension capabilities. A separately implemented Python/TypeScript service or pack must be able to register a domain with no core fork or Rust requirement. Coordinate Plans 43, 45 and 57; no universal timeline model, generic graph platform or full non-video editor. Plan 46 owns agent workspace commands over Plan 24 component instances and Plan 45 bindings; expose the common target/authority contract without implementing those layout operations here. See the [multimodal and workspace design](architecture.md#creative-domains-one-resource-contract-separate-engines).
 
 Out: replacing the workspace store, building an inference engine, generic IPC for its own sake, rewriting the editor or deleting Python worker support. Keep implementation-specific unit tests and add public behavioural fixtures; do not weaken current required gates.
 
@@ -46,6 +48,7 @@ Consumes a frozen integrated Runtime/Agent/App tuple, current workspace.v1 artif
 - Independent worker claims, settles, cancels and recovers a task; stale fence, unauthorized grant, duplicate receipt and incompatible version are rejected or reconciled exactly as the reference specifies.
 - Static import and process-boundary checks catch planted private-authority dependencies; genuine platform support is explicitly allowlisted and tested, not moved into a second authority.
 - Characterize current reference and preserve native custody checks on the supported three OSes; report unqualified paths, not a blanket compatibility claim.
+- A bounded non-video domain witness and the timeline both use the same resource identity, authorization, revision and event path; invalid/stale edits refuse, an independent contributor can implement the witness without changing core, and it does not inherit timeline-specific semantics. No full image/3D product proof.
 - An independent reviewer accepts the contract, ownership table and parity corpus. No Rust server parity or new install route is claimed yet.
 
 Scope completion is contribution to LS-006, not automatic gap closure; qualify the integrated release separately and record limits.

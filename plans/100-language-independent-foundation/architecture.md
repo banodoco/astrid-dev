@@ -58,6 +58,69 @@ The core owns durable session identity, scoped project/context references, admit
 
 Same runtime source and public contract for local and headless deployment, with platform-specific packaging/adapters and explicit workspace custody. A local authority may delegate scoped execution to a remote worker; a fully hosted workspace is a different selected authority, not a hidden replica. No multi-master sync or transparent failover promise. Remote workers authenticate, use bounded input transfer, return verified results, reconcile interrupted execution, and enforce spend consent. Existing Plans 25/26 own actual cloud product journeys; Plan 32 owns placement and F-008 generation portability. Plan 105 proves shared core/worker deployment, not a second hosted product or scheduler.
 
+## Creative domains: one resource contract, separate engines
+
+A timeline is the first domain, not the universal data model. A creative resource has a stable identity, domain/type and schema version, authoritative revision, typed asset/resource references, permissions and declared operations. The common runtime supplies resource lifecycle, transactional publication, revision/receipt/event infrastructure, dependency graph, grants, storage/CAS, tasks and recovery. It does not know what a brush stroke, ripple trim, 3D transform or MIDI quantization means. A domain engine owns those semantics, its document representation, validation, conflict and inverse-operation rules, import/export and rendering inputs. It can run in a reviewed Rust crate or through a versioned isolated service/pack; contributions must not require Rust, a core rebuild or privileged database access. Domain data storage and migrations must coordinate with Plan 57; do not silently reinterpret its owner-approved direction.
+
+Each domain manifest advertises resource types, schema versions and migrations, typed operations (input/output, grant/effect, touched resources, preview support, error/undo semantics), available views, capability/engine requirements and typed ports. A shared operation envelope names resource identity, expected revision, idempotency key and actor scope; the domain computes a candidate change against bounded immutable state; the core validates authority and preconditions and atomically commits the result. No untrusted engine may write canonical storage or mint authority. A domain engine may expose optimized native, WASM or local calculation bindings for preview; final edits still go through the same authoritative commit path. High-frequency brush, scrub, viewport and audio interactions stay local, coalescing meaningful changes or streaming bounded ephemeral state; avoid RPC per pointer sample or mesh vertex. Heavy effects, raster/vector/GPU work, geometry, simulation and inference are tasks or specialist rendering services, not generic core functions.
+
+| Domain | Owned resources and operations | Specialist interface/processing |
+| --- | --- | --- |
+| Timeline | tracks, clips, nested compositions; trim/split/move/ripple/retime | React timeline/player; existing Remotion, FFmpeg |
+| Image canvas | layers, raster tiles, vectors, masks, transforms; paint/composite/filter | React canvas/brush controls, WebGL/WebGPU/native processing |
+| 3D scene | nodes, geometry/asset references, materials, lights, cameras; transform, animate, assign material | Three.js viewport; Blender or other qualified renderer/geometry workers |
+| Music/sound | notes, clips, instruments, tempo, routing; arrange, automate, mix | DAW-style controls; real-time audio/DSP service |
+| Writing | text/blocks, links, revisions; insert, replace, restructure | React rich text/document views |
+| Independent domain | contributed schemas and operations, bounded migration | pack-defined client/service without core fork |
+
+For example, an agent can use Python to trim a timeline clip, add a canvas layer, set a 3D material, render a scene and place the output on a timeline. These are separate domain calls using the same authority; an image texture or scene reference can follow an explicit latest revision or remain pinned. A dependency change does not implicitly grant permission to regenerate, upload or overwrite other resources. Plan 45 owns explicit connections, including type compatibility, invalidation, cycle handling where relevant and reversible bindings.
+
+Plan 100 extracts only the shared contract that actual timeline and a bounded non-video witness justify. Plan 102 is its first substantial native domain, not a generic timeline-shaped storage model. Before 0.3 closure, prove a small genuinely different resource (a canvas with layer/transform/mask edit or structured 3D scene with object/transform edit) can be implemented separately without changing the core and without duplicating its persistence, authorization or event logic. This is an abstraction witness, not a full 0.5 image product. Plan 43 owns later independently scoped mature modalities; Plan 11/current Three.js work is reusable prior art. In particular, [existing Three.js authoring](https://github.com/banodoco/astrid-agent/blob/dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5/astrid/packs/rendering/ui/threejs-live-editor/authoring.ts) already includes asset packages, revision captures and placement publication; preserve its useful contracts instead of inventing a second scene store.
+
+## Agent-controlled interface: the workspace as a resource
+
+Distinguish three operation classes: domain editing changes creative data; workspace control opens/arranges/binds/focuses existing views; software extension creates or changes executable components/capabilities. They have different authority and must never collapse into browser automation or arbitrary code execution. An agent should be able to ask what tools and resource types are installed, what workspace/window it is acting on, and which operations and bindings are allowed.
+
+A component definition has a stable type/version, owning pack, supported resource types, input/output ports, size/layout constraints, lifecycle and mount capability. A component instance names its definition and explicit bindings; a workspace layout declares instances and placement/focus intent. Canonical saved layouts/presets and resource bindings are versioned through the workspace authority; window/viewport state, focus, selection, hover, transient drag and previews remain scoped to the target client/session unless the user saves them. Use existing Plan 35 state ownership, not a new shadow store.
+
+Illustrative command sequence (not existing SDK syntax):
+
+```python
+workspace = astrid.workspace(session_id="editor-session")
+workspace.discover(resource_type="image.canvas")
+canvas_view = workspace.open(tool="canvas.editor", resource=canvas_id)
+workspace.open(tool="timeline.editor", resource=timeline_id, beside=canvas_view)
+workspace.open(tool="lighting.inspector", bind={"scene": scene_id})
+workspace.focus(canvas_view)
+```
+
+Open an existing resource is not create/edit. A request to create a canvas uses the distinct domain create command with its own grant and receipt, then opens that resource. The workspace operation includes target session/client/window, requested action, expected layout revision if persistent, idempotency, scoped grant and typed resource binding. The Runtime/session service routes validated requests/events to the selected client; the React shell resolves the installed component definition and mounts/updates the view; it returns actual applied/refused/disconnected/unavailable acknowledgement. An accepted command is not proof that a view is visible. Do not silently redirect to another device, reopen a closed window, steal focus against user preference, or queue surprise UI mutations for a future session. In a headless session, resource operations still work, but interactive presentation returns no active target; only an explicitly saved layout may persist for later opening. User-selected local settings, responsive placement and locked panels are respected; stale or concurrent changes are reconciled with revision/receipt and undo. Failed or missing components show scoped diagnostics without losing the layout or creative work.
+
+A tool may be a transient panel, docked editor, modal, viewport or multi-component preset; a single reusable composition contract covers them. Agents and humans use the same operations for ordinary open/close/dock/resize/bind/focus/save/restore. Agent-authored new React components, shaders or tools use existing pack installation/activation and live reload, scoped capabilities, review/consent and safe rollback (Plans 06, 41, 47); ordinary interface changes never need source generation or a Rust rebuild. The renderer remains React/TypeScript and domain-specialized views (e.g. Three.js), not Rust-generated UI. Privileged native IPC is not exposed to untrusted frontend code.
+
+Prior art at App `cc1d48f016fde55ad6b0609c619d8a4bcec56823`: [panesStore](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/shared/state/panesStore.ts) holds pane visibility, locks and size; [DynamicComponentRegistry](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/tools/video-editor/runtime-components/DynamicComponentRegistry.ts) supports dynamic registration and versioned subscriptions; [agentToolRegistry](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/tools/video-editor/runtime/agentToolRegistry.ts) is provider-mount-scoped with manifest contributions, handlers, validation and disposal. These are source observations, not proof of a unified cross-domain layout API.
+
+Ownership: Plan 24 supplies portable definitions/instances/layout lifecycle; Plan 45 supplies typed resource/capability bindings; Plan 46 supplies safe agent-visible operations and real targeted-client acknowledgement; Plan 100 supplies the shared resource and operation boundary; Plan 101 supplies the common native/local/hosted shell and session discovery; Plan 104 supplies actor/session grants and durable task context, not a second UI command implementation. This avoids a new overlapping plan. First prove an agent opens an existing canvas and a timeline next to it, shows an appropriate inspector, binds it to the selected resource, and restores the prior layout; close the targeted browser, revoke the grant, race a human edit and break a component to verify truthful outcomes. A minimal non-video witness is enough for the early contract; actual rich canvas/3D tooling remains Plan 43 scope.
+
+## Roadmap and provisional engineering allowances
+
+The current roadmap owns strategic aims, while numbered release briefs own membership; the generator groups patches with the next minor/major release (see [contribution workflow](../../docs/contribution-workflow.md#review-the-strategy)). Do not invent a release number to record a distant aspiration, hand-edit generated blocks or change release kinds to force a version. Owner has requested these planning records land on main, not started implementation or approved a particular release.
+
+| Proposed milestone | Work to consider |
+| --- | --- |
+| 0.1 | existing dependability and reference |
+| 0.2 | 100/101/102 early slices alongside existing speed/qualification, no disruption of Releases 15–18 |
+| 0.3 | 100–104 native/extension foundations; early Plan 24/45/46 contract and small second-domain witness; scope after evidence |
+| 0.4 | 105 and existing 25/26/32 cloud outcomes |
+| 0.5 | Plan 43 mature image canvas |
+| 0.6 | 3D, writing, music/sound primitives |
+| 0.7 | cross-modal compositions and live connections |
+| 0.8+ | independent new domain foundations and shared environments |
+
+If a target milestone needs to be stored before release assignment, consider an optional project-level target-milestone intent with a generated display and validation against actual release membership, but not a competing canonical assignment. This is an unresolved planning-system proposal; do not introduce a schema field, change Otto or allocate release numbers without an owner decision. Currently add a plan under Included plans in the intended release brief, coordinate branch rows and run authority, then regenerate strategy.
+
+Planning allowances from conversation, not a bottom-up estimate or approved budget: Plan 100 20–40 engineering days (includes a 5–10 day thin second-domain contract witness increment over the earlier 15–30), 101 20–40, 102 30–60, 103 80–180, 104 15–35, 105 15–35; total gross 180–390 engineer-days, overlapping and subject to reuse. Existing workspace UI Plans 24/45/46 need a separate actual inventory; preliminary 20–45 days for a coherent narrow open/bind/arrange/focus/restore witness across two domains, not a commitment and not additive where already covered by existing work. Mature image 25–50, 3D 30–65, music/sound 30–60, writing 10–20, broader cross-modal binding 15–30 additional engineer-days after the core; not full professional application parity. Review, native OS integration, data migration and real hardware proof dominate schedule uncertainty; parallel engineering changes elapsed time, not total effort. Re-estimate from exact scoped tasks and avoid double-counting existing plans.
+
 ## Requirements shared by all six projects
 
 1. One canonical authority per resource and installation; make ownership transfer, startup, shutdown and recovery explicit; delete redundant paths after qualified cutover.
