@@ -8,7 +8,7 @@ An agent can build or adapt a needed tool during creative work, register it with
 
 ## Current state
 
-Astrid has packs, agent skills and extension points, and [Plan 06](../../plans/06-packs/plan.md) covers a trusted pack lifecycle. There is not yet reliable proof of an agent creating a tool, testing it against real creative work and maintaining it through later updates.
+Astrid has packs, agent skills and extension points, and [Plan 06](../../plans/06-packs/plan.md) covers a trusted pack lifecycle. There is not yet reliable proof of an agent creating a tool, testing it against real creative work and maintaining it through later updates. Source/plan reassessment, 26 November 2026: [Plan 78](../../plans/78-live-custom-element-editing/plan.md) defines live agent-written custom rendering element admission, exact revision pins and no editor reload, under its explicitly trusted local project-pack assumption. That is meaningful prior art, not proof of an agent authoring, replacing and maintaining a complete interactive tool or of isolation for untrusted contributions. [Plan 41's draft refinement](../../plans/41-agent-managed-tools/plan.md) targets this missing evidence; no new product qualification is claimed.
 
 ## Gap
 

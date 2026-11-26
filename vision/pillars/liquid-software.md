@@ -28,7 +28,7 @@ Every interface component should be dockable, floatable, nestable, or spatially 
 
 The capabilities of a tool should be adjustable while the creator is using it.
 
-People and agents should be able to connect components, change behavior, introduce controls, and install trusted extensions as the creative problem changes. An agent should also be able to extend its own capabilities rather than remain trapped by a fixed initial toolset. Every extension should expose useful ways for others to build on it.
+People and agents should be able to connect components, change behavior, introduce controls, and install trusted extensions as the creative problem changes. An agent should also be able to extend its own capabilities rather than remain trapped by a fixed initial toolset. Every extension should expose useful ways for others to build on it. People and agents should be able to change existing creative interfaces, write complete new tools and substitute compatible views while retaining their work, using the same supported extension contracts as Astrid's default creative tools. Ordinary extensions should not require rebuilding the shared core; a failed extension should not strand the creator or prevent recovery.
 
 ### Shared human–agent work
 
@@ -46,7 +46,7 @@ Creators can work with a considered default composition or adapt every layer as 
 
 A pack should be something you can change while you are using it and take anywhere Astrid runs.
 
-A pack is a living part of the workspace, not a separate development project that interrupts making art. People and agents can find, adapt and combine its capabilities while they work. One extension contract connects the interface and Python backend, so a useful contribution can be shared, installed and extended without becoming tied to its author's setup.
+A pack is a living part of the workspace, not a separate development project that interrupts making art. People and agents can find, adapt and combine its capabilities while they work. One extension contract connects the interface and Python backend, so a useful contribution can be shared, installed and extended without becoming tied to its author's setup. The contract is open to other implementation languages too. An independently built tool can use the same authoritative resources and be selected instead of a default interface without a core fork or project migration; permissions, versioning and recovery still apply.
 
 **We should:**
 
