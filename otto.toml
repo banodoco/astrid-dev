@@ -1,7 +1,7 @@
 version = 1
 
 [otto]
-commit = "223086a92e9ce0dc8c01d02278f84b08330df243"
+commit = "13cf97b873558ffa4038963bb252fd4f26eecead"
 
 [workspace]
 name = "astrid-dev"
