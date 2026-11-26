@@ -1,0 +1,51 @@
+# A language-independent foundation
+
+**Project:** A language-independent foundation
+
+**Goal:** A separately built client and worker can use Astrid's real workspace and task operations through documented contracts without depending on the core's private implementation.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** Independent architecture and gap-boundary review, owner scope decision and release placement; pin the current integrated reference and coordinate Plans 38 and 83.
+
+**Start:** [Astrid agent start document](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
+
+**Vision gaps:** [LS-006 — Independent creative foundation](../../vision/gaps/LS-006-independent-creative-foundation.md) (primary) · [Full-stack contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (supporting) · [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting)
+
+**Contributes to closure:** LS-006: E1: independent client/worker contract and behavioural reference.
+
+## Outcome and scope
+
+**Draft proposal — owner agreed the direction on 26 November 2026, but detailed project scope, independent challenge and release placement are pending. No implementation authorized.**
+
+Make the real product boundaries language-independent, not merely the public HTTP surface. Inventory and classify every private Runtime import from Agent, dynamic authoring-provider callback, OS custody handoff, installed source identity, worker/session protocol and lifecycle/manifest assumption. Include App and Pinokio entry points where they depend on implementation detail. Reuse workspace.v1, generated Python/TypeScript clients, current schemas, service declarations, scoped credentials, process identity and worker lease/fence invariants. Split genuine local platform support from authoritative Runtime operations; preserve retained native handles and pre-import source verification.
+
+Deliver one versioned client/worker contract, a separately implemented client and simple worker that exercise real state/task/receipt operations, and a differential conformance harness usable against Python and a later Rust implementation. Define observable contract errors, idempotency, canonical serialization/digests, opaque revisions, permission scopes, cancellation, events and crash/expiry behavior. Characterize the timeline provider seam and design a batched immutable-input/pure-result boundary for Plan 102; do not port timeline semantics here. Define machine-level ownership and handoff contract with Plan 101; no competing launch or update path.
+
+Out: replacing the workspace store, building an inference engine, generic IPC for its own sake, rewriting the editor or deleting Python worker support. Keep implementation-specific unit tests and add public behavioural fixtures; do not weaken current required gates.
+
+## Existing work and decision
+
+The current Runtime already owns the public protocol and generated clients, but Agent generic_host directly imports runtime_protocol.platform, dirfd, errors, storage, verified_host_launch and external_pack_sources; Runtime loads the Agent's synchronous timeline commit provider. Plans 38 and 83 consolidate process identity and decompose host behavior; use their qualified work, not another implementation. Plan 50's recorded boundaries and Plans 39/91's green gates provide reusable evidence. The [shared architecture rationale](architecture.md) records concrete source identities and alternatives. See [inputs](inputs.md#planning-evidence) for alternatives, review limits and outstanding owner decisions. This is not an authorization to alter accepted existing projects.
+
+## Sequence and readiness
+
+Inventory and pin first; agree the contract and the independent conformance harness; then remove private authority imports in small parity-proven slices, preserving the current product. Deliver an independent consumer and worker before declaring the seam ready. Plan 101 may prototype its bootstrap in parallel, but ownership transfer depends on the accepted lifecycle contract; Plan 102 consumes the reviewed timeline seam. Plan 103 consumes the complete conformance baseline. Review migration scope before any code starts. The [task outline](tasks.md) is not a dispatch packet. Re-estimate after the first bounded evidence slice; do not assign to a release or start product work without a recorded run decision.
+
+## Interfaces and handoff
+
+Consumes a frozen integrated Runtime/Agent/App tuple, current workspace.v1 artifacts, Plan 38's identity/custody contracts, Plan 83's characterization and the recorded boundary fixtures as available. Produces a dependency/ownership inventory, public client and worker ABI, lifecycle and timeline-boundary design, executable black-box suite with negative fixtures, exact versioned contracts and independent consumer/worker receipts. Plan 103 must run the same suite, not a rewritten weaker version.
+
+## Completion
+
+- A clean independent consumer with no private Python Runtime imports creates/reads an actual project, submits a typed capability task, reads the same output and receipt through a second client and exercises event delivery.
+- Independent worker claims, settles, cancels and recovers a task; stale fence, unauthorized grant, duplicate receipt and incompatible version are rejected or reconciled exactly as the reference specifies.
+- Static import and process-boundary checks catch planted private-authority dependencies; genuine platform support is explicitly allowlisted and tested, not moved into a second authority.
+- Characterize current reference and preserve native custody checks on the supported three OSes; report unqualified paths, not a blanket compatibility claim.
+- An independent reviewer accepts the contract, ownership table and parity corpus. No Rust server parity or new install route is claimed yet.
+
+Scope completion is contribution to LS-006, not automatic gap closure; qualify the integrated release separately and record limits.
