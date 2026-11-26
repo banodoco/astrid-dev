@@ -17,7 +17,7 @@ Start-up, once:
       release/16/main from release/15/main, if release/16/main doesn't exist yet;
       release/16/plan-{PLAN} from release/16/main, if it doesn't exist yet.
    b. Find or open its board, "board: release 16 plan {PLAN}", the same way as step 1.
-   c. Create its manager: a new Codex session in my account, sent the text of releases/16/briefs/manager.md with {PLAN} and {BOARD} filled in.
+   c. Create its manager: a new Codex session in my account, sent the text of releases/16/briefs/manager-P{PLAN}.md with only {BOARD} filled in.
    Do the first of them now; do the second only once the first one's first packet posts its early STATUS (packet chats reach GitHub).
 6. Later, when a plan finishes or is parked, do step 5's a to c for the plan whose Starts after names it.
 7. Post one STATUS, as run.md's Lead loop shows, then run that loop every hour.

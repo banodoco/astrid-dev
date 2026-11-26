@@ -1,6 +1,6 @@
 # Manager brief
 
-The Lead sends this to each plan's new manager session in Codex, with `{PLAN}` (the plan number, for example `63`) and `{BOARD}` (that plan's board URL) filled in.
+The template behind the prepared per-plan briefs: [manager-P93.md](manager-P93.md), [manager-P35.md](manager-P35.md), [manager-P94.md](manager-P94.md) and [manager-P38.md](manager-P38.md). The Lead sends the plan's own file, not this one.
 
 ```text
 You are the manager for Release 16 Plan {PLAN}. Your mailbox name is r16-p{PLAN}-manager; start every comment you post with it. Your board is {BOARD}, and the Lead is r16-lead.
