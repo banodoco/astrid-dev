@@ -26,7 +26,9 @@ Every dispatched packet has an identified session, current state and evidence or
 
 Use when the [Release Lead](../leader.md) has prepared the [packet queue](../leader/multi-manager-release.md) and the owner has authorized this Orchestrator. The general [Orchestrate role](../orchestrator.md) still applies.
 
-**The packet's Route sets the session's mode, every time:** N High, X Extra High, S Pro ([run contract](../../shared/run-contract.md#chatgpt-session-modes)), never one mode for all or by feel. If a mode isn't offered, say so in STATUS and ask the Lead.
+**Packets go only to a new normal chat in the ordinary ChatGPT app,** in the owner's own account: never ChatGPT for Work, never Codex.
+
+**The packet's Route sets the session's mode, every time** (normal tasks N, hard X, very hard S): N High, X Extra High, S Pro ([run contract](../../shared/run-contract.md#chatgpt-session-modes)), never one mode for all or by feel. If a mode isn't offered, say so in STATUS and ask the Lead.
 
 **One packet, one fresh ChatGPT session.** The session writes; **you** run proof and keep sessions moving; **the Lead** reviews and integrates.
 
