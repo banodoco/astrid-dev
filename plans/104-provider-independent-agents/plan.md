@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** TBD
 
 **Waiting on:** Plan 100 agent/worker contracts and Plan 103 native authority for final proof; independent scope/release review; preserve current ACP and skill integrations.

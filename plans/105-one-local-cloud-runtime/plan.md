@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.4
+
 **Estimate:** TBD
 
 **Waiting on:** Plan 100 worker contract, Plan 103 native core and accepted placement contract; independent scope/release review; coordinate Plans 25, 26 and 32 rather than duplicate them.

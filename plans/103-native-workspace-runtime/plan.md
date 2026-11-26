@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** TBD
 
 **Waiting on:** Plan 100 conformance and ownership boundary, Plan 102 kernel/commit contract, Plan 101 native controller for distribution; independent scope/release and data migration approval.
