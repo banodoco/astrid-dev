@@ -10,9 +10,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, the installed Desktop witness and review 1–1.5. Assumes a tester takes the user test request on a matching build; re-estimate if CD-0 cannot tie a Desktop install to its endpoint.
+**Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, review 0.5–1, all on CPU. The installed Desktop witness is later work.
 
-**Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; a tester taking [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on a matching tester build; Release 16's base for the branch.
+**Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; Release 16's base for the branch.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -53,7 +53,7 @@ The agent's skills reduce to: run `generate targets`, and do what its next actio
 - the existing-install rungs for ComfyUI Desktop on Windows: a running install, a closed one, a stale registration whose recorded files are gone (#1848), a wrong responder on the install's port, a denied or ambiguous observation, and several installs;
 - next actions: the person-side start instruction, re-probing after it, and attaching the chosen endpoint through the existing consented placement (Plan 20's `settings set placement`, Plan 32's path);
 - the setup and VibeComfy skills and the editor's connection copy, saying the same states;
-- one installed Desktop witness, run by a tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) before or after the release, with the existing Portable, Git and Pinokio cases checked for regressions where available. No lane tests on the owner's machine.
+- the Desktop checks on CPU fixtures. The installed Desktop witness and the Portable, Git and Pinokio regression checks are later work, see [tasks.md](tasks.md#later-real-hardware-qualification-not-in-release-16). No lane tests on the owner's machine.
 
 **Not included:**
 - Astrid launching Desktop itself (the native launch boundary is Linux-only today and needs Desktop's own launcher; see D3);
@@ -79,8 +79,7 @@ The plan reuses all of these and changes only what makes an unchecked target loo
 2. **CD-1:** the ladder contract, then **RS1** reviews it, because Plan 94 and the rest of this plan build on it.
 3. **CD-2 and CD-3:** the existing-install rungs and the next actions, in parallel.
 4. **CD-4:** the wording.
-5. **CD-5:** the installed witness, through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952).
-6. **R:** the final review.
+5. **R:** the final review.
 
 Plan 94 starts its install branch once RS1 accepts the ladder. The details are in [tasks.md](tasks.md). Recording this plan authorizes no implementation.
 
@@ -97,26 +96,19 @@ Plan 94 starts its install branch once RS1 accepts the ladder. The details are i
 - **Produces:**
   - the readiness ladder in `generate targets`;
   - a verified or explicitly blocked existing-install disposition (installed, reachable, identified, compatible, with the owning layout and the one next action), which Plan 94 consumes and does not re-derive;
-  - the updated skills and editor copy;
-  - the installed Desktop witness.
+  - the updated skills and editor copy.
 
 ## Completion
 
-On the declared Windows NVIDIA machine and Desktop version, run by a tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952) on the installed CLI and the matching editor:
-- **A running Desktop** is found, identified as that install, attached, and produces an image in the editor.
-- **A closed Desktop** gets "open it", and once the person opens it, the next check continues to an image.
+For Release 16, completion is every remaining card's focused CPU tests passing on base and head. CPU fixtures prove that each case below stops at the right rung with its reason and one next action, and leaves placement unchanged where it refuses:
+- **A running Desktop** is found, identified as that install, and attached.
+- **A closed Desktop** gets "open it", and once the person opens it, the next check continues.
 - **A stale registration** is diagnosed as broken, with no data deleted, and the next action offers Desktop's reinstall or Plan 94's separate copy.
-- **These each stop at the right rung with the right next action, and leave placement unchanged:**
-  - another server answering on Desktop's old port, which is never reported as Desktop;
-  - denied access;
-  - two installs;
-  - a declined consent.
-- **An unrelated queued job** in Desktop survives.
+- **Another server on Desktop's old port** is never reported as Desktop; denied access, two installs and a declined consent each stop at the right rung.
 - **Nothing reads `ready`** without the observations behind it.
-- **The agent follows next actions only,** with zero off-script steps in the witness.
-- **The time from intent to an image is recorded,** for the running and the closed cases.
+- **The skills** tell the agent to run `generate targets` and do its next action.
 
-Running Portable, Git and Pinokio installs are checked for regressions where available; anything not qualified is labelled so. CPU fixtures prove classification and refusal only. No hardware use, spending or publication is authorized by this plan.
+Real-hardware proof is later work, not part of Release 16: the installed Desktop witness through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), the image in the editor, the unrelated queued job, the time from intent to image, zero off-script steps, and Portable, Git and Pinokio regression checks where available. See [Later](tasks.md#later-real-hardware-qualification-not-in-release-16). No hardware use, spending or publication is authorized by this plan.
 
 ## Proposed Release 16 reconciliation — 25 November 2026
 

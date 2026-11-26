@@ -8,6 +8,8 @@
 
 **Scope decision:** Pending — on 24 November 2026 the owner asked for broader environment setup and recovery, and for this plan and [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md) to be in Release 16 (in the planning chat behind astrid-dev #1847, then in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV). On 25 November she asked for both plans to deliver one end state: one honest state, one next step and one consent, with the agent never improvising. plan.md describes this plan's branch of it. That is release intent, not a go to implement. Next: the owner confirms the split and D2–D6.
 
+**CPU-only (owner, 26 November 2026):** real-hardware work moves to the Later section of tasks.md, done separately later.
+
 **Prior art:** the tester report [#1848](https://github.com/banodoco/astrid-dev/issues/1848) and its [frozen handoff](https://github.com/banodoco/astrid-dev/blob/501e34de4503994b75c602ede6108a8e69a1c4e0/releases/15/tester-run/exploratory-build-a09ea669.md), 24 November: Windows 11, RTX 5070 Ti Laptop.
 - **Install:** the candidate installed in 622.5 s, including 219 s of silence.
 - **Desktop:** its registration was stale.
@@ -48,7 +50,7 @@ Rejected:
 
 The critique estimated only the inventory and baseline (1–2 days); the rest is estimated after ER-1.
 
-**Proof and limits:** plan.md's [Completion](plan.md#completion), two consecutive live rounds on the declared Windows NVIDIA combination through the installed CLI and the matching editor, plus the focused tests. CPU fixtures prove classification, refusal and resume logic only. Wall-time differences in #1848 are unattributed and aren't a performance finding.
+**Proof and limits:** plan.md's [Completion](plan.md#completion): the focused CPU tests, which prove classification, refusal and resume logic. The live Windows NVIDIA rounds are later work. Wall-time differences in #1848 are unattributed and aren't a performance finding.
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the install's write and consent boundary, and R at most 1. Next: the owner confirms (D6).
 
@@ -63,7 +65,7 @@ Each is a recommendation until the owner confirms it in writing.
 | D1 | Release | **Decided (owner, 24 November 2026):** Release 16. This is release intent, not a go to implement. |
 | D2 | The end state and the split | Plan 93 owns the ladder and existing installs, including Desktop's witness. This plan owns the install offered when nothing usable is left, the `computes` rung, and Astrid's own download as a resumable task. The ten statements in plan.md hold for the declared combination only. |
 | D3 | The install route | Official ComfyUI Portable into an isolated destination, started the supported way, unless ER-0 shows finishing Astrid's Windows recipe is smaller. One route only. |
-| D4 | The support matrix and limits | Qualify the tested Windows 11 / RTX 5070 Ti Laptop combination first, labelling everything else unqualified. A tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), with its proposed destination, disk reserve (40 GB), download (25 GB) and time (about 3 hours per round) limits, and zero paid spend, as the owner confirms. |
+| D4 | The support matrix and limits | Qualify the tested Windows 11 / RTX 5070 Ti Laptop combination first, labelling everything else unqualified. A tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), with its proposed destination, disk reserve (40 GB), download (25 GB) and time (about 3 hours per round) limits, and zero paid spend, as the owner confirms. (Later: the tester round is not part of Release 16.) |
 | D5 | A Runtime download task | Not now. Use the existing verified, resumable download, and decide from the live loop's evidence, keeping #722's and Plan 90's ownership. |
 | D6 | Reviews and the base | RS1 at most 1 and R at most 1. The base: `release/16/main` once it is cut, or an owner-approved early start on `release/15/main`, with the SHA recorded. |
 
