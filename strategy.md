@@ -2,11 +2,13 @@
 
 Make Astrid an open, dependable, fast and extensible creative environment where people and agents pursue ambitious work and build on one another's tools and knowledge. See our [vision](vision/README.md).
 
-**Last reviewed:** 2026-11-25.
+**Last reviewed:** 2026-11-26.
 
 ## Focus now
 
 Complete Release 15, then deliver 0.1 in [Release 16](releases/16.md). Scope the work against the integrated Release 15 product branches. Keep the continuous hardening and fluidity releases on the path to 0.2.
+
+In parallel, investigate the [independent creative foundation](vision/gaps/LS-006-independent-creative-foundation.md) as a proposed route to the extensible-foundations milestone. Use the dependable and fast product as the behavioral reference; aim to establish the common native core before broad cross-modal expansion. See [the proposed architecture](plans/100-language-independent-foundation/architecture.md). This is direction, not a release assignment, a deadline, or a reason to interrupt Releases 15–18.
 
 ## Versions
 
@@ -130,6 +132,8 @@ Future milestones are direction, not committed projects or release dates. Scope 
 
 <details>
 <summary>Decision history and operating context</summary>
+
+- **2026-11-26 (native foundation direction):** In conversation the owner agreed to pursue an independently recoverable Rust core, shared native timeline semantics, React interfaces, managed Python/Node environments and interchangeable agents. Capture the proposed gap and scopes in [idea #2038](https://github.com/banodoco/astrid-dev/issues/2038). Detailed scope, independent critique, priority, sequencing within releases and cutover remain open; current release briefs and publication authority are unchanged.
 
 - **2026-11-25 (strategy layout):** Keep the roadmap chronological, with one short aim and proof paragraph per version and generated release links only. Detailed project contributions and issue lists stay in the canonical release briefs and plans. The existing release-kind semantics, generated membership, and publication authority are unchanged.
 - **2026-11-25 (later milestones):** Owner refines the trajectory after the common foundation and cloud milestones: image is the second mature modality (0.5); writing, 3D, music and sound join together as creative primitives (0.6); connected creative workspaces (0.7); creator- and agent-built fully featured tools and foundations (0.8); sharing and reusing whole workspaces (0.9); and everything working together (1.0). The early 0.3 milestone proves extensible contracts, not the complete later tool-building or sharing experience. These are strategic aims, not release assignments. Release 16 scope and its research kit remain unchanged.

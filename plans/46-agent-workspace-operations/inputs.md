@@ -6,7 +6,7 @@
 
 **Scope decision:** Pending — This draft records a proposed user-facing outcome, not a settled technical implementation. Next: choose the smallest independent scope and name an accountable owner.
 
-**Prior art:** [Plan 24 layouts](../24-liquid-workspace/plan.md), [Plan 45 bindings](../45-component-connections/plan.md) and [Plan 04 concurrent edits](../04-concurrent-edits/plan.md). Next: inspect exact latest code and retained contributor work and pin revision identity.
+**Prior art:** [Plan 24 layouts](../24-liquid-workspace/plan.md), [Plan 45 bindings](../45-component-connections/plan.md) and [Plan 04 concurrent edits](../04-concurrent-edits/plan.md). Source review 26 November 2026: App `cc1d48f016fde55ad6b0609c619d8a4bcec56823` panesStore, DynamicComponentRegistry and provider-scoped agentToolRegistry give usable prior art, not proof of unified workspace control. [Plan 100 architecture](../100-language-independent-foundation/architecture.md#agent-controlled-interface-the-workspace-as-a-resource) records exact file links and proposal. Next: inspect exact latest code and retained contributor work and pin revision identity.
 
 **Approach:** Pending — Reuse existing Astrid and Hivemind interfaces before creating new abstractions. Next: compare alternatives on actual source.
 

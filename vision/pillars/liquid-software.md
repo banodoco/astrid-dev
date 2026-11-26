@@ -16,17 +16,19 @@ The shared core should stay understandable and reliable while creative tools evo
 
 Timelines, media, projects, identities, validated operations, and permissions are durable resources shared by human-facing interfaces and agents. Specialized behavior belongs in reusable components and packs; extend the core only for genuinely shared needs.
 
+The foundation should be fast, independently operable and recoverable: it can inspect, preserve and repair creative work even when an interface, agent provider or managed creative environment fails. The same authoritative operations are available to people and agents through interchangeable interfaces, whether the workspace lives on their own machine or in the cloud. New creative tools and modalities build on explicit shared contracts; they do not need to depend on or fork the core's implementation. A dependable core enables, rather than constrains, live experimentation above it.
+
 ### Live tool composition
 
 Creators and agents should be able to reshape their tools without interrupting creative work.
 
-Every interface component should be dockable, floatable, nestable, or spatially arrangeable, while keeping its bindings to the right timeline, selection, playback, and task. Agents should be equally free to reorganize and extend their own tools to accomplish a creative goal, within the creator's permissions. Neither a human nor an agent should lose project state simply because a tool has been rearranged.
+Every interface component should be dockable, floatable, nestable, or spatially arrangeable, while keeping its bindings to the right timeline, selection, playback, and task. Agents should be equally free to reorganize and extend their own tools to accomplish a creative goal, within the creator's permissions. Neither a human nor an agent should lose project state simply because a tool has been rearranged. People should be able to ask their agents to open a specific creative resource, show the right tool, arrange and connect views and restore the previous workspace through the same supported operations as a human, with explicit target and bindings and without having to rewrite the interface for ordinary changes.
 
 ### Real-time functionality
 
 The capabilities of a tool should be adjustable while the creator is using it.
 
-People and agents should be able to connect components, change behavior, introduce controls, and install trusted extensions as the creative problem changes. An agent should also be able to extend its own capabilities rather than remain trapped by a fixed initial toolset. Every extension should expose useful ways for others to build on it.
+People and agents should be able to connect components, change behavior, introduce controls, and install trusted extensions as the creative problem changes. An agent should also be able to extend its own capabilities rather than remain trapped by a fixed initial toolset. Every extension should expose useful ways for others to build on it. People and agents should be able to change existing creative interfaces, write complete new tools and substitute compatible views while retaining their work, using the same supported extension contracts as Astrid's default creative tools. Ordinary extensions should not require rebuilding the shared core; a failed extension should not strand the creator or prevent recovery.
 
 ### Shared human–agent work
 
@@ -44,7 +46,7 @@ Creators can work with a considered default composition or adapt every layer as 
 
 A pack should be something you can change while you are using it and take anywhere Astrid runs.
 
-A pack is a living part of the workspace, not a separate development project that interrupts making art. People and agents can find, adapt and combine its capabilities while they work. One extension contract connects the interface and Python backend, so a useful contribution can be shared, installed and extended without becoming tied to its author's setup.
+A pack is a living part of the workspace, not a separate development project that interrupts making art. People and agents can find, adapt and combine its capabilities while they work. One extension contract connects the interface and Python backend, so a useful contribution can be shared, installed and extended without becoming tied to its author's setup. The contract is open to other implementation languages too. An independently built tool can use the same authoritative resources and be selected instead of a default interface without a core fork or project migration; permissions, versioning and recovery still apply.
 
 **We should:**
 
@@ -63,6 +65,6 @@ A pack is a living part of the workspace, not a separate development project tha
 
 ## References
 
-**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md) · [LS-005 — Agent-managed tools](../gaps/LS-005-agent-managed-tools.md).
+**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md) · [LS-005 — Agent-managed tools](../gaps/LS-005-agent-managed-tools.md) · [LS-006 — Independent creative foundation](../gaps/LS-006-independent-creative-foundation.md).
 
 **Implementation exploration:** [Portable/resizable components](../../plans/24-liquid-workspace/plan.md) · [Composable connections](../../plans/45-component-connections/plan.md) · [Agent workspace operations](../../plans/46-agent-workspace-operations/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals, not proof of shipped capabilities.

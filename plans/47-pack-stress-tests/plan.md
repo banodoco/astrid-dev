@@ -22,6 +22,8 @@ Push frontend-only, backend-only and mixed UI/processing packs to their limits, 
 
 **Included:** Substantial interactive UI, long-running backend jobs, mixed packs, dependency conflicts, interrupted updates, failed migrations and recovery with real project data.
 
+**Draft refinement (26 November 2026):** Qualify the same whole React tool/extension artifact through local, hosted and declared native shell routes, including a creator-authorized live update and alternate view selection with the same project identity, operations, history and undo. Include compiled artifact compatibility, failed compilation/mount, lifecycle disposal, last-known-good rollback, versioned persisted state and pinned old rendering revisions. Exercise untrusted extension isolation/capability denials against the actual reviewed Plan 15 boundary; same-origin React and error boundaries are not a sandbox. Qualify independent build/backend environments, scoped grants and dependency failures. Plan 41 owns authoring; 101 delivery; reuse Plan 06 and Plan 78 rather than introducing another manager. See [native extension design](../100-language-independent-foundation/architecture.md#agent-authored-tools-and-replaceable-default-interfaces).
+
 **Boundary:** Avoid duplicating finished Plan 06; qualify its contract, then file bounded defects and proposed fixes with evidence.
 
 ## What this builds on
