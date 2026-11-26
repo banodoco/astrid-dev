@@ -12,7 +12,7 @@
 
 **Estimate:** about 4.5 (Phase 1 about 2.7; Phase 2 about 1.8)
 
-**Waiting on:** Reconcile the 13 November implementation against the still-unticked VA cards; owner's mark-up, supporting-aspirations table and physical-device look remain outstanding, along with independent review. The prior Release 14 Lead remains the recorded owner; the Release 15 Lead must confirm handoff or disposition.
+**Waiting on:** Owner's final Release 15 decision moved this plan to Release 16. Reconcile 13 November implementation against unticked VA cards; owner mark-up, supporting-aspirations table, physical-device look and independent review remain outstanding. Confirm accountable Release 16 handoff and scope.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -120,3 +120,7 @@ Phase 2 is done when, on the deployed App, a visitor opens a pillar and, without
 Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
 
 Owner directed the existing Plan 53 handoff into Release 16. Carry the bounded product residual and existing authority; no new lane or reset is authorized. The proposed reconciliation is recorded in tasks.md.
+
+## Status reconciliation — 26 November 2026
+
+Existing vision changes are not proof of all twelve VA task rows. Retain the current lifecycle pending Release 16 reconciliation. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

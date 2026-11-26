@@ -10,7 +10,7 @@
 
 **Estimate:** about 8–11 days
 
-**Waiting on:** —
+**Waiting on:** Earlier run produced substantial implementation evidence but [completion PR #276](https://github.com/banodoco/astrid-dev/pull/276) was closed unmerged with Completion: No. Reconcile outstanding placement-path tasks, review and exact integrated/final proof with the accountable Lead before closure; no new run authority implied.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
@@ -130,3 +130,7 @@ All of it is CPU only. The live proof (T7) is a later pass of [Plan 34](../34-re
 - All of the above is CPU evidence (owner, 8 Nov). Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows Plan 33.
 
 The proof does not cover new providers, Wan2GP or the `generic_host` split. [F-003](../../vision/gaps/F-003-creative-execution.md) does not close automatically.
+
+## Status reconciliation — 26 November 2026
+
+Forty-three of 51 task rows were ticked at the audit base. The earlier completion assessment cannot be treated as an accepted closure; preserve the queued status pending a later whole-scope receipt. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

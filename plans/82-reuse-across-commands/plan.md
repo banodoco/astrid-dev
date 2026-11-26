@@ -4,13 +4,13 @@
 
 **Goal:** `astrid generate` on an installed Astrid is queued in about 3 s instead of about 5.8 s, because caches reuse what an earlier command worked out, and never uses a result that is out of date.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Release 15 Plan 82 orchestrator (`session_011EzfW1e1nGMfuKEg7z7nKN`), by [packet dispatch](../../releases/15/run.md#plan-82-dispatch)
 
 **Estimate:** About 3 to 4 engineering days.
 
-**Waiting on:** Recorded merged branches, but RA-0a, RA-0b, RA-2 and R are still open in [tasks](tasks.md). Reconcile stage-one proof and the stage-two disposition at the freeze; the real ComfyUI timing is assigned to Plan 92. Do not infer whole-plan completion.
+**Waiting on:** Release 15 stage 1 published and lane stood down. Await an authorized continuation of the explicitly held stage 2, its integration and final review: [handoff #1906](https://github.com/banodoco/astrid-dev/pull/1906) and [tasks](tasks.md). The real ComfyUI measurement is routed to Plan 92; the 3 s goal was not established.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's [catalog](../../plans/index.md) row; its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -47,3 +47,7 @@ RA-6 first; RA-0a; then RA-0b, RA-1b and RA-2; then R. **Depends on:** Plan 81 l
 - **Refused:** a mismatched receipt or companion digest is refused; a matching one is admitted.
 - **Safe to lose:** deleting what is kept only slows the next command.
 - **Limits:** CI uses a stand-in ComfyUI. Landing and publishing remain the owner's.
+
+## Status reconciliation — 26 November 2026
+
+Stage 1 landed; stage 2's accepted-but-unmerged PRs and the remaining RA-0a, RA-0b, RA-2 and R dispositions are preserved in the handoff. The stand-in comparison is not evidence that the whole plan met the speed target. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

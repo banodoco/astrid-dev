@@ -10,7 +10,7 @@
 
 **Estimate:** 4–6 engineering days, one phase.
 
-**Waiting on:** Agent plan recorded merged; review dispositions and the separate motion-pack fresh-install issue #1525 are recorded in [tasks](tasks.md). Reconcile LE-2, LE-4, R and RF.1 against the actual release candidate, including live-edit proof and the remaining accepted dispositions, before closure.
+**Waiting on:** Release 15 Agent/App landings published. Reconcile LE-2, LE-4, R and RF.1 against the actual shipped tuple and the live-edit evidence; the fresh-install motion-pack issue [#1525](https://github.com/banodoco/astrid-dev/issues/1525) is separately recorded. Publication alone does not prove the release-freeze live-edit test ran.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md).
 
@@ -55,3 +55,7 @@ Consumes the plan-69 Agent, Runtime and App work (project-pack compile and admis
 On a disposable copy of a heavy project, the editor's chat agent is asked for the four edits and delivers them with one timeline receipt and one history row: seven clips retargeted to two forked elements, their parameter edits, and six added text clips. The open editor shows them without a reload. A pack installed after the Runtime started resolves on the next commit without a restart. No SQL, outside script or detached publish is used.
 
 The record holds the source pins, the prompt, the resulting head, stills of the four edits compared with the intent, and the elapsed time for admission, commit and visible result. Negative cases: a stale head, a wrong or unadmitted revision, a failed compile and a failed commit after a good admission each leave the timeline unchanged and say which step failed. If the exact word-bound timing of the new text clips cannot be committed, the proof uses numeric timing and says so. The proof is local; it shows nothing about hosted isolation or about every project size.
+
+## Status reconciliation — 26 November 2026
+
+The release-freeze RF.1 row explicitly remained not started at the audit base. Keep the remaining verification and accepted review dispositions open; no task boxes changed. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

@@ -12,7 +12,7 @@
 
 **Estimate:** about 2.5
 
-**Waiting on:** Reconcile II-8, II-9, II-11 and II-13 against the remaining product redirect/reporting patches and packet evidence; II-10 needs the owner's issue transfers, II-11 her browser proof, and II-9 her approval. The prior Release 14 Lead remains the recorded owner; the Release 15 Lead must confirm handoff or disposition.
+**Waiting on:** Owner's final Release 15 decision moved this plan to Release 16. Reconcile II-8, II-9, II-11 and II-13 against redirect/reporting patches and packet evidence; II-10 needs owner issue transfers, II-11 browser proof and II-9 approval. Confirm accountable Release 16 handoff and accepted residual scope.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -121,3 +121,7 @@ No budget and no paid service. Tasks are in [tasks.md](tasks.md); recording this
 Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
 
 Owner directed the existing Plan 52 handoff into Release 16. Carry the bounded product residual and existing authority; no new lane or reset is authorized. The proposed reconciliation is recorded in tasks.md.
+
+## Status reconciliation — 26 November 2026
+
+Release 15 publication is not a completion receipt for the deferred project. Retain the current lifecycle until the Release 16 Lead reconciles the new run; nine of 14 task rows were ticked at the audit base. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.

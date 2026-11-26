@@ -10,7 +10,7 @@
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
-**Waiting on:** First cut landed with the restart limit accepted; startup slice parked, and the save follow-up is carried by Plan 89. Reconcile outstanding SL/SV cards and remaining Release 15 scope with the Lead against the freeze and qualification; see [tasks](tasks.md).
+**Waiting on:** Release 15 first cut published with accepted restart limit; startup slice is parked and save follow-up carried by Plan 89 / Plan 75. Reconcile remaining SL/SV cards and actual whole-plan scope; the integrated 616-clip saves reopened correctly but took 30.3/32.0 s, not the original speed target.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -64,3 +64,7 @@ It consumes the three `release/15/plan-77` branches (App, Agent, Runtime), cut o
 ## Completion
 
 Saving completes when both rounds 2 and 3 pass on fresh stacks using the full standard fixture. Each scenario saves within about 2 s ([time to Saved](#terms)) or is refused for a real clash with Try again and Discard, with no vanished work and one head. Round 4 reports opening against the provisional targets. Round 5 addresses the largest measured CPU cost and preserves open and save time. The loop ends after round 5 or an early stop. Record remaining gaps, each measured result, and all four plan deltas. The owner retains the real-timeline check. Plan 75 carries the 300 ms target.
+
+## Status reconciliation — 26 November 2026
+
+The first-cut landing is no longer waiting for publication. Sixteen of 38 rows were ticked in the screened record. Unfinished startup, stress and save scope is not silently closed. The [final Release 15 decision](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7170081785), [publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and [stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) distinguish completed release contributions from remaining project scope. This audit records existing state; it does not start a run, allocate a release, or change acceptance criteria.
