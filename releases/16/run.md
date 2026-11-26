@@ -26,6 +26,271 @@ The brief holds strategy; each plan's tasks hold work and progress. This section
 
 At every check-in: read all current mailbox messages; reconcile predecessor moves, task receipts, exact writer conflicts and proof availability; start ready work within actual authorized capacity; report blocked contracts/resources with owner and next action. Agent CI remains subject to existing shared authority and the current Release Lead's priority and capacity decisions. P91's historical launch text is not new R16 authorization. No new permanent scheduler, strategy file or tracker is introduced.
 
+## Delivery: Lead and managers
+
+How Release 16 runs unattended for days. **All judgment happens once, in advance, before anyone is left running; every brief is prepared in [briefs/](briefs/README.md).** After that, each role repeats one short loop. This section is each role's whole job for this run: where it differs from a skill, this section wins. Don't open the skills to look for more work.
+
+| Role | Runs in | Every | Job |
+|---|---|---|---|
+| Lead (`r16-lead`) | Codex | hour | Sends one Luna per active plan to run the plan loop; acts on what comes back; sends Sol for capped fixes; merges finished plans. It reads only one-line results, never code or logs. |
+| Manager (`r16-p<PP>-manager`) | Codex, one per active plan | hour | Starts the next packet in a new ChatGPT chat, and resumes or replaces silent chats. |
+| Packet (`R16-P<PP>-<nn>-<n>`) | a normal chat in ChatGPT on the web, opened by its manager in the browser | — | Writes one packet's code and tests, runs its Proof command in the chat, and pushes code and result to its branch after each task. |
+
+**Packets go only to a normal chat in ChatGPT on the web:** the manager opens chatgpt.com in its browser, signed in to the owner's own account. Never ChatGPT for Work, never Codex. The mode follows the packet's Route, every time:
+
+| Route | The task is | ChatGPT mode |
+|---|---|---|
+| N | normal | High |
+| X | hard | Extra High |
+| S | very hard | Pro |
+
+Never one mode for everything. If a mode isn't offered, use the next one up; if none is, post `PARKED <packet>: mode not offered`.
+
+### The six rules
+
+1. **The queue is fixed.** Every packet is written in advance, in order. Nobody running the release adds, splits, re-scopes or reorders work. A plan is **finished** when every packet in it is Done or Parked.
+2. **Proof runs where the code is written, and is pushed with it.** Every packet names one **Proof:** command. The packet runs it in its own ChatGPT chat (Sol in its own sandbox) and pushes to its branch on GitHub after each task. The commit that finishes the packet carries the result as its last line: `Proof: <command> — PASS <summary>`. That pushed line on the head is the proof, and nobody re-runs it. Nothing runs on a machine we set up, and nobody dispatches hosted CI.
+3. **Every loop has a cap.** At the cap, mark the item **Parked**, post one line saying why, and move on. Parked work waits for the owner; everything else keeps moving.
+4. **Park, don't ask.** A question this section doesn't answer is parked, never debated. Nobody waits for an answer.
+5. **Replace once, then park.** A silent packet chat or manager is resumed or nudged once, then replaced once. A second need parks it. The state is on GitHub, not in the chat.
+6. **A missed check isn't made up.** If your scheduled check didn't fire, run the loop once now; don't backfill.
+
+### Never, at any level
+
+- Write evidence files, receipts, audits, readbacks, summaries or re-verifications. A one-line board comment is the whole record.
+- Clone, build or run tests outside a packet chat, dispatch hosted CI, or collect proof of any other kind.
+- Edit plans, `tasks.md`, skills, this section or `releases/16.md`. The planning session reconciles `tasks.md` when the run ends.
+- Start a new plan, investigation, review or document.
+- Rebase, force-push, or create a branch outside the table below.
+- Spend money, or use the owner's machine or media.
+
+### Branches
+
+| Branch | Who creates it | Who merges into it |
+|---|---|---|
+| `release/16/main` | the Lead, at start-up, from `release/15/main` | the Lead, when a plan is finished |
+| `release/16/plan-<PP>` | the Lead, when it starts that plan, from `release/16/main` | a Luna on a valid PASS; the Lead, merging `release/16/main` in when the plan is finished |
+| `p<PP>/<packet-id>` | the packet chat, from its plan branch's head | nobody: it is the PR's head |
+
+Merge, never rebase. A PR always targets its plan branch. Push after each task. Before posting READY, the packet merges its plan branch's head in, runs the Proof, and pushes.
+
+### Where things are, and the commands
+
+Use these commands, exactly. `<repo>` is the product repository a packet names (`astrid-agent`, `astrid-runtime`, `astrid-app` or `VibeComfy`). Every board is an issue in `banodoco/astrid-dev`, and packets and this section live there too.
+
+| To | Run |
+|---|---|
+| Find a board's issue number | `gh api "search/issues?q=repo:banodoco/astrid-dev+is:issue+is:open+in:title+%22board:+release+16+lead%22" --jq '.items[]\|[.number,.title]\|@tsv'` (put the board's title in place of `lead`, e.g. `plan+63`) |
+| Read a board after a cursor (0 for the whole board) | `gh api "repos/banodoco/astrid-dev/issues/<issue>/comments?per_page=100" --paginate --jq '.[] \| select(.id > <cursor>) \| "\(.id) \(.created_at) \(.body)"'` |
+| Read a file on astrid-dev `main`, such as a packet | `gh api repos/banodoco/astrid-dev/contents/<path> --jq .content \| base64 -d` |
+| Post on a board | `gh issue comment <issue> -R banodoco/astrid-dev --body "<text>"`; start every comment with your mailbox name |
+| A PR's changed files | `gh pr view <PR> -R banodoco/<repo> --json files --jq '.files[].path'` |
+| A head commit's last line | `gh api repos/banodoco/<repo>/commits/<head> --jq .commit.message \| tail -n 1` |
+| A branch's last commit time | `gh api repos/banodoco/<repo>/commits/<branch> --jq .commit.committer.date` |
+| Whether a PR merges cleanly | `gh pr view <PR> -R banodoco/<repo> --json mergeable --jq .mergeable` (`MERGEABLE` is clean) |
+| Merge a PR into its plan branch | `gh pr merge <PR> -R banodoco/<repo> --merge` |
+| Create a branch from another, if it doesn't exist (a 422 "already exists" reply is fine) | `gh api repos/banodoco/<repo>/git/refs -f ref=refs/heads/<new> -f sha="$(gh api repos/banodoco/<repo>/git/ref/heads/<from> --jq .object.sha)"` |
+| Open a board | `gh issue create -R banodoco/astrid-dev --title "<title>" --body "$(gh api repos/banodoco/astrid-dev/contents/releases/16/briefs/board.md --jq .content \| base64 -d)"` |
+| Merge one branch into another | `gh api repos/banodoco/<repo>/merges -f base=<into> -f head=<from>`; a 409 reply is a conflict, so park, never resolve it by hand |
+
+Your mailbox name is only the name you sign with; there is no other mailbox.
+
+**The Codex side** (creating a session, sending it its brief, your hourly scheduled task, sending a Luna or Sol helper and getting its one-line final reply, and the manager's browser) is recorded in the toolkit table below. Use the newest Luna model for plan loops and the newest Sol model for Sol briefs.
+
+| Role | To | How (from the Lead board's TOOLKIT comments) |
+|---|---|---|
+| Lead and manager | Schedule your hourly check | — |
+| Lead | Create a manager session and send it its brief | — |
+| Lead | Send a Luna or Sol helper and read its final reply | — |
+| Manager | Open a new ChatGPT chat on the web, pick its mode and name it | — |
+| Manager | Resume an existing ChatGPT chat | — |
+| Packet | Read the repository, push a branch, open a draft PR and comment, through the chat's GitHub connector | — |
+
+**Toolkit check, the first time each role starts:** first read the Lead board's `TOOLKIT` comments; a row already recorded there is just followed. For a row not yet recorded, your first real use of it is the trial: the Lead's first manager is the real one, a manager's first chat is its first packet, and the Sol row is recorded the first time a Sol is sent. Once a row works, post one comment on the Lead board: `TOOLKIT <row>: <the exact steps that worked>`. A row you can't do is one `PARKED <role>: can't <row>` for the owner. The comments are the record; the table only lists the rows.
+
+**The packet row** is proved by the first packet's early STATUS. If that packet instead posts BLOCKED because the chat can't reach GitHub, the manager posts `PARKED plan <PP>: packet chats can't reach GitHub`, and the Lead starts no more managers until the owner answers.
+
+### Packet states
+
+| State | Set by | When |
+|---|---|---|
+| Queued | prepared in advance | written, waiting its turn |
+| Running | the manager | its chat has started; Rework 1 and 2 count as Running |
+| Ready | the packet | it posted READY, and its head commit ends with a PASS line |
+| Rework 1, Rework 2 | a Luna | the PASS wasn't valid, or the result was FAIL |
+| Sol | the Lead | it failed after Rework 2, or posted BLOCKED; Sol has one try, and the manager leaves it alone |
+| Done | a Luna | a valid PASS, merged into the plan branch |
+| Parked | whoever hits a cap | it frees its slot, and the Luna parks each packet that depends on it |
+
+**Every park is one comment on the plan's board:** `PARKED <packet or plan <PP>>: <reason>`. A parked plan gets no new packets.
+
+The live state is the newest STATUS on each plan's board. Each role's own last STATUS is its memory: it carries what was nudged, resumed and replaced. Nobody keeps a second copy.
+
+### Prepared in advance (before the Lead starts)
+
+A planning session prepares this with the owner; no running role does it, and preparing it again is the only way to change the run. The Lead does everything after it.
+1. Choose the plans for this run. Take only plans whose owner decisions are answered and whose packets can all be proved on CPU inside a chat. Everything needing real hardware, a real install or the network stays out.
+2. For each plan, write every packet under `releases/16/packets/R16-P<PP>-<nn>.md`. Each packet has:
+   - one contract, about three hours;
+   - **Repository**, **Route** and **Depends** (earlier packets of the same plan only);
+   - **May touch** and **Must not touch**;
+   - **Files to load:** everything the chat needs to run the proof;
+   - one **Proof:** command that runs only the narrow tests of the code this packet changes: its own module's tests and the new ones it writes, never a broad suite or an external or integration test. The tests need no network and run on CPU, inside the chat, in under 10 minutes.
+   Packets that touch the same file get a Depends link. Plans in one run touch no file in common. Review stops (RS, R) are packets too.
+3. Fill in the Plans table and each plan's queue table below, in dispatch order.
+4. The owner pastes [briefs/lead.md](briefs/lead.md) into a new Codex session. The earlier Release 16 Lead (`session_011EzfW1C63rxLXsL6TkHHVV`) stands down.
+
+### Plans
+
+**Active at once:** two plans (owner, 26 November 2026), so at most six ChatGPT chats. When a plan finishes or is parked, the Lead starts the next plan in this table whose **Starts after** plan is done or parked.
+
+| Order | Plan | Starts after | Repositories for its branches | Queue |
+|---|---|---|---|---|
+| 1 | 93 ComfyUI Desktop and existing environments | — (first) | astrid-agent | [Plan 93 queue](#plan-93-queue) |
+| 2 | 35 One home for user state | — (first) | astrid-agent, astrid-runtime | [Plan 35 queue](#plan-35-queue) |
+| 3 | 94 Dependable environment setup and recovery | 93 | astrid-agent | [Plan 94 queue](#plan-94-queue) |
+| 4 | 38 One process identity (its CPU half) | 35 | astrid-runtime, astrid-agent | [Plan 38 queue](#plan-38-queue) |
+
+### Queues
+
+One table per plan, in dispatch order. A manager starts them in this order and no other.
+
+#### Plan 93 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P93-01](packets/R16-P93-01.md) Redacted Desktop states as fixtures | astrid-agent | N | none |
+| [R16-P93-02](packets/R16-P93-02.md) The readiness ladder in the envelope | astrid-agent | X | none |
+| [R16-P93-03](packets/R16-P93-03.md) Observing the four existing-install rungs | astrid-agent | X | R16-P93-02 |
+| [R16-P93-04](packets/R16-P93-04.md) `generate targets` probes before it says ready | astrid-agent | N | R16-P93-03 |
+| [R16-P93-RS1](packets/R16-P93-RS1.md) Review stop on the ladder | astrid-agent | S | R16-P93-02, R16-P93-03, R16-P93-04 |
+| [R16-P93-05](packets/R16-P93-05.md) Telling ComfyUI Desktop's states apart | astrid-agent | X | R16-P93-RS1, R16-P93-01 |
+| [R16-P93-06](packets/R16-P93-06.md) The scan checks every responder and reports installations | astrid-agent | X | R16-P93-05 |
+| [R16-P93-07](packets/R16-P93-07.md) Desktop states on the ladder, with their next actions | astrid-agent | X | R16-P93-05 |
+| [R16-P93-08](packets/R16-P93-08.md) `generate targets` uses Desktop's state, and attaches only on a yes | astrid-agent | X | R16-P93-04, R16-P93-06, R16-P93-07 |
+| [R16-P93-09](packets/R16-P93-09.md) The setup and VibeComfy skills run `generate targets` and do its next action | astrid-agent | N | R16-P93-08 |
+| [R16-P93-10](packets/R16-P93-10.md) The states in the words the person reads | astrid-agent | N | R16-P93-09 |
+| [R16-P93-R](packets/R16-P93-R.md) Final review of Plan 93 | astrid-agent | S | R16-P93-01, R16-P93-02, R16-P93-03, R16-P93-04, R16-P93-RS1, R16-P93-05, R16-P93-06, R16-P93-07, R16-P93-08, R16-P93-09, R16-P93-10 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+#### Plan 35 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P35-01](packets/R16-P35-01.md) One helper for Runtime user-state documents | astrid-agent | N | none |
+| [R16-P35-02](packets/R16-P35-02.md) One-time import with a receipt | astrid-agent | X | R16-P35-01 |
+| [R16-P35-03](packets/R16-P35-03.md) Protected grant ledger with revoke and reapprove | astrid-runtime | X | none |
+| [R16-P35-04](packets/R16-P35-04.md) State survives backup and restore (Runtime proof) | astrid-runtime | N | R16-P35-03 |
+| [R16-P35-RS1](packets/R16-P35-RS1.md) Review of the Runtime state and grant work | astrid-runtime | S | R16-P35-03, R16-P35-04 |
+| [R16-P35-05](packets/R16-P35-05.md) Check that flags a new user-state side store | astrid-agent | N | none |
+| [R16-P35-06](packets/R16-P35-06.md) User choices document with a safe mirror rule | astrid-agent | X | R16-P35-02 |
+| [R16-P35-07](packets/R16-P35-07.md) Skills opt-outs read from and mirrored to the Runtime | astrid-agent | N | R16-P35-06 |
+| [R16-P35-08](packets/R16-P35-08.md) Compute profiles in the Runtime, with one import | astrid-agent | N | R16-P35-02 |
+| [R16-P35-09](packets/R16-P35-09.md) Removal date for the old VibeComfy TOML import | astrid-agent | N | none |
+| [R16-P35-R](packets/R16-P35-R.md) Review of the Agent state work | astrid-agent | S | R16-P35-01, R16-P35-02, R16-P35-05, R16-P35-06, R16-P35-07, R16-P35-08, R16-P35-09 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+#### Plan 94 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P94-01](packets/R16-P94-01.md) CPU fixtures for the starting states | astrid-agent | N | none |
+| [R16-P94-02](packets/R16-P94-02.md) The computes probe and its causes | astrid-agent | X | none |
+| [R16-P94-03](packets/R16-P94-03.md) Peak-space check before any write, in the model download | astrid-agent | N | R16-P94-01 |
+| [R16-P94-04](packets/R16-P94-04.md) One progress line and named failures in the model download | astrid-agent | N | R16-P94-03 |
+| [R16-P94-05](packets/R16-P94-05.md) No model transfer after a failed computes check | astrid-agent | N | R16-P94-02, R16-P94-04 |
+| [R16-P94-06](packets/R16-P94-06.md) The Portable pin and the install offer | astrid-agent | N | R16-P94-01 |
+| [R16-P94-07](packets/R16-P94-07.md) The resumable install: journal and consent | astrid-agent | S | R16-P94-06 |
+| [R16-P94-08](packets/R16-P94-08.md) The real download and unpack steps | astrid-agent | X | R16-P94-07 |
+| [R16-P94-09](packets/R16-P94-09.md) Attach the new install, with the old choice kept | astrid-agent | N | R16-P94-08 |
+| [R16-P94-10](packets/R16-P94-10.md) The one install command | astrid-agent | N | R16-P94-09 |
+| [R16-P94-11](packets/R16-P94-11.md) The install offer as the ladder's next action | astrid-agent | X | R16-P94-10 |
+| [R16-P94-RS1](packets/R16-P94-RS1.md) Review the install's write and consent boundary | astrid-agent | S | R16-P94-06, R16-P94-07, R16-P94-08, R16-P94-09, R16-P94-10, R16-P94-11 |
+| [R16-P94-12](packets/R16-P94-12.md) The computes rung on the ladder | astrid-agent | X | R16-P94-02, R16-P94-11 |
+| [R16-P94-13](packets/R16-P94-13.md) The setup skill's no-target branch | astrid-agent | N | R16-P94-10, R16-P94-11 |
+| [R16-P94-R](packets/R16-P94-R.md) Final local review | astrid-agent | S | R16-P94-01, R16-P94-02, R16-P94-03, R16-P94-04, R16-P94-05, R16-P94-06, R16-P94-07, R16-P94-08, R16-P94-09, R16-P94-10, R16-P94-11, R16-P94-12, R16-P94-13, R16-P94-RS1 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+#### Plan 38 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P38-01](packets/R16-P38-01.md) One closure definition file with golden vectors (Runtime) | astrid-runtime | X | none |
+| [R16-P38-02](packets/R16-P38-02.md) Process-binding provider API (Linux and Windows delegation) | astrid-runtime | X | none |
+| [R16-P38-03](packets/R16-P38-03.md) Linux peer authority retained through a pidfd | astrid-runtime | S | R16-P38-02 |
+| [R16-P38-04](packets/R16-P38-04.md) Linux birth helpers, zombie witness and census in the provider | astrid-runtime | N | R16-P38-03 |
+| [R16-P38-RS1](packets/R16-P38-RS1.md) Review stop after the provider | astrid-runtime | S | R16-P38-01, R16-P38-02, R16-P38-03, R16-P38-04 |
+| [R16-P38-05](packets/R16-P38-05.md) Linux boundary tests carry the pidfd mark; a named refusal gate | astrid-runtime | N | R16-P38-RS1 |
+| [R16-P38-06](packets/R16-P38-06.md) Stale-owner tests use well-formed Linux births | astrid-runtime | N | R16-P38-RS1 |
+| [R16-P38-07](packets/R16-P38-07.md) Runtime one-implementation guard | astrid-runtime | N | R16-P38-01, R16-P38-02, R16-P38-03, R16-P38-04, R16-P38-05 |
+| [R16-P38-08](packets/R16-P38-08.md) Agent closure reads the shared definition | astrid-agent | N | R16-P38-01, R16-P38-RS1 |
+| [R16-P38-09](packets/R16-P38-09.md) Agent custody uses the provider on Linux and Windows | astrid-agent | X | R16-P38-02, R16-P38-03, R16-P38-RS1 |
+| [R16-P38-10](packets/R16-P38-10.md) Agent birth ids and Linux census from the provider | astrid-agent | X | R16-P38-04, R16-P38-09 |
+| [R16-P38-11](packets/R16-P38-11.md) Remaining Agent birth readers go through the provider | astrid-agent | N | R16-P38-10 |
+| [R16-P38-12](packets/R16-P38-12.md) Agent one-implementation guard | astrid-agent | N | R16-P38-08, R16-P38-09, R16-P38-10, R16-P38-11 |
+| [R16-P38-R](packets/R16-P38-R.md) Final review of phase 1 (both repositories) | astrid-runtime and astrid-agent (work in the Agent checkout; the Runtime checkout is `../astrid-runtime/`) | S | R16-P38-RS1, R16-P38-01, R16-P38-02, R16-P38-03, R16-P38-04, R16-P38-05, R16-P38-06, R16-P38-07, R16-P38-08, R16-P38-09, R16-P38-10, R16-P38-11, R16-P38-12 |
+| [R16-P38-13](packets/R16-P38-13.md) Shared role-custody base in runtime_protocol (Runtime) | astrid-runtime | N | R16-P38-07, R16-P38-R |
+| [R16-P38-14](packets/R16-P38-14.md) Agent broker imports the shared role-custody base | astrid-agent | N | R16-P38-13, R16-P38-12 |
+| [R16-P38-R2](packets/R16-P38-R2.md) Review of the shared role-custody base (both repositories) | astrid-runtime and astrid-agent (work in the Agent checkout; the Runtime checkout is `../astrid-runtime/`) | S | R16-P38-13, R16-P38-14 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+
+### The Lead — every hour
+
+**Job:** run the plan loops through Lunas, act on their flags, and merge finished plans. Nothing else.
+
+1. **Read** your own last STATUS, and new comments on your board after its cursor. If the Plans table names no plans, nothing was prepared: post `PARKED lead: nothing prepared` and stop.
+2. **Send one Luna per active plan,** all at once, each sent [briefs/luna.md](briefs/luna.md) with that plan's last result line. Wait for each one's single result line. A Luna that hasn't returned its final reply within 30 minutes, or by the end of your check, leaves that plan's line as it was, with `no-result` raised by one; at `no-result 2`, park the plan. A result resets it to 0.
+3. **Act on each flag** in the results:
+   - `SOL <packet>: <reason>` → post `SOL <packet>` on the plan's board, then send one Sol [briefs/sol.md](briefs/sol.md) with that reason;
+   - `NO-CHATS <PP>` → add it to "for the owner", and do nothing else;
+   - `REPLACE manager <PP>` → replace that manager, once, and add `manager replaced` to its line; if it was already replaced, park the plan;
+   - `FINISHED <PP>` → in each repository the Plans table lists for it, merge `release/16/main` into the plan branch, then the plan branch into `release/16/main`. If either won't merge cleanly, park the plan. Then start the plan whose Starts after names it, as step 6 of [briefs/lead.md](briefs/lead.md) says; do the same when a plan is parked.
+4. **Parked:** copy any new Parked lines into your STATUS, under "for the owner". Don't solve them.
+5. **Post** one STATUS on your board, then stop until the next check:
+
+   ```text
+   STATUS r16-lead | <each active plan's last result line, with no-result <n> and manager replaced if so> | … | sol: <packet and time sent, or none> | merged to release/16/main: <plans or none> | managers: <PP>=<session>, … | plans done: <list> | plans parked: <list> | for the owner: <parked and NO-CHATS lines, or none> | cursor: <last comment id on your board>
+   ```
+
+**Never:** read code, diffs or logs yourself, run tests, write or reorder packets, answer technical questions, or change a plan.
+
+### Plan loop and Sol
+
+Each Luna runs the plan loop in [briefs/luna.md](briefs/luna.md) and replies with one line. Each Sol follows [briefs/sol.md](briefs/sol.md), with one try per packet.
+
+### The manager — every hour
+
+**Job:** start the next packet. You are a dispatcher, not a reviewer.
+
+1. **Read** your own last STATUS, then new comments on your plan's board, after your cursor. Drop each packet posted as `PARKED`, `DONE` or `SOL` from your Running list: a SOL packet is Sol's, not yours. If the plan itself is parked, post a final STATUS and stop.
+2. **Each REWORK** on the board: send it to that packet's chat. If that chat won't load, use a new chat at the PR's head.
+3. **Each Running packet** with no commit and no post for 3 hours, counted from the later of those and your last resume or replacement of it:
+   - send the resume message;
+   - if it was already resumed, replace the chat, once;
+   - if the replacement goes silent too, post `PARKED <packet>: silent after replacement`;
+   - a packet Running for 8 hours in all without READY: post `PARKED <packet>: no READY in 8 hours`.
+4. **Free slots:** at most three packets per plan Running. A replaced chat counts as closed. If the account refuses a new chat, post `NO-CHATS` and try again at the next check. Fill them with Queued packets, in queue order, whose Depends are all Done. Each packet gets a NEW normal chat in ChatGPT on the web, opened at chatgpt.com in your browser (never ChatGPT for Work, never Codex), in its Route's mode: N High, X Extra High, S Pro. Send it [briefs/packet.md](briefs/packet.md) filled in, and name it `<packet id>-<n>`, for example `R16-P63-01-1`. Your first packet goes alone, until it posts its first STATUS.
+5. **Post** one STATUS, then stop until the next check:
+
+   ```text
+   STATUS r16-p<PP>-manager | running: <id since time, …> | chats: <packet>=<chat name and link>, … | next: <id> | started: <ids or none> | resumed ever: <ids> | replaced ever: <ids> | cursor: <id>
+   ```
+
+**Never:** edit the repository, merge, judge code, answer a packet's question, or start packets out of order.
+
+### Briefs and fixed messages
+
+Every message is prepared in [briefs/](briefs/README.md): the Lead's, the manager's, the packet's, the Luna's and the Sol's briefs, the board header, and the nudge, resume, rework and replace messages. Fill in the `{NAME}`s; never write a different message.
+
+### The owner's check-ins
+
+Once a day, read the newest STATUS on `board: release 16 lead`. "For the owner" lists everything parked. If that STATUS is over 2 hours old, the Lead has stopped: paste [briefs/lead.md](briefs/lead.md) into a fresh session, adding the Replace line from [briefs/messages.md](briefs/messages.md); it starts no new managers. Answer parked items there; to change the run, prepare it again.
+
 ## Now (11:20 UTC, Tue 24 Nov; historical before the scope change)
 
 Release 16 is a draft. Plan 91 (Agent main green) runs now as its own lane, moved here from Release 15 by the owner on 24 November 2026; its section is below. The Release 16 Lead is `session_011EzfW1C63rxLXsL6TkHHVV`.
