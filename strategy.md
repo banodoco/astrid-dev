@@ -12,7 +12,7 @@ In parallel, investigate the [independent creative foundation](vision/gaps/LS-00
 
 ## Versions
 
-Each milestone states the intended outcome and its proof. Release links are generated; project scope and implementation detail stay in the [release briefs](releases/) and [project catalogue](plans/index.md).
+Each milestone states the intended outcome and its proof. Release links and links to explicitly targeted unfinished projects not yet allocated to a draft release are generated; later release allocations against an explicit earlier target are flagged for review. Project scope stays in its own plan and release membership in [release briefs](releases/). A project's optional `Target milestone` is strategic intent, not a release allocation or a run authorization; projects already in a draft derive their effective target unless explicitly overridden. See the [filterable project queries](plans/index.md#filter-projects).
 
 ### Version 0.1
 

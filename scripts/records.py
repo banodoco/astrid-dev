@@ -189,6 +189,26 @@ def git_show(root: Path, revision: str, path: str, *, missing: str = "error") ->
 PROJECT_FIELDS = ("Project", "Goal", "Status", "Owner", "Estimate", "Waiting on")
 
 
+def project_target_milestone(plan_text: str) -> str | None:
+    """Optional strategic target, not release membership or a required catalog field."""
+    header = re.split(r"^## ", plan_text, maxsplit=1, flags=re.M)[0]
+    matches = re.findall(r"^\*\*Target milestone:\*\*([^\r\n]*)", header, re.M)
+    if not matches:
+        return None
+    if len(matches) != 1:
+        raise ValueError("Target milestone duplicated; keep one header field")
+    value = matches[0].strip()
+    if not re.fullmatch(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)", value):
+        raise ValueError("Target milestone must be a major.minor value such as 0.5, or omit the field")
+    return value
+
+
+def strategy_milestones(text: str) -> tuple[str, ...]:
+    """Read the authored milestone headings, never the generated release links."""
+    body = section(text, "Versions", missing="none", boundary=r"^## ", strip=False)
+    return tuple(re.findall(r"^### Version ([0-9]+\.[0-9]+)[ \t]*$", body or "", re.M))
+
+
 def project_fields(plan_text: str) -> dict[str, str]:
     header = re.split(r"^## ", plan_text, maxsplit=1, flags=re.M)[0]
     result = {}
@@ -204,13 +224,14 @@ def project_fields(plan_text: str) -> dict[str, str]:
         if "|" in value:
             raise ValueError(f"{field} malformed; remove the | from the **{field}:** line")
         result[field] = value
+    project_target_milestone(plan_text)
     return result
 
 
 
-RELEASE_PLAN_LINK = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
+RELEASE_PLAN_LINK = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2,}-[a-z0-9-]+)/plan\.md\)')
 RELEASE_PLAN_LINE = re.compile(
-    r'^- \[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\) [—-] (\S.*)$'
+    r'^- \[Plan (\d+)\]\(\.\./plans/([0-9]{2,}-[a-z0-9-]+)/plan\.md\) [—-] (\S.*)$'
 )
 RELEASE_BRIEF_SECTIONS = ("Highlight", "Intent", "Approach", "Included plans", "Publication")
 

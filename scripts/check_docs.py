@@ -183,7 +183,7 @@ def release_errors(filename: str, body: str) -> list[str]:
         issues.append(f'releases/{filename}: Included plans must link project plan.md files')
     if len({folder for _, folder in plans}) != len(plans):
         issues.append(f'releases/{filename}: duplicated included plan')
-    if any(number != folder[:2] for number, folder in plans):
+    if any(number != folder.split('-', 1)[0] for number, folder in plans):
         issues.append(f'releases/{filename}: included plan number does not match its link')
     for error in brief['errors']:
         # Preserve the existing no-links diagnostic without adding a duplicate.

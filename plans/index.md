@@ -11,6 +11,22 @@ This catalog shows every plan's status, owner, priority order and estimate, incl
 <!-- status-definitions:end -->
 Owner is accountability, not permission. Estimates are remaining human engineering days or `TBD`.
 
+## Filter projects
+
+Use the read-only canonical project query from a checkout (it does not parse or change this generated table):
+
+```sh
+python3 scripts/astrid_dev.py projects --pending
+python3 scripts/astrid_dev.py projects --status queued --owner unassigned
+python3 scripts/astrid_dev.py projects --pending --target-milestone 0.5
+python3 scripts/astrid_dev.py projects --pending --unallocated
+python3 scripts/astrid_dev.py projects --release 16 --pending
+python3 scripts/astrid_dev.py projects --pending --late
+python3 scripts/astrid_dev.py projects --pending --json
+```
+
+Filters combine; repeat `--status` for several statuses, use `--target-milestone unassigned` for no effective target and `--search` for a substring of project name, ID or goal. Pending means nonterminal statuses; unallocated means no Draft release. Results retain catalog priority and distinguish explicit targets from release-derived targets. A project may ship earlier than its target; later allocation is flagged, not automatically rewritten. Final release membership remains history. The authoritative target is the optional field in the plan's header; see [strategy workflow](../docs/contribution-workflow.md#review-the-strategy).
+
 ## All plans
 
 <!-- plan-catalog:start -->

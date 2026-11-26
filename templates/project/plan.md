@@ -12,6 +12,8 @@
 
 **Waiting on:** What the project waits for, or `—`.
 
+Optional: add `**Target milestone:** 0.5` before the first `##` heading only when a strategic target is agreed and not already implied by the delivery release. Omit when unknown or not applicable. This is not a seventh required catalog field or release/run authority.
+
 **Start:** [Astrid agent start document](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** Link the relevant [existing gap](../../vision/gaps/F-001-platform-reliability.md) (primary), with any other truly useful supporting gaps linked after it, or, for no gap, replace this line with `**Vision role:** Foundational enabler — <reason>`. A small bug or maintenance fix belongs in an issue.

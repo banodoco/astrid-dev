@@ -12,6 +12,8 @@ def main(argv=None, *, root=ROOT, registry=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("list", help="List each check's id, trigger and description")
+    from project_query import add_arguments as add_project_arguments
+    add_project_arguments(commands.add_parser("projects", help="Filter canonical project records and release allocations"))
     commands.add_parser("sync", help="Legacy spelling: regenerate declared Markdown views")
     views_command = commands.add_parser("views", help="Generated Markdown views")
     views_subcommands = views_command.add_subparsers(dest="views_action", required=True)
@@ -41,6 +43,13 @@ def main(argv=None, *, root=ROOT, registry=None):
     body.add_argument("--body-file", type=Path)
     args = parser.parse_args(argv)
     entries = checks.REGISTRY if registry is None else registry
+    if args.command == "projects":
+        from project_query import run
+        try:
+            return run(Path(root), args)
+        except (ValueError, OSError) as exc:
+            print(f"ERROR projects: {exc}")
+            return 1
     if args.command == "release":
         from release_status import run
         try:
