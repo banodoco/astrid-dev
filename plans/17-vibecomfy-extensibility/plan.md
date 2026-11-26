@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** about 15–18 (inferred): phase 1 about 7, phase 2 about 9
 
 **Waiting on:** the owner's go to queue it (ready, held by the owner on 9 Nov); scope agreement; Plan 32 T6b (T6d for A4)

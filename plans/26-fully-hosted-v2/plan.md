@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.4
+
 **Estimate:** TBD
 
 **Waiting on:** Plan 25 contract; hosted identity/storage decisions; security/cost approval
