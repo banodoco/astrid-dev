@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** Provisional 20–40 engineering days for the storage contract, migrations, SDKs and bounded qualification; re-estimate after PD-1/PD-2 and independent review. Full hosted product delivery is separate.
 
 **Waiting on:** version 0.1 ([Strategy](../../strategy.md#versions)); Plan 106 storage/authority findings and Plan 100 shared contract coordination; exact baseline, independent scope review and owner decisions. Proposed target milestone 0.3; hosted qualification 0.4. No numbered release assigned.

@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — Owner's original direction on 15 November 2026 is preserved in [plan.md](plan.md#outcome-and-scope). On 26 November the owner requested this project's refinement after discussing a protected SQLite core, independent logical pack data, local/cloud parity and schema evolution. Refine the proposal, not execution authority. Physical layout, trust, migration/undo policy, exact first feature, milestone and run remain pending.
+**Scope decision:** Pending — Owner's original direction on 15 November 2026 is preserved in [plan.md](plan.md#outcome-and-scope). On 26 November the owner requested this project's refinement after discussing a protected SQLite core, independent logical pack data, local/cloud parity and schema evolution. Refine the proposal, not execution authority. Physical layout, trust, migration/undo policy, exact first feature, milestone and run remain pending. Next: review actual storage alternatives and record owner scope decisions.
 
 **Prior art:** Source-observed at the immutable revisions below on 26 November 2026; not installed-product qualification.
 
@@ -16,7 +16,7 @@
 
 **Approach:** Provisional logical per-pack namespace scoped by Runtime, one typed mediated storage contract, ordinary SQLite relational support and reusable existing document primitives. Compare separate SQLite files, same-file protected tables and existing documents with real atomic edit, failure, isolation and export cases. Keep physical arrangement private. [SQLite ATTACH](https://www.sqlite.org/lang_attach.html) explicitly limits cross-file crash atomicity in WAL mode; [appropriate uses](https://www.sqlite.org/whentouse.html) explains server-mediated access and single-writer concurrency; [security guidance](https://www.sqlite.org/security.html) and [authorizer](https://www.sqlite.org/c3ref/set_authorizer.html) are inputs for an independently reviewed SQL boundary, not proof of isolation. Retain SQLite default unless measured concurrency/availability or actual transaction needs dictate another backend. Avoid a generic database platform, new migration manager per language or compulsory SQL for small tools.
 
-**Challenge:** Pending — independent advisor must review actual source and the alternatives, particularly core/pack scope, SQL authorizer bypass paths, user/tenant isolation, filesystem and same-origin trust boundaries, cross-store crash safety, coherent export/restore, and downgrade/undo without lost user work. The author is not an independent reviewer.
+**Challenge:** Pending — independent advisor must review actual source and the alternatives, particularly core/pack scope, SQL authorizer bypass paths, user/tenant isolation, filesystem and same-origin trust boundaries, cross-store crash safety, coherent export/restore, and downgrade/undo without lost user work. The author is not an independent reviewer. Next: commission independent source-backed critique and record dispositions.
 
 **Proof and limits:** [Completion](plan.md#completion) defines concrete positive and negative journeys. Planning source inspection only; no implementation, tests, benchmarks, migrations, hosted load or security qualification executed. PD-1 pins and refreshes installed/candidate identities and real test commands; PD-2 must make the critical storage/atomicity choice demonstrable.
 
