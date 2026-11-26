@@ -46,7 +46,7 @@ Creators have the final say over their creative environments.
 
 Your agents handle technical work so you can focus on art.
 
-## Gaps — 22 assessed outcomes
+## Gaps — 23 assessed outcomes
 
 Each gap describes a result that remains independently verifiable even if its proposed implementation changes. Follow its link for the full current assessment, sources and closure evidence. Project completion never closes a gap automatically.
 
@@ -72,6 +72,7 @@ Each gap describes a result that remains independently verifiable even if its pr
 - **[LS-003 — Frontend and backend extensions don't yet compose](gaps/LS-003-full-stack-contributions.md)** — Open. An installed/trusted music capability yields a typed beat-grid result used in a real timeline view and music control surface.
 - **[LS-004 — A creative ecosystem across modalities isn't yet established](gaps/LS-004-cross-modal-foundations.md)** — Open. On documented supported setups, creators and agents successfully make real work using video plus at least two non-video modality foundations, with preserved files and project control.
 - **[LS-005 — Agents can't yet reliably create and maintain their own tools](gaps/LS-005-agent-managed-tools.md)** — Open. For a real creative task, an agent creates or adapts a narrow tool, tests it, shows its source and permissions, and requests approval to activate it.
+- **[LS-006 — The creative foundation is not yet independent of its clients and creative environments](gaps/LS-006-independent-creative-foundation.md)** — Open. - E1 — A separately implemented client and worker use documented, versioned contracts without private implementation imports, and read the same project and task receipts as the supported SDKs; unknown versions, stale writes and unauthorized operations are refused.
 
 ## Projects and participation
 
