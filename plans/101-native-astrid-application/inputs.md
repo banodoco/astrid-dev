@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Direction agreed in owner conversation, 2026-11-26: pursue a Rust native foundation, shared timeline semantics, React and managed Python/Node, replaceable agents, common local/cloud architecture. Recorded in [idea #2038](https://github.com/banodoco/astrid-dev/issues/2038). Pending — this precise independent project scope, overlap disposition and release placement have not been independently reviewed or approved. Next: review these documents and obtain the specific scope decision.
+**Scope decision:** Pending — Direction agreed in owner conversation, 2026-11-26: pursue a Rust native foundation, shared timeline semantics, React and managed Python/Node, replaceable agents, common local/cloud architecture. Recorded in [idea #2038](https://github.com/banodoco/astrid-dev/issues/2038). This precise independent project scope, overlap disposition and release placement have not been independently reviewed or approved. Next: review these documents and obtain the specific scope decision.
 
 **Prior art:** Pinned App public/install, scripts/dev-local-workspace.mjs and install-manifest.json; Agent astrid/installer/{core,launcher,service,runtime_lifecycle,update_job}.py; Runtime bootstrap.py, profile-services docs and portability tests. See Plan 100 architecture. [Architecture proposal](../100-language-independent-foundation/architecture.md) records dated source observations, not live qualification.
 
