@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.9
+
 **Estimate:** TBD
 
 **Waiting on:** scope agreement; approved knowledge API

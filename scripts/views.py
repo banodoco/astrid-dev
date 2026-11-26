@@ -133,6 +133,16 @@ def _strategy(root: Path, version: str) -> str:
             link += f" ({brief['state']})"
         links.append(link)
     generated = "**Releases:** " + " · ".join(links) + "\n" if links else ""
+    # Release-linked plans remain in their owning briefs. Show strategic
+    # targets without a draft allocation, and flag late allocations.
+    from project_query import load_projects, filter_projects
+    targets = filter_projects(load_projects(root, briefs=briefs), pending=True, milestone=version)
+    unallocated = [item for item in targets if item["target_source"] == "explicit" and not item["draft_releases"]]
+    late = [item for item in targets if item["late_allocation"]]
+    for label, items in (("Targeted projects (not allocated)", unallocated), ("Later release allocation — review target", late)):
+        if items:
+            project_links = [f"[Plan {item['id']}](plans/{item['folder']}/plan.md)" for item in items]
+            generated += ("\n" if generated else "") + f"**{label}:** " + " · ".join(project_links) + "\n"
     return before + start + "\n" + generated + end + after
 
 
@@ -186,7 +196,7 @@ VIEWS = (
 ) + (
     View("shared-workstream-index", ("agent/shared/workstreams/*.md",), "agent/README.md",
          lambda root: _agent_index(root, "agent/README.md"), "shared-workstreams"),
-) + tuple(View(f"strategy-{version}", ("releases/*.md",), "strategy.md",
+) + tuple(View(f"strategy-{version}", ("releases/*.md", "plans/*/plan.md", "plans/priority.md"), "strategy.md",
                lambda root, version=version: _strategy(root, version), f"strategy-{version}")
           for version in [*(f"0.{n}" for n in range(1, 10)), "1.0"])
 

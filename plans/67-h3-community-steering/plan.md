@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.2
+
 **Estimate:** 9.5 days (CPU only; the live test is separate and comes after)
 
 **Waiting on:** Owner greenlight of scope, and Plans 64, 65, 66 and 68; the `speech-continue` recipe also waits for Plan 70.

@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** TBD
 
 **Waiting on:** scope agreement; Plan 32 T6 (scoping and the Linux recipe can start alongside Plan 32 T2)

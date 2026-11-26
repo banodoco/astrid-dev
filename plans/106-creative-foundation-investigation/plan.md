@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** 8–12 engineering days, provisional; formerly included in Plan 100's estimate, not additional to the programme.
 
 **Waiting on:** Accountable investigator, exact shipped/candidate source baseline, independent scope and review agreement, and explicit run authority for read-only research; separate authority for any product probes.

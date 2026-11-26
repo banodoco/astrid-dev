@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.7
+
 **Estimate:** TBD
 
 **Waiting on:** owner/scope agreement; source and dependency checks

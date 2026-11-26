@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** TBD
 
 **Waiting on:** scope agreement; relevant editing/pack foundations

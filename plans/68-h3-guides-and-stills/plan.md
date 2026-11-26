@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.2
+
 **Estimate:** 2 days (CPU only; the live check comes after)
 
 **Waiting on:** Owner greenlight of scope, and Plan 66.

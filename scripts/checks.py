@@ -16,10 +16,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 def _catalog(context):
     import lifecycle
     from project_contract import PLAN_FOLDER
-    from records import project_fields, priority_order, section
+    from records import project_fields, project_target_milestone, strategy_milestones, priority_order, section
     root = context.root
     errors = []
     folders = set()
+    strategy_path = root / "strategy.md"
+    milestones = strategy_milestones(strategy_path.read_text(encoding="utf-8")) if strategy_path.is_file() else ()
     for path in sorted((root / "plans").glob("*/plan.md")):
         folder = path.parent.name
         if not PLAN_FOLDER.fullmatch(folder):
@@ -27,7 +29,11 @@ def _catalog(context):
             continue
         folders.add(folder)
         try:
-            fields = project_fields(path.read_text(encoding="utf-8"))
+            text = path.read_text(encoding="utf-8")
+            fields = project_fields(text)
+            target = project_target_milestone(text)
+            if target is not None and target not in milestones:
+                errors.append(f"plans/{folder}/plan.md: Target milestone {target} has no authored strategy milestone")
             if fields["Status"] not in lifecycle.names():
                 errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use {lifecycle.phrase()}")
         except (ValueError, OSError) as exc:

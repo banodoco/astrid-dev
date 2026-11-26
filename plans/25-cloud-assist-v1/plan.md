@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.4
+
 **Estimate:** TBD
 
 **Waiting on:** scope agreement; approved providers and cost limits; local-file custody contract

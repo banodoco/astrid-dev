@@ -69,7 +69,7 @@ python3 scripts/astrid_dev.py views generate
 python3 scripts/astrid_dev.py check
 ```
 
-The project field list is a contract shared by the plan, catalog, feed, and checks. Keep its order and meaning consistent across those readers.
+The project field list is a contract shared by the plan, catalog, feed, and checks. Keep its order and meaning consistent across those readers. `Target milestone` is optional metadata read by `records.project_target_milestone`, validated against authored strategy headings; it deliberately does not change the six required fields or historical catalog row shape. `scripts/project_query.py` uses existing project/release/lifecycle readers and supports read-only filters and generated strategy links. Keep Astrid-specific milestone and release semantics in the Dev workspace adapter when integrating Otto; do not introduce a second record store or modify the in-flight Otto v0.1 contract.
 
 ## Add or edit a workstream
 
