@@ -24,7 +24,7 @@
 - **D2 — Pending (26 November 2026):** Worker and timeline ABI: use versioned typed command/receipt contracts; retain local handle transfer via minimal reviewed OS-specific ABI. Reject direct DB access.
 - **D4 — Pending (26 November 2026):** Select one minimal independent non-video resource witness and decide the actual common resource/operation boundary; do not authorize a full canvas or universal engine. Coordinate Plan 46 session-targeted UI operations and Plan 57 extension storage.
 - **D3 — Pending (26 November 2026):** Whether already planned work should absorb any slice: require an ownership/reuse disposition for Plans 38, 50 and 83 before changing their scope.
-- **D5 — Pending (26 November 2026):** Owner asked for a focused architectural investigation. Proposed first slice NF-1a–NF-1j ([investigation](investigation.md)), 8–12 engineering days inside the existing provisional estimate. Confirm read-only source scope, exact pinned baseline, independent reviewer and any separately authorized disposable probes before dispatch. The report must recommend concrete removals/reuse and an independent-tool test, not assume Rust or more abstraction is the solution. No implementation, release assignment or gap closure approved by this request.
+- **D5 — Decided (26 November 2026):** Owner directed that the architectural investigation be its own plan. [Plan 106](../106-creative-foundation-investigation/plan.md) owns the original NF-1a–NF-1j research scope (now FI-1–FI-10 and R), independently reviewed findings and 8–12 day allowance. Plan 100 waits on that handoff and keeps only NF-1 verification/refresh plus its contract/conformance/implementation tasks; provisional remaining estimate 12–28 days, combined allowance unchanged. No product run, release assignment or gap closure authorized.
 
 ## Source identities
 
@@ -33,7 +33,7 @@ Planning reference observations (not a run base): Runtime `686ca695469bda48cd40a
 ## References
 
 - [Architecture proposal](architecture.md) — common rationale, source findings, cross-project requirements, alternatives and sequencing.
-- [Investigation](investigation.md) — bounded first evidence slice, source-backed lanes, independent-tool test and decision pack; progress belongs in tasks.md.
+- [Plan 106 investigation](../106-creative-foundation-investigation/plan.md) — standalone research dependency, source-backed lanes, independent-tool test and reviewed decision pack; research progress belongs in that plan.
 - [LS-006](../../vision/gaps/LS-006-independent-creative-foundation.md) — independently assessable outcome and closure route.
 - [Idea #2038](https://github.com/banodoco/astrid-dev/issues/2038) — owner direction and coordination reference.
 - [Planning workstream](../../agent/shared/workstreams/plan.md) and [strategy](../../strategy.md).
