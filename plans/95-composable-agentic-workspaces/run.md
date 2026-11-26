@@ -81,6 +81,7 @@ Cap: three Running or Review at once (ruling 6). Priority: P95-09 (critical path
 | [P95-14](packets/P95-14.md) Marketing and blank fixture workspaces | OT-14 | Ready (OT-13 merged) | — | High. Otto repo only. Completes the specimen into runnable workspaces; planted violations must fail with the contract's messages |
 | [P95-18](packets/P95-18.md) Voice of the stand-up playbook | OT-18 | Ready (OT-16, OT-13 merged) | — | T (taste). The owner sees the before and after at Step 1; relay it. Words only: a rule-preservation table must show nothing moved |
 | [P95-06b](packets/P95-06b.md) Otto skills: opt-in parity seams (generated header, lock names, legacy link ownership) | OT-6 follow-up | Ready (found by P95-19b Step 1; blocks 19b) | — | Extra High. Otto repo only. Defaults must not change; the orchestrator re-pins astrid-dev after merge |
+| [P95-19c](packets/P95-19c.md) Dev import swap, part 3: relationship layer and the Dev records adapter | OT-19 | Ready (19a merged; runs beside 19b) | — | Extra High. Step 1 must find every Otto-versus-Dev difference first (lesson from 19b); output byte-identical, `project_delivery.py check` 249 records / 309 relationships |
 | [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
 
