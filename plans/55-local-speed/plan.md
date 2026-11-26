@@ -8,6 +8,8 @@
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
+**Target milestone:** 0.2
+
 **Estimate:** 2–3
 
 **Waiting on:** Release 15. On 22 November 2026 the owner moved the under-a-second work into separate plans: [Plan 81](../81-once-per-command/plan.md) starts from this plan’s meter, and [Plan 82](../82-reuse-across-commands/plan.md) follows it. This plan’s resident-session redesign remains deferred.

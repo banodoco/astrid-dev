@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.2
+
 **Estimate:** About 6.5 engineering days; V6 (live Agent and Runtime) is about half of it, and V0 (the installer fix for [#825](https://github.com/banodoco/astrid-dev/issues/825)) about half a day.
 
 **Waiting on:** it is queued and in no release brief. It is the follow-up to Plan 61; it needs Plan 61's RB-7, the two installer fixes V0 (#825) and V9 (the retained-profile guard), then D1: the owner decides its release (recommended: Release 15).

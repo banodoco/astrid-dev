@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** Provisional 30–60 engineering days; re-estimate against exact accepted command corpus and reference.
 
 **Waiting on:** Plan 100's reviewed authoring seam; independent scope and release placement; pin accepted Plans 63/75/76/77/89 and Plan 88 reference.

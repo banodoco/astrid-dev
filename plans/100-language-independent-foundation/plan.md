@@ -8,6 +8,8 @@
 
 **Owner:** Unassigned
 
+**Target milestone:** 0.3
+
 **Estimate:** Provisional 12–28 engineering days, excluding the separate 8–12 day Plan 106 investigation; combined prior allowance 20–40 days. Includes thin second-domain witness; re-estimate after investigation and scope review.
 
 **Waiting on:** [Plan 106 — Creative foundation investigation](../106-creative-foundation-investigation/plan.md) reviewed handoff; independent architecture and gap-boundary review, owner scope decision and release placement; pin the current integrated reference and coordinate Plans 38 and 83.
