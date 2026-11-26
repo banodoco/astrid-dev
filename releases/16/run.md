@@ -146,14 +146,98 @@ A planning session prepares this with the owner; no running role does it, and pr
 
 | Order | Plan | Starts after | Repositories for its branches | Queue |
 |---|---|---|---|---|
-| 1 | 93 ComfyUI Desktop and existing environments | — (first) | — | — |
-| 2 | 35 One home for user state | — (first) | — | — |
-| 3 | 94 Dependable environment setup and recovery | 93 | — | — |
-| 4 | 38 One process identity (its CPU half) | 35 | — | — |
+| 1 | 93 ComfyUI Desktop and existing environments | — (first) | astrid-agent | [Plan 93 queue](#plan-93-queue) |
+| 2 | 35 One home for user state | — (first) | astrid-agent, astrid-runtime | [Plan 35 queue](#plan-35-queue) |
+| 3 | 94 Dependable environment setup and recovery | 93 | astrid-agent | [Plan 94 queue](#plan-94-queue) |
+| 4 | 38 One process identity (its CPU half) | 35 | astrid-runtime, astrid-agent | [Plan 38 queue](#plan-38-queue) |
 
 ### Queues
 
-One table per plan, prepared in advance: Packet, Repository, Route, Depends, Proof. None is written yet.
+One table per plan, in dispatch order. A manager starts them in this order and no other.
+
+#### Plan 93 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P93-01](packets/R16-P93-01.md) Redacted Desktop states as fixtures | astrid-agent | N | none |
+| [R16-P93-02](packets/R16-P93-02.md) The readiness ladder in the envelope | astrid-agent | X | none |
+| [R16-P93-03](packets/R16-P93-03.md) Observing the four existing-install rungs | astrid-agent | X | R16-P93-02 |
+| [R16-P93-04](packets/R16-P93-04.md) `generate targets` probes before it says ready | astrid-agent | N | R16-P93-03 |
+| [R16-P93-RS1](packets/R16-P93-RS1.md) Review stop on the ladder | astrid-agent | S | R16-P93-02, R16-P93-03, R16-P93-04 |
+| [R16-P93-05](packets/R16-P93-05.md) Telling ComfyUI Desktop's states apart | astrid-agent | X | R16-P93-RS1, R16-P93-01 |
+| [R16-P93-06](packets/R16-P93-06.md) The scan checks every responder and reports installations | astrid-agent | X | R16-P93-05 |
+| [R16-P93-07](packets/R16-P93-07.md) Desktop states on the ladder, with their next actions | astrid-agent | X | R16-P93-05 |
+| [R16-P93-08](packets/R16-P93-08.md) `generate targets` uses Desktop's state, and attaches only on a yes | astrid-agent | X | R16-P93-04, R16-P93-06, R16-P93-07 |
+| [R16-P93-09](packets/R16-P93-09.md) The setup and VibeComfy skills run `generate targets` and do its next action | astrid-agent | N | R16-P93-08 |
+| [R16-P93-10](packets/R16-P93-10.md) The states in the words the person reads | astrid-agent | N | R16-P93-09 |
+| [R16-P93-R](packets/R16-P93-R.md) Final review of Plan 93 | astrid-agent | S | R16-P93-01, R16-P93-02, R16-P93-03, R16-P93-04, R16-P93-RS1, R16-P93-05, R16-P93-06, R16-P93-07, R16-P93-08, R16-P93-09, R16-P93-10 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+#### Plan 35 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P35-01](packets/R16-P35-01.md) One helper for Runtime user-state documents | astrid-agent | N | none |
+| [R16-P35-02](packets/R16-P35-02.md) One-time import with a receipt | astrid-agent | X | R16-P35-01 |
+| [R16-P35-03](packets/R16-P35-03.md) Protected grant ledger with revoke and reapprove | astrid-runtime | X | none |
+| [R16-P35-04](packets/R16-P35-04.md) State survives backup and restore (Runtime proof) | astrid-runtime | N | R16-P35-03 |
+| [R16-P35-RS1](packets/R16-P35-RS1.md) Review of the Runtime state and grant work | astrid-runtime | S | R16-P35-03, R16-P35-04 |
+| [R16-P35-05](packets/R16-P35-05.md) Check that flags a new user-state side store | astrid-agent | N | none |
+| [R16-P35-06](packets/R16-P35-06.md) User choices document with a safe mirror rule | astrid-agent | X | R16-P35-02 |
+| [R16-P35-07](packets/R16-P35-07.md) Skills opt-outs read from and mirrored to the Runtime | astrid-agent | N | R16-P35-06 |
+| [R16-P35-08](packets/R16-P35-08.md) Compute profiles in the Runtime, with one import | astrid-agent | N | R16-P35-02 |
+| [R16-P35-09](packets/R16-P35-09.md) Removal date for the old VibeComfy TOML import | astrid-agent | N | none |
+| [R16-P35-R](packets/R16-P35-R.md) Review of the Agent state work | astrid-agent | S | R16-P35-01, R16-P35-02, R16-P35-05, R16-P35-06, R16-P35-07, R16-P35-08, R16-P35-09 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+#### Plan 94 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P94-01](packets/R16-P94-01.md) CPU fixtures for the starting states | astrid-agent | N | none |
+| [R16-P94-02](packets/R16-P94-02.md) The computes probe and its causes | astrid-agent | X | none |
+| [R16-P94-03](packets/R16-P94-03.md) Peak-space check before any write, in the model download | astrid-agent | N | R16-P94-01 |
+| [R16-P94-04](packets/R16-P94-04.md) One progress line and named failures in the model download | astrid-agent | N | R16-P94-03 |
+| [R16-P94-05](packets/R16-P94-05.md) No model transfer after a failed computes check | astrid-agent | N | R16-P94-02, R16-P94-04 |
+| [R16-P94-06](packets/R16-P94-06.md) The Portable pin and the install offer | astrid-agent | N | R16-P94-01 |
+| [R16-P94-07](packets/R16-P94-07.md) The resumable install: journal and consent | astrid-agent | S | R16-P94-06 |
+| [R16-P94-08](packets/R16-P94-08.md) The real download and unpack steps | astrid-agent | X | R16-P94-07 |
+| [R16-P94-09](packets/R16-P94-09.md) Attach the new install, with the old choice kept | astrid-agent | N | R16-P94-08 |
+| [R16-P94-10](packets/R16-P94-10.md) The one install command | astrid-agent | N | R16-P94-09 |
+| [R16-P94-11](packets/R16-P94-11.md) The install offer as the ladder's next action | astrid-agent | X | R16-P94-10 |
+| [R16-P94-RS1](packets/R16-P94-RS1.md) Review the install's write and consent boundary | astrid-agent | S | R16-P94-06, R16-P94-07, R16-P94-08, R16-P94-09, R16-P94-10, R16-P94-11 |
+| [R16-P94-12](packets/R16-P94-12.md) The computes rung on the ladder | astrid-agent | X | R16-P94-02, R16-P94-11 |
+| [R16-P94-13](packets/R16-P94-13.md) The setup skill's no-target branch | astrid-agent | N | R16-P94-10, R16-P94-11 |
+| [R16-P94-R](packets/R16-P94-R.md) Final local review | astrid-agent | S | R16-P94-01, R16-P94-02, R16-P94-03, R16-P94-04, R16-P94-05, R16-P94-06, R16-P94-07, R16-P94-08, R16-P94-09, R16-P94-10, R16-P94-11, R16-P94-12, R16-P94-13, R16-P94-RS1 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
+#### Plan 38 queue
+
+| Packet | Repository | Route | Depends |
+|---|---|---|---|
+| [R16-P38-01](packets/R16-P38-01.md) One closure definition file with golden vectors (Runtime) | astrid-runtime | X | none |
+| [R16-P38-02](packets/R16-P38-02.md) Process-binding provider API (Linux and Windows delegation) | astrid-runtime | X | none |
+| [R16-P38-03](packets/R16-P38-03.md) Linux peer authority retained through a pidfd | astrid-runtime | S | R16-P38-02 |
+| [R16-P38-04](packets/R16-P38-04.md) Linux birth helpers, zombie witness and census in the provider | astrid-runtime | N | R16-P38-03 |
+| [R16-P38-RS1](packets/R16-P38-RS1.md) Review stop after the provider | astrid-runtime | S | R16-P38-01, R16-P38-02, R16-P38-03, R16-P38-04 |
+| [R16-P38-05](packets/R16-P38-05.md) Linux boundary tests carry the pidfd mark; a named refusal gate | astrid-runtime | N | R16-P38-RS1 |
+| [R16-P38-06](packets/R16-P38-06.md) Stale-owner tests use well-formed Linux births | astrid-runtime | N | R16-P38-RS1 |
+| [R16-P38-07](packets/R16-P38-07.md) Runtime one-implementation guard | astrid-runtime | N | R16-P38-01, R16-P38-02, R16-P38-03, R16-P38-04, R16-P38-05 |
+| [R16-P38-08](packets/R16-P38-08.md) Agent closure reads the shared definition | astrid-agent | N | R16-P38-01, R16-P38-RS1 |
+| [R16-P38-09](packets/R16-P38-09.md) Agent custody uses the provider on Linux and Windows | astrid-agent | X | R16-P38-02, R16-P38-03, R16-P38-RS1 |
+| [R16-P38-10](packets/R16-P38-10.md) Agent birth ids and Linux census from the provider | astrid-agent | X | R16-P38-04, R16-P38-09 |
+| [R16-P38-11](packets/R16-P38-11.md) Remaining Agent birth readers go through the provider | astrid-agent | N | R16-P38-10 |
+| [R16-P38-12](packets/R16-P38-12.md) Agent one-implementation guard | astrid-agent | N | R16-P38-08, R16-P38-09, R16-P38-10, R16-P38-11 |
+| [R16-P38-R](packets/R16-P38-R.md) Final review of phase 1 (both repositories) | astrid-runtime and astrid-agent (work in the Agent checkout; the Runtime checkout is `../astrid-runtime/`) | S | R16-P38-RS1, R16-P38-01, R16-P38-02, R16-P38-03, R16-P38-04, R16-P38-05, R16-P38-06, R16-P38-07, R16-P38-08, R16-P38-09, R16-P38-10, R16-P38-11, R16-P38-12 |
+| [R16-P38-13](packets/R16-P38-13.md) Shared role-custody base in runtime_protocol (Runtime) | astrid-runtime | N | R16-P38-07, R16-P38-R |
+| [R16-P38-14](packets/R16-P38-14.md) Agent broker imports the shared role-custody base | astrid-agent | N | R16-P38-13, R16-P38-12 |
+| [R16-P38-R2](packets/R16-P38-R2.md) Review of the shared role-custody base (both repositories) | astrid-runtime and astrid-agent (work in the Agent checkout; the Runtime checkout is `../astrid-runtime/`) | S | R16-P38-13, R16-P38-14 |
+
+Each packet's file holds its May touch, Files to load and Proof.
+
 
 ### The Lead — every hour
 
@@ -165,7 +249,7 @@ One table per plan, prepared in advance: Packet, Repository, Route, Depends, Pro
    - `SOL <packet>: <reason>` → post `SOL <packet>` on the plan's board, then send one Sol [briefs/sol.md](briefs/sol.md) with that reason;
    - `NO-CHATS <PP>` → add it to "for the owner", and do nothing else;
    - `REPLACE manager <PP>` → replace that manager, once, and add `manager replaced` to its line; if it was already replaced, park the plan;
-   - `FINISHED <PP>` → merge `release/16/main` into the plan branch, then the plan branch into `release/16/main`. If either won't merge cleanly, park the plan. Then start the plan whose Starts after names it, as step 6 of [briefs/lead.md](briefs/lead.md) says; do the same when a plan is parked.
+   - `FINISHED <PP>` → in each repository the Plans table lists for it, merge `release/16/main` into the plan branch, then the plan branch into `release/16/main`. If either won't merge cleanly, park the plan. Then start the plan whose Starts after names it, as step 6 of [briefs/lead.md](briefs/lead.md) says; do the same when a plan is parked.
 4. **Parked:** copy any new Parked lines into your STATUS, under "for the owner". Don't solve them.
 5. **Post** one STATUS on your board, then stop until the next check:
 
