@@ -14,9 +14,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Documentation rules retain the legacy order and skip after a bad catalog.
 def _catalog(context):
-    import lifecycle
+    from otto import lifecycle
     from project_contract import PLAN_FOLDER
-    from records import project_fields, priority_order, section
+    from records import project_fields, priority_order
+    from otto.markdown import section_by_heading as section
     root = context.root
     errors = []
     folders = set()
@@ -71,7 +72,7 @@ def _unique_project_numbers(context):
 
 def _release_documents(context):
     from check_docs import read, release_errors
-    from records import git_show
+    from otto.git import git_show
     from release_status import validate_change
     root = context.root
     if not _catalog_ready(context):
@@ -303,7 +304,7 @@ def _link_anchors(context):
     from check_docs import LINK, read
     root, fence = context.root, r"(?ms)^\s*```.*?^\s*```[^\n]*$"
 
-    from document_structure import markdown_heading_anchors
+    from otto.markdown import markdown_heading_anchors
 
     def anchors(relative):
         return {anchor for _, _, anchor in markdown_heading_anchors(read(root, relative))}
@@ -406,7 +407,7 @@ def _completion_impl(context):
 def _boundary_impl(context):
     import check_gap_boundaries as gate
     from gap_relationships import gap_metadata, parse_gap_aspirations
-    from records import read_text
+    from otto.markdown import read_text
     required = gate.affected_gaps(context.base, context.root)
     if not required:
         return []
@@ -426,7 +427,7 @@ def _boundary_impl(context):
 
 def _planning_impl(context):
     import check_project_planning as gate
-    from records import read_text
+    from otto.markdown import read_text
     names = gate.changed_projects(context.base, context.root)
     errors = []
     for name in sorted(names):

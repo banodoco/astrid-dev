@@ -8,7 +8,7 @@ from unittest.mock import patch
 import check_completion
 import check_docs
 import checks
-import lifecycle
+from otto import lifecycle
 import records
 import views
 

@@ -15,7 +15,7 @@ import tempfile
 from urllib.parse import quote, unquote
 
 from agent_documents import AGENT_SOURCE_ROOT, SKILL_PREFIX, AgentDocument, discover_documents
-from document_structure import markdown_heading_anchors
+from otto.markdown import markdown_heading_anchors
 
 OUTPUT = Path(".generated/skills")
 MARKER = f".{SKILL_PREFIX}generated"

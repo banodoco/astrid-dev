@@ -75,7 +75,7 @@ def _catalog(root: Path) -> str:
 
 
 def _status_definitions(root: Path) -> str:
-    from lifecycle import definitions
+    from otto.lifecycle import definitions
     path = root / "plans/index.md"
     text = path.read_text(encoding="utf-8")
     start, end = "<!-- status-definitions:start -->", "<!-- status-definitions:end -->"
@@ -385,7 +385,7 @@ def _owner_body(text: str, name: str, path: str) -> tuple[str, str, str]:
     """Return the owner's body, its nearest heading title and that heading's anchor."""
     begin, body_start, body_end, _ = _block_regions(text, path)[("block-source", name)]
     body = text[body_start:body_end].strip("\n")
-    from document_structure import markdown_heading_anchors
+    from otto.markdown import markdown_heading_anchors
     headings = markdown_heading_anchors(text[:begin])
     if not headings:
         return body, "", ""

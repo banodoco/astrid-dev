@@ -7,11 +7,13 @@ from pathlib import Path
 from urllib.parse import unquote
 
 from gap_relationships import parse_gap_relationships
-import lifecycle
+from otto import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
 from project_delivery import GAP_FILE as GAP_NAME
-from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
-                     is_placeholder, key_value_lines, read_text, release_brief, release_branch_errors, release_fix_issue_errors, BRANCH_FIRST_RELEASE, section as record_section)
+from records import (PLACEHOLDERS_ACTIVE_OWNER, release_brief, release_branch_errors,
+                     release_fix_issue_errors, BRANCH_FIRST_RELEASE)
+from otto.markdown import (heading_present, is_placeholder, key_value_lines, read_text,
+                           section_by_heading as record_section)
 from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]

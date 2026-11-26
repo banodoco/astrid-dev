@@ -12,8 +12,10 @@ from pathlib import Path
 
 from check_docs import ROOT
 from project_contract import PLAN_FOLDER
-from records import (PLACEHOLDERS_PLANNING, git_result, git_show, is_placeholder,
-                     named_field_matches, read_text, section as record_section)
+from records import PLACEHOLDERS_PLANNING
+from otto.git import git_result, git_show
+from otto.markdown import (is_placeholder, named_field_matches, read_text,
+                           section_by_heading as record_section)
 
 PLAN = re.compile(r"^plans/(" + PLAN_FOLDER.pattern + r")/(plan|inputs)\.md$")
 LABELS = ("Scope decision", "Prior art", "Approach", "Challenge", "Proof and limits")

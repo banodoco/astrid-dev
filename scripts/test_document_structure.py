@@ -1,8 +1,8 @@
 """Reusable document-structure primitives used by workstream and project-pack checks."""
 import unittest
 
-from document_structure import (frontmatter, headings, markdown_heading_anchors,
-                                ordered_bold_fields, ordered_heading_error, section)
+from otto.markdown import (frontmatter, headings, markdown_heading_anchors,
+                           ordered_bold_fields, ordered_heading_error, section)
 
 
 class DocumentStructureTests(unittest.TestCase):

@@ -12,9 +12,10 @@ from pathlib import Path
 
 from check_docs import ROOT
 from gap_relationships import VISION, gap_metadata, parse_gap_relationships
-from records import (PLACEHOLDERS_GAP, field_match, git_result, git_show,
-                     is_placeholder, matching_sections, read_text,
-                     section as record_section, section_after_match)
+from records import PLACEHOLDERS_GAP
+from otto.git import git_result, git_show
+from otto.markdown import (field_match, is_placeholder, matching_sections, read_text,
+                           section_by_heading as record_section, section_after_match)
 
 GAP_PATH = re.compile(r"^(?:visions|vision)/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
 SECTION = re.compile(
