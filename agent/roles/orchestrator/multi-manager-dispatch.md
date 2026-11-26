@@ -50,7 +50,7 @@ Board: <issue URL>, run <run id>, format in its first post. You are <mailbox nam
 the Orchestrator is <name>; the Lead is <name>.
 [Replacing <prior session>: continue from <branch> at <head> and <last STATUS link>;
  apply Lead decisions <comment IDs> not yet done.]
-Write this packet's code and tests; do not clone, build or run tests. Post STATUS or BLOCKED as comments on the board,
+Write this packet's code and tests and push after each task; run its Proof command here if it names one; do not clone or build. Post STATUS or BLOCKED as comments on the board,
 the first as soon as your first branch is pushed and its draft pull request open.
 End with READY-PROOF <repo> <PR> <head> <selectors>, then stop.
 Do not merge, tick tasks.md or start another packet.
