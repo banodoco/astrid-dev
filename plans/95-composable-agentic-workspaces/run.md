@@ -77,6 +77,7 @@ Cap: three Running or Review at once (ruling 6). Priority: P95-09 (critical path
 | [P95-PK](packets/P95-PK.md) Package the templates and guidance for installed Otto | gap from OT-12 | Ready (OT-12 and OT-17 merged) | — | Extra High. Beside P95-10; needed before OT-22 |
 | [P95-13](packets/P95-13.md) `otto check` assembly and workspace registration | OT-13 | Ready (OT-6, OT-10, OT-12 merged; Otto main `223086a9`) | — | High. Critical path (then OT-14, OT-22) |
 | [P95-19a](packets/P95-19a.md) Dev import swap, part 1: Otto pin, `otto.toml`, Markdown/Git/lifecycle helpers | OT-19 | Ready (OT-5 merged) | — | Extra High. Riskiest card; parity gate after each part; 19b skills, 19c relationships, 19d engines follow |
+| [P95-19b](packets/P95-19b.md) Dev import swap, part 2: skill reader, builder, installer | OT-19 | Waits for P95-19a merged | — | Extra High. Tests patch private names of the Dev skill modules; Step 1 must list each and ask. Parity gate: OT-1 skill tree hash |
 | [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
 | Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
 
