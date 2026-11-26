@@ -739,7 +739,7 @@ class PackageTests(unittest.TestCase):
                 if len(writes) == 2:
                     raise PermissionError("second staged update failed")
             return real_replace(src, dst)
-        with patch("skill_builder.os.replace", side_effect=fail_second):
+        with patch("otto.skills.builder.os.replace", side_effect=fail_second):
             with self.assertRaisesRegex(PermissionError, "second staged update"):
                 build_packages(self.root)
         self.assertEqual(writes, ["astrid-dev-leader", "astrid-dev-start"])
@@ -761,7 +761,7 @@ class PackageTests(unittest.TestCase):
             if left == output:
                 raise OSError("publish failed")
             return _exchange_paths(left, right)
-        with patch("skill_builder._exchange_paths", side_effect=fail_publish):
+        with patch("otto.skills.builder._exchange_paths", side_effect=fail_publish):
             with self.assertRaisesRegex(OSError, "publish failed"):
                 build_packages(self.root)
         self.assertEqual((skill.read_bytes(), marker.read_bytes(), os.readlink(link)), before)
@@ -778,16 +778,17 @@ class PackageTests(unittest.TestCase):
         child = """from pathlib import Path
 import os, sys
 import skill_builder as b
+from otto.skills import builder as engine
 root = Path(sys.argv[1]).resolve()
 phase = sys.argv[2]
-original = b._exchange_paths
+original = engine._exchange_paths
 def crash(left, right):
     if left == root / b.OUTPUT:
         if phase == 'before': os._exit(71)
         original(left, right)
         os._exit(72)
     original(left, right)
-b._exchange_paths = crash
+engine._exchange_paths = crash
 b.build_packages(root)
 """
         for phase, expected_exit in (("before", 71), ("after", 72)):
@@ -816,11 +817,11 @@ b.build_packages(root)
         with _build_lock(output.parent.resolve()):
             with self.assertRaisesRegex(RuntimeError, "another skill build"):
                 build_packages(self.root)
-        def change_source(stage, expected):
+        def change_source(stage, expected, config):
             result = _build_output(stage, expected)
             source.write_text(source.read_text() + "\nLater.\n")
             return result
-        with patch("skill_builder._build_output", side_effect=change_source):
+        with patch("otto.skills.builder._build_output", side_effect=change_source):
             with self.assertRaisesRegex(RuntimeError, "sources changed"):
                 build_packages(self.root)
         self.assertEqual(skill.read_bytes(), before)
@@ -835,7 +836,7 @@ b.build_packages(root)
         before = skill.read_bytes()
         source = self.root / "agent" / "start.md"
         source.write_text(source.read_text() + "\nChanged.\n")
-        with patch("skill_builder._exchange_paths", side_effect=OSError("unsupported")):
+        with patch("otto.skills.builder._exchange_paths", side_effect=OSError("unsupported")):
             with self.assertRaisesRegex(OSError, "unsupported"):
                 build_packages(self.root)
         self.assertEqual(skill.read_bytes(), before)
@@ -888,7 +889,7 @@ b.build_packages(root)
 
     def test_lock_symlink_and_unsupported_first_publish_refuse(self):
         output = self.root / ".generated" / "skills"
-        with patch("skill_builder._exchange_paths", side_effect=OSError("unsupported")):
+        with patch("otto.skills.builder._exchange_paths", side_effect=OSError("unsupported")):
             with self.assertRaisesRegex(OSError, "unsupported"):
                 build_packages(self.root)
         self.assertFalse(output.exists())
@@ -980,12 +981,12 @@ with b._build_lock(Path(sys.argv[1])):
     def test_unexpected_output_during_first_build_is_preserved(self):
         from skill_builder import _build_output
         output = self.root / ".generated" / "skills"
-        def foreign_appears(stage, expected):
+        def foreign_appears(stage, expected, config):
             actions = _build_output(stage, expected)
             output.mkdir()
             (output / "foreign").write_text("keep")
             return actions
-        with patch("skill_builder._build_output", side_effect=foreign_appears):
+        with patch("otto.skills.builder._build_output", side_effect=foreign_appears):
             with self.assertRaisesRegex(RuntimeError, "output changed"):
                 build_packages(self.root)
         self.assertEqual((output / "foreign").read_text(), "keep")
@@ -996,11 +997,11 @@ with b._build_lock(Path(sys.argv[1])):
         source = self.root / "agent" / "start.md"
         source.write_text(source.read_text() + "\nPublished.\n")
         @contextmanager
-        def fail_after_lock(parent):
+        def fail_after_lock(parent, config):
             with _build_lock(parent):
                 yield
             raise OSError("finalization failure")
-        with patch("skill_builder._build_lock", fail_after_lock):
+        with patch("otto.skills.builder._build_lock", fail_after_lock):
             with self.assertRaisesRegex(OSError, "published.*finalization") as caught:
                 build_packages(self.root)
         self.assertIsInstance(caught.exception.__cause__, OSError)
@@ -1059,13 +1060,14 @@ with b._build_lock(Path(sys.argv[1])):
         child = """from pathlib import Path
 import sys
 import skill_builder as b
-original = b._build_output
-def pause(stage, expected):
-    result = original(stage, expected)
+from otto.skills import builder as engine
+original = engine._build_output
+def pause(stage, expected, config):
+    result = original(stage, expected, config)
     print('staged', flush=True)
     sys.stdin.read(1)
     return result
-b._build_output = pause
+engine._build_output = pause
 b.build_packages(Path(sys.argv[1]))
 """
         process = subprocess.Popen([sys.executable, "-c", child, str(self.root)],
@@ -1098,12 +1100,13 @@ b.build_packages(Path(sys.argv[1]))
         child = """from pathlib import Path
 import os, sys
 import skill_builder as b
+from otto.skills import builder as engine
 root = Path(sys.argv[1]).resolve()
-original = b._exchange_paths
+original = engine._exchange_paths
 def crash(left, right):
     if left == root / b.OUTPUT: os._exit(71)
     original(left, right)
-b._exchange_paths = crash
+engine._exchange_paths = crash
 b.build_packages(root)
 """
         process = subprocess.run([sys.executable, "-c", child, str(self.root)],
@@ -1136,12 +1139,13 @@ b.build_packages(root)
         child = """from pathlib import Path
 import os, sys
 import skill_builder as b
+from otto.skills import builder as engine
 root = Path(sys.argv[1]).resolve()
-original = b._exchange_paths
+original = engine._exchange_paths
 def crash(left, right):
     original(left, right)
     if left == root / b.OUTPUT: os._exit(72)
-b._exchange_paths = crash
+engine._exchange_paths = crash
 b.build_packages(root)
 """
         result = subprocess.run([sys.executable, "-c", child, str(self.root)],
@@ -1165,12 +1169,13 @@ b.build_packages(root)
         child = """from pathlib import Path
 import os, sys
 import skill_builder as b
+from otto.skills import builder as engine
 root = Path(sys.argv[1]).resolve()
-original = b._exchange_paths
+original = engine._exchange_paths
 def crash(left, right):
     if left == root / b.OUTPUT: os._exit(71)
     original(left, right)
-b._exchange_paths = crash
+engine._exchange_paths = crash
 b.build_packages(root)
 """
         result = subprocess.run([sys.executable, "-c", child, str(self.root)],
