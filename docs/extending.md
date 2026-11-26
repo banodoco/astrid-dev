@@ -73,7 +73,7 @@ The project field list is a contract shared by the plan, catalog, feed, and chec
 
 ## Add or edit a workstream
 
-Write the instruction once as a regular Markdown document in `agent/`. The [workstream authoring convention](../agent/README.md) describes the shared purpose; the steps below are the Markdown-first authoring procedure. The source reader is `scripts/agent_documents.py`, backed by reusable [Markdown structure checks](../scripts/document_structure.py). The former dual-format parser is [`workstreams.py`](https://github.com/banodoco/astrid-dev/blob/c49701679d3edb344c3c6638109d1be7ca1f01e8/scripts/workstreams.py) (migration history, not the new authoring format).
+Write the instruction once as a regular Markdown document in `agent/`. The [workstream authoring convention](../agent/README.md) describes the shared purpose; the steps below are the Markdown-first authoring procedure. The source reader is `scripts/agent_documents.py`, backed by reusable [Markdown structure checks](https://github.com/banodoco/otto/blob/223086a92e9ce0dc8c01d02278f84b08330df243/otto/markdown.py). The former dual-format parser is [`workstreams.py`](https://github.com/banodoco/astrid-dev/blob/c49701679d3edb344c3c6638109d1be7ca1f01e8/scripts/workstreams.py) (migration history, not the new authoring format).
 
 **1. Choose the document's home.**
 
