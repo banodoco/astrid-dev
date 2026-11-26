@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** Provisional 20–40 engineering days, including a thin second-domain witness; re-estimate after source inventory and independent scope review.
+**Estimate:** Provisional 20–40 engineering days, including a thin second-domain witness and the first investigation slice (8–12 days within this allowance); re-estimate after source inventory and independent scope review.
 
 **Waiting on:** Independent architecture and gap-boundary review, owner scope decision and release placement; pin the current integrated reference and coordinate Plans 38 and 83.
 
@@ -36,7 +36,7 @@ The current Runtime already owns the public protocol and generated clients, but 
 
 ## Sequence and readiness
 
-Inventory and pin first; agree the contract and the independent conformance harness; then remove private authority imports in small parity-proven slices, preserving the current product. Deliver an independent consumer and worker before declaring the seam ready. Plan 101 may prototype its bootstrap in parallel, but ownership transfer depends on the accepted lifecycle contract; Plan 102 consumes the reviewed timeline seam. Plan 103 consumes the complete conformance baseline. Review migration scope before any code starts. The [task outline](tasks.md) is not a dispatch packet. Re-estimate after the first bounded evidence slice; do not assign to a release or start product work without a recorded run decision.
+Start with the [bounded architectural investigation](investigation.md) (NF-1a–NF-1j): source-backed traces of the SDK, default tools, contribution/operation discovery, state, trust, rendering and deployment; independent-tool and non-video witness design; explicit keep/reuse/remove dispositions and independent critique. Pin the real integrated tuple first. The investigation is read-only by default and is a prerequisite to the contract and conformance design; no product implementation or tests without the appropriate recorded authority. Then agree the contract and the independent conformance harness; then remove private authority imports in small parity-proven slices, preserving the current product. Deliver an independent consumer and worker before declaring the seam ready. Plan 101 may prototype its bootstrap in parallel, but ownership transfer depends on the accepted lifecycle contract; Plan 102 consumes the reviewed timeline seam. Plan 103 consumes the complete conformance baseline. Review migration scope before any code starts. The [task outline](tasks.md) is not a dispatch packet. Re-estimate after the first bounded evidence slice; do not assign to a release or start product work without a recorded run decision.
 
 ## Interfaces and handoff
 
