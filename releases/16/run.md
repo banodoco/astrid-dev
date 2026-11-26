@@ -28,171 +28,217 @@ At every check-in: read all current mailbox messages; reconcile predecessor move
 
 ## Delivery: Lead, lanes and managers
 
-The Lead's worksheet for running Release 16 once the owner agrees its scope. It holds who runs what, the hourly checks and the launch messages; the rules behind them live in the skills it links, and each plan's `tasks.md` holds its progress. The Lead rewrites the tables at each check-in.
+How Release 16 runs unattended for days. **All judgment happens once, in Setup, before anyone is left running.** After that, each role repeats one short loop. This section is each role's whole job for this run: where it differs from a skill, this section wins. Don't open the skills to look for more work.
 
-### How it runs
+**Where each role runs:**
+- the Lead and the orchestrators: Codex (or Claude cloud) sessions with network access;
+- each manager: a Codex session, which opens each packet as a new ChatGPT chat;
+- packets: those ChatGPT chats.
 
-- **One Lead** (`r16-lead`): owns the release. Every hour it confirms that each orchestrator is alive and its lane moved, unblocks what didn't, answers gates, and confirms every landing into `release/16/main` ([Leader](https://github.com/banodoco/astrid-dev/blob/main/agent/roles/leader.md), [lane orchestrators](https://github.com/banodoco/astrid-dev/blob/main/agent/roles/leader/lane-orchestrators.md)).
-- **Up to three lane orchestrators** (`r16-lane<n>-orchestrator`): each answers for its lane's plans. It cards each plan into packets, starts one manager per plan, runs every proof, reviews, and merges into the plan branches ([lane orchestrator](https://github.com/banodoco/astrid-dev/blob/main/agent/roles/orchestrator/lane-orchestrator.md); as the Lead for its own plans, [fresh-packet dispatch](https://github.com/banodoco/astrid-dev/blob/main/agent/roles/leader/multi-manager-release.md)).
-- **One manager per plan** (`r16-p<PP>-manager`, a Codex session as for Plans 87, 89 and 91): it starts each Ready packet in a fresh ChatGPT session in its Route's mode, keeps sessions moving, and passes `READY-PROOF` to its orchestrator. It never merges or edits the repository ([dispatch](https://github.com/banodoco/astrid-dev/blob/main/agent/roles/orchestrator/multi-manager-dispatch.md)).
-- **One fresh ChatGPT session per packet** (`r16-P<PP>-<nn>-<n>`): writes one packet's code and tests, ends with `READY-PROOF`, then stops ([packet](https://github.com/banodoco/astrid-dev/blob/main/agent/roles/manager/chatgpt-packet.md)).
+### The six rules
 
-The chain is Lead → orchestrator → manager → packet. Each role posts on its own board ([rules](https://github.com/banodoco/astrid-dev/blob/main/agent/shared/run-contract.md#coordination-boards-and-check-ins)):
-- the Lead on `board: release 16 lead`;
-- each orchestrator on `board: release 16 lane <n>`;
-- each manager and its packets on `board: release 16 plan <PP>`.
+1. **The queue is fixed.** Setup writes every packet, in order. Nobody running the release adds, splits, re-scopes or reorders work; the only exception is a [fix packet](#fixed-messages). A plan is **finished** when every packet in it is Done or Parked.
+2. **Proof is one command.** Every packet names its own **Proof:** command. The orchestrator runs it once, in its own session, on the head named in `READY-PROOF`. The result is one of three:
+   - **PASS:** the command passes;
+   - **FAIL:** the command ran and failed;
+   - **COULDN'T RUN:** a cancellation, a timeout, a broken environment, or not finished by the next check.
+   Nothing else counts as proof, and nothing more is collected.
+3. **Every loop has a cap.** At the cap, mark the item **Parked**, post one line saying why, and move on. Parked work waits for the owner, and everything else keeps moving.
+4. **Park, don't ask.** A question this section doesn't answer is parked, never debated. Nobody waits for an answer.
+5. **Replace once, then park.** A session that is stuck, looping or confused is replaced by a fresh one with the fixed message, at most once each:
+   - each packet's session, after one resume;
+   - each manager, after one nudge;
+   - each orchestrator, after one nudge.
+   A second need parks that packet, plan or lane for the owner. The state is on GitHub, not in the chat.
+6. **A missed check isn't made up.** If your scheduled check didn't fire, run the loop once now; don't backfill.
 
-A plan gets its manager only when it has Ready packets, so not every plan has one at once.
+### Never, at any level
 
-### Before any lane starts
+- Write evidence files, receipts, audits, readbacks, summaries or re-verifications. A one-line board comment is the whole record.
+- Re-run a proof that passed, or run tests the packet doesn't name.
+- Edit plans, skills, this section or `releases/16.md`. The orchestrator edits only `tasks.md` Progress ticks and fix packets.
+- Start a new plan, investigation, review or document.
+- Rebase, force-push, or create a branch outside the table below.
+- Spend money, or use the owner's machine or media. Hosted CI on GitHub is not spend.
 
-1. **Take the role.** The new Lead:
-   - posts on its board;
-   - records itself as release manager in [releases/16.md](../16.md);
-   - takes over from the earlier Release 16 Lead (`session_011EzfW1C63rxLXsL6TkHHVV`), which then stands down.
-2. **Scope agreement.** Bring the owner, in one message, [PR #1964](https://github.com/banodoco/astrid-dev/pull/1964) and the decisions in its [scoping handoff](evidence/scoping/README.md#scoping-handoff--pending-owner-scope-decision), each with a recommendation. Nothing is implemented until she agrees. Then merge it.
-3. **Branches and Run start.** Cut `release/16/main` in each repository from the `release/15/main` heads she names (merge forward, never rebase). Record each plan's Run start, naming its lane orchestrator as the accountable agent.
-4. **Lanes.** Start the lanes with the launch message below, one session each.
+### Branches
+
+| Branch | Who creates it | Who merges into it |
+|---|---|---|
+| `release/16/main` | Setup, once | the Lead, at a gate |
+| `release/16/plan-<PP>` | Setup, once | the orchestrator, on PASS |
+| `p<PP>/<packet-id>` | the packet session, from its plan branch's head | nobody: it is the PR's head |
+
+Merge, never rebase. A PR always targets its plan branch. Before `READY-PROOF`, the packet merges its plan branch's head in. A PR that then won't merge cleanly counts as FAIL.
+
+### Packet states
+
+| State | Set by | When |
+|---|---|---|
+| Queued | Setup, or the orchestrator for a fix packet | written, waiting its turn |
+| Running | the manager | its session has started |
+| Proof | the packet session | it posted `READY-PROOF` |
+| Rework 1, Rework 2 | the orchestrator | its proof FAILED |
+| Done | the orchestrator | PASS, and merged into the plan branch |
+| Parked | whoever hits a cap, or the orchestrator for a BLOCKED | it frees its slot, and the orchestrator parks each packet that depends on it; everything else continues |
+
+Rework 1 and Rework 2 count as Running, for slots and for silence.
+
+**Every park is one comment on the plan's board:** `PARKED <packet, plan <PP> or lane <n>>: <reason>`. A parked plan gets no new packets. A parked lane's managers stop once their slots are full.
+
+The live state is the newest STATUS on each board, and each role's own last STATUS is its memory: it carries what was nudged, resumed and replaced. Nobody keeps a second copy.
+
+### Setup (once, before leaving it running)
+
+The owner does this with a planning session she chooses, such as the one that wrote this section; no running role does it. Running Setup again is the only way to change the run.
+1. Choose the plans for this run. Take only plans whose owner decisions are answered and that need no real hardware. A plan without a written queue is not in this run.
+2. For each plan, write every packet under `releases/16/packets/R16-P<PP>-<nn>.md`. Each packet has:
+   - one contract, about three hours;
+   - **Route** and **Depends** (earlier packets of the same plan only);
+   - **May touch** and **Must not touch**;
+   - the ids that already fail;
+   - one **Proof:** command, which runs in under 30 minutes.
+   Packets that touch the same file get a Depends link, so they never run at once. Review stops (RS, R) are packets too.
+3. Write each plan's queue table below, in dispatch order.
+4. Cut the branches, open the boards, record each plan's Run start naming its orchestrator, and fill in the Lanes table.
+5. Start the Lead. The earlier Release 16 Lead (`session_011EzfW1C63rxLXsL6TkHHVV`) stands down.
 
 ### Lanes
 
-Plans are carded in this order and run side by side once carded. One writer per function, schema or pin, as the Approach in [releases/16.md](../16.md) reserves them.
+| Lane | Plans in this run | Orchestrator | Board |
+|---|---|---|---|
+| 1 Install, update and release | chosen in Setup from 31, 10, 09, 29, 30, 38 | — | — |
+| 2 Environment and generation | chosen in Setup from 93, 94, 90 (with Plan 56's residual), 35, 52, 53 | — | — |
+| 3 Editing, media and render | chosen in Setup from 63 (with Plan 04), 87 (the Release 15 handoff, #1938), 79, 85 | — | — |
 
-| Lane | Plans, in carding order | Orchestrator | Board | State |
-|---|---|---|---|---|
-| 1 Install, update and release | 31, 10, 09, 29, 30, 38 | — | — | not started |
-| 2 Environment and generation | 93, 94, 90 (with Plan 56's residual), 35, then the Plan 52 and 53 residuals | — | — | not started |
-| 3 Editing, media and render | 63 (with Plan 04), 87 (the Release 15 handoff, #1938), 79, 85 | — | — | not started |
+### Queues
 
-### Plans
+One table per plan, written in Setup: Packet, Route, Depends, Proof. None is written yet.
 
-| Plan | Lane | Manager | Board | Packets ready / running / review | Next |
-|---|---|---|---|---|---|
-| 31 | 1 | — | — | 0 / 0 / 0 | card after scope agreement |
-| 10 | 1 | — | — | 0 / 0 / 0 | card; native Stop/Quit first |
-| 09 | 1 | — | — | 0 / 0 / 0 | card; IU-0 freezes the sources |
-| 29 | 1 | — | — | 0 / 0 / 0 | reconcile the Release 12 rows, then card |
-| 30 | 1 | — | — | 0 / 0 / 0 | after Plan 29's UR-1 and UR-9 to UR-11 |
-| 38 | 1 | — | — | 0 / 0 / 0 | card |
-| 93 | 2 | — | — | 0 / 0 / 0 | card CD-0 and CD-1 |
-| 94 | 2 | — | — | 0 / 0 / 0 | card ER-0 and ER-1 |
-| 90 | 2 | — | — | 0 / 0 / 0 | after Plan 56's residual is reconciled |
-| 35 | 2 | — | — | 0 / 0 / 0 | card from scratch |
-| 52, 53 | 2 | — | — | 0 / 0 / 0 | confirm the existing custodians |
-| 63, 04 | 3 | — | — | 0 / 0 / 0 | card; inverse and batching first |
-| 87 | 3 | — | — | 0 / 0 / 0 | take over the Release 15 handoff |
-| 79 | 3 | — | — | 0 / 0 / 0 | card |
-| 85 | 3 | — | — | 0 / 0 / 0 | card |
+### The Lead — every 3 hours
 
-**Cap:** at most five packets in Running or Review per lane. The release total stays within the number of ChatGPT sessions the account can run at once, which the first manager's startup checks measure.
+**Job:** keep the orchestrators alive and moving, and open the gates. Nothing else.
 
-### Hourly checks
+1. **Read** your own last STATUS, the newest STATUS on each lane's board, and new comments on your own board.
+2. **Check each lane:**
+   - **Moving:** its STATUS is under 2 hours old, and its Done plus Parked count rose within the last 6 hours. Do nothing; a lane that moves is no longer nudged.
+   - **Not moving, not yet nudged:** send the nudge.
+   - **Not moving, nudged, never replaced:** replace the orchestrator.
+   - **Not moving after a replacement:** park the lane for the owner.
+3. **Gates:** for each `GATE` request:
+   - it shows `new failing ids: 0` → merge the plan branch into `release/16/main` and reply DONE;
+   - it shows any new ids → reply "fix packet";
+   - it says COULDN'T RUN → park the plan.
+4. **Parked:** copy any new Parked lines into your STATUS, under "for the owner". Don't solve them.
+5. **Post** one STATUS, then stop until the next check:
 
-**Lead**, about ten minutes:
-1. Check liveness: `python3 scripts/boards.py roster 16`. Nudge any orchestrator or manager with no post for 2 hours. At 3 hours, replace the session or tell the owner.
-2. Check movement: each lane should have a commit, PR, packet move or `tasks.md` tick since the last check. If not, say whether the work or the environment is the cause, and fix it where it lives.
-3. Answer every gate and REQUEST on your board, once, with the condition and next step attached.
-4. Reconcile release status: `python3 scripts/astrid_dev.py release status 16 --refresh`, then `--check`.
-5. Rewrite the Lanes and Plans tables, post one STATUS, and add any rulings to the decisions log for the owner.
+   ```text
+   STATUS r16-lead | lane 1: <moving|nudged|replaced|parked> done+parked <n> (last rise <time>) | lane 2: … | lane 3: … | gates: <merged ids or none> | for the owner: <parked lines or none>
+   ```
 
-**Orchestrator:**
-1. Read your board and your plans' boards by cursor.
-2. Answer each `READY-PROOF` within 45 minutes, running proofs in parallel.
-3. Keep every carded plan with a live manager and its next packets written before the current ones finish.
-4. Run the parallelism pass, then post one STATUS.
+**Never:** read code, run tests, write or reorder packets, answer technical questions, or change a plan.
 
-**Manager:** every 20 minutes while a packet is Running or in Review, hourly otherwise, as its launch message says.
+### The orchestrator — every hour
 
-### Standing rulings
+**Job:** turn `READY-PROOF` into Done or Rework, keep each plan's manager alive, and request the gate when a plan is finished.
 
-These hold for every lane, on top of the skills:
-1. **Fixes are packet work.** Orchestrators and the Lead diagnose, prove, review and merge; they don't write the fix.
-2. **Only harm blocks.** Harm means lost work, a broken install, update or rollback, wrong output on a real path, or a broken promise of this release. File everything else as an issue and move on.
-3. **Plan 91 is Release 17's.** Its branch, board (#1826) and packets above are not this release's work.
-4. **Nothing paid.** Nothing runs on rented machines, the owner's machine or her media without her go. Real-hardware rounds go through user test requests such as [#1952](https://github.com/banodoco/astrid-dev/issues/1952).
+1. **Read** your own last STATUS, then new comments on your lane board and your plans' boards, after your cursor.
+2. **Each `READY-PROOF`:**
+   - Check the PR's changed files. Any file outside the packet's May touch, or inside Must not touch, means FAIL.
+   - Otherwise, run the packet's Proof command once, on that head, side by side with other proofs.
+   - **PASS:** merge the PR into the plan branch, tick the packet's `tasks.md` Progress, and post `DONE <packet> <merge sha>`.
+   - **FAIL:** post the rework message with the failing ids or files. After Rework 2, a third FAIL means Parked.
+   - **COULDN'T RUN:** run it once more at the next check. If it still can't run, it is Parked. This doesn't count as a Rework.
+3. **Each BLOCKED or other park:** post `PARKED <packet>` with its question or reason, then `PARKED` for each packet that depends on it.
+4. **Each plan's manager:** if its last STATUS is over 2 hours old, nudge it. If it is still silent after the nudge, replace it, once. If the replacement is silent too, post `PARKED plan <PP>`.
+5. **A finished plan:**
+   - merge `release/16/main` into the plan branch;
+   - run the repository's hosted CI on that head; if it is cancelled or times out, run it once more, and if that fails too, post `GATE plan <PP> | head <sha> | COULDN'T RUN`;
+   - compare its failing test ids with `release/16/main`'s latest run, using `python3 env/baseline-diff.py --strict`;
+   - post on the Lead's board: `GATE plan <PP> | head <sha> | new failing ids: <n> <ids>`.
+   After "fix packet", write and queue one fix packet for those ids. A second gate with new ids parks the plan.
+6. **Post** one STATUS, then stop until the next check:
 
-### Waiting on the owner
+   ```text
+   STATUS r16-lane<n>-orchestrator | plan <PP>: queued <n> running <n> proof <n> done <n> parked <n> manager <ok|nudged|replaced> | … | acted on: <ids> | queued now: <fix packet ids or none> | parked: <lines or none> | cursor: <id>
+   ```
 
-- Paste the Lead start message below into the Lead's session.
-- The scope agreement, which the Lead brings her.
-- A Codex device sign-in in any session whose login check fails.
-- A resume nudge when a session's window ends and the Lead can't resume it.
+**Never:** write a fix yourself, write any packet but a fix packet, judge a PR beyond the May touch check and the Proof command, run other tests, or ask the Lead anything but a gate.
+
+### The manager — every hour
+
+**Job:** start the next packet. You are a dispatcher, not a reviewer.
+
+1. **Read** your own last STATUS, then new comments on your plan's board, after your cursor. Drop each packet posted as `PARKED` from your Running list. If the plan itself is parked, post a final STATUS and stop.
+2. **Each Running packet** with no commit and no post for 3 hours:
+   - send the resume message;
+   - if it was already resumed, replace the session, once;
+   - if a replacement goes silent too, post `PARKED <packet>: silent after replacement`.
+3. **Free slots:** at most three packets per plan in Running or Proof. Fill them with Queued packets, in queue order, whose Depends are all Done. Fix packets the orchestrator posts as `QUEUED` come first. Each packet gets a NEW ChatGPT chat in its Route's mode (N High, X Extra High, S Pro), with the packet start message, named `r16-P<PP>-<nn>-<n>`.
+4. **Each Rework** the orchestrator posted: send it to that packet's chat. If that chat won't load, use a new chat at the PR's head.
+5. **Post** one STATUS, then stop until the next check:
+
+   ```text
+   STATUS r16-p<PP>-manager | running: <ids> | proof: <ids> | next: <id> | started: <ids or none> | resumed ever: <ids> | replaced ever: <ids> | cursor: <id>
+   ```
+
+**Never:** edit the repository, merge, judge code, answer a packet's question (its BLOCKED is the orchestrator's, on the same board), or start packets out of order.
+
+### Fixed messages
+
+Fill the `<…>`. Never write a different one.
+
+- **Nudge:** `Check-in missed. Run your loop in releases/16/run.md "Delivery" now and post STATUS.`
+- **Rework (orchestrator to packet):** `REWORK <n> of 2 for <packet>: FAIL on <head>. Failing: <ids or files>. Fix only these, inside May touch, merge the plan branch's head in, and post READY-PROOF again.`
+- **Resume (manager to packet):** `Resume <packet>. Your branch is p<PP>/<id> at <head>. Read the board for messages to you, continue, and end with READY-PROOF.`
+- **Fix packet (orchestrator, after "fix packet"):** write `releases/16/packets/R16-P<PP>-FIX.md`:
+  - **Route:** X;
+  - **Outcome:** make these test ids pass: `<ids>`;
+  - **May touch:** the files the plan's packets touched;
+  - **Must not touch:** the test files that hold those ids;
+  - **Proof:** those ids, run directly with pytest.
+  Then post `QUEUED R16-P<PP>-FIX` on the plan's board. One per plan.
+- **Replace (any parent):** start a fresh session with that role's start message below, adding: `You replace <old session>. The state is on <board>, from comment <cursor>. Don't redo Done work.`
 
 ### Lead start message
 
-The owner pastes this into the Lead's own session.
+The owner pastes this once, after Setup.
 
 ```text
-You are the Lead (release manager) for Release 16 of Astrid, "Make Astrid dependable" (0.1.0), and you answer for it shipping. Your mailbox name is r16-lead.
-Follow the astrid-dev Leader role (agent/roles/leader.md) and its lane-orchestrators and multi-manager-release workstreams, in banodoco/astrid-dev.
-Your worksheet is releases/16/run.md, section "Delivery: Lead, lanes and managers"; the brief is releases/16.md. Read both on PR #1964's branch until it merges, then on main.
-First do "Before any lane starts": post on board: release 16 lead, and bring me the scope agreement in one message, with your recommendation on each decision. Nothing is implemented until I agree.
-Then run the release through up to three lane orchestrators, as the worksheet lays out. Each answers for its lane's plans, and each plan has one manager that hands its packets to fresh ChatGPT sessions. Create the orchestrator sessions and send each one the worksheet's orchestrator message from my account; if a session won't take it as my message, give me the text to paste.
-Every hour: run the worksheet's Lead check, post one STATUS on your board, and keep a decisions log I can read each morning.
+You are the Lead for Release 16 of Astrid (mailbox r16-lead). Your whole job is the Lead loop in releases/16/run.md, section "Delivery: Lead, lanes and managers", on astrid-dev main. Run it every 3 hours with your own scheduled task, at a minute other than :00 or :30, and never do anything that section doesn't list.
+Start the lane orchestrators named in its Lanes table now: create each session in my Codex account and send it the orchestrator start message. If a session won't take it as my message, post the text on your board for me to paste.
 You may, without asking me:
-- create, resume and replace orchestrator and manager sessions in my Codex account;
-- attach any banodoco repo;
-- cut release/16/* branches from the release/15/main heads I agree (merge forward, never rebase);
-- edit and merge Release 16's astrid-dev records: the worksheet, packets, tasks.md progress, and the Run start lines for the scope I agreed;
-- confirm gates and merge plan branches into release/16/main on your by-id comparison;
-- dispatch hosted CI within the shared slots.
-Come to me for:
-- the scope agreement and the decisions it lists;
-- changing an existing test assertion beyond a plan's rules;
-- anything paid, rented machines, or my machine or media;
-- publishing a release.
+- create, nudge and replace orchestrator sessions as the section says;
+- merge plan branches into release/16/main on a GATE showing 0 new failing ids.
+Everything else is parked for me.
 ```
 
-### Orchestrator launch message
-
-The Lead fills each `<…>` and sends it, one session per lane.
+### Orchestrator start message
 
 ```text
-You are the orchestrator for Release 16 lane <n>, <lane name>: Plans <list>. You answer for those plans finishing. Your mailbox name is r16-lane<n>-orchestrator, and the Lead is r16-lead.
-Follow the astrid-dev Orchestrator role and its lane-orchestrator workstream in banodoco/astrid-dev. For your own plans, also take the Lead's part in agent/roles/leader/multi-manager-release.md ("A lane can be the Lead for its own plan").
-Your worksheet is releases/16/run.md, section "Delivery: Lead, lanes and managers", on astrid-dev main. Your plans' Run start lines name you.
-For each plan, in the worksheet's order:
-- Card it into packets under releases/16/packets/R16-P<PP>-<nn>.md: one contract each, about three hours, with May touch, Must not touch, the focused selectors and the ids that already fail.
-- Open its board, board: release 16 plan <PP>.
-- Start one manager for it in a Codex session, with the worksheet's manager message.
-- Keep the next packets written before the current ones finish.
-Packets have no network, so you run every proof. You also review, merge into release/16/plan-<PP>, and commission each plan's review stops. Then ask the Lead for the gate into release/16/main, with your by-id comparison.
-Every hour: run the worksheet's orchestrator check and post one STATUS on board: release 16 lane <n>.
+You are the orchestrator for Release 16 lane <n> (mailbox r16-lane<n>-orchestrator, board <issue URL>); the Lead is r16-lead. Your whole job is the orchestrator loop in releases/16/run.md, section "Delivery: Lead, lanes and managers", on astrid-dev main, for the plans the Lanes table gives your lane. Run it every hour with your own scheduled task, at a minute other than :00 or :30, and never do anything that section doesn't list.
+Now start one manager per plan: create each session in the owner's Codex account and send it the manager start message for that plan.
 You may, without asking:
-- run Codex, or Claude subagents if Codex refuses;
-- attach any banodoco repo;
-- cut release/16/plan-<PP> from release/16/main;
-- create, resume and replace manager sessions in the owner's Codex account;
-- write and merge your plans' packets, tasks.md progress and evidence in astrid-dev;
-- merge into your plan branches on green.
-The Lead decides direction; bring anything else to the Lead.
+- run each packet's Proof command, and merge PASSing PRs into your plan branches;
+- tick tasks.md Progress;
+- write and queue fix packets;
+- run hosted CI once per gate;
+- create, nudge and replace manager sessions as the section says.
+Everything else is parked.
 ```
 
-### Manager launch message
-
-The orchestrator fills each `<…>` and sends it, one session per plan.
+### Manager start message
 
 ```text
-You are the manager for Release 16 Plan <PP> (<title>). Your mailbox name is r16-p<PP>-manager, and you report to r16-lane<n>-orchestrator (session <id>).
-Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev, with your orchestrator as "the Lead".
-Board: <issue URL> (board: release 16 plan <PP>); its format is in its first post. Your packets are releases/16/packets/R16-P<PP>-*.md on main, and the queue is the plan's row in releases/16/run.md. Re-read both at every check.
-First do the startup checks and post one STATUS with each result:
-- the board works both ways;
-- you can start a fresh ChatGPT session in each Route's mode, and resume one;
-- your hourly reminder fires;
-- a packet session can push, open a draft PR and comment in each repository the packets name;
-- how many ChatGPT sessions the account can run at once.
-Dispatch nothing until the orchestrator's DECISION answers it.
-Then give each Ready packet a FRESH ChatGPT session in its Route's mode (N High, X Extra High, S Pro), with the workstream's packet start message, named r16-P<PP>-<nn>-<n>. The first packet goes alone.
-Every 20 minutes while a packet is Running or in Review (hourly otherwise):
-- read the board by cursor;
-- check every open packet;
-- start every Ready packet that has no unmet dependency and no function conflict with a running one, within your lane's cap;
-- resume or replace stalled sessions;
-- pass READY-PROOF to the orchestrator.
-Post one STATUS an hour.
-You may start, resume, stop and replace packet sessions and comment on the board. You may not merge, edit the repository, approve anything or dispatch CI. If a check fails, say which step the owner must do.
+You are the manager for Release 16 Plan <PP> (mailbox r16-p<PP>-manager). Your orchestrator is r16-lane<n>-orchestrator, and your board is <issue URL>. Your whole job is the manager loop in releases/16/run.md, section "Delivery: Lead, lanes and managers", on astrid-dev main, over the Plan <PP> queue in that section and any fix packet posted as QUEUED. Run it every hour with your own scheduled task, at a minute other than :00 or :30, and never do anything that section doesn't list.
+Start each packet in a new ChatGPT chat with this message, filled in:
+"You are implementing ONE packet for Release 16: releases/16/packets/<id>.md on astrid-dev main. Follow agent/roles/manager/chatgpt-packet.md, except that you edit only files in the packet's May touch. Board: <issue URL>; you are r16-<id>-<n>. Branch p<PP>/<id> from release/16/plan-<PP>'s head, and write the code and tests only; never clone, build or run tests. Post an early STATUS once your draft PR is open. Merge the plan branch's head in, end with READY-PROOF <repo> <PR> <head>, and stop. If the packet can't be done inside May touch, post BLOCKED once with the reason and stop. Do not merge or start another packet."
+You may start, resume and replace packet chats as the section says, and comment on the board. Nothing else.
 ```
+
+### The owner's check-ins
+
+Whenever you like, read the newest STATUS on `board: release 16 lead`. "For the owner" lists everything parked. Answer there, or run Setup again to change the run.
 
 ## Now (11:20 UTC, Tue 24 Nov; historical before the scope change)
 
