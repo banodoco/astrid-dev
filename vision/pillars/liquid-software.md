@@ -16,6 +16,8 @@ The shared core should stay understandable and reliable while creative tools evo
 
 Timelines, media, projects, identities, validated operations, and permissions are durable resources shared by human-facing interfaces and agents. Specialized behavior belongs in reusable components and packs; extend the core only for genuinely shared needs.
 
+The foundation should be fast, independently operable and recoverable: it can inspect, preserve and repair creative work even when an interface, agent provider or managed creative environment fails. The same authoritative operations are available to people and agents through interchangeable interfaces, whether the workspace lives on their own machine or in the cloud. New creative tools and modalities build on explicit shared contracts; they do not need to depend on or fork the core's implementation. A dependable core enables, rather than constrains, live experimentation above it.
+
 ### Live tool composition
 
 Creators and agents should be able to reshape their tools without interrupting creative work.
@@ -63,6 +65,6 @@ A pack is a living part of the workspace, not a separate development project tha
 
 ## References
 
-**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md) · [LS-005 — Agent-managed tools](../gaps/LS-005-agent-managed-tools.md).
+**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md) · [LS-005 — Agent-managed tools](../gaps/LS-005-agent-managed-tools.md) · [LS-006 — Independent creative foundation](../gaps/LS-006-independent-creative-foundation.md).
 
 **Implementation exploration:** [Portable/resizable components](../../plans/24-liquid-workspace/plan.md) · [Composable connections](../../plans/45-component-connections/plan.md) · [Agent workspace operations](../../plans/46-agent-workspace-operations/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals, not proof of shipped capabilities.
