@@ -48,6 +48,8 @@ A pack should be something you can change while you are using it and take anywhe
 
 A pack is a living part of the workspace, not a separate development project that interrupts making art. People and agents can find, adapt and combine its capabilities while they work. One extension contract connects the interface and Python backend, so a useful contribution can be shared, installed and extended without becoming tied to its author's setup. The contract is open to other implementation languages too. An independently built tool can use the same authoritative resources and be selected instead of a default interface without a core fork or project migration; permissions, versioning and recovery still apply.
 
+A creative contribution should be able to introduce its own durable data model and evolve it as creative needs change. Its data should remain usable, portable and recoverable across tool updates, removal, reinstall and local or hosted work, without changing the shared foundation or accessing another contribution's private data. Astrid should handle the infrastructure of data ownership, permissions, migration and recovery so a contributor can concentrate on the tool's creative meaning.
+
 **We should:**
 
 - Render a pack's changes in the running app at once, including the web app.
