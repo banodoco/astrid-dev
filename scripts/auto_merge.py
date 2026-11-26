@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import re
 
-from records import key_value_lines
+from otto.markdown import key_value_lines
 
 
 RELEASE_BRIEF = re.compile(r"^releases/[1-9]\d*\.md$")

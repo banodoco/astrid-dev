@@ -11,18 +11,18 @@ from records import (
     PLACEHOLDERS_COMPLETION,
     PLACEHOLDERS_GAP,
     PLACEHOLDERS_PLANNING,
+    release_brief,
+)
+from otto.git import git_output, git_result, git_show
+from otto.markdown import (
     field_match,
-    git_output,
-    git_result,
-    git_show,
     heading,
     is_placeholder,
     key_value_lines,
     matching_sections,
     named_field_matches,
     read_text,
-    release_brief,
-    section,
+    section_by_heading as section,
     section_after_match,
     split_table_row,
 )

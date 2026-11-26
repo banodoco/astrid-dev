@@ -5,9 +5,10 @@ import re
 from pathlib import Path
 
 from check_project_planning import LABELS as PLANNING_LABELS
-from document_structure import headings, ordered_heading_error
+from otto.markdown import headings, ordered_heading_error, read_text
 from project_contract import PLAN_FOLDER
-from records import PROJECT_FIELDS, git_result, read_text
+from otto.git import git_result
+from records import PROJECT_FIELDS
 
 
 def _headings(text: str) -> list[str]:

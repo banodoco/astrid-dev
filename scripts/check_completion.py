@@ -6,8 +6,9 @@ from pathlib import Path
 
 from check_docs import read
 from project_contract import plan_gap_ids, project_number
-from records import (PLAN_CELL, PLACEHOLDERS_COMPLETION, field_match, git_result, git_show,
-                     is_placeholder, matching_sections, section_after_match)
+from records import PLAN_CELL, PLACEHOLDERS_COMPLETION
+from otto.git import git_result, git_show
+from otto.markdown import field_match, is_placeholder, matching_sections, section_after_match
 
 SECTION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2,})\s*$", re.I | re.M)
 GAP_LINE = re.compile(
@@ -24,7 +25,7 @@ def has_real_reason(value: str) -> bool:
 
 
 def transitions_to_done(before: dict[str, str], after: dict[str, str]) -> list[str]:
-    from lifecycle import requiring
+    from otto.lifecycle import requiring
     completion_statuses = requiring("completion-assessment")
     return sorted(f"{folder}/plan.md" for folder, status in after.items()
                   if status in completion_statuses and before.get(folder) != status)
@@ -133,7 +134,8 @@ def project_statuses(root: Path, revision: str | None = None) -> dict[str, str]:
             raise ValueError(f"base revision {revision!r} is not available; fetch the PR base")
     if revision is not None:
         from project_contract import PLAN_FOLDER
-        from records import git_output, project_fields
+        from otto.git import git_output
+        from records import project_fields
         statuses = {}
         for path in git_output(root, "ls-tree", "-r", "--name-only", revision, "plans/").splitlines():
             parts = Path(path).parts

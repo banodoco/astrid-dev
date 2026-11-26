@@ -16,8 +16,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from contribution_api import request
-from records import (BRANCH_FIRST_RELEASE, BRANCH_REPOSITORIES, release_branch_errors, release_brief,
-                     section, split_table_row)
+from records import BRANCH_FIRST_RELEASE, BRANCH_REPOSITORIES, release_branch_errors, release_brief
+from otto.markdown import section_by_heading as section, split_table_row
 
 OWNER = "banodoco"
 NOT_CUT = "not yet cut"

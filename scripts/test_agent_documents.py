@@ -310,7 +310,7 @@ class AgentDocumentTests(unittest.TestCase):
                                      "Leader" if path.startswith("roles/") else "Plan")
 
     def test_required_sections_cannot_be_missing_out_of_order_or_empty(self):
-        from document_structure import section
+        from otto.markdown import section
         cases = (("roles/leader.md", ROLE, ("Responsibility", "Authority", "Responsibilities", "Handoff")),
                  ("shared/workstreams/plan.md", STREAM, ("When to use", "Outcome", "Inputs", "Procedure", "Completion")))
         for path, original, headings in cases:
@@ -330,7 +330,7 @@ class AgentDocumentTests(unittest.TestCase):
                 parse_document(self.root, file)
 
     def test_required_workstream_sections_keep_the_legacy_substance_minimum(self):
-        from document_structure import section
+        from otto.markdown import section
         file = self.write("shared/workstreams/plan.md", STREAM)
         for heading in ("When to use", "Outcome", "Inputs", "Procedure", "Completion"):
             for value in ("short", "TBD", "TODO", "12345678901"):
@@ -355,7 +355,7 @@ class AgentDocumentTests(unittest.TestCase):
         self.assertEqual(len([doc for doc in discover_documents(self.root) if doc.kind == "workstream"]), 2)
 
     def test_real_workstreams_all_keep_five_substantive_sections(self):
-        from document_structure import section
+        from otto.markdown import section
         root = Path(__file__).resolve().parents[1]
         streams = [doc for doc in discover_documents(root) if doc.kind == "workstream"]
         self.assertGreaterEqual(len(streams), 15)

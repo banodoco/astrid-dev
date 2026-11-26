@@ -12,7 +12,9 @@ from check_docs import ROOT, read
 from gap_relationships import gap_metadata, parse_gap_aspirations, parse_gap_relationships
 from project_contract import plan_gap_ids
 from project_delivery import GAP_FILE as GAP_ID
-from records import PLAN_CELL, git_output, heading as record_heading, section as record_section
+from records import PLAN_CELL
+from otto.git import git_output
+from otto.markdown import heading as record_heading, section_by_heading as record_section
 from vision_subject import parse_subject, render_subject_markdown
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"

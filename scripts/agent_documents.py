@@ -11,7 +11,7 @@ from pathlib import Path
 import re
 import os
 
-from document_structure import frontmatter, headings, section
+from otto.markdown import frontmatter, headings, section
 
 
 SKILL_PREFIX = "astrid-dev-"

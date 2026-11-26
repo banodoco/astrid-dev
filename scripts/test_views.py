@@ -282,7 +282,7 @@ class PlanCatalogViewTests(unittest.TestCase):
 
     def test_catalog_region_preserves_prose_and_generates_only_marker_and_table(self):
         import views
-        from records import split_table_row
+        from otto.markdown import split_table_row
         view = self.view()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -391,7 +391,7 @@ class PlanCatalogViewTests(unittest.TestCase):
 
     def test_new_valid_folder_appears_last_among_open_rows_without_a_catalog_edit(self):
         import views
-        from records import split_table_row
+        from otto.markdown import split_table_row
         from test_records import ProjectRecordTests as Records
         view = self.view()
         with tempfile.TemporaryDirectory() as directory:
@@ -831,7 +831,7 @@ class SharedBlockTests(unittest.TestCase):
         # P73-07 decision 7159672645: real canonical consumers use direct links.
         import views
         from agent_documents import discover_documents, routing_table_headers
-        from document_structure import section
+        from otto.markdown import section
         from test_agent_documents import REF
         root = Path(__file__).resolve().parent.parent
         found, errors = views.block_views(root)

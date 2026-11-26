@@ -2,8 +2,9 @@
 from pathlib import Path
 import re
 
-from lifecycle import names
-from records import project_fields, release_brief, section, split_table_row
+from otto.lifecycle import names
+from records import project_fields, release_brief
+from otto.markdown import section_by_heading as section, split_table_row
 
 START = "<!-- release-status:start -->"
 END = "<!-- release-status:end -->"
