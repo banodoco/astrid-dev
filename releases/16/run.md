@@ -34,7 +34,7 @@ How Release 16 runs unattended for days. **All judgment happens once, in Setup, 
 |---|---|---|---|
 | Lead (`r16-lead`) | Codex | hour | Sends one Luna per active plan to run the plan loop; acts on what comes back; sends Sol for capped fixes; merges finished plans. It reads only one-line results, never code or logs. |
 | Manager (`r16-p<PP>-manager`) | Codex, one per active plan | hour | Starts the next packet in a new ChatGPT chat, and resumes or replaces silent chats. |
-| Packet (`r16-P<PP>-<nn>-<n>`) | a normal chat in ChatGPT on the web, opened by its manager in the browser | — | Writes one packet's code and tests, runs its Proof command in the chat, and pushes code and result to its branch after each task. |
+| Packet (`R16-P<PP>-<nn>-<n>`) | a normal chat in ChatGPT on the web, opened by its manager in the browser | — | Writes one packet's code and tests, runs its Proof command in the chat, and pushes code and result to its branch after each task. |
 
 **Packets go only to a normal chat in ChatGPT on the web:** the manager opens chatgpt.com in its browser, signed in to the owner's own account. Never ChatGPT for Work, never Codex. The mode follows the packet's Route, every time:
 
@@ -59,7 +59,7 @@ Never one mode for everything. If a mode isn't offered, use the next one up; if 
 
 - Write evidence files, receipts, audits, readbacks, summaries or re-verifications. A one-line board comment is the whole record.
 - Clone, build or run tests outside a packet chat, dispatch hosted CI, or collect proof of any other kind.
-- Edit plans, `tasks.md`, skills, this section (except the toolkit table) or `releases/16.md`. Setup reconciles `tasks.md` when the run ends.
+- Edit plans, `tasks.md`, skills, this section or `releases/16.md`. Setup reconciles `tasks.md` when the run ends.
 - Start a new plan, investigation, review or document.
 - Rebase, force-push, or create a branch outside the table below.
 - Spend money, or use the owner's machine or media.
@@ -81,7 +81,8 @@ Use these commands, exactly. `<repo>` is the product repository a packet names (
 | To | Run |
 |---|---|
 | Find a board's issue number | `gh api "search/issues?q=repo:banodoco/astrid-dev+is:issue+is:open+in:title+%22board:+release+16+lead%22" --jq '.items[]\|[.number,.title]\|@tsv'` (put the board's title in place of `lead`, e.g. `plan+63`) |
-| Read a board after a cursor | `python3 agent/guides/codex-cloud/inbox.py banodoco/astrid-dev <issue> --after <cursor>`, from an astrid-dev checkout of `main` |
+| Read a board after a cursor (0 for the whole board) | `gh api "repos/banodoco/astrid-dev/issues/<issue>/comments?per_page=100" --paginate --jq '.[] \| select(.id > <cursor>) \| "\(.id) \(.created_at) \(.body)"'` |
+| Read a file on astrid-dev `main`, such as a packet | `gh api repos/banodoco/astrid-dev/contents/<path> --jq .content \| base64 -d` |
 | Post on a board | `gh issue comment <issue> -R banodoco/astrid-dev --body "<text>"`; start every comment with your mailbox name |
 | A PR's changed files | `gh pr view <PR> -R banodoco/<repo> --json files --jq '.files[].path'` |
 | A head commit's last line | `gh api repos/banodoco/<repo>/commits/<head> --jq .commit.message \| tail -n 1` |
@@ -94,15 +95,18 @@ Your mailbox name is only the name you sign with; there is no other mailbox.
 
 **The Codex side** (creating a session, sending it its start message, your hourly scheduled task, sending a Luna or Sol helper and getting its one-line final reply, and the manager's browser) is recorded in the toolkit table below. Use the newest Luna model for plan loops and the newest Sol model for Sol briefs.
 
-| To | How (written at the toolkit check) |
-|---|---|
-| Schedule your hourly check | — |
-| Create a manager session and send it its start message | — |
-| Send a Luna or Sol helper and read its final reply | — |
-| Open a new ChatGPT chat on the web, pick its mode and name it (managers) | — |
-| Resume an existing ChatGPT chat (managers) | — |
+| Role | To | How (from the Lead board's TOOLKIT comments) |
+|---|---|---|
+| Lead and manager | Schedule your hourly check | — |
+| Lead | Create a manager session and send it its start message | — |
+| Lead | Send a Luna or Sol helper and read its final reply | — |
+| Manager | Open a new ChatGPT chat on the web, pick its mode and name it | — |
+| Manager | Resume an existing ChatGPT chat | — |
+| Packet | Read the repository, push a branch, open a draft PR and comment, through the chat's GitHub connector | — |
 
-**Toolkit check, the first time each role starts:** do each row of your role once, as a trial. Write the exact steps that worked into its row, by one PR to this section that changes only that table, merged on green. A row you can't do is one `PARKED <role>: can't <row>` for the owner. A role whose rows are filled in just follows them.
+**Toolkit check, the first time each role starts:** first read the Lead board's `TOOLKIT` comments; a row already recorded there is just followed. For a row not yet recorded, your first real use of it is the trial: the Lead's first manager is the real one, a manager's first chat is its first packet, and the Sol row is recorded the first time a Sol is sent. Once a row works, post one comment on the Lead board: `TOOLKIT <row>: <the exact steps that worked>`. A row you can't do is one `PARKED <role>: can't <row>` for the owner. The table above is a summary that Setup refreshes; the comments are the record.
+
+**The packet row** is proved by the first packet's early STATUS. If that packet instead posts BLOCKED because the chat can't reach GitHub, the manager posts `PARKED plan <PP>: packet chats can't reach GitHub`, and the Lead starts no more managers until the owner answers.
 
 ### Packet states
 
@@ -139,7 +143,7 @@ The owner does this with a planning session she chooses, such as the one that wr
 
 **Lead board:** — (written in Setup).
 
-**Active at once:** at most four plans. The first manager's startup check measures how many ChatGPT chats the account runs at once; four plans need about twelve, so if it's fewer, run as many plans as that number divided by three allows. When a plan finishes or is parked, the Lead starts the next one in this table.
+**Chats at once:** — (the owner's ChatGPT plan limit, written in Setup). **Active at once:** the smaller of four and that number divided by three, rounded down, and at least one; with fewer than three chats, one plan runs with that many slots. When a plan finishes or is parked, the Lead starts the next one in this table that isn't in its STATUS as done or parked.
 
 | Order | Plan | Board | Manager | State |
 |---|---|---|---|---|
@@ -157,7 +161,6 @@ One table per plan, written in Setup: Packet, Route, Depends, Proof. None is wri
 2. **Send one Luna per active plan,** all at once, each with the plan loop brief below and that plan's last result line. Wait for each one's single result line. A Luna that hasn't returned its final reply within 30 minutes, or by the end of your check, leaves that plan's line as it was, with `no-result` raised by one; at `no-result 2`, park the plan. A result resets it to 0.
 3. **Act on each flag** in the results:
    - `SOL <packet>: <reason>` → post `SOL <packet>` on the plan's board, then send one Sol with the Sol brief below and that reason;
-   - `chats <n>` → the number of plans active at once becomes the smaller of four and n divided by three, rounded down; start the next plans' managers up to it;
    - `NO-CHATS <PP>` → add it to "for the owner", and do nothing else;
    - `REPLACE manager <PP>` → replace that manager, once, and add `manager replaced` to its line; if it was already replaced, park the plan;
    - `FINISHED <PP>` → merge `release/16/main` into the plan branch, then the plan branch into `release/16/main`. If either won't merge cleanly, park the plan. Then start the next plan in the Plans table, with the manager start message.
@@ -165,7 +168,7 @@ One table per plan, written in Setup: Packet, Route, Depends, Proof. None is wri
 5. **Post** one STATUS on your board, then stop until the next check:
 
    ```text
-   STATUS r16-lead | <each active plan's last result line, with no-result <n> and manager replaced if so> | … | sol: <packet and time sent, or none> | merged to release/16/main: <plans or none> | for the owner: <parked and NO-CHATS lines, or none> | cursor: <last comment id on your board>
+   STATUS r16-lead | <each active plan's last result line, with no-result <n> and manager replaced if so> | … | sol: <packet and time sent, or none> | merged to release/16/main: <plans or none> | managers: <PP>=<session>, … | plans done: <list> | plans parked: <list> | for the owner: <parked and NO-CHATS lines, or none> | cursor: <last comment id on your board>
    ```
 
 **Never:** read code, diffs or logs yourself, run tests, write or reorder packets, answer technical questions, or change a plan.
@@ -174,7 +177,7 @@ One table per plan, written in Setup: Packet, Route, Depends, Proof. None is wri
 
 ```text
 You are running one check of the Release 16 plan loop for Plan <PP>, on board <issue URL>. Follow releases/16/run.md, section "Delivery", "Plan loop" on astrid-dev main. Do only these steps, then return one line.
-1. Your last result line was: <the Lead pastes it, or "none">. Read the board's comments after its cursor, or the whole board if there is none. Skip any READY that already has a DONE or REWORK after it. If the manager's startup STATUS gives the chat limit, add chats <n> to your line, once; if the manager posted NO-CHATS since your cursor, flag NO-CHATS <PP>.
+1. Your last result line was: <the Lead pastes it, or "none">. Read the board's comments after its cursor, or the whole board if there is none. Skip any READY that already has a DONE or REWORK after it. If the manager posted NO-CHATS since your cursor, flag NO-CHATS <PP>. Read each packet's file (releases/16/packets/<id>.md) for its May touch, Must not touch and Proof.
 2. For each READY <repo> <PR> <head>:
    - every file the PR changes is in the packet's May touch and none in Must not touch;
    - the head commit's last line is `Proof: <the packet's own Proof command> — PASS …`;
@@ -186,8 +189,8 @@ You are running one check of the Release 16 plan loop for Plan <PP>, on board <i
 4. Each PARKED packet: post PARKED for every packet whose Depends includes it.
 5. The manager's last STATUS is over 2 hours old: post the nudge on the board, unless your last result line says manager nudged, in which case flag REPLACE manager <PP>.
 6. Every packet is Done or Parked: flag FINISHED <PP>.
-Return exactly: plan <PP>: queued <n> running <n> ready <n> done <n> parked <n> manager <ok|nudged> | flags: <SOL …: <reason>, REPLACE …, FINISHED …, NO-CHATS …, chats <n>, or none> | cursor: <last comment id>.
-Never run tests, read beyond these steps, or write anything else.
+Return exactly: plan <PP>: queued <n> running <n> ready <n> done <n> parked <n> manager <ok|nudged> | flags: <SOL …: <reason>, REPLACE …, FINISHED …, NO-CHATS …, or none> | cursor: <last comment id>.
+Use the commands in the section's command table. Never run tests, read beyond these steps, or write anything else.
 ```
 
 ### Sol brief (one try per packet)
@@ -211,11 +214,11 @@ Don't do anything else.
    - if it was already resumed, replace the chat, once;
    - if the replacement goes silent too, post `PARKED <packet>: silent after replacement`;
    - a packet Running for 8 hours in all without READY: post `PARKED <packet>: no READY in 8 hours`.
-4. **Free slots:** at most three packets per plan Running. A replaced chat counts as closed. If the account refuses a new chat, post `NO-CHATS` and try again at the next check. Fill them with Queued packets, in queue order, whose Depends are all Done. Each packet gets a NEW normal chat in ChatGPT on the web, opened at chatgpt.com in your browser (never ChatGPT for Work, never Codex), in its Route's mode: N High, X Extra High, S Pro. Send it the packet start message, and name it `r16-P<PP>-<nn>-<n>`. Your first packet goes alone, until it posts its first STATUS.
+4. **Free slots:** at most three packets per plan Running. A replaced chat counts as closed. If the account refuses a new chat, post `NO-CHATS` and try again at the next check. Fill them with Queued packets, in queue order, whose Depends are all Done. Each packet gets a NEW normal chat in ChatGPT on the web, opened at chatgpt.com in your browser (never ChatGPT for Work, never Codex), in its Route's mode: N High, X Extra High, S Pro. Send it the packet start message, and name it `<packet id>-<n>`, for example `R16-P63-01-1`. Your first packet goes alone, until it posts its first STATUS.
 5. **Post** one STATUS, then stop until the next check:
 
    ```text
-   STATUS r16-p<PP>-manager | running: <id since time, …> | next: <id> | started: <ids or none> | resumed ever: <ids> | replaced ever: <ids> | cursor: <id>
+   STATUS r16-p<PP>-manager | running: <id since time, …> | chats: <packet>=<chat name and link>, … | next: <id> | started: <ids or none> | resumed ever: <ids> | replaced ever: <ids> | cursor: <id>
    ```
 
 **Never:** edit the repository, merge, judge code, answer a packet's question, or start packets out of order.
@@ -234,7 +237,7 @@ The owner pastes this after Setup, or into a fresh session to replace a stopped 
 
 ```text
 You are the Lead for Release 16 of Astrid (mailbox r16-lead). Your whole job is the Lead loop in releases/16/run.md, section "Delivery: Lead and managers", on astrid-dev main. Run it every hour with your own scheduled task, at a minute other than :00 or :30, and never do anything that section doesn't list. Use its commands exactly.
-First do the toolkit check for the Lead's rows in that section. Then start the manager for the first plan in its Plans table: create the session in my Codex account and send it the manager start message. When a Luna's line shows `chats <n>`, start the next plans' managers as the section says. If you replace an earlier Lead, start no managers: continue from its last STATUS. If a session won't take it as my message, post the text on your board for me to paste.
+First do the toolkit check for the Lead's rows in that section. Then start the manager for the first plan in its Plans table: create the session in my Codex account and send it the manager start message. When its first packet's early STATUS shows packet chats reach GitHub, start the next plans' managers, up to the number active at once. If you replace an earlier Lead, start no managers: continue from its last STATUS. If a session won't take it as my message, post the text on your board for me to paste.
 You may, without asking me:
 - send Luna helpers with the plan loop brief, and Sol helpers with the Sol brief;
 - create, nudge and replace manager sessions as the section says;
@@ -246,10 +249,10 @@ Everything else is parked for me.
 
 ```text
 You are the manager for Release 16 Plan <PP> (mailbox r16-p<PP>-manager). Your board is <issue URL>, and the Lead is r16-lead. Your whole job is the manager loop in releases/16/run.md, section "Delivery: Lead and managers", on astrid-dev main, over the Plan <PP> queue in that section. Run it every hour with your own scheduled task, at a minute other than :00 or :30, and never do anything that section doesn't list. Use its commands exactly.
-Startup: do the toolkit check for the managers' rows in that section, then post one STATUS saying how many ChatGPT chats the account can run at once, and whether High, Extra High and Pro are offered.
+Startup: do the toolkit check for the managers' rows in that section, then post one STATUS saying whether High, Extra High and Pro are offered.
 Every packet goes to a new normal chat in ChatGPT on the web: open chatgpt.com in your browser, signed in to the owner's account. Never ChatGPT for Work, never Codex. Its mode follows its Route: N (normal) High, X (hard) Extra High, S (very hard) Pro.
 Start each packet in a new ChatGPT chat with this message, filled in:
-"You are implementing ONE packet for Release 16: releases/16/packets/<id>.md on astrid-dev main. Board: <issue URL>; you are r16-<id>-<n>. Load the packet's Files to load. Branch p<PP>/<id> from release/16/plan-<PP>'s head, or continue on it and its draft PR from their head if they already exist, and edit only files in the packet's May touch. Push to the branch after each task. Open a draft PR into release/16/plan-<PP> and post an early STATUS once it's open. Run the packet's Proof command here in this chat: only the narrow tests of the code you changed, never a broad suite. When it passes, merge the plan branch's head in, run it again, push a commit whose last line is `Proof: <command> — PASS <summary>`, post READY <repo> <PR> <head>, and stop. If you can't run the Proof here, or can't do the packet inside May touch, post BLOCKED once with the reason and stop. Do not merge or start another packet."
+"You are implementing ONE packet for Release 16: releases/16/packets/<id>.md on astrid-dev main. Board: <issue URL>; you are <id>-<n>. Load the packet's Files to load. Branch p<PP>/<id> from release/16/plan-<PP>'s head, or continue on it and its draft PR from their head if they already exist, and edit only files in the packet's May touch. Push to the branch after each task. Open a draft PR into release/16/plan-<PP> and post an early STATUS once it's open. Run the packet's Proof command here in this chat: only the narrow tests of the code you changed, never a broad suite. When it passes, merge the plan branch's head in, run it again, push a commit whose last line is `Proof: <command> — PASS <summary>`, post READY <repo> <PR> <head>, and stop. If you can't run the Proof here, or can't do the packet inside May touch, post BLOCKED once with the reason and stop. Do not merge or start another packet."
 You may start, resume and replace packet chats as the section says, and comment on the board. Nothing else.
 ```
 
