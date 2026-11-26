@@ -1,0 +1,1 @@
+Release 16 run board. One comment per message, each starting with its sender's mailbox name. The rules and message formats are in releases/16/run.md, section "Delivery: Lead and managers", in banodoco/astrid-dev on main. This issue is public: never post credentials, tokens or private paths.

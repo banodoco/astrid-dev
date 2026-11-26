@@ -8,6 +8,8 @@
 
 **Scope decision:** Pending — on 24 November 2026 the owner asked for ComfyUI Desktop support and for this plan and [Plan 94](../94-dependable-environment-setup-and-recovery/plan.md) to be in Release 16 (in the planning chat behind astrid-dev #1847, then in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV). On 25 November she asked for both plans to deliver one end state, which is the one plan.md now describes: one honest state, one next step and one consent, so neither the person nor the agent improvises. That is release intent, not a go to implement. Next: the owner confirms the split and D2–D5.
 
+**CPU-only (owner, 26 November 2026):** real-hardware work moves to the Later section of tasks.md, done separately later.
+
 **Prior art:** [Plan 20 phase 4](../20-zero-to-first-image/plan.md#phase-4-local-first) shipped the first-image flow and excluded Desktop discovery and stopped installs. [Plan 32](../32-generation-placement-targets/plan.md) owns placement and the generation path, and [Plan 34](../34-real-gpu-proof/plan.md) the GPU evidence format. At Agent `b934555c`:
 - `astrid/core/generation/preflight.py:90-99`: `readiness_envelope` reads `ready` whenever no issue was raised;
 - `astrid/sdk/generation.py:1335`: `targets` "inspect[s] selection without probing";
@@ -38,7 +40,7 @@ Rejected:
 
 The estimate follows the critique's 4–6 days, plus the ladder contract, which Plan 94 also uses.
 
-**Proof and limits:** plan.md's [Completion](plan.md#completion), on one declared Windows NVIDIA machine and Desktop version, through the installed CLI and the matching editor. CPU fixtures prove classification and refusal only. Running Portable, Git and Pinokio installs are regression checks, not qualification.
+**Proof and limits:** plan.md's [Completion](plan.md#completion), on CPU fixtures, which prove classification, next actions and refusal. The Windows NVIDIA Desktop witness is later work. Running Portable, Git and Pinokio installs are regression checks, not qualification.
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the ladder, because CD-2 to CD-5 and Plan 94 build on it, and R at most 1. Next: the owner confirms (D4).
 
@@ -54,7 +56,7 @@ Each is a recommendation until the owner confirms it in writing.
 | D2 | What is qualified | One Windows NVIDIA machine and one ComfyUI Desktop version, proved with a real image. Running Portable, Git and Pinokio stay regression checks; anything else is labelled unqualified. |
 | D3 | Who starts ComfyUI Desktop | The person, when Astrid asks. Astrid never launches, restarts, updates or replaces Desktop or Pinokio. Native launch is cut from this plan; revisit only if the witness shows asking is not enough. |
 | D4 | The split and the reviews | Keep two plans with the handoff in plan.md: this plan defines the ladder and owns existing installs, and Plan 94 owns the separate install when nothing usable is left. One review stop on the ladder, and one final review. |
-| D5 | The base and the tester | `release/16/main` once it is cut, or an owner-approved early start on `release/15/main`, with the SHA recorded. A tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), within its Limits and consent, which the owner confirms; no lane tests on the owner's machine. |
+| D5 | The base and the tester | `release/16/main` once it is cut, or an owner-approved early start on `release/15/main`, with the SHA recorded. A tester through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), within its Limits and consent, which the owner confirms; no lane tests on the owner's machine. (Later: the tester round is not part of Release 16.) |
 
 ## Source identities
 
