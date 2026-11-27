@@ -1,96 +1,79 @@
 # Tasks: refined concurrent editing
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Proposed Release 16 reconciliation, 27 November 2026.** These cards replace the former `pre-main` / Plan 02 composition sequence. No implementation or qualification result is newly claimed. [Historical task record](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/04-concurrent-edits/tasks.md).
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../index.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Shared implementation](../63-dependable-saving/tasks.md)
 
-## Task index
+## Task disposition and ownership
 
-| ID / outcome | Route and dependency | Progress |
-|---|---|---|
-| [CE-FINAL](#ce-final): accept exact retained tuple | N / Luna · App repair, CE-LIMIT, retained Agent and Runtime | Not recorded |
-| [CE-REPAIR](#ce-repair-only-if-required): fix a demonstrated boundary failure, if any | S / Sol + Luna · exact CE-FINAL failure | Conditional; not recorded |
-| [CE-END](#ce-end): existing project END review | Review / Astra · CE-FINAL, CE-0, CE-LIMIT | Not recorded |
-| [CE-COMPOSE](#ce-compose): compose CE inputs after generation integration | X / Terra + Luna · CE-END and generation integration promotion | Not recorded |
-| [CE-REVIEW](#ce-review): review exact composed heads | Review / Astra · CE-COMPOSE | Not recorded |
-| [CE-PROMOTE](#ce-promote): promote reviewed immutable heads | N / Luna · CE-REVIEW | Not recorded |
-| [CE-REF](#ce-ref): dev reference builder on commitTimeline | X / Terra + Luna · none recorded; fixes App CI Lanes/quick-journey | Not recorded |
+| ID | Disposition / remaining outcome | Owner and dependency | Progress |
+|---|---|---|---|
+| [CE-FINAL](#ce-final) | Keep; map retained acceptance and qualify the current tuple | Independent P04 verifier; mapping starts alongside P63, execution consumes its candidate | Not recorded |
+| [CE-REPAIR](#ce-repair) | Consolidate; only demonstrated failures enter the existing P63 lane | Existing P63 task/function owner; exact failing boundary | Conditional; not recorded |
+| [CE-END](#ce-end-and-ce-review) | Consolidate; named independent concurrency END verdict within R0 | Independent reviewer; CE-FINAL and recovered CE-0/CE-LIMIT | Not recorded |
+| [CE-COMPOSE](#ce-compose) | Amend; shared R16 provider → Agent → App pin join | Existing release integration/pin owner; reviewed shared changes | Not recorded |
+| [CE-REVIEW](#ce-end-and-ce-review) | Consolidate; same exact-tuple R0 review, separate concurrency conclusion | Independent reviewer; composed candidate and affected evidence | Not recorded |
+| [CE-PROMOTE](#ce-promote) | Remove separate publishing work; retain the release publication boundary | Existing Release Lead; accepted candidate and publication authority | Superseded as a separate task; publication not recorded |
+| [CE-REF](#ce-ref) | Credit merged source; retain qualification only | Existing Agent/reference-journey owner; current source and evidence | Source implementation present; qualification not recorded |
 
-## Task details
+**Effort:** 1–2 engineering days for evidence mapping, additional concurrency checks and the independent verdict, alongside shared P63 qualification. Product repairs, the shared installed run and pin integration are estimated in P63. Re-estimate only if recovered obligations expose a concrete missing boundary.
 
-### CE-FINAL
+## CE-FINAL
 
-- **Outcome / work:** Independently verify the retained concurrent-editing tuple, retaining code and fixture repairs. The App repair's full eight-case verification passed, but CE-2 still requires independent final acceptance. Prior 351 SDK passes are reusable only for unchanged internals; they do not establish acceptance of a newly composed tuple.
-- **Route:** N / Luna.
-- **Dependencies and inputs:** Verified App repair, CE-LIMIT, and retained Agent/Runtime inputs; see [inputs](inputs.md#starting-code-and-branch-policy).
-- **Focused checks:** Run the seven SDK nodes below and the original, unchanged full-eight hosted wrapper (J1–J5 variants and recovery) on the recorded Agent/App/Runtime tuple. There are seven SDK nodes and eight hosted cases. The older CE-2 contract selects four SDK files; retain that file-level selection when applying that contract. Reuse independent evidence only when tuple, wrapper, and selection match exactly; changed dependencies or composition require affected final checks. Include CE-LIMIT's existing explicit check. Run migration/owner negative regression only if a merge changes those boundaries. Do not run full SDK/UI suites or weaken restore, lost-ACK, or unknown-flight assertions. In-scope failures present before the change remain blocking; unrelated baseline failures remain out of scope.
-- **Done:** Independent verifier passes all seven SDK nodes and eight hosted cases on the recorded tuple, without replaying unchanged 351 nodes.
+**Outcome.** Retain the original seven SDK outcomes, eight hosted cases, cooperative limit and CE-0 requirements on the actual R16 candidate. Historical 351 SDK passes and App eight-case passes are credited only for their recorded inputs.
 
-SDK selectors in `tests/sdk/test_timeline_ce2_retry.py`:
+**First work.** Use the [recovered seven-node map](inputs.md#retained-sdk-acceptance-map). Retrieve the exact original eight-case hosted wrapper (J1–J5 variants and recovery), CE-0 and CE-LIMIT definitions/check, and accepted END review scope/remaining-round budget. Locate originals before proposing replacement. If an artifact cannot be recovered, present a concrete current-route equivalence and obtain the appropriate owner/Lead ruling; do not silently reduce coverage or recreate a retired editing lease.
 
-- `test_ce2_pending_user_editing_refusal_is_retryable_via_tl_retry`
-- `test_ce2_resend_preserves_body_key_base_flight`
+**Current acceptance.** Combine the retained mapping with P63's real-route proof of:
 
-SDK selectors in `tests/sdk/test_timeline_sync.py`:
+- Simultaneous supported disjoint writes and actual overlap; exact per-item readback, no collateral changes or silent overwrite.
+- Separate recoverable writers sharing an authenticated actor; explicit legacy-flight recovery, no arbitrary sibling replay, no trust gained from a client-supplied writer label.
+- Exact key/body/base/fence retention on unknown outcome, matching late-ACK settlement, wrong-owner and replaced-flight negatives; changed bytes use a fresh attempt key only after a definitive result.
+- Real browser/process restart, stale restore refusal, own queued/in-flight/accepted undo, preservation of later disjoint edits and explicit overlap handling.
+- Bounded retry and the retained cooperative limit, with known refusal distinguished from an unanswered or malformed reply.
 
-- `test_user_editing_deadline_includes_an_unanswered_post`
-- `test_user_editing_http_wait_uses_single_budget_and_saves_acknowledged_refusal`
-- `test_user_editing_backoff_reaching_cap_does_not_resend`
-- `test_user_editing_http_timeout_keeps_unknown_flight_with_single_budget`
-- `test_restore_lost_ack_retries_exact_request_after_reload`
+Use the shared history-bearing installed fixture and existing harness. Preserve old outcome assertions; test definitions alone are not proof. Use focused checks and affected neighbors, not a new blanket full-suite gate. When applying an older contract that selected four SDK files, retain that selection until a documented equivalence decision says otherwise.
 
-The CE-LIMIT check selector and the exact identities/definitions of CE-0 and CE-LIMIT are not present in the supplied card; recover them from the source evidence at setup. Do not infer them.
+**Done.** Independent exact-tuple evidence and the accepted original-to-current mapping cover all retained outcomes. Missing original evidence or a blocking current result prevents closure.
 
-### CE-REPAIR, only if required
+## CE-REPAIR
 
-- **Outcome / work:** Reproduce a newly demonstrated failed boundary and repair its cause with one owner.
-- **Route:** S / Sol + Luna for unresolved concurrency or ownership invariants; ordinary fixture/setup repair is N / Luna. Sol is not for setup or test-running.
-- **Dependencies and inputs:** Exact failure from CE-FINAL.
-- **Focused checks:** Recheck the failed boundary and affected neighboring checks; preserve unknown flights, late acknowledgements, request body/key/base/fence, deadline, and user edits.
-- **Done:** Same boundary and affected neighboring checks pass.
+**Outcome.** Repair a demonstrated failed safety boundary with one existing owner.
 
-### CE-END
+Route SDK writer/flight custody to P63 CC-4b; browser recovery/undo to CC-5a/5b; shared outcomes to CC-4/4b; supported edit/admission errors to CC-3/6/13/14; measured heavy undo/history costs to CC-17. P79 owns import facts and operation recovery; P63 owns the captured placement attempt.
 
-- **Outcome / work:** Conduct the existing project END review of required outcomes and the exact tuple.
-- **Route:** Review / Astra.
-- **Dependencies and inputs:** CE-FINAL, CE-0, and CE-LIMIT.
-- **Focused checks:** Existing END scope; no new review stage or budget is specified here. Recover accepted review details at setup.
-- **Done:** No blocking findings; real hosted outcomes, SDK guarantees, and the cooperative limit are evidenced.
+Record the failure and minimal change under that task. Preserve exact requests, retained work, authentication, history and migration negatives. App [#363](https://github.com/banodoco/astrid-app/pull/363) already proposes the accepted-save/recovery-slot fix; inspect and reuse its compatible delta and regressions rather than assign a competing fix.
 
-### CE-COMPOSE
+**Done.** The failed boundary and affected checks pass on the reviewed shared candidate. No parallel product branch or extra implementation budget.
 
-- **Outcome / work:** After generation integration, freeze rolling `pre-main`, compose accepted CE Runtime, Agent, and App inputs once, and regenerate canonical pins/locks.
-- **Route:** X / Terra + Luna.
-- **Dependencies and inputs:** CE-END and generation integration promotion; exact inputs and current bases in [inputs](inputs.md#starting-code-and-branch-policy).
-- **Focused checks:** Preserve generation/installer behavior while integrating lease/retry/save contracts; run affected final checks, including the tuple checks specified above. Do not assume historical evidence proves the composed tuple.
-- **Done:** Actual final tuple passes its affected checks.
+## CE-COMPOSE
 
-### CE-REVIEW
+**Outcome.** Consume reviewed provider/Runtime, Agent and App changes through the normal R16 pin chain.
 
-- **Outcome / work:** Review the composed tuple and changed-boundary proof.
-- **Route:** Review / Astra.
-- **Dependencies and inputs:** CE-COMPOSE; exact immutable candidate heads.
-- **Focused checks:** Existing scoped review; retain its accepted scope and remaining rounds.
-- **Done:** No blocking integration findings on the exact immutable heads.
+The existing integration owner records immutable source, generated schema/client and installed tuple identities. Historical donor SHAs are evidence only. Retire `pre-main`, Plan 02 promotion and old aggregate-lane instructions; do not merge old donor trees wholesale.
 
-### CE-PROMOTE
+Run affected checks after composition; assess whether state, history, imports or service changes invalidate earlier evidence. The shared installed run may support both P63 and P04, with two verdicts.
 
-- **Outcome / work:** Publish fresh immutable increment lanes and promote those same heads to `pre-main`.
-- **Route:** N / Luna.
-- **Dependencies and inputs:** CE-REVIEW and its exact reviewed heads.
-- **Focused checks:** Verify remote heads equal reviewed heads; reconcile moved targets and rerun affected checks under the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md).
-- **Done:** Exact reviewed heads are promoted; no force push and no second aggregate. Existing project/initiative authority governs publication.
+**Done.** Integrated candidate and affected proof recorded, ready for R0's independent judgments.
 
-### CE-REF
+## CE-END and CE-REVIEW
 
-- **Outcome / work:** Move the dev reference builder off the retired publish path. Astrid-agent `astrid/core/dev/reference_realm.py` `build_reference` still calls the retired `publish_parent_composition`, which fails App CI Lanes/quick-journey. Rebuild it on `commit_timeline` as a fresh-timeline commit: `track.create` plus `clip.add-media` with a `MediaSelection`, steps, and base revision. Update `tests/journeys/test_journey_plumbing.py` and `tests/journeys/test_quick_journey_f1.py` to match.
-- **Route:** X / Terra + Luna.
-- **Dependencies and inputs:** Agent source in astrid-agent; the failing App CI Lanes/quick-journey job. No other dependency is recorded.
-- **Focused checks:** `tests/journeys/test_journey_plumbing.py` and `tests/journeys/test_quick_journey_f1.py`, plus the App CI Lanes/quick-journey job. Exact selectors TBD at setup.
-- **Done:** The builder commits through `commit_timeline`, the two journey test files pass, and the retired call is gone from the builder.
+These retained IDs denote independent concurrency acceptance and the composed-candidate review. Consolidate their execution with P63 R0, preserving accepted scope and review-round limits once recovered.
 
-## Proposed Release 16 reconciliation — 25 November 2026
+Record a distinct **P04 concurrency verdict**, separate from **P63 dependable-saving verdict**, covering CE-FINAL, CE-0, CE-LIMIT and changed-boundary evidence at the exact composed heads. A P63 unit-test pass cannot close P04.
 
-Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+**Done.** No blocking concurrency findings remain. R0 produces these verdicts; it does not wait for its own verdict as an input.
 
-keep all seven **Not recorded** statuses and conditional CE-REPAIR. CE-FINAL uses actual R16 tuple and original seven SDK/eight hosted outcomes; recover CE-0/CE-LIMIT/wrapper selectors or get explicit equivalence ruling. CE-REPAIR routes only shown gaps to CC-4b/5b/13/14. CE-END and CE-REVIEW become a named independent concurrency verdict within R0, preserving review scope/limits. CE-COMPOSE replaces retired pre-main/generation-promotion dependency with normal reviewed provider→Agent→App pins. CE-PROMOTE joins the one Release Lead go. CE-REF verifies the now-existing commit_timeline reference builder rather than rebuilding an obsolete missing path. Missing original acceptance remains a real proof blocker. Evidence: [SC-04](https://github.com/banodoco/astrid-dev/blob/cbd951924424ecbad213d3ad999a75ade2aabb51/plans/04-concurrent-edits/evidence/release-16-scoping/SC-04.md), [SC-63](https://github.com/banodoco/astrid-dev/blob/6cf0dda31179711582a6ed0d8fcf76d3456c4de9/plans/63-dependable-saving/evidence/release-16-scoping/SC-63.md), [INV-03](https://github.com/banodoco/astrid-dev/blob/5d924e96aee1a2afdaeeb86131f698f5a57a5daf/releases/16/evidence/scoping/INV-03.md), [AUD-01](https://github.com/banodoco/astrid-dev/blob/43e3e390d6ffe026e6f2a61f0c866b0ac94daf9b/releases/16/evidence/scoping/AUD-01.md).
+## CE-PROMOTE
+
+Separate project promotion is superseded by the existing single Release 16 publication. The release owner verifies reviewed heads, pins and required qualification before using existing publication authority.
+
+There is no P04 product branch to promote, no second publisher, no `pre-main` destination and no permission to merge or publish supplied here.
+
+## CE-REF
+
+**Already implemented in source.** Current Agent [reference_realm.py](https://github.com/banodoco/astrid-agent/blob/4a2bad187f12e7b0d1ba5bd1164b4a076787516a/astrid/core/dev/reference_realm.py) seeds through `service.commit_timeline` and verifies the accepted target. The claim that it still uses retired publication is superseded.
+
+**Remaining work.** Reuse accepted exact-source evidence if available; otherwise qualify `tests/journeys/test_journey_plumbing.py`, `tests/journeys/test_quick_journey_f1.py` and actual App Lanes/quick-journey on the selected tuple. Repair only a demonstrated remaining failure in the owning lane.
+
+**Done.** Accepted current journey evidence linked. Source presence alone does not complete the task.

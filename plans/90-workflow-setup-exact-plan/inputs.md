@@ -1,43 +1,72 @@
 # Inputs — Workflow set-up: one exact plan and one approval
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
-
-[Plan](plan.md) · [Tasks](tasks.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Observation #2058](https://github.com/banodoco/astrid-dev/issues/2058)
 
 ## Planning evidence
 
-**Scope decision:** Pending — this is the original scope of [Plan 56](../56-workflow-setup/plan.md), accepted 15 November 2026 (D1–D3) and extended on 23 November 2026 with the exact-plan approval the owner described in [issue 1731](https://github.com/banodoco/astrid-dev/issues/1731); Plan 56 took the 90/10 for Release 15 and this plan is its follow-up. The owner agreed the numbering on 23 November 2026; Next: the owner picks its release (D1).
+**Prior art:** P56 D1–D3 were accepted on 15 November 2026. The 23 November owner request in [#1731](https://github.com/banodoco/astrid-dev/issues/1731) added the first-class unknown-pack/model journey, rented-machine scope and an agent-facing envelope. P56 kept the R15 foundation; P90 retained exact plan/apply, reusable trust and its related outcomes. The [P56 decisions](../56-workflow-setup/inputs.md#owner-decisions) and checked history remain unchanged.
 
-**Prior art:** Plan 56's [inputs](../56-workflow-setup/inputs.md#planning-evidence) (code readings of 15–16 and 23 November 2026, the lookup, version and consent findings). Plan 35 owns where user choices live; Plan 32 owns the manifest and F4.
+**Current run:** the [Lead's 27 November bounded handoff](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7222502183) authorizes Manager94, under Astra94 technical ownership, to coordinate only the canonical P90 dependency required by 94-G: WS2, canonical RS1, WS9, WS3-L and evidence-only 90-H. This supersedes the old blanket “no run authorized” statement for that subset. It does not authorize a second full P90 programme, paid work or completion of the broader rows.
 
-**Approach:** One plan function and digest over Plan 56's approval record; reuse `fetch-models`, `align` and the controlled installer. Alternatives: only the 90/10 (no exact-plan approval, no reusable trust); a per-user trust store first (little value before the plan exists).
+**Review status:** canonical [RS1 round 1 returned REWORK](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7224469577); the [manager](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7224681756) assigned the existing authors three repairs and a focused second/final review. Preserve that budget. The historical full-R proposal is up to two rounds; its whole-project scope/commissioning remains pending. This reconciliation adds no reviewer or round.
 
-**Challenge:** Codex Astra reviewed the 80/20 on 23 November 2026 (critique recorded in Plan 56's inputs). Accepted: terminal approval is a speed bump; one immutable approval record; reusable trust deferred to Plan 35; conflicting pins refused; first-use hashing reduced to saving the download receipt.
+**Scope decision:** Pending — this reconciliation changes documentation only, in one unmerged PR. The bounded execution handoff above remains authorized; current owners and branches stay intact. Next: review the proposed smaller first-release boundary and authority decisions without treating them as approved removal of wider [R16](../../releases/16.md) or P56 obligations.
 
-**Proof and limits:** Completion is in [plan.md](plan.md#completion). Estimates are inferred.
+**Approach:** Continue the existing P90 producer/consumer programme, use P93 target and P94 environment/transfer seams, and preserve P35 as grant authority. The task map retains all original rows and inherited residuals.
 
-**Review rounds:** Pending — recommended: RS1 after the plan and approval contract, plus two final rounds; cross-repository security work. Next: the owner confirms.
+**Challenge:** Reviewed — [#2058](https://github.com/banodoco/astrid-dev/issues/2058) and prior scoping were checked against current source, full board #2051 and P35 owner decisions; the independent assessment below rejects duplicate or owner-deferred implementation.
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session, what it may do without asking, what still needs the owner's go, and the advisor session.
+**Proof and limits:** The [source register](#source-and-evidence-register) distinguishes author CPU, independent review, real serializer, public CLI, installed apply and owner SAM claims. No product tests were executed for this planning correction and no full P90 row is newly complete.
 
-## Owner decisions
+## Independent assessment and reuse
 
-- **D1 Release.** Which release carries this follow-up? Recommendation: the one after Release 15, once Plan 56 has landed.
-- **D2 Reusable trust.** Does it wait for Plan 35? Recommendation: yes.
+The [25 November SC-90](https://github.com/banodoco/astrid-dev/blob/1bd93cf70f169e0db52f95ced5b8f9d189865539/plans/90-workflow-setup-exact-plan/evidence/release-16-scoping/SC-90.md), [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md) and #2058 were checked against current source and owner records. Existing problems are linked to their current owners; this is not a new investigation queue.
 
-## Source identities
+| Finding / history | Disposition |
+|---|---|
+| P56 stage-one approval/recipe/consent/resolver/installer and existing verified transfer | Credit delivered foundation; preserve its 17 checked rows and relevant negative assertions. Do not rebuild it. Remaining 16 rows stay explicitly mapped in tasks. |
+| P35 protected actor ledger and app-state read | Credit bounded CPU delivery; no claim of installed issuance, revocation-on-restore or full trust UI. Its explicit deferred rows remain deferred. |
+| Digest includes mutable observations/progress/capacity; packages remain unknown without a consumer observation | Confirmed in actual WS2 source, including replacement `3ed74f2…`. Required existing-owner contract decisions before apply acceptance; no new assignment, package solver or automatic expansion of the current three-finding continuation. |
+| Current three RS1 P1 findings | Existing WS2/WS9 repairs, preserving full fixtures, P56 computation and general redaction. Source repair is distinct from independent acceptance. |
+| Target/readiness/compute/capacity duplication | Use P93's selected target/seven rungs and P94-A/B/E's current ownership. 94-G adapts P90, never supplies a competing grant or plan. |
+| Strict source/entry/publication, recovery and inherited #1910/#1861/#1928 concerns | Retain the applicable acceptance cases in existing WS9/WS3/UP1 owners. No blanket old-branch merge or new generic rollback framework. |
+| Broad trust mutation/restore recommendation in #2058 | Do not automatically adopt: it conflicts with P35's recorded owner deferral and exceeds the later handoff's missing-read/validation allowance. Resolve explicitly if required on the retained installed path. |
+| Broader source search, general update automation and whole-caller convergence | Proposed later work, with original rows and accepted guarantees retained until owner scope agreement. |
 
-Planning read: as in [Plan 56](../56-workflow-setup/inputs.md#source-identities). Code work: `release/<NN>/plan-90` from each repository's `release/<NN>/main` for the release D1 picks, recorded at run start.
+## Decisions and scope boundaries
 
-## References
+**Preserved P56 rules:** D1 refuses changes to existing packages or pack folders on human-owned environments; D6 never runs `install.py`; D7 uses existing exact content-bound `code=<token>` confirmation, which is a speed bump an agent can type, not human authentication; D8 keeps revision-bound approval evidence apart from source refs; D12 permits disclosed transitive resolution at install under the existing guard. D10 accepts a manual instruction with a useful retry, and D11 keeps bounded grouped evidence rather than a name-only automatic command. No package solver, alternate approval record or new ledger is justified.
 
-- [Plan 56](../56-workflow-setup/plan.md) and its [inputs](../56-workflow-setup/inputs.md)
-- [Issue 1731](https://github.com/banodoco/astrid-dev/issues/1731)
+**D1 — Release (updated record).** The bounded P90 local subset is already assigned to R16 by the Lead. The full remainder's first-release scope remains unresolved; “await a release number” is stale, while “all of P90 authorized/done” would also be false.
 
-## Proposed Release 16 reconciliation — 25 November 2026
+**D2 / D-SYN-3 — Trust authority (preserved boundary).** Reusable trust belongs with P35. Its [26 November owner deferral](../35-one-home-for-user-state/tasks.md#later-real-hardware-qualification-not-in-release-16) explicitly retains grant HTTP mutation/generated clients, the revocation-on-restore journal, credential resolution and TR1 outside that CPU queue. The later bounded P90 handoff permits only a necessary read/validation bridge through existing authority. Revoked, unavailable or unknown cannot authorize mutation; generic app-state PUT, an old token, copied entry or “rollback” label cannot reinstate permission. No promise to cancel already-running third-party code is implied.
 
-Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+| Unresolved consequential decision | Recommendation and alternative | Who resolves / effect |
+|---|---|---|
+| First-release full P90/P56 remainder | Recommend bounded local plan/apply plus minimal real P56 public-path fixes, explicit manual/refusal cases, and later broader WS4/WS12/WS16/TR1/UP1/remote automation. Alternative: retain every current R16 promise and fund/qualify the additional work. | Owner scope decision. Until accepted, all wider rows remain open release obligations; local acceptance is not project completion. |
+| Absent protected grant with fresh P56 one-time consent | Existing technical owners must define the exact absent/approved/revoked/unavailable mapping. Recommend retain established one-time consent only where an explicit ruling and real authority proof permit it; otherwise fail closed with actionable recovery. Alternative: separately authorize the minimal protected production mutation/restore bridge under P35. | Astra94/P35/P90 ruling before affected WS3-L writes; owner if it changes accepted guarantees or the P35 deferral. No fabricated grant or implied authority in this plan. |
+| Stable approval and dependency observation | Recommend stable immutable desired intent with fresh authority/capacity and verified own-action progress; exact approved-snapshot recovery is an acceptable alternative if equally evidenced. Use actual selected-interpreter package observation and existing controlled install policy. | Existing WS2/WS3-L/RS1 technical owners before apply acceptance. Does not reassign or widen the current three-P1 author task. |
+| Unknown-hash model and broad remote support | Recommend keep unsupported unknown-hash sources/manual cases explicit for the local cut; preserve the original WS12 receipt/loader requirement for later decision. Repair/qualify a retained hazardous remote route or explicitly restrict it; never infer paid authority from preview. | Owner release-scope decision if narrowing D3/D5 or retained routes. Actual machine/media/spend and P56 WS-L remain separately authorized. |
 
-Preserve P56 D1/D6/D7/D8/D12 and reconcile current sources and the proposed P35 grant revoke/restore seam. Full donor mapping and proof joins are in tasks.md; consent is not a new human-authentication service.
+A protected read using real Agent/Runtime transport can prove apply refusal after service-level revocation. It does not prove that an installed user can issue/reapprove a grant or that an older backup preserves a revocation. Full TR1 requires those additional real authority/restore proofs before claiming reusable trust.
 
-**D-SYN-3 — proposed, owner decision pending:** preserve the existing P56 D7 terminal consent rule and accepted D1/D6/D8/D12. Bind plan and apply to exact source, target, writes and current grant; restore or revoke decisions require the P35 seam. No claim of new human authentication or authorization for unspecified targets.
+## Source and evidence register
+
+Planning base: astrid-dev `2b43946a85f63a0a114023e271baf4952ed209c2`. Source/PR/board reads were refreshed on 27 November 2026; no product tests were run for this reconciliation. These are immutable observations, not dispatch pins or installed proof.
+
+| Source | Evidence and limit |
+|---|---|
+| [VibeComfy #224](https://github.com/banodoco/VibeComfy/pull/224) | Open/draft replacement head `3ed74f2c3dbd782afdd8702d22b7c83b1c40b82a`, base `55c3948212d23cf037fae8a4c6faad77d33e7279`, same existing branch. Read exact [_plan.py](https://github.com/banodoco/VibeComfy/blob/3ed74f2c3dbd782afdd8702d22b7c83b1c40b82a/vibecomfy/requirements/_plan.py) and [_observe.py](https://github.com/banodoco/VibeComfy/blob/3ed74f2c3dbd782afdd8702d22b7c83b1c40b82a/vibecomfy/requirements/_observe.py). Repaired public field is `approval.consent_code`; focused serializer proof is reported, while committed WS9 public integration and final RS1 remain open. |
+| [Independent original WS2 CPU receipt](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7223894068) and [replacement author receipt](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7225235962) | Independent base 122/head 253 applies to `23f5506b85ce2391ebc8d5daa46120979a8724c1`. Replacement author proof on exact `3ed74f2…` reports 264 passes, all prior 253 identities retained, 11 added and 0 removed. Source repairs/author proof are credited, not independent acceptance. |
+| [Real WS9 serializer replay](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7225251822) | Both complete replacement fixtures survive actual Agent `0087c03…` envelope/error serialization with unchanged plan/digest; old SAM field and credential negatives still refuse. Executed in the frozen VibeComfy environment using complete real modules: focused CPU boundary evidence, not the full pinned Agent suite, CLI, installed, grant or apply proof. |
+| [Agent #689](https://github.com/banodoco/astrid-agent/pull/689) | Open/draft `0087c03d9d7fdd28c4004312ffb3b355c9b6915c`. Actual [requirements.py](https://github.com/banodoco/astrid-agent/blob/0087c03d9d7fdd28c4004312ffb3b355c9b6915c/astrid/core/generation/requirements.py) still gates the public producer, preserves a complete plan and only reads the protected ledger. |
+| [P35 Runtime authority](https://github.com/banodoco/astrid-runtime/blob/55a541a7ab904873e63510e581a60742e1b83fb8/runtime_protocol/service.py#L5037-L5290) | Actor-scoped grant methods and protected app-state; [HTTP read](https://github.com/banodoco/astrid-runtime/blob/55a541a7ab904873e63510e581a60742e1b83fb8/runtime_protocol/server.py#L963-L973). Generic PUT cannot mint grants. The Agent's embedded R15 Runtime `686ca695…` is not this R16 service head. |
+| [P93 public producer](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7223795883) | Actual C merge `44d59774abb638c61ed0aae2b32653e62a5bcf66` on P93; consume its real fixture rather than assuming P94 ancestry. |
+| [94-A landed](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7224101860), [94-B active receipt](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7224526051) | P94 capacity/transfer/compute ownership remains separate. Landed A/E are source prerequisites, not a completed joined managed/Windows/installed path. |
+| [P56 residual and donor register](../56-workflow-setup/tasks.md#proposed-residual-handoff-to-plan-90) | Retain checked implementation, all 16 receivers and useful donor deltas. Old helper proofs and historical-plan merges are not current integrated delivery. |
+
+## Effort and proof limits
+
+The remaining bounded estimate is **6–11 implementation/review-preparation engineering days plus 3–5 qualification days**, including the active P90 work. Retaining the complete broader scope adds **8–14 implementation plus 2–4 qualification days**, low confidence until the authority/policy decisions are resolved. P94-A/B/E and P35 implementation costs are not charged twice; hardware waits and paid/owner SAM are separate. The historical “about 10 days after P56” estimate is retained only as history, not as the remaining full-programme budget.
+
+Source-level acceptance, real transport integration, installed first/warm delivery and owner-run SAM are distinct verdicts. Use the existing P93/P94 fixtures and qualification programme; no additional proof framework or duplicate full-film/hardware exercise is created.

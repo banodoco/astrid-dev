@@ -2,6 +2,12 @@
 
 The live state of the Release 16 run, rewritten at each check-in by the release manager. The [brief](../16.md) holds intent, included plans, branches and issues; each plan's `tasks.md` holds its progress.
 
+## Planning reconciliation boundary — 27 November 2026
+
+The proposed [saving/media/workflow reconciliation](../16.md#saving-media-and-workflow-reconciliation--27-november-2026) changes canonical planning records only. P63/P04/P79 are not dispatched here. The already authorized bounded P90 dependency continues on [board #2051](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7222502183), under its existing Manager94/Astra94 owners and later explicit review/continuation decisions. Its live producer/consumer targets and proof requirements take precedence over provisional branch rows or the original CPU packet assumptions for that authorized subset. This revision changes no active queue, assignment, execution branch or capacity limit.
+
+The prepared CPU programme below governs its packet execution; queue completion and installed-product acceptance are different. P63/P04/P79/P90 retain their canonical installed and independent acceptance. A Done packet establishes only its evidenced claim; a parked release blocker remains open. Before final qualification, the Lead must record a separately authorized venue and the applicable retained gates. These planning edits do not grant new machine, paid or owner-media access, expand current review rounds or authorize publication.
+
 ## Scope change — 25 November 2026
 
 The owner now places the full Plan 91 green programme in [Release 17](../17.md), not Release 16. The existing plan branch, packet names, mailbox, evidence and active authority below are preserved; nothing is deleted, renamed, force-pushed or merged by this scoping change. **Do not land Plan 91 into release/16/main.** Before another target-dependent dispatch or landing, the existing Lead and Plan 91 orchestrator must record a coordinated handoff, confirm in-flight work, and rebind destination, branch and proof on the Release 17 base. Until then use the existing lane only for already-authorized bounded work on its retained branch; do not start a competing lane or treat the historical launch message below as fresh authorization. The Release 17 brief is the intended destination, and the older dispatch section remains the record of the original run.
@@ -48,8 +54,8 @@ Never one mode for everything. If a mode isn't offered, use the next one up; if 
 
 ### The six rules
 
-1. **The queue is fixed.** Every packet is written in advance, in order. Nobody running the release adds, splits, re-scopes or reorders work. A plan is **finished** when every packet in it is Done or Parked.
-2. **Proof runs where the code is written, and is pushed with it.** Every packet names one **Proof:** command. The packet runs it in its own ChatGPT chat (Sol in its own sandbox) and pushes to its branch on GitHub after each task. The commit that finishes the packet carries the result as its last line: `Proof: <command> — PASS <summary>`. That pushed line on the head is the proof, and nobody re-runs it. Nothing runs on a machine we set up, and nobody dispatches hosted CI.
+1. **The queue is fixed.** Every packet is written in advance, in order. Nobody running the release adds, splits, re-scopes or reorders work. A plan's **CPU packet queue is finished** when every packet in it is Done or Parked; this does not establish the plan's retained installed-product acceptance or close a parked release blocker.
+2. **Proof runs where the code is written, and is pushed with it.** Every packet names one **Proof:** command. The packet runs it in its own ChatGPT chat (Sol in its own sandbox) and pushes to its branch on GitHub after each task. The commit that finishes the packet carries the result as its last line: `Proof: <command> — PASS <summary>`. That pushed line on the head is the packet's proof, and this CPU loop does not re-run it. Within this loop nothing runs on a machine we set up, and nobody dispatches hosted CI. Separately authorized recovery or final qualification follows its own explicit handoff; this rule is not an installed-product PASS or waiver.
 3. **Every loop has a cap.** At the cap, mark the item **Parked**, post one line saying why, and move on. Parked work waits for the owner; everything else keeps moving.
 4. **Park, don't ask.** A question this section doesn't answer is parked, never debated. Nobody waits for an answer.
 5. **Replace once, then park.** A silent packet chat or manager is resumed or nudged once, then replaced once. A second need parks it. The state is on GitHub, not in the chat.

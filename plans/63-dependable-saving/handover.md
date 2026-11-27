@@ -1,5 +1,7 @@
 # Handover — Dependable saving
 
+> **Historical snapshot, not current dispatch instructions.** The 27 November 2026 [plan](plan.md), [tasks](tasks.md) and [inputs](inputs.md) reconcile the R16 scope and retained decisions. Preserve this 18 November record for provenance; do not execute its old R15 branch, deletion or publication instructions.
+
 [Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md) · [Statements](statements.md) · [Plan 18](../18-timeline-editing/plan.md) · [Release 14](../../releases/14.md)
 
 Written on 18 November 2026 by the session that moved Plan 18's Phase 0 here. It is a dated snapshot for whoever manages this plan next. Nothing is built. Re-read branches with `git ls-remote` before acting.

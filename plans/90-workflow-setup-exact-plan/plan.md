@@ -1,59 +1,61 @@
 # Workflow set-up: one exact plan and one approval
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Planning reconciliation — 27 November 2026:** Proposed corrections from [observation #2058](https://github.com/banodoco/astrid-dev/issues/2058). Existing bounded execution continues under [the Lead's handoff](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7222502183). Broader release deferrals below require owner agreement; this record neither dispatches work nor waives accepted guarantees.
 
 **Project:** Workflow set-up: one exact plan and one approval
 
-**Goal:** A person or agent sees one plan of every node pack and model a workflow lacks, approves exactly that plan once, and the saved workflow remembers it; packs they have trusted before install without asking again.
+**Goal:** A person or agent reviews one exact workflow dependency plan, approves its bounded actions once, safely resumes them, and opens a real result from the saved workflow; reusable trust remains a separately tracked outcome.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Manager94 coordinates the bounded P90 dependency under Astra94 technical ownership; broader P90 work remains unassigned
 
-**Estimate:** TBD — R16 exact-plan plus inherited P56 residual only; historical estimate about 10 engineering days after P56
+**Estimate:** Remaining bounded P90 work: 6–11 engineering days implementation plus 3–5 qualification; full retained remainder adds 8–14 plus 2–4 respectively, pending scope decisions
 
-**Waiting on:** P56 stage 1 (17 checked rows) landed in published R15, including recipe/approval/consent primitives; see [P56 task handoff](../56-workflow-setup/tasks.md#proposed-release-16-reconciliation--25-november-2026). [SC-90](https://github.com/banodoco/astrid-dev/blob/1bd93cf70f169e0db52f95ced5b8f9d189865539/plans/90-workflow-setup-exact-plan/evidence/release-16-scoping/SC-90.md) maps unfinished exact plan/apply, trust, safe recovery and producer seams; preserve P56 owner-run SAM proof. P35 CPU grant methods landed in R16, public grant route/consumer remains; await scope and manager.
+**Waiting on:** Existing WS2/RS1/WS9 work on board #2051; WS3-L consumes real P93 target, P94 transfer/compute and P35 protected-read seams. P56 stage 1 is delivered, not a whole-plan start gate. Full grant/restore and broader scope decisions are in inputs.md.
 
-**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six fields above feed the generated [catalog](../../plans/index.md); do not edit the catalog. Priority remains in [priority.md](../../plans/priority.md).
 
-**Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): a workflow is only portable if the place it lands can be made ready for it without a person hunting for files. [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting): nothing runs another person's code without an informed yes.
+**Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) and [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
-## Outcome and scope
+## One local journey, with explicit limits
 
-Plan 56 makes every setup state end in a named next step and gives one informed yes for a pack Astrid has not reviewed. This plan adds the exact-plan form of that approval:
+The active authorized cut is P90's bounded local producer/consumer contribution to P94-G; full project acceptance remains outstanding. P93 selects and observes the actual target. P94 owns environment offers, selected compute and transfer internals. P90 owns the workflow requirement plan and approval-to-apply orchestration. P35 owns user-state and grant authority.
 
-- `astrid generate requirements FILE|ENTRY [--placement] [--add URL[@REF]] [--add-model DEST=URL#sha256]` answers with one plan: each pack and model *present*, *found*, *needs approval* or *not found*, with source, pinned identity, dependencies, size, destination and one digest, installing nothing.
-- `--apply DIGEST` installs exactly that plan, with `--consent code` for code outside the catalog; per-action progress (done, failed, pending); stops at "restart needed" and continues; refuses a stale or altered digest and conflicting pins.
-- Reconcile what is not found: offer a file already present, a candidate from declared sources, one recorded answer per field.
-- A reusable per-user trust list (`trust list|approve|revoke`) so a pack approved once is not asked about again on another workflow, kept where Plan 35 puts user state.
-- Update and rollback plans: a changed pin is a new plan; switching versions on a kept machine.
-- Save the observed hash and size of a download into the bundle for a model without a published hash; pickle formats judged by their loader.
-- After Plan 32 F4, `fetch-models` and `align` call the same plan and apply.
+1. `astrid generate requirements FILE|ENTRY`, with the actual `--placement`, `--add URL[@REF]`, `--add-model DEST=URL#sha256`, `--dry-run` and `--json` forms, returns one canonical plan without target or entry mutation. Show exact source, full commit/recipe, model identity, destination, known/unknown size and capacity, observations and the next useful action.
+2. `--apply DIGEST`, with applicable existing `--consent code=<token>` confirmation, applies only the reviewed local actions through the controlled installer and built-in verified transfer. A preview or selected endpoint is not permission to write; a plan digest is not a grant.
+3. Keep verified progress through interruption, process exit and required restart. Recheck actual target, authorization, capacity and required compute before later writes. Preserve the previous valid entry, lock and unrelated environment. A second invocation uses the saved exact declarations and verified completed actions without duplicate transfer or consent for unchanged approved scope.
+4. Positive dependency observations permit workflow readiness; actual generated media opening in the matching editor permits delivery. Neither a plan, a running server nor downloaded weights establishes that outcome.
 
-**Not included:** executing a pack's `install.py` (never); signing, registries, sandboxing; identifying files by content (issue 665); a ComfyUI on another machine.
+For an unknown or unsafe item, the accepted P56 manual action with a usable retry step is sufficient. Never run `install.py` or arbitrary Python workflow code during preview. Human-owned environments retain P56 D1's prohibition on changing installed packages or existing pack folders. Preserve D12's disclosed transitive resolution policy; do not introduce a package solver or silently demand universally immutable transitive artifacts.
+
+## Contract repairs required before apply acceptance
+
+These are acceptance obligations for the existing owners, not extra assignments or an expansion of the current three-finding WS2 continuation.
+
+- **Stable approved intent, fresh observations.** Verified own progress, saved approval receipts and ordinary free-space changes must not invalidate otherwise unchanged authorized work. Bind workflow, selected identity, source/recipe/packages, destination, action scope and approved bounds; separately revalidate current capacity, grant and postconditions. The existing owners must choose and review either a stable intent projection or exact-snapshot recovery with narrowly proved own-action transitions. Never ignore arbitrary digest differences.
+- **A working dependency transition.** Prove a missing supported dependency becomes installed and positively verified in the actual selected interpreter; an already satisfied pack becomes a no-op. Unknown or conflicting dependencies stay blocked/manual. Source presence is not dependency readiness.
+- **One complete public plan.** WS9 preserves the producer's plan and digest through CLI/SDK/MCP and typed errors, mapping into P93's existing seven-rung ladder and single next action. The replacement producer uses `approval.consent_code` for the non-secret P56 value; consumer agreement and exact fixture proof remain required. Do not weaken credential redaction or rehash a redacted approximation.
+- **One authority.** Use P35's authenticated protected read, never a second ledger or generic grant PUT. Revoked, unavailable or unknown authority cannot authorize writes. The absent-grant/fresh-one-time-consent rule must be explicitly resolved before that apply case lands. Full issuance/reapproval/restore semantics remain open under the P35 boundary.
 
 ## Existing work and decision
 
-This is the original scope of [Plan 56](../56-workflow-setup/plan.md) (accepted 15 November 2026, decisions D1–D3), which that plan's 23 November amendment narrowed to the 90/10 for [Release 15](../../releases/15.md). Reasoning, the independent critiques and the reuse map are in [Plan 56's inputs](../56-workflow-setup/inputs.md#planning-evidence); the task rows are the original WS-2 to WS-4 with the 80/20 additions, in [tasks.md](tasks.md). Plan 56's approval record is bound to identity plus recipe hash from day one so this plan wraps it with a digest and reinterprets nothing.
+P56's 17 checked stage-one rows supply approval records, consent, recipe handling, resolver, controlled restore and entry primitives. The [16-row residual map](../56-workflow-setup/tasks.md#proposed-residual-handoff-to-plan-90) remains authoritative history; [tasks.md](tasks.md) identifies what the local cut consumes and what remains. P35's CPU ledger is landed; its public mutation and restore bridge are not delivered. Existing model-transfer and capacity work belongs to P94-A/B/E.
 
-## Sequence and readiness
+At the 27 November refresh, [VibeComfy #224](https://github.com/banodoco/VibeComfy/pull/224) was an open draft at `3ed74f2c3dbd782afdd8702d22b7c83b1c40b82a`; [Agent #689](https://github.com/banodoco/astrid-agent/pull/689) remained an open draft at `0087c03d9d7fdd28c4004312ffb3b355c9b6915c` with the deliberate preview gate. [Canonical RS1 round 1](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7224469577) required three repairs: submodule-filter safety, schema-known node enumeration and the public consent field. The existing author and consumer own their repair; [manager disposition](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7224681756) requires the focused second review. No P90 row is complete.
 
-After Plan 56: the plan function and an RS1 review stop on its JSON and approval contract, then `generate requirements` and `--apply`, then reconcile and trust, then updates. Task details in [tasks.md](tasks.md). Recording this plan authorizes no work.
-
-## Interfaces and handoff
-
-**Consumes:** Plan 56's approval record, `--consent code`, `--add`, the fix envelope with `who`; Plan 32's manifest and F4; VibeComfy's lock, installer, resolver and fetch.
-
-**Produces:** the Plan JSON `{requirements[], gaps[], bytes, digest}`, whose digest binds workflow content, target root and interpreter, sources, commits, recipe, packages and destinations; `generate requirements` and `--apply`; a trust list API.
+The independent 122-base/253-head CPU receipt applies to the earlier `23f5506…` producer. The [replacement author receipt](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7225235962) reports 264 passes with all 253 prior identities retained; the [real serializer replay](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7225251822) preserves both complete fixtures and digests through current WS9 modules. Credit that focused source evidence. It is not final independent RS1 acceptance, committed WS9 public CLI integration or installed/apply proof. Refresh exact identities before landing; [inputs](inputs.md#source-and-evidence-register) retains these distinctions.
 
 ## Completion
 
-- With SAM-Audio in no list, `generate requirements ... --add <url> --placement runpod --dry-run --json` returns `needs_approval` with the pinned commit, dependencies, `install.py` reported not run and the digest, without a machine; `--apply DIGEST --consent code` installs exactly that; a second plan is `ready` with no flag.
-- Negative cases: a changed target state invalidates the digest; a stale digest is refused; a failure after two of five actions reports two done, one failed, two pending and the next run does the three; a model that does not match its hash leaves no file.
-- Limits: an agent can type the consent flag; approved code runs with the target's access.
+**Bounded local acceptance:** use one tractable unfamiliar workflow needing a pinned node pack and model, plus the canonical unlisted SAM preview fixture. Prove public preview → decline with identical state → approved built-in apply → interruption/restart/repeat → canonical saved entry → real first and warm result in the matched editor. Include stale source/target/recipe/destination, revoked or unreadable grant, insufficient space, failed required compute, checksum mismatch, conflicting pin and protected-environment refusals. Exercise actual transport and immutable integrated pins, preserve original assertions and report unrun cells. Reuse P94-G/I/J and P93's qualification rather than creating a parallel programme.
 
-## Proposed Release 16 reconciliation — 25 November 2026
+**Full P90 acceptance remains separate.** The [Release 16 brief](../../releases/16.md) currently retains the wider P56/P90 obligations. WS4 reconciliation, WS12 unknown-hash receipts, WS16 caller convergence, TR1 reusable trust, UP1 update/rollback, remote WS3 and owner-run SAM are not completed by local acceptance. Recommend deferring their broader portions while retaining required local safety and usable manual outcomes; the owner must accept that release-scope change. Until then these remain open obligations, with their original guarantees and receiver rows.
 
-Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
+A no-machine RunPod preview never authorizes a future target. Any retained remote route must meet its existing paid/custody and unsafe-setup boundary or receive an explicit release restriction. Actual paid execution and P56 WS-L remain separately owner-authorized.
 
-One exact dependency plan, applicable approval and resumable apply consume integrated Plan 56 Stage 1 and its individually mapped residuals; valid grant is not target readiness. A no-machine preview cannot authorize mutation on an unspecified future target.
+## Sequence and effort
+
+Review the repaired WS2 candidate and continue existing WS9 integration; complete the current RS1/consumer agreement, then WS3-L after the real transfer, compute and authority joins. Existing 90-H delivers the exact combined receipt to 94-G and the single pin integrator. Native preparation and disjoint P93/P94 work continue independently. One writer owns each shared CLI/preflight/transfer/skill hunk; no duplicate task or wholesale donor-branch merge.
+
+The 6–11 implementation days and 3–5 qualification days estimate remaining P90 effort, including active work, not fresh assignments or elapsed duration. The additional full-scope 8–14 implementation and 2–4 qualification days are low-confidence until the decisions in inputs are settled. Neither estimate charges P94-A/B/E, P35's own authority work, native capacity waits or paid SAM work again.
