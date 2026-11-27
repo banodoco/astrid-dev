@@ -8,6 +8,95 @@ The owner now places the full Plan 91 green programme in [Release 17](../17.md),
 
 The Plan 91 mailbox records the owner-directed [STOP](https://github.com/banodoco/astrid-dev/issues/1826#issuecomment-7129888302) and [manager confirmation](https://github.com/banodoco/astrid-dev/issues/1826#issuecomment-7130215692): no packet was started and monitoring stopped. The older bounded-authority text does not override that STOP; only a later owner or orchestrator decision can resume it. Preserve its actual Agent branch and records.
 
+## Proposed H3 programme queue (66, 68, 70, 67)
+
+Prepared at the owner's request, 27 November. **Draft only: not active authority, branch cut, dispatch or Ready.** Preserve all existing R16 recovery lanes, active Plans table and boards. Existing Lead [#2030](https://github.com/banodoco/astrid-dev/issues/2030) reviews [PR #2056](https://github.com/banodoco/astrid-dev/pull/2056) and explicitly activates rows with exact accepted source and current standing rulings. No competing Lead, native subagents, new scheduler or extra chat/CI/GPU allocation.
+
+**Readiness gate.** Independent high-judgment review of revised P66/P67 contract, including existing hook injection, registry/soft-default boundaries and unchanged H3 no-Astrid-imports guard. At preparation observed Agent R16 main `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`, VibeComfy R16 main `55c3948212d23cf037fae8a4c6faad77d33e7279`, R15 Agent `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5`, published poms default pin `2379ab54aca522019ff4f869cfdf9375bdb56dfc`. Observations, not dispatch pins. Lead refreshes actual refs, verifies retained P59/64/65 ancestor/contract, checks adequate CPU venue, capacity and function reservations, then cuts P66 from accepted R16 integration. No P17 prerequisite. Each packet needs actual focused base selectors/results, executed node IDs and configured marks/deselections, precise May touch functions and dependencies present in consumer's exact base. No baseline was executed in this planning session. New tests not on base are explicitly accounted for on head. Preserve existing checks; missing collection, resource/transport errors or incomplete source closure are NO-RESULT, not PASS. Exact approved replacement selectors required if v1/capture cleanup removes a test; do not silently omit.
+
+**Proof/authority.** Current Lead-managed recovery handoff supersedes historical in-chat proof assumption for this proposed lane. One fresh normal ChatGPT author per implementation packet (N High, X Extra High, S Pro; T editorial cards propose Pro, confirm actual binding). Early STATUS and draft PR, then exact READY-PROOF with repository/PR/head/selectors and stop. No tests/build/merge/native subagents by author absent current explicit Lead ruling. Lead/custodian runs exact base and candidate proof in adequate pinned environment and commissions independent RS/R review. Keep real failure IDs and full node inventories/logs, no silent skip/xfail/deselect or test weakening. Review/diagnostic and installed proof rows are Lead assignments, not author chats. Real native/cold reads/CPU ComfyUI/installation proof and pin changes use Lead-authorized venue; CPU compile is not live quality. R16 final exact-tuple qualification and separately authorized live/GPU gate remain. A Parked dependency never unlocks a consumer; actual accepted handoff must be present in its exact base.
+
+**Sequence.** P66 serial job/compile/caller cutover, RS1, one capability/provider table, describe, node inventory, neutral receipt, clocks, occurrence compose/verify, templates and skills, then independent closing review and accepted R16 integration. After 66, two tracks run subject to actual writer/slot reservations:
+- Native track: P68 guide → full-canvas still preparation → exact mask/compose proof → recipes, then P70 compare full canvas vs active capture → prefix → bridge → insert → delete capture/flag → recipes → integrated review. 70-01 is a decision gate, not permission to assume equal latent shapes. P70 bridge/insert may author concurrently only with reviewed disjoint functions/fixtures; conservative queue serializes them.
+- P67 shared track: 01 independent contract review, 02 staged admission (only missing P17 P1 slice), 03 bounded host/worker custody; 04 pure default selector can proceed beside 02 if exact schema/parser functions are disjoint; 05 joins shared transaction. 08 pinned VC NKD schema cache can proceed independently after 01. External activation remains blocked if an unscoped generic prerequisite appears; native steering does not wait for it.
+- Native P67 10–14 follow accepted P70 in the conservative queue (shared H3 schema/builder/receipt/table writers); they do **not** depend on CS-0/installer or NKD. 14 stock guide phase is independent of NKD fallback. 06 point injection after 03 and P70, 07 independent pack root, 09 node declaration/soft companion require 05/07/08; reserve H3 functions against 10–14. If Lead can isolate disjoint earlier native or point/hook functions, advance reviewed slices after producer contract, with exact accepted base sync; no parallel writers to same schema/builder/table/shared tests/skill. Do not rely on clean merge as proof. 15 actual curve and conditional fallback waits 14 and independent package/node handoff. 16 native recipes may proceed after native 14 even if external blocked; 17 provider recipes joins both. 18 actual default install, 19 shared/chained installed graph, 20 controller/worker custody, independent 67-R. This preserves every original 67 outcome including P70 speech-continue.
+- Existing P09/P35 install and grants, P90/P93/P94 generation/VC/worker pins and receipt owners, P31 manifest, actual proof/CI/chat limits remain protected. Lead reserves actual functions, not entire repos. Same-source default pins for NKD and astrid_motion remain in existing manifest; poms_packs is an external input, not an unsupported release-branch-table repo. Lead designates reviewed external candidate target (proposed `p67/r16-provider` from approved source), no author writes to main. P31 alone publishes exact pins. Keep full P17 paused; reuse actual P1 evidence once.
+
+All rows below are **Prepared / Blocked** until approved. Only the Lead reconciles them into active dispatch; [manager briefs](briefs/README.md) are prepared, not launched.
+
+### Proposed H3 Plan 66 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P66-01](packets/R16-P66-01.md) Freeze measured job and ownership | CC-1.1 (a) | astrid-agent | S | readiness gate |
+| [R16-P66-02](packets/R16-P66-02.md) Persist and reuse the resolved job | CC-1.1 (b) | astrid-agent | S | R16-P66-01 |
+| [R16-P66-03](packets/R16-P66-03.md) Introduce compile_job and source-free feature lowering | CC-1.2 (a) | astrid-agent | S | R16-P66-02 |
+| [R16-P66-04](packets/R16-P66-04.md) Unify masks, adapters and retained continuation | CC-1.2 (b) | astrid-agent | S | R16-P66-03 |
+| [R16-P66-05](packets/R16-P66-05.md) Move public and lifecycle callers to compile_job | CC-1.3 (a) | astrid-agent | X | R16-P66-04 |
+| [R16-P66-06](packets/R16-P66-06.md) Consolidate interim transport without losing custody | CC-1.3 (b) | astrid-agent | S | R16-P66-05 |
+| [R16-P66-07](packets/R16-P66-07.md) Migrate v2 canonical-spec consumers | CC-1.4 (a) | astrid-agent | S | R16-P66-06 |
+| [R16-P66-08](packets/R16-P66-08.md) Retire v1 and route classification | CC-1.4 (b) | astrid-agent | S | R16-P66-07 |
+| [R16-P66-RS1](packets/R16-P66-RS1.md) Independent resolved-job contract review | RS1 | astrid-agent (Lead) | S | R16-P66-08 |
+| [R16-P66-09](packets/R16-P66-09.md) One capability table and typed provider assembly | CC-2 (a) | astrid-agent | X | R16-P66-RS1 |
+| [R16-P66-10](packets/R16-P66-10.md) One public describe and admission projection | CC-2 (b) | astrid-agent | X | R16-P66-09 |
+| [R16-P66-11](packets/R16-P66-11.md) Read worker node inventory from existing pins | CC-2 (c; Plan 64 SR-3) | astrid-agent | X | R16-P66-10 |
+| [R16-P66-12](packets/R16-P66-12.md) Serialize the pack-owned resolved-job view | CC-3 (a) | astrid-agent | X | R16-P66-11 |
+| [R16-P66-13](packets/R16-P66-13.md) Authenticate neutral producer evidence through SDK readback | CC-3 (b; retained SR-6 receipt) | astrid-agent | X | R16-P66-12 |
+| [R16-P66-14](packets/R16-P66-14.md) Resolve end-relative times on stream clocks | CC-9 | astrid-agent | X | R16-P66-13 |
+| [R16-P66-15](packets/R16-P66-15.md) Paste exact media by occurrence | CC-10 (a) | astrid-agent | X | R16-P66-14 |
+| [R16-P66-16](packets/R16-P66-16.md) Verify exact delivered pixels and per-channel PCM | CC-10 (b) | astrid-agent | X | R16-P66-15 |
+| [R16-P66-17](packets/R16-P66-17.md) Generic recipe discovery, typed fill and normal submission | CC-5 (a) | astrid-agent | X | R16-P66-16 |
+| [R16-P66-18](packets/R16-P66-18.md) Ship and prove recipes for existing features | CC-5 (b) | astrid-agent | X | R16-P66-17 |
+| [R16-P66-19](packets/R16-P66-19.md) Rewrite general H3 skill and thin Recast | CC-6 | astrid-agent | S | R16-P66-18 |
+| [R16-P66-R](packets/R16-P66-R.md) Close compiler foundation | R | astrid-agent (Lead) | S | R16-P66-19, R16-P66-16 |
+
+### Proposed H3 Plan 68 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P68-01](packets/R16-P68-01.md) Soft timed guides through the ordered guide seam | CC-4 | astrid-agent | X | R16-P66-R |
+| [R16-P68-02](packets/R16-P68-02.md) Full-canvas source and still chunk ownership | CC-8 (a) | astrid-agent | X | R16-P68-01 |
+| [R16-P68-03](packets/R16-P68-03.md) Exact still masks and delivered holds | CC-8 (b) | astrid-agent | X | R16-P68-02 |
+| [R16-P68-04](packets/R16-P68-04.md) Guide and still recipes and producer handoff | CC-11 | astrid-agent | S | R16-P68-03 |
+
+### Proposed H3 Plan 70 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P70-01](packets/R16-P70-01.md) Compare full-canvas vs motion-context preparation | CC-7a (a) | astrid-agent (Lead) | S | R16-P68-04 |
+| [R16-P70-02](packets/R16-P70-02.md) Port active prefix continuation | CC-7a (b) | astrid-agent | S | R16-P70-01 |
+| [R16-P70-03](packets/R16-P70-03.md) Bridge placed clips through the same arrangement function | CC-7b | astrid-agent | S | R16-P70-02 |
+| [R16-P70-04](packets/R16-P70-04.md) Insert a placed clip between generated spans | CC-7c | astrid-agent | S | R16-P70-03 |
+| [R16-P70-05](packets/R16-P70-05.md) Remove captured workflow and inert flag | CC-7d | astrid-agent | S | R16-P70-04 |
+| [R16-P70-06](packets/R16-P70-06.md) Native continuation recipes and final skill trim | CC-12 | astrid-agent | S | R16-P70-05 |
+| [R16-P70-R](packets/R16-P70-R.md) Independent integrated native H3 review | R | astrid-agent (Lead) | S | R16-P70-06 |
+
+### Proposed H3 Plan 67 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P67-01](packets/R16-P67-01.md) Independent provider/admission/default boundary review | CS-0 (a) | astrid-agent (Lead) | S | R16-P66-R |
+| [R16-P67-02](packets/R16-P67-02.md) Staged extension admission and owner dependency | CS-0 (b; P17 P1 subset) | astrid-agent | X | R16-P67-01 |
+| [R16-P67-03](packets/R16-P67-03.md) Trusted effective contribution and worker admission | CS-0 (c; only proven gap) | astrid-agent | S | R16-P67-02 |
+| [R16-P67-04](packets/R16-P67-04.md) Pure generic default-companion selection | CS-10 (a) | astrid-agent | X | R16-P67-01 |
+| [R16-P67-05](packets/R16-P67-05.md) Use one existing consent and default transaction | CS-10 (b) | astrid-agent | X | R16-P67-04, R16-P67-02 |
+| [R16-P67-06](packets/R16-P67-06.md) H3-owned provider point and host injection | CS-1 (a) | astrid-agent | X | R16-P67-03, R16-P70-R |
+| [R16-P67-07](packets/R16-P67-07.md) Independent NKD package root | CS-1 (b) | poms_packs | N | R16-P67-06 |
+| [R16-P67-08](packets/R16-P67-08.md) Pinned NKD object-info schema evidence | CS-1 (c) | VibeComfy | N | R16-P67-01 |
+| [R16-P67-09](packets/R16-P67-09.md) Used-only NKD requirements and soft default declaration | CS-1 (d) | astrid-agent | X | R16-P67-07, R16-P67-08, R16-P67-05 |
+| [R16-P67-10](packets/R16-P67-10.md) Timed prompts use existing text mechanism | CS-2 | astrid-agent | X | R16-P70-R |
+| [R16-P67-11](packets/R16-P67-11.md) Report actual reference tag and intended actor | CS-6 | astrid-agent | N | R16-P67-10 |
+| [R16-P67-12](packets/R16-P67-12.md) ControlNet lowering or honest unsupported refusal | CS-5 | astrid-agent | S | R16-P67-11 |
+| [R16-P67-13](packets/R16-P67-13.md) LoRA phase only if H3 hook is proven | CS-7 | astrid-agent | X | R16-P67-12 |
+| [R16-P67-14](packets/R16-P67-14.md) Guide denoise phase through the existing guide function | CS-3 (stock decision; external fallback conditional) | astrid-agent | X | R16-P67-13, R16-P68-04 |
+| [R16-P67-15](packets/R16-P67-15.md) Real independent NKD curve action | CS-4; CS-3 fallback if 14 requires it | poms_packs | X | R16-P67-14, R16-P67-07, R16-P67-09 |
+| [R16-P67-16](packets/R16-P67-16.md) Native steering recipes and skill | CS-8 (a) | astrid-agent | S | R16-P67-14, R16-P70-R |
+| [R16-P67-17](packets/R16-P67-17.md) Provider-owned recipes and guidance | CS-8 (b) | poms_packs | S | R16-P67-16, R16-P67-15 |
+| [R16-P67-18](packets/R16-P67-18.md) Prove real release default delivery and opt-out | CS-11 | astrid-agent (Lead) | X | R16-P67-17, R16-P67-05 |
+| [R16-P67-19](packets/R16-P67-19.md) Installed shared and chained toolkit proof | CS-9 (a) | astrid-agent | S | R16-P67-18 |
+| [R16-P67-20](packets/R16-P67-20.md) Controller and worker exact provider custody | CS-9 (b) | astrid-agent | S | R16-P67-19 |
+| [R16-P67-R](packets/R16-P67-R.md) Independent close of default-provider programme | R | astrid-agent (Lead) | S | R16-P67-20, R16-P67-18, R16-P67-17 |
+
 ## Proposed R16 readiness — pending scope agreement and dispatch
 
 The brief holds strategy; each plan's tasks hold work and progress. This section records current readiness, branch/function reservations, scarce proof slots and source/pin deltas. It does not start a run. Reconfirm the existing Lead and each carried custodian before dispatch; preserve R15 priority, the P91 R17 handoff and held P82 authority.

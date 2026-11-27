@@ -11,3 +11,7 @@ Every message the Release 16 run sends, prepared in advance. A sender copies the
 | [sol.md](sol.md) | the Lead | one Sol helper, once per packet |
 | [board.md](board.md) | the Lead, at start-up | the first comment of each new board |
 | [messages.md](messages.md) | anyone | nudge, resume and replace |
+
+## Proposed H3 programme (not activated)
+
+[Plan 66](manager-P66.md) · [Plan 68](manager-P68.md) · [Plan 70](manager-P70.md) · [Plan 67](manager-P67.md). Use only after existing Lead approves the [H3 queue](../run.md#proposed-h3-programme-queue-66-68-70-67), freezes actual base/baseline/authority/capacity and explicitly activates rows. These preserve current READY-PROOF custody; active briefs remain unchanged.
