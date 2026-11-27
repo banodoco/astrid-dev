@@ -4,13 +4,13 @@
 
 **Goal:** An agent can make the edits a real film needed on a heavy timeline (swap a clip's media, move word-anchored clips, remove and restore clips) on a build of `release/15/main`, and each edit is confirmed by reading it back and by a render.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Orchestrator session `session_011EzfW2CaMLCifo6wA8AVqu`, hosting one manager
 
-**Estimate:** Provisional, about 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop. Re-estimate once TE-3's feasibility is known.
+**Estimate:** 0
 
-**Waiting on:** Recorded landed; read-back proofs and independent review are ticked. The Lead deferred render clauses to the release-freeze check; confirm that proof and the recorded probe limitations before publication and completion assessment.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
@@ -86,3 +86,9 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 - On the film-shaped fixture: the overlay clips are gone, replaced by in-place swaps; a 15-frame cut after a word moves every later clip exactly 15 frames earlier; it renders whole on Plan 87's stack. The owner's real film is hers to clean up after the fixes ship.
 - If TE-3 can only be delivered as a refusal, the ripple edit and the pause tightening move to Plan 18 and this plan says so plainly; the rest still completes.
 - Limits: two generated fixtures (standard and film-shaped); agents editing at the same time are probed, not covered.
+
+## Completion reconciliation — 26 November 2026
+
+The [Lead's revised landing decision](https://github.com/banodoco/astrid-dev/pull/1790) explicitly moved the render-backed clauses to the Release 15 freeze; [completion handover #1821](https://github.com/banodoco/astrid-dev/pull/1821) records closure of the lane. All six task rows are complete. [Agent #612](https://github.com/banodoco/astrid-agent/pull/612) landed as `514499debc902643a03aee3f0ed68b710c5d3ead`, verified ancestor of published Agent `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5`. The isolated fixture readbacks prove scoped swaps, ripple and reflow behavior; the integrated release gate accepted whole renders on the film-shaped and standard fixtures. That is not separate render proof for each individual TE probe. Probe 4 was fixture-blocked; probe 6 read back 250 changes without establishing a refusal-size boundary. Large-shots fixture defect [#1916](https://github.com/banodoco/astrid-dev/issues/1916) and interim ripple removal under [Plan 18](../18-timeline-editing/plan.md) remain follow-ups. No assertion that the owner's actual film was edited or every future timeline operation is qualified.
+
+Release 15 was [qualified](https://github.com/banodoco/astrid-dev/issues/1834#issuecomment-7172606069) under the owner's approved conditional gate and [published](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) on 25 November. The [Lead's stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) confirms delivery is over. The owner's long-lived-install check and formal release finalization remain separate; no release status or gap is closed by this metadata reconciliation.

@@ -4,13 +4,13 @@
 
 **Goal:** The fixes and the custom-element work made while editing a real clip and its tools land in Release 15: a project's own effects and components load in every editor and render the same in preview and in the final render, and a failure to load them never blocks the editor or the agent.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS)
 
-**Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
+**Estimate:** 0
 
-**Waiting on:** Recorded landed in Release 15; the installed Linux journey and final tuple comparisons are recorded in [tasks](tasks.md). Await release qualification/publication and completion assessment, with the inherited manifest and imported-file limits recorded there.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -47,3 +47,9 @@ It consumes `release/15/main` in each repository. It produces admitted project e
 ## Completion
 
 Pending the owner's scope: at least, a project with an admitted effect and component opens in a fresh editor, previews and renders identically, and an editor whose element list fails still opens, prompts and saves, with the failing clip showing the reason.
+
+## Completion reconciliation — 26 November 2026
+
+All 18 recorded task rows are complete. The independently reviewed Runtime [#98](https://github.com/banodoco/astrid-runtime/pull/98), Agent [#518](https://github.com/banodoco/astrid-agent/pull/518) and App [#368](https://github.com/banodoco/astrid-app/pull/368) landed at `ff154ba2079ac1afa58bb6e108410fdede14142a`, `1be7ea2c2f9e46ef3b69f403661814150f7fd027`, and `e3dbad64d402724ac5a35fb6447f18e432c64b78` respectively; all three are ancestors of the published Release 15 tuple (GitHub compare verified). The exact paired tests, installed Linux preview/render proof, element-list failure recovery and unrelated saved edit reopening are recorded in [tasks](tasks.md) and the landing PRs. Pre-release receipts without the compiled binding require source change, re-admission and placement; inherited manifest/imported-file limits and cancelled hosted cells remain as recorded. This closes the agreed project-elements scope, not all pack portability, workspace component placement or render parity across all platforms.
+
+Release 15 was [qualified](https://github.com/banodoco/astrid-dev/issues/1834#issuecomment-7172606069) under the owner's approved conditional gate and [published](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) on 25 November. The [Lead's stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) confirms delivery is over. The owner's long-lived-install check and formal release finalization remain separate; no release status or gap is closed by this metadata reconciliation.

@@ -4,13 +4,13 @@
 
 **Goal:** A person with a rented RunPod machine sees when it will stop (release time, minutes left, cost so far, hourly rate) and can keep it longer or until they release it, always within a spend cap they set and with fresh paid consent.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Plan 40 manager
 
-**Estimate:** 1.5–2
+**Estimate:** 0
 
-**Waiting on:** Recorded landed in Release 15; all task Progress rows ticked, including the Lead's hosted gate and bounded CPU-fake checks. Await release qualification/publication and the completion assessment; no real paid RunPod run is claimed.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
@@ -53,3 +53,9 @@ On CPU fakes, through the real CLI and host operation:
 - reuse still cannot extend a paid limit.
 
 The proof's limit: it runs on fakes, so a real pod is not kept or released here; Plan 34 can do that in its next run.
+
+## Completion reconciliation — 26 November 2026
+
+All 17 recorded task rows are complete. [Agent #554](https://github.com/banodoco/astrid-agent/pull/554) records the Lead's 23 November gate, 42 R1 and 17 headline cases passing with CPU fakes, and hosted comparison runs 45127057649 and 45127061949 (no new failures after the recorded baseline rulings). Merge `8fdf6615082785f5a8458abf614a9323092e0bc6` is an ancestor of the published Agent `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5`, verified via GitHub compare. The scoped completion proof is CPU-fake proof, not a live paid RunPod session; no claim about real provider behavior or spend is made.
+
+Release 15 was [qualified](https://github.com/banodoco/astrid-dev/issues/1834#issuecomment-7172606069) under the owner's approved conditional gate and [published](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) on 25 November. The [Lead's stand-down](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7179900972) confirms delivery is over. The owner's long-lived-install check and formal release finalization remain separate; no release status or gap is closed by this metadata reconciliation.
