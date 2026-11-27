@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 12.5 (9.5–18): phase 1 11.5, phase 2 1
+**Estimate:** TBD — residual only; prior whole-plan estimate 12.5 (9.5–18) engineering days
 
-**Waiting on:** Plan 29; the owner's go; owner decisions; astrid-dev `main` protection; [Plan 58](../58-strategy-from-releases/plan.md), which first makes the briefs and the strategy page the records this plan publishes from
+**Waiting on:** [Plan 58](../58-strategy-from-releases/plan.md) is done; reuse the existing release briefs, parser and strategy view. [SC-31](https://github.com/banodoco/astrid-dev/blob/25ced2a35b4677532911aaa61127fc9452be59b7/plans/31-releases-from-astrid-dev/evidence/release-16-scoping/SC-31.md) identifies remaining semantic-version display, protected exact-tuple finalization, generated manifest/bootstrap cutover and served readback. Await owner controls, scoped dispatch and P29 status seam; no separate publication.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 

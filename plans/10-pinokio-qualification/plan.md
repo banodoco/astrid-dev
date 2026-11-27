@@ -10,7 +10,7 @@
 
 **Estimate:** TBD
 
-**Waiting on:** —
+**Waiting on:** Existing P07 launcher and consent fix retained; [SC-10](https://github.com/banodoco/astrid-dev/blob/d358b3b9de02c156d8a5576495256d6dea73c577/plans/10-pinokio-qualification/evidence/release-16-scoping/SC-10.md) identifies missing engine refusal-veto, native custody and fully-local paired recovery. R16 needs actual engine and six OS/mode witnesses with P38/P09/P30, not surrogate proof.
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../vision/gaps/F-002-safe-user-control.md).
 

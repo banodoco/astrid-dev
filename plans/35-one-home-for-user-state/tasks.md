@@ -41,6 +41,10 @@ The following proposed S35-0–6 rows are uncompleted; the earlier outline is re
 
 No general store/API cleanup, broad P36 consolidation or P12/P75 architecture is required for parallel starts. Evidence: [SC-35](https://github.com/banodoco/astrid-dev/blob/44d813650b7e8b3726bd41699e80c182db8f79a1/plans/35-one-home-for-user-state/evidence/release-16-scoping/SC-35.md), [SC-35-severity-correction-01](https://github.com/banodoco/astrid-dev/blob/ebe295571bb58028fe72d98c3da2cbe7fd40eaa5/plans/35-one-home-for-user-state/evidence/release-16-scoping/SC-35-severity-correction-01.md), [INV-04](https://github.com/banodoco/astrid-dev/blob/9e8411372fc9a0257175d0f49da65ba7bee77bbb/releases/16/evidence/scoping/INV-04.md), [AUD-01](https://github.com/banodoco/astrid-dev/blob/43e3e390d6ffe026e6f2a61f0c866b0ac94daf9b/releases/16/evidence/scoping/AUD-01.md).
 
+## Prepared Release 16 queue — completed 26 November 2026
+
+The [Lead's terminal receipt](https://github.com/banodoco/astrid-dev/issues/2030#issuecomment-7191806062) confirms 11 done, zero parked and the accepted work merged into Agent and Runtime `release/16/main`. The [Plan 35 board](https://github.com/banodoco/astrid-dev/issues/2033) records DONE for R16-P35-01–09, RS1 and R. The final Agent review merge `f59cc40cba7f25872def3be4603fd78a10bf1431` and Runtime review merge `c7019b00f270a1cb173d9e4f0bf9852c95a3147c` are ancestors of their current release integration heads (verified 27 November). This completes the bounded CPU packet queue, not the full project, the deferred rows below, or final installed/native release qualification. No new product proof was executed for this record update.
+
 ## Later: real-hardware qualification (not in Release 16)
 
 Owner, 26 November 2026: done separately, later. Not part of this plan's Release 16 run.

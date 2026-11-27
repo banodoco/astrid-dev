@@ -10,9 +10,9 @@
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
-**Estimate:** about 4.5 (Phase 1 about 2.7; Phase 2 about 1.8)
+**Estimate:** TBD — residual owner/acceptance work only; historical estimate about 4.5 engineering days
 
-**Waiting on:** Owner's final Release 15 decision moved this plan to Release 16. Reconcile 13 November implementation against unticked VA cards; owner mark-up, supporting-aspirations table, physical-device look and independent review remain outstanding. Confirm accountable Release 16 handoff and scope.
+**Waiting on:** 13 Nov implementation already on main (including [App #257](https://github.com/banodoco/astrid-app/pull/257), merged); not a new R15 feature. Owner carried residual to R16: reconcile VA-1–9 against proof, wording/table approval, VA-10/12 review and physical-device look; VA-11 post-live. Confirm accountable handoff; do not infer acceptance from source alone.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

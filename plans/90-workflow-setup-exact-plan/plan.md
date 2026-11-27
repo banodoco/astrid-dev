@@ -10,9 +10,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 10 engineering days after [Plan 56](../56-workflow-setup/plan.md) (inferred): plan function and digest 2, `generate requirements` and `--apply` 3, reconcile 2, reusable trust 2 with Plan 35, updates 1. Plan 56 first.
+**Estimate:** TBD — R16 exact-plan plus inherited P56 residual only; historical estimate about 10 engineering days after P56
 
-**Waiting on:** [Plan 56](../56-workflow-setup/plan.md) (its approval record and `--consent code`); Plan 32 F4 for the single fetch path; Plan 35 for where trust lives; the owner's go
+**Waiting on:** P56 stage 1 (17 checked rows) landed in published R15, including recipe/approval/consent primitives; see [P56 task handoff](../56-workflow-setup/tasks.md#proposed-release-16-reconciliation--25-november-2026). [SC-90](https://github.com/banodoco/astrid-dev/blob/1bd93cf70f169e0db52f95ced5b8f9d189865539/plans/90-workflow-setup-exact-plan/evidence/release-16-scoping/SC-90.md) maps unfinished exact plan/apply, trust, safe recovery and producer seams; preserve P56 owner-run SAM proof. P35 CPU grant methods landed in R16, public grant route/consumer remains; await scope and manager.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

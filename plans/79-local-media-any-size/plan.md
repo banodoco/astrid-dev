@@ -10,9 +10,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 8 engineering days (7 to 9): the Runtime's client and the Agent's pin about 1, the Agent about 4, the App about 1.5, the live proof and review about 1.5. The critique of 21 November 2026 raised it from 5.
+**Estimate:** Historical estimate 7–9 engineering days; re-size using existing transport and P77 retry path
 
-**Waiting on:** a manager, in **Release 16** (the owner moved it from Release 15 on 24 November 2026; its branches become `release/16/plan-79`, cut from `release/16/main`), and Plan 77 landing: it edits the same Agent and App files, and the editor half needs its drop handling ([sequence](#sequence-and-readiness)). The interim 1 GiB limit (D2) does not wait.
+**Waiting on:** P77's R15 contribution landed; reuse its drop/retry work. [SC-79](https://github.com/banodoco/astrid-dev/blob/ede2640e3a1b0ff2f1d5136abf289ff5a70d53f1/plans/79-local-media-any-size/evidence/release-16-scoping/SC-79.md) still observed a 64 MiB Agent cap and missing ordinary video/audio placement; no delivered 1 GiB interim claim. R16 residual: sized streaming, authoritative limit, safe placement/reload/retry, original bytes and installed proof; coordinate P63/P87 and await manager.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

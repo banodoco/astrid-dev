@@ -6,13 +6,13 @@
 
 **Goal:** User choices, project choices and project work live in the Runtime (app-state and project documents), not in side files, env variables or browser storage; machine bootstrap state stays local.
 
-**Status:** queued
+**Status:** paused
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** TBD — prepared R16 CPU queue completed (11/11); size deferred scope separately
 
-**Waiting on:** scope agreement; Plan 32 T6d
+**Waiting on:** Prepared R16 CPU implementation and reviews finished 26 Nov, all 11 packets landed in Agent/Runtime release/16/main ([Lead receipt](https://github.com/banodoco/astrid-dev/issues/2030#issuecomment-7191806062); [P35 board](https://github.com/banodoco/astrid-dev/issues/2033)). Not a R15 contribution or whole-project completion. Owner reserved App migration, pack/RunPod custody, grant API/revocation, installed migration/rollback, export/CLI and other guard work for later ([tasks](tasks.md#later-real-hardware-qualification-not-in-release-16)); no active queue or new dispatch.
 
 **Vision gaps:** [Local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary) · [User control and recovery](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
