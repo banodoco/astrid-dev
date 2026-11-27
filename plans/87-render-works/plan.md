@@ -10,9 +10,9 @@
 
 **Owner:** Orchestrator session `session_011EzfW2YgL2GSmbJMr9r9SG`, hosting one manager
 
-**Estimate:** Provisional, about 9 engineering days: 1 to port the sound fixes, 5 for the proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check. Re-estimate after the lease measurement and the first whole-fixture attempt.
+**Estimate:** TBD — R16 residual only; RN-14 historical estimate 12–16 h plus separately sized fixes/proof (original whole-plan estimate about 9 days)
 
-**Waiting on:** Release 15 core and follow-ups published; the Lead stood down the completed release lane. Whole-plan residual scope remains: [Release 16 handoff #1938](https://github.com/banodoco/astrid-dev/issues/1938), RN-0/R evidence, large-shots fixture, RN-14 fresh-pack handling, and remaining output/recovery proof. Await authorized continuation; no claim of complete original scope.
+**Waiting on:** R15 core and follow-ups shipped, including installed 616-clip whole render twice with byte-identical output, but standard fixture missed heavy size gate. [Handoff #1938](https://github.com/banodoco/astrid-dev/issues/1938): RN-14 default packs, sprite phase, preview/export parity, native custody/restart and heavy fixture/whole-render/review residuals. Await authorized continuation; not a new renderer build or full original-scope pass.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 

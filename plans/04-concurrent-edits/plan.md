@@ -10,9 +10,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** TBD — shared implementation in P63; independent acceptance and demonstrated repairs only
 
-**Waiting on:** —
+**Waiting on:** Historical App eight-case and SDK checks passed on earlier inputs; current tuple acceptance remains unrecorded. [SC-04](https://github.com/banodoco/astrid-dev/blob/cbd951924424ecbad213d3ad999a75ade2aabb51/plans/04-concurrent-edits/evidence/release-16-scoping/SC-04.md) identifies same-actor custody, recovery and undo gaps. Use P63 as shared implementation owner per proposed R16 reconciliation, preserve CE-FINAL seven SDK/eight hosted cases and named independent verdict; no duplicate implementation or premature closure.
 
 **Vision gaps:** [Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (primary).
 

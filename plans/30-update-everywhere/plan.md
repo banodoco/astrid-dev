@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 7–9
+**Estimate:** Historical residual estimate 7–9 engineering days; re-size remaining supported-route gaps before dispatch
 
-**Waiting on:** Plan 29
+**Waiting on:** Reuse P29's landed updater; [SC-30](https://github.com/banodoco/astrid-dev/blob/75d69e848eaa0760993e7be3a7c13c5fa7a0f19c/plans/30-update-everywhere/evidence/release-16-scoping/SC-30.md) identifies older systemd worker lifecycle, normalized status/refusal, fully-local skew and genuine Pinokio update proof. Coordinate P09/P10/P29; task rows remain unchecked.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 

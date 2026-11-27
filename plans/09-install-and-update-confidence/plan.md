@@ -10,7 +10,7 @@
 
 **Estimate:** TBD
 
-**Waiting on:** —
+**Waiting on:** Existing installer/update transaction is reusable; [SC-09](https://github.com/banodoco/astrid-dev/blob/52c40028c067047533e222a017c92ac17f8cf5ba/plans/09-install-and-update-confidence/evidence/release-16-scoping/SC-09.md) reconciles prior work. R16 residual: schema-changing lock handoff, lived-in rollback/retention, route/OS and removal evidence; coordinate P29/P30/P10/P38. Await scoped dispatch, not a replacement installer.
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 

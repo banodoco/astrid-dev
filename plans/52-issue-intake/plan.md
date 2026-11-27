@@ -10,9 +10,9 @@
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
-**Estimate:** about 2.5
+**Estimate:** TBD — remaining redirect/reporting proof and owner tasks only; historical estimate about 2.5 engineering days
 
-**Waiting on:** Owner's final Release 15 decision moved this plan to Release 16. Reconcile II-8, II-9, II-11 and II-13 against redirect/reporting patches and packet evidence; II-10 needs owner issue transfers, II-11 browser proof and II-9 approval. Confirm accountable Release 16 handoff and accepted residual scope.
+**Waiting on:** Core intake forms, labels, bot and review completed earlier (9/14 task/review rows checked; [tasks](tasks.md)); Agent redirect shipped in R13. Owner carried residual to R16: reconcile II-8/9/11/13 against existing patches/evidence, II-10 owner transfers, II-9 wording approval and real two-door proof. Confirm accountable handoff; do not rebuild core or claim all redirects landed.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

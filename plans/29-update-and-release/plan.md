@@ -8,9 +8,9 @@
 
 **Owner:** Plan 29 manager
 
-**Estimate:** 11–13
+**Estimate:** TBD — residual only; historical whole-plan estimate 11–13 engineering days
 
-**Waiting on:** —
+**Waiting on:** Prior release work already implements shared capability/reason, update transaction and many UR rows. [SC-29](https://github.com/banodoco/astrid-dev/blob/68849637ddb2fb007289983727bc66e303328580/plans/29-update-and-release/evidence/release-16-scoping/SC-29.md) credits these; retain only actual status/skew, mixed-version, rollback and ownership/default-pack gaps and integrated proof with P09/P30/P31. Confirm remaining dispatch.
 
 **Resuming Release 12 on a new machine?** Start at [handoff.md](handoff.md).
 

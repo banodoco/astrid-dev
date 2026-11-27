@@ -10,9 +10,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 4 engineering days. A shared shape for result files and a generated table are left until a second plan has used the home (see Not included).
+**Estimate:** Historical estimate about 4 engineering days; reuse existing measurement drivers, re-size consolidation only
 
-**Waiting on:** a release; the owner's decision D1 in [inputs.md](inputs.md#owner-decisions).
+**Waiting on:** R15 P81/P89/P87 already provide installed runners, save marks and render receipts. [SC-85](https://github.com/banodoco/astrid-dev/blob/799938e9ebcb2d8d97d078a27d448635ed7f7b5c/plans/85-one-place-to-measure/evidence/release-16-scoping/SC-85.md) identifies comparability and fixture gaps; retain only missing inventory/method, portable reuse and exact paired evidence. MS-1–5/R remain unchecked; owner D1 and dispatch remain.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
