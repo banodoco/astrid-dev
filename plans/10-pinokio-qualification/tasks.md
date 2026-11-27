@@ -1,6 +1,24 @@
 # Tasks: Pinokio qualification
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 [Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+
+## Current Release 16 dispatch interpretation — 27 November 2026
+
+This is the canonical residual reading of these existing task IDs after [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060). It preserves original tests, safety requirements and historical progress; it does not mark product acceptance complete, create a new author, change existing proof contracts or add review rounds. The [P09 programme](../09-install-and-update-confidence/plan.md) owns the shared lifecycle and qualification sequence; P31 owns publication. Refresh live reservations before assigning any shared function, especially the existing `38-08U` joins on [#2050](https://github.com/banodoco/astrid-dev/issues/2050).
+
+| Existing IDs | Current R16 disposition |
+| --- | --- |
+| PIN-0 | Actual engine/launcher/helper identities and supported action interface; share origin/target register with P09/P31. |
+| PIN-1 | Preserve implemented menu/bootstrap/consent/paired-recovery behavior and original focused tests; fix only current defects. |
+| PIN-2 | Early exact engine capability and refusal/settlement proof; concrete missing capability stays open. |
+| PIN-3 | Consume PIN-2 and P38 retained custody; no alternative supervisor. |
+| PIN-4 | One actual 3 OS × hosted/local proof, including P30 UR-18a, Stop/Quit, interrupted recovery, retry and removal. |
+| PIN-END / PIN-PROMOTE | Record honest programme outcome and hand off one immutable candidate to P31; no pre-main publication. |
+
+The following historical cards and ledgers preserve their original IDs, evidence and checkboxes. Earlier release numbers, bases, donor hints, “open” snapshots and promotion commands are historical, not current R16 dispatch instructions. Where a retained acceptance obligation appears below, the table names its current owner rather than discarding it. Promised native routes stay unqualified until demonstrated; a named limitation is not automatic acceptance.
+
 
 ## Task index
 
@@ -19,7 +37,7 @@
 ### PIN-0 — Freeze and reconcile sources
 
 - **Route:** N / Luna.
-- **Work and done:** Record exact repo/remotes/branches/heads and clean/dirty state for the chosen Pinokio base, intended `pre-main` target, and proposed donors. Resolve target existence, base, and create-or-fast-forward policy. Map Task L environment/lifecycle changes and M4-4a/M4-6 inputs to current ancestry and paths; mark each reusable, superseded, absent, or incompatible. Do not select an arbitrary latest branch.
+- **Work and done:** Record exact repo/remotes/branches/heads, actual deployed engine identity and clean/dirty state for the current Lead-selected Pinokio base/target and proposed donors. Resolve target existence and current landing authority; historical pre-main is not a destination. Map Task L environment/lifecycle changes and M4-4a/M4-6 inputs to current ancestry and paths; mark each reusable, superseded, absent, or incompatible. Do not select an arbitrary latest branch.
 
 ### PIN-1 — Preserve launcher interface and Task L behavior
 

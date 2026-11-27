@@ -1,18 +1,18 @@
 # ComfyUI Desktop and existing environments
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Current R16 authority, 27 November 2026:** The existing [recovery board #2032](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7221823198) and subsequent Lead rulings govern actual sessions, bases, writer reservations, proof venues and review budgets. The earlier CPU-only queue and provisional run-start conditions below are historical where they conflict. Installed/native outcome and the single release acceptance remain open; this planning correction creates no dispatch, replacement author or extra review round. See the [final programme review](../../releases/16/evidence/final-programme-review.md).
 
 **Project:** ComfyUI Desktop and existing environments
 
 **Goal:** A creator who already has ComfyUI, including ComfyUI Desktop on Windows, gets an image from Astrid through it, and when it is closed or broken is told exactly what is true and the one thing to do next.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Existing R16 Manager93 and technical owner on [board #2032](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7221823198); no reassignment
 
-**Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, review 0.5–1, all on CPU. The installed Desktop witness is later work.
+**Estimate:** 3–5 engineering days remaining implementation (1–2 original consumer work, 2–3 shared PACK repairs), plus 3–5 incremental review/integration/native qualification; credits landed A/B/C/CAT and authored D/PACK work. Venue waits excluded.
 
-**Waiting on:** the owner's decisions D2–D5 in [inputs.md](inputs.md#owner-decisions) and the Run start; Release 16's base for the branch.
+**Waiting on:** Current R93-D/E, PACK-A/B/C/DELIVERY and exact installed/App/native F/G/H/I gates on board #2032. The readiness producer is already landed and consumable; do not wait on the whole project to start P94 or P90.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -100,7 +100,9 @@ Plan 94 starts its install branch once RS1 accepts the ladder. The details are i
 
 ## Completion
 
-For Release 16, completion is every remaining card's focused CPU tests passing on base and head. CPU fixtures prove that each case below stops at the right rung with its reason and one next action, and leaves placement unchanged where it refuses:
+Current completion requires the recovery board's actual App/native/installed outcome and final accepted tuple, in addition to the original CPU assertions below. Any older sentence treating native first-image proof as outside R16 is superseded by the [27 November recovery handoff](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7221823198).
+
+CPU implementation requires the original and added focused tests on the actual base and candidate. They establish only the classifications below, not the full installed outcome:
 - **A running Desktop** is found, identified as that install, and attached.
 - **A closed Desktop** gets "open it", and once the person opens it, the next check continues.
 - **A stale registration** is diagnosed as broken, with no data deleted, and the next action offers Desktop's reinstall or Plan 94's separate copy.
@@ -108,7 +110,7 @@ For Release 16, completion is every remaining card's focused CPU tests passing o
 - **Nothing reads `ready`** without the observations behind it.
 - **The skills** tell the agent to run `generate targets` and do its next action.
 
-Real-hardware proof is later work, not part of Release 16: the installed Desktop witness through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), the image in the editor, the unrelated queued job, the time from intent to image, zero off-script steps, and Portable, Git and Pinokio regression checks where available. See [Later](tasks.md#later-real-hardware-qualification-not-in-release-16). No hardware use, spending or publication is authorized by this plan.
+Current recovery acceptance also includes real-hardware proof: the installed Desktop witness through [user test request #1952](https://github.com/banodoco/astrid-dev/issues/1952), the image in the editor, the unrelated queued job, the time from intent to image, zero off-script steps, and Portable, Git and Pinokio regression checks where available. See [Later](tasks.md#later-real-hardware-qualification-not-in-release-16). Use only the existing recovery authorization and its actual venue/spend limits; this planning correction grants no additional execution or publication authority.
 
 ## Proposed Release 16 reconciliation — 25 November 2026
 

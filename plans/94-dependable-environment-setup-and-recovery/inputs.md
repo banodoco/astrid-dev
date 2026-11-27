@@ -1,14 +1,18 @@
 # Inputs — Dependable environment setup and recovery
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Current R16 authority, 27 November 2026:** The existing [recovery board #2051](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7221824353) and subsequent Lead rulings govern actual sessions, bases, writer reservations, proof venues and review budgets. The earlier CPU-only queue and provisional run-start conditions below are historical where they conflict. Installed/native outcome and the single release acceptance remain open; this planning correction creates no dispatch, replacement author or extra review round. See the [final programme review](../../releases/16/evidence/final-programme-review.md).
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 24 November 2026 the owner asked for broader environment setup and recovery, and for this plan and [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md) to be in Release 16 (in the planning chat behind astrid-dev #1847, then in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV). On 25 November she asked for both plans to deliver one end state: one honest state, one next step and one consent, with the agent never improvising. plan.md describes this plan's branch of it. That is release intent, not a go to implement. Next: the owner confirms the split and D2–D6.
+**Scope decision:** Accepted — retained among the 18 R16 projects; current execution continues under the [existing recovery authorization](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7221824353). Earlier proposal/review-round entries below describe the original dispatch and do not reset active contracts.
 
-**CPU-only (owner, 26 November 2026):** real-hardware work moves to the Later section of tasks.md, done separately later.
+**Run start:** Active — existing manager, technical owner, authors, branches and proof arrangements remain in force. Read the actual board for changes before consumption.
+
+**Historical scope proposal:** Pending — on 24 November 2026 the owner asked for broader environment setup and recovery, and for this plan and [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md) to be in Release 16 (in the planning chat behind astrid-dev #1847, then in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV). On 25 November she asked for both plans to deliver one end state: one honest state, one next step and one consent, with the agent never improvising. plan.md describes this plan's branch of it. That is release intent, not a go to implement. Next: the owner confirms the split and D2–D6.
+
+**Historical CPU-only dispatch (owner, 26 November 2026; superseded for current recovery):** real-hardware work moves to the Later section of tasks.md, done separately later.
 
 **Prior art:** the tester report [#1848](https://github.com/banodoco/astrid-dev/issues/1848) and its [frozen handoff](https://github.com/banodoco/astrid-dev/blob/501e34de4503994b75c602ede6108a8e69a1c4e0/releases/15/tester-run/exploratory-build-a09ea669.md), 24 November: Windows 11, RTX 5070 Ti Laptop.
 - **Install:** the candidate installed in 622.5 s, including 219 s of silence.
@@ -54,7 +58,7 @@ The critique estimated only the inventory and baseline (1–2 days); the rest is
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the install's write and consent boundary, and R at most 1. Next: the owner confirms (D6).
 
-**Run start:** Pending — no implementation, hardware use or real download is authorized. Next: the owner names the accountable orchestrator, confirms the user test request's limits and zero paid spend (D4) and the base (D6); then record the date and limits here.
+**Historical Run start proposal:** Pending — no implementation, hardware use or real download is authorized. Next: the owner names the accountable orchestrator, confirms the user test request's limits and zero paid spend (D4) and the base (D6); then record the date and limits here.
 
 ## Owner decisions
 

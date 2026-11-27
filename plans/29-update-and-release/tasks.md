@@ -1,8 +1,32 @@
 # Tasks — One update path and release
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 [Plan](plan.md) · [Inputs](inputs.md)
 
-## Release 12 Track A current work
+## Current Release 16 dispatch interpretation — 27 November 2026
+
+This is the canonical residual reading of these existing task IDs after [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060). It preserves original tests, safety requirements and historical progress; it does not mark product acceptance complete, create a new author, change existing proof contracts or add review rounds. The [P09 programme](../09-install-and-update-confidence/plan.md) owns the shared lifecycle and qualification sequence; P31 owns publication. Refresh live reservations before assigning any shared function, especially the existing `38-08U` joins on [#2050](https://github.com/banodoco/astrid-dev/issues/2050).
+
+| Existing IDs | Current R16 disposition |
+| --- | --- |
+| UR-0; old UR-14/UR-16 release lanes | Historical investigations/publications; do not redispatch or republish. |
+| UR-1/1b/3/4/5/6/8/9/10/11/12; UR-13a–l/n/p; UR-15/15a; UR-15l-1/2 | Existing implementation/history, including merged Runtime #36/#37/#39/#40/#41 and Agent #301/#307. Reuse and verify current behavior; stale “open” history is not a new author assignment. |
+| UR-7/13/13o; UR-15b/f/j/k/l-3/l-a5 | Retain actual paired/unknown/owner outcome, public-path and mixed-version proof with P30; pending work survives reload/repair. |
+| UR-8b/c/d and protection/publication | Already moved to P31. Keep current guard until effective replacement; one publisher. |
+| UR-13m / UR-15c / UR-R2.1b/d | P09 IU-15 shared lived-in real-origin/content and preservation fixtures, including original assertions. |
+| UR-15d/g/h/i; M4 custody remainder | P38 live authority and P09 retained-root/transaction admission. Discovery/journal/cached PID is never stop authority. |
+| UR-15e | Recorded R0 rollback-window owner decision recovered in inputs; no routine renewed approval. Any proposed policy change remains an owner choice. |
+| UR-R1.1–1.7; UR-R2.1/a/c, 2.4, 2.6/7, 2.9/10 | Preserve historical implementation receipts and tests; native/final-tuple proof is not implied. |
+| UR-R2.3 | Actual dead-worker retry/no-double-start and settled result. |
+| UR-R2.5 | P30 UR-15 old-systemd launch plus query/settlement. |
+| UR-R2.2; general CI/MyPy/SSH cleanup | Deferred unless a concrete retained route/effective required gate fails. |
+| UR-R and historical correction ledgers | One shared integrated review within existing budgets. Keep original safety/regression obligations; route exact residuals to their existing owners. |
+
+The following historical cards and ledgers preserve their original IDs, evidence and checkboxes. Earlier release numbers, bases, donor hints, “open” snapshots and promotion commands are historical, not current R16 dispatch instructions. Where a retained acceptance obligation appears below, the table names its current owner rather than discarding it. Promised native routes stay unqualified until demonstrated; a named limitation is not automatic acceptance.
+
+
+## Historical Release 12 Track A work
 
 The active task definitions and gates are in [Track A](../../releases/12/fixes.md).
 

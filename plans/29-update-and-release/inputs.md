@@ -1,6 +1,21 @@
 # Inputs — One update path and release
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 [Plan](plan.md) · [Tasks](tasks.md)
+
+## Current Release 16 evidence — 27 November 2026
+
+The owner retains P09/P10/P29/P30 in the 18-project release. The current residual programme is in [P09](../09-install-and-update-confidence/plan.md), with per-ID dispositions in [tasks](tasks.md). [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060) was read in full with its subsequent comments (none at the review snapshot); it is a source investigation, not a native proof receipt. Historical bases and publication commands below are provenance only.
+
+Refreshed independent source heads: Agent R16 integration `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`; Runtime R16 integration `55a541a7ab904873e63510e581a60742e1b83fb8`; published App `cc1d48f016fde55ad6b0609c619d8a4bcec56823`; Pinokio `1e4c1e77f0d2b1ed322d0112d5f40103c998c5eb`. These are not a frozen integrated R16 tuple. [R15 publication](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and the App source manifest identify release/required floor 15; fresh HTTP bytes and post-live owner confirmation remain distinct P31 evidence.
+
+[P38 continuation handoff](https://github.com/banodoco/astrid-dev/issues/2050#issuecomment-7225429126) identifies draft Runtime #133 `ccfdacc3559e7cb219f1cac1fadc150d957122bf` and Agent #697 `8da74aa9821cb27caec7a3eec7a30e17733f5284`. It reports portable proof for authored deferred/cold fixes, not native systemd served-origin qualification. The [completed oracle follow-up](https://github.com/banodoco/astrid-dev/issues/2050#issuecomment-7225981241) corrects the broad impossibility inference: stock systemd does not supply the proposed frozen-definition compare-stop, but that is not identical to the canonical retained-owner requirement. The Lead must decide the supervisor-policy boundary and demonstrate its complete protocol; any reduced R15 primary action requires its exact product disposition. Current authored terminal/detached continuation does not implement managed Update-now/old service-start/local-page job consumption. No native positive is claimed. All shared-function reservations and original negative proofs remain intact.
+
+Plans 52, 53 and 85 are excluded by the present owner instruction. Necessary measurements, product qualification and original regressions remain under existing retained owners and infrastructure; this evidence update does not reinstate the removed projects.
+
+**Recovered recorded choices:** the preserved [#178 inputs at `5c1f139`](https://github.com/banodoco/astrid-dev/blob/5c1f1393d8b435ba16722359840704d0c95d3003/plans/29-update-and-release/inputs.md) explicitly record decision 18 (local `npm run update`, hosted curl) and decision 19 (R0 rollback offered only until the first successful post-handoff update, then retained R0 code/plist/version may be pruned). The PR was closed/unmerged; this is a recovered decision record, not proof that its implementation landed or a publication go. Do not ask the same policy question solely because main retains an older “pending” cell. Preserve user content/newer work and current P35/P38 authority; only a proposed change to that policy requires a fresh owner decision.
+
 
 ## Planning evidence
 

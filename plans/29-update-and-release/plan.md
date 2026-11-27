@@ -1,5 +1,7 @@
 # One update path and release
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 **Project:** One update path and release
 
 **Goal:** One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes.
@@ -8,111 +10,28 @@
 
 **Owner:** Plan 29 manager
 
-**Estimate:** TBD — residual only; historical whole-plan estimate 11–13 engineering days
+**Estimate:** 1–2 engineering days remaining implementation plus 0.5 incremental integration/qualification days; shared P09/P10/P29/P30 total 6–11 + 3–5, counted once, excluding existing P38/P93/P94/P31 work and venue waits.
 
 **Waiting on:** Prior release work already implements shared capability/reason, update transaction and many UR rows. [SC-29](https://github.com/banodoco/astrid-dev/blob/68849637ddb2fb007289983727bc66e303328580/plans/29-update-and-release/evidence/release-16-scoping/SC-29.md) credits these; retain only actual status/skew, mixed-version, rollback and ownership/default-pack gaps and integrated proof with P09/P30/P31. Confirm remaining dispatch.
-
-**Resuming Release 12 on a new machine?** Start at [handoff.md](handoff.md).
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
-## Outcome and scope
+## Release 16 residual
 
-People see one clear way to update Astrid, and it works:
-- **Update now** for a normal install;
-- **Update in Pinokio** for Pinokio;
-- the command or agent instructions only as a secondary option, or where the button can't work.
+**End state:** every update surface names the installed owner, shows the same truthful state and offers the right working action; success means the selected App/Runtime pair is usable and pending work is preserved.
 
-Every screen agrees, because each one shows what the installed Astrid says rather than guessing. A release number means a real release: it changes only when what users install changes, and only by a deliberate merge.
+The foundational update UI, `self_update` capability/reasons, installation resolver, transaction, outcome record, helper and original release guard were delivered in earlier releases. The [sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060) confirms their source and merged history. Do not repeat Release 10–14 authoring, historical int promotion, old review rounds or a second publisher. Preserve their tests and evidence.
 
-- **Included:**
-  - fix "Update now" at its root (it has never worked on any published install);
-  - say why whenever it can't run;
-  - one decision table for every update surface;
-  - remove setup and consent UI from update surfaces;
-  - a release number that moves only with the installed tuple, guarded by a small required check;
-  - protected App `main`.
-- **Also included:** a Runtime `self_update` capability; update status for Pinokio fully local (its preview server answers 501 today); fully local Update now through the existing in-page updater.
-- **Committed in [Plan 30](../30-update-everywhere/plan.md):** removing the systemd 254 floor, typed contracts at both broken boundaries, the refused cards, and Pinokio and fully local update proof.
+The residual is one decision over actual selected installation/owner and both App/Runtime identities, including current/ahead/behind/unknown, mismatched halves, busy/repair/recovery-needed, mixed old/new pages and truthful settled outcomes. Existing `resolveUpdate`, status reasons and `outcome.py` remain the mechanism. P30 LA-1–7 closes paired-local skew and local-owner/recovery gaps. In particular, current App Git ancestry alone must not return “up to date” while the Runtime is stale. Local npm and hosted curl instructions retain the recorded owner distinction; Pinokio users keep the Pinokio action.
 
-  This plan takes over [Plan 09](../09-install-and-update-confidence/plan.md) IU-5 (in-app route). Plan 09 keeps IU-1 transaction consolidation.
-- **Not building:**
-  - new status fields;
-  - a new resolver;
-  - a publish script;
-  - new CI rows;
-  - a "main only moves by release" rule. App `main` also deploys the hosted editor, so that rule would make every UI fix a release.
+P09 owns the common transaction and migration/retention invariants. Existing P38 `38-08U` owns its reserved lifecycle/deferred-recovery joins; P29 consumes the outcome rather than building another queue or outcome engine. P35 owns durable state, while P63/P79 supply pending-work save/import guard obligations. Keep reload and recovery from discarding those operations. P94 owns environment setup and P93 owns pack observation/admission; update UI does not absorb either installer.
 
-## Existing work and decision
+P31 already owns UR-8b/c/d and canonical version/publication work. Retain the existing guard until its protected replacement is effective. R16 displays 0.1.0 while the legacy integer still orders releases and required-update floors; current known floor is 15. No floor change is implied by the semantic version. Publication is one P31 action after the final tuple's proofs and owner go.
 
-The current state was mapped by seven read-only reviews, then a draft design was challenged by an independent reviewer whose cuts were accepted. Both are summarised in [inputs.md](inputs.md#planning-evidence).
+## Sequence and completion
 
-The approach reuses what exists:
-- the installed Astrid's own `identity` (`managed_by`, `release`);
-- the existing `resolveUpdate`, the update status `reason`, `release-check.mjs` and the served-manifest canary.
+Disjoint decision/fixture work starts on current interfaces without waiting for all of P09/P38. Shared function landings follow explicit reservations. One integrated proof uses actual R15 origins and the final R16 tuple through each retained public action, including refusal, interrupted update, preserved content, recovery and successful retry. A stand-in/helper POST does not substitute for native engine or actual browser-action proof where required. P29's verdict feeds the shared P09/10/29/30 programme review and P31 release gate; old review-round limits remain preserved, not multiplied into fresh rounds.
 
-Each is fixed where it is wrong, rather than replaced.
-
-The owner's decisions (7 Nov 2026) are recorded in [inputs.md](inputs.md#owner-decisions) and are the source of truth that the decision table test enforces.
-
-## Sequence and readiness
-
-This plan (about 11–13 engineer-days) gives every normal install a working, honest Update now from Release 10, and a release number that only moves when a release is published. After this plan, [Plan 31](../31-releases-from-astrid-dev/plan.md) defines and publishes releases from astrid-dev. The less common setups follow in [Plan 30](../30-update-everywhere/plan.md) (about 7–9 days), which is committed, not optional.
-
-**Phase 1a: App only, deployable this week (about 3.5–4 days).**
-- Show Update now only when the installed Astrid's update status reports it can update itself. No Runtime reports it yet, so the button that has never worked disappears for everyone today, and turns on by itself with Release 10. Everyone else sees the reason and the command.
-- Show the real refusal reason.
-- Remove SetupBlock from the four update surfaces and from "Astrid on this computer".
-- Move the chat update cards onto the shared decision (`resolveUpdate`, which already drives every other Update now button).
-- Pinokio memory reads the Runtime's own identity; Pinokio fully local serves its update status instead of 501.
-- `release-check.mjs` becomes one rule, run on pull requests and on push to `main`; `pin.mjs` stops changing `release`.
-
-**Phase 1b: fully local Update now (about 1.5 days).** Re-enable the existing in-page updater the owner hid in `f2eca0bd5`, after a short spike to confirm it works.
-
-**Phase 1c: Release 10 (about 6.5–7.5 days).**
-- Merge the existing five-commit `reconcile` lane (Agent `b97c43db8` and its tests), with one Agent test that drives the Runtime's real update request through the real helper.
-- The Runtime reports the capability and a reason on `GET /v1/update/status` (not in health `identity`, which would change the schema digest).
-- A narrow test-only seam lets a hosted row update to a stand-in release through the in-app request; one such row per OS for a normal install.
-- Freeze `public/install*` while 10 is qualified; publish 10 without marking it required.
-- **Owner step:** turn on branch protection with the release check required on App `main`.
-
-**Then:** [Plan 30](../30-update-everywhere/plan.md) finishes the remaining setups.
-
-Owner decisions are recorded in [inputs.md](inputs.md#decisions-recorded-7-nov-2026). Recording this plan does not authorize implementation. Task cards: [tasks.md](tasks.md).
-
-## Interfaces and handoff
-
-- **Consumes:**
-  - Runtime `GET /v1/health` `identity` and `GET`/`POST /v1/update/status`;
-  - the Agent update helper (`update_job.main` actions);
-  - the App manifest `public/install-manifest.json` and bootstrap `public/install*`.
-- **Produces:**
-  - one update decision table in the App;
-  - a Runtime↔Agent helper contract test;
-  - a release guard in which a tuple or bootstrap change means release +1, and anything else leaves the release unchanged.
-
-## Completion
-
-Before publishing, up to three independent review rounds turn findings into routed tasks and complete them ([UR-R](tasks.md#ur-r-review-rounds)).
-
-On the published release 10 tuple:
-- a hosted row on every OS updates a normal install from the installed candidate to a stand-in 11 through the in-app request, and one of them through a real browser click in the candidate's hosted App (decision 13);
-- an installed Release 9 reaches the candidate through the install command (decision 13);
-- the decision table test passes for every install type × situation;
-- `release-guard` checks the Release 10 PR to App `main` (making it a required check is the owner's, later; decision 14);
-- an App-only merge leaves `release` unchanged, and a re-pin without a bump is refused.
-
-**Negative cases:**
-- releases 9 and earlier never show an enabled Update now;
-- Pinokio never sees the installer command;
-- "Astrid on this computer" has no actions;
-- an installed version newer than astrid.haus shows no command.
-
-
-## Proposed Release 16 scope reconciliation (25 November 2026)
-
-This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
-
-retain one understandable update decision across hosted/local, selected installation, installed-ahead, optional/required and unknown states. Replace historical “P31 after all P29 on main” with the specific status/manifest consumer landing seam. P09 owns the transaction; P31 owns publication; P30 owns route residuals. Distinguish Runtime release from App source/deployment and served manifest.
+The four-plan residual estimate is counted once in [P09](../09-install-and-update-confidence/plan.md). [Tasks](tasks.md) records current dispositions without erasing historical checkboxes. [Inputs](inputs.md) separates retained owner decisions from historical release-specific authority. The [previous full plan](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/29-update-and-release/plan.md) preserves earlier phasing and completed release history.

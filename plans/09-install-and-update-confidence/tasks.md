@@ -1,6 +1,32 @@
 # Tasks: Install and update confidence
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 [Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+
+## Current Release 16 dispatch interpretation — 27 November 2026
+
+This is the canonical residual reading of these existing task IDs after [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060). It preserves original tests, safety requirements and historical progress; it does not mark product acceptance complete, create a new author, change existing proof contracts or add review rounds. The [P09 programme](../09-install-and-update-confidence/plan.md) owns the shared lifecycle and qualification sequence; P31 owns publication. Refresh live reservations before assigning any shared function, especially the existing `38-08U` joins on [#2050](https://github.com/banodoco/astrid-dev/issues/2050).
+
+| Existing IDs | Current R16 disposition |
+| --- | --- |
+| IU-0 | One origin/target/owner/route register shared with P10/P31; current branches, not pre-main. |
+| IU-1 | Complete the existing transaction and reserved P38/P35 joins; no replacement installer. |
+| IU-2/3/4/9/13/15 | Retain native positive/negative, real-origin/content and changed-schema lock proof. Preserve the origin inventory and all original regression assertions; share only demonstrated equivalent fixtures. |
+| IU-5 | P29/P30 own the existing action/adapter; retain its proof here by reference. |
+| IU-6 | Shared actual-origin removal/data-preservation proof in IU-15. |
+| IU-7 | Preserve Windows R0-origin support/refusal choice; no invented migration. |
+| IU-8/12 | P38 live-authority/Windows jobs plus P30 status and P10 native engine proof; no second registry. |
+| IU-10/11 | Reuse existing captures/generator/harness. Correct a demonstrated proof-affecting mismatch; defer wholesale fixture modernization. |
+| IU-14 | Historical R13 implementation, not a fresh authoring task. Verify current behavior/ancestry and retain incident fixtures. |
+| IU-16/17 | Verify credential continuity and selected-root/capability parity with P35/existing credential owners and P93. |
+| IU-18 | Preserve required-state refusal and optional quarantine. Existing pack admission owns the decision; durable user data outside versions remains authoritative in its own domain. No generic registry/refactor or blanket hostile-home success promise. |
+| IU-19 | Idempotent pruning only of owned, unneeded state after retained rollback needs; unknown/user content stays. Recorded R0 window is in inputs; no new arbitrary downgrade promise. |
+| IU-20 | P29 outcome/copy pass, preserving delivered progress and pending-work behavior; no decorative launch requirement. |
+| IU-21 / IU-END | Existing ownership review and one final programme verdict into P31; no new review framework or separate publication. |
+
+The following historical cards and ledgers preserve their original IDs, evidence and checkboxes. Earlier release numbers, bases, donor hints, “open” snapshots and promotion commands are historical, not current R16 dispatch instructions. Where a retained acceptance obligation appears below, the table names its current owner rather than discarding it. Promised native routes stay unqualified until demonstrated; a named limitation is not automatic acceptance.
+
 
 The project is planned, not dispatched. Exact test selectors are not present in the source plan; identify them during task setup. Do not run broad or auto-discovered suites. Task progress is the single `[ ]` record in each index row/card.
 
@@ -40,7 +66,7 @@ The separately paused [legacy-to-standalone conversion draft](legacy-conversion/
 
 - **Outcome:** Frozen starting identities and a baseline matrix classifying each supported path on Linux, macOS, and Windows as real, mocked, or untested.
 - **Route:** N
-- **Dependencies and inputs:** Start; see [inputs](inputs.md). Record exact `pre-main` heads for all three repositories, Plan 08 verified outputs and donor commits, and create-only candidate naming rule. Recover baseline evidence at task start.
+- **Dependencies and inputs:** Start; see [inputs](inputs.md). Record the actual R16 integration/task heads and served R15 origins, retained donor evidence and current Lead-authorized destinations. Historical pre-main and Plan 08 identities are provenance only.
 - **Work:** Enumerate supported paths from this plan: newer-release update; update while Runtime runs; failed-update rollback after staging; in-app button; background job (or note proposed removal dependency); install-line repair; uninstall; real R1→candidate schema migration; Windows locked-file case; Linux without a systemd user manager; Intel macOS; Windows 11 Home, non-admin, and Defender. Mark each path/OS cell and evidence mode.
 - **Baseline matrix (record at start):** Each cell is `real`, `mocked`, `none`, or a named limitation; all are TBD until evidence is collected.
 
@@ -204,7 +230,7 @@ The separately paused [legacy-to-standalone conversion draft](legacy-conversion/
 - **Work:**
   - **Fixtures:** for each release in the App manifest history, build a fixture with that release's own code in a disposable HOME/XDG. It signs in (provisioning only), adds a pack, makes a project with a timeline, and keeps an App tab polling during the update. Save it once per release.
   - **Gate rows:** update from each fixture to the candidate, plus one forced rollback from each origin.
-  - **Hostile-state test:** whatever is under XDG state and data (garbage, duplicates, dirty or missing checkouts, old formats), the host reaches ready with every product capability.
+  - **Hostile-state test:** retain the original incident fixtures and regression obligations. Invalid optional sources cannot override product definitions; missing required components/state produce truthful safe refusal. Preserve user/unknown content. Arbitrary corruption is not a universal ready guarantee.
   - **Write-set:** record each release's write-set outside `versions/` and diff it at review.
 - **Focused checks:** each new row fails against R12 for the incident fixture and passes on IU-14.
 - **Done:** The gate's origin list is generated from the manifest history, and the release skill requires it.
@@ -232,7 +258,7 @@ The separately paused [legacy-to-standalone conversion draft](legacy-conversion/
 
 ### IU-18 Nothing outside the version root is authoritative or fatal
 
-- **Outcome:** Astrid's own code lives only inside `versions/<v>`. Anything outside it is user data or cache, and can never override a product pack or stop the host.
+- **Outcome:** Version-owned product definitions cannot be overridden by stale external product copies. Optional invalid inputs are quarantined where permitted; missing required state is a truthful refusal. User state outside versions retains its own authority and must be preserved.
 - **Route:** S.
 - **Dependencies and inputs:**
   - IU-15 protects the refactor; IU-17 makes path-derived ownership sound.
@@ -249,7 +275,7 @@ The separately paused [legacy-to-standalone conversion draft](legacy-conversion/
 
 ### IU-19 Tombstones retired with version pruning
 
-- **Outcome:** Leftovers of older releases that Astrid can recreate are removed aggressively, without ever losing user data or breaking rollback.
+- **Outcome:** Remove only owned, redundant old-release state once no retained rollback path needs it, preserving unknown content, user data and newer work.
 - **Route:** X.
 - **Dependencies and inputs:** IU-15 and IU-18. Owner direction (12 Nov): be aggressive about cleaning up redundant state; never lose projects, timelines, media, credentials or packs the user wrote.
 - **Work:**
@@ -298,12 +324,12 @@ The separately paused [legacy-to-standalone conversion draft](legacy-conversion/
 
 ### IU-END Scoped review and promotion
 
-- **Outcome:** Review the exact candidate and promote it to `pre-main`.
+- **Outcome:** Review the exact integrated candidate and hand its installation verdict to P31.
 - **Route:** X
 - **Dependencies and inputs:** All IU tasks and their evidence; existing run review/publication authority.
 - **Work:** Assess IU-0 matrix coverage and all named limitations, verify candidate identities, then apply only the existing review and promotion rules.
 - **Focused checks:** Exact review target and permitted promotion operation recorded by the existing run; no additional suite implied.
-- **Done:** Exact candidate review is complete and the authorized promotion to `pre-main` is recorded. Completion does not claim unsupported paths are covered; they remain named limitations.
+- **Done:** Exact candidate review and qualification are recorded for the shared programme and handed to P31. A promised supported path without proof stays open; no separate promotion is authorized.
 
 
 ## Proposed Release 16 scope reconciliation (25 November 2026)

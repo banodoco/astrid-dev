@@ -2,94 +2,68 @@
 
 **Project:** Releases defined and published from astrid-dev
 
-**Goal:** Each release starts as a living strategy brief linked from the release-led roadmap, then becomes one owner-approved immutable record whose finalization publishes the checked product tuple, with versions shown to users.
+**Goal:** Publish one owner-approved, qualified Release 16 tuple as visible version 0.1.0 through the existing release record, installer and deployment machinery, and let testers reproduce exact tentative snapshots.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** TBD — residual only; prior whole-plan estimate 12.5 (9.5–18) engineering days
+**Estimate:** 4–7 engineering days remaining implementation, plus 2–3 incremental integration, nonpublishing rehearsal and independent review days; shared native release qualification and venue waits are counted once by the release.
 
-**Waiting on:** [Plan 58](../58-strategy-from-releases/plan.md) is done; reuse the existing release briefs, parser and strategy view. [SC-31](https://github.com/banodoco/astrid-dev/blob/25ced2a35b4677532911aaa61127fc9452be59b7/plans/31-releases-from-astrid-dev/evidence/release-16-scoping/SC-31.md) identifies remaining semantic-version display, protected exact-tuple finalization, generated manifest/bootstrap cutover and served readback. Await owner controls, scoped dispatch and P29 status seam; no separate publication.
+**Waiting on:** The protected publication/deployment boundary and qualification-policy decision below; exact final producer identities and product/native evidence before publication. P58 is delivered. Independent record, renderer, tester and status preparation need no whole-project P29/P38/P93 wait.
 
-**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Start:** [Astrid agent start](../../agent/start.md), [task dispositions](tasks.md), [inputs and decisions](inputs.md). The catalog is generated from this project's metadata.
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
+> **Final planning reconciliation, 27 November 2026.** Incorporates [independent sense-check #2063](https://github.com/banodoco/astrid-dev/issues/2063) and its actual-source checks. This is the proposed executable R16 contract, replacing conflicting historical dispatch instructions. It does not authorize publication, change active implementation assignments or accept a weaker proof gate. [Previous complete pack](https://github.com/banodoco/astrid-dev/tree/2b43946a85f63a0a114023e271baf4952ed209c2/plans/31-releases-from-astrid-dev) preserves history and original assertions; unresolved owner choices stay explicit.
+
 ## Outcome and scope
 
-A release starts **in advance** as one living strategy document in astrid-dev, `releases/<N>.md`. That *same file* becomes the permanent, immutable release record when published; there is no parallel planning document or handwritten release log.
+Use the existing `releases/<N>.md` brief as the single authored release record. P58 already delivered the template, `records.release_brief`, draft checks, generated strategy and frozen issue-list machinery. Extend those components for a complete immutable Final payload and its exact approval; do not recreate them or add a parallel release log.
 
-- **Plan the release.** Start from [`releases/TEMPLATE.md`](../../releases/TEMPLATE.md). A draft has a short, memorable **highlight**, a longer **intent/outcome**, the **approach and trade-offs**, and a list of included [plans](../../plans/index.md) with one-line reasons. Identify dependencies and boundaries; adjust scope as evidence comes in, before freezing. It can be created and revised on `main` without publishing anything. An unassigned plan stays unassigned rather than being silently promised to a release.
-- **Release-led strategy.** [`strategy.md`](../../strategy.md) draws its repeated release material from release briefs; the release file owns rationale and scope. The catalog owns project status, priority, estimates and ownership; gaps own closure evidence ([hierarchy](../../docs/contribution-workflow.md#review-the-strategy)).
-- **Prepare a tentative testing build.** A contributor or their coding agent can discover the designated active testing release (or specify a release or recorded snapshot), resolve its latest coherent release-branch tuple, and locally generate and validate its manifest and matching Windows/Linux installers without a maintainer, pre-created bundle, write credential or Final transition. Derive dependency pins from their owners; do not combine independent floating heads. Freeze the full source identities, artifact hashes and qualification status per session; fresh sessions resolve again and resumed sessions reuse their receipt. Multiple snapshots may share a release integer. Keep tentative use opt-in and separate from production publication. Update the existing [tester brief](../../releases/15/tester-run/tester-brief.md) and [technical matrix](../../releases/15/tester-run/test-matrix.md) into a permanent reusable testing entrypoint with platform adapters and release-specific focus, using platform-neutral filenames and preserving consent/reporting safeguards. Support full-stack testing of the exact compatible App commit through its local editor route, with real browser connection, timeline edits/save/reopen, agent setup and first project-aware chat, alongside installed-side generation; explicitly separate served App from pinned App evidence. See RL-1e.
-- **Finalize the same file.** A ready-to-publish record keeps the strategy sections and adds the pinned publication payload: release integer, version and kind, optional required-update reason, full App/Agent/Runtime SHAs, schema digest, tool versions and any informational Pinokio pin. The final transition is owner-approved; after publication the file is append-only history (no editing or deleting the released record).
-- **Gate.** CI validates draft structure and plan links without demanding pins; strategy material is generated from briefs. Only an explicit draft-to-final transition with a complete, coherent payload can trigger publication; it checks the pinned commits, monotonic release number and owner approval. A draft edit, a strategy edit, or the presence of future planned releases **must never publish an installer**.
-- **Protection.** Only the owner can approve a release, and publishing fails closed if that approval or the branch protection is missing.
-- **Publish.** Merging writes one generated install manifest to a generated-only branch, the same way the vision feed is published.
-- **App copy.** An App workflow syncs that manifest and the pinned install scripts into the App's one generated copy, which deploys. There is no App PR per release, and nobody edits those files by hand.
-- **On screen.** Users see versions, such as "Astrid 0.0.10", and never release numbers.
+The integer release remains the ordering key on the wire and disk. R16 displays **0.1.0** in hosted and fully local update surfaces before its first public go. The required-update floor remains a separate policy, not a consequence of a minor version. The actual R15 receipt establishes the current predecessor and floor 15, subject to fresh served-origin readback at cutover. An unmapped older install displays “an earlier version”; do not invent semantic versions for historical candidates.
 
-**Not changed by the publication pipeline:** the Agent, Runtime and Pinokio. If a same-release tentative snapshot update exposes an installer defect, route the smallest supported repair to Plans 09/29/30; never fake a release number or bypass update safety. The integer `release` stays the ordering key on the wire and on users' disks. The installer URLs stay the same.
+The complete publication identity preserves every existing manifest field: App/Agent/Runtime sources, Runtime schema and generated-client/lock agreement, VibeComfy/lifecycle pins, selected default packs and their source/tree/build/projection witnesses, tool/platform archive pins, matching bootstraps, semantic metadata, required floor/reason and provenance. Producer locks remain authoritative. A shorter handwritten payload must not drop fields that today's installer consumes.
 
-**Not building:**
-- runtime proxying of the manifest by astrid.haus;
-- signatures;
-- a separate go-check bot;
-- version arithmetic in the App;
-- a second Markdown release log or a separate release-planning document, since the release files themselves are both living plans and the eventual ledger.
+### One publication authority and delivery path
 
-## Existing work and decision
+1. Draft edits remain ordinary planning changes and cannot publish.
+2. The existing trusted release workflow validates the complete candidate, original regression obligations, qualification evidence and authenticated exact owner approval. Changed source, base/head, evidence, policy or generated bytes invalidates the approval.
+3. Final is the owner's immutable decision **before any public write**. Final alone is not a deployment receipt. Historical adoption of an already-published release is explicitly nonpublishing.
+4. Deterministic generated artifacts flow through an effectively protected existing delivery path. Prefer a generated-only App PR satisfying its required checks; an alternative requires equivalent demonstrated enforcement and owner agreement. A generated branch, if used, is output rather than another authority.
+5. Hold the deployment interval or prove compatibility across old/new editor, backend, bootstrap and manifest combinations. Reuse the existing App deployment and canary; compare all approved manifest and bootstrap bytes plus actual build/deployment identity.
+6. Append post-live evidence separately from the immutable Final payload. Resume an interrupted delivery only with the same authorization and bytes; after public exposure, follow the owner's existing recovery/fix-release policy rather than silently rewriting history.
 
-The design reuses the vision pipeline (`vision-consumer-contract`, `publish-vision`), the App's existing manifest check and canary, and astrid-dev's fail-closed protection precedent (the claim bot). It takes over [Plan 29](../29-update-and-release/plan.md)'s UR-8b, UR-8c and UR-8d, and replaces UR-8's tuple guard. The evidence, alternatives and both independent reviews are in [inputs.md](inputs.md#planning-evidence).
+The existing App pin derivation, lock checks, tuple guard, installer validators and canary are reusable. Retire old public write authority only when replacement enforcement is effective. Preserve its assertions, public URLs, checks and useful derivation functions; deleting their names is not an acceptance outcome. No second installer, release transaction engine, scheduler, polling service, registry, generic approval bot or broad CI cleanup is required.
 
-## Sequence and readiness
+### Tentative tester snapshots
 
-Phase 1, releases defined and published from astrid-dev:
-1. **RL-0:** a worker setup script for the App, so workers can run its checks.
-2. **RL-1a–RL-1d:** a release-file template, draft/strategy checks, final-record checks, the `release-contract` job across repositories, the fail-closed `publish-release` gate, and the Release skill publishing through final records. RL-1a also imports the release live at start as a historical record and proves its rendered manifest matches the served one. Earlier published releases are backfilled only from real receipts, never invented.
-3. **RL-2a–RL-2d:** a typed manifest schema shared by every App reader, the bootstrap move, the App's generated copy and sync (deleting `release-guard` and `pin.mjs` write mode in the same change), and the canary comparing with `release-published`. Syncing the legacy record changes only metadata.
-4. **RL-1e:** self-service tentative build preparation and the permanent tester guide, using the same manifest renderer and validation logic before retiring the old pin writer.
-5. **Review rounds (RL-R),** then **go live (RL-G)** through the Release skill, in a fixed order with the owner's settings changes between steps.
+Generalize the existing [R15 preparation entrypoint](../../releases/15/tester-run/prepare-build.md) and tester matrix. A read-only resolver selects an explicit or uniquely active release, derives a coherent full tuple from its actual producer pins, and uses the same renderer/checker to create matching manifest and installers with immutable hashes and qualification status. Fresh sessions resolve again; resumed sessions replay their receipt. Multiple tentative snapshots may share the integer without changing production policy.
 
-Phase 2, on screen: **RL-3**, users see versions. It ships with the next record after its own review round.
+Installed-side exploratory evidence and a matching local App/editor witness are distinct. Prove real Windows and Linux preparation/install, local editor connection, edit/save/reopen and supported agent setup/chat with existing consent. macOS and genuine Pinokio remain in the shared retained product qualification matrix. Route same-number update defects to P09/P29/P30; do not fabricate a new release integer or a second install path.
 
-All work lands on `int/31-releases-from-astrid-dev` in astrid-dev and the App. Only the Release skill moves either branch to `main`.
+## Existing work and boundaries
 
-**Plan 58 contract.** Plan 58 provides the release template, draft checks, `records.release_brief`, generated strategy and issue lists. RL-1a uses that reader, keeps final-record checks and the legacy record, and refuses changed or deleted finalized records, including frozen issues. Releases 12 and 13 remain to be made Final here (D5). Owner review gates Final; ordinary draft issue pulls remain unblocked.
+- **P58:** completed release/strategy/record foundation; preserve its reader, views and checks.
+- **P29/P30:** existing selected-install resolver, status, update outcome and adapters. P31 adds version/identity/publication policy at their agreed seams, not a competing status or updater.
+- **P09/P38:** real installation lifecycle, quiescence, rollback and process authority. Public publication waits on their retained supported-route evidence; record/renderer work does not.
+- **P93/P87 and H3 owners:** supply the actual accepted pack/source/build/installed-delivery witnesses. P31 freezes their identities once; it neither authors packs nor certifies draft pins.
+- **Release Lead/Qualifier:** one matched tuple, complete inventory, shared native matrix and final acceptance. CPU author proof, independent review, integration, native qualification and release go remain separate.
+- **Owner/App deploy owner:** effective protection, authorized actor and safe deployment interval. Checked-in YAML is not proof of these settings.
 
-This plan was sequenced after [Plan 29](../29-update-and-release/plan.md) and the owner's go (decision recorded 8 Nov 2026). The initial legacy record must describe **whichever release is actually live when implementation starts**; the earlier estimate that it would be Release 10 is historical, not an instruction to overwrite the newer releases. The next new release is the first one published through this path. The owner turns on astrid-dev `main` protection before the first publish. The details are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
+The original public release path in [agent/shared/workstreams/release.md](../../agent/shared/workstreams/release.md) is the actual procedure to reconcile in RL-1d. Its publish-then-Final order remains historical until the protected replacement is implemented and accepted; this planning revision does not modify or exercise it.
 
-## Interfaces and handoff
+## Sequence
 
-- **Consumes:**
-  - the App's manifest checker (`checkManifest`, behind RL-2a's typed schema and `manifest-check`);
-  - the served-manifest canary;
-  - the Agent's `tools.validate_manifest`;
-  - each product's `main` history.
-- **Produces:**
-  - `releases/<N>.md` (draft strategy → final release ledger), its template, CI structure/strategy checks and publishable record format;
-  - the `release-published` branch, with one generated `install-manifest.json`;
-  - the App's generated `public/install*` copy;
-  - the release skill's publishing steps;
-  - a permanent tester entrypoint and read-only tentative-build preparation with reproducible manifest/installer receipts.
+Prepare record/legacy evidence, protection/deploy inventory, shared renderer/tester guide and version/status work in parallel. Land additive metadata/validation and deterministic generation, then the protected transition/delivery seam. Review RL-3 and nonpublishing negative rehearsal before the single RL-G go. Use Lead-selected R16 branches and actual row-level producer joins; obsolete `int/31` and “all P29 on main” waits do not dispatch work.
 
 ## Completion
 
-The proof is these observable results:
-- **Phase 1:**
-  - A future release can be drafted, revised and linked from `strategy.md` without a manifest change, installer publication or required full SHAs; CI rejects missing required sections, broken plan links and invalid generated strategy structure.
-  - The first release after this plan is published by an owner-approved transition of its existing draft `releases/<N>.md` to final, with no App PR, and the canary confirms the deployed manifest matches it.
-  - A final record that is incomplete, inconsistent or unapproved can't merge or publish. That includes a commit that isn't on its repository's `main`. A published release document cannot be silently rewritten or removed.
-  - A hand edit to the App's generated files fails its PR.
-  - A Windows and a Linux tester independently prepare and install an unpublished coherent snapshot without repository write access or a pre-made bundle, verify the active identities, produce a first result and report it. Both platforms also open the exact local App with that tuple, perform a real edit and save/reopen, and exercise a supported agent setup/chat journey (credentials and spending only with consent); report blocked/skipped cases separately, never substitute a fake backend. A fresh session resolves newer coherent inputs; replay reproduces the old snapshot. A same-release-number update succeeds through the supported route or reports an explicit routed blocker. Wrong release, ambiguous discovery, missing/stale/mixed pins and invalid tools fail clearly. Tentative preparation cannot change the public manifest, update feed, required policy or publication gate; production still requires main ancestry and owner approval.
-- **Phase 2:** the hosted App and the local launcher show versions, such as "Astrid is up to date (0.0.11)", and never a release number.
+A draft cannot publish; an incomplete, unauthorized, stale or changed Final cannot publish; a finalized payload and its issue list cannot be silently rewritten. Candidate preparation accepts unpublished coherent refs, while actual public promotion checks the required approved production ancestry.
 
-Limits: the trust root becomes astrid-dev `main`, so its protection is a prerequisite. Releases go live within one sync interval plus a deploy.
+A tester reproduces two coherent same-number snapshots through supported install/update routes and records true installed/App identities. Users see 0.1.0 and truthful earlier/unknown/rollback states. Mixed build/manifest status refuses instead of presenting a coherent update.
 
+The exact candidate satisfies every binding product, native and required-check obligation, with complete namespaced collection/execution accounting. Missing formerly-red tests, skipped/cancelled runs, discarded original assertions or an inherited failure without disposition are not passes. The proposed D-SYN-1 policy remains an owner decision; the stronger existing rule holds until changed.
 
-## Proposed Release 16 scope reconciliation (25 November 2026)
-
-This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
-
-deliver first-minor publication and visible version inside R16; reuse P58. Replace obsolete `int/31`/whole-P29-on-main sequencing with approved release branches and row-level joins. Proposed D-SYN-1 would reconcile green-gate language only after explicit owner agreement; never call a ceiling full green.
+Only then does the owner approve the exact tuple/evidence and the existing release authority perform one public transition. Full served manifest and three bootstraps, actual deployment/build identity, interruption recovery and the required owner long-lived update receipt establish delivery. No plan-specific publish and no claim that source/CPU readiness alone completes the release.

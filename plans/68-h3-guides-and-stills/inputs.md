@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 18 November 2026 in the Plan 59 session the owner asked to split [Plan 66](../66-h3-composable-core/plan.md) into several plans ("why not just make it multiple plans"); this is one of them. It takes Plan 66's guide and exact-still cards (CC-4, CC-8). Next: the owner greenlights the scope.
+**Scope decision:** Accepted — the owner retains P68 in the complete 18-project Release 16 (0.1.0) programme on 27 November 2026; see the [release brief](../../releases/16.md) and [final programme review](../../releases/16/evidence/final-programme-review.md). Preserve the existing full H3 outcomes, D1 CPU implementation boundary and required final qualification. Scope allocation is not run start, paid/live authority or publication.
 
 **Prior art:** The cards were written and reviewed as part of Plan 66. Its [planning evidence](../66-h3-composable-core/inputs.md#planning-evidence) holds the source findings, the direction and functional reviews, the restrictions and ambiguity passes, and the alignment review. The design they follow is in [Plan 66's plan](../66-h3-composable-core/plan.md#outcome-and-scope), shipped as `astrid/packs/h3_av/docs/design.md`.
 

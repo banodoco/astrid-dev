@@ -1,78 +1,73 @@
 # Inputs — Releases defined and published from astrid-dev
 
-[Plan](plan.md) · [Tasks](tasks.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Independent observation #2063](https://github.com/banodoco/astrid-dev/issues/2063)
 
 ## Planning evidence
 
-**Release-led strategy direction (10 Nov 2026):** The owner asked that each release be planned in advance as a living strategy document, showing a one-line highlight, fuller outcome, included plans with one-line reasons, and intended approach. The top-level strategy should mostly summarize those releases. This amends the earlier JSON-only record design: `releases/<N>.md` is the human-readable draft and the permanent final ledger entry, with a machine-readable pin block added only for final publication. The draft/strategy consistency check can land as an ordinary documentation improvement now; the publish gate, final-record migration and product integrations remain Plan 31's separately authorized work. A draft must never imply a go to ship, and old records must be imported from actual receipts only. No separate Markdown log or duplicate release plan.
+**Scope decision:** Pending — the owner retains P31 in Release 16 (0.1.0), with semantic versions visible before first public go. This final reconciliation updates planning records and preserves current implementation/approval authority. Next: settle the named publication-control and qualification-policy decisions, then execute through the existing Lead; no publication is authorized here.
 
+**Prior art:** Completed [P58 release records](../58-strategy-from-releases/tasks.md), existing [P29 update/release machinery](../29-update-and-release/plan.md), and the [actual-source register below](./inputs.md#source-and-progress-register) establish what is reused. [Sense-check #2063](https://github.com/banodoco/astrid-dev/issues/2063) verifies the bounded residual guard, canary, inventory and protection findings.
 
-**Scope decision:** Pending — on 8 Nov 2026 the owner asked for releases to be defined and published from astrid-dev, with CI and protection, as a new project that starts after Plan 29 ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)). Next: the owner answers the open decisions below and confirms the scope.
+**Approach:** Reuse completed P58 records/strategy and P29/App pin, manifest, update, guard and canary machinery. Complete protected exact identity, deterministic delivery and proof; do not restart a release system.
 
-**Prior art:** read-only maps of the release number in the App, Agent, Runtime and Pinokio at App `915bfa84d87268038f396dc999dc2095683e5d8a`, plus two independent design reviews ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)). Key findings:
-- The integer `release` is checked as an integer in every repository and persisted on users' disks, so switching the wire format would cost 8–12 days.
-- On App `main`, `pin.mjs` added 1 on every pin run, which is how release went from 1 to 9 on 7 Nov.
-- At least six consumers read the manifest from an App checkout or image, not from astrid.haus.
-- The vision feed already publishes from astrid-dev to a generated-only branch, after testing with the App's parser.
-- astrid-dev `main` and App `main` are unprotected, and every product repository is public. *(Since 11 Nov 2026, astrid-dev `main` requires a pull request and two status checks, but no approval or code-owner review.)*
+**Challenge:** Reviewed — [#2063](https://github.com/banodoco/astrid-dev/issues/2063) was checked against canonical P31/P58 records and actual guard, canary, status, inventory and protection sources. The [previous inputs](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/31-releases-from-astrid-dev/inputs.md) preserve all earlier design reviews, accepted history and alternatives. No further broad planning round is commissioned.
 
-**Approach:** astrid-dev release records, checked by CI with the App's existing manifest check, published like the vision feed. The App syncs one generated copy, so nothing in the Agent, Runtime or Pinokio changes. This replaces Plan 29's UR-8b (version helper, App PR #208), UR-8c (markdown log, astrid-dev PR #82) and UR-8d, and UR-8's tuple guard.
+**Proof and limits:** Source/API inspection and recorded historical receipts, not a fresh installed, native or served-origin pass. No tests, publication, product changes or control changes were performed for this planning correction. Actual deployment credentials/environments and complete effective release-branch protection remain unverified.
 
-**Challenge:** Reviewed — two independent high-judgment reviews ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)). The first kept the App manifest as the source. The owner then asked for astrid-dev as the source, and the second review, briefed for the simplest reliable design, chose syncing a generated App copy over having astrid.haus serve the manifest at runtime. Proxying would add server code to the install path, make installs depend on GitHub at install time, and change five consumers. It also cut signatures, a separate go-check bot, version arithmetic and the markdown log.
+## Preserved owner decisions and resolved historical drift
 
-A third high-judgment review on 8 Nov 2026, after Plan 29's lessons ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)), split the four tasks into twelve plus an owner row and resized the plan from 6–7 to about 12.5 days. All of its findings were accepted:
-- Work lands on `int/31` with a go-live task (RL-G), instead of PRs on `main`.
-- The fail-closed gate is its own S task, not inside an N task.
-- Each commit must be an ancestor of its repository's `main`. Fetchable isn't enough, because GitHub serves fork and PR commits through the parent.
-- `CODEOWNERS` covers the publishing code as well as `releases/`.
-- A typed shared manifest schema (RL-2a) replaces the hand-written parsers.
-- `release-contract` checks against the App branch the PR targets, so it can be proven before Release.
-- The deletion list is updated for what Plan 29's UR-8 already removed. Deleting `release-guard` needs an owner row (O-2), since Plan 29 makes it required.
-- The sync stays off behind an owner-set variable, runs the App's checks itself before pushing, and is a named Release-skill step.
-- RL-3 adds `QuietUpdateNotice.tsx` and the local launcher, and shows "an earlier version" for a release with no version.
-- A worker setup script for the App (RL-0) lets workers run the proofs. Proofs that need other repositories are labelled hosted.
-- The plan is phased, because it is over ten days.
+- The 10 November release-led strategy decision owns one living `releases/<N>.md` brief that becomes the immutable final publication record. There is no parallel handwritten release log. P58's completed implementation is reused.
+- Versions use `major.minor.patch`; patch is default unless the owner declares otherwise. The owner now explicitly assigns **R16 = 0.1.0**. The integer release stays the wire/disk ordering key. Hosted App deploys alone are not numbered releases.
+- Required-update policy is a separate per-release decision with a reason. Minor does not imply required. The published R15 floor is 15; preserve the actual served floor unless an explicit owner change and migration/compatibility proof justify another.
+- **astrid-dev is the release source**, superseding the old App-authority proposal. Generated App artifacts are delivery output. A protected generated-only App PR is the recommended delivery mechanism; the earlier direct-push/no-App-PR proposal cannot waive effective controls.
+- Actual legacy history starts from the truly published predecessor and its receipts. R15 was published; earlier “if R15 publishes” and predicted Release 10 anchors are obsolete. Do not manufacture semantic mappings for every past candidate: unmapped installs show “an earlier version” with exact integer in diagnostics.
+- The 25 November tester direction remains: contributors independently resolve a coherent tentative snapshot without write access or a prebuilt bundle, reproduce it from a receipt and exercise the matching local App/Agent with existing consent. Same-number snapshots must use the supported installer/update path.
+- Owner-approved exact Final and effective protection remain prerequisites before public writes. The qualified candidate can use unpublished release branches; main ancestry is checked at its actual public promotion stage.
+- Version display is inside R16 before RL-R/RL-G. The old “phase 2 after publication”, `int/31`, whole-P29-on-main wait, obsolete skill path and blanket deletion grep are no longer active dispatch instructions.
+- Existing independent review limits remain binding. Historical recommendation was at most three P31 rounds, not an accepted unlimited budget; the Lead records the applicable agreed budget before commissioning. This reconciliation adds none.
 
-**Review rounds:** Pending — recommend at most three. This is release and security work, and it moves the trust root for code users run into astrid-dev. Next: the owner confirms the number.
+## Source and progress register
 
-**Ambiguity pass:** Pending. The tasks include X and S, and other agents will run them, so N helpers run one per task group before the plan starts, resolving choices from code and listing only real owner decisions. It waits for the start because Release 10 and the Green mains rule change the files it reads. Next: run it when the owner gives the go.
+These are immutable observations from 27 November 2026, not frozen dispatch pins.
 
-**Proof and limits:** see [plan.md](plan.md#completion). astrid-dev `main` protection is a prerequisite for the first publish. A release goes live within one sync interval plus a deploy.
+| Source | Verified meaning / remaining limit |
+|---|---|
+| [P58 tasks](../58-strategy-from-releases/tasks.md) and [completion #692](https://github.com/banodoco/astrid-dev/pull/692) | SR-1–7 foundation delivered; reuse existing record/check/view/issue machinery and assertions. |
+| [R15 publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695), [qualification](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7172609349) | Actual 25 November predecessor, integer/floor15 and exact product sources. Receipt abbreviates hashes and reserves owner long-lived proof; recover actual artifacts/readback, do not guess missing bytes or mark reserved proof done. R15 brief's Draft/Not pinned drift needs historical nonpublishing adoption. |
+| App main and R16 branch `cc1d48f016fde55ad6b0609c619d8a4bcec56823` | R16 App ref now exists but equals R15 source; source/ref presence does not prove a refreshed R16 consumer or matched installed tuple. |
+| Agent R16 `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`; Runtime R16 `55a541a7ab904873e63510e581a60742e1b83fb8` | Ongoing product work, not final pins. Agent's observed lock still names R15 Runtime `686ca695469bda48cd40a70824c4ccef2a137284`; a checkout overlay is not packaged proof. Refresh before integration. |
+| [App release guard](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/scripts/installer/release-guard.mjs) | Existing tuple/bootstrap/increment checks reusable. Missing required or changed floor0 bypasses its nonzero floor predicate; preserve floor policy with focused negatives. Source-derived finding, no executed exploit claimed. |
+| [App canary](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/scripts/installer/served-manifest.mjs) | Compares only four manifest fields and three bootstrap byte buffers, then pin coherence. Extend to complete approved manifest and actual deployment/build identity. |
+| [Hosted status](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/shared/lib/updates/updateStatus.ts), [local status](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/config/vite/localUpdateStatus.ts) | Hosted independently reads build and manifest without release equality; local enforces equality and a 16 KiB bound. Agree minimal compatible shared contract with P29/P30; preserve resource bounds. |
+| [Dev ruleset 27040267](https://github.com/banodoco/astrid-dev/rules/27040267) | Active but zero approving reviews, no code-owner or stale-review rule, nonstrict checks and an always-bypass integration. App main reports unprotected. Not proof of the required publish boundary; settings outside observed APIs remain unknown. |
+| [baseline-diff.py](../../env/baseline-diff.py) | Missing derives only from formerly-passing tests. Full original collection/execution coverage, including formerly-failed missing IDs, needs the existing bounded P31 inventory correction. |
+| [P38 #2050](https://github.com/banodoco/astrid-dev/issues/2050), [P93 #2032](https://github.com/banodoco/astrid-dev/issues/2032), [P94/P90 #2051](https://github.com/banodoco/astrid-dev/issues/2051) | Actual current implementation owners and proof gates; P31 consumes accepted producer identities and retained native results, not draft heads or historical whole-plan completion labels. |
 
-## Owner decisions
+The R15 manifest includes VibeComfy, lifecycle, motion pack digest and complete tool assets; preserve them in the full publication payload. P29's #82/#208 proposals are already closed unmerged. `pin.mjs` no longer automatically increments release on every run; the earlier source claim is historical.
 
-Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-release/inputs.md#owner-decisions), decisions 7–8):
-- **Versions:** `major.minor.patch`, patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`.
-- **Wire ordering:** the integer `release` stays the ordering key.
-- **Required:** its own per-release decision with a reason, never implied by kind. Kind changes no behaviour for now.
-- **History:** it starts at a legacy record for the release *actually live when the work starts*. The 8 Nov prediction that this would be Release 10 is no longer reliable; check the served manifest and publication receipts at implementation time.
-- **Hosted App deploys** are not releases.
-- **Source:** astrid-dev defines and publishes each release. This replaces Plan 29 decision 9's "App manifest stays the source".
+## Qualification-policy decision
 
-**Owner direction, 25 November 2026:** contributors and their agents must independently prepare a coherent tentative manifest and matching installers from the active release branches, without waiting for a Release Lead or a pre-created artifact. Fresh sessions resolve the latest coherent snapshot; replay uses its receipt. Update the existing tester documents now for Release 15 and make them the reusable Windows/Linux testing workflow in RL-1e. The trigger was a Release 15 tester finding only Release 13 manifests on the old tester branches. Keep production publication authority, release ordering and safety intact; same-release updates require focused proof.
+**D-SYN-1 remains proposed, not accepted.** Recommend the smallest dependable gate:
 
-Open, each with a recommendation:
-1. **Sync trigger and push identity:** a scheduled pull plus a manual run, or an instant push from astrid-dev. Recommend the scheduled pull. Either way, the sync pushes to App `main`, which will be protected. The workflow token probably can't be put on a ruleset bypass list (unconfirmed; confirm at start). If so, the sync needs a GitHub App or deploy key that can write only to the App. That is a new credential, the owner sets it up, and RL-2c becomes S.
-2. **Who can approve a release:** only the owner in `CODEOWNERS`, or any maintainer. Recommend only the owner.
-3. **Protection timing:** protect astrid-dev `main` now, since it's required before the first publish. App `main` follows (owner row O-2). Recommend now.
-4. **Versions for past releases:** the legacy record maps releases 1 to N as `0.0.<n>`, so every existing install has a version to show. Recommend yes.
-5. **Phasing:** phase 1 is publishing from astrid-dev; phase 2 is versions on screen (RL-3, about a day). Recommend these phases. RL-3 could instead join phase 1 for one go-live, at the cost of a longer first review.
+Every effective required status on the exact candidate and every retained positive/negative supported journey passes. No known harm, supported-path failure, new/lost failure or unclassified failure is accepted. Establish complete executed/collected inventory against the actually served predecessor, namespaced by repository, job family, OS/architecture, selector/configuration and full test identity. Combine all shards within each family; retain subtests/duplicates, actual producer exits and collection results. Missing/skipped/cancelled/uncollected/newly quarantined cases are not passes; a formerly-red disappeared case needs an explicit removal/equivalence disposition too.
 
-## Source identities
+An actually executed **nonrequired inherited red** may remain only with a named evidence-backed nonharm classification, owner acceptance and later owner/task. “Old” or “same as baseline” does not prove harmless. If actual protection or owner policy still requires literal all-green, that remains binding: repair the minimum or hold R16. P39/P91 broader cleanup stays R17; P52/P53/P85 remain removed from R16. Existing qualification/measurement infrastructure remains required.
 
-Record exact base SHAs when each task starts. Land all work on `int/31-releases-from-astrid-dev`, in astrid-dev and the App, cut from each `main` when the run starts. Only the Release skill moves either branch to `main` (RL-G).
+Concrete alternatives: adopt this bounded policy with retained safety/required gates; or require all jobs green and accept the added repair effort. Only the owner can resolve the difference. The final programme must display which rule applies; this planning text does not grant a waiver.
 
+## Remaining control and product decisions
 
-## Proposed Release 16 scope reconciliation (25 November 2026)
+| Decision or fact needed | Recommendation / alternative | Consequence and authority |
+|---|---|---|
+| Protected publisher and deployment interval | Reuse the existing trusted workflow and deterministic generated-only App PR with exact checks; hold auto-deploy during an incompatible interval or prove that interval safe. An equivalently enforced route is acceptable. | Owner/deploy owner supplies actual effective controls and allowed actors. Unknown controls block publication, not independent record/status preparation. No extra scheduler or broad bypass by default. |
+| Who can approve Final | Preserve owner-only final approval and narrow CODEOWNERS coverage for release/gate paths. Any maintainer delegation must be explicit. | A stale historical approval or source author is not final owner go. Ordinary draft editing stays independent. |
+| Required floor or supported-route changes | Carry actual floor15 and retained support. Only propose16 with a concrete migration reason and proof, or a route restriction with explicit consequences. | These are conditional owner decisions, not mandatory new questions or silent reductions. |
+| Missing legacy/long-lived evidence | Recover actual R15 receipt artifacts and owner witness; record unknowns honestly. Backfill older releases only from real receipts. | Historical adoption cannot publish or fabricate a hash/version. Do not block R16 on unrelated exhaustive history backfill. |
 
-This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
+Routine renderer/parser/adapter choices are implementation judgments within retained contracts. No new broad ambiguity pass is needed; investigate only a named uncertainty that changes one of these decisions.
 
-**D-SYN-1 — proposed, not accepted:**
+## Effort and proof limits
 
-Adopt a bounded R16 gate: every **effective required status on the exact candidate** must pass; every retained positive/negative release journey must pass; no known harm, supported-path failure, new/lost failure, or unclassified failure may be accepted. Build a complete executed inventory against the actually served predecessor, with repository, job family, OS/architecture, selector/configuration and full test identity. Combine shards within each job family; shard is provenance, not identity. Preserve duplicate/subtest accounting explicitly. Missing/skipped/cancelled/not-collected cases, newly quarantined cases and absent proof are not passes. Formerly-red disappearing cases need a documented removal/equivalence decision, just as formerly-green missing cases do.
+Remaining P31-specific effort is **4–7 implementation plus 2–3 integration/rehearsal/independent-review engineering days**. Shared native product matrix, product repairs and hardware/owner waiting time are outside this estimate. If actual protected deployment or candidate preparation requires substantive repair, **10–14+ total days** is the contingency, not an automatic extra workstream.
 
-An **actually executed, nonrequired inherited red** may remain only with a named, evidence-backed nonharm classification, owner acceptance, and a later owner/task. Candidate-equal or old does not mean harmless. In particular, the latest #2002 descriptor and occurrence-precondition groups remain unclassified until investigated. No change to assertions, required names, gates, bypass rules or job selection merely to produce this result. P91's full green cleanup remains R17. If the actual protection or owner policy instead demands all jobs green, that is binding: fund the minimum required repairs or hold R16. Record this choice in P31 inputs and remove contradictory literal all-green wording only through the approved canonical amendment.
-
-P31 stays in R16. RL-3 visible 0.1.0 and final review precede the first authorized Final transition. Keep the legacy integer for order and required floor; semantic display is a validated mapping. Carry forward the **actual published floor** (15 if the present R15 candidate publishes, otherwise the then-served floor); minor does not mean required. Floor 16 needs an explicit reason and mixed-version/migration proof. Preserve RL-3's primary-UI fallback **“an earlier version”** for unmapped legacy releases, with exact legacy integer in diagnostics/records; do not invent public semantic versions. P58's existing record reader/generator is the only strategy/publication record home.
-
-Proposed D-SYN-1 requires an exact legacy anchor and display policy, actual published floor, generated-only sync, protected owner transition, safe deployment interval and approval invalidation. Retain any stricter owner rule until explicitly amended. Effective protection is a required fact, not an assumption from checked-in YAML.
+Current implementation branches, sessions, owner-go procedures and original regression obligations remain intact. This record authorizes no protection mutation, product implementation dispatch, release promotion or publication.

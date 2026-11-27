@@ -1,5 +1,7 @@
 # Tasks — One process identity for Agent and Runtime
 
+> **Current R16 authority, 27 November 2026:** The existing [recovery board #2050](https://github.com/banodoco/astrid-dev/issues/2050) and subsequent Lead rulings govern actual sessions, bases, writer reservations, proof venues and review budgets. The earlier CPU-only queue and provisional run-start conditions below are historical where they conflict. Installed/native outcome and the single release acceptance remain open; this planning correction creates no dispatch, replacement author or extra review round. See the [final programme review](../../releases/16/evidence/final-programme-review.md).
+
 [Plan](plan.md) · [Inputs](inputs.md)
 
 Routes, per the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md):
@@ -10,7 +12,7 @@ Routes, per the [run contract](https://github.com/banodoco/astrid-dev/blob/257a8
 
 X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. An N task that misses the same acceptance check twice re-routes to X.
 
-**Where work lands.** Each task lands by PR on `int/38-one-process-identity`, in the Runtime (R) or the Agent (A), cut from each `main` after release 12 is published. Record each task's base SHA when it starts.
+**Where work lands now.** Existing R16 branches and owners on board #2050 govern. The original table below preserves task identity, historical proof and regression obligations. Its `int/38`, phase/publication and dispatch references are historical; Pub is an internal phase-one checkpoint, with a single P31 publication after both retained phases.
 
 **Proof labels:**
 - *Local* runs in a worker session with only that task's repository attached. The other repository comes from public git at a pinned commit: the Agent's `scripts/worker-env/agent-setup.sh` fetches the Runtime at `runtime.lock.json`, and W0's `scripts/worker-env/runtime-setup.sh` fetches the Agent at `tests/astrid-agent.pin`. Each is called by literal path.
@@ -45,7 +47,7 @@ These run beside it:
 - A2, A3, L1 and F1 run beside A1.
 - G1 and G2 finish before R.
 
-A1 and A2 change different functions, and A3 changes a different file, so they run in parallel. A1 and A3 both bump `runtime.lock.json`, so merge A1 first and rebase A3's lock change onto it. Phase 2 is C1 → C2 → R2, after Pub.
+A1 and A2 change different functions, and A3 changes a different file, so they run in parallel. A1 and A3 both bump `runtime.lock.json`, so let the existing single lock owner integrate the accepted A1/A3 inputs additively; do not rebase. Phase 2 is C1 → C2 → R2 after the internal phase-one checkpoint, before the same R16 publication.
 
 ## Run progress — 9 Nov 2026
 

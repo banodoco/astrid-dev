@@ -1,18 +1,18 @@
 # Dependable environment setup and recovery
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Current R16 authority, 27 November 2026:** The existing [recovery board #2051](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7221824353) and subsequent Lead rulings govern actual sessions, bases, writer reservations, proof venues and review budgets. The earlier CPU-only queue and provisional run-start conditions below are historical where they conflict. Installed/native outcome and the single release acceptance remain open; this planning correction creates no dispatch, replacement author or extra review round. See the [final programme review](../../releases/16/evidence/final-programme-review.md).
 
 **Project:** Dependable environment setup and recovery
 
 **Goal:** When a creator has no usable ComfyUI, Astrid offers one separate install with its real cost stated, sets it up safely and resumably after one consent, proves the GPU computes, and delivers an image in the editor, with the agent never improvising.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Existing R16 Manager94 and technical owner on [board #2051](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7221824353); no reassignment
 
-**Estimate:** 1–2 engineering days for ER-0 and ER-1, then estimated from that baseline. Once ER-0 has chosen the route, the install branch, GPU rung, resumable downloads and skill wiring are likely 6–10 more, all on CPU. The live rounds are later work.
+**Estimate:** 5–9 engineering days remaining implementation and integration preparation, plus 4–7 incremental review/installed Windows/Linux/GPU qualification; credits original packet landings, A/E and authored C2. P38/P90/P93 implementation and venue waits excluded.
 
-**Waiting on:** the owner's decisions D2–D6 in [inputs.md](inputs.md#owner-decisions) and the Run start; [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md)'s readiness ladder (its RS1) for ER-2 to ER-5; Release 16's base for the branch.
+**Waiting on:** Existing C1/C2/B/F/D joins and exact P93 selected-target / P90 public plan-apply handoffs on board #2051, followed by integrated and native gates. No blanket whole-P93 wait or new scope/run-start decision.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../priority.md); a plan not listed there comes after the listed ones.
 
@@ -117,7 +117,7 @@ The proof can feed Release 17's stable qualification, not replace it.
 
 ## Completion
 
-For Release 16, completion is every remaining card's focused CPU tests passing on base and head. CPU fixtures prove that each case below ends truthfully, with nothing unconsented written:
+CPU implementation requires the original and added focused tests on the exact accepted base and candidate. Those fixtures prove classification/refusal/resume only; they are the first stage of the current recovery board, not Release 16 completion. The following assertions remain binding:
 - an install interrupted after its files were written, then resumed or retried through the same command;
 - a download interrupted and resumed;
 - too little disk, said before writing;
@@ -126,7 +126,7 @@ For Release 16, completion is every remaining card's focused CPU tests passing o
 - an unsupported GPU, told what works;
 - an older editor, which never recommends an impossible update.
 
-The clean-machine and broken-Desktop journeys to an image in the editor, with their per-round evidence, zero off-script steps and cleanup record, are later work and not part of Release 16: see [Later](tasks.md#later-real-hardware-qualification-not-in-release-16). No hardware use, spending or publication is authorized by this plan.
+The existing recovery authorization brings the retained clean-machine and broken-Desktop journeys, actual selected GPU computation, image in the matching editor, interruption/retry and cleanup into R16 acceptance. The historical [Later ledger](tasks.md#later-real-hardware-qualification-not-in-release-16) preserves their original definitions. Use the currently authorized venues and limits; this documentation correction itself grants no additional hardware, spend or publication authority.
 
 ## Proposed Release 16 reconciliation — 25 November 2026
 

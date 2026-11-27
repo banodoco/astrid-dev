@@ -2,11 +2,85 @@
 
 The live state of the Release 16 run, rewritten at each check-in by the release manager. The [brief](../16.md) holds intent, included plans, branches and issues; each plan's `tasks.md` holds its progress.
 
-## Planning reconciliation boundary — 27 November 2026
+## Current programme authority and sequencing
 
-The proposed [saving/media/workflow reconciliation](../16.md#saving-media-and-workflow-reconciliation--27-november-2026) changes canonical planning records only. P63/P04/P79 are not dispatched here. The already authorized bounded P90 dependency continues on [board #2051](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7222502183), under its existing Manager94/Astra94 owners and later explicit review/continuation decisions. Its live producer/consumer targets and proof requirements take precedence over provisional branch rows or the original CPU packet assumptions for that authorized subset. This revision changes no active queue, assignment, execution branch or capacity limit.
+**27 November 2026 — final planning reconciliation.** Exactly the 18 projects in the [brief](../16.md) remain. [Final review and estimates](evidence/final-programme-review.md) reconcile [#2057](https://github.com/banodoco/astrid-dev/issues/2057), [#2058](https://github.com/banodoco/astrid-dev/issues/2058), [#2059](https://github.com/banodoco/astrid-dev/issues/2059), [#2060](https://github.com/banodoco/astrid-dev/issues/2060), [#2061](https://github.com/banodoco/astrid-dev/issues/2061) and [#2063](https://github.com/banodoco/astrid-dev/issues/2063), including subsequent comments. No P52/P53/P85 programme, product edit, new implementation session or publication is authorized here.
 
-The prepared CPU programme below governs its packet execution; queue completion and installed-product acceptance are different. P63/P04/P79/P90 retain their canonical installed and independent acceptance. A Done packet establishes only its evidenced claim; a parked release blocker remains open. Before final qualification, the Lead must record a separately authorized venue and the applicable retained gates. These planning edits do not grant new machine, paid or owner-media access, expand current review rounds or authorize publication.
+**Precedence:** Current explicit owner decisions and the existing [Lead #2030](https://github.com/banodoco/astrid-dev/issues/2030) / recovery contracts govern. Read the actual boards before consuming a handoff: [35 #2033](https://github.com/banodoco/astrid-dev/issues/2033), [38 #2050](https://github.com/banodoco/astrid-dev/issues/2050), [93 #2032](https://github.com/banodoco/astrid-dev/issues/2032), [94/P90 #2051](https://github.com/banodoco/astrid-dev/issues/2051). The [through-shipment continuation](https://github.com/banodoco/astrid-dev/issues/2030#issuecomment-7221857523) supersedes the historical CPU terminal state for 38/93/94. P35's completed queue and explicit later deferrals remain. A Done CPU packet, accepted producer review, merged branch, installed result and release acceptance are different states; Parked never unlocks a dependent outcome.
+
+Keep the active authors, managers, branches, review-round limits and function reservations. The Lead's [current CI-capacity ruling](https://github.com/banodoco/astrid-dev/issues/2030#issuecomment-7223569025) and [hourly cadence](https://github.com/banodoco/astrid-dev/issues/2030#issuecomment-7225569908) remain authoritative; this document does not replace them with historical run caps or a new scheduler. Current records are board messages, existing proof artifacts and canonical tasks. This review is static evidence, not another live tracker.
+
+### Ownership at the actual joins
+
+| Shared surface | Existing producer / single writer | Consumer and landing contract |
+| --- | --- | --- |
+| User-state location, migration authority and protected grant read | Accepted P35 Agent/Runtime work; existing state custodian | P09/P63/P79/P90 consume the accepted interface. No broad App relocation, HTTP grant mutation or restore issuance is reopened. Absent/fresh-consent mapping is a named technical ruling; changed owner deferrals need owner decision. |
+| Native authority, source closure and role ABI | P38 current Runtime/Agent authors; 38-07 alone owns lock/vendor convergence | P09/10/29/30 lifecycle, P87 render cleanup, P93/P94 worker start and H3 provider custody consume accepted exact pair. Preserve original all-green/native/negative obligations. |
+| R15 transition and protected writes | Existing 38-08U reserved provider/CLI/service/backend/local/outcome hunks; P09 transaction owner | Lead settles authenticated-supervisor versus stronger-policy interpretation. Reserve only missing consumer functions for P29/30. Failed authority fences authorize no protected mutation; prior admitted private staging remains distinct. Actual Update-now, old service-start, local action, cold rollback and next successful update are proof joins. |
+| Installation, update decision and route adapters | P09 existing transaction; P29 shared selected-install status/outcome; P30 old-systemd/local adapter; P10 actual engine adapter | One decision and lifecycle, with exact App/Runtime pair identity. Shared route fixtures and state preservation run once. Pinokio Stop/Quit/Update proof uses the actual application, not descriptor simulation. |
+| Pack source, admission and automatic delivery | Existing P93 PACK-A canonical poms; PACK-B facade/direct-source witness; PACK-C App projection; PACK-DELIVERY installer/group/loader bridge | P87 accepts render outcome; P67 consumes hook and adds selector/consent/admission only. `installer/core.py` update/rollback/clean-install/repair and `transaction.py` prepared-group hooks stay reserved. PACK-DELIVERY also owns its newly identified `BoundaryHandoff.run/recover` apply/rollback calls inside the existing R0 locks/callbacks; no stop-authority change. No second author on the same function. |
+| Final default NKD/motion identity | P67 CS-11 hands actual same-source commit plus both tree/digests to PACK-B/C | Existing generators refresh commit-bound witness/projection; P31 alone freezes App manifest. New repository commit invalidates commit-bound proof even when motion bytes are unchanged. Do not wait for NKD to implement or diagnose current motion delivery. |
+| Target / workflow / environment | P93 actual target observations; P90 existing WS2 → WS9 → WS3-L / 90-H under Manager94/Astra94; P94 B/C/D/F and existing capacity/transfer owners | Consume accepted producer in the exact base. WS2 bounded final review is accepted; WS9 real call/public transport remains open. Approval intent, dependency observations and grant state must agree before apply. No second readiness ladder, installer or grant store. |
+| Save / concurrency / import / recovery | P63 one save/outcome/writer/inverse lane; P79 transfer and stable import receipt; P29 shared reload guard | P04 independently judges concurrent outcomes in the common review. Import receipt precedes capture and idempotent placement retry; P35 migration and P87 accepted output consume the same state. One witness, distinct verdicts. |
+| H3 schema, compiler and host injection | P66 typed immutable snapshot and one compiler; later P68/P70/P67 functions explicitly reserved by Lead | No external discovery/Astrid import in H3; no whole-P17 dependency. Generic admission/default/schema work can consume an earlier reviewed interface. Same schema/table/test function has one writer even where packets can otherwise overlap. |
+| Release tuple, evidence inventory and public writes | Existing Lead pin integrator / P31 publisher and actual deployment owner | Complete source/generated/installed/deployed identities, required checks and original inventories; exact owner Final before public writes, full served readback afterward. One release acceptance and no per-plan publication. |
+
+### Dependency graph
+
+Arrows are accepted interface/qualification joins, not whole-project start barriers. Exact source and proof must be present in each consumer base.
+
+```mermaid
+flowchart TD
+  state["35 accepted state interfaces"] --> lifecycle["09 · 10 · 29 · 30 lifecycle"]
+  custody["38 process authority"] --> lifecycle
+  custody --> environment["93 targets · 94 managed setup · 90 workflow"]
+  state --> saving["63 saving · 04 verdict"]
+  saving --> media["79 import and placement"]
+  media --> render["87 output and recovery"]
+  saving --> render
+  custody --> render
+  lifecycle --> defaults["93 existing pack delivery"]
+  defaults --> render
+  defaults --> h3["66 · 68 · 70 · 67 H3"]
+  environment --> h3
+  saving --> candidate["One integrated candidate"]
+  lifecycle --> candidate
+  environment --> candidate
+  render --> candidate
+  h3 --> candidate
+  candidate --> qualification["Original · native · heavy proof"]
+  qualification --> publication["31 exact owner Final and delivery"]
+```
+
+The H3 source-order graph is narrower than the whole release:
+
+```mermaid
+flowchart TD
+  typed["66 reviewed typed interface"] --> generic["67 admission · selector · schema"]
+  typed --> core["66 completed compiler and composition"]
+  core --> guides["68 guides and exact stills"]
+  guides --> arrangement["70 continuation · bridge · insert"]
+  core --> steering["67 native steering"]
+  core --> provider["67 provider injection"]
+  generic --> provider
+  guides -->|guide phase only| steering
+  arrangement --> recipes["67 continuation recipe and final proof"]
+  steering --> recipes
+  provider --> recipes
+```
+
+### Recommended execution waves
+
+| Wave | Work that can proceed | Actual gate to the next result |
+| --- | --- | --- |
+| **0 — retain and settle** | Keep current 38/93/94/P90 authors moving; credit P35. Lead records the narrow P38 trust interpretation. Owner answers only the named policy/scope choices. Prepare P31 controls/records, P10 engine capability, real-origin inventory, save corpus/measurement and H3 baseline/interface review in parallel when authorized. | Actual owner/current-authority boundary; no new whole-programme planning round or repeated old decision request. |
+| **1 — disjoint repairs** | P63 save model/attempt/writer/inverse work with P04 acceptance mapping; P79 stream/metadata; P09/29/30 route/pair-state work; P87 local parity; P31 record/renderer/status; P66 compiler; generic P67 preparation after exact typed-interface review. Existing PACK and P38 producer work continues. | Only the function/schema/identity each consumer uses. Missing native evidence does not prevent disjoint source work. |
+| **2 — early integrated journeys** | One R15 install/update/rollback/retry path; existing environment → exact plan → decline/approve → first image; real large media → edit/lost ACK → undo/reopen → short render/failure/next render. P68/P70 and P67 native/external tracks proceed under disjoint function reservations. | Real consumer invocation and accepted joined tuple; diagnostic interim passes remain scoped to their pins and fixtures. |
+| **3 — converge** | Finish P38 role ABI and installed host contract, P94 managed route, public P90 apply, default NKD/motion identity, P87 parity, save/inverse/history gates, local/Pinokio adapters and P31 nonpublishing rehearsal. | All retained code and existing independent review stops; actual same-source pack/witness tuple, no duplicated or pending join disguised by green unit tests. |
+| **4 — freeze and qualify** | One exact integrated candidate; genuine supported OS/mode/origin and GPU cells, native authority, lived-in state, failed operation/recovery/next success, retained whole-render/resource checks, complete original executed inventory. Reuse identical setup; record separate project verdicts. H3 live quality only in its authorized final venue. | Required product/safety/regression checks pass. Original support obligations stand unless the owner explicitly changes them. Changed relevant inputs invalidate affected proof and approval. |
+| **5 — accept once** | P31 final independent review and exact owner go; one protected Final, generated delivery and observed live readback; then named post-live long-lived user check. | Final is not a deployment receipt. Do not publish from a Draft or from this review. |
+
+**Decision and proof holds are local.** The [named-decision table](evidence/final-programme-review.md#decisions-and-bounded-questions) gives the concrete alternatives, consequences and recommendation. Do not hold unrelated source work for those decisions. Keep the original review stops and exact proof contracts; this section creates none. A new issue warrants investigation only when its specific answer changes a named design, support decision or proof result.
 
 ## Scope change — 25 November 2026
 
@@ -14,25 +88,98 @@ The owner now places the full Plan 91 green programme in [Release 17](../17.md),
 
 The Plan 91 mailbox records the owner-directed [STOP](https://github.com/banodoco/astrid-dev/issues/1826#issuecomment-7129888302) and [manager confirmation](https://github.com/banodoco/astrid-dev/issues/1826#issuecomment-7130215692): no packet was started and monitoring stopped. The older bounded-authority text does not override that STOP; only a later owner or orchestrator decision can resume it. Preserve its actual Agent branch and records.
 
-## Proposed R16 readiness — pending scope agreement and dispatch
+## Proposed H3 programme queue (66, 68, 70, 67)
 
-The brief holds strategy; each plan's tasks hold work and progress. This section records current readiness, branch/function reservations, scarce proof slots and source/pin deltas. It does not start a run. Reconfirm the existing Lead and each carried custodian before dispatch; preserve R15 priority, the P91 R17 handoff and held P82 authority.
+Prepared at the owner's request, 27 November. **Draft only: not active authority, branch cut, dispatch or Ready.** Preserve all existing R16 recovery lanes, active Plans table and boards. Existing Lead [#2030](https://github.com/banodoco/astrid-dev/issues/2030) reviews [PR #2056](https://github.com/banodoco/astrid-dev/pull/2056) and explicitly activates rows with exact accepted source and current standing rulings. No competing Lead, native subagents, new scheduler or extra chat/CI/GPU allocation.
 
-1. Establish the current served/predecessor/candidate register and actual old origins. Confirm narrow owner decisions: qualification mode, retained P89 gate, Windows route, P38 role scope, grant restore/revoke policy and P52/P53 closure boundary. Independent inventory, fixtures, native feasibility and bounded implementation preparation proceed together once authorized.
-2. Fill every ready nonconflicting work package: records/protection; native update/Pinokio/systemd; provider/closure; state/grants; existing and managed environments/exact plan; save model/corpus/capture; streaming media; pack/output/recovery; bounded paid safety; evidence; carried P52/P53 residuals. For each, link canonical task IDs, current branch/function holder, exact predecessor, next landing contract and proof venue. A different function in the same file is not a blanket conflict.
-3. Hold only real joins: provider/schema review before dependent consumer landing; exact authorization before privileged apply; verified migration before retirement; individual inverse feasibility before batching; actual native engine authority before lifecycle proof. Start fixtures, adapters and venue discovery before those joins where useful.
-4. Record two interim vertical checkpoints independently: existing-environment first creation with decline/consent; substantial import/edit/recovery/undo/reopen/short-render/next-render. Record exact tuples and limits. These are internal integration evidence, not shipment or automatic final acceptance.
-5. Converge all retained outcomes, P56 residuals and bounded adjunct product changes through one pin integrator. Rehearse changed-schema lived-in update/rollback, grant/state recovery, native custody and generated publication. Resolve unknown causes; preserve original task history. Name current resource reservations and actual waits, not a new task list.
-6. Freeze exact product/Runtime/client/schema/pack/bootstrap/launcher/engine identities after required landings and code/interface reviews. Qualify the retained support/negative matrix, actual served origins, heavy and native journeys; require complete comparable inventories and effective required checks. Then complete RL-R and final qualification reviews on that evidence before the owner's go. Rerun only affected evidence when inputs move, with explicit impact rationale; do not silently carry old passes.
-7. Owner approves one exact tuple and ledger. P31 performs one protected Final transition and coherent generated sync/deploy, then verifies complete served bytes and live identity. Plans do not publish separately. Retain named post-live owner observations/administrative closure without pretending they happened before publication.
+**Readiness gate.** Independent high-judgment review of revised P66/P67 contract, including existing hook injection, registry/soft-default boundaries and unchanged H3 no-Astrid-imports guard. At preparation observed Agent R16 main `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`, VibeComfy R16 main `55c3948212d23cf037fae8a4c6faad77d33e7279`, R15 Agent `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5`, published poms default pin `2379ab54aca522019ff4f869cfdf9375bdb56dfc`. Observations, not dispatch pins. Lead refreshes actual refs, verifies retained P59/64/65 ancestor/contract, checks adequate CPU venue, capacity and function reservations, then cuts P66 from accepted R16 integration. No P17 prerequisite. Each packet needs actual focused base selectors/results, executed node IDs and configured marks/deselections, precise May touch functions and dependencies present in consumer's exact base. No baseline was executed in this planning session. New tests not on base are explicitly accounted for on head. Preserve existing checks; missing collection, resource/transport errors or incomplete source closure are NO-RESULT, not PASS. Exact approved replacement selectors required if v1/capture cleanup removes a test; do not silently omit.
 
-**Conditional critical path (proposal):** reviewed producer/identity/schema/grant contracts → slowest retained native custody, managed/exact workflow, save/inverse/migration, media/output or install/update consumer → coherent pin convergence → exact-tuple changed-schema/native/support/negative/heavy proof → RL-R and required final reviews → owner go → one protected Final/deploy and served readback. This is conditional on measured work and venue availability, not a committed duration.
+**Proof/authority.** Current Lead-managed recovery handoff supersedes historical in-chat proof assumption for this proposed lane. One fresh normal ChatGPT author per implementation packet (N High, X Extra High, S Pro; T editorial cards propose Pro, confirm actual binding). Early STATUS and draft PR, then exact READY-PROOF with repository/PR/head/selectors and stop. No tests/build/merge/native subagents by author absent current explicit Lead ruling. Lead/custodian runs exact base and candidate proof in adequate pinned environment and commissions independent RS/R review. Keep real failure IDs and full node inventories/logs, no silent skip/xfail/deselect or test weakening. Review/diagnostic and installed proof rows are Lead assignments, not author chats. Real native/cold reads/CPU ComfyUI/installation proof and pin changes use Lead-authorized venue; CPU compile is not live quality. R16 final exact-tuple qualification and separately authorized live/GPU gate remain. A Parked dependency never unlocks a consumer; actual accepted handoff must be present in its exact base.
 
-**Shared-function reservations:** the existing Lead records the actual holder, branch/function, next landing contract and proof venue when each lane is authorized and ready. Reserve the P38 Runtime lock, P90/P56 workflow command and schema, readiness/error case table, P63 outcome/queue mutation, shared media add/placement, pack/schema generator, and release pins/publication writer individually. No holder, branch, date or capacity is assigned by this proposed section. Independent fixtures and venue discovery can start before these joins once authorized.
+**Sequence.** P66 serial job/compile/caller cutover, RS1, typed capability/provider table and describe. The node-inventory reader and resolved-job serializer may proceed concurrently with disjoint reservations; final 66-R joins both. Receipt, clocks, occurrence compose/verify, templates and skill follow their actual predecessors. P67-01 may review the exact typed interface after P66-09, allowing generic admission/selector/schema preparation before whole P66 completion. Native H3 implementation consumes accepted 66-R. Then two tracks run subject to actual writer/slot reservations:
+- Native track: P68 guide → full-canvas still preparation → exact mask/compose proof → recipes, then P70 compare full canvas vs active capture → prefix → bridge → insert → delete capture/flag → recipes → integrated review. 70-01 is a decision gate, not permission to assume equal latent shapes. P70 bridge/insert may author concurrently only with reviewed disjoint functions/fixtures; conservative queue serializes them.
+- P67 shared track: 01 independent contract review, 02 staged admission (only missing P17 P1 slice), 03 bounded host/worker custody; 04 pure default selector can proceed beside 02 if exact schema/parser functions are disjoint; 05 consumes the accepted PACK-DELIVERY hook and adds the existing consent/frozen-list join, without touching its reserved lifecycle/group/loader implementation. 08 pinned VC NKD schema cache can proceed independently after 01. External activation remains blocked if an unscoped generic prerequisite appears; native steering does not wait for it.
+- Native P67 10–14 consume accepted P66, with Lead-reserved disjoint H3 schema/builder/receipt/table functions against P68/P70; a shared writer may serialize work but is not a whole-P70 product prerequisite; they do **not** depend on CS-0/installer or NKD. 14 stock guide phase is independent of NKD fallback. 06 point injection after 03 and P66-R, 07 independent pack root, 09 node declaration/soft companion require 05/07/08; reserve H3 functions against 10–14. If Lead can isolate disjoint earlier native or point/hook functions, advance reviewed slices after producer contract, with exact accepted base sync; no parallel writers to same schema/builder/table/shared tests/skill. Do not rely on clean merge as proof. 15 actual curve and conditional fallback waits 14 and independent package/node handoff. 16 native recipes may proceed after native 14 even if external blocked; 17 provider recipes joins both. 18 actual default install, 19 shared/chained installed graph, 20 controller/worker custody, independent 67-R. This preserves every original 67 outcome including P70 speech-continue.
+- Existing P09/P35 install and grants, P90/P93/P94 generation/VC/worker pins and receipt owners, P31 manifest, actual proof/CI/chat limits remain protected. Lead reserves actual functions, not entire repos. Same-source default pins for NKD and astrid_motion remain in existing manifest; poms_packs is an external input, not an unsupported release-branch-table repo. Lead designates reviewed external candidate target (proposed `p67/r16-provider` from approved source), no author writes to main. P31 alone publishes exact pins. Keep full P17 paused; reuse actual P1 evidence once.
 
-At every check-in: read all current mailbox messages; reconcile predecessor moves, task receipts, exact writer conflicts and proof availability; start ready work within actual authorized capacity; report blocked contracts/resources with owner and next action. Agent CI remains subject to existing shared authority and the current Release Lead's priority and capacity decisions. P91's historical launch text is not new R16 authorization. No new permanent scheduler, strategy file or tracker is introduced.
+All rows below are **Prepared / Blocked** until approved. Only the Lead reconciles them into active dispatch; [manager briefs](briefs/README.md) are prepared, not launched.
+
+### Proposed H3 Plan 66 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P66-01](packets/R16-P66-01.md) Freeze measured job and ownership | CC-1.1 (a) | astrid-agent | S | readiness gate |
+| [R16-P66-02](packets/R16-P66-02.md) Persist and reuse the resolved job | CC-1.1 (b) | astrid-agent | S | R16-P66-01 |
+| [R16-P66-03](packets/R16-P66-03.md) Introduce compile_job and source-free feature lowering | CC-1.2 (a) | astrid-agent | S | R16-P66-02 |
+| [R16-P66-04](packets/R16-P66-04.md) Unify masks, adapters and retained continuation | CC-1.2 (b) | astrid-agent | S | R16-P66-03 |
+| [R16-P66-05](packets/R16-P66-05.md) Move public and lifecycle callers to compile_job | CC-1.3 (a) | astrid-agent | X | R16-P66-04 |
+| [R16-P66-06](packets/R16-P66-06.md) Consolidate interim transport without losing custody | CC-1.3 (b) | astrid-agent | S | R16-P66-05 |
+| [R16-P66-07](packets/R16-P66-07.md) Migrate v2 canonical-spec consumers | CC-1.4 (a) | astrid-agent | S | R16-P66-06 |
+| [R16-P66-08](packets/R16-P66-08.md) Retire v1 and route classification | CC-1.4 (b) | astrid-agent | S | R16-P66-07 |
+| [R16-P66-RS1](packets/R16-P66-RS1.md) Independent resolved-job contract review | RS1 | astrid-agent (Lead) | S | R16-P66-08 |
+| [R16-P66-09](packets/R16-P66-09.md) One capability table and typed provider assembly | CC-2 (a) | astrid-agent | X | R16-P66-RS1 |
+| [R16-P66-10](packets/R16-P66-10.md) One public describe and admission projection | CC-2 (b) | astrid-agent | X | R16-P66-09 |
+| [R16-P66-11](packets/R16-P66-11.md) Read worker node inventory from existing pins | CC-2 (c; Plan 64 SR-3) | astrid-agent | X | R16-P66-10 |
+| [R16-P66-12](packets/R16-P66-12.md) Serialize the pack-owned resolved-job view | CC-3 (a) | astrid-agent | X | R16-P66-10; disjoint serializer reservation |
+| [R16-P66-13](packets/R16-P66-13.md) Authenticate neutral producer evidence through SDK readback | CC-3 (b; retained SR-6 receipt) | astrid-agent | X | R16-P66-12 |
+| [R16-P66-14](packets/R16-P66-14.md) Resolve end-relative times on stream clocks | CC-9 | astrid-agent | X | R16-P66-13 |
+| [R16-P66-15](packets/R16-P66-15.md) Paste exact media by occurrence | CC-10 (a) | astrid-agent | X | R16-P66-14 |
+| [R16-P66-16](packets/R16-P66-16.md) Verify exact delivered pixels and per-channel PCM | CC-10 (b) | astrid-agent | X | R16-P66-15 |
+| [R16-P66-17](packets/R16-P66-17.md) Generic recipe discovery, typed fill and normal submission | CC-5 (a) | astrid-agent | X | R16-P66-16 |
+| [R16-P66-18](packets/R16-P66-18.md) Ship and prove recipes for existing features | CC-5 (b) | astrid-agent | X | R16-P66-17 |
+| [R16-P66-19](packets/R16-P66-19.md) Rewrite general H3 skill and thin Recast | CC-6 | astrid-agent | S | R16-P66-18 |
+| [R16-P66-R](packets/R16-P66-R.md) Close compiler foundation | R | astrid-agent (Lead) | S | R16-P66-19, R16-P66-16, R16-P66-11 |
+
+### Proposed H3 Plan 68 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P68-01](packets/R16-P68-01.md) Soft timed guides through the ordered guide seam | CC-4 | astrid-agent | X | R16-P66-R |
+| [R16-P68-02](packets/R16-P68-02.md) Full-canvas source and still chunk ownership | CC-8 (a) | astrid-agent | X | R16-P68-01 |
+| [R16-P68-03](packets/R16-P68-03.md) Exact still masks and delivered holds | CC-8 (b) | astrid-agent | X | R16-P68-02 |
+| [R16-P68-04](packets/R16-P68-04.md) Guide and still recipes and producer handoff | CC-11 | astrid-agent | S | R16-P68-03 |
+
+### Proposed H3 Plan 70 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P70-01](packets/R16-P70-01.md) Compare full-canvas vs motion-context preparation | CC-7a (a) | astrid-agent (Lead) | S | R16-P68-04 |
+| [R16-P70-02](packets/R16-P70-02.md) Port active prefix continuation | CC-7a (b) | astrid-agent | S | R16-P70-01 |
+| [R16-P70-03](packets/R16-P70-03.md) Bridge placed clips through the same arrangement function | CC-7b | astrid-agent | S | R16-P70-02 |
+| [R16-P70-04](packets/R16-P70-04.md) Insert a placed clip between generated spans | CC-7c | astrid-agent | S | R16-P70-03 |
+| [R16-P70-05](packets/R16-P70-05.md) Remove captured workflow and inert flag | CC-7d | astrid-agent | S | R16-P70-04 |
+| [R16-P70-06](packets/R16-P70-06.md) Native continuation recipes and final skill trim | CC-12 | astrid-agent | S | R16-P70-05 |
+| [R16-P70-R](packets/R16-P70-R.md) Independent integrated native H3 review | R | astrid-agent (Lead) | S | R16-P70-06 |
+
+### Proposed H3 Plan 67 queue
+
+| Packet | Task slice | Repository | Route | Depends (accepted) |
+| --- | --- | --- | --- | --- |
+| [R16-P67-01](packets/R16-P67-01.md) Independent provider/admission/default boundary review | CS-0 (a) | astrid-agent (Lead) | S | exact reviewed P66-09 typed interface; current PACK-DELIVERY contract |
+| [R16-P67-02](packets/R16-P67-02.md) Staged extension admission and owner dependency | CS-0 (b; P17 P1 subset) | astrid-agent | X | R16-P67-01 |
+| [R16-P67-03](packets/R16-P67-03.md) Trusted effective contribution and worker admission | CS-0 (c; only proven gap) | astrid-agent | S | R16-P67-02 |
+| [R16-P67-04](packets/R16-P67-04.md) Pure generic default-companion selection | CS-10 (a) | astrid-agent | X | R16-P67-01 |
+| [R16-P67-05](packets/R16-P67-05.md) Use one existing consent and default transaction | CS-10 (b) | astrid-agent | X | R16-P67-04, R16-P67-02; accepted PACK-DELIVERY hook before integration |
+| [R16-P67-06](packets/R16-P67-06.md) H3-owned provider point and host injection | CS-1 (a) | astrid-agent | X | R16-P67-03, R16-P66-R; disjoint H3 function reservations |
+| [R16-P67-07](packets/R16-P67-07.md) Independent NKD package root | CS-1 (b) | poms_packs | N | R16-P67-06 |
+| [R16-P67-08](packets/R16-P67-08.md) Pinned NKD object-info schema evidence | CS-1 (c) | VibeComfy | N | R16-P67-01 |
+| [R16-P67-09](packets/R16-P67-09.md) Used-only NKD requirements and soft default declaration | CS-1 (d) | astrid-agent | X | R16-P67-07, R16-P67-08, R16-P67-05 |
+| [R16-P67-10](packets/R16-P67-10.md) Timed prompts use existing text mechanism | CS-2 | astrid-agent | X | R16-P66-R; disjoint H3 function reservations |
+| [R16-P67-11](packets/R16-P67-11.md) Report actual reference tag and intended actor | CS-6 | astrid-agent | N | R16-P67-10 |
+| [R16-P67-12](packets/R16-P67-12.md) ControlNet lowering or honest unsupported refusal | CS-5 | astrid-agent | S | R16-P67-11 |
+| [R16-P67-13](packets/R16-P67-13.md) LoRA phase only if H3 hook is proven | CS-7 | astrid-agent | X | R16-P67-12 |
+| [R16-P67-14](packets/R16-P67-14.md) Guide denoise phase through the existing guide function | CS-3 (stock decision; external fallback conditional) | astrid-agent | X | R16-P67-13, R16-P68-04 |
+| [R16-P67-15](packets/R16-P67-15.md) Real independent NKD curve action | CS-4; CS-3 fallback if 14 requires it | poms_packs | X | R16-P67-14, R16-P67-07, R16-P67-09 |
+| [R16-P67-16](packets/R16-P67-16.md) Native steering recipes and skill | CS-8 (a) | astrid-agent | S | R16-P67-14, R16-P70-R |
+| [R16-P67-17](packets/R16-P67-17.md) Provider-owned recipes and guidance | CS-8 (b) | poms_packs | S | R16-P67-16, R16-P67-15 |
+| [R16-P67-18](packets/R16-P67-18.md) Prove real release default delivery and opt-out | CS-11 | astrid-agent (Lead) | X | R16-P67-17, R16-P67-05 |
+| [R16-P67-19](packets/R16-P67-19.md) Installed shared and chained toolkit proof | CS-9 (a) | astrid-agent | S | R16-P67-18 |
+| [R16-P67-20](packets/R16-P67-20.md) Controller and worker exact provider custody | CS-9 (b) | astrid-agent | S | R16-P67-19 |
+| [R16-P67-R](packets/R16-P67-R.md) Independent close of default-provider programme | R | astrid-agent (Lead) | S | R16-P67-20, R16-P67-18, R16-P67-17 |
 
 ## Delivery: Lead and managers
+
+> **Historical prepared CPU run contract.** The following section preserves the original dispatch record and packet identities. Current explicit owner/Lead recovery rulings linked at the top govern where they differ, including actual proof venues, substantive independent review, evidence collection, native/installed work, capacity and continuation. Do not treat its old one-line-proof, no-evidence, fixed-queue or Done/Parked rules as current whole-release acceptance or permission to replace live sessions.
 
 How Release 16 runs unattended for days. **All judgment happens once, in advance, before anyone is left running; every brief is prepared in [briefs/](briefs/README.md).** After that, each role repeats one short loop. This section is each role's whole job for this run: where it differs from a skill, this section wins. Don't open the skills to look for more work.
 
