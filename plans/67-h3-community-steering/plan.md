@@ -2,7 +2,7 @@
 
 **Project:** H3 community steering
 
-**Goal:** An agent can time what happens and what's said in an H3 shot, steer it with guides, curves, LoRAs and ControlNet at chosen points in the model's denoising, and see honestly which voice and reference each character is bound to, all through the Plan 66 lever model with no new mechanism.
+**Goal:** An agent steers H3 shots with timed prompts, guides, curves, LoRAs and ControlNet, sees honest bindings, and can install a separate NKD steering pack that extends H3 through the one compiler/lever contract without modifying H3 routes.
 
 **Status:** queued
 
@@ -10,9 +10,9 @@
 
 **Target milestone:** 0.2
 
-**Estimate:** 9.5 days (CPU only; the live test is separate and comes after)
+**Estimate:** 9.5 days previous CPU estimate; re-estimate after CS-0 review for independent-provider installation and proof. Live testing separately authorized.
 
-**Waiting on:** Owner greenlight of scope, and Plans 64, 65, 66 and 68; the `speech-continue` recipe also waits for Plan 70.
+**Waiting on:** Plan 66's reviewed provider contract; verified 64/65 inputs; Plan 68 for guides; Plan 70 for continuation recipe; owner run authorization. External activation waits only for the narrow shared lifecycle gate CS-0, not all of Plan 17.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -39,10 +39,13 @@ Plan 66 gives every H3 job one shape: three families of levers (Output, Context,
   - a late LoRA.
 - **An honest status** on every new kind: `compiles`, `live-tested` with a cited render, or `unavailable`.
 
+**Independent extension proof.** Ship `h3_nkd_steering` as a normal independently installable pack with a distinct ID/source/version/pin, hard dependency on `h3_av`, and a versioned H3-owned typed provider contribution using Astrid's existing extension registry and 66's seam. A real curve tool is always in the optional pack; use stock guide scheduling when proven, otherwise the pack contributes the NKD guide lowering. If stock scheduling wins, prove the typed lowering seam with an independently installed test contribution rather than inventing a redundant product lowering. Timed prompts, binding reports, native LoRA scheduling and basic guides stay in H3. ControlNet stays a native optional capability unless proven independent lifecycle justifies another provider (separate review). No new registry, recursive sub-pack loader, version-range solver or generic workflow-family rewrite. A toolkit recipe may depend on both packs through existing explicit ID dependencies; no automatic install or update.
+
 **NKD Basic Tools** is used as a pinned external ComfyUI custom-node pack on the worker, like the motion pack and ComfyUI itself (D2). Astrid calls its nodes through graphs, and no NKD source is copied into astrid-agent.
 
 **Not in this plan. Do not build these:**
 - a GPU or live run (D1). The owner tests afterwards;
+- general VibeComfy standalone H3 extraction, automatic multi-source dependency resolution, or packaging every lever as a pack; these are not prerequisites;
 - hard word timing: no node enforces when a word is spoken;
 - hard per-actor routing of voices or references within one pass;
 - stem separation, or editing one voice under music;
@@ -64,15 +67,13 @@ NKD's MiniMax Guides node schedules each guide over denoising progress, and its 
 
 ## Sequence and readiness
 
-Plans 64, 65 and 66 land first; this plan uses Plan 66's capability table, dry-run view and recipe format, cites the design in `astrid/packs/h3_av/docs/design.md`, and wraps [Plan 68](../68-h3-guides-and-stills/plan.md)'s guide lowering. Timed prompts, binding reports, ControlNet and LoRA phase (CS-2, CS-6, CS-5, CS-7) can start after Plan 66; guide phase and the curve tool (CS-3, CS-4) wait for Plan 68; the `speech-continue` recipe in CS-8 waits for [Plan 70](../70-h3-continuation-bridges-inserts/plan.md).
+Plans 64, 65 and 66 land first; CS-0 independently reviews the actual extension/installation/worker boundary and supplies only missing shared validation before real external activation. Plan 17 is not a whole-project dependency. Native work does not wait for external activation; this plan uses Plan 66's capability table, dry-run view and recipe format, cites the design in `astrid/packs/h3_av/docs/design.md`, and wraps [Plan 68](../68-h3-guides-and-stills/plan.md)'s guide lowering. Timed prompts, binding reports, ControlNet and LoRA phase (CS-2, CS-6, CS-5, CS-7) can start after Plan 66; guide phase and the curve tool (CS-3, CS-4) wait for Plan 68; the `speech-continue` recipe in CS-8 waits for [Plan 70](../70-h3-continuation-bridges-inserts/plan.md).
 
 Order:
-1. CS-1 pins NKD on the worker.
-2. CS-2 (timed prompts), CS-3 (guide phase) and CS-6 (signals) run in parallel.
-3. CS-4 (curve audio guides) follows CS-3.
-4. CS-5 and CS-7 follow CS-1 and can run alongside CS-2, CS-3 and CS-6.
-5. CS-8 adds the recipes and skill sections.
-6. The final review.
+1. After 66, CS-0 reviews the narrow shared boundary and CS-2, CS-5, CS-6 and CS-7 may start on disjoint files (serialize overlapping schema/builder edits).
+2. CS-1 pins and packages NKD after CS-0. CS-3 follows 68; try stock scheduling first, with the NKD fallback only after CS-1.
+3. CS-4 implements the independent pack's curve tool after CS-1 and CS-3.
+4. CS-8 adds recipes and skills; only the continuation recipe waits for 70. CS-9 proves install/disable/upgrade/rollback, actual independent contributions, and local/attached/RunPod CPU custody; finish both before final review.
 
 [Task cards](tasks.md)
 
@@ -87,7 +88,7 @@ Order:
 - the timed `prompt` form;
 - `phase` on guides (and on LoRAs, if proven);
 - `role: control`;
-- the curve tool;
+- the independently installed `h3_nkd_steering` pack, curve tool, and conditional guide lowering; the real provider/worker custody and lifecycle evidence;
 - the per-tag binding report;
 - recipes and skill sections for each;
 - table rows with honest status.
@@ -96,12 +97,13 @@ Order:
 
 CPU tests prove each of these:
 - A two-segment timed prompt serializes, in time order, into H3's timed shot format, and the dry run shows the final string.
-- A guide with `phase: [0, 0.2]` compiles through NKD's MiniMax Guides with that `until`, at the right frame.
+- A guide with `phase: [0, 0.2]` compiles with proven stock scheduling, otherwise through the installed NKD provider's MiniMax Guides with that `until`, at the right frame.
 - The curve tool writes an audio file from an Event Curve recipe, and that file works as an audio guide at frame 0.
 - A pose control video with `phase: [0, 0.6]` compiles to `MiniMaxH3FunControlNetApply` with matching start and end percent.
 - `describe` shows each new kind's status.
 - A LoRA `phase` either compiles through a proven hook, or is refused from the table as `unavailable`.
 - For a two-speaker request, the dry run names which occurrence and soundtrack each `<Audio n>` tag is bound to, and marks per-actor binding as soft.
+- Install the independent pack via the existing trusted pack route, prove no H3 edits or extra NKD dependencies for a base job, deterministic collision/version/missing-dependency refusals, and safe rollback. Prove exact selected provider and reachable node requirements agree on controller and worker CPU paths. A separately installed fixture proves the typed lowering interface if real NKD guide lowering is unnecessary.
 - Every recipe fills, dry-runs and compiles, and a small-model cold read reaches a dry run for the speech-timing recipe.
 
 Review then closes the plan. How well timing, guides, curves and ControlNet are followed is judged in the owner's live test afterwards.

@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 18 November 2026 in the Plan 59 session, the owner asked for this plan. Their words: "if we're doing something for historical reasons, why don't we just update it to use the current way"; "a generalizable tool on top of MiniMax… really elegant"; tool sets, then a general skill, then problem skills like Recast with templates, applied to other problems such as endless continuation. They asked for it to be "ready to go as another plan". D3 to D5 decided the same day (below). Next: the owner greenlights the scope.
+**Scope decision:** Owner agreed on 27 November 2026 in the ChatGPT planning conversation to make 66 provider-ready, prove independent extension in 67, and bring forward only necessary shared infrastructure. Original direction of 18 November (one elegant generalizable H3 tool, eliminate historical routes, general skill then problem skills and templates) and D1–D5 remain. The revised boundary still requires independent critique and separate run authorization.
 
 **Prior art:**
 - **The request already has the model's shape.** `request.v2.json` holds timeline and reference items, per-item `edit[]` grants, and `hard` and `latent_pin` fields that nothing uses ([direction review §1](research/direction.md)).
@@ -120,6 +120,8 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
 - four reservations, the design file in the pack, three skill guards, a closing review here and the integrated review after Plan 70;
 - card ids unchanged.
 
+**Provider seam readiness (27 Nov 2026; source-only):** Agent main `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5` has `GenerationInputs` and `LIMITS` in `astrid/packs/h3_av/shared/generation.py` and H3's existing VibeComfy workflow hooks. The prerequisite integration [Agent #478](https://github.com/banodoco/astrid-agent/pull/478), `f6e629b31e0f7fe74c0cb809061c10b74a79a765`, is its ancestor (compare ahead 821, behind 0). Plan 65's historical task evidence still records red CPU/CI and earlier-head live receipts: completion status is not a current baseline. At dispatch record exact release/dependency identities and scoped baseline failures. Have an independent high-judgment reviewer check the CC-2 registration seam, stable snapshot, six mechanisms, pack-neutral receipt and 67 consumption against current source before freezing the contract. No independent review or tests have run in this planning update. See [67's dependency assessment](../67-h3-community-steering/inputs.md#provider-boundary-and-plan-17-dependency-27-nov-2026).
+
 **Proof and limits:** CPU only (D1). Because of D3, the old workflows are gone before the live test, so the live test compares the port with today's saved takes rather than with a fresh run of the old workflows. Proof covers compiled graphs, refusals, the dry-run record, template admission and a cold read of the skill. Not covered, and left to the owner's live test:
 - whether the ported continuation looks and sounds like the captured one;
 - guide adherence;
@@ -127,7 +129,7 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
 
 **Review rounds:** Recommend 1. This replaces the pack's compiler and request identity, and it's the base for every future H3 skill. Next: the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: the owner starts a run after Plans 59, 64 and 65.
+**Run start:** Pending — no product execution or release authorized. Next: confirm independent seam review, refreshed base and owner run authorization.
 
 ## Owner decisions
 
@@ -143,6 +145,8 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
   - after Plan 68 (guides, interior stills).
 
   The options are (a) keep everything CPU-only until all the plans are done (D1 as it stands), or (b) add those sessions, with small GPU spend and a budget set by the owner. Recommendation: (b), because nothing can be marked `live-tested` otherwise. Still pending the owner.
+
+- **D7 — provider-ready core (owner direction, 27 Nov 2026).** H3 keeps semantic ownership and one typed capability/lowering assembly seam. 66 proves it with a separate fixture; 67 owns real installation. No new registry, generic API or Plan 17 dependency. Preserve CPU-only scope; the narrow contract is subject to independent review.
 
 ## Source identities
 

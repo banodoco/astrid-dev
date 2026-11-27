@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — in the Plan 59 session on 18 November 2026 the owner asked that Plans 64–66 stay focused on the existing tools, with "a follow-up project for some of the stuff that we don't do right now… centred around Nekodificador, or what we need to service that". They also asked how NKD's speech scheduling would work with a master frame. Next: the owner greenlights this scope.
+**Scope decision:** Owner agreed on 27 Nov 2026 in ChatGPT to make 67 the first independent H3 extension proof, with 66 provider-ready and only necessary Plan 17 work brought forward. Original community-steering outcomes and CPU-only boundaries remain. Exact source boundary and scoped implementation cards require independent review; no run authorized.
 
 **Prior art:**
 - **NKD Basic Tools** (commit `c157722a2b484d80dee6b6d3f166c90d9ec197b8`, GPL-3.0) has two relevant nodes ([research/nkd-speech.md](research/nkd-speech.md)):
@@ -29,11 +29,23 @@
 
 **Challenge:** Reviewed — the alignment review of 18 November 2026 ([research/alignment-review.md](research/alignment-review.md)), backed by a source check of each task against the NKD, ComfyUI and Astrid code ([research/alignment-luna.md](research/alignment-luna.md)), found Plans 64–66 largely aligned with this plan. All twelve of its edits are accepted: guide `phase` is tried first with stock conditioning time ranges, so no NKD node enters job graphs unless needed; `phase` is allowed on any kind the table permits; node packs are declared per lever kind and the worker's pack list is read from the pins; the dry run shows the final prompt string; the guide lowering stays one function; the curve tool uses the node's 32 kHz and names its offset `--offset`; ControlNet starts by proving pinned weights exist and stays `unavailable` otherwise; signals report labels without reading the prompt; CS-5 and CS-7 depend only on CS-1. The review found the source check's call for broad compatibility wording overstated. Plan 66's own critique, functional review and red-team review are recorded in its inputs. An independent critique is still recommended before dispatch, once Plan 66 has landed.
 
+## Provider boundary and Plan 17 dependency (27 Nov 2026)
+
+Source-only assessment at Agent `dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5`; refresh at dispatch. Existing assets to reuse:
+- [`core/extensions/registry.py`](https://github.com/banodoco/astrid-agent/blob/dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5/astrid/core/extensions/registry.py), `model.py` and `sidecar.py`: metadata discovery, versioned points, schema/effects checks, quarantine/shadow/disable and lazy entry import/protocol check. Registry exists and production generation engine/machine callers use it. H3 must use effective admitted contributions, not scan raw folders or call `entry()` on a stale/untrusted record; inspect the actual trust/custody path before activation.
+- [`vibecomfy/extensions/points/workflows.yaml`](https://github.com/banodoco/astrid-agent/blob/dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5/astrid/packs/vibecomfy/extensions/points/workflows.yaml), H3 workflow hooks and `core/generation/entries.py`: already supply the workflow entry/controller build and after-output paths. H3's provider point is not a second workflow family. No VibeComfy native plugin extraction needed.
+- [`core/pack/transaction.py`](https://github.com/banodoco/astrid-agent/blob/dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5/astrid/core/pack/transaction.py) and `pack_validation.py`: existing explicit ID dependency checks and staged group install/rollback, but no observed extension registry parse in the staged transaction, nor point-owner dependency enforcement there. This is Plan 17 P1's concrete gap. Reuse its proof and bring forward only the missing staged validation/owner-dependency/trust slice via CS-0; coordinate a bounded shared PR and record the accepted head for P17 P1 so later work does not duplicate it. Do not claim P1 complete without its actual proof.
+- [`packs/runpod/machine.py`](https://github.com/banodoco/astrid-agent/blob/dc45d97c6bc2734cbfb9b2a25b43cb40ed5757e5/astrid/packs/runpod/machine.py) ships the active installed pack selection with revision/tree digest and file hashes and refuses unshipped workflow entries. A built-in H3 entry using an outside provider may need additional pre-claim selected-provider custody validation: prove the controller/worker identity and requirements rather than assuming this is already handled. No full P17 A2 wheel/plugin transport needed for an ordinary installed Astrid pack; a missing custody check is a bounded CS-0/CS-9 repair, not a new transport.
+
+**Ruling for the revised scope:** Plan 66 has no dependency on 17. Native 67 tasks have no dependency on 17. For the external proof, CS-0 requires only the source-confirmed missing part of P17 P1 and any narrowly proven activation/custody gap; no dependency on V1–V5, A1–A4, H1, C1–C3, IMG or S2. P2/P3 full CLI/docs are not gates; use the existing pack action discovery and H3 describe, with bounded docs for the new point. Plan 17 remains paused and owns the eventual generic VibeComfy family/standalone H3 migration. Its H1 still references v1 and `branch_for`; refresh it after 66 before running it. No claim that 17 has been amended. Existing ID-list dependencies and explicit independent installs suffice; version-range/multi-source automatic solving is deferred. Keep the H3-owned point first, not a premature universal control API. Provider code is trusted by the existing install policy, not a sandbox; no loading at metadata discovery. Verify no new core H3 imports.
+
+Independent architecture critique and exact selected release baseline are pending, not performed here. Review 66's typed seam, real registry invocation, dependency/install custody and the task boundary before dispatch; if a generic prerequisite exceeds CS-0's narrow bounds, record a separately scoped prerequisite and block external activation only. Do not block native work or silently widen product scope. The older exploratory research is retained as history; this decision supersedes its recommendation to consider a separate project for this first proof.
+
 **Proof and limits:** CPU only (D1). Proof covers compiled graphs, table status, refusals, dry-run strings and bindings, and recipe admission. How well timed prompts, guide phase, curves, ControlNet and two-actor direction are followed needs the owner's live test.
 
 **Review rounds:** Recommend 1 at the end. Next: the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: the owner starts a run after Plans 64–66.
+**Run start:** Pending — no product execution or release authorized. Next: confirm independent boundary review, Plan 66 contract, release placement and owner run authorization.
 
 ## Owner decisions
 
@@ -44,13 +56,15 @@
   - Do not copy NKD source into astrid-agent: astrid-agent is Apache-2.0, and vendoring GPL-3.0 code into it would change its licence.
   - The reimplement-first route is dropped. The curve tool is a thin Astrid wrapper around NKD's Event Curve node.
 
+- **D3 — first external provider (owner direction, 27 Nov 2026).** Use ordinary independently installed `h3_nkd_steering`, not a nested loader. Base H3 owns semantics, native kinds and exact composition. Separate NKD-specific tool and only necessary lowering; ControlNet packaging is conditional, not a new mandatory pack. Use CS-0 to close the proven shared prerequisite, without starting the full paused Plan 17. Preserve D1/D2 and review the exact extension protocol before execution.
+
 ## Source identities
 
 Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin/release/14/main` (`9f614dff`); ComfyUI `6bfaacc`; the H3 motion pack `361624fb`; NKD Basic Tools `c157722a2b484d80dee6b6d3f166c90d9ec197b8`. At dispatch, record the release, its `release/<NN>/main` SHA, the Plan 64–66 merge SHAs and the `release/<NN>/plan-67` head.
 
 ## References
 
-- **New architectural exploration (20 Nov 2026, unapproved):** [Composable control substrate and optional packs](research/composable-control-packs.md). Tests the owner's idea of H3 as a base frame/timeline control compiler with separately installed NKD, ControlNet and higher-level toolkit contributions; distinguishes model-specific lowering from generic VibeComfy machinery, and notes that Plan 71 is already occupied. This is evidence and a proposed design, **not an amendment to Plan 67's agreed task scope, greenlight or run authority**. Independent critique and an owner decision are needed before implementation.
+- **Historical architectural exploration (20 Nov 2026; direction superseded in part by D3):** [Composable control substrate and optional packs](research/composable-control-packs.md). Tests the owner's idea of H3 as a base frame/timeline control compiler with separately installed NKD, ControlNet and higher-level toolkit contributions; distinguishes model-specific lowering from generic VibeComfy machinery, and notes that Plan 71 is already occupied. This remains exploratory evidence; D3 and the revised task cards define the accepted direction, not every proposal in that note. Independent critique and run authorization remain required.
 
 - [NKD speech scheduling research](research/nkd-speech.md), [ten-capability extension check](research/extension.md), [red-team cases](research/breaking-cases.md).
 - **Later issues, not in this plan:**
