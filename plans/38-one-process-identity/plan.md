@@ -1,18 +1,20 @@
 # One process identity for Agent and Runtime
 
+> **Current R16 authority, 27 November 2026:** The existing [recovery board #2050](https://github.com/banodoco/astrid-dev/issues/2050) and subsequent Lead rulings govern actual sessions, bases, writer reservations, proof venues and review budgets. The earlier CPU-only queue and provisional run-start conditions below are historical where they conflict. Installed/native outcome and the single release acceptance remain open; this planning correction creates no dispatch, replacement author or extra review round. See the [final programme review](../../releases/16/evidence/final-programme-review.md).
+
 **Project:** One process identity for Agent and Runtime
 
 **Goal:** A Runtime-managed host-only pack host starts and runs a task on macOS, Linux and Windows: process identity, peer custody and signalling live once in `runtime_protocol`, the source closure has one definition with golden vectors, every duplicate is deleted, a one-implementation test in each repository stops new copies, and every test in the area is green on all three OSes.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Existing R16 Manager38 and technical owner on [board #2050](https://github.com/banodoco/astrid-dev/issues/2050); no reassignment
 
-**Estimate:** 10–13: phase 1 7–9, phase 2 3–4
+**Estimate:** 8–14 engineering days remaining implementation, plus 2–3 independent review, 1–2 integration and 3–5 native qualification days; conditional on the existing Lead settling an executable supervisor/continuation contract. New external capability and venue waits are unbounded here.
 
-**Waiting on:** release 12 published, then Plan 20's Agent `main` group landed (owner's order, 9 Nov)
+**Waiting on:** Existing producer/consumer and single lock joins on board #2050; the bounded R15 supervisor/continuation ruling and genuine three-platform proof. R12 publication and the old int/38 branch cut are satisfied historical prerequisites, not new gates.
 
-**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). Project metadata here feeds the generated [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
@@ -55,26 +57,18 @@ The closure has a different shape. Its two measurers must stay separate: the ver
 
 ## Sequence and readiness
 
-Start after release 12 is published to `main` (owner, 9 Nov 2026). Release 12 carries the two fixture fixes, the harness fix and a strict, declared xfail on the custody-spawn test that links here.
+Continue the existing [P38 recovery programme](https://github.com/banodoco/astrid-dev/issues/2050) through its exact provider review, Agent reader/closure adoption, single `runtime.lock.json` join, guards, installed host-spawn and common-role ABI. Preserve original IDs and all-green area/three-platform obligations. The old phase-one publication is an internal checkpoint; both retained phases converge into one R16 release through P31.
 
-**Phase 1: host-only start works on all three OSes.**
-1. **T0** re-inventories the area tests at the published release-12 heads. **W0** adds the Runtime worker setup script that the proofs need.
-2. **P1** builds the provider in the Runtime. **P2r** sets the closure definition there, in parallel.
-3. **RS1** review stop on the provider.
-4. **A1–A3** move the Agent onto the provider and the shared closure definition, deleting its copies. **L1** fixes the Linux boundary lane, and **F1** fixes the rest of the inventory.
-5. **G1** and **G2** add the guards. **E1** adds the three-OS host-spawn job and removes the xfail.
-6. **T1** words the failure messages. Then the review (**R**) and publication (**Pub**).
+Credit the landed Runtime closure and authored Linux/Darwin/Windows providers, closure and birth readers and `38-08U` deferred/cold work. Source drafts and individual native producer tests do not establish integrated installed acceptance. `38-07` retains the exclusive lock/vendor join. Existing authors keep their functions; no second updater or provider is commissioned.
 
-**Phase 2: one role-custody core.**
-- **C1** and **C2**: the designation ABI classes move into `runtime_protocol`, and both brokers keep only their own extensions.
-- **R2** review, then publication with the next release.
+The [27 November contract follow-up](https://github.com/banodoco/astrid-dev/issues/2050#issuecomment-7225981241) distinguishes retained owner authority from a stronger frozen-supervisor-policy assumption. The Lead settles that precise trust boundary, then proves either authenticated supervisor delegation or a reachable quiescent R15 continuation using the existing transaction. A manual-only R15 exception requires an explicit product decision; permanent refusal does not satisfy the promised update. Keep native cold rollback, old service-start, Update-now and local-page consumption in the affected owners' proof. No PID/journal authority fallback and no unproved policy guarantee.
 
-Work lands by PR on `int/38-one-process-identity` in the Runtime and the Agent, cut from each `main` after release 12. Only the Release skill moves either branch to `main`. Recording this plan does not authorize implementation. Details, the critical path and proof are in [tasks.md](tasks.md).
+Use the current `release/16/plan-38` branches and current review/proof contracts. The historical `int/38` table remains an acceptance ledger, not dispatch instructions. Preserve product-specific role extensions, wire framing, retained native handles and independent pre-import measurement; the common ABI is not a general broker rewrite.
 
 ## Interfaces and handoff
 
 - **Consumes:**
-  - release 12's Agent and Runtime `main` heads;
+  - the exact accepted R16 Runtime/Agent provider pair and actual served-origin compatibility;
   - the Agent's `runtime.lock.json` and `scripts/vendor_lock.py`, which vendor Runtime artifacts by SHA;
   - the Runtime's `tests/astrid-agent.pin`.
 - **Produces:**
@@ -114,7 +108,7 @@ Limits:
 - Upgrade-time journals with the old Agent birth format fail closed (D3).
 
 
-## Proposed Release 16 scope reconciliation (25 November 2026)
+## Historical Release 16 scope proposal (25 November 2026)
 
 This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
 

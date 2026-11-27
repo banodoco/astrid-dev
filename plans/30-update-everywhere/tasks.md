@@ -1,6 +1,29 @@
 # Tasks — Update everywhere: remaining setups
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 [Plan](plan.md) · [Inputs](inputs.md)
+
+## Current Release 16 dispatch interpretation — 27 November 2026
+
+This is the canonical residual reading of these existing task IDs after [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060). It preserves original tests, safety requirements and historical progress; it does not mark product acceptance complete, create a new author, change existing proof contracts or add review rounds. The [P09 programme](../09-install-and-update-confidence/plan.md) owns the shared lifecycle and qualification sequence; P31 owns publication. Refresh live reservations before assigning any shared function, especially the existing `38-08U` joins on [#2050](https://github.com/banodoco/astrid-dev/issues/2050).
+
+| Existing IDs | Current R16 disposition |
+| --- | --- |
+| UR-15 | Old-systemd worker lifecycle and legacy-job compatibility; independent from P38 managed-warm contract. |
+| UR-16a | One Runtime-owned contract only for an unvalidated seam; reuse existing types/tests first. |
+| UR-16b / LA-2 / LA-4 | One normalized paired status and reason contract; do not mandate duplicate wrapper schemas or digest churn. |
+| UR-17 | Existing decision meanings including behind/current/ahead/unknown and actual owner. |
+| UR-18a | P10 PIN-4 actual engine proof, counted once. |
+| UR-18b / LA-3 | Existing local fixture plus native paired skew/interruption/recovery and successful retry. |
+| LA-1 | Existing selected-install resolver with read-only authority output; no new resolver. |
+| LA-5 / LA-6 | Exclusive true local owner and existing repair route; no hosted service takeover. |
+| LA-7 | Existing redacted diagnostics for App prepare/recovery failure. |
+| UR-R | Shared programme review; every LA row remains in acceptance. |
+| Closed/unmerged #178 UR19–31 | Historical proposals, not fresh dispatch block. R0 retention policy maps to P09 IU-19; other genuine residuals map to existing capability/decision/copy/readiness/native-proof owners; broad CI expansion stays later. |
+
+The following historical cards and ledgers preserve their original IDs, evidence and checkboxes. Earlier release numbers, bases, donor hints, “open” snapshots and promotion commands are historical, not current R16 dispatch instructions. Where a retained acceptance obligation appears below, the table names its current owner rather than discarding it. Promised native routes stay unqualified until demonstrated; a named limitation is not automatic acceptance.
+
 
 Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run contract](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change.
 

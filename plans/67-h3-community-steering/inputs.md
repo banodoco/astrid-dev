@@ -4,22 +4,22 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — Owner agreed in ChatGPT on 27 Nov 2026 to the revised first real, default-installed but removable NKD companion, generic composable packs, and full delivery of 66/67 in Release 16. The brief also allocates required 68/70 producer plans, preserving their existing scopes. Next: independent critique of the exact default/activation interface and Lead run start; no execution or publication claimed by this planning PR.
+**Scope decision:** Accepted — the owner retains P67 in the complete 18-project Release 16 (0.1.0) programme on 27 November 2026; see the [release brief](../../releases/16.md) and [final programme review](../../releases/16/evidence/final-programme-review.md). Preserve the existing full H3 outcomes, D1 CPU implementation boundary and required final qualification. Scope allocation is not run start, paid/live authority or publication.
 
 **Prior art:**
-- **NKD Basic Tools** (commit `c157722a2b484d80dee6b6d3f166c90d9ec197b8`, GPL-3.0) has two relevant nodes ([research/nkd-speech.md](research/nkd-speech.md)):
+- **NKD Basic Tools** (commit `c157722a2b484d80dee6b6d3f166c90d9ec197b8`, GPL-3.0) has two relevant nodes ([research/nkd-speech.md](./research/nkd-speech.md)):
   - **Event Curve** (`NKDEventCurveAudio`) draws or derives a clip-time envelope and synthesizes an audio guide. Its `W Guide (words)` mode makes muffled, speech-like audio that sets pauses and syllable rate. It doesn't contain the line.
   - **MiniMax Guides** (`NKDMiniMaxGuides`) anchors image, video and audio guides through the stock `MiniMaxH3AddGuide`. Its `until` controls the fraction of denoising during which each guide stays active.
 
   Neither schedules real words; the evidence is the author's description and an example workflow, with no measurements.
-- **The official H3 node** (ComfyUI `6bfaacc`) exposes the following ([research/extension.md](research/extension.md)):
+- **The official H3 node** (ComfyUI `6bfaacc`) exposes the following ([research/extension.md](./research/extension.md)):
   - timed guide rows;
   - first and last keyframes;
   - reference slots;
   - `MiniMaxH3FunControlNetApply`, which takes a model patch, VAE, strength, `start_percent`, `end_percent`, and an optional control video, mask and source.
 - **H3's prompt guide** writes timed shots as `[Shot n] At 00:03.000, …`. That is a documented convention, not frame isolation.
 - **The ten-capability check** found every item fits the Plan 66 lever model without a seventh mechanism. Multi-pass upscaling sits above a single job.
-- **The red-team review** ([research/breaking-cases.md](research/breaking-cases.md)) found that two actors with independent voices can't be routed within one pass, because references and text are shared across the frame. The owner set most of that list aside for later; only honest binding reports come into this plan.
+- **The red-team review** ([research/breaking-cases.md](./research/breaking-cases.md)) found that two actors with independent voices can't be routed within one pass, because references and text are shared across the frame. The owner set most of that list aside for later; only honest binding reports come into this plan.
 - **Plan 66's design** is in [its research/levers.md](../66-h3-composable-core/research/levers.md) and [plan](../66-h3-composable-core/plan.md).
 
 **Approach:** each capability is a lever kind with a table row, one lowering function into an existing mechanism, and a recipe. Alternatives considered:
@@ -27,7 +27,7 @@
 - **(b)** Reimplementing Event Curve in Astrid. Dropped once D2 was decided.
 - **(c)** Hard per-actor routing now. Rejected: no H3 lowering exists.
 
-**Challenge:** Reviewed — the alignment review of 18 November 2026 ([research/alignment-review.md](research/alignment-review.md)), backed by a source check of each task against the NKD, ComfyUI and Astrid code ([research/alignment-luna.md](research/alignment-luna.md)), found Plans 64–66 largely aligned with this plan. All twelve of its edits are accepted: guide `phase` is tried first with stock conditioning time ranges, so no NKD node enters job graphs unless needed; `phase` is allowed on any kind the table permits; node packs are declared per lever kind and the worker's pack list is read from the pins; the dry run shows the final prompt string; the guide lowering stays one function; the curve tool uses the node's 32 kHz and names its offset `--offset`; ControlNet starts by proving pinned weights exist and stays `unavailable` otherwise; signals report labels without reading the prompt; CS-5 and CS-7 depend only on CS-1. The review found the source check's call for broad compatibility wording overstated. Plan 66's own critique, functional review and red-team review are recorded in its inputs. An independent critique is still recommended before dispatch, once Plan 66 has landed.
+**Challenge:** Reviewed — the alignment review of 18 November 2026 ([research/alignment-review.md](./research/alignment-review.md)), backed by a source check of each task against the NKD, ComfyUI and Astrid code ([research/alignment-luna.md](./research/alignment-luna.md)), found Plans 64–66 largely aligned with this plan. All twelve of its edits are accepted: guide `phase` is tried first with stock conditioning time ranges, so no NKD node enters job graphs unless needed; `phase` is allowed on any kind the table permits; node packs are declared per lever kind and the worker's pack list is read from the pins; the dry run shows the final prompt string; the guide lowering stays one function; the curve tool uses the node's 32 kHz and names its offset `--offset`; ControlNet starts by proving pinned weights exist and stays `unavailable` otherwise; signals report labels without reading the prompt; CS-5 and CS-7 depend only on CS-1. The review found the source check's call for broad compatibility wording overstated. Plan 66's own critique, functional review and red-team review are recorded in its inputs. An independent critique is still recommended before dispatch, once Plan 66 has landed.
 
 ### Provider boundary and Plan 17 dependency (27 Nov 2026)
 
@@ -74,9 +74,9 @@ Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin
 
 ## References
 
-- **Historical architectural exploration (20 Nov 2026; direction superseded in part by D3):** [Composable control substrate and optional packs](research/composable-control-packs.md). Tests the owner's idea of H3 as a base frame/timeline control compiler with separately installed NKD, ControlNet and higher-level toolkit contributions; distinguishes model-specific lowering from generic VibeComfy machinery, and notes that Plan 71 is already occupied. This remains exploratory evidence; D3 and the revised task cards define the accepted direction, not every proposal in that note. Independent critique and run authorization remain required.
+- **Historical architectural exploration (20 Nov 2026; direction superseded in part by D3):** [Composable control substrate and optional packs](./research/composable-control-packs.md). Tests the owner's idea of H3 as a base frame/timeline control compiler with separately installed NKD, ControlNet and higher-level toolkit contributions; distinguishes model-specific lowering from generic VibeComfy machinery, and notes that Plan 71 is already occupied. This remains exploratory evidence; D3 and the revised task cards define the accepted direction, not every proposal in that note. Independent critique and run authorization remain required.
 
-- [NKD speech scheduling research](research/nkd-speech.md), [ten-capability extension check](research/extension.md), [red-team cases](research/breaking-cases.md).
+- [NKD speech scheduling research](./research/nkd-speech.md), [ten-capability extension check](./research/extension.md), [red-team cases](./research/breaking-cases.md).
 - **Later issues, not in this plan:**
   - **hard word timing:** needs a node that enforces when a word is spoken;
   - **per-actor routing:** independent voice and reference per character in one pass;

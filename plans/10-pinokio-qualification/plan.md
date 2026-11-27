@@ -1,5 +1,7 @@
 # 10 — Pinokio qualification: engine controls, custody and fully-local
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 **Project:** Pinokio qualification
 
 **Goal:** Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively.
@@ -8,7 +10,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** 1–2 engineering days remaining implementation plus 1–2 incremental integration/qualification days; shared P09/P10/P29/P30 total 6–11 + 3–5, counted once, excluding existing P38/P93/P94/P31 work and venue waits.
 
 **Waiting on:** Existing P07 launcher and consent fix retained; [SC-10](https://github.com/banodoco/astrid-dev/blob/d358b3b9de02c156d8a5576495256d6dea73c577/plans/10-pinokio-qualification/evidence/release-16-scoping/SC-10.md) identifies missing engine refusal-veto, native custody and fully-local paired recovery. R16 needs actual engine and six OS/mode witnesses with P38/P09/P30, not surrogate proof.
 
@@ -16,57 +18,18 @@
 
 **Contributing:** [Astrid development skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md).
 
-Qualify Pinokio Stop/Quit safety, direct custody, fully-local journeys, and unknown-state stop on every supported OS. This follows [Plan 07](../07-pinokio/plan.md), from its verified launcher and gate; no legacy migration is needed because Pinokio had no users when R1 shipped.
+## Release 16 residual
 
-## Goal and scope
+**End state:** the real Pinokio application installs, opens, updates, safely stops and removes Astrid in hosted and fully local mode on Windows, macOS and Linux. Busy/unknown Stop or Quit cannot abandon a live owned task; failure leads to a truthful recovery path and successful retry. User data and unrelated applications remain intact.
 
-- **Included:** engine-backed Stop/Quit refusal or safe settlement while Astrid is busy; end-to-end direct custody; the same journey in hosted and fully-local modes on every supported OS; unknown-state stop as a negative control. Also a hosted row that drives the Pinokio app itself (its Install, Start, Stop and Update buttons through `pinokio.js`), which Plan 07's launcher-command rows do not cover. Fully-local CI rows are `pinokio-fully-local-{linux,macos,windows}`.
-- **Deferred:** old-launcher compatibility. No dependency on Packs completion; if work is composed into the Astrid product tuple, use then-current reviewed Agent, Runtime, and App pins.
-- Native engine veto and settlement semantics, deployed version, supported API, and OS qualification remain to be established. Historical reports, fake fixtures, and adapter lifecycle ordering do not qualify these behaviors.
+P07's launcher/menu/bootstrap and consent behavior already exist. Preserve them; fix only the missing native-engine or paired-recovery seam. This is the engine-specific part of [P09's shared installation programme](../09-install-and-update-confidence/plan.md), not another installer or process supervisor. The [sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060) confirms that the current hosted row's update leg calls the installer directly; that receipt cannot establish an actual Pinokio Update/Stop/Quit action.
 
-## What we build on
+PIN-0 refreshes actual launcher and deployed engine identities. PIN-2 establishes the supported engine API, action/session identity, refusal and terminal settlement early, independently of other project completion. PIN-1 preserves launcher behavior and paired App/Runtime recovery. PIN-3 consumes the reviewed P38 provider and the real PIN-2 contract; it does not reimplement custody. PIN-4 proves six OS × hosted/local cells, including the actual engine's Install/Start/Open/Update/Stop/Quit/Reset/Uninstall actions, busy/unknown refusal, interrupted recovery, same-session retry and user-data preservation. Bind helper bytes before and after any launcher pull.
 
-Plan 07's verified launcher and gate, Task L's interface and validation requirements, and historical M4-4a/M4-6 research. Reconcile each source against current heads before reuse; [inputs](inputs.md) records identities and evidence limits.
+Keep PIN-1's original focused tests and accepted regression obligations. Use deterministic busy/unknown barriers. Descriptor inspection, Node invocation, queued acceptance, process exit zero or fake engine fixtures are not native action settlement. If a required deployed API is absent, record the exact unsupported capability and consequence. The owner chooses any support-contract change; no silent substitution or extra supervisor is authorized.
 
-## Sequence
+PIN-END records the demonstrated outcome and remaining gaps. PIN-PROMOTE hands the reviewed immutable launcher candidate and evidence to P31's single publication. The four-plan shared residual estimate lives in P09 and is counted once. Source implementation, independent review, integrated native qualification and release acceptance remain distinct.
 
-Freeze and reconcile source identities (PIN-0), then preserve launcher behavior (PIN-1) and establish actual engine controls (PIN-2). Reconcile custody against current owners (PIN-3); validate and review the exact candidate (PIN-4), record disposition (PIN-END), and publish an accepted launcher increment only under its existing authority (PIN-PROMOTE). See [tasks](tasks.md) for dependencies and selectors.
+## History and next records
 
-## Completion
-
-Report only demonstrated outcomes. Missing deployed veto, settlement/readback, or custody evidence leaves that release boundary unqualified with a concrete NEEDS report. A launcher increment may be delivered independently only without unsupported native safety or qualification claims. Publication remains limited to the reviewed immutable candidate and resolved `pre-main` under ordinary create/fast-forward rules; this plan itself authorizes no execution or mutation.
-
-## Carried from Plan 07
-
-Plan 07 (Pinokio basic) closed on 7 Nov 2026 with hosted Linux, macOS and Windows rows passing all six steps on `main` (astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462`, launcher `d15c58b5`; run https://github.com/banodoco/astrid-agent/actions/runs/42421306190). These Plan 07 gaps are now part of this plan:
-
-| Gap | Next step |
-|---|---|
-| The real Pinokio app is not exercised by the hosted rows: they run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | macOS: the owner tested the real Pinokio app by hand on 5 Nov 2026 and everything worked. Linux and Windows: not yet checked by hand. Add a hosted row that drives the Pinokio app itself |
-| A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
-| The "other Runtime unchanged" process check was dropped (it was macOS-only) | Add a per-OS check |
-| A Windows Pinokio install made before the private-record fix keeps its inherited version records, so a stopped uninstall refuses (safely, keeping data) until one Update rewrites them | None needed while Pinokio has no users; recheck if any pre-fix install is reported |
-| On fast runners the busy-stop task can finish before Stop lands; the row then sends Stop right after admission and accepts a clean stop, so a busy refusal is not exercised every run | Use a deterministic long-running test task |
-
-## Test robustness
-
-Getting the Windows Pinokio row to pass on 7 Nov 2026 took seven fix-and-rerun rounds. Each 20–40 minute run showed only the next failure, and early rounds had to guess the cause. These changes make one run show every failure, with its cause:
-
-| Gap | Next step |
-|---|---|
-| A row stops at its first failed step, and its evidence was cut short: the receipt kept only the first 500 characters of an error, and Windows and macOS logs were not uploaded until added one by one | Run every step even after one fails, record each step's full error in the receipt, and always upload every Astrid log and install record for every OS |
-| A test candidate is built by hand: repin, commit an App candidate, hash the manifest and install scripts, and start the run. The Release-1 workflow tests the Agent the App pins, not the Agent commit just landed, and forgetting that cost a run | One script that builds a candidate from the commits under test, starts the chosen rows and prints the run link, and refuses when the App does not pin the Agent being tested |
-| Windows install records were written with inherited permissions that the Runtime's private read refuses, which caused three separate failures (installed packages, the selection record and version records) | One shared helper that writes every record the Runtime reads privately, plus a cross-repo test that each written record passes the Runtime's own Windows read |
-
-## Read next
-
-- [tasks.md](tasks.md): task index, routes, dependencies, focused checks, and completion evidence.
-- [inputs.md](inputs.md): source identities, retained work, provenance, and evidence limits.
-- [Project status and owner](../../README.md): queue authority.
-
-
-## Proposed Release 16 scope reconciliation (25 November 2026)
-
-This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
-
-retain actual native engine hosted/local journeys on all three OS. Reuse current launcher and delivered setup; separate human-owned discovered ComfyUI from launcher-owned children. Do not call a descriptor or simulator native engine proof.
+[Tasks](tasks.md) preserve every PIN ID and focused selector. [Inputs](inputs.md) preserve P07/Task L/M4 provenance and their limits. The [previous complete plan](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/10-pinokio-qualification/plan.md) retains historical test-robustness findings; only defects that block the retained current journey are launch work. Do not revive an old pre-main promotion lane.

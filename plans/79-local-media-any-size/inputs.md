@@ -1,76 +1,69 @@
-# Inputs — Local media of any size
+# Inputs — Large local media
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Planning revision — 27 November 2026, under review.** The owner authorized reconciliation of planning records and one documentation PR, not product implementation or merge. Proposed amendments below do not create execution authority or retrospectively accept scope changes.
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner asked for this project and its release on 21 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Let's add a project to do this right and add it to release 15, please." After the critique she was given the revised end state (about 8 days; the Runtime refuses by size; a Runtime client change and a pin) with the recommended answers to D1, D2, D4 and D5, and replied: "Yes, I agree with your recommendations."
+**Scope decision:** Pending — the owner authorized this planning reconciliation, preserving accepted D1/D2/D4/D5. Next: review the canonical correction and D2 disposition; no implementation is dispatched here.
 
-**Prior art:** Read on 21 November 2026 at astrid-agent [`release/15/main` `aac1ceb6`](https://github.com/banodoco/astrid-agent/tree/aac1ceb6) and astrid-runtime [`release/15/main` `1758a6df`](https://github.com/banodoco/astrid-runtime/tree/1758a6df), by an exploration with four read-only helpers, with the lines below re-read by the planner.
+**Prior art:** On 21 November 2026 the owner requested the project and accepted managed-copy streaming, the revised scope/estimate and D1/D2/D4/D5 in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG). The complete prior rationale, alternatives, independent critique and owner wording are preserved in [inputs at 2b43946a](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/79-local-media-any-size/inputs.md); prior [plan](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/79-local-media-any-size/plan.md) and [tasks](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/79-local-media-any-size/tasks.md) preserve original acceptance and progress.
 
-- **The limit is the Agent's.** `astrid/sdk/authoring_media.py:27` sets `_MAX_BYTES = 64 * 1024 * 1024`. `_metadata` refuses above it and calls it "Runtime's 64 MiB limit" (lines 111 and 141). The Runtime's object limit is 5 GiB (`runtime_protocol/cas.py:16`).
-- **The file is read whole, more than once.** `_metadata` calls `path.read_bytes()` to hash it (line 139); `astrid/sdk/timeline/media_add.py:55` reads it again and passes the bytes to `import_project_media`; detached authoring reads every file again (`authoring_media.py:592`).
-- **The Runtime already streams.** `runtime_protocol/server.py:1129` handles `POST …/media-imports` by staging the request body in chunks with the expected digest, then recording the catalog entry.
-- **The editor already sends large files** on that route, with a 5 GiB limit of its own (`AssetResolver.ts:57`, reported by the exploration, not re-read).
-- **`astrid media import` uses a different route.** It streams to the project objects route (`astrid/sdk/workspace_client.py:837`) and records a managed object. Its digest can be placed only when exactly one catalog entry matches it (see Challenge).
-- **Nothing is moved or deleted.** Every route reads the user's file. The Runtime deletes only its own staging files (`runtime_protocol/cas.py`, reported by the exploration).
-- **Negative finding:** an earlier "path-backed realm" is mentioned in #1235 as removed. Why was not found.
+**Challenge:** Reviewed — [observation #2059](https://github.com/banodoco/astrid-dev/issues/2059), [SC-79](https://github.com/banodoco/astrid-dev/blob/ede2640e3a1b0ff2f1d5136abf289ff5a70d53f1/plans/79-local-media-any-size/evidence/release-16-scoping/SC-79.md), [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md), current records and [R16 scope](../../releases/16.md) were independently checked against source. Principal gaps were already identified by SC-79. Metadata-admission, swallowed-persistence and receipt-selection findings refine existing tasks rather than create workstreams.
 
-**Approach:** Four options were compared.
+**Approach:** Managed-copy streaming through existing Runtime import/settlement. In-place references and clone-first storage remain P80; existing native placement, outbox, guard and measurement mechanisms remain their owners' implementations. Deliver reliable import/placement/recovery without a new media architecture.
 
-| Option | What it is | Days | Verdict |
-| --- | --- | --- | --- |
-| A | Keep Astrid's private copy; remove the Agent's limit; stream | about 8 | **Chosen.** No wire, schema or store change; one Runtime client change and a pin; closes #1235 and #1237 |
-| B | Reference the file in place, check before each use, copy only when needed | 15–25 | Its own plan: [Plan 80](../80-use-media-in-place/plan.md) |
-| C | Copy-on-write clone into the store where the file system allows, else copy | 4–6 on top of A | A possible later step: Plan 80's D6 |
-| D | Always reference in place | — | Not viable |
+**Proof and limits:** The [verified baseline](#verified-baseline-and-reconciliation) credits source and merged work only. No product tests or installed witnesses were run here; LM-6 retains real large-media, memory, recovery and output qualification.
 
-**What stops Astrid using the file where it is.** Recorded because the owner asked.
+## Verified baseline and reconciliation
 
-- **The editor cannot.** It is a browser app and never learns a dropped file's path.
-- **A clip's identity is its content.** Every commit records the media's digest and the Runtime re-checks it; the Runtime skips re-hashing only because nothing else can write to its store. A user's file can change, move or vanish at any time.
-- **Everything downstream reads the store:** preview, the renderer, export, recovery and rented machines.
-- **So in-place use needs** missing-media and relink screens, a copy on export and for rented machines, and a media identity that can change under the saving plans' checks (Plans 63, 75 and 77), which are being stabilised now.
+Source/PR checks on 27 November used Agent R16 `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`, Runtime R16 `55a541a7ab904873e63510e581a60742e1b83fb8`, App main `cc1d48f016fde55ad6b0609c619d8a4bcec56823` and Dev main `2b43946a85f63a0a114023e271baf4952ed209c2`. These are inspection identities, not an installed/served release tuple. No product tests, uploads or native proof were run for this revision; bounded open-PR search is not exhaustive execution inventory.
 
-**Challenge:** Reviewed — commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) on 21 November 2026 and done by an independent Codex critic (on the high-judgment role, high effort, read-only brief, no stake in the draft), which checked the draft's claims in the three repositories. It ran no tests or uploads. Findings and what the planner did with each:
+| Finding / evidence | Planning consequence |
+| --- | --- |
+| Runtime [template](https://github.com/banodoco/astrid-runtime/blob/55a541a7ab904873e63510e581a60742e1b83fb8/generators/python_client_template.py#L1185-L1212) has sized object streaming but `import_project_media` still calls `bytes(data)`. Existing staging/CAS/import operation remains. | Keep LM-1 at `python_client_template.py`, not stale `generate.py`; regenerate, preserve bytes compatibility and pin separately. No replacement uploader/store. |
+| Agent [_metadata](https://github.com/banodoco/astrid-agent/blob/4a2bad187f12e7b0d1ba5bd1164b4a076787516a/astrid/sdk/authoring_media.py#L108-L143) still applies 64 MiB and reads whole bytes; [detached apply](https://github.com/banodoco/astrid-agent/blob/4a2bad187f12e7b0d1ba5bd1164b4a076787516a/astrid/sdk/authoring_media.py#L580-L652) holds all payloads. [Handle selection](https://github.com/banodoco/astrid-agent/blob/4a2bad187f12e7b0d1ba5bd1164b4a076787516a/astrid/sdk/timeline/media_add.py#L38-L85) refuses zero/many catalog matches. | LM-2/3 remain. Preserve all-input validation, distinguish timeline atomicity from independently accepted catalog imports, and use exact selection/retry rather than deduplication by digest alone. |
+| Open draft [Agent #475](https://github.com/banodoco/astrid-agent/pull/475), head `3f79b2c537776b7e5c44d9a9c146a5a9c4c4307e`, contains the [1 GiB constant](https://github.com/banodoco/astrid-agent/blob/3f79b2c537776b7e5c44d9a9c146a5a9c4c4307e/astrid/sdk/authoring_media.py#L20-L33); it is unmerged. | D2 is authored elsewhere, not delivered. No competing stopgap assignment or wholesale merge of the broad donor. |
+| Runtime [request/probe/settlement](https://github.com/banodoco/astrid-runtime/blob/55a541a7ab904873e63510e581a60742e1b83fb8/runtime_protocol/service.py#L5918-L6200) validates numeric caller metadata and decodability but does not carry probe facts into catalog settlement. | Correct the old claim that only callers fall short. LM-1 derives/validates intrinsic facts inside existing admission; LM-4 propagates them. Existing fields and operation replay remain compatible; no new schema or retroactive accepted-history rewrite. |
+| App [preparation](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/integrations/runtime/dataProvider.ts#L1411-L1498) creates a key per call and suppresses native selection for `prepareAsset`; [recovery](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/integrations/runtime/dataProvider.ts#L1753-L1802) swallows persistence failure, recovers completed receipt, or retransmits pending bytes. | LM-4/5 retain one import operation and truthful bounded metadata custody. Completed receipt reuse differs from pending settlement; no promise to restore browser bytes. Duplicate-import risk is source-supported, not newly reproduced. |
+| [Drop](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/tools/video-editor/lib/external-drop-utils.ts#L465-L570) retries upload-and-place; audio lacks exact selection and [handoff](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/tools/video-editor/hooks/timelineLocalSaveHandoff.ts#L746-L766) still guards ordinary non-image placement out. | LM-4 needs producer plus bounded native handoff repair, not merely removal of an image predicate. P63 owns shared placement custody. |
+| [App #309](https://github.com/banodoco/astrid-app/pull/309) merged `2ffc0a300009f38b5eca6cbc0f5cedf0d6a86e87`; [#326](https://github.com/banodoco/astrid-app/pull/326) merged `cc57a53cbf60bec343f21dfd38cf410e152f31ef`; existing [reload guard](https://github.com/banodoco/astrid-app/blob/cc1d48f016fde55ad6b0609c619d8a4bcec56823/src/shared/lib/updates/draftSafeReload.ts#L4-L81) retains dirty owners and validates mutations. | Credit parked/Discard UX, concurrent-drop tracking and shared guard. Extend their lifetime/receipt integration; do not rebuild them or infer large-media qualification from historical focused tests. |
+| [Agent #612](https://github.com/banodoco/astrid-agent/pull/612) merged `514499debc902643a03aee3f0ed68b710c5d3ead`; its render-backed qualification remained deferred. [#526](https://github.com/banodoco/astrid-agent/pull/526) is an unmerged older swap donor. | Reuse P88 same-kind swap/verified edit work; do not duplicate it. Source implementation and final render/installed acceptance remain separate. |
 
-- **Accepted — the Agent cannot learn the limit.** 5 GiB is a ceiling that `RUNTIME_MAX_OBJECT_BYTES` can lower, and neither health nor handshake reports it (`runtime_protocol/service.py:561`, `:858`, `:905`). The draft promised a refusal "before any bytes are sent". Now: the Agent declares the size and the Runtime refuses before reading the body. Reporting the limit in the handshake is a protocol change, left as D1's option (c).
-- **Accepted — streaming needs a Runtime client change and a pin.** The route stages chunks, but the generated client calls `bytes(data)` (`astrid_runtime_client/generated.py:1185-1212`; generator at astrid-runtime `generators/generate.py:23`; pin at astrid-agent `runtime.lock.json:15`). Now LM-1, with the pin as D5.
-- **Accepted — the editor proof has a blocker.** On `release/15/main` the save handoff refuses an ordinary dropped video (`timelineLocalSaveHandoff.ts:705-720`), and the App's 5 GiB test only changes a tiny file's reported size (`mediaImport.test.ts:228`). Now LM-4, and the proof reopens the saved timeline.
-- **Accepted — the handle diagnosis was conditional.** A digest handle already works when exactly one catalog entry matches; none and several give the same refusal (`astrid/sdk/timeline/media_add.py:72-85`). The narrower fix catalogs the stored object on first placement and leaves `media import` and its output alone. Now LM-3; the draft's D5 is withdrawn.
-- **Accepted — other callers read whole files:** SDK add and replacement (`astrid/sdk/timeline/commit_session.py:277`, `:383`) and detached apply, which holds every payload before its first change (`authoring_media.py:591`). Now in LM-2, keeping the check-everything-first guarantee with bounded staging.
-- **Accepted — smaller points:** measure resident memory, not `tracemalloc`; translate the Runtime's digest mismatch into the promised message; test a slow acknowledgement (the client's socket timeout is 30 s, 300 s on Plan 77); LM-1 and LM-2 of the draft merged into one `X` task; the wording folded into it; the reload guard separated and built on the App's shared guard (`draftSafeReload.ts`).
-- **Noted:** no Agent test pins 64 MiB for local authoring. "The Runtime deletes only its staging files" holds for import clean-up; it removes stored objects elsewhere, by design.
-- **Estimate:** 5 days was optimistic; now about 8.
+**Independent assessment:** accept necessary streaming, metadata, selection and custody amendments. Keep one LM task set and the [P63 shared contract](../63-dependable-saving/plan.md#shared-import-and-placement-contract). Do not turn exhaustive format exploration, aggregate project size, a new fixture framework or every fault point into separate work. Accepted memory/original-integrity/recovery guarantees and final supported-route qualification remain gates. No LM row is complete on this evidence.
 
-**Proof and limits:** The four completion cases in [plan.md](plan.md#completion). Not proven here: Windows long paths, network and removable drives, and files above 5 GiB.
-
-**Review rounds:** One round at the end, because the change crosses three repositories and a flow every creator uses. Agreed by the owner on 21 November 2026 in the Release 15 Lead session: "Yeah, I agree with your recommendations".
-
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking and what still needs the owner's go.
+**Recovery clarification from source:** Runtime's existing [`_ingest_transfer`](https://github.com/banodoco/astrid-runtime/blob/55a541a7ab904873e63510e581a60742e1b83fb8/runtime_protocol/service.py#L5800-L5885) binds actual staged digest and original request options, including an absent `expected_digest`, to the stable object-ingest key. A pending receipt can supply content identity for browser recovery without mandatory prehashing. Preserve the original options on replay; newly adding the learned digest as a header can break a correct retry. These are LM-4/5 regression cases, not another recovery mechanism or estimate increment.
 
 ## Owner decisions
 
-- **D1 — the limit.** (a) The Runtime's limit is the only limit, and the Runtime refuses by the declared size. (b) The Agent keeps a lower limit of its own. (c) As (a), and the Runtime also reports its limit in the handshake so clients can refuse earlier; this is a protocol change. Recommendation: (a); a second number is how #1237 happened, and (c) can follow if the late refusal proves annoying. **Decided 21 November 2026: (a).** The owner agreed with the Lead's recommendation in the Release 15 Lead session (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Yes, I agree with your recommendations."
-- **D2 — a stopgap first.** (a) No stopgap; this plan starts soon. (b) Raise the Agent's constant to 1 GiB now as a one-line fix, and let this plan replace it. Recommendation: (b) only if this plan waits more than a few days behind Plan 77; a 1 GiB file then uses about 1 GiB of memory. **Decided 21 November 2026: (b),** raise the constant to 1 GiB now, because this plan waits behind Plan 77. Same source as D1.
-- **D3 — using the file in place.** Now its own plan: [Plan 80](../80-use-media-in-place/plan.md). Nothing to decide here.
-- **D4 — an upload in flight at reload (astrid-app #255).** (a) Warn before the page closes while an upload is running, using the App's shared reload guard. (b) Save pending uploads and resume them. Recommendation: (a); (b) is a design of its own. **Decided 21 November 2026: (a),** the warning. Same source as D1.
-- **D5 — the Runtime pin.** LM-1 changes the Runtime's generated client, and the Agent must pin the Runtime commit that has it. A pin change is the owner's to approve. Recommendation: approve it as its own commit once LM-1 has passed review. **Decided 21 November 2026: approved in advance,** as its own commit once LM-1 has passed review. Same source as D1.
+The following decisions remain accepted from 21 November 2026; the [original record](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/79-local-media-any-size/inputs.md#owner-decisions) retains alternatives and the exact owner response.
 
-## Source identities
+- **D1 — Runtime-only limit: option (a).** Runtime refuses by declared size. Agent/App do not impose an independent byte ceiling. Option (c), reporting the configured limit through a new interface, was not approved; it remains conditional on evidence that existing refusal cannot provide truthful client behavior.
+- **D2 — 1 GiB interim cap: option (b).** Approved because P79 waited behind P77. The authorized donor exists in open #475; inspected release source remains 64 MiB. Proposed supersession is explicit below, not a claim this decision was revoked or delivered.
+- **D3 — use in place.** Separate [Plan 80](../80-use-media-in-place/plan.md); managed-copy streaming remains this plan's approach.
+- **D4 — warning at reload: option (a).** Use the shared guard; browser warning and reselect/discard are the boundary. Persistent browser upload bytes/resumption were not approved. App-controlled reload/update must respect pending custody; native warning cannot prevent an overridden reload or crash.
+- **D5 — Runtime pin.** Approved in advance as its own commit once LM-1 passes review. No unrelated pin movement or publication authority follows from this approval.
 
-Pending — no code work has started. At run start record, for astrid-runtime, astrid-agent and astrid-app: `release/15/plan-79`, cut from that repository's `release/15/main` after Plan 77 has landed there, the commit it was cut at, and the Runtime commit the Agent pins before and after LM-1. Intended destination: `release/15/main`.
+**Review rounds:** one final independent round, as agreed 21 November 2026. Preserve the existing review contract and bounded findings process.
+
+## Remaining decisions and limits
+
+**D2 recommendation for review:** if streaming is promptly dispatched, absorb the interim need into LM-2 and do not land a separate whole-file-memory cap increase. If the Lead still needs the stopgap first, reuse the already authorized narrow donor after exact-base review. Do not create another assignment or treat the entire #475 PR as approved. This proposed disposition awaits acceptance of the planning correction.
+
+**Conditional interface decision:** first prove actual configured-cap refusal and handle/pending recovery through existing interfaces. If truthful client errors or exact stored-object settlement cannot be implemented within that boundary, bring the smallest concrete interface amendment, evidence and alternative to the owner. A new limit handshake or recovery endpoint is not pre-authorized by this revision.
+
+**Qualification limits:** the original primary live witness is one OS, with absolute Agent RSS below 256 MiB for a real greater-than-1-GiB file; the task also retains the 300 MiB absolute gate. Broader supported-platform checks belong to the existing R16 matrix. Windows long paths and network/removable drives are not proven by source review. No expensive full-film rerender is required to establish import correctness. P88 #1916 is relevant only when its large-shots fixture is selected; P87 owns output repair.
+
+**Estimate:** 6–9 implementation person-days plus 2–3 integration/installed-qualification/review days, 8–12 total. Existing P63/P87 work is not counted twice. Hardware availability and unrelated release repair remain separate uncertainty.
+
+## Source identities and run start
+
+**Run start:** Pending. This assignment permits planning-record corrections only; no P79 implementation run is authorized here. At dispatch the Lead records accountable sessions, exact product bases, overlapping function owners, focused proof commands and the Runtime/Agent pin before and after LM-1. Use the current approved `release/16/main` lineage and actual plan branches; do not follow preserved historical R15 branch instructions.
+
+**Final handoff:** one exact integrated source/installed/served tuple with LM-6 evidence and separate P63 saving, P04 concurrency and P87 output verdicts. A merged predecessor, source presence, mocked size or historical small-file run is not final P79 qualification.
 
 ## References
 
-- [#1235](https://github.com/banodoco/astrid-dev/issues/1235), [#1237](https://github.com/banodoco/astrid-dev/issues/1237), [astrid-app #255](https://github.com/banodoco/astrid-app/issues/255), [astrid-app #252](https://github.com/banodoco/astrid-app/issues/252).
-- [#1222](https://github.com/banodoco/astrid-dev/issues/1222): the Runtime's verify-once rule, which in-place reference would break.
-- [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), [Plan 63](../63-dependable-saving/plan.md) and [Plan 75](../75-fast-saving/plan.md): the saving plans this must not disturb.
-
-## Proposed Release 16 reconciliation — 25 November 2026
-
-Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
-
-bind configured cap, source-change detection, scratch/disk/memory accounting, zero/one/many handle cases, accepted import versus pending placement and D4 crash/reselect policy. Distinguish source-supported duplicate-import risk from a reproduced incident.
+- Existing incidents: [#1235](https://github.com/banodoco/astrid-dev/issues/1235), [#1237](https://github.com/banodoco/astrid-dev/issues/1237), [App #252](https://github.com/banodoco/astrid-app/issues/252), [App #255](https://github.com/banodoco/astrid-app/issues/255). Keep their evidence; no duplicate observation is needed.
+- Adjacent ownership: [P63](../63-dependable-saving/plan.md), [P04](../04-concurrent-edits/plan.md), [P35](../35-one-home-for-user-state/plan.md), [P29](../29-update-and-release/plan.md), [P77](../77-saving-holds-on-a-heavy-timeline/plan.md), [P87](../87-render-works/plan.md), [P88](../88-timeline-edits-land/plan.md), [P85](../85-one-place-to-measure/plan.md).

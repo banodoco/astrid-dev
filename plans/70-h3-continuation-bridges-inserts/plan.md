@@ -8,11 +8,11 @@
 
 **Owner:** Unassigned
 
-**Target milestone:** 0.2
+**Target milestone:** 0.1
 
-**Estimate:** 6 days (CPU only; the live check comes after)
+**Estimate:** 5–7 engineering days remaining implementation plus 1–2 incremental review/integration/installed qualification; shared live H3 quality proof is separate. Existing producer work is credited; no duplicate PACK-DELIVERY implementation.
 
-**Waiting on:** Owner greenlight of scope, and Plans 66 and 68.
+**Waiting on:** Accepted P66/P68 handoffs and the bounded full-canvas versus motion-context comparison, then existing Lead run start. R16 scope is accepted.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

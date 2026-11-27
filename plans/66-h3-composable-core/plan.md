@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Target milestone:** 0.3
+**Target milestone:** 0.1
 
-**Estimate:** 8 days (CPU only; the live check comes after)
+**Estimate:** 8–11 engineering days remaining implementation plus 1–2 incremental review/integration/installed qualification; shared live H3 quality proof is separate. Existing producer work is credited; no duplicate PACK-DELIVERY implementation.
 
 **Waiting on:** Independent review of the revised provider seam, refreshed Plan 59/64/65 baseline on Release 16, and Lead run start. No Plan 17 or 67 dependency.
 

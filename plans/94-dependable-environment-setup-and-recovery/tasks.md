@@ -1,6 +1,6 @@
 # Tasks — Dependable environment setup and recovery
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Current R16 authority, 27 November 2026:** The existing [recovery board #2051](https://github.com/banodoco/astrid-dev/issues/2051#issuecomment-7221824353) and subsequent Lead rulings govern actual sessions, bases, writer reservations, proof venues and review budgets. The earlier CPU-only queue and provisional run-start conditions below are historical where they conflict. Installed/native outcome and the single release acceptance remain open; this planning correction creates no dispatch, replacement author or extra review round. See the [final programme review](../../releases/16/evidence/final-programme-review.md).
 
 [Plan](plan.md) · [Inputs](inputs.md)
 

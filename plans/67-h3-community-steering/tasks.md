@@ -1,6 +1,6 @@
 # Tasks — H3 community steering
 
-[Plan](plan.md) · [Inputs](inputs.md)
+[Plan](plan.md) · [Shared delivery ownership](plan.md#shared-delivery-ownership) · [Inputs](inputs.md)
 
 **Task ids:** `CS-0`, `CS-1` … `CS-11`, final review `R`.
 

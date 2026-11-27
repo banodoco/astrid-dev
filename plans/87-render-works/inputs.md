@@ -1,10 +1,31 @@
 # Inputs — The renderer works end to end
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Current release:** R16 retains the residual renderer outcome. The dated evidence below supersedes obsolete R15 execution instructions without erasing their decisions or receipts.
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
+
+Current reconciliation: 27 November 2026.
+
+**Scope decision:** Accepted — the owner retains P87 among the 18 [Release 16 projects](../../releases/16.md). Reconcile the residual shipped-renderer work, not a new renderer or an additional project. Plans 52, 53 and 85 are excluded; necessary proof uses existing release/measurement infrastructure.
+
+**Challenge:** Reviewed — [#2061](https://github.com/banodoco/astrid-dev/issues/2061), including its complete source register and task dispositions; no comments were present at the initial read. Its source-only missing-delivery observation subsequently received the existing Lead's bounded [PACK-DELIVERY assignment](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7225505932). That owner, not a new P87 writer, is implementing and proving the bridge.
+
+**Prior art:** [R15 handover #1938](https://github.com/banodoco/astrid-dev/issues/1938) and [final qualifier](https://github.com/banodoco/astrid-dev/issues/1834#issuecomment-7172606069). Core render changes, integer-ms follow-ups and the real raw-pack webpack compatibility landed. The qualifier's successful whole renders used the pinned pack after manual addition; automatic delivery, full parity and unrun large-shots remain separate. Preserve the historical 580 KB versus 2.6 MB profile discrepancy and reconcile the P87/P88 film-extent records from the actual accepted fixture.
+
+**Live shared work, observations not frozen release pins:** [poms PR3](https://github.com/banodoco/poms_packs/pull/3) advanced to `f40b1f44bbe513cb871387a07e14332ffbed8a53` with the [bounded inventory correction](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7226174764); original failure/reproof history remains. [Agent PR700](https://github.com/banodoco/astrid-agent/pull/700) remains `4210932093c8c34838dbe3c7e11a14a3536c2411`, with its 83-case receipt and witness still tied to prior K `23f78bfc…`; explicit new-K verification/witness refresh is open. [Agent PR701](https://github.com/banodoco/astrid-agent/pull/701) remains draft `175dcfa84b02fed9621849dd69d6932f8859ba47`. Its [latest installed receipt](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7226256951) credits 10/10 actual adapter/loader cases on the proof-only joined candidate with prior K, plus 20 compile/syntax outputs; native service/browser and final new-K release proof remain separate. PACK-DELIVERY now owns the bounded R0 `BoundaryHandoff.run/recover` apply/rollback join inside existing authority, not a new stop policy. PACK-C is [actively authoring](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7226184772) on its reserved App projection functions. Refresh board and exact heads before consumption; no new author or release PASS is implied.
+
+**Approach:** Consume the existing shared repair and retain only parity, safe recovery and exact-candidate proof in P87. Source at Agent `44d59774abb638c61ed0aae2b32653e62a5bcf66` confirms both existing default wrappers call `install_group`; `release_manifest.py` supports default-list reconciliation and requires one repository/commit. Loader source still used managed-source declarations, explaining the bounded authority join in PR701. PACK-B's current direct-source reader checks actual bytes plus upstream commit, so the later shared NKD/motion commit must refresh existing witness/provenance through the same owners. P67 does not create another transaction. P38 owns process custody; P63/P04 owns accepted state; P79 owns ingress; P31 owns final manifest/publication.
+
+**Proof and limits:** This reconciliation is source/record review, not a new test or native execution. Retained original regression and heavy proof obligations remain. The supported user outcome includes matching output and safe failure/recovery followed by another render. A proposed reduction of the historical heavy workload or supported-platform promise requires owner decision; no such reduction is asserted here. No broad new investigation or implementation session is commissioned.
+
+**Review rounds:** One independent review of the residual integrated work and its proof; reuse exact applicable original reviews.
+
+**Run start:** This correction dispatches no new implementation. Preserve existing sessions and reservations; the Release Lead sequences the residual joins.
+
+## Historical Release 15 planning evidence
+
 
 **Scope decision:** Accepted — included in Release 15 by the owner on 23 November 2026, recorded in the [Release 15 brief](../../releases/15.md). Reshaped the same day at the owner's direction: this plan gets the renderer working end to end with the fixes in the proper code; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline fixes; everything else is an issue. Filing authority only; no run has started.
 

@@ -1,24 +1,59 @@
 # The renderer works end to end
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **Release 16 residual programme, 27 November 2026:** The current scope below replaces the historical R15 execution instructions. Preserve the shipped implementation, original task IDs, regression obligations and receipts; this record does not dispatch a new author or change a live proof contract.
 
 **Project:** The renderer works end to end
 
-**Goal:** A heavy real timeline renders from first frame to last in one product render on a build of `release/15/main` with no local patches, and the file matches what the editor shows.
+**Goal:** On the frozen Release 16 (0.1.0) candidate, a supported heavy timeline renders whole with the selected packs installed automatically, the output matches the editor, and a failed or cancelled attempt has a safe, truthful recovery path to the next render.
 
 **Status:** paused
 
-**Owner:** Orchestrator session `session_011EzfW2YgL2GSmbJMr9r9SG`, hosting one manager
+**Owner:** Release 16 Lead coordinates the residual handoffs; existing PACK-A/B/C/DELIVERY and P38/P63/P79 owners retain their functions. The R15 orchestrator is historical, not a new dispatch target.
 
-**Estimate:** TBD — R16 residual only; RN-14 historical estimate 12–16 h plus separately sized fixes/proof (original whole-plan estimate about 9 days)
+**Estimate:** 2–4 engineering days of remaining render-local implementation plus 2–4 days of integration, independent review and qualification; excludes the shared pack/installer repair already assigned on P93, shared custody and save/media producers. Venue wait and heavy-render machine time are separate.
 
-**Waiting on:** R15 core and follow-ups shipped, including installed 616-clip whole render twice with byte-identical output, but standard fixture missed heavy size gate. [Handoff #1938](https://github.com/banodoco/astrid-dev/issues/1938): RN-14 default packs, sprite phase, preview/export parity, native custody/restart and heavy fixture/whole-render/review residuals. Await authorized continuation; not a new renderer build or full original-scope pass.
+**Waiting on:** Existing P93 pack producer/default-delivery handoff, accepted P38 custody, P63/P04 accepted timeline and P79 media contracts at the relevant joins; Lead authorization of any unassigned render-local continuation and exact qualification venue. Targeted parity and fixture preparation need not wait for whole-project completion.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
 **Vision role:** Foundational enabler — rendering is how finished work leaves Astrid. [Plan 27](../27-video-render-options/plan.md) keeps export choices; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline-editing fixes found in the same session; everything else found that day is an issue, listed in [inputs.md](inputs.md#moved-to-issues).
 
-## Outcome and scope
+## Release 16 outcome and remaining work
+
+The core renderer shipped in R15. Preserve RN-1–9, RN-13, RN-15 and P87-07/08/09 implementation and their original tests. The [handover #1938](https://github.com/banodoco/astrid-dev/issues/1938), [final qualifier](https://github.com/banodoco/astrid-dev/issues/1834#issuecomment-7172606069) and [sense-check #2061](https://github.com/banodoco/astrid-dev/issues/2061) establish what remains; no donor cherry-pick, experiment overlay, replacement renderer or second pack manager is required.
+
+1. **One admitted pack identity and automatic delivery (RN-5b/RN-14).** Consume the existing [P93 producer repair contract](https://github.com/banodoco/astrid-dev/issues/2032#issuecomment-7225224127), actual PACK-A source, PACK-B facade/witness/generators and PACK-C App projection/provenance. [PACK-DELIVERY](https://github.com/banodoco/astrid-agent/pull/701) owns the real installed-manifest → existing release-manifest/group transaction → loader authority bridge, inside the existing installation lifecycle. P87 supplies rendering acceptance, not another writer. Preserve legacy witnesses, all 64 motion source files, all 20 elements and original security/import gates. Rendering-union admission does not claim full project-pack preview-runner admission.
+2. **Correct preview and export.** Close the demonstrated sprite source-clock/frame-offset regression, authored background mismatch and supported easing behavior through the existing source and generators. Diagnose the distinct dim 3 s frame before choosing its fix. Test fractional time, repeated cut/undo/reopen and relevant flatten behavior against actual decoded output. Verify a suspected additional clock or content race before creating implementation work.
+3. **Safe recovery and accepted inputs.** Consume P38's process authority and settlement; never treat cancellation acknowledgement, a lease, cached PID or forced slot clear as process exit. A safely settled failed/cancelled/lease-lost attempt permits a subsequent real render; uncertainty remains explicitly held with an actionable recovery route. Keep verified output and pending work. P63/P04 owns accepted parent/child timeline revisions and undo; P79 owns media ingestion and placement receipts. P87 binds and verifies what its render consumed and fixes only demonstrated render-local gaps.
+4. **One exact-candidate qualification.** Reuse the existing real-render lane and shared fixture family. Start with canonical pack compilation and a small installed render, then parity/recovery and retained whole standard, large-shots and film-shaped witnesses. Preserve original repetition and sensitivity obligations. RN-12 consumes the final RN-10 evidence when the exact integrated inputs match; it is not a second identical campaign.
+
+## Ownership and true joins
+
+| Boundary | Producer / writer | P87 consumption |
+| --- | --- | --- |
+| Motion source, facade, witness, catalog and App provenance | Existing PACK-A/B/C on [#2032](https://github.com/banodoco/astrid-dev/issues/2032); Lead alone freezes pins | Canonical resource closure, exact source identity and real preview/export parity |
+| Default acquisition, publication, recovery and loader authority | Existing PACK-DELIVERY; P09/P29/P30 lifecycle; P31 publication | RN-14 fresh and lived-in installed proof; no hand-added pack, loss of user packs or resurrected removal |
+| Native process custody and safe settlement | P38 current authors on [#2050](https://github.com/banodoco/astrid-dev/issues/2050) | Render-specific fail/cancel/lease-loss and subsequent-operation witness |
+| Accepted timeline, save recovery and media | P63/P04 and P79; existing shared fixture builder | Same accepted parent/child/media revision throughout one render; no second timeline or media store |
+| Final candidate, measurement and publication | Release Lead and P31 using existing measurement infrastructure | Exact tuple, complete outcomes and rendered artifacts; no P85 restart and no separate P87 publication |
+
+P67's later same-source NKD default may advance the shared poms repository commit while the motion subtree is unchanged. Its actual commit, both subtrees and digests must flow through the same PACK-B/C generators and P31 pin owner. A matching motion digest alone cannot qualify the new direct-source commit identity. Reuse unchanged-source evidence only with an explicit impact record; recheck affected identity/install joins.
+
+## Qualification and acceptance
+
+R15's final qualifier demonstrated the manifest-pinned pack after manual addition, an image-only render, a 616-clip whole render and a reported 621-clip film render. Credit these as shipped evidence; they do not prove automatic installation, all parity, large-shots or a new R16 tuple. The 616 fixture was about 580 KB, not the historical 2.6 MB profile. P87 and P88 historical film records disagree on intended duration: record the actual builder, accepted revision, clip count and decoded extent before assigning coverage. Do not silently equate either smaller fixture with the retained heavy requirement.
+
+Use the existing supported-route matrix. Short exact-output/recovery witnesses cover materially distinct Windows/macOS/Linux and genuine Pinokio/hosted/local paths where the release promises them; one representative heavy venue may cover equivalent routes with a recorded rationale. Keep native custody and actual user operation distinct from CPU fixtures. The old Mac/Linux-only limitation is historical, not a current release waiver.
+
+Keep the original whole standard/large-shots repetition, accepted film extent and installed-wheel/negative-sensitivity obligations open until proved or explicitly changed by the owner. Run a small child fixture before expensive construction. Set workload-appropriate bounded deadline and disk admission, including verified-copy overhead; the old one-hour/25 GiB assumptions are not proof that a roughly three-hour/40 GB workload fits. No unlimited timeout, sliced/joined substitute, resumable renderer or every-GPU campaign is introduced.
+
+Release acceptance requires the actual frozen tuple, admitted/default-installed pack, matching output, safe failure/recovery followed by success, retained regressions and independent review. Unknown cause, unexecuted proof and setup failure remain visible. Changing a retained workload or support promise requires an explicit owner decision; selecting a safe proof venue and measuring the actual fixture are execution work, not a new planning round.
+
+## Historical Release 15 design and receipts
+
+The following record explains the shipped implementation. Its branch names, donor instructions, tracked overlays, reset workaround, old scope exclusions and prior orchestrator are **historical only**. Current work follows the residual scope above and the dated task dispositions. Original acceptance history remains available for audit.
+
+### Historical outcome and scope
 
 We want one thing: the renderer works, proven on a heavy timeline, with the fixes in the proper code.
 
@@ -130,7 +165,7 @@ A first version of this plan ported all sixteen commits before fixing anything. 
 - Every defect met during the loop that was not fixed here has an issue.
 - Limits: one machine class, macOS and Linux; Windows and render speed are not covered.
 
-## Proposed Release 16 reconciliation — 25 November 2026
+## Earlier proposed Release 16 reconciliation — 25 November 2026 (historical)
 
 Draft pending independent review and owner scope agreement; preserve existing task progress and accepted decisions. Source: [SYN-01 original](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md).
 

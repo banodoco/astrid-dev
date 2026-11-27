@@ -1,6 +1,21 @@
 # Inputs: Install and update confidence
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 [Plan](plan.md) · [Tasks](tasks.md)
+
+## Current Release 16 evidence — 27 November 2026
+
+The owner retains P09/P10/P29/P30 in the 18-project release. The current residual programme is in [P09](../09-install-and-update-confidence/plan.md), with per-ID dispositions in [tasks](tasks.md). [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060) was read in full with its subsequent comments (none at the review snapshot); it is a source investigation, not a native proof receipt. Historical bases and publication commands below are provenance only.
+
+Refreshed independent source heads: Agent R16 integration `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`; Runtime R16 integration `55a541a7ab904873e63510e581a60742e1b83fb8`; published App `cc1d48f016fde55ad6b0609c619d8a4bcec56823`; Pinokio `1e4c1e77f0d2b1ed322d0112d5f40103c998c5eb`. These are not a frozen integrated R16 tuple. [R15 publication](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695) and the App source manifest identify release/required floor 15; fresh HTTP bytes and post-live owner confirmation remain distinct P31 evidence.
+
+[P38 continuation handoff](https://github.com/banodoco/astrid-dev/issues/2050#issuecomment-7225429126) identifies draft Runtime #133 `ccfdacc3559e7cb219f1cac1fadc150d957122bf` and Agent #697 `8da74aa9821cb27caec7a3eec7a30e17733f5284`. It reports portable proof for authored deferred/cold fixes, not native systemd served-origin qualification. The [completed oracle follow-up](https://github.com/banodoco/astrid-dev/issues/2050#issuecomment-7225981241) corrects the broad impossibility inference: stock systemd does not supply the proposed frozen-definition compare-stop, but that is not identical to the canonical retained-owner requirement. The Lead must decide the supervisor-policy boundary and demonstrate its complete protocol; any reduced R15 primary action requires its exact product disposition. Current authored terminal/detached continuation does not implement managed Update-now/old service-start/local-page job consumption. No native positive is claimed. All shared-function reservations and original negative proofs remain intact.
+
+Plans 52, 53 and 85 are excluded by the present owner instruction. Necessary measurements, product qualification and original regressions remain under existing retained owners and infrastructure; this evidence update does not reinstate the removed projects.
+
+**Recovered recorded choices:** the preserved [#178 inputs at `5c1f139`](https://github.com/banodoco/astrid-dev/blob/5c1f1393d8b435ba16722359840704d0c95d3003/plans/29-update-and-release/inputs.md) explicitly record decision 18 (local `npm run update`, hosted curl) and decision 19 (R0 rollback offered only until the first successful post-handoff update, then retained R0 code/plist/version may be pruned). The PR was closed/unmerged; this is a recovered decision record, not proof that its implementation landed or a publication go. Do not ask the same policy question solely because main retains an older “pending” cell. Preserve user content/newer work and current P35/P38 authority; only a proposed change to that policy requires a fresh owner decision.
+
 
 ## Starting code
 
@@ -49,7 +64,7 @@ Adopt a bounded R16 gate: every **effective required status on the exact candida
 
 An **actually executed, nonrequired inherited red** may remain only with a named, evidence-backed nonharm classification, owner acceptance, and a later owner/task. Candidate-equal or old does not mean harmless. In particular, the latest #2002 descriptor and occurrence-precondition groups remain unclassified until investigated. No change to assertions, required names, gates, bypass rules or job selection merely to produce this result. P91's full green cleanup remains R17. If the actual protection or owner policy instead demands all jobs green, that is binding: fund the minimum required repairs or hold R16. Record this choice in P31 inputs and remove contradictory literal all-green wording only through the approved canonical amendment.
 
-P31 stays in R16. RL-3 visible 0.1.0 and final review precede the first authorized Final transition. Keep the legacy integer for order and required floor; semantic display is a validated mapping. Carry forward the **actual published floor** (15 if the present R15 candidate publishes, otherwise the then-served floor); minor does not mean required. Floor 16 needs an explicit reason and mixed-version/migration proof. Preserve RL-3's primary-UI fallback **“an earlier version”** for unmapped legacy releases, with exact legacy integer in diagnostics/records; do not invent public semantic versions. P58's existing record reader/generator is the only strategy/publication record home.
+P31 stays in R16. RL-3 visible 0.1.0 and final review precede the first authorized Final transition. Keep the legacy integer for order and required floor; semantic display is a validated mapping. Carry forward the **actual published floor** (15 in the actual R15 publication, rechecked against served bytes before candidate freeze); minor does not mean required. Floor 16 needs an explicit reason and mixed-version/migration proof. Preserve RL-3's primary-UI fallback **“an earlier version”** for unmapped legacy releases, with exact legacy integer in diagnostics/records; do not invent public semantic versions. P58's existing record reader/generator is the only strategy/publication record home.
 
 **D-SYN-4 — proposed, not accepted:**
 
@@ -57,6 +72,6 @@ Keep Windows, macOS, Linux and genuine Pinokio hosted/local; RunPod remains expe
 
 Retain P38's minimal common role ABI C1/C2/R2 because one-home role authority is in the requested outcome and owner-requested source history. Reconcile the still-open D1 wording explicitly. Design/inventory can start early; landing follows the internal phase-one checkpoint. If the reviewed source proves that outcome requires a substantially larger redesign, request an owner scope decision before dispatching that expansion. It never gates independent lanes merely to create concurrency.
 
-Carry P52/P53's recorded R16 move explicitly. Recommendation: complete bounded existing product-facing residuals and their prepublication proof in this shipment, while owner issue-transfer administration and genuinely post-live observation remain separately named closure tasks. Do not claim all adjunct tasks complete or silently call them nonproduct. If the owner intends every administrative closure to block the product go, add that specific gate and owner availability; do not create a circular “live page before publication” dependency. §4.17 gives exact rows.
+P52/P53/P85 are excluded by the current owner decision. Preserve retained product qualification and measurement with existing infrastructure; do not recreate their project or administration gates in this programme.
 
 The proposed transition depends on D-SYN-1/4, an actual origin inventory, per-volume peak-space accounting and operation/lifetime-lock handoff. Quarantine optional packs and refuse missing required packs; preserve defaults, tombstones and credentials. Rollback after new work requires explicit preservation. The required floor is the actual published floor, not an assumed historical 14. Bootstrap refusal may leave bounded owned tool/cache/log preparation unless moved earlier: source currently writes before validating pins; it cannot be described as literally zero filesystem writes.

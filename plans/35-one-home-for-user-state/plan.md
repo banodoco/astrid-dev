@@ -1,6 +1,6 @@
 # One home for user state
 
-> **Draft reconciliation:** The dated Release 16 proposal below supersedes conflicting historical scope or dependency wording for review only. Existing statuses, decisions and delivery authority remain the historical record until the owner accepts a change.
+> **R16 retained boundary:** The 11-packet CPU lane is delivered and integrated. Preserve its actual owner deferrals; the broad original design below is not an instruction to redispatch it. The final candidate consumes its accepted state interfaces and adds preservation evidence through the existing install/save/workflow journeys.
 
 **Project:** One home for user state
 
@@ -8,9 +8,9 @@
 
 **Status:** paused
 
-**Owner:** Unassigned
+**Owner:** Existing P35 custodian / Release Lead; CPU lane finished on [board #2033](https://github.com/banodoco/astrid-dev/issues/2033)
 
-**Estimate:** TBD — prepared R16 CPU queue completed (11/11); size deferred scope separately
+**Estimate:** 0 new implementation absent a demonstrated regression; 0.5–1.5 incremental evidence/qualification days within shared lived-in lifecycle proof. Owner-deferred mutation/restore and App relocation are not reopened.
 
 **Waiting on:** Prepared R16 CPU implementation and reviews finished 26 Nov, all 11 packets landed in Agent/Runtime release/16/main ([Lead receipt](https://github.com/banodoco/astrid-dev/issues/2030#issuecomment-7191806062); [P35 board](https://github.com/banodoco/astrid-dev/issues/2033)). Not a R15 contribution or whole-project completion. Owner reserved App migration, pack/RunPod custody, grant API/revocation, installed migration/rollback, export/CLI and other guard work for later ([tasks](tasks.md#later-real-hardware-qualification-not-in-release-16)); no active queue or new dispatch.
 

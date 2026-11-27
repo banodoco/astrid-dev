@@ -1,5 +1,7 @@
 # 09 — Install and update confidence
 
+[Final Release 16 programme review](../../releases/16/evidence/final-programme-review.md) records current dependencies, estimates and remaining decisions.
+
 **Project:** Install and update confidence
 
 **Goal:** Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route.
@@ -8,7 +10,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** 2–4 engineering days remaining implementation plus 1–1.5 incremental integration/qualification days; shared P09/P10/P29/P30 total 6–11 + 3–5, counted once, excluding existing P38/P93/P94/P31 work and venue waits.
 
 **Waiting on:** Existing installer/update transaction is reusable; [SC-09](https://github.com/banodoco/astrid-dev/blob/52c40028c067047533e222a017c92ac17f8cf5ba/plans/09-install-and-update-confidence/evidence/release-16-scoping/SC-09.md) reconciles prior work. R16 residual: schema-changing lock handoff, lived-in rollback/retention, route/OS and removal evidence; coordinate P29/P30/P10/P38. Await scoped dispatch, not a replacement installer.
 
@@ -16,62 +18,44 @@
 
 **Contributing:** [Astrid development skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md).
 
-Make supported install, update, rollback, repair, and uninstall routes dependable on Linux, macOS, and Windows. Qualify them with real hosted evidence and a single update transaction while preserving the previous working version and user data on failure or refusal.
+## Release 16: complete the existing installation lifecycle
 
-## Goal and scope
+Plans 09, 10, 29 and 30 retain their separate outcomes but form one residual programme. The shared transaction, installation resolver, outcome record, local adapter, managed Pinokio adapter and platform workers already exist. Preserve them and repair only demonstrated gaps. The [installation/update sense-check #2060](https://github.com/banodoco/astrid-dev/issues/2060) supplies the task dispositions; the current [task ledger](tasks.md) records their canonical R16 homes. Historical Release 1–14 instructions and pre-main/int promotion lanes are not current dispatch authority.
 
-- **Included:** one transaction shared by supported update routes; hosted real-path coverage across the three operating systems; real released-R1-to-candidate update with schema migration; Windows locked-file handling; post-R0→R1 uninstall; platform breadth; typed Agent↔Runtime control contract and dead R0-code retirement; captured real service-manager output for unit fakes. See [tasks.md](tasks.md) for the preserved boundaries and task cards.
-- **Included, phase 2 (from the 12 Nov Release 1 → 12 incident):** updates stay safe whatever older releases left on the machine.
-  - An unblock hotfix (IU-14).
-  - An update gate from every published release, lived-in and hostile (IU-15).
-  - Sign-in without the legacy copy (IU-16) and one bundled-pack root (IU-17).
-  - The invariant that nothing outside the version root is authoritative or fatal (IU-18).
-  - Aggressive, rollback-aware cleanup of old leftovers (IU-19).
-  - An update a person can follow (IU-20), and a review rule for ownership moves (IU-21).
-  - See [Phase 2](#phase-2-upgrade-safe-installed-state).
-- **Deferred:** Pinokio install/update routes ([Plan 07](../07-pinokio/plan.md)); pack transactions ([Plan 06, PK-9](../06-packs/tasks.md#pk-9-transactions)); unused Release-2 browser machinery unless reused by a task; broad Agent unit-suite debt.
-- **Owner decision:** Windows R0→R1 upgrade may be implemented or refused permanently; its existing low-priority rationale is preserved in IU-7.
+**End state:** a person can install, repair, update and remove Astrid through the appropriate supported route on Windows, macOS and Linux. An interrupted or failed update preserves the previous working selection and user data, provides a truthful next step, and can recover and subsequently complete an update. Removal keeps user data unless its separate removal is explicitly requested.
 
-## What we build on
+### Ownership and residual work
 
-Start from Plan 08's verified Release 1 output, including its five-row hosted gate and update step. Freeze current `pre-main` heads for astrid-agent, astrid-runtime, and astrid-app when work starts; the exact heads and donor commits are not recorded here. Plan 01 shares installer files (`cli.py`, `backend.py`) and must be sequenced with IU-1. Historical source observations and the R1 stand-in do not prove current identities or real schema migration; see [inputs.md](inputs.md).
+| Existing owner | Retained responsibility |
+| --- | --- |
+| P09 IU-1/13 | Existing installer transaction, selection, migration lock handoff, rollback/recovery and retained-version policy. No new transaction or lock registry. |
+| P29 with P30 LA-1–7 | One installed-owner/paired-version decision, truthful outcome and existing hosted/local adapters; no new update state machine. |
+| P30 UR-15 | Safe worker launch, observation, settlement and interrupted-job compatibility on systemd 249/252 as well as newer managers. Lowering a version check alone is insufficient. |
+| P10 PIN-2–4 | Actual Pinokio engine actions, Stop/Quit safety, settlement and hosted/local native proof; consume the common transaction and P38 custody. |
+| P35 / P38 | P35 owns durable user-state compatibility; P38 owns live process authority and the currently reserved upgrade lifecycle hunks. P09 consumes these joins. |
+| P93 / P94 / H3 P67 | P93 owns pack admission/default delivery; P94 owns environment/model provisioning. H3 companion selection uses the existing pack group transaction. These are not second Astrid installers. |
+| P31 / Release Lead | One candidate tuple, qualification register, effective publication protection and authorized publication. |
 
-### Proposed legacy-to-standalone conversion
+The existing P38 `38-08U` author owns its reserved `core`/CLI/backend/service/local-update/outcome joins; the existing contract oracle owns the bounded managed-update contract question on [board #2050](https://github.com/banodoco/astrid-dev/issues/2050). Do not dispatch a competing P09/P29/P30 writer over those functions. Their latest portable source results do not constitute native served-origin proof. Native cold continuation/rollback and a supported live R15 transition remain open. The [completed oracle follow-up](https://github.com/banodoco/astrid-dev/issues/2050#issuecomment-7225981241) distinguishes retained process authority from the added frozen-policy assumption. The Lead must resolve whether authenticated supervisor policy is trusted and prove the selected route. If the stronger boundary is retained, managed Update-now, old service-start and local-page job continuation still need a reachable consumer; the current refreshed-terminal/detached route does not cover them. A one-time manual R15 transition would be a specific owner-visible support exception, not the existing releases-9-and-earlier exception. Safe refusal is mandatory where authority is absent, but does not discharge a promised successful update route.
 
-The separately [paused conversion draft](legacy-conversion/plan.md) describes moving a qualified existing legacy installation to standalone at the same data-root path. Its [task cards](legacy-conversion/tasks.md) reuse this plan's IU-1 transaction and IU-13 lock handoff and retain the existing ownership guards. It is a proposed extension, not a change to this plan's current release scope or permission to resume the paused installation; reconcile its ownership and shared surfaces before dispatch.
+### Preservation and qualification
 
-## Sequence
+- Use the actually published R15 origin and the final R16 candidate, with full App/Agent/Runtime/pack/launcher identities. R15 is published and its required floor is 15 ([publication receipt](https://github.com/banodoco/astrid-dev/issues/1836#issuecomment-7174076695)); P31 owns fresh served-byte verification and any separately approved floor change.
+- Retain an inventory of every genuinely published supported origin. Share fixtures only where source-backed state/transition equivalence preserves the original origin obligation; do not invent historical versions or silently drop a published cohort. Keep content assertions, default-removal tombstones, credentials, revoked grants, pending edits/imports, user packs and user-owned environments.
+- Verify changed-schema lock transfer where the candidate changes schema; retain faithful changed-schema contract proof otherwise. Do not remove or bypass the installer lifetime lock. Same-schema success does not prove this seam.
+- Version-owned product definitions cannot be overridden by stale legacy copies. Durable user state outside the version root remains authoritative in its own domain. Quarantine invalid optional inputs where permitted; missing required state remains a truthful failure. No general hostile-home cleanup, removal of unknown content, or claim that arbitrary corrupt data can never prevent safe startup.
+- Preserve last-good selection until verification. Prune only owned, unneeded state under the accepted rollback window; never restore over newer work. Record automatic failed-update rollback, retained R0 handoff rollback and release roll-forward separately. Do not promise arbitrary post-success downgrade.
+- Reuse the existing journey harness and measured per-volume space checks. Native proof covers each supported OS/owner/route difference, including fully local paired update and genuine Pinokio hosted/local actions. Stand-ins remain logic tests. An unqualified promised cell stays open; naming a limitation does not silently remove support.
+- Each positive journey includes failure/refusal, preserved state, recovery/retry and subsequent successful operation. Qualify busy/unknown owner refusal, stale PID, Windows locked files/DACLs, interrupted workers, failed activation, insufficient space, no-manager/autostart-off paths where supported, repair and data-safe removal. Reuse evidence across the four projects without duplicating whole runs.
 
-IU-0 freezes source identities and records the path × OS × evidence-mode baseline. IU-1 consolidates the update transaction; IU-2 and IU-3 then cover hosted runtime/rollback legs and real version migration, with IU-4 and IU-9 extending platform evidence. IU-5, IU-6, IU-7, IU-8, and IU-10 follow their indexed dependencies and can proceed independently where the graph permits. IU-END reviews and promotes the exact candidate. Full routes and acceptance are in [tasks.md](tasks.md).
+### Execution order and completion
 
-## Phase 2: upgrade-safe installed state
+Prepare origin fixtures, P31 records, P10 engine feasibility and P30 disjoint worker/paired-state work in parallel. Land only the affected P35/P38 producer-consumer joins before their dependent transaction work. Run one early installed vertical journey; integrate required P93/P94/default-pack readiness, then freeze one tuple and run the native matrix. Independent review and actual release acceptance are separate from source implementation or portable tests. IU-END contributes its verdict to P31; it does not publish another release.
 
-On 12 Nov a Release 1 user's update to Release 12 failed and rolled back. Release 1 had downloaded Hivemind into the user's home folder at sign-in. Release 11 made Hivemind built in, and the duplicate stopped the pack host. Every user who signed in on Release 1, 9 or 10 is affected. The 11-row matrix missed it because it starts from three hand-picked releases with an empty home folder.
+**Remaining shared effort:** 6–11 engineering days for residual implementation, focused regressions and fixtures; 3–5 days for integration/native qualification and resulting bounded correction, conditional on the P38 contract and real engine capability. This is the four-plan total (9–16), not four additive estimates, and excludes P35/P38/P93/P94/P31 implementation. Independent release review is budgeted once at programme level. An unresolved upstream capability or required support change is outside this range.
 
-Reviews by Astra (with 14 Luna probes) and Fable agreed: this is structural, not a one-off. The category is **incomplete installation-state transitions**: a release moves who owns something without reconciling what older releases left behind, the code that still reads it, and what rollback needs. Two design flaws make it likely:
-- ownership is reconstructed separately by each consumer instead of being decided once;
-- updates check only the workspace schema, while the product also reads state outside the workspace.
+**Outstanding owner boundary:** Windows R0-origin upgrade versus explicit permanent safe refusal (IU-7), if no prior accepted disposition can be recovered. Keep the [legacy conversion draft](legacy-conversion/plan.md) paused. Existing R0 retention/command decisions are recorded in [inputs](inputs.md); do not reopen them merely because an old task cell says pending. Any change to retained support or rollback policy requires the owner; ordinary shared implementation sequencing does not.
 
-The design keeps the concepts few:
-- **One invariant:** Astrid's own code lives only inside the versioned root; anything outside is user data or cache, and never authoritative or fatal.
-- **One derived set** of product pack ids.
-- **One tombstone list** for legacy product state, retired with version pruning.
-- **One gate** that updates from every published release, lived-in and hostile.
+## History and next records
 
-IU-14 ships first, in Release 13 (owner, 12 Nov); then the gate (IU-15), before the refactor it protects (IU-18). [Phase 2 evidence](inputs.md#phase-2-upgrade-safe-installed-state).
-
-## Completion
-
-The IU-0 matrix must show a real hosted test for every supported path on every OS, or a named limitation for that cell; IU-END then reviews the exact candidate and promotes it to `pre-main`. Evidence must preserve the old working version and data on failure/refusal. Any unsupported path is recorded as a named limitation. Existing run authority and review limits apply; this plan does not start work or expand publication authority.
-
-## Read next
-
-- [tasks.md](tasks.md): task index, routes, dependencies, acceptance, and progress.
-- [inputs.md](inputs.md): repositories, starting identities, predecessor/donor inputs, and evidence limits.
-
-
-## Proposed Release 16 scope reconciliation (25 November 2026)
-
-This is a proposed scoping amendment from [SYN-01](https://github.com/banodoco/astrid-dev/blob/4259785be40565ba940ecb076ca8c9889742d7cf/releases/16/evidence/scoping/SYN-01.md); scope, execution and publication remain subject to the existing independent reviews and owner decisions. Existing task progress, accepted decisions and historical evidence remain unchanged. Where historical sequencing differs, the following describes the proposed R16 task-level sequencing; it does not change existing delivery authority.
-
-retain native Windows/macOS/Linux, all genuinely published origins, repair/removal, lived-in update and rollback. Replace any replacement-installer implication with completion of the existing transaction. Define successful update as an actually usable selected realm with preserved accepted/pending work, packs, environment and choices. Retain explicit unknown Windows R0 decision rather than deleting Windows or asserting an unproved origin.
+Original decisions, historical task IDs and evidence remain in [tasks](tasks.md), [inputs](inputs.md) and the [prior complete plan](https://github.com/banodoco/astrid-dev/blob/2b43946a85f63a0a114023e271baf4952ed209c2/plans/09-install-and-update-confidence/plan.md). The shared [Release 16 brief](../../releases/16.md) and [run board](../../releases/16/run.md) govern scope, current reservations and publication authority.
