@@ -12,7 +12,7 @@
 
 **Estimate:** 8 days (CPU only; the live check comes after)
 
-**Waiting on:** Independent review of the revised provider seam, refreshed Plan 59/64/65 baseline, owner run authorization and release placement. No Plan 17 dependency.
+**Waiting on:** Independent review of the revised provider seam, refreshed Plan 59/64/65 baseline on Release 16, and Lead run start. No Plan 17 or 67 dependency.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -44,7 +44,7 @@ Context and Process only influence.
 
 Composition then restores every kept pixel and sample. A new lever adds a kind to the table and a function that feeds one mechanism. It never adds a request structure or a compiler branch.
 
-**Provider-ready core.** Keep one H3-owned, versioned, typed registration/assembly seam around the capability table and six lowering mechanisms. Built-ins and a separately authored test provider enter through the same deterministic, immutable per-job snapshot for admission, describe, dry run and compile. The host owns validation, scheduling, exact ownership/composition and requirements; providers return only validated contributions to the existing mechanisms. Refuse duplicate IDs, unsupported API versions, unmet dependencies and conflicts; report selected provider identity and only used node/model requirements. No external loading, pack installer or VibeComfy family migration in 66. Plan 67 activates genuine independent providers through Astrid's existing registry; 66 needs no Plan 17 work.
+**Provider-ready core.** Keep one H3-owned, versioned, typed registration/assembly seam around the capability table and six lowering mechanisms. Built-ins and a separately authored test provider enter through the same deterministic, immutable per-job snapshot for admission, describe, dry run and compile. The host owns validation, scheduling, exact ownership/composition and requirements; providers return only validated contributions to the existing mechanisms. Refuse duplicate IDs, unsupported API versions, unmet dependencies and conflicts; report selected provider identity and only used node/model requirements. Providers can expose validated references to ordinary pack-owned preprocessing actions/recipes in the same capability discovery; a curve-producing tool remains an input-making action, not a seventh mechanism or fake lever. The base compiler never depends on the presence of a default companion. No external loading, pack installer or VibeComfy family migration in 66. Plan 67 activates genuine independent providers through Astrid's existing registry; 66 needs no Plan 17 work.
 
 **Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` here; [Plan 67](../67-h3-community-steering/plan.md) adds it) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
 
@@ -67,7 +67,7 @@ Plans 64–70 are proven by compiling. The owner's live test comes after.
 3. **Problem skills such as Recast:** the order of work, judgment calls, pitfalls, and a brief template naming each shot's recipes.
 4. **Templates:** a template is a request with named holes. It can be listed, shown, filled from `--set` values or a shot, written out, and submitted like any request.
 
-**This plan builds the core only.** The injected-provider fixture is not proof of independently installed extensions; 67 owns installation, trust, activation and worker custody. It adds no new creative capability, so its live check is a clean regression check. The capabilities on top come in their own plans, each citing this plan's design, which ships in the pack as `astrid/packs/h3_av/docs/design.md`:
+**This plan builds the core only.** The injected-provider fixture is not proof of independently installed extensions; 67 owns independent/default installation, trust, activation, chained composition and worker custody. It adds no new creative capability, so its live check is a clean regression check. The capabilities on top come in their own plans, each citing this plan's design, which ships in the pack as `astrid/packs/h3_av/docs/design.md`:
 - [Plan 68](../68-h3-guides-and-stills/plan.md): guides and exact stills at any frame;
 - [Plan 70](../70-h3-continuation-bridges-inserts/plan.md): continuation, bridges and inserts by placement, and deleting the captured continuation workflows;
 - [Plan 67](../67-h3-community-steering/plan.md): community steering (timed prompts, `phase`, the curve tool, ControlNet, binding reports).
@@ -121,7 +121,7 @@ CPU tests prove each of these:
 - The public prompt-and-image invocation, a masked edit, a fixed-audio redub, Character Swap and the captured-bundle continuation each go through preparation, build, composition and receipt via `compile_job`.
 - `branch_for` is gone, and a v1 request is refused with a message to write it as v2.
 - `describe --entry h3 --json` shows the same capabilities admission uses, with the reserved rows marked `unavailable`.
-- A separately authored CPU fixture registers a kind through the same seam as built-ins, compiles via an existing mechanism, and appears with its provenance and used requirements in the one job snapshot. Missing, duplicate, incompatible or conflicting providers fail before claim; base H3 remains unchanged without the fixture. Core/SDK remain pack-neutral.
+- A separately authored CPU fixture registers a kind through the same seam as built-ins, compiles via an existing mechanism, and appears with its provenance and used requirements in the one job snapshot. Missing, duplicate, incompatible or conflicting providers fail before claim; base H3 remains unchanged without the fixture. Core/SDK remain pack-neutral. A provider may advertise an admitted pack-owned preprocessing action without registering a fictitious lowering; the action's output enters ordinary request bindings. An absent optional provider cannot alter base request admission or require its nodes.
 - Unsupported pairs are refused, naming both items and a fix. A late LoRA, a mouth edit inside a continuation prefix, `role: control`, `role: guide` and an off-zero still are refused before claim, with no build.
 - Every kept or supplied span is byte-identical per channel in the decoded published file, including asymmetric stereo and off-by-one cases; the permission and strength masks are separate, and a vanished grant fails loudly.
 - The dry run reports each tag's actual binding, and each occurrence's retained frames, audio and resource estimate.

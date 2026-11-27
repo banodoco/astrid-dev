@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Owner agreed on 27 November 2026 in the ChatGPT planning conversation to make 66 provider-ready, prove independent extension in 67, and bring forward only necessary shared infrastructure. Original direction of 18 November (one elegant generalizable H3 tool, eliminate historical routes, general skill then problem skills and templates) and D1–D5 remain. The revised boundary still requires independent critique and separate run authorization.
+**Scope decision:** Pending — Owner agreed on 27 November 2026 in ChatGPT to make 66 provider-ready and 67 a full default-companion and composable-pack proof, with NKD as the first real provider; both are allocated to Release 16 in the proposed brief. Earlier one-compiler and CPU-only decisions remain. Next: independent critique of the amended interface and release-base readiness; record the accepted scope/run start with the Lead.
 
 **Prior art:**
 - **The request already has the model's shape.** `request.v2.json` holds timeline and reference items, per-item `edit[]` grants, and `hard` and `latent_pin` fields that nothing uses ([direction review §1](research/direction.md)).
@@ -146,7 +146,7 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
 
   The options are (a) keep everything CPU-only until all the plans are done (D1 as it stands), or (b) add those sessions, with small GPU spend and a budget set by the owner. Recommendation: (b), because nothing can be marked `live-tested` otherwise. Still pending the owner.
 
-- **D7 — provider-ready core (owner direction, 27 Nov 2026).** H3 keeps semantic ownership and one typed capability/lowering assembly seam. 66 proves it with a separate fixture; 67 owns real installation. No new registry, generic API or Plan 17 dependency. Preserve CPU-only scope; the narrow contract is subject to independent review.
+- **D7 — provider-ready core (owner direction, 27 Nov 2026).** H3 keeps semantic ownership and one typed capability/lowering assembly seam. 66 proves it with a separate fixture; 67 owns real installation, default companion selection and chained contributions. In the owner follow-up on 27 Nov, NKD is to ship by default with H3 without becoming H3's hard dependency. The provider seam advertises ordinary preprocessing tools as such, not invented levers; absence of the default provider cannot affect native requests. No new registry, generic API or Plan 17 dependency. Preserve CPU-only scope; the narrow contract is subject to independent review.
 
 ## Source identities
 
