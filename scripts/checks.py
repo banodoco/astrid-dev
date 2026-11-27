@@ -1,11 +1,10 @@
 """Registry contract for repository checks."""
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Literal
-import json
 import re
 import sys
 import subprocess
+
+from otto.checks import Check, Context, _body
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -386,14 +385,6 @@ def _tracked_generated_skills(context):
     return errors
 
 
-def _body(context):
-    if context.body_file:
-        return context.body_file.read_text(encoding='utf-8')
-    if context.event:
-        return json.loads(context.event.read_text(encoding='utf-8')).get('pull_request', {}).get('body') or ''
-    return ''
-
-
 def _completion_impl(context):
     import check_completion as gate
     before = gate.project_statuses(context.root, context.base)
@@ -471,32 +462,6 @@ def _pack_shape(context):
         return _pack_shape_impl(context)
     except (OSError, ValueError) as exc:
         return [f"can't check new packs against the templates: {exc}; if the base revision is missing, fetch the PR base, then run the check again"]
-
-
-@dataclass(frozen=True)
-class Context:
-    root: Path
-    base: str | None = None
-    event: Path | None = None
-    body_file: Path | None = None
-
-
-@dataclass(frozen=True)
-class Check:
-    id: str
-    trigger: Literal["always", "pr"]
-    description: str
-    run: Callable[[Context], list[str]]
-
-    def __post_init__(self):
-        if not self.id or any(c.isspace() for c in self.id):
-            raise ValueError("check id must be a nonempty token")
-        if self.trigger not in ("always", "pr"):
-            raise ValueError("check trigger must be always or pr")
-        if not self.description.strip() or "\n" in self.description or "\r" in self.description:
-            raise ValueError("check description must be one nonempty line")
-        if not callable(self.run):
-            raise ValueError("check must be callable")
 
 
 def _project_delivery(context: Context) -> list[str]:
