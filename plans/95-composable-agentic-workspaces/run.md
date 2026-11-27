@@ -2,7 +2,11 @@
 
 The live state of Plan 95's run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (19:15 UTC, Wed 25 Nov)
+## Acting Lead update — 27 November (draft)
+
+The owner appointed `p95-acting-lead-codex-1` in [handoff 7221454707](https://github.com/banodoco/astrid-dev/issues/1886#issuecomment-7221454707). P95-19b is proved and merged into `project/95-otto` at `dc2e82f0fb65da9ebe2321f637c810318af2333b`. Literal OT-1 skills and public export hashes drifted before 19b; the historical values, like-input controls and required OT-22/final review carry-forward are in [decision 7221652000](https://github.com/banodoco/astrid-dev/issues/1886#issuecomment-7221652000). P95-19d is in Step 1 in [this normal Chat](https://chatgpt.com/c/6b099ceb-f3d8-83eb-a597-dbcd252c0a07) and waits for a Lead decision before editing. [P95-20](packets/P95-20.md) and [P95-21](packets/P95-21.md) are drafts, not Ready; final scopes, split, baseline and base are pending.
+
+## Earlier run state (19:15 UTC, Wed 25 Nov)
 
 Plans 71, 72 and 73 are on `main` (`7cf00a5ed5ded3f4ca1b34b97214d693ab584fdd`). The Otto repository `banodoco/otto` exists, public and empty, and the orchestrator has push access. Ready: P95-03 (Otto package skeleton), P95-04 (contract design, Pro) and P95-15 (rule-preservation map, Pro), after the orchestrator's OT-1 and OT-2 are posted. The manager checks in **every 20 minutes** while any packet is Running or in Review, and hourly when idle.
 
