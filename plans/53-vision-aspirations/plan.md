@@ -12,7 +12,7 @@
 
 **Estimate:** TBD — residual owner/acceptance work only; historical estimate about 4.5 engineering days
 
-**Waiting on:** 13 Nov implementation already on main (including [App #257](https://github.com/banodoco/astrid-app/pull/257), merged); not a new R15 feature. Owner carried residual to R16: reconcile VA-1–9 against proof, wording/table approval, VA-10/12 review and physical-device look; VA-11 post-live. Confirm accountable handoff; do not infer acceptance from source alone.
+**Waiting on:** 13 Nov implementation already on main (including [App #257](https://github.com/banodoco/astrid-app/pull/257), merged); not a new R15 feature. Owner previously carried residual to R16; on 27 November 2026 removed P53 from R16. Await separate release placement; retained residual: reconcile VA-1–9 against proof, wording/table approval, VA-10/12 review and physical-device look; VA-11 post-live. Confirm accountable handoff; do not infer acceptance from source alone.
 
 **Start:** [Astrid contributor skill](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/start.md) and [domain map](https://github.com/banodoco/astrid-dev/blob/257a80bab15f753f1164994ca024efd01a4205e0/agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
