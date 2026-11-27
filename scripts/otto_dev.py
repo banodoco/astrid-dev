@@ -14,6 +14,7 @@ _SCRIPT_DIR = str(Path(__file__).resolve().parent)
 if _SCRIPT_DIR not in sys.path:
     sys.path.insert(0, _SCRIPT_DIR)
 
+from otto.checks import Check
 from otto.config import Workspace
 from otto.ids import RecordRef as _RecordRef, SourceLocation
 from otto.markdown import markdown_heading_anchors, section_after_match
@@ -278,3 +279,58 @@ def load_dev_records(workspace: Workspace) -> RecordBatch:
         RelationshipRow(edge.source, edge.kind, edge.target, edge.role,
                         edge.source_path, edge.source_line)
         for edge in links))
+
+
+def register_dev_checks(workspace: Workspace) -> tuple[Check, ...]:
+    """Add Dev domain policy to Otto's fixed generic checks.
+
+    The legacy CLI retains checks.REGISTRY, including its ordering, triggers,
+    IDs and presentation. This factory is only for Otto's strict workspace
+    assembly; it never replaces or disables a generic check.
+    """
+    import checks
+
+    record_ids = {
+        "plan-catalog", "unique-project-numbers", "release-documents",
+        "active-plans-in-releases", "strategy-consistency", "catalog-paths",
+        "gap-structure", "plan-files", "subjects", "canonical-principles",
+        "public-vision-content",
+    }
+    record_checks = tuple(entry for entry in checks.REGISTRY if entry.id in record_ids)
+
+    def record_contracts(context):
+        return [message for entry in record_checks for message in entry.run(context)]
+
+    # Reuse the canonical delivery predicate: its collector validates the
+    # explicit Vision role/gaps grammar and its configured graph enforces
+    # EnablerRule (ordinary primary, enabler exclusion and existing identity).
+    # Do not infer exemptions from a lack of edges or copy the graph rules.
+    local = (
+        Check("dev-record-contracts", "always", "Validate Dev authored record contracts",
+              record_contracts),
+        Check("dev-project-addresses", "always", "Validate Dev project addresses and enablers",
+              checks._project_delivery),
+    )
+
+    # Otto already checks anchors and generated views. Their legacy-only
+    # scope, trigger and diagnostic policy remain in the Dev registry.
+    # Dev mandatory Markdown sources and new-pack planning shape have
+    # additional domain rules beyond Otto's generic link/template checks.
+    legacy_only = {"project-delivery", "link-anchors", "generated-views"}
+    domain_names = {
+        "markdown-links": "dev-mandatory-markdown-links",
+        "pack-shape": "dev-new-pack-shape",
+    }
+    return local + tuple(
+        Check(domain_names.get(entry.id, f"dev-{entry.id}"),
+              entry.trigger, entry.description, entry.run)
+        for entry in checks.REGISTRY
+        if entry.id not in record_ids and entry.id not in legacy_only
+    )
+
+
+def register_dev_views(workspace: Workspace):
+    """Expose the same Dev declarations and preflight to Otto's view engine."""
+    import views
+
+    return views.views_for(workspace.root)

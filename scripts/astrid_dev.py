@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 import checks
+from otto.checks import list_registry, run_registry
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -96,19 +97,11 @@ def main(argv=None, *, root=ROOT, registry=None):
             print(f"ERROR skills {args.skills_action}: {exc}")
             return 1
     if args.command == "list":
-        for entry in entries:
-            print(f"{entry.id} {entry.trigger} {entry.description}")
-        return 0
+        return list_registry(entries)
     if bool(args.base) != bool(args.event or args.body_file):
         parser.error("--base and one of --event or --body-file must be supplied together")
     context = checks.Context(Path(root), args.base, args.event, args.body_file)
-    failed = False
-    for entry in entries:
-        if entry.trigger == "always" or args.base:
-            for message in entry.run(context):
-                print(f"ERROR {entry.id}: {message}")
-                failed = True
-    return int(failed)
+    return run_registry(context, entries, ordered=False)
 
 
 if __name__ == "__main__":
