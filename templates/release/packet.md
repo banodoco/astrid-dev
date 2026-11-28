@@ -9,7 +9,7 @@
 **May touch:** <files and functions>
 **Must not touch:** <files and functions>
 **Proof:** <source task IDs holding actual acceptance and checks>
-**PR destination:** <repo(s): `p<P>/<task id>` → `release/<N>/plan-<P>`, or `release/<N>/<topic>` → `release/<N>/main`>
+**PR destination:** <repo(s): `task/<P>/<task id>` cut from `release/<N>/plan-<P>`, or `release/<N>/<topic>` → `release/<N>/main`>
 **Authority:** <link to accepted Run start and permissions>
 
-One packet starts **one fresh ChatGPT session**. The session opens task PRs and ends with `READY-PROOF`, **never merging or editing `tasks.md`**. The orchestrator runs the proof, has the PR reviewed where the brief requires, and merges it into the plan branch.
+One packet starts **one fresh ChatGPT session**. The session pushes its task branches and ends with `READY-PROOF`, **never merging or editing `tasks.md`**. The orchestrator runs the proof, has the SHA reviewed where the brief requires, and merges the task into the plan branch.
