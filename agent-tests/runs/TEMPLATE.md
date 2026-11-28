@@ -28,6 +28,8 @@ The misses grouped by cause ([how](../../agent/shared/workstreams/improve.md#syn
 
 ## Round 2
 
+Re-runs on the changed documents. A row that ran on a later commit names it, as `at <sha>` in its Cause cell.
+
 | Case | Verdict | Misses | Cause |
 | --- | --- | --- | --- |
 

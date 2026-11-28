@@ -320,14 +320,15 @@ def _sheets(root: Path) -> list[Path]:
     return sorted(p for p in folder.glob("*.md") if p.name not in ("TEMPLATE.md", "README.md")) if folder.is_dir() else []
 
 
-def _rows(text: str, heading: str) -> dict[str, str]:
-    """Case id to verdict, from one round's table in a run sheet."""
+def _rows(text: str, heading: str) -> dict[str, tuple[str, str | None]]:
+    """Case id to (verdict, commit), from one round's table; a row may name its own commit as `at <sha>`."""
     match = re.search(rf"\n## {heading}\n(.*?)(?=\n## |\Z)", text, re.S)
     rows = {}
     for line in (match.group(1) if match else "").splitlines():
         cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
         if len(cells) >= 2 and cells[1] in ("pass", "fail"):
-            rows[cells[0].strip("`")] = cells[1]
+            own = re.search(r"\bat `?([0-9a-f]{7,40})`?", line)
+            rows[cells[0].strip("`")] = (cells[1], own.group(1) if own else None)
     return rows
 
 
@@ -349,8 +350,8 @@ def status(root: Path) -> list[tuple[str, str, str]]:
         commit = re.search(r"\*\*Commit:\*\*\s*`?([0-9a-f]{7,40})", text)
         rows = _rows(text, "Round 1")
         rows.update(_rows(text, "Round 2"))
-        for case_id, verdict in rows.items():
-            latest[case_id] = (verdict, commit.group(1) if commit else "", sheet)
+        for case_id, (verdict, own) in rows.items():
+            latest[case_id] = (verdict, own or (commit.group(1) if commit else ""), sheet)
     out = []
     for case in load_cases(root).values():
         if case.id not in latest:
