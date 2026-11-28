@@ -10,9 +10,9 @@
 
 **Target milestone:** 0.2
 
-**Estimate:** 6 days (CPU only; the live check comes after)
+**Estimate:** 4–8 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days; the live check comes after)
 
-**Waiting on:** Owner greenlight of scope, and Plans 66 and 68.
+**Waiting on:** Plan 66's contract review (RS1) and composition by occurrence (CC-10); Plan 68 CC-4 for guides inside a continuation.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -25,7 +25,7 @@ On the [Plan 66](../66-h3-composable-core/plan.md) core, a clip shorter than the
 - **bridge:** a clip, a generated gap, a clip;
 - **insert:** a clip inside generated time.
 
-They lower through the pinned motion-context nodes, chosen by the one arrangement function Plan 66 reserves. This plan fills the dry run's delivered-to-sampled frame map, maps guides inside a continuation, deletes the captured continuation workflows and the `continuation` flag (Plan 66 D3), ships recipes and one skill section, does the final trim pass over the skill, and holds the integrated review of Plans 66, 68 and 70.
+They lower through the pinned motion-context nodes, chosen by the one arrangement function Plan 66 reserves. This plan fills the dry run's delivered-to-sampled frame map, maps guides inside a continuation, deletes the captured continuation workflows and the `continuation` flag (Plan 66 D3), and ships recipe files. The skill section, final trim and integrated review are Plan 67's (CS-8, R).
 
 **Not in this plan. Do not build these:**
 - a GPU or live run (D1);
@@ -39,11 +39,11 @@ The cards CC-7a to CC-7d, their lattice summary and the assembly additions were 
 
 ## Sequence and readiness
 
-Plans 66 and 68 land first. CC-7a's first step checks whether one full-canvas preparation (from Plan 68 CC-8) can serve prefix, insert and bridge; that decides whether CC-7b and CC-7c need lowerings of their own. Then CC-7b and CC-7c in parallel, CC-7d (deleting the captured workflows), CC-12 (recipes, the skill section and the final trim), and the integrated review. [Task cards](tasks.md)
+CC-7a starts at Plan 66 RS1 and CC-10, with Plan 68 CC-4 for guides inside a continuation; it does not wait for Plan 68's stills. Its proof records a bounded comparison with full-canvas preparation. The same placement semantics do not require the same sampler initialization, so prefix and insert share a context helper and bridge keeps its native initializer, all behind one compile call (28 Nov 2026). Then CC-7b and CC-7c in parallel, CC-7d (deleting the captured workflows after CPU parity), and CC-12 (recipe files). Final recipe integration is [Plan 67 CS-8](../67-h3-community-steering/tasks.md), and the integrated review is [Plan 67 R](../67-h3-community-steering/tasks.md). Arrangement stays H3's own choose-one decision. Each arrangement publishes its frozen ranges and its delivered-to-sampled time map, which clock-typed parameters read. A pack loop, such as continuation cycles, may bring its own arrangement only by declaring its length and time map. Edit-then-extend becomes one request in [Plan 107](../107-h3-passes/plan.md). [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
-**Consumes:** Plan 66's job, table, dry-run view, composition and arrangement function; Plan 68's full-canvas builder and guide lowering.
+**Consumes:** Plan 66's job, table, dry-run view, composition and arrangement function; Plan 68's guide lowering.
 
 **Produces:** prefix, bridge and insert preparation in one function; the filled delivered-to-sampled frame map; removal of the captured workflows and the `continuation` flag; their recipes and skill lines. Plan 67's `speech-continue` recipe builds on it.
 
@@ -57,4 +57,4 @@ CPU tests prove each of these:
 - With the Character Swap adapter on, continuation and bridge graphs carry both LoRAs in the model chain.
 - The captured workflows and the `continuation` flag are gone, and every recipe fills, dry-runs and compiles.
 
-The integrated review then closes Plans 66, 68 and 70 together. The owner's live check judges seams against saved takes.
+Plan 67 R, the programme's integrated review, closes Plans 66, 68, 70 and 67 together. The owner's live check judges seams against saved takes.
