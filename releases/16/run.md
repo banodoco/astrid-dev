@@ -243,7 +243,7 @@ A planning session prepares this with the owner; no running role does it, and pr
 
 ### Plans
 
-**Active at once:** two plans (owner, 26 November 2026), so at most six ChatGPT chats. When a plan finishes or is parked, the Lead starts the next plan in this table whose **Starts after** plan is done or parked.
+**Active at once:** four plans in ChatGPT, one chat each (owner, 28 November 2026, replacing the two of 26 November); the H3 lane runs beside them under its own brief. When a plan finishes or is parked, the Lead starts the next plan in this table whose **Starts after** plan is done or parked.
 
 | Order | Plan | Starts after | Repositories for its branches | Queue |
 |---|---|---|---|---|
