@@ -8,7 +8,7 @@ This directory holds the authored Markdown-first agent instructions: the one sou
 
 ## Where instructions live
 
-- [Who does what](../docs/lifecycle.md): one table of every level (release, lane, plan, task), who opens, runs, merges and closes it, and its branch in each repository. Read it first.
+- [The pipeline](shared/pipeline.md): how work moves from a gap to a published release, who does what at each level, and how branches and pull requests are used. Read it first.
 - [Start](start.md) routes requests to an existing contribution, procedure, or accountable role.
 - [Roles](roles/) define a continuing identity and its authority. Each role is a single file: Leader, Orchestrator, Manager, Worker.
 - Role-specific workstreams live in the sibling folder of their role file (for example manager/chatgpt-packet.md). They inherit that role's authority and are usually loaded through it.

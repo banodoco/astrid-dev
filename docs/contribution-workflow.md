@@ -222,7 +222,7 @@ In an **Astrid-dev checkout**, the [route-use helper](../scripts/model_usage.py)
 
 ## Submit a completed project
 
-Once the required product changes are integrated into their intended destinations and the **combined result** has been qualified, the project owner (its accountable agent: the lane orchestrator in a lane, otherwise its manager; see [who does what](lifecycle.md)) submits one Astrid-dev completion PR using the [completion template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md):
+Once the required product changes are integrated into their intended destinations and the **combined result** has been qualified, the project owner (its accountable agent: the lane orchestrator in a lane, otherwise its manager; see [the pipeline](../agent/shared/pipeline.md#who-does-what)) submits one Astrid-dev completion PR using the [completion template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md):
 
 ```text
 Project: plans/NN-project-name/plan.md
