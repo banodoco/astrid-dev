@@ -10,7 +10,7 @@
 
 **Estimate:** About 12 engineering days (10–14) after Plans 71–73 land: pipelines about 2.5, organisation guidance about 3, project templates about 1.5, extraction and config about 3, Dev migration about 2, reviews about 1. The critical path to the tagged Otto v0.1.0 that Plan 96 waits on is about 7 days of elapsed work.
 
-**Waiting on:** the acting Lead's decision on how Dev's `link-anchors` check is scoped, which blocks OT-19 part d, and the owner's actions on the [run board](run.md#now-28-nov-2026): Otto public before the tag, who cuts the tag, and authority for progress pull requests to `main`; astrid-dev `main` merges of the project branch need the owner's go at the end (OT-24).
+**Waiting on:** the acting Lead finishing OT-19 part d and then the adopted path on the [run board](run.md#now-28-nov-2026); the owner's own sign-off on OT-18's before and after; astrid-dev `main` merges of the project branch need the owner's go at the end (OT-24).
 
 **Run route:** astrid-dev-only
 
