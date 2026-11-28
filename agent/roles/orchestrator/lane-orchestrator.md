@@ -18,7 +18,7 @@ The lane brief and the `tasks.md` files it links, on astrid-dev `main`; the owne
 
 ## Procedure
 
-Read only your brief and the `tasks.md` files it links. Decide within them. Come to the Lead or the owner only at the points the brief lists (its Owner only section for the owner, and the release-gate merge its Merges names for the Lead), and at the anchor points below. The rules below, together with the [Codex-in-Claude workstream](codex-in-claude-cloud.md) for hosting Codex.
+Read only your brief, what it links (each plan's `tasks.md`, its guides and records) and your lane board. Decide within them. Come to the Lead or the owner only at the points the brief lists (its Owner only section for the owner, and the release-gate merge its Merges names for the Lead), and at the anchor points below. The rules below, together with the [Codex-in-Claude workstream](codex-in-claude-cloud.md) for hosting Codex.
 
 ## Completion
 
