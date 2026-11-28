@@ -14,4 +14,4 @@ Every message the Release 16 run sends, prepared in advance. A sender copies the
 
 ## H3 programme (prepared for handover)
 
-[orchestrator-h3.md](orchestrator-h3.md) is sent by the owner to one orchestrator session, which runs Plans 66, 68, 70 and 67 from their execution-unit tables and then continues with Plan 107 in Release 17. [reviewer-h3.md](reviewer-h3.md) is sent by that orchestrator to a top-tier reviewer for each review stop and S-route unit. The older per-plan manager briefs are superseded.
+[h3.md](h3.md) is the lane brief: the one home for how the H3 programme runs, including the owner's one-line launch. [reviewer-h3.md](reviewer-h3.md) is sent by the orchestrator to a top-tier reviewer for each review stop and S-route unit. The per-plan H3 manager briefs and `orchestrator-h3.md` are superseded.

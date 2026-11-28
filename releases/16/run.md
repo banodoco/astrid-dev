@@ -10,14 +10,7 @@ The Plan 91 mailbox records the owner-directed [STOP](https://github.com/banodoc
 
 ## H3 programme lane
 
-Prepared for handover, not started (owner, 28 November 2026). One orchestrator runs Plans 66, 68, 70 and 67 as one lane, then continues with [Plan 107](../../plans/107-h3-passes/plan.md) in Release 17. The owner starts it by sending [briefs/orchestrator-h3.md](briefs/orchestrator-h3.md). It answers to the owner, not to the Release 16 Lead.
-
-- **Queue:** the "Execution units" tables in each plan's `tasks.md`. A unit is dispatchable when its Depends are merged. The orchestrator writes each packet at dispatch from the unit's cards; no packet files are prepared ahead.
-- **Branches:** already cut from `release/16/main`: astrid-agent `release/16/plan-66`, `plan-68`, `plan-70` and `plan-67` at `4a2bad18`, and VibeComfy `release/16/plan-67` at `55c39482`. The orchestrator cuts any later branch itself.
-- **Authors:** one fresh normal ChatGPT session per unit, in its route's mode. The author runs the focused proof, pushes, and opens a PR into the plan branch; CI is the proof. Plan 66 CC-14's `engine_deps` lane becomes the one proof workflow once it lands. A unit may land as several PRs. No separate custodian.
-- **Reviews:** a top-tier reviewer from [briefs/reviewer-h3.md](briefs/reviewer-h3.md), independent of authors and the orchestrator, at Plan 66 RS1 (both halves), every S-route unit, Plan 67 R and Plan 107 R. Other units merge on green CI and shown proof.
-- **Integration:** a finished plan branch merges into `release/16/main`, after any overlapping merge from Plans 93, 94 or 38.
-- **Owner only:** scope changes, spend or GPUs, publication, and a unit parked after one replacement.
+One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It answers to the owner. Everything about how it runs is in the lane brief [briefs/h3.md](briefs/h3.md): plans and order, queue, dispatch, proof, reviews, merges, rulings, cut line, coordination and launch. State: prepared, not started.
 
 ## Proposed H3 programme queue (66, 68, 70, 67)
 
