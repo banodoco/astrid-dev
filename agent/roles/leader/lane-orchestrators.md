@@ -34,9 +34,7 @@ A plan that grows mid-run gets its own plan number rather than cards bolted onto
 
 ## 2. Make the session
 
-- **Fresh or reused.** Prefer a fresh session on the same base when a lane has been going round in circles or used about half its context; reuse a session only at a breakpoint (its current work landed). Never hand over mid-card.
-- **Create it with a short placeholder prompt** ("You will be the orchestrator for Plan NN. Wait for the owner's launch message"). Never pass shell syntax as the prompt; it is sent literally.
-- **Codex.** Codex logins are per container, and usage limits are per account. Before assigning Codex work, the session runs `codex exec --skip-git-repo-check -s read-only 'Reply ok.'` once. A session on an account at its limit runs its cards on Claude subagents by the same routes, or the owner signs it in with another account. Test each session; never infer one session's account from another's.
+Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the lane brief, sets the session up (repositories, model by route, permission mode, skills), creates it with a placeholder prompt, and hands the owner a three-part launch line. Replacement sessions (fresh or reused) and the Codex account check are in that workstream too.
 
 ## 3. The owner pastes the launch message
 
