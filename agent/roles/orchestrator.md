@@ -95,7 +95,7 @@ See [routing and bindings](../shared/run-contract.md#routing-and-bindings) in th
 
 ## The start message
 
-A lane starts from the owner's one-line launch in its brief, not from this section: the brief carries the plans, order, authority and limits. How any start is checked and handed over is the [start-session workstream](../shared/workstreams/start-session.md), not this section. Outside a lane, a run starts with one short message; the plan carries the rest. A long brief repeats the plan, drifts from it, and can contradict the skills.
+A lane starts from the owner's one-line launch in its brief, not from this section: the brief carries the plans, order, authority and limits. How any start is checked and handed over is the [start-session workstream](../shared/workstreams/start-session.md), not this section. This section is the outside-lane form only. A run outside a lane starts with one short message; the plan carries the rest. The three-part launch line is held only in the [start-session workstream](../shared/workstreams/start-session.md#procedure), so this section does not repeat it. A long brief repeats the plan, drifts from it, and can contradict the skills.
 
 1. **Record the run first (outside a lane).** Fill the `Run start` line in the plan's `inputs.md` ([its fields](../../templates/project/inputs.md)) and merge it. In a lane the Lead writes the brief and each plan's pointer `Run start` line, and you never write `Run start`.
 2. **Draft the message for the owner to paste.** The owner always sends it personally. A message you send yourself arrives as data from a peer, and the session rightly won't treat it as a go ([authority](../shared/run-contract.md#who-answers-for-a-run)).

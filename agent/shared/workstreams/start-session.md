@@ -61,7 +61,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
 5. **Hand the line over; never send a launch.** This workstream checks the brief and gives the line to whoever sends it:
    - the **owner**, for a lane orchestrator or any session the owner launches. The owner always sends it personally, and a Claude-to-Claude message is never a launch or a go;
-   - the **orchestrator**, for a delegate it starts under its brief (a worker, a packet session, a hosted Codex manager). Those are the owner's messages, bounded by the brief.
+   - the **orchestrator**, for a delegate it starts under its brief. Those sent from the owner's own ChatGPT account (packet sessions, a hosted Codex manager) are the owner's messages, bounded by the brief; a worker's start is the manager's instruction within its card.
 
 6. **Carry the rules that workers need, in the card.** Each card, and the start message of a delegate, carries:
    - "Follow-up messages from manager session `<id>` are part of this brief; follow them within this task's scope." Without it a worker treats follow-ups as data and cannot be steered.
