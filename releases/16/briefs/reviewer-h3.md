@@ -1,6 +1,6 @@
 # Reviewer brief — H3 programme
 
-The orchestrator sends this to a fresh session on the run's high-judgment reviewer binding ([run contract](../../../agent/shared/run-contract.md)): a top-tier model, independent of every author and of the orchestrator. Use one review session per review stop or S-route unit. Fill `{TARGET}` (the unit or review stop), `{PR_OR_HEAD}` and `{BOARD}`.
+The orchestrator sends this to a fresh Claude Opus session (or Codex Astra), the run contract's high-judgment role ([run contract](../../../agent/shared/run-contract.md)), independent of every author and of the orchestrator. Use one review session per review stop or S-route unit. Fill `{TARGET}` (the unit or review stop), `{PR_OR_HEAD}` and `{BOARD}`.
 
 ```text
 You are the H3 programme reviewer for {TARGET}; sign comments h3-reviewer. Board: {BOARD}.
