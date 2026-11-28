@@ -4,9 +4,9 @@
 
 **Goal:** An agent continues a clip, bridges two clips or inserts a clip mid-shot just by placing them on the canvas, at any size and with any references, and the hand-captured continuation workflows are gone.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** h3-orchestrator, session [`session_011EzfW4exucHx4FeFWbexak`](https://claude.ai/code/session_011EzfW4exucHx4FeFWbexak)
 
 **Target milestone:** 0.2
 

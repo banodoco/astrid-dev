@@ -4,9 +4,9 @@
 
 **Goal:** An agent steers H3 shots with timed prompts, guides, curves, LoRAs and ControlNet, and a standard H3 installation includes a separately pinned, removable NKD steering pack. Prove independent, shared and chained pack composition through the same compiler and existing pack lifecycle, with three real providers that stack: NKD by default, and the optional H3 Experiments and Dials packs.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** h3-orchestrator, session [`session_011EzfW4exucHx4FeFWbexak`](https://claude.ai/code/session_011EzfW4exucHx4FeFWbexak)
 
 **Target milestone:** 0.2
 

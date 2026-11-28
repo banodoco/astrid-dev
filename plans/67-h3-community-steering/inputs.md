@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — Owner agreed in ChatGPT on 27 Nov 2026 to the revised first real, default-installed but removable NKD companion, generic composable packs, and full delivery of 66/67 in Release 16. The brief also allocates required 68/70 producer plans, preserving their existing scopes. Next: independent critique of the exact default/activation interface and Lead run start; no execution or publication claimed by this planning PR.
+**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 ([#2065](https://github.com/banodoco/astrid-dev/issues/2065))
 
 **Prior art:**
 - **NKD Basic Tools** (commit `c157722a2b484d80dee6b6d3f166c90d9ec197b8`, GPL-3.0) has two relevant nodes ([research/nkd-speech.md](research/nkd-speech.md)):
@@ -27,7 +27,7 @@
 - **(b)** Reimplementing Event Curve in Astrid. Dropped once D2 was decided.
 - **(c)** Hard per-actor routing now. Rejected: no H3 lowering exists.
 
-**Challenge:** Reviewed — the alignment review of 18 November 2026 ([research/alignment-review.md](research/alignment-review.md)), backed by a source check of each task against the NKD, ComfyUI and Astrid code ([research/alignment-luna.md](research/alignment-luna.md)), found Plans 64–66 largely aligned with this plan. All twelve of its edits are accepted: guide `phase` is tried first with stock conditioning time ranges, so no NKD node enters job graphs unless needed; `phase` is allowed on any kind the table permits; node packs are declared per lever kind and the worker's pack list is read from the pins; the dry run shows the final prompt string; the guide lowering stays one function; the curve tool uses the node's 32 kHz and names its offset `--offset`; ControlNet starts by proving pinned weights exist and stays `unavailable` otherwise; signals report labels without reading the prompt; CS-5 and CS-7 depend only on CS-1. The review found the source check's call for broad compatibility wording overstated. Plan 66's own critique, functional review and red-team review are recorded in its inputs. An independent critique is still recommended before dispatch, once Plan 66 has landed.
+**Challenge:** Reviewed — the alignment review of 18 November 2026 ([research/alignment-review.md](./research/alignment-review.md)), backed by a source check of each task against the NKD, ComfyUI and Astrid code ([research/alignment-luna.md](research/alignment-luna.md)), found Plans 64–66 largely aligned with this plan. All twelve of its edits are accepted: guide `phase` is tried first with stock conditioning time ranges, so no NKD node enters job graphs unless needed; `phase` is allowed on any kind the table permits; node packs are declared per lever kind and the worker's pack list is read from the pins; the dry run shows the final prompt string; the guide lowering stays one function; the curve tool uses the node's 32 kHz and names its offset `--offset`; ControlNet starts by proving pinned weights exist and stays `unavailable` otherwise; signals report labels without reading the prompt; CS-5 and CS-7 depend only on CS-1. The review found the source check's call for broad compatibility wording overstated. Plan 66's own critique, functional review and red-team review are recorded in its inputs. An independent critique is still recommended before dispatch, once Plan 66 has landed.
 
 ### Provider boundary and Plan 17 dependency (27 Nov 2026)
 

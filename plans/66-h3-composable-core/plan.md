@@ -4,9 +4,9 @@
 
 **Goal:** Every H3 request goes through one compiler, one capability table and one dry-run view, and every capability, built-in or community pack, plugs in through one typed extension contract that stacks safely, so agents learn one shape from one page.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** h3-orchestrator, session [`session_011EzfW4exucHx4FeFWbexak`](https://claude.ai/code/session_011EzfW4exucHx4FeFWbexak)
 
 **Target milestone:** 0.3
 
