@@ -6,7 +6,7 @@
 **Go:** given on 28 November 2026 in the [planning session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): owner-authorized run of Plans 93, 94, 38 and 79 in Release 16 to the cut on Friday 4 December 2026, CPU and Linux scope (see Owner rulings). The orchestrator replaces the Codex Lead `r16-lead` for these plans; their existing managers and chats continue under it.
 **Orchestrator:** one Codex session in the Codex app on the owner's computer, on route S (Sol), mailbox `dependable-orchestrator` (owner, 28 Nov 2026). It replaces the Claude session `session_011EzfVzdahcZYHKAzfLeHTj`, which opened the board and stood down. It records its thread name here in its first progress PR.
 **Reviewer:** a fresh Claude Opus session, independent of every author and of the orchestrator; one per review stop ([reviewer-h3.md](reviewer-h3.md) is the template, with this lane's board)
-**Board:** `board: lane dependable`, opened by the orchestrator at start and linked here in its first progress PR. It is this lane's one message board.
+**Board:** [`board: lane dependable`](https://github.com/banodoco/astrid-dev/issues/2086), opened on 28 November. It is this lane's one message board.
 
 This is the one home for how the dependable lane runs. **Precedence:** for this lane, this brief wins over the orchestrator skill wherever they differ. The [run contract](../../../agent/shared/run-contract.md)'s safety, proof and permission rules win over this brief. Branches, merges and pull requests follow [the pipeline](../../../agent/shared/pipeline.md#branches-and-pull-requests).
 
