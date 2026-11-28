@@ -133,6 +133,28 @@ class ReleaseStatusTests(unittest.TestCase):
         old = BRIEF.replace("Release 15", "Release 14").replace("**Release:** 15", "**Release:** 14")
         self.assertEqual(validate_change(self.root, 14, old, old.replace("Draft", "Final")), [])
 
+    def test_lane_column_and_no_lane_prompt(self):
+        lane = (self.root / "releases/15/briefs")
+        lane.mkdir(parents=True)
+        (lane / "alpha.md").write_text(
+            "# Lane brief — alpha\n\n**Lane:** alpha\n**Releases:** 15\n\n## Plans and order\n\n"
+            "| Plan | Release | Starts when | Branches |\n| --- | --- | --- | --- |\n"
+            "| [Plan 40](../../../plans/40-example/plan.md) | 15 | Now | astrid-dev `main` |\n",
+            encoding="utf-8")
+        other = self.root / "plans/41-other"
+        other.mkdir()
+        (other / "plan.md").write_text(PLAN, encoding="utf-8")
+        brief = BRIEF.replace("- [Plan 40](../plans/40-example/plan.md) — Example\n",
+                              "- [Plan 40](../plans/40-example/plan.md) — Example\n"
+                              "- [Plan 41](../plans/41-other/plan.md) — Other\n")
+        body = report(self.root, 15, brief)
+        self.assertIn("| [Plan 40](../plans/40-example/plan.md) | alpha | queued |", body)
+        self.assertIn("| [Plan 41](../plans/41-other/plan.md) | — | queued |", body)
+        self.assertIn("- Plan 41 has no lane: the Lead proposes lanes with the owner "
+                      "(agent/roles/leader.md#divide-the-release-into-lanes).", body)
+        self.assertNotIn("Plan 40 has no lane", body)
+        self.assertEqual(self.invoke(), 0)
+
     def test_missing_progress_and_partial_landing(self):
         (self.plan / "tasks.md").unlink()
         extra = "| astrid-runtime | release/15/plan-40 | plan 40 | abc | open |\n"
