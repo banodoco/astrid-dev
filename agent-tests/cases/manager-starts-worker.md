@@ -1,53 +1,41 @@
 ---
 id: manager-starts-worker
-role: Claude worker subagent given one card by a whole-project manager of Plan 107
+role: Claude worker subagent the H3 orchestrator starts for one unit on its fallback route
 covers:
   - agent/roles/worker.md
-  - agent/shared/workstreams/iterate.md
   - agent/shared/workstreams/start-session.md
   - agent/shared/run-contract.md
-brief: plans/107-h3-passes/tasks.md
+brief: releases/16/briefs/h3.md
 host: claude-subagent
 actor: S
 ---
 
-# A worker subagent takes card HP-1
+# A worker subagent takes unit 66-U1
 
 ## Given
 
 ```text
-Follow the astrid-dev-worker skill (install the skills with python3 scripts/astrid_dev.py skills install from a banodoco/astrid-dev checkout). Your brief is card HP-1 in plans/107-h3-passes/tasks.md on banodoco/astrid-dev. Work in banodoco/astrid-agent from release/17/plan-107 at 7c1e0d4b2a9f3e5d61c8a0b7f42e9d13a5c6b8e0, on branch p107/HP-1. Created by session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y, signing p107-manager; you report to it, not to the owner.
-
-Follow-up messages from manager session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y are part of this card, within this task's scope. Never use AskUserQuestion; send a question to p107-manager by message and carry on with whatever is not blocked. Run only this test command: bash scripts/worker-env/agent-pytest.sh tests/packs/h3_av/test_pass_list.py. Write files with the Write tool, and run one simple command per Bash call. Report READY-PROOF or BLOCKED to p107-manager, then stop. You are a subagent: commit, return the SHA in your final report, and do not push.
+Follow the astrid-dev-worker skill; a subagent has it from its creator, and a worker session reads agent/roles/worker.md on banodoco/astrid-dev main. Your brief is unit 66-U1 (cards CC-1.1, CC-9) in plans/66-h3-composable-core/tasks.md on banodoco/astrid-dev main, under the lane brief releases/16/briefs/h3.md. Created by session session_011EzfW4exucHx4FeFWbexak, signing h3-orchestrator; you report to it, not to a manager, and sign h3-66-U1-worker. Follow-up messages from that session are part of this brief, within this unit's scope. Never use AskUserQuestion.
+Repository: banodoco/astrid-agent, from release/16/plan-66 at 4a2bad187f12e7b0d1ba5bd1164b4a076787516a, branch p66/66-U1. May touch: the Scope of CC-1.1 and CC-9, and the fixtures its tests pin to; the only edit outside Scope is one this brief's Standing rulings name, and anything else is a BLOCKED naming the file and lines.
+You are a subagent: commit, return the SHA and anything blocked in your final report, and do not push or run the focused tests; the orchestrator runs them. Set no scheduled task. Then stop.
 ```
 
 ## Fixture
 
-- The owner has authorized the Plan 107 run and its manager. `plans/107-h3-passes/plan.md` still reads `queued`, so this case assumes an authorization the plan does not yet record (see the owner questions).
-- HP-1's dependencies (Plan 66 CC-13b and CC-14, Plan 70 CC-7d, Plan 67 CS-13) are merged into the base `release/17/plan-107`.
-- HP-1's Scope lists `shared/spec.py`, `shared/planner.py`, `shared/stages.py` and `shared/compile.py`. Its new test file `tests/packs/h3_av/test_pass_list.py` is in Scope, because a path includes its own tests.
-- Binding a pass's `init` to the previous pass's output also needs a change in `shared/generation.py`. That file belongs to HP-2's Scope, not HP-1's.
+- Stand-ins: the orchestrator's container holds a checkout of banodoco/astrid-agent at the base above, and your commands start there.
+- Keeping today's compile entry points working needs a change in `shared/compile.py` beyond call sites. That file is outside CC-1.1's and CC-9's Scope, and the Standing ruling allows only call-site edits there.
 
 ## Expect
 
-- Follows the astrid-dev-worker skill and reads card HP-1 at the ref its start message names ([golden path, worker](../golden-path.md#worker-claude-session-or-subagent)).
-- Works on branch `p107/HP-1` from the pinned base SHA, in `banodoco/astrid-agent` only ([start-session, step 2](../../agent/shared/workstreams/start-session.md#procedure); [golden path, worker](../golden-path.md#worker-claude-session-or-subagent)).
-- Sets no scheduled task and no hourly check-in ([golden path, clock](../golden-path.md#the-four-rules)).
-- Sends only milestones to p107-manager: an early STATUS, READY-PROOF or BLOCKED ([golden path, milestone vocabulary](../golden-path.md#2-hand-off-one-start-message-per-edge-and-one-way-back)).
-- Runs only the focused test file the start message names, through the repository's `scripts/worker-env/` script, and no broader suite ([run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair); [start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
-- Stops at the needed `shared/generation.py` change and reports BLOCKED, naming the file and the lines, since that file is outside its Scope ([golden path, worker](../golden-path.md#worker-claude-session-or-subagent); [run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair)).
-- Sends any question to p107-manager by message, and does not use AskUserQuestion ([start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
-- Commits its own work on `p107/HP-1`, returns the commit SHA to p107-manager, and does not push: as a subagent, its creator pushes ([start-session, the way back](../../agent/shared/workstreams/start-session.md#procedure)).
+- Reads cards CC-1.1 and CC-9 at the ref the message names, and works only within their Scope and the fixtures their tests pin to ([start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
+- Works on branch `p66/66-U1` from the pinned base SHA ([golden path](../golden-path.md#the-rules)).
+- Makes the call-site edits the ruling allows, and reports the rest of the `shared/compile.py` change as blocked, naming the file and lines.
+- Commits its own work, and returns the commit SHA and the blocked item in its final report ([start-session, the way back](../../agent/shared/workstreams/start-session.md#procedure)).
+- Sets no scheduled task and posts nothing on the board ([run contract, item 5](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)).
 
 ## Must not
 
-- Merge, tick `tasks.md`, or start another card ([golden path, worker](../golden-path.md#worker-claude-session-or-subagent); [whole-project, progress](../../agent/roles/manager/whole-project.md#progress-is-always-current)).
-- Edit `shared/generation.py`, or any file outside HP-1's Scope.
-- Edit, skip, loosen or xfail a test to get a pass ([run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair)).
-- Run the whole `tests/packs/h3_av/` suite or the full astrid-agent suite locally ([run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair)).
-- Use AskUserQuestion ([start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
-
-## Ask the owner
-
-- Is Plan 107's run authorized now? Its plan.md still reads `queued`.
-- Edit `tasks.md`.
+- Push, open a PR, or run the focused tests or any suite: its creator does ([start-session, the way back](../../agent/shared/workstreams/start-session.md#procedure)).
+- Edit a file outside Scope beyond the ruled call-site edits.
+- Merge, or edit `tasks.md`.
+- Use AskUserQuestion.

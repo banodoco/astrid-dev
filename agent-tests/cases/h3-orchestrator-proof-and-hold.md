@@ -35,7 +35,7 @@ Hourly check-in. You are h3-orchestrator (session_011EzfW4exucHx4FeFWbexak). Fol
 - Treats HOLD as blocking the merge.
 - Records the finding as a row under the reviewed card, with the ID the card's convention names.
 - Sends the finding back to the same author once, through the manager on the board, with the fix and proof the reviewer named.
-- Posts one STATUS of 10 lines or fewer covering both events.
+- Posts one STATUS of 10 lines or fewer covering what it acted on; a HOLD that arrives after that STATUS goes in the next one.
 
 ## Must not
 

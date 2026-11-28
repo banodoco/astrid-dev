@@ -35,7 +35,7 @@ Follow the astrid-dev-manager skill (install the skills with python3 scripts/ast
 - Starts each worker with start-session's worker message: one card (its route and focused proof come from the card), the follow-up and AskUserQuestion lines, and which kind of worker it is ([start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
 - Re-runs each task's focused proof on the task branch before it merges the task ([run contract, load-bearing table](../../agent/shared/run-contract.md#when-a-test-run-is-load-bearing); [whole-project, step 4](../../agent/roles/manager/whole-project.md#steps)).
 - Leaves the full suite to CI and runs no full suite locally before review ([run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair); [whole-project, step 1](../../agent/roles/manager/whole-project.md#steps)).
-- Merges into `main` only its own `tasks.md` progress PRs, and holds the final project PR for the owner's go ([golden path, manager](../golden-path.md#manager-outside-a-lane); [run contract, one merge rule](../../agent/shared/run-contract.md#who-answers-for-a-run)).
+- Merges into `main` only its own `tasks.md` progress PRs, and holds the final project PR for the owner's go ([golden path, manager](../golden-path.md#the-rules); [run contract, one merge rule](../../agent/shared/run-contract.md#who-answers-for-a-run)).
 
 ## Must not
 

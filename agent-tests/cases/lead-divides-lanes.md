@@ -34,7 +34,7 @@ Follow the astrid-dev-leader skill (install the skills with python3 scripts/astr
 - For each grouping, gives its cut line, its cross-lane coordination and the cost to the owner in lanes they would follow ([lanes, step 1](../../agent/roles/leader/lane-orchestrators.md#1-propose-two-or-three-groupings)).
 - Keeps the running H3 lane as it stands in every option, or names any re-lane of it as the owner's decision ([lanes, re-laning](../../agent/roles/leader/lane-orchestrators.md#how-it-runs)).
 - Ends with one recommendation and its reason, then stops ([lanes, step 1](../../agent/roles/leader/lane-orchestrators.md#1-propose-two-or-three-groupings)).
-- Posts the options on `board: release 16 lead` and tells the owner they are waiting on a choice ([golden path, Release Lead](../golden-path.md#release-lead); [Plan 108 H-3](../../plans/108-lane-briefs/tasks.md)).
+- Posts the options on `board: release 16 lead` and tells the owner they are waiting on a choice ([golden path, Release Lead](../golden-path.md#the-rules); [Plan 108 H-3](../../plans/108-lane-briefs/tasks.md)).
 
 ## Must not
 
