@@ -89,6 +89,7 @@ Units of at most three human engineering days, including focused proof, replace 
 ## Decisions
 
 - **66-U1 — orchestrator ruling 28 Nov 2026:** Refuse incompatible reference sets and shared sampler settings in preparation using an exception subclassing both `PreparationError` and `CompilationError`; retain the pinned reference-set phrase, name the grants and conflicting field, and keep the compiler check as a defensive duplicate.
+- **66-U1 — orchestrator ruling 28 Nov 2026:** Add `shared/conform.py` per-stream selection to U1 scope, limited to selected-range computation and trim bounds; preserve thresholds, messages, scaling, encoders and host boundary, and prove both stream clocks with real AV and the existing conform tests.
 
 ## CC-1 detail
 
