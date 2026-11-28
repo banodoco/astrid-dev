@@ -7,7 +7,7 @@
 | You want to… | Action | Approval boundary |
 | --- | --- | --- |
 | Fix a bug or small issue | Search/open an [Astrid-dev issue](#issues) and submit a focused product PR into a fix branch of the release in progress, or into its own fix release for the published one ([which](../agent/shared/workstreams/release.md#how-a-release-runs)) | Reproduction, actual proof and appropriate product PR review; no project pack |
-| Take on an existing project | Claim one `queued` and `Unassigned` project through a PR that changes only the `**Owner:**` line in its `plan.md` | **The claim bot or a maintainer merges the claim.** It gives ownership, not execution authority |
+| Take on an existing project | Claim one `queued` and `Unassigned` project that no running lane brief lists through a PR that changes only the `**Owner:**` line in its `plan.md` | **The claim bot or a maintainer merges the claim.** It gives ownership, not execution authority |
 | Propose new substantial work | Open an [idea issue](#issues), then a reviewed scope PR | Maintainer accepts the new scope and project pack |
 | Submit project work | Open product PRs; optionally open an Astrid-dev implementation review PR | A project owner’s PR is **queued for review**, not auto-approved |
 | Ship a change in a release | Open a pull request into the plan or fix branch `release/<NN>/…`; it names its plan or issue ([How a release runs](../agent/shared/workstreams/release.md#how-a-release-runs)) | Product PR review; the owner decides what a release includes and gives the go to publish. A pull request from outside, or against `main`, is retargeted or recorded as [Merge](../agent/shared/workstreams/merge.md#where-a-pull-request-lands) says |

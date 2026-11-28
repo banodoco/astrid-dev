@@ -149,7 +149,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Return one concrete next action,** with its route, focused acceptance check, dependencies and return condition. For a high-judgment choice, give the simplest viable option, its trade-off, and a challenge against over-engineering.
 - **Stay inside the run contract's limits** ([review and promotion boundaries](../shared/run-contract.md#review-and-promotion-boundaries), [checks and failure repair](../shared/run-contract.md#checks-and-failure-repair)), and never invent a model ID.
 
-## Path 3: check in (only when the owner asks)
+## Path 3: check in (when the owner or the brief sets a cadence)
 
 For delegated multi-manager release work use the [dispatch checklist](orchestrator/multi-manager-dispatch.md#every-hour); the Lead retains release-wide review and issue intake. Otherwise use this general project check-in path.
 

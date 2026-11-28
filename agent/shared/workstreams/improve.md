@@ -56,7 +56,7 @@ Enter through [astrid-dev](../../start.md). Words follow the [glossary](../gloss
 
 1. Start from a recorded failure: a process ledger entry, an issue or an accepted card. No failure, no change.
 2. Find the home in the table. Change it and nothing else; replace any copy with a link to the home's heading.
-3. If you add words, cut as many.
+3. If you add words, cut as many. Write the change as an [explainer](../../README.md#write-it-as-an-explainer): the parent rule, not another case.
 4. Change what a check accepts, or add a check, in a separate, announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../run-contract.md#checks-and-failure-repair).
 5. Prove it. Run `python3 scripts/astrid_dev.py check`; the tests of what you touched (`python3 -m unittest discover -s scripts -p "test_<file>.py"`); and `sync` if a generated page changed. `check` confirms that a linked file exists and (`link-anchors`) that a `#heading` link into a skill, template or top-level doc names an existing heading. A pull request is checked with `check --base <base commit> --body-file /dev/null`.
    For a change to a role, workstream, start message or brief, also run the [agent tests](#agent-tests) that cover it (`agent-test status` lists them) and commit the run sheet; a changed document with no case gets one.

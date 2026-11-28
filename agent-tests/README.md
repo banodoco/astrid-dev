@@ -60,7 +60,7 @@ The exact first message, as the role receives it.
 | `covers` | The documents whose instructions the case tests. A changed covered file makes the result stale. |
 | `brief` | The brief the session works under, if any (a lane brief, a plan's `tasks.md`). Also part of the result's fingerprint. |
 | `host` | `claude-cloud`, `claude-subagent`, `codex-app`, `codex-in-claude` or `chatgpt-web`. Sets the role-play line. |
-| `actor` | The route that plays the role. Default `N`, the cheapest: if the cheapest model follows the documents, they are clear. |
+| `actor` | The route that plays the role: the cheapest route allowed to hold it. Default `N`. A role whose judgment is its job (a Lead dividing lanes, a reviewer) runs on its own route, since a miss on `N` there shows only that `N` can't do the job. |
 | `after` | A chained case: its Given contains `{upstream}`, filled with the text the upstream case's actor produced (for example the manager launch an orchestrator posted). Chains test hand-offs. Pass only the text the upstream session would hand over, not its whole report. |
 
 **Writing expectations.** Take each one from [the golden path](golden-path.md), which names the document line it rests on. A behaviour the documents don't state is not an expectation yet: fix the document first, through [improve](../agent/shared/workstreams/improve.md). Phrase each line so the report can show it, for example "posts its first STATUS on `board: lane h3`", not "communicates well".

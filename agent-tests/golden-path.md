@@ -14,6 +14,8 @@ Ranked by consequence times likelihood. Each lists the findings it settles.
 
 ### 1. Authority: the brief changes defaults, and says so
 
+*Written into the [run contract](../agent/shared/run-contract.md#who-answers-for-a-run) on 28 Nov 2026.*
+
 A role document states defaults. The run's brief (a lane brief, or a plan's `Run start` and `tasks.md` outside a lane) may change a default within the owner's go, and must name each change in its Roles, Merges or How it runs. A rule written for another lane or run does not bind this one. The run contract's safety, proof and permission rules win over both.
 
 **Settles:**
@@ -25,6 +27,8 @@ A role document states defaults. The run's brief (a lane brief, or a plan's `Run
 - the Lead's gate in a lane that has its own.
 
 ### 2. Hand-off: one start message per edge, and one way back
+
+*The way back is written into [start-session](../agent/shared/workstreams/start-session.md#procedure), step 7, on 28 Nov 2026.*
 
 Every edge from a parent to a child (owner to Lead, owner to orchestrator, orchestrator to manager, manager or orchestrator to worker or chat, orchestrator to reviewer) has one start message. It lives in [start-session](../agent/shared/workstreams/start-session.md) for the general case, or in the brief for a lane. It names:
 - what the child reads, and at which ref;
@@ -53,6 +57,8 @@ Role documents link to it and don't restate it.
 - launch lines missing the creator.
 
 ### 3. Clock: long-running roles check in, one-shot roles report
+
+*Written into the [run contract](../agent/shared/run-contract.md#coordination-boards-and-check-ins), items 5, 7 and 8, on 28 Nov 2026.*
 
 A long-running role (Lead, orchestrator, manager) sets an hourly check-in at start with its own host's scheduler. On Claude that is a scheduled task or `/loop`; in the Codex app, its automation tool. It names the check-in in its first STATUS. A one-shot role (worker, chat, reviewer) sets none and posts milestones only.
 

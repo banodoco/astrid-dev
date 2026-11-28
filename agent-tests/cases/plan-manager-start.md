@@ -23,7 +23,7 @@ Follow the astrid-dev-manager skill (install the skills with python3 scripts/ast
 
 - The creator, session `session_011EzfW1gtAhRQwk8pgJMzhG`, is the planning session. Its sign-off name in this case is `planning-session`.
 - Plan 108's `Run start` line names the accountable manager `p108-manager` and carries the owner's go of 28 November 2026. Its plan check passes.
-- No branch `project/108-lane-briefs` exists yet, and every card in `tasks.md` is open. This case tests a start, not the plan's current state (see the owner questions).
+- Stand-ins: this rehearses Plan 108's original start. Treat `tasks.md` as if every card were open and no branch `project/108-lane-briefs` existed; where Plan 108's records say otherwise, this state wins.
 
 ## Expect
 

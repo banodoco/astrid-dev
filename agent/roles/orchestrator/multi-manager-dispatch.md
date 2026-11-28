@@ -42,6 +42,8 @@ Use when a lane brief's How it runs names this option. The lane brief sets which
 
 ## Packet start message
 
+When your brief has its own chat start message, send that one. This template is for releases with prepared packet files.
+
 ```text
 You are the ChatGPT manager implementing ONE packet for Release <N>.
 Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
@@ -65,7 +67,7 @@ Releases that still have packet files use the earlier form: replace the lane bri
 
 ## Every hour
 
-Every 20 minutes while a packet is Running or in Review, a short pass relays submissions, resumes stalled sessions and starts Ready packets. The STATUS stays hourly. If your own run ends, for example at the end of a ChatGPT agent window, say so in your last STATUS, with the text the owner pastes to resume you. Don't stop while your plan may still need packets.
+At each check-in (hourly, unless the brief sets another cadence), a pass relays submissions, resumes stalled sessions and starts Ready packets. If your own run ends, for example at the end of a ChatGPT agent window, say so in your last STATUS, with the text the owner pastes to resume you. Don't stop while your plan may still need packets.
 
 1. **Read by cursor** ([rules](../../shared/run-contract.md#coordination-boards-and-check-ins)): the lane board, where every message about the lane's plans goes.
 2. **Inspect every open packet** in the lane: Ready, Running, Review or Blocked. The branch, not the chat, shows health. No commit or STATUS for 3 hours: resume it. A chat that will not load after one reload, is silent 30 minutes after a resume, or is quiet for 6 hours is broken: replace it once its branch has not moved for 30 minutes, naming the head in the replacement's first message. Never two writers on one branch.

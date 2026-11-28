@@ -6,7 +6,7 @@ covers:
   - releases/16/briefs/reviewer-h3.md
 brief: releases/16/briefs/h3.md
 host: claude-cloud
-actor: N
+actor: S
 ---
 
 # A reviewer judging 66-U1

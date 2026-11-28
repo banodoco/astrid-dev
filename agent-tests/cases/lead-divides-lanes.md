@@ -7,7 +7,7 @@ covers:
   - agent/shared/workstreams/release.md
 brief: releases/16.md
 host: claude-cloud
-actor: N
+actor: X
 ---
 
 # The Release 16 Lead proposes lanes and waits for the owner
