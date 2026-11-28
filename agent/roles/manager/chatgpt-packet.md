@@ -24,7 +24,7 @@ Receive and verify the assignment, implement code and tests directly on the perm
 
 Every assigned task has a traceable disposition, exact candidate source and proof selectors, and a Lead-visible handoff without unauthorized merging.
 
-Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). Follow [Manage](../manager.md) for scoped engineering and proof; the review is the Lead's, so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.
+Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). Follow [Manage](../manager.md) for scoped engineering and proof; the review belongs to whoever your brief names (the Lead by default), so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.
 
 ## Receive → implement → submit
 
@@ -37,7 +37,7 @@ Use when a fresh ChatGPT session receives **one** accepted packet from the [Orch
    - **Tests.** Change test setup and assertions only as the [run contract](../../shared/run-contract.md#checks-and-failure-repair) allows.
    - **Pins.** Put any pin change in its own commit and name it in STATUS; pins are not yours to approve.
    - **Pauses.** Before any pause, push work in progress and post STATUS.
-3. **Submit and stop.** When code and tests are pushed on the draft PR, post `READY-PROOF <repo> <PR> <head> <selectors>` as a `STATUS` on your board, `to:` the Orchestrator, with the packet ID, task IDs, adjacent edits and remaining limits; then stop. It is not Done. A fix round is a resume with the orchestrator's findings, never a held BLOCKED; the Orchestrator may instead start a **replacement session for the same packet**.
+3. **Submit and stop.** When code and tests are pushed, mark the draft PR ready and post `READY-PROOF <repo> <PR> <head> <selectors>` as a `STATUS` on your board, `to:` the Orchestrator, with the packet ID, task IDs, adjacent edits and remaining limits; then stop. It is not Done. A fix round is a resume with the orchestrator's findings, never a held BLOCKED; the Orchestrator may instead start a **replacement session for the same packet**.
 4. **If blocked**, post `BLOCKED` with the failure, what you tried and the action needed; continue independent work.
 
-**Do not merge, update `tasks.md` or claim the plan is finished:** those are the Lead's. A row the plan lacks goes in STATUS as a proposal.
+**Do not merge, update `tasks.md` or claim the plan is finished:** those belong to whoever your brief names (the Lead by default). A row the plan lacks goes in STATUS as a proposal.

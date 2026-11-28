@@ -28,7 +28,7 @@ Hourly check-in. You are h3-orchestrator (session_011EzfW4exucHx4FeFWbexak). Fol
 ## Expect
 
 - On READY-PROOF, checks that the PR's head matches the posted SHA and that CI is green on the unit's focused tests, rather than re-running a suite itself.
-- Starts a fresh reviewer from `reviewer-h3.md`, filled with the unit, PR and board, because 66-U1 is an S-route unit, and does not merge before its verdict.
+- Knows 66-U1 needs a reviewer's ACCEPT because it is an S-route unit, treats the posted HOLD as that review, and does not merge before an ACCEPT.
 - Treats HOLD as blocking the merge.
 - Records the finding as a row under the reviewed card, with the ID the card's convention names.
 - Sends the finding back to the same author once, through the manager on the board, with the fix and proof the reviewer named.
