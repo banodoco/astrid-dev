@@ -4,7 +4,7 @@
 **Releases:** 16
 **State:** running; takes over Plans 93, 94 and 38 from the earlier Release 16 setup, and starts Plan 79. Its orchestrator moved from Claude to Codex on 28 November (owner).
 **Go:** given on 28 November 2026 in the [planning session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): owner-authorized run of Plans 93, 94, 38 and 79 in Release 16 to the cut on Friday 4 December 2026, CPU and Linux scope (see Owner rulings). The orchestrator replaces the Codex Lead `r16-lead` for these plans; their existing managers and chats continue under it.
-**Orchestrator:** one Codex session in the Codex app on the owner's computer, on route S (Sol), mailbox `dependable-orchestrator` (owner, 28 Nov 2026). It replaces the Claude session `session_011EzfVzdahcZYHKAzfLeHTj`, which opened the board and stood down. It records its thread name here in its first progress PR.
+**Orchestrator:** Codex app chat `Set up dependable orchestrator` on the owner's computer, on route S (Sol), mailbox `dependable-orchestrator` (owner, 28 Nov 2026). It replaces the Claude session `session_011EzfVzdahcZYHKAzfLeHTj`, which opened the board and stood down.
 **Reviewer:** a fresh Claude Opus session, independent of every author and of the orchestrator; one per review stop ([reviewer-h3.md](reviewer-h3.md) is the template, with this lane's board)
 **Board:** [`board: lane dependable`](https://github.com/banodoco/astrid-dev/issues/2086), opened on 28 November. It is this lane's one message board.
 
