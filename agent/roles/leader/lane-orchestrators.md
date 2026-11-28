@@ -36,7 +36,7 @@ Post the proposal on the Lead board (`board: release <N> lead`) and tell the own
 - **Cross-lane coordination:** shared files, fixtures, machines, CI and pins, and how their merges are ordered;
 - **The cost to the owner:** how many lanes they follow, and what each would ask of them.
 
-End with a **recommendation** and the reason. Then stop. The owner chooses, and may change a grouping. Write no brief until they have.
+Give every option all five, in the same table, so the owner compares like with like. End with a **recommendation** and the reason. Then stop. The owner chooses, and may change a grouping. Write no brief until they have.
 
 ## 2. Record the agreed split on the run board
 
