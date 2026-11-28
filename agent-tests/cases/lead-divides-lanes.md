@@ -20,6 +20,7 @@ Follow the astrid-dev-leader skill (install the skills with python3 scripts/astr
 
 ## Fixture
 
+- Stand-ins: the owner has recorded the handoff of the Release 16 Lead to this session; where `releases/16/run.md` names an earlier Lead, this state wins.
 - The plans to place are those in the H-3 card of `plans/108-lane-briefs/tasks.md`: Plans 93, 94 and 38 (active); Plans 09, 10, 29, 30, 31, 04, 63, 79, 90 and 87 (unstarted); and the H3 programme (Plans 66, 68, 70 and 67).
 - The H3 lane already runs under `releases/16/briefs/h3.md` (State `running`, the owner's go of 28 November 2026). Re-laning it is the owner's decision alone.
 - `releases/16/run.md` records no lane split beyond the H3 lane.
