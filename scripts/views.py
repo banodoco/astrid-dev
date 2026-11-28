@@ -56,6 +56,11 @@ def _checks(root: Path) -> str:
     return "# Registered checks\n\n" + "\n".join(f"- `{line}`" for line in result.stdout.splitlines()) + "\n"
 
 
+def _responsibility(root: Path) -> str:
+    from lifecycle import responsibility_page
+    return responsibility_page()
+
+
 def _catalog(root: Path) -> str:
     from records import projects
     path = root / "plans/index.md"
@@ -188,6 +193,7 @@ VIEWS = (
     View("plan-catalog", ("plans/*/plan.md", "plans/priority.md"), "plans/index.md", _catalog, "plan-catalog"),
     View("status-definitions", ("scripts/lifecycle.py",), "plans/index.md", _status_definitions, "status-definitions"),
     View("check-catalog", ("scripts/checks.py",), "docs/checks.md", _checks),
+    View("responsibility-map", ("scripts/lifecycle.py",), "docs/lifecycle.md", _responsibility),
 ) + tuple(
     View(f"workstream-index-{Path(target).stem}",
          ((Path(target).with_suffix("") / "*.md").as_posix(),),

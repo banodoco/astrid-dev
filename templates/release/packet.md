@@ -12,4 +12,4 @@
 **PR destination:** <repo(s): `p<P>/<task id>` → `release/<N>/plan-<P>`, or `release/<N>/<topic>` → `release/<N>/main`>
 **Authority:** <link to accepted Run start and permissions>
 
-One packet starts **one fresh ChatGPT session**. The session opens task PRs and ends with `READY-PROOF`, **never merging or editing `tasks.md`**. The Orchestrator runs the proof and reports the handoff; the Lead reviews and integrates.
+One packet starts **one fresh ChatGPT session**. The session opens task PRs and ends with `READY-PROOF`, **never merging or editing `tasks.md`**. The orchestrator runs the proof, has the PR reviewed where the brief requires, and merges it into the plan branch.

@@ -34,7 +34,7 @@ The execution-units tables in each plan's `tasks.md` are the queue. Link each pl
 - **Dispatch.** <The in-flight cap, whether the first unit runs alone, and the route and mode for each unit. Replacement rules. The hourly cadence.>
 - **Proof.** <Who runs the focused proof, where it runs, and what counts as evidence. Hosted CI as the final check.>
 - **Reviews.** <Which stops need the reviewer's ACCEPT, which units merge on green CI and shown proof, and how findings return.>
-- **Merges.** <What the orchestrator merges on green, and the release gate into `release/<N>/main`: `Lead`, or `orchestrator, after any overlapping merge` when the owner's go grants it.>
+- **Merges.** <What the orchestrator merges on green. Each ready plan goes to the Lead as a PR into `release/<N>/main`, and the Lead merges it.>
 - **Check-ins.** <One STATUS on the lane board per check-in, and what it holds.>
 
 ## Roles

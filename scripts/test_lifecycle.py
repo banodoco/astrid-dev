@@ -239,3 +239,19 @@ class StatusViewTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ResponsibilityMapTests(unittest.TestCase):
+    def test_lane_states_match_the_lane_check(self):
+        from records import LANE_STATES
+        lane = next(level for level in lifecycle.LEVELS if level.name == "Lane")
+        self.assertEqual(lane.states, ", ".join(f"`{state}`" for state in LANE_STATES))
+
+    def test_plan_states_are_the_lifecycle(self):
+        plan = next(level for level in lifecycle.LEVELS if level.name == "Plan")
+        self.assertEqual(plan.states, ", ".join(f"`{name}`" for name in lifecycle.names()))
+
+    def test_page_lists_every_level(self):
+        page = lifecycle.responsibility_page()
+        for level in lifecycle.LEVELS:
+            self.assertIn(f"| **{level.name}** |", page)

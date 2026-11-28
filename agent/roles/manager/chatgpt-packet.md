@@ -24,7 +24,7 @@ Receive and verify the assignment, implement code and tests directly on the perm
 
 Every assigned task has a traceable disposition, exact candidate source and proof selectors, and a Lead-visible handoff without unauthorized merging.
 
-Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). Follow [Manage](../manager.md) for scoped engineering and proof; the review belongs to whoever your brief names (the Lead by default), so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.
+Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../orchestrator/multi-manager-dispatch.md). Follow [Manage](../manager.md) for scoped engineering and proof; the review belongs to whoever your brief names (the plan's accountable agent by default), so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.
 
 ## Receive → implement → submit
 
