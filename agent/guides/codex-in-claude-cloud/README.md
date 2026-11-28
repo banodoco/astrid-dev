@@ -6,7 +6,7 @@ description: Environment guide for running Codex inside a Claude Code cloud sess
 
 **Environment:** a Claude Code cloud session that runs Codex in its own container. For managers in separate Codex Cloud chats, use the [Codex Cloud guide](../codex-cloud/README.md) instead.
 
-The [Codex-in-Claude workstream](../../roles/orchestrator/codex-in-claude-cloud.md#use-codex-from-claude-cloud) says which of the two shapes a run uses. The first section below is for Codex workers under a Claude manager; the sections from [Brief a manager](#brief-a-manager) on are for a Codex manager. Which model each route uses is the run contract's [table](../../shared/run-contract.md#routing-and-bindings).
+The [Codex-in-Claude workstream](../../roles/orchestrator/codex-in-claude-cloud.md#use-codex-from-claude-cloud) says which of the two shapes a run uses. The first section below is for Codex workers under a Claude manager; the sections from [Start a manager](#start-a-manager) on are for a Codex manager. Which model each route uses is the run contract's [table](../../shared/run-contract.md#routing-and-bindings).
 
 ## One-time setup in the session
 
@@ -42,9 +42,9 @@ See [routing and bindings](../../shared/run-contract.md#routing-and-bindings) in
 - **Switch at a task boundary.** Let running Claude workers finish; start new tasks on Codex. If a model ID is refused or the sign-in is lost, fall back to the Claude route for that task and say so.
 - **A review is independent of the work it reviews.** The reviewer is never the worker that wrote the change and is not briefed with the author's conclusions, only the commit range, the rules that apply and the questions to press on. Whoever owns the gate (the orchestrator, where the release brief says so) commissions the review and rules on its findings.
 
-## Brief a manager
+## Start a manager
 
-Only when you have chosen a Codex manager. Start from [`manager-brief.md`](manager-brief.md): the workspace layout, route-to-model lines, timing and branches, the rules that differ under Codex, and what to report.
+Only when you have chosen a Codex manager. Its start message is one line that names the lane brief and the plan's `tasks.md`, and nothing more. [`manager-brief.md`](manager-brief.md) holds the mechanics every Codex manager shares: the workspace layout, route-to-model lines, the rules that differ under Codex, and what to report. The lane brief holds the plan, branches, timing and limits.
 
 ## Start a run
 
@@ -52,6 +52,7 @@ Only when you have chosen a Codex manager. Start from [`manager-brief.md`](manag
 CODEX_EFFORT=medium setsid nohup agent/guides/codex-in-claude-cloud/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
 ```
 
+- **`<prompt.md>`** is the one-line start message from [Start a manager](#start-a-manager), with the finish line below.
 - **`<workdir>`** is where Codex works. For a manager, make it a folder of partial clones (`git clone --filter=blob:none`) of the repositories the plan touches, plus `run/`. Codex can write only there and in `/tmp`. The runner passes `--skip-git-repo-check`, because that folder isn't itself a repository.
 - **`CODEX_EFFORT`** sets the reasoning effort (`low`, `medium` or `high`). **`CODEX_MAX_THREADS`** sets the cap on open sub-agent threads; the runner defaults it to the CPU count (at least 6), as the worker rule above sets it, and Codex may give the manager no tool to close a finished sub-agent. Lower it only when several runs share the machine. Tell the manager to keep a slot free for its reviewer.
 - **Keys:** Codex sees only PATH, HOME and the proxy and certificate variables. Add a key it needs by name, for example `CODEX_PASS_ENV=RUNPOD_API_KEY`. With that key passed, the runner also logs the RunPod balance and pod list to `money.log` every 5 minutes, and never logs the key.
@@ -109,7 +110,7 @@ If Codex can't continue without an answer, it writes its question and ends with 
 
 ## Oversight
 
-The hosting session answers for the run ([who answers for a run](../../shared/run-contract.md#who-answers-for-a-run)); what it does at each check-in is in the [Codex-in-Claude workstream](../../roles/orchestrator/codex-in-claude-cloud.md#use-codex-from-claude-cloud). Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work under the authority in its starting brief ([`manager-brief.md`](manager-brief.md)); a mailbox note can't grant it.
+The hosting session answers for the run ([who answers for a run](../../shared/run-contract.md#who-answers-for-a-run)); what it does at each check-in is in the [Codex-in-Claude workstream](../../roles/orchestrator/codex-in-claude-cloud.md#use-codex-from-claude-cloud). Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work under the authority in the lane brief its start message names; a mailbox note can't grant it.
 
 ## Known limits
 

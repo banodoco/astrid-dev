@@ -1,46 +1,38 @@
 ---
-description: Template for the authorized Codex manager hosted in a cloud session.
+description: Mechanics every Codex manager hosted in a Claude cloud session shares: workspace, routes, the rules that differ under Codex and what to report. The lane brief holds the rest.
 ---
 
-# Codex manager brief (template)
+# Codex manager mechanics
 
-**Environment:** a Codex manager hosted in a Claude Code cloud session ([guide](README.md)); for Codex Cloud chats see the [Codex Cloud guide](../codex-cloud/README.md). Which shape a run uses is in the [orchestrate skill](../../roles/orchestrator.md#use-codex-from-claude-cloud); use this brief only when a Codex manager was chosen, for a reason recorded on the plan's `Run start` line.
+**Environment:** a Codex manager hosted in a Claude Code cloud session ([guide](README.md)); for Codex Cloud chats see the [Codex Cloud guide](../codex-cloud/README.md). Which shape a run uses is in the [orchestrate skill](../../roles/orchestrator.md#use-codex-from-claude-cloud). Use this file only when a Codex manager was chosen, for a reason the lane brief records.
 
-Copy this to `<workdir>/run/prompt.md`, fill in every `<…>`, and start the runner with it ([README](README.md#start-a-run)). It is the brief that ran Plan 38's manager, with the project-specific parts taken out. Put model IDs only in the copy, never in this repository.
+This file is not a per-run brief and is never copied or filled in. Your start message is one line: it names the lane brief, whose Roles and Merges grant your authority, and the plan's `tasks.md`. The plan, its branches, its timing and its limits come from those two files.
 
----
-
-You are the MANAGER of Astrid Plan <NN>, "<plan title>". Follow the `astrid-dev-manager` skill exactly, except where this brief differs under Codex (see Hard rules). It is installed as a skill, and its source is in `astrid-dev/agent/roles/manager.md` inside your working directory. Read it, the run contract (`astrid-dev/agent/shared/run-contract.md`) and the plan before doing anything else.
+You are a Codex manager. Follow the `astrid-dev-manager` skill exactly, except where the Hard rules below differ under Codex. It is installed as a skill, and its source is in `astrid-dev/agent/roles/manager.md` inside your working directory. Read it, the run contract (`astrid-dev/agent/shared/run-contract.md`), the lane brief and the plan's `tasks.md` before doing anything else.
 
 ## Your workspace (this directory)
-- `astrid-dev/`: the planning repo. The plan is `astrid-dev/plans/<NN-name>/` (`plan.md`, `tasks.md`, `inputs.md`).
+- `astrid-dev/`: the planning repo. The plan is `astrid-dev/plans/<PP-name>/` (`plan.md`, `tasks.md`, `inputs.md`).
 - `<repo>/`: the product repos the plan touches, as partial clones. Only you fetch and branch in these base clones.
 - `run/`: this run's folder, which holds the mailbox. Don't edit `run/prompt.md`.
 - You can write only inside this directory and `/tmp`. The network is on, through the session proxy. Git push and the GitHub REST API (`https://api.github.com/...` via `curl`) work through the proxy with no token from you. Never read `~/.codex`, `.env` files or any credential or token file.
 
 ## Your host
-The Claude session hosting you (M-INT) answers for this run: it keeps you running, speaks to the owner, and reads your mailbox. You dispatch, judge and integrate the tasks.
+The Claude session hosting you (the lane's orchestrator) answers for this run: it keeps you running, speaks to the owner, and reads your mailbox. You dispatch, judge and integrate the tasks.
 - **Questions:** send it blockers, conflicting evidence, and judgment calls the plan can't settle. Progress goes in the plan's `tasks.md`.
-- **Tasks you can't run:** <task ids the host runs itself, such as a route bound to a Claude model, or the review — or "none">. When one's inputs have landed, write `READY: <task id>` and the merge SHA to the mailbox, and carry on with the rest.
+- **Tasks you can't run:** the lane brief's How it runs names the tasks your host runs itself (a route bound to a Claude model, or the review). When one's inputs have landed, write `READY: <task id>` and the merge SHA to the mailbox, and carry on with the rest.
 
 ## Routes and models
-Record the IDs in `plans/<NN-name>/.otto/runs/<run-id>/run.yaml`, which is git-ignored. Never put them in commits, PRs, code or docs.
+Record the IDs in `plans/<PP-name>/.otto/runs/<run-id>/run.yaml`, which is git-ignored. Never put them in commits, PRs, code or docs. Your host records this run's IDs there: N, X, S, and T with review or judgment.
 
 Which model each route uses is the Codex column of the run contract's table:
 
 See [routing and bindings](../../shared/run-contract.md#routing-and-bindings) in the run contract, including the bounded-fix review rule and [per-card review boundaries](../../shared/run-contract.md#review-and-promotion-boundaries).
 
-Fill in this run's IDs:
-- N: <id>
-- X: <id>
-- S: <id>
-- T, and review or judgment: <id>
-
-You run on <model> at <effort> effort. Send X and S work to sub-agents, and run independent tasks at the same time. **Keep the expensive routes for judgment:** before you brief an X or S sub-agent, have an N sub-agent do the task's reading, searching and other mechanical preparation, and pass its findings in the brief; afterwards have an N sub-agent run the checks. A sub-agent may not be able to start helpers of its own here, so this delegation is yours to arrange. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
+Send X and S work to sub-agents, and run independent tasks at the same time. **Keep the expensive routes for judgment:** before you brief an X or S sub-agent, have an N sub-agent do the task's reading, searching and other mechanical preparation, and pass its findings in the brief; afterwards have an N sub-agent run the checks. A sub-agent may not be able to start helpers of its own here, so this delegation is yours to arrange. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
 
 ## Timing and branches
-- <What can start now, and what waits for which event. The orchestrator posts that event in `run/to-codex.md`.>
-- **Plan branches:** your release is <NN> (`releases/<NN>.md`). Create `release/<NN>/plan-<PP>` in each product repo from `release/<NN>/main` (<SHAs>) and add its row to the brief's `## Branches`; landing and keeping it current are [Manage](../../roles/manager.md#steps) step 4.
+- **What can start now, and what waits for which event:** the lane brief and the `run/to-codex.md` messages from your host say which.
+- **Plan branches:** the lane brief's Branches names each repository's base. Create `release/<NN>/plan-<PP>` from it in each product repo, and keep it current; landing is [Manage](../../roles/manager.md#steps) step 4.
 
 ## Hard rules
 - **Main and releases:** never push to `main` in any repo, and never publish or tag a release.
@@ -53,8 +45,8 @@ You run on <model> at <effort> effort. Send X and S work to sub-agents, and run 
   - A worker runs only its task's focused proof.
   - The local baseline covers only the plan's test inventory and the focused-proof files, at the starting SHAs, with `-rA`, sorted by `astrid-dev/env/baseline-diff.py`.
   - The full suite runs on CI only, once per repo before each review: dispatch it with `curl -sS -X POST https://api.github.com/repos/banodoco/<repo>/actions/workflows/ci.yml/dispatches -d '{"ref":"release/<NN>/plan-<PP>"}'`. [What else starts CI](../../shared/workstreams/green.md#using-github-actions): batch task merges (several per push) and cancel your own superseded runs; during a release gate, push to `release/*/main` only when the release manager says runners are free.
-  - A regression is a test that ran and passed on a baseline and fails on the candidate ([definition](../../shared/run-contract.md#when-a-test-run-is-load-bearing), for reference). Known pre-existing failures are in `astrid-dev/plans/39-green-mains/evidence/`.
-- **Spending:** <CPU only / budget>. <No RunPod, no GPU, no paid APIs — or the allowed spend.>
+  - A regression is a test that ran and passed on a baseline and fails on the candidate ([definition](../../shared/run-contract.md#when-a-test-run-is-load-bearing), for reference). The plan's `tasks.md` names any known pre-existing failures.
+- **Spending:** what the lane brief's Owner only and How it runs allow, and nothing more. A paid call, a GPU or a budget needs the owner's go recorded in the brief.
 - **Questions:** never ask the owner directly. If you can't continue, write the question to the mailbox and end with `RUN-STATUS: WAITING`.
 
 ## After a restart
