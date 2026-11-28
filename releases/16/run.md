@@ -207,6 +207,8 @@ Your mailbox name is only the name you sign with; there is no other mailbox.
 
 **Toolkit check, the first time each role starts:** first read the Lead board's `TOOLKIT` comments; a row already recorded there is just followed. For a row not yet recorded, your first real use of it is the trial: the Lead's first manager is the real one, a manager's first chat is its first packet, and the Sol row is recorded the first time a Sol is sent. Once a row works, post one comment on the Lead board: `TOOLKIT <row>: <the exact steps that worked>`. A row you can't do is one `PARKED <role>: can't <row>` for the owner. The comments are the record; the table only lists the rows.
 
+The recorded steps for these rows are in the [Codex app guide](../../agent/guides/codex-app/README.md).
+
 **The packet row** is proved by the first packet's early STATUS. If that packet instead posts BLOCKED because the chat can't reach GitHub, the manager posts `PARKED plan <PP>: packet chats can't reach GitHub`, and the Lead starts no more managers until the owner answers.
 
 ### Packet states
