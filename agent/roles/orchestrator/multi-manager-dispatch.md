@@ -26,7 +26,7 @@ Every dispatched packet has an identified session, current state and evidence or
 
 Use when a lane brief's How it runs names this option. The lane brief sets which plans and units it covers; the general [Orchestrate role](../orchestrator.md) still applies.
 
-**Packets go only to a new normal chat in ChatGPT on the web:** open chatgpt.com in your browser, signed in to the owner's own account. Never ChatGPT for Work, never Codex.
+**Packets go only to a new normal chat in ChatGPT on the web:** open chatgpt.com in your browser, signed in to the owner's own account. Never ChatGPT for Work, never Codex. For the Codex-app route, see the Codex-app guide at `agent/guides/codex-app/README.md` (to be linked after it merges).
 
 **The packet's Route sets the session's mode, every time** (normal tasks N, hard X, very hard S): N High, X Extra High, S Pro ([run contract](../../shared/run-contract.md#chatgpt-session-modes)), never one mode for all or by feel. If a mode isn't offered, say so in STATUS and ask the owner.
 
@@ -38,14 +38,15 @@ Use when a lane brief's How it runs names this option. The lane brief sets which
 2. Do the board's startup checks: the mailbox both ways ([protocol](../../guides/codex-cloud/README.md#establish-the-mailbox)), how sessions start and resume (a comment or session URL cannot wake one), how many ChatGPT sessions this account's subscription can run at once, and that **you** can clone, build the environment and run one focused test on a network-capable machine (packet sessions never do).
 3. **Find every earlier manager or packet session** on this lane's plans. Stop any you can reach, name any you cannot for the owner, and list each one's branches and open pull requests with heads. You decide what each becomes within the brief; the Lead decides any release-level effect.
 4. Dispatch the first packet alone: its early STATUS proves a packet session can push, open a pull request and comment. Each later packet's early STATUS proves its own repository.
-5. Give each Ready packet a **new ChatGPT session** in its Route's mode with the [start message](#packet-start-message), and name it in your next STATUS; a packet's ID is its file name.
+5. Give each Ready packet a **new ChatGPT session** in its Route's mode with the [start message](#packet-start-message), and name it in your next STATUS; a packet's ID is its file name, or in a lane its unit's card IDs.
 
 ## Packet start message
 
 ```text
 You are the ChatGPT manager implementing ONE packet for Release <N>.
 Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
-Packet: releases/<N>/packets/<id>.md at <SHA>; its PR destination names your branches.
+Lane brief: <brief path> at <SHA>; your units: <card IDs>, from each plan's tasks.md at <SHA>.
+Packet: written at dispatch from those rows and posted on the board; its PR destination names your branches.
 Authority: the lane brief's Roles and Merges at <SHA>, given by the owner.
 Standing rulings: the brief's Standing rulings section; they bind you.
 Board: <issue URL>, run <run id>, format in its first post. You are <mailbox name>;
@@ -59,6 +60,8 @@ Do not merge, tick tasks.md or start another packet.
 ```
 
 You send it as the owner's message ([run contract](../../shared/run-contract.md#who-answers-for-a-run)). If you cannot start a session, give the owner a ready-to-paste prompt.
+
+Releases that still have packet files use the earlier form: replace the lane brief and card-ID lines with `Packet: releases/<N>/packets/<id>.md at <SHA>; its PR destination names your branches.`
 
 ## Every hour
 
