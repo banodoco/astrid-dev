@@ -24,7 +24,19 @@
 
 **Review rounds:** One (L-R), on the high-judgment role.
 
-**Run start:** Pending — No run is authorized. Next: the owner starts it, either as its own lane or inside the Lead's work.
+**Run start:** Whole project (L-1 to H-3), owner-authorized on 28 November 2026 in the [planning session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG). **Accountable agent:** the manager `p108-manager` (Claude Sonnet), following the [whole-project manager workstream](../../agent/roles/manager/whole-project.md) for an astrid-dev-only project. **May, without asking:**
+- dispatch subagents on each card's route (N Haiku, X Sonnet, S Opus);
+- cut `project/108-lane-briefs` from `main`, and task branches `p108/<task>` from it;
+- merge task branches into the project branch;
+- merge its own `tasks.md` progress PRs to `main` once checks pass;
+- open and post on `board: plan 108 lane briefs`.
+
+**Needs the owner's go:**
+- the final project PR to `main`;
+- the owner's lane choice in H-3, which the manager proposes and then waits on;
+- anything outside astrid-dev.
+
+**Review:** L-R on the high-judgment role. **Advisor:** the planning session `session_011EzfW1gtAhRQwk8pgJMzhG`, by send_message; questions that block go there, never to AskUserQuestion. **Decision log:** a "Rulings" section at the top of `tasks.md`.
 
 ## Owner decisions
 

@@ -4,13 +4,15 @@
 
 **Goal:** Every group of plans one orchestrator runs has one lane brief, agreed by the Lead with the owner and written to one template, so an orchestrator learns its whole job from one file and the same dispatch note is never hand-rewritten again.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** The Plan 108 manager `p108-manager`, a Claude Sonnet session launched on 28 November 2026 by the planning session `session_011EzfW1gtAhRQwk8pgJMzhG` (advisor); it records its own session id in its first progress PR
 
 **Estimate:** 6–7 days (units of at most 3 days; planning figures)
 
 **Waiting on:** —
+
+**Run route:** astrid-dev-only
 
 **Start:** [Astrid agent start document](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
