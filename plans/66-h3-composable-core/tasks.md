@@ -86,6 +86,10 @@ Units of at most three human engineering days, including focused proof, replace 
 | 66-RS1b Contract review | RS1 (second half) | 0.5–1 | 66-U4, 66-U6a | S |
 | 66-U12 Skill, hand-written | CC-6 | 1–1.5 | 66-U4, 66-U11 | X |
 
+## Decisions
+
+- **66-U1 — orchestrator ruling 28 Nov 2026:** Refuse incompatible reference sets and shared sampler settings in preparation using an exception subclassing both `PreparationError` and `CompilationError`; retain the pinned reference-set phrase, name the grants and conflicting field, and keep the compiler check as a defensive duplicate.
+
 ## CC-1 detail
 
 **Lifecycle.**
