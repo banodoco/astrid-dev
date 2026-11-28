@@ -6,9 +6,9 @@
 
 **Goal:** When a creator has no usable ComfyUI, Astrid offers one separate install with its real cost stated, sets it up safely and resumably after one consent, proves the GPU computes, and delivers an image in the editor, with the agent never improvising.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** the dependable lane orchestrator (`dependable-orchestrator`, [lane brief](../../releases/16/briefs/dependable.md))
 
 **Estimate:** 1–2 engineering days for ER-0 and ER-1, then estimated from that baseline. Once ER-0 has chosen the route, the install branch, GPU rung, resumable downloads and skill wiring are likely 6–10 more, all on CPU. The live rounds are later work.
 

@@ -6,7 +6,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 24 November 2026 the owner asked for ComfyUI Desktop support and for this plan and [Plan 94](../94-dependable-environment-setup-and-recovery/plan.md) to be in Release 16 (in the planning chat behind astrid-dev #1847, then in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV). On 25 November she asked for both plans to deliver one end state, which is the one plan.md now describes: one honest state, one next step and one consent, so neither the person nor the agent improvises. That is release intent, not a go to implement. Next: the owner confirms the split and D2–D5.
+**Scope decision:** Accepted — the owner asked for this plan on 24 November 2026 and authorized its Release 16 run, CPU and Linux scope, on 28 November 2026 in the [planning session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG); real-machine cells are Release 17 ([lane brief](../../releases/16/briefs/dependable.md#standing-rulings)).
 
 **CPU-only (owner, 26 November 2026):** real-hardware work moves to the Later section of tasks.md, done separately later.
 
@@ -44,7 +44,7 @@ The estimate follows the critique's 4–6 days, plus the ladder contract, which 
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the ladder, because CD-2 to CD-5 and Plan 94 build on it, and R at most 1. Next: the owner confirms (D4).
 
-**Run start:** Pending — no implementation is authorized. Next: the owner names the accountable orchestrator, confirms the user test request's limits and the matching build (D2, D5), and the base; then record the date and limits here.
+**Run start:** Lane [dependable](../../releases/16/briefs/dependable.md): the brief records the owner's go, authority and limits.
 
 ## Owner decisions
 

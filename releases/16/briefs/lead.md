@@ -1,5 +1,7 @@
 # Lead brief
 
+*Superseded on 28 November 2026: the Release 16 Lead is named in [releases/16.md](../../16.md), and Plans 93, 94 and 38 run in the [dependable lane](dependable.md). Kept as history; do not paste.*
+
 The owner pastes this into a new Codex session, once. To replace a stopped Lead, the owner pastes it into a fresh session and adds the last line of [messages.md](messages.md)'s Replace message.
 
 ```text

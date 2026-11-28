@@ -10,7 +10,7 @@
 
 | Work area | Route | Depends on | Progress |
 |---|---|---|---|
-| [Verify the audit and fix the keep list](#intended-work-and-proof) | TBD | Plan 32 T6d (the settings document's shape) | Draft; not dispatched |
+| [Verify the audit and fix the keep list](#intended-work-and-proof) | TBD | Plan 32 T6d (the settings document's shape) | Superseded by the [28 November reconciliation](#release-16-reconciliation-28-november-2026); CPU part [x] merged |
 
 ## Intended work and proof
 
@@ -61,3 +61,43 @@ These rows need a real machine, an install of the App's dependencies, native Pin
 | Export gap | `structured_export` (and `GET /v1/export`) leaves out `user_app_state`, `project_selections` and `user_preferences`. The SQLite backup and restore keep them (proved in R16-P35-04). | `contract/schemas/export.json` is hash-pinned; adding keys changes the contract for every client. |
 | CLI for choices | A command to save, list and remove compute profiles; a command for the skills opt-out list. | New commands change `cli-surface.json` and need its generator and the broad CLI tests, not a narrow proof. R16-P35-08 adds the functions only. |
 | Other repositories' side-store checks | The same "new side store" check for the App (a lint on `localStorage`, `sessionStorage` and `indexedDB`) and for the Runtime. | The App lint needs the App's ESLint install. A scan of the Runtime found only install records, log and data roots, the default export folder (`service.py:7768`) and `~/Astrid/packs`; none holds a user choice. |
+
+## Release 16 reconciliation, 28 November 2026
+
+Evidence: first-parent history of `origin/release/16/plan-35` in astrid-agent and astrid-runtime. Agent merged into `release/16/main` by `0701ae2d0` ("Merge release/16/plan-35 into release/16/main"); Runtime by `e3f2bd8`. The App has no plan-35 branch; astrid-app `release/16/main` (`cc1d48f0`) holds no P35 work. Nothing is open in Agent or Runtime for this plan.
+
+### Packets
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+|---|---|---|---|---|---|
+| R16-P35-01 one helper for Runtime user-state documents | N | none | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_user_state.py` | [x] PR #665, merge `a554c82d1` |
+| R16-P35-05 side-store check | N | none | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_user_state_side_stores.py` | [x] PR #667, merge `898cefc7f` |
+| R16-P35-02 one-time import with receipt | X | 01 | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_user_state.py tests/test_user_state_import.py` | [x] PR #668, merge `fad0b093b` |
+| R16-P35-06 choices document, safe mirror rule | X | 02 | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_user_choices.py` | [x] PR #669, merge `5461c0945` |
+| R16-P35-08 compute profiles in Runtime, one import | N | 02 | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/core/test_compute_profile.py tests/core/test_compute_profile_volume.py tests/core/test_compute_profile_runtime.py -k "not untyped_mock_values"` | [x] PR #670, merge `4338648f2` |
+| R16-P35-07 skills opt-outs mirrored to Runtime | N | 06 | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_skills_state.py tests/test_skills_state_runtime_choices.py` | [x] PR #672, merge `010659858` |
+| R16-P35-09 removal date for VibeComfy TOML import | N | none | astrid-agent | `python -m pytest -p no:cacheprovider --noconftest -q tests/core/generation/test_generation_settings_legacy_removal.py` | [x] PR #674, merge `0c74617af` |
+| R16-P35-R review of Agent work | S | 01, 02, 05-09 | astrid-agent | review receipt | [x] PR #676, merge `f59cc40cba7f25872def3be4603fd78a10bf1431` |
+| R16-P35-03 protected grant ledger, revoke and reapprove | X | none | astrid-runtime | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_user_grants.py tests/test_app_state.py -k "not http_owner and not generated_python_client"` | [x] PR #125, merge `67825b519d8007c6ecbb433286cdaabd3bead97c` |
+| R16-P35-04 state survives backup and restore | N | 03 | astrid-runtime | `python -m pytest -p no:cacheprovider --noconftest -q tests/test_user_state_restore.py tests/test_app_state.py -k "not http_owner and not generated_python_client"` | [x] PR #126, merge `b7e21c61593920e9e0c6006d5eef8cc8e73522b6` |
+| R16-P35-RS1 review of Runtime work | S | 03, 04 | astrid-runtime | review receipt | [x] PR #127, merge `c7019b00f270a1cb173d9e4f0bf9852c95a3147c` |
+
+### Remaining cards (owner-deferred to after Release 16, 26 November)
+
+All rows below are outside the 4 December cut unless the owner says otherwise. They are dispatchable as written once their blocker is cleared.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+|---|---|---|---|---|---|
+| S35-2a App: last-opened project via `/v1/projects/selection`; remove localStorage `lastSelectedProjectId` and `ui.preferences.lastOpenedProjectId` | X | owner's go; a machine with `npm install` | astrid-app: `useProjectSelection.ts`, `projectSelectionStore.ts` | `cd astrid-app && npx vitest run src -t "project selection"` | [ ] blocked: needs App `node_modules` and a networked machine |
+| S35-2b App: extension state to one store (`astrid.extension-state` IndexedDB, `astrid.ext.state.*`) | X | S35-2a | astrid-app: `extensionStateRepositoryProvider.ts`, `extensionStateRepositoryIndexedDB.ts` | `cd astrid-app && npx vitest run src -t "extension state"` | [ ] blocked: needs App `node_modules` |
+| S35-2c App: hidden shots, strokes, effect drafts, pending join clips to `project_documents` | X | S35-2a | astrid-app: `useHiddenShots.ts`, `useStrokePersistence.ts`, `effect-store.ts`, `useJoinClips.ts`, `clipPendingActions.ts` | `cd astrid-app && npx vitest run src -t "project documents"` | [ ] blocked: needs App `node_modules` |
+| S35-2d App: last-used generation settings replaced by latest task spec; browser-storage lint | X | S35-2a | astrid-app: `useShotSettings.ts`, `useJoinSegmentsSettings.ts`, `useLastUsedEditSettings.ts`, `settingsStore.ts`, ESLint config | `cd astrid-app && npx eslint src --max-warnings 0 && npx vitest run src -t "settings store"` | [ ] blocked: needs App `node_modules` |
+| S35-3a pack `disabled` list out of `pack-sources.json` | X | Plan 38 owner decision on `_inventory_launch_policy` | astrid-agent: `core/pack/source_setup.py`, `core/execution/custody_broker.py` | `python -m pytest -p no:cacheprovider -q tests -k "pack_sources or custody_broker"` | [ ] blocked: moves Plan 38 launch policy pin |
+| S35-3b / S35-5 RunPod `claim.json` lease state | X | Plan 38 custody phases; paid RunPod account | astrid-agent: `packs/runpod/target_selection.py`, `packs/runpod/adapter.py` | `python -m pytest -p no:cacheprovider -q tests -k runpod` plus owner-run real-pod lease proof | [ ] blocked: owner money and Plan 38 |
+| S35-4a grant ledger HTTP route and generated clients | X | R16-P35-03 (done); contract owner | astrid-runtime: `contract/artifacts.json`, generated clients in Agent and App | `python -m pytest -p no:cacheprovider -q tests/test_user_grants.py tests/test_app_state.py` (includes `http_owner` and `generated_python_client`) | [ ] not started |
+| S35-4b revocation journal replayed by `restore` (`apply_revocations`) | X | S35-4a | astrid-runtime: `backup.py` dirfd restore path | `python -m pytest -p no:cacheprovider -q tests -k "backup and revoc"` | [ ] not started |
+| S35-4c credential-reference resolution; Plan 90 `trust approve/revoke/list` (TR-1) | X | Plan 36 design; S35-4a | Plan 36 and Plan 90 owners | owned by Plan 36 / 90 | [ ] blocked: Plan 36 design unfinished |
+| S35-6 installed migration/rollback integration: stale client, interrupted copy, native Pinokio, revoke and restore | X | S35-2, S35-3, S35-4; installed candidate; real older Astrid | integration owner | owner-run on a real install; record dated evidence | [ ] blocked: needs real machine and native Pinokio |
+| Export gap: `user_app_state`, `project_selections`, `user_preferences` in `structured_export` / `GET /v1/export` | X | owner decision on hash-pinned `contract/schemas/export.json` | astrid-runtime plus clients | `python -m pytest -p no:cacheprovider -q tests -k export` | [ ] not started |
+| CLI for compute profiles and skills opt-out | X | owner decision on `cli-surface.json` | astrid-agent | `python -m pytest -p no:cacheprovider -q tests -k "cli_surface"` | [ ] not started |
+| App and Runtime side-store lints | N | S35-2d for App | astrid-app, astrid-runtime | App: `npx eslint src`; Runtime: packet-05 style scan test | [ ] blocked for App: needs `node_modules` |

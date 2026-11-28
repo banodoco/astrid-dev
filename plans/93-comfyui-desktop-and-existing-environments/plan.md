@@ -6,9 +6,9 @@
 
 **Goal:** A creator who already has ComfyUI, including ComfyUI Desktop on Windows, gets an image from Astrid through it, and when it is closed or broken is told exactly what is true and the one thing to do next.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** the dependable lane orchestrator (`dependable-orchestrator`, [lane brief](../../releases/16/briefs/dependable.md))
 
 **Estimate:** 5–7 engineering days: the readiness ladder 2, existing-install rungs and next steps 2–3, wording 0.5, review 0.5–1, all on CPU. The installed Desktop witness is later work.
 

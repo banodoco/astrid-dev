@@ -6,7 +6,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 24 November 2026 the owner asked for broader environment setup and recovery, and for this plan and [Plan 93](../93-comfyui-desktop-and-existing-environments/plan.md) to be in Release 16 (in the planning chat behind astrid-dev #1847, then in session https://claude.ai/code/session_011EzfW1C63rxLXsL6TkHHVV). On 25 November she asked for both plans to deliver one end state: one honest state, one next step and one consent, with the agent never improvising. plan.md describes this plan's branch of it. That is release intent, not a go to implement. Next: the owner confirms the split and D2–D6.
+**Scope decision:** Accepted — the owner asked for this plan on 24 November 2026 and authorized its Release 16 run, CPU and Linux scope, on 28 November 2026 in the [planning session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG); real-machine cells are Release 17 ([lane brief](../../releases/16/briefs/dependable.md#standing-rulings)).
 
 **CPU-only (owner, 26 November 2026):** real-hardware work moves to the Later section of tasks.md, done separately later.
 
@@ -54,7 +54,7 @@ The critique estimated only the inventory and baseline (1–2 days); the rest is
 
 **Review rounds:** Pending — recommend RS1 at most 1 on the install's write and consent boundary, and R at most 1. Next: the owner confirms (D6).
 
-**Run start:** Pending — no implementation, hardware use or real download is authorized. Next: the owner names the accountable orchestrator, confirms the user test request's limits and zero paid spend (D4) and the base (D6); then record the date and limits here.
+**Run start:** Lane [dependable](../../releases/16/briefs/dependable.md): the brief records the owner's go, authority and limits.
 
 ## Owner decisions
 

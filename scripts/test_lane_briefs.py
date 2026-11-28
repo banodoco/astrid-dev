@@ -285,7 +285,10 @@ class LaneBriefCheckTests(unittest.TestCase):
     def test_real_h3_brief_passes_and_template_is_not_scanned(self):
         self.assertTrue(is_lane_brief((ROOT / "templates/release/lane.md").read_text(encoding="utf-8")))
         briefs = checks._lane_brief_files(ROOT)
-        self.assertEqual(list(briefs), ["releases/16/briefs/h3.md"])
+        self.assertIn("releases/16/briefs/h3.md", briefs)
+        self.assertTrue(all(path.startswith("releases/") for path in briefs))
+        for path, brief in briefs.items():
+            self.assertEqual(brief["errors"], [], path)
         parsed = briefs["releases/16/briefs/h3.md"]
         self.assertEqual((parsed["errors"], parsed["releases"]), ([], [16, 17]))
         self.assertIn(parsed["state"], ("prepared", "running", "paused", "done"))

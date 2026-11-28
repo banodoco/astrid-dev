@@ -4,9 +4,9 @@
 
 **Goal:** A Runtime-managed host-only pack host starts and runs a task on macOS, Linux and Windows: process identity, peer custody and signalling live once in `runtime_protocol`, the source closure has one definition with golden vectors, every duplicate is deleted, a one-implementation test in each repository stops new copies, and every test in the area is green on all three OSes.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** the dependable lane orchestrator (`dependable-orchestrator`, [lane brief](../../releases/16/briefs/dependable.md))
 
 **Estimate:** 10–13: phase 1 7–9, phase 2 3–4
 
