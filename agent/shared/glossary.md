@@ -14,7 +14,7 @@ One meaning per word; two meanings, two terms.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it creates a new ChatGPT manager session per packet, owns liveness and handoffs, and in a lane's packets option it reviews and merges into plan branches itself ([run contract](run-contract.md#who-answers-for-a-run)).
+**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it has a new ChatGPT manager session per packet started (by the owner pasting, or by itself where an owner-signed-in route exists), owns liveness and handoffs, and in a lane's packets option it reviews and merges into plan branches itself ([run contract](run-contract.md#who-answers-for-a-run)).
 
 **release lead:** the agent leading delivery across all plans of a release; the release manager named in the release brief.
 
