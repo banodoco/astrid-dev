@@ -1,8 +1,8 @@
 """Agent-test module: case parsing, validation, prompts, results, registry and CLI on the real repository."""
 import contextlib
+import subprocess
 import io
 import tempfile
-import time
 import unittest
 from pathlib import Path
 
@@ -164,15 +164,6 @@ class ValidateTests(unittest.TestCase):
                                               "Start the lane. Upstream said: {upstream}"))
         self.assertTrue(any("uses {upstream} but the case names no 'after' case" in e for e in errors), errors)
 
-    def test_result_for_unknown_case_is_an_error(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            root = make_root(tmp)
-            write_case(root)
-            (root / agent_tests.RESULTS_DIR).mkdir(parents=True)
-            (root / agent_tests.RESULTS_DIR / "ghost.md").write_text("# Result — ghost\n", encoding="utf-8")
-            errors = agent_tests.validate(root)
-            self.assertTrue(any("result for an unknown case" in e and "ghost.md" in e for e in errors), errors)
-
 
 class PromptTests(unittest.TestCase):
     EXPECT = "- EXPECTLINE-ALPHA the session posts its status."
@@ -239,41 +230,124 @@ class PromptTests(unittest.TestCase):
             self.assertIn("VERDICT: pass", prompt)
 
 
-class RecordStatusTests(unittest.TestCase):
-    VERDICT = "E1. met. Evidence quoted.\n\nVERDICT: pass (every line met)\n"
+SHEET_SECTIONS = ("Governing finding", "Round 1", "Synthesis", "Changes", "Round 2", "Owner questions", "Next")
 
-    def test_record_writes_verdict_and_inputs_then_status_reports_pass_then_stale(self):
+
+def sheet_text(cases="sample-case", commit=None, round1=(), round2=(), omit=()):
+    """A run sheet shaped like agent-tests/runs/TEMPLATE.md, with the given rows and sections left out."""
+    parts = ["# Agent-test run — 2026-01-02 — sample\n",
+             "**Date:** 2026-01-02",
+             f"**Commit:** {commit}" if commit else "**Commit:** —",
+             "**Run by:** test",
+             "**Trigger:** test",
+             f"**Cases:** {cases}\n"]
+    rows = {"Round 1": round1, "Round 2": round2}
+    for name in SHEET_SECTIONS:
+        if name in omit:
+            continue
+        parts.append(f"## {name}\n")
+        if name in rows:
+            parts.append("| Case | Verdict | Misses | Cause |\n| --- | --- | --- | --- |")
+            parts += [f"| {case} | {verdict} | — | — |" for case, verdict in rows[name]]
+        else:
+            parts.append("Text.")
+        parts.append("")
+    return "\n".join(parts)
+
+
+def git(root, *args):
+    return subprocess.run(["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@invalid", *args],
+                          check=True, capture_output=True, text=True).stdout
+
+
+def commit_all(root, message):
+    git(root, "add", "-A")
+    git(root, "commit", "-q", "-m", message)
+    return git(root, "rev-parse", "HEAD").strip()
+
+
+def git_repo_with_case(tmp):
+    """A git repository holding one case and its covered file and brief; returns (root, head sha)."""
+    root = make_root(tmp)
+    git(root, "init", "-q")
+    write_case(root)
+    return root, commit_all(root, "case and covered file")
+
+
+class StatusTests(unittest.TestCase):
+    def write_sheet(self, root, name, text):
+        runs = root / agent_tests.RUNS_DIR
+        runs.mkdir(parents=True, exist_ok=True)
+        (runs / name).write_text(text, encoding="utf-8")
+        return commit_all(root, f"run sheet {name}")
+
+    def test_round_1_pass_then_stale_after_covered_file_changes(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root = make_root(tmp)
-            case = agent_tests.parse_case(root, write_case(root))
-            out = agent_tests.record(root, case, self.VERDICT, "test-actor-model", "test-judge-model",
-                                     today="2026-01-02")
-            self.assertEqual(out, root / agent_tests.RESULTS_DIR / "sample-case.md")
-            text = out.read_text(encoding="utf-8")
-            self.assertIn("**Verdict:** pass", text)
-            self.assertIn("**Inputs:**", text)
-            self.assertIn("`agent/roles/orchestrator.md`", text)
-            self.assertIn("`releases/16/brief.md`", text)
-            self.assertIn("VERDICT: pass", text)
-            self.assertEqual(agent_tests.status(root), [("sample-case", "pass")])
+            root, sha = git_repo_with_case(tmp)
+            self.write_sheet(root, "2026-01-02-sample.md",
+                             sheet_text(commit=sha, round1=[("sample-case", "pass")]))
+            self.assertEqual(agent_tests.status(root),
+                             [("sample-case", "pass", "agent-tests/runs/2026-01-02-sample.md")])
 
-            time.sleep(0.01)
             (root / "agent/roles/orchestrator.md").write_text("# Orchestrator\n\nChanged role text.\n", encoding="utf-8")
-            self.assertEqual(agent_tests.status(root), [("sample-case", "stale")])
+            commit_all(root, "change covered file")
+            self.assertEqual(agent_tests.status(root)[0][:2], ("sample-case", "stale"))
 
-    def test_record_without_verdict_line_raises(self):
+    def test_round_2_row_overrides_round_1(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root = make_root(tmp)
-            case = agent_tests.parse_case(root, write_case(root))
-            with self.assertRaises(ValueError):
-                agent_tests.record(root, case, "E1. met.\nNo verdict here.\n", "a", "j", today="2026-01-02")
-            self.assertFalse((root / agent_tests.RESULTS_DIR / "sample-case.md").exists())
+            root, sha = git_repo_with_case(tmp)
+            self.write_sheet(root, "2026-01-02-sample.md", sheet_text(
+                commit=sha, round1=[("sample-case", "fail")], round2=[("sample-case", "pass")]))
+            self.assertEqual(agent_tests.status(root)[0][:2], ("sample-case", "pass"))
 
-    def test_case_without_result_reports_never_run(self):
+    def test_case_on_no_sheet_is_never_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, sha = git_repo_with_case(tmp)
+            write_case(root, "other-case")
+            self.write_sheet(root, "2026-01-02-sample.md",
+                             sheet_text(cases="sample-case", commit=sha, round1=[("sample-case", "pass")]))
+            states = dict((case_id, state) for case_id, state, _ in agent_tests.status(root))
+            self.assertEqual(states, {"sample-case": "pass", "other-case": "never run"})
+
+
+class SheetValidationTests(unittest.TestCase):
+    def sheet_errors(self, name="2026-01-02-sample.md", **kwargs):
         with tempfile.TemporaryDirectory() as tmp:
             root = make_root(tmp)
             write_case(root)
-            self.assertEqual(agent_tests.status(root), [("sample-case", "never run")])
+            runs = root / agent_tests.RUNS_DIR
+            runs.mkdir(parents=True)
+            (runs / name).write_text(sheet_text(**kwargs), encoding="utf-8")
+            return agent_tests.validate(root)
+
+    def test_valid_sheet_has_no_errors(self):
+        self.assertEqual(self.sheet_errors(round1=[("sample-case", "pass")]), [])
+
+    def test_badly_named_sheet_is_an_error(self):
+        errors = self.sheet_errors(name="Sample_Run.md")
+        self.assertTrue(any("a run sheet is named YYYY-MM-DD-<subject>.md" in e for e in errors), errors)
+
+    def test_sheet_missing_a_section_is_an_error(self):
+        errors = self.sheet_errors(omit=("Synthesis",))
+        self.assertTrue(any("missing section '## Synthesis'" in e for e in errors), errors)
+
+    def test_sheet_naming_an_unknown_case_is_an_error(self):
+        errors = self.sheet_errors(cases="sample-case, ghost-case")
+        self.assertTrue(any("names an unknown case: ghost-case" in e for e in errors), errors)
+
+
+class CheckoutTests(unittest.TestCase):
+    def test_checkout_of_real_repository_withholds_cases_sheets_and_golden_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dest = Path(tmp) / "checkout"
+            agent_tests.make_checkout(ROOT, dest)
+            self.assertTrue((dest / ".git").is_dir())
+            cases = sorted(p.name for p in (dest / agent_tests.CASES_DIR).glob("*.md"))
+            self.assertEqual(cases, ["README.md"])
+            self.assertEqual((dest / "agent-tests/golden-path.md").read_text(encoding="utf-8"), agent_tests.WITHHELD)
+            runs = sorted(p.name for p in (dest / agent_tests.RUNS_DIR).glob("*.md"))
+            self.assertEqual(runs, ["TEMPLATE.md"])
+            self.assertEqual(agent_tests.validate(dest), [])
 
 
 class RegistryTests(unittest.TestCase):

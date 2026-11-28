@@ -3,19 +3,17 @@
 A case lives at agent-tests/cases/<id>.md. It declares the documents it covers, the brief it runs
 under, the host it simulates and the exact message the session receives. Its Expect and Must not
 lines never reach the actor: the actor gets only what the role would get. A judge compares the
-actor's report with those lines. See agent-tests/README.md.
+actor's report with those lines, and each run is recorded on one dated run sheet in
+agent-tests/runs/. See agent-tests/README.md.
 """
 from __future__ import annotations
 
-import hashlib
 import re
 import subprocess
 from dataclasses import dataclass, field
-from datetime import date
 from pathlib import Path
 
 CASES_DIR = Path("agent-tests/cases")
-RESULTS_DIR = Path("agent-tests/results")
 RUNS_DIR = Path("agent-tests/runs")
 RUN_SECTIONS = ("Governing finding", "Round 1", "Synthesis", "Changes", "Round 2", "Owner questions", "Next")
 HOSTS = ("claude-cloud", "claude-subagent", "codex-app", "codex-in-claude", "chatgpt-web")
@@ -181,20 +179,7 @@ def validate(root: Path) -> list[str]:
         for case_id in re.findall(r"[a-z0-9]+(?:-[a-z0-9]+)+", named.group(1) if named else ""):
             if case_id not in cases:
                 errors.append(f"{rel}: names an unknown case: {case_id}")
-    results = root / RESULTS_DIR
-    for path in sorted(results.glob("*.md")) if results.is_dir() else ():
-        if path.name != "README.md" and path.stem not in cases:
-            errors.append(f"{path.relative_to(root).as_posix()}: result for an unknown case")
     return errors
-
-
-def _digest(root: Path, ref: str) -> str:
-    return hashlib.sha256(_target(root, ref).read_bytes()).hexdigest()[:12]
-
-
-def _fingerprint(root: Path, case: Case) -> list[tuple[str, str]]:
-    refs = sorted(set(case.covers + ([case.brief] if case.brief else [])))
-    return [(ref.split("#", 1)[0], _digest(root, ref)) for ref in refs]
 
 
 ACTOR_PREAMBLE = """DRY RUN of an astrid-dev agent test. You are role-playing a session that has just been started.
@@ -293,7 +278,7 @@ WITHHELD = "# Withheld\n\nThis file is withheld from agent-test actors.\n"
 
 
 def make_checkout(root: Path, dest: Path) -> Path:
-    """Export HEAD to dest as a fresh git repository, withholding the cases, results and golden path."""
+    """Export HEAD to dest as a fresh git repository, withholding the cases, run sheets and golden path."""
     root, dest = Path(root), Path(dest)
     if dest.exists() and any(dest.iterdir()):
         raise ValueError(f"{dest} exists and is not empty")
@@ -301,12 +286,17 @@ def make_checkout(root: Path, dest: Path) -> Path:
     archive = subprocess.run(["git", "-C", str(root), "archive", "HEAD"], capture_output=True, check=True)
     subprocess.run(["tar", "-x", "-C", str(dest)], input=archive.stdout, check=True)
     tests = dest / "agent-tests"
-    for sub in (CASES_DIR.name, RESULTS_DIR.name):
+    for sub in (CASES_DIR.name,):
         folder = tests / sub
         if folder.is_dir():
             for path in folder.glob("*.md"):
                 path.unlink()
             (folder / "README.md").write_text(WITHHELD, encoding="utf-8")
+    runs = tests / RUNS_DIR.name
+    if runs.is_dir():
+        for path in runs.glob("*.md"):
+            if path.name != "TEMPLATE.md":
+                path.unlink()
     for name in ("golden-path.md",):
         if (tests / name).is_file():
             (tests / name).write_text(WITHHELD, encoding="utf-8")
@@ -325,44 +315,53 @@ def _head(root: Path) -> str:
         return "unknown"
 
 
-def record(root: Path, case: Case, verdict_text: str, actor_model: str, judge_model: str,
-           today: str | None = None) -> Path:
-    root = Path(root)
-    match = re.search(r"VERDICT:\s*(pass|fail)", verdict_text)
-    if not match:
-        raise ValueError("the judge's text has no 'VERDICT: pass|fail' line")
-    lines = [f"# Result — {case.id}", "",
-             f"**Date:** {today or date.today().isoformat()}",
-             f"**Verdict:** {match.group(1)}",
-             f"**Actor:** {actor_model} (route {case.actor})",
-             f"**Judge:** {judge_model}",
-             f"**Commit:** {_head(root)}",
-             "**Inputs:** " + "; ".join(f"`{ref}` {digest}" for ref, digest in _fingerprint(root, case)),
-             "", "## Judgement", "", verdict_text.strip(), ""]
-    out = root / RESULTS_DIR / f"{case.id}.md"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text("\n".join(lines), encoding="utf-8")
-    return out
+def _sheets(root: Path) -> list[Path]:
+    folder = Path(root) / RUNS_DIR
+    return sorted(p for p in folder.glob("*.md") if p.name not in ("TEMPLATE.md", "README.md")) if folder.is_dir() else []
 
 
-def status(root: Path) -> list[tuple[str, str]]:
-    """Each case's state: never run, stale (a covered file changed since its result), fail or pass."""
-    root = Path(root)
-    rows = []
-    for case in load_cases(root).values():
-        path = root / RESULTS_DIR / f"{case.id}.md"
-        if not path.is_file():
-            rows.append((case.id, "never run"))
-            continue
-        text = path.read_text(encoding="utf-8")
-        recorded = dict(re.findall(r"`([^`]+)` ([0-9a-f]{12})", text))
-        current = dict(_fingerprint(root, case))
-        verdict = re.search(r"\*\*Verdict:\*\* (pass|fail)", text)
-        if recorded != current:
-            rows.append((case.id, "stale"))
-        else:
-            rows.append((case.id, verdict.group(1) if verdict else "fail"))
+def _rows(text: str, heading: str) -> dict[str, str]:
+    """Case id to verdict, from one round's table in a run sheet."""
+    match = re.search(rf"\n## {heading}\n(.*?)(?=\n## |\Z)", text, re.S)
+    rows = {}
+    for line in (match.group(1) if match else "").splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) >= 2 and cells[1] in ("pass", "fail"):
+            rows[cells[0].strip("`")] = cells[1]
     return rows
+
+
+def _changed_since(root: Path, commit: str, paths: list[str]) -> bool | None:
+    try:
+        out = subprocess.run(["git", "-C", str(root), "diff", "--name-only", commit, "HEAD", "--", *paths],
+                             capture_output=True, text=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return bool(out.strip())
+
+
+def status(root: Path) -> list[tuple[str, str, str]]:
+    """Each case's state from the newest run sheet that ran it: pass, fail, stale or never run."""
+    root = Path(root)
+    latest: dict[str, tuple[str, str, Path]] = {}
+    for sheet in _sheets(root):
+        text = sheet.read_text(encoding="utf-8")
+        commit = re.search(r"\*\*Commit:\*\*\s*`?([0-9a-f]{7,40})", text)
+        rows = _rows(text, "Round 1")
+        rows.update(_rows(text, "Round 2"))
+        for case_id, verdict in rows.items():
+            latest[case_id] = (verdict, commit.group(1) if commit else "", sheet)
+    out = []
+    for case in load_cases(root).values():
+        if case.id not in latest:
+            out.append((case.id, "never run", ""))
+            continue
+        verdict, commit, sheet = latest[case.id]
+        paths = [ref.split("#", 1)[0] for ref in case.covers + ([case.brief] if case.brief else [])]
+        changed = _changed_since(root, commit, paths) if commit else None
+        state = "stale" if changed or changed is None else verdict
+        out.append((case.id, state, sheet.relative_to(root).as_posix()))
+    return out
 
 
 def coverage(root: Path) -> tuple[dict[str, list[str]], list[str]]:
@@ -393,9 +392,8 @@ def run(root: Path, args) -> int:
             print(f"{case.id}\t{case.host}\t{case.role}{chain}")
         return 0
     if action == "status":
-        rows = status(root)
-        for case_id, state in rows:
-            print(f"{case_id}\t{state}")
+        for case_id, state, sheet in status(root):
+            print(f"{case_id}\t{state}\t{sheet}")
         return 0
     if action == "coverage":
         by_doc, uncovered = coverage(root)
@@ -421,9 +419,6 @@ def run(root: Path, args) -> int:
             print(actor_prompt(root, case, args.checkout or str(root), upstream))
         elif action == "judge":
             print(judge_prompt(case, args.report.read_text(encoding="utf-8"), args.checkout or str(root)))
-        elif action == "record":
-            out = record(root, case, args.verdict.read_text(encoding="utf-8"), args.actor_model, args.judge_model)
-            print(out.relative_to(root).as_posix())
     except (OSError, ValueError) as exc:
         print(f"ERROR agent-tests: {exc}")
         return 1
@@ -433,9 +428,9 @@ def run(root: Path, args) -> int:
 def add_arguments(parser) -> None:
     sub = parser.add_subparsers(dest="agent_test_action", required=True)
     sub.add_parser("list", help="List the declared cases")
-    sub.add_parser("status", help="Each case: never run, stale, fail or pass")
+    sub.add_parser("status", help="Each case, from the newest run sheet: pass, fail, stale or never run")
     sub.add_parser("coverage", help="Cases per covered document, and skill documents with none")
-    checkout = sub.add_parser("checkout", help="Export HEAD for actors, with cases, results and golden path withheld")
+    checkout = sub.add_parser("checkout", help="Export HEAD for actors, with cases, run sheets and golden path withheld")
     checkout.add_argument("dest", type=Path)
     prompt = sub.add_parser("prompt", help="Print the actor's prompt (never the expectations)")
     prompt.add_argument("case")
@@ -445,8 +440,3 @@ def add_arguments(parser) -> None:
     judge.add_argument("case")
     judge.add_argument("--report", type=Path, required=True)
     judge.add_argument("--checkout")
-    rec = sub.add_parser("record", help="Write agent-tests/results/<case>.md from the judge's text")
-    rec.add_argument("case")
-    rec.add_argument("--verdict", type=Path, required=True)
-    rec.add_argument("--actor-model", required=True)
-    rec.add_argument("--judge-model", required=True)

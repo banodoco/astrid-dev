@@ -9,10 +9,9 @@ A test is a **case**. Each case is declared in one file, and names the documents
 | What | Where |
 | --- | --- |
 | One case | `agent-tests/cases/<id>.md` |
-| A case's latest result | `agent-tests/results/<id>.md`, written by `agent-test record` |
 | One run's sheet: what was found, synthesized, changed and re-run | `agent-tests/runs/<YYYY-MM-DD>-<subject>.md`, from [the template](runs/TEMPLATE.md) |
 | The golden path the cases encode | [golden-path.md](golden-path.md) |
-| The runner | `python3 scripts/astrid_dev.py agent-test list \| status \| coverage \| prompt \| judge \| record` |
+| The runner | `python3 scripts/astrid_dev.py agent-test list \| status \| coverage \| checkout \| prompt \| judge` |
 | The structure check | `agent-tests` in `python3 scripts/astrid_dev.py check` |
 
 Cases live here, not next to the documents under `agent/`. Two reasons: a skill's text is what the actor reads, so expectations beside it would hand the actor the answers; and many cases cover a path across several documents (an orchestrator's launch line becomes a manager's input), so a case belongs to the path, not to one file. Each case declares what it covers; `agent-test coverage` gives the view from each document's side.
@@ -66,15 +65,6 @@ The exact first message, as the role receives it.
 
 **Writing expectations.** Take each one from [the golden path](golden-path.md), which names the document line it rests on. A behaviour the documents don't state is not an expectation yet: fix the document first, through [improve](../agent/shared/workstreams/improve.md). Phrase each line so the report can show it, for example "posts its first STATUS on `board: lane h3`", not "communicates well".
 
-## Results
-
-A result records the date, verdict, the actor's and judge's models, the commit, and a digest of every covered file and the brief. `agent-test status` reports each case as `never run`, `stale` (a covered file changed since), `fail` or `pass`.
-
-The person running the tests does not fix misses one by one: they group them by cause, name the parent idea behind each group, and fix that ([synthesize, don't react](../agent/shared/workstreams/improve.md#synthesize-dont-react)). A miss has one of three causes, which the judge names:
-- **doc-gap:** the documents are missing, wrong or contradictory. Fix the document, then re-run.
-- **actor-error:** the documents were clear. Note it; re-run once on the next route up if it repeats.
-- **ambiguity:** only the owner can decide. Ask, record the answer in its one home, then re-run.
-
 ## Run sheets
 
 Every run gets one sheet, copied from [the template](runs/TEMPLATE.md) and filled in as the run goes, in pyramid order:
@@ -85,15 +75,20 @@ Every run gets one sheet, copied from [the template](runs/TEMPLATE.md) and fille
 5. round 2 on the changed documents;
 6. the owner's questions and answers.
 
-Result files say where each case stands now. Sheets say how it got there, so a later run can see what was tried. The check validates a sheet's name, sections and case ids.
+The sheet is the only record. `agent-test status` reads each case's latest verdict from the newest sheet that ran it, and reports `stale` when a covered file or the brief changed after that sheet's commit (`never run`, `stale`, `fail` or `pass`). The check validates a sheet's name, sections and case ids.
+
+The person running the tests does not fix misses one by one: they group them by cause, name the parent idea behind each group, and fix that ([synthesize, don't react](../agent/shared/workstreams/improve.md#synthesize-dont-react)). A miss has one of three causes, which the judge names:
+- **doc-gap:** the documents are missing, wrong or contradictory. Fix the document, then re-run.
+- **actor-error:** the documents were clear. Note it; re-run once on the next route up if it repeats.
+- **ambiguity:** only the owner can decide. Ask, record the answer in its one home, then re-run.
 
 ## When cases run
 
-- **Changing a covered document:** run every case that covers it, and record the results in the same PR ([improve](../agent/shared/workstreams/improve.md), step 5).
+- **Changing a covered document:** run every case that covers it, and commit the run sheet in the same PR ([improve](../agent/shared/workstreams/improve.md), step 5).
 - **Before a lane launches:** run the cases that name its brief.
 - **Adding a workstream, role or brief:** add at least one case for it.
 
-The check validates structure only: fields, sections, covered files, chains and result files. It runs no models.
+The check validates structure only: fields, sections, covered files, chains and run sheets. It runs no models.
 
 ## Depths
 

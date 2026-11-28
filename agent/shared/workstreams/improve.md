@@ -59,7 +59,7 @@ Enter through [astrid-dev](../../start.md). Words follow the [glossary](../gloss
 3. If you add words, cut as many.
 4. Change what a check accepts, or add a check, in a separate, announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../run-contract.md#checks-and-failure-repair).
 5. Prove it. Run `python3 scripts/astrid_dev.py check`; the tests of what you touched (`python3 -m unittest discover -s scripts -p "test_<file>.py"`); and `sync` if a generated page changed. `check` confirms that a linked file exists and (`link-anchors`) that a `#heading` link into a skill, template or top-level doc names an existing heading. A pull request is checked with `check --base <base commit> --body-file /dev/null`.
-   For a change to a role, workstream, start message or brief, also run the [agent tests](#agent-tests) that cover it (`agent-test status` lists them) and commit their results; a changed document with no case gets one.
+   For a change to a role, workstream, start message or brief, also run the [agent tests](#agent-tests) that cover it (`agent-test status` lists them) and commit the run sheet; a changed document with no case gets one.
 6. Add a `fix` entry to the process ledger that ends `Follows: <entry it resolves>`.
 
 ## Audit
@@ -75,7 +75,7 @@ An agent test checks that a fresh session, given a role's documents and one star
 3. **Run the actor.** `agent-test prompt <case> --checkout <path>` prints its prompt. Give that text, unchanged, to a fresh subagent on the case's route (N: Haiku), read-only. Never show the actor the case file, its Expect lines or an earlier report. For a chained case, pass the upstream actor's text with `--upstream <file>`.
 4. **Judge.** `agent-test judge <case> --report <file>` prints the judge's prompt. Give it to a separate high-judgment session ([routing](../run-contract.md#routing-and-bindings)), never the author of the change.
 5. **Synthesize before fixing** ([below](#synthesize-dont-react)). Then **fix and re-run.** Each parent fix lands at its home through the [steps](#steps) above. Re-run the actor on the fixed documents until the case passes or only owner questions remain. Don't edit a case's Expect lines to get a pass; a wrong expectation is fixed in the [golden path](../../../agent-tests/golden-path.md) first, with its source.
-6. **Record.** `agent-test record <case> --verdict <file> --actor-model <model> --judge-model <model>` writes `agent-tests/results/<case>.md`. Commit it with the change.
+6. **Record** each round's verdicts, the synthesis and the changes on the run sheet, and commit it with the change.
 7. **Owner.** Post each case's walkthrough and its Ask-the-owner questions on the PR, and record the answers where they belong.
 
 Run independent cases side by side; run a chain in order.

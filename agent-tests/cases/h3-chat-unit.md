@@ -16,6 +16,10 @@ after: h3-codex-manager-start
 
 {upstream}
 
+## Fixture
+
+- Stand-ins: board issue 9999 is `board: lane h3`.
+
 ## Expect
 
 - Checks first that its connector can read banodoco/astrid-dev and push banodoco/astrid-agent.

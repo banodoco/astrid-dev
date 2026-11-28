@@ -22,7 +22,7 @@
 
 - **Cases** in `agent-tests/cases/`, one file each, declaring the documents they cover, the brief they run under, the host, the exact starting message, and Expect and Must not lines.
 - **A golden path** (`agent-tests/golden-path.md`): what each role should do, each line resting on a document or on one of four parent rules (authority, hand-off, clock, host).
-- **A runner** (`astrid_dev.py agent-test`): list, status, coverage, the actor's prompt (never the expectations), the judge's prompt, and a recorded result fingerprinted to its inputs.
+- **A runner** (`astrid_dev.py agent-test`): list, status, coverage, the actor's prompt (never the expectations), the judge's prompt, an actor checkout that withholds the answers, and status from the newest run sheet.
 - **A structure check** (`agent-tests`), and a home in the existing meta workstream: [improve](../../agent/shared/workstreams/improve.md#agent-tests) runs, synthesizes and records agent tests. Principle 11 in the [design principles](../../docs/contribution-design-principles.md).
 - **First cases:** the H3 lane chain (orchestrator, Codex manager, ChatGPT chat, Claude worker, reviewer) and six general paths (Lead dividing lanes, plan manager, manager to worker, a refused start, a contributor, an improve change).
 
@@ -43,5 +43,5 @@ Consumes the role and workstream documents as merged with Plan 108. Produces cas
 ## Completion
 
 - `python3 scripts/astrid_dev.py check` passes, and `scripts/test_agent_tests.py` passes.
-- Every case in `agent-tests/cases/` has a recorded result; the H3 chain passes, or its remaining misses are owner questions.
+- Every case in `agent-tests/cases/` appears on a run sheet; the H3 chain passes, or its remaining misses are owner questions.
 - The four parent rules are written at their homes and the cases that found them re-run.
