@@ -7,7 +7,7 @@ covers:
   - agent/shared/run-contract.md
 brief: plans/108-lane-briefs/tasks.md
 host: claude-cloud
-actor: N
+actor: X
 after: plan-manager-hands-worker
 handover: creator
 ---
@@ -24,7 +24,7 @@ Check-in. You are p108-manager, the whole-project manager for Plan 108; follow t
 
 ## Fixture
 
-- Stand-ins: treat Plan 108 as just started, with the card in the report open and its commit present on its branch; where Plan 108's records say otherwise, this state wins.
+- Stand-ins: Plan 108 started earlier today; your hourly check-in, named in your STATUS 1, is what woke you. The card in the report is open and its commit is present locally; where Plan 108's records say otherwise, this state wins.
 
 ## Expect
 

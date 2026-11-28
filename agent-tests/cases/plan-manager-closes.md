@@ -6,7 +6,7 @@ covers:
   - agent/shared/run-contract.md
 brief: plans/108-lane-briefs/tasks.md
 host: claude-cloud
-actor: N
+actor: X
 ---
 
 # The plan manager closing its run
