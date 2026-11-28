@@ -51,6 +51,8 @@ A role contains sections for Responsibility, Authority, Responsibilities, and Ha
 
 Each workstream has a defined, independently verifiable outcome. Keep its full execution instructions and authoritative discovery metadata in its own document; a role's navigation summary is not a second source. Never replace actual steps or proof with placeholder summaries. Shared run policy and shared workstreams have one authoritative home; do not duplicate their instructions. Keep role responsibilities, defaults, selection rules and composability guidance in the role document. Do not add folders for workstreams that need no variant. The source checks validate structure, not the correctness of instructions, sufficiency of evidence or authority of the actor.
 
+A role or workstream is proved by its [agent tests](../agent-tests/README.md): cases that give a fresh session only its starting message and check what it does.
+
 ## Build and install
 
 Generated SKILL.md files carry a do-not-edit header naming their source; always edit the source under agent/.

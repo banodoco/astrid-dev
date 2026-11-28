@@ -143,7 +143,9 @@ The dry run requires current packages and displays intended link changes. The re
 
 Only install into real Claude, Codex or other supported agent skill roots when the owner authorizes that installation. With no explicit destination, the installer uses existing supported skill roots. Use an explicit authorized destination and review the dry run first; verify the agent can discover the expected skill and read its references. Building or installing packages never grants execution, spending, merge or publishing authority.
 
-**5. Verify discovery from a client.** A newly started session must list the skill and be able to read its procedure and the run contract. For Claude Code, expose the disposable destination as a project skills directory and start a fresh non-interactive session that reads nothing from your own user settings:
+**5. Add or update its agent test.** Declare at least one case in `agent-tests/cases/` that covers the document, and run every case that covers a changed document ([agent tests](../agent-tests/README.md), [workstream](../agent/shared/workstreams/agent-test.md)).
+
+**6. Verify discovery from a client.** A newly started session must list the skill and be able to read its procedure and the run contract. For Claude Code, expose the disposable destination as a project skills directory and start a fresh non-interactive session that reads nothing from your own user settings:
 
 ~~~sh
 proj=$(mktemp -d) && mkdir "$proj/.claude" && ln -s "$demo" "$proj/.claude/skills" &&
