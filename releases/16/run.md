@@ -10,7 +10,7 @@ The Plan 91 mailbox records the owner-directed [STOP](https://github.com/banodoc
 
 ## H3 programme lane
 
-One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It answers to the owner. Everything about how it runs is in the lane brief [briefs/h3.md](briefs/h3.md): plans and order, queue, dispatch, proof, reviews, merges, rulings, cut line, coordination and launch. State: prepared, not started.
+One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It answers to the owner. Everything about how it runs is in the lane brief [briefs/h3.md](briefs/h3.md): plans and order, queue, dispatch, proof, reviews, merges, rulings, cut line, coordination and launch. State: running; the owner gave the go on 28 November 2026 (see the Lanes table and the brief's `**Go:**`).
 
 ### Lanes
 
