@@ -28,7 +28,7 @@ The execution-units tables in each plan's `tasks.md` are the queue. Link each pl
 
 **Option:** <hosted or packets>
 
-`hosted`: a Claude orchestrator runs a Codex worker per card by `codex exec` (Claude workers as fallback). `packets`: fresh ChatGPT sessions the owner pastes into, or the orchestrator starts only where an owner-signed-in route exists.
+`hosted`: a Claude orchestrator runs a Codex worker per card by `codex exec` (Claude workers as fallback), or a Codex manager it hosts when this brief says so. `packets` is the ChatGPT web-chat route: one Codex desktop manager (name it, e.g. `h3-manager`) runs in the Codex app on the owner's computer, the orchestrator posts its launch on the lane board and the owner pastes it, and it opens one ChatGPT chat per unit (N High, X Extra High, S Pro) by the TOOLKIT steps on astrid-dev #2030. Fallbacks, in order: `codex exec` workers run by the orchestrator's Claude session, then Claude workers.
 
 - **Start.** Open the lane board first, then post one STATUS. <The startup checks, each posted as one STATUS line: passed or failed.>
 - **Dispatch.** <The in-flight cap, whether the first unit runs alone, and the route and mode for each unit. Replacement rules. The hourly cadence.>
