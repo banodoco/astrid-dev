@@ -23,7 +23,7 @@
 
 **Review rounds:** One closing review, recommended because the time map and exactness span every pass.
 
-**Run start:** Pending — this plan runs in the H3 lane; its run starts when the owner records her go in the lane brief [releases/16/briefs/h3.md](../../releases/16/briefs/h3.md) (its "Owner's go" line). Next: the owner launches the lane.
+**Run start:** Lane [h3](../../releases/16/briefs/h3.md): the brief records the owner's go, authority and limits.
 
 ## Owner decisions
 

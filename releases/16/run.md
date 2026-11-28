@@ -12,6 +12,12 @@ The Plan 91 mailbox records the owner-directed [STOP](https://github.com/banodoc
 
 One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It answers to the owner. Everything about how it runs is in the lane brief [briefs/h3.md](briefs/h3.md): plans and order, queue, dispatch, proof, reviews, merges, rulings, cut line, coordination and launch. State: prepared, not started.
 
+### Lanes
+
+| Lane | Session | Brief | State |
+|---|---|---|---|
+| h3 (Plans 66, 68, 70, 67; board `board: lane h3`) | not yet recorded; the orchestrator records it in its brief at its first progress PR | [briefs/h3.md](briefs/h3.md) | running, from the owner's go of 28 November |
+
 ## Proposed H3 programme queue (66, 68, 70, 67)
 
 **Superseded 28 November:** the [H3 programme lane](#h3-programme-lane) replaces this queue and its Lead activation; the packets below are acceptance history only. The rows below remain the acceptance history. Prepared at the owner's request, 27 November. **Draft only: not active authority, branch cut, dispatch or Ready.** Preserve all existing R16 recovery lanes, active Plans table and boards. Existing Lead [#2030](https://github.com/banodoco/astrid-dev/issues/2030) reviews [PR #2056](https://github.com/banodoco/astrid-dev/pull/2056) and explicitly activates rows with exact accepted source and current standing rulings. No competing Lead, native subagents, new scheduler or extra chat/CI/GPU allocation.
@@ -406,7 +412,7 @@ The mailbox names keep their `r15-` prefix, as they were opened before the move.
 ### Standing rulings (Plan 91)
 
 1. Release 15's Plans 87 and 89 rulings 1–3, 5 and 6 apply as written.
-2. Release 15's [rulings for Plan 82](../15/run.md#rulings-for-plan-82-from-the-first-three-dispatches) apply to Plan 91, from the Release 15 Lead's review of the first twelve merged packets:
+2. Release 15's [rulings for Plan 82](../15/run.md#rulings-for-plan-82) apply to Plan 91, from the Release 15 Lead's review of the first twelve merged packets:
    - packets have no network and run no hosted test, so each packet's list of already-failing IDs and its focused selectors come from AG-0's [card lists](../../plans/91-agent-main-green/evidence/release-15-514499de/cards/);
    - one contract per PR, aimed at about three hours; a larger card is delivered as consecutive PRs at its seams;
    - every packet lists what must pass unchanged, and an existing assertion changes only as the triage rules allow; a packet that finds this untrue posts `BLOCKED` once with the exact list;
