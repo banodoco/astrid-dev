@@ -2,9 +2,16 @@
 
 The live state of Plan 95's run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (19:15 UTC, Wed 25 Nov)
+## Now (28 Nov; mailbox read to 22:19 UTC, Fri 27 Nov)
 
-Plans 71, 72 and 73 are on `main` (`7cf00a5ed5ded3f4ca1b34b97214d693ab584fdd`). The Otto repository `banodoco/otto` exists, public and empty, and the orchestrator has push access. Ready: P95-03 (Otto package skeleton), P95-04 (contract design, Pro) and P95-15 (rule-preservation map, Pro), after the orchestrator's OT-1 and OT-2 are posted. The manager checks in **every 20 minutes** while any packet is Running or in Review, and hourly when idle.
+**The run is paused on one decision.** The acting Lead (`p95-acting-lead-codex-1`) holds no running packet. [Tasks](tasks.md) shows what is ticked; this section covers only what the ticks do not.
+
+- **Merged on `project/95-otto`:** OT-19 parts a, b and c (Otto pin and `otto.toml`, skill reader/builder/installer, relationship layer and records adapter), through astrid-dev PRs #2028, #2043 and #2040.
+- **Blocked: OT-19 part d** (the Dev check runner and view engine, [P95-19d](packets/P95-19d.md)). Otto's generic `link-anchors` check reports nine real Dev links as broken, because they point at `<a id=...>` anchors inside table cells in `plans/39-green-mains/evidence/release-14-record/tasks.md`, and Otto recognises only heading anchors. Part d cannot pass its parity gate until Otto recognises them without granting false ones.
+- **Why it has not converged:** a stdlib-only scanner for those anchors (packet P95-ANCHOR, Otto PR #20) has been rejected three times (heads `c8681932`, `7c53cb1`, `19674be`). After each fix, Astra's differential against GitHub's real GFM renderer found another false pass. Hand-patching a Markdown boundary scanner is not converging. The strict Dev scan stays at 55 findings (SHA-256 `32c4e62c9941b274616d987cc419ebcd4e51d03fabe8656d56cef009b805a83e`).
+- **What the Lead found on 27 Nov** ([mailbox 7229223038](https://github.com/banodoco/astrid-dev/issues/1886#issuecomment-7229223038)): ten "prefixed" expectations at Otto `tests/test_fragment_targets.py:385` disagree with GitHub's renderer, which renders only the prefix and "before" anchors and not "after". A renderer-aware check must report "after" missing in those ten cases. Separately, a disposable `cmarkgfm` 2025.10.22 proof rejected both confirmed false passes and kept all nine real targets, but it was verified only on macOS ARM64 with Python 3.11, and Plan 95 mandates standard library only.
+- **Owner decisions waiting** (neither is the acting Lead's to make): (1) authorize correcting exactly those ten expectations, which are owner-reserved assertions; (2) choose the route for anchor recognition: a bounded stdlib-only subset that gives up some valid layouts as false negatives, or a stdlib-only exception for a vendored or optional GFM parser.
+- **Queued behind it, not started:** P95-ANCHOR-POLICY (an audited-ratchet for the historical broken links, which stays strict by default), then OT-19d, OT-20 and OT-21. The acting Lead has drafted these packets on `p95/packets-20-21`, not yet on `main`. OT-22 to OT-24 and R follow. Plan 96 still waits on the OT-23 tag.
 
 ## Authority
 
