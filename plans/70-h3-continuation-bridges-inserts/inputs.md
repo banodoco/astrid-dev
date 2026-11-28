@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 (#2065)
+**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 ([#2065](https://github.com/banodoco/astrid-dev/issues/2065))
 
 **Prior art:** The cards were written and reviewed as part of Plan 66. Its [planning evidence](../66-h3-composable-core/inputs.md#planning-evidence) holds the source findings, the direction and functional reviews, the restrictions and ambiguity passes, and the alignment review. The design they follow is in [Plan 66's plan](../66-h3-composable-core/plan.md#outcome-and-scope), shipped as `astrid/packs/h3_av/docs/design.md`.
 

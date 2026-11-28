@@ -4,10 +4,10 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 (#2065)
+**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 ([#2065](https://github.com/banodoco/astrid-dev/issues/2065))
 
 **Prior art:**
-- **The request already has the model's shape.** `request.v2.json` holds timeline and reference items, per-item `edit[]` grants, and `hard` and `latent_pin` fields that nothing uses ([direction review §1](research/direction.md)).
+- **The request already has the model's shape.** `request.v2.json` holds timeline and reference items, per-item `edit[]` grants, and `hard` and `latent_pin` fields that nothing uses ([direction review §1](./research/direction.md)).
 - **The compiler is route-shaped.** `request_v2.py` `branch_for` returns one of four routes. `compile.py` has `_compile_native`, `_compile_lanpaint`, `_compile_native_masked_edit`, `_compile_character_swap_v2`, `_compile_native_v2` and `_compile_generation`. `spec.py`'s `_from_v2` accepts one bounded video source at frame 0 and image references only.
 - **Continuation is not a time-masked V2V edit.**
   - At defaults the captured graphs run Existing Video mode: a 39-frame motion context taken from the decoded source audio-video feeds one active extension block (six are wired, one is active), with joint audio, then a stream mux ([critique](research/critique.md)).
@@ -28,7 +28,7 @@
 - **(d) Keep the captured continuation workflows as the only path.** Rejected: it keeps the two-slot and fixed-size limits.
 - **(e) Reuse `hard: false` on timeline items for guides.** Rejected: omitted `hard` already serializes as false on exact placements, so it can't mean soft. A new `role: guide` is used instead.
 
-**Challenge:** Reviewed — Fable's direction review of 18 November 2026 ([research/direction.md](research/direction.md)) read Plans 64 and 65, the H3 pack on `release/14/main` and the Recast skill on `release/14/plan-59`. Accepted:
+**Challenge:** Reviewed — Fable's direction review of 18 November 2026 ([research/direction.md](./research/direction.md)) read Plans 64 and 65, the H3 pack on `release/14/main` and the Recast skill on `release/14/plan-59`. Accepted:
 - the exact/soft split as the core axis;
 - the three default rules in place of preset code;
 - one record and compiler;
