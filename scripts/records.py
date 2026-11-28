@@ -471,7 +471,8 @@ LANE_SECTIONS = ("Outcome", "Plans and order", "Queue", "How it runs", "Roles", 
                  "Context", "Cut line and coordination", "Owner only", "Launch", "Status")
 LANE_PLAN_COLUMNS = ["Plan", "Release", "Starts when", "Branches"]
 LANE_LABELS = ("Start.", "Dispatch.", "Proof.", "Reviews.", "Merges.", "Check-ins.")
-LANE_PLACEHOLDER = re.compile(r"<[^<>\n]+>")
+LANE_PLACEHOLDER = re.compile(r"<(?!https?://)[^<>\n]+>")
+LANE_RELEASES = re.compile(r"\d+(, (continuing in )?\d+)*")
 LANE_PLAN_FILE = re.compile(r"plans/[0-9]{2,}-[a-z0-9-]+/plan\.md")
 LANE_TASKS_LINK = re.compile(r"\]\([^)\s]*plans/[0-9]{2,}-[a-z0-9-]+/tasks\.md\)")
 MARKDOWN_TARGET = re.compile(r"\]\(([^)\s]+)\)")
@@ -520,7 +521,13 @@ def lane_brief(text: str, path: str) -> dict:
     go = fields["Go"] or ""
     if go.startswith("Pending") and state not in (None, "prepared"):
         errors.append(f"**Go:** is Pending while State is {state}; record the owner's go before the lane runs")
-    releases = [int(number) for number in re.findall(r"\d+", fields["Releases"] or "")]
+    releases: list[int] = []
+    releases_value = fields["Releases"] or ""
+    if releases_value and not LANE_PLACEHOLDER.search(releases_value):
+        if LANE_RELEASES.fullmatch(releases_value):
+            releases = [int(number) for number in re.findall(r"\d+", releases_value)]
+        else:
+            errors.append(f"header **Releases:** must hold release numbers only, like 16 or 16, continuing in 17; it holds {releases_value!r}")
 
     sections: dict[str, str] = {}
     for name in LANE_SECTIONS:
@@ -556,6 +563,8 @@ def lane_brief(text: str, path: str) -> dict:
         if release is None and not LANE_PLACEHOLDER.search(release_cell):
             errors.append(f"## Plans and order: row {label} has Release {release_cell!r}, not a release number")
         plans.append({"label": label, "path": plan_path, "release": release})
+    if rows and len(rows) < 3:  # no data row was found
+        errors.append("## Plans and order lists no plan")
 
     queue = sections["Queue"]
     if queue and not LANE_TASKS_LINK.search(queue):
