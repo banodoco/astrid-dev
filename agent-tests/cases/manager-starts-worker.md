@@ -18,7 +18,7 @@ actor: N
 ```text
 Follow the astrid-dev-worker skill (install the skills with python3 scripts/astrid_dev.py skills install from a banodoco/astrid-dev checkout). Your brief is card HP-1 in plans/107-h3-passes/tasks.md on banodoco/astrid-dev. Work in banodoco/astrid-agent from release/17/plan-107 at 7c1e0d4b2a9f3e5d61c8a0b7f42e9d13a5c6b8e0, on branch p107/HP-1. Created by session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y, signing p107-manager; you report to it, not to the owner.
 
-Follow-up messages from manager session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y are part of this card, within this task's scope. Never use AskUserQuestion; send a question to p107-manager by message and carry on with whatever is not blocked. Run only this test command: bash scripts/worker-env/agent-pytest.sh tests/packs/h3_av/test_pass_list.py. Write files with the Write tool, and run one simple command per Bash call. Report READY-PROOF or BLOCKED to p107-manager, then stop.
+Follow-up messages from manager session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y are part of this card, within this task's scope. Never use AskUserQuestion; send a question to p107-manager by message and carry on with whatever is not blocked. Run only this test command: bash scripts/worker-env/agent-pytest.sh tests/packs/h3_av/test_pass_list.py. Write files with the Write tool, and run one simple command per Bash call. Report READY-PROOF or BLOCKED to p107-manager, then stop. You are a subagent: commit, return the SHA in your final report, and do not push.
 ```
 
 ## Fixture
