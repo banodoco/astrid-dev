@@ -102,6 +102,8 @@ One meaning per word; two meanings, two terms.
 
 **check:** a rule in `scripts/checks.py`; a scoped test is a test run.
 
+**agent test:** a declared case in `agent-tests/cases/` that checks a fresh session, given a role's documents and one starting message, does the right thing; see [agent-tests](../../agent-tests/README.md).
+
 **view:** a generated page (`scripts/views.py`).
 
 **decision log:** a manager's append-only list of its own rulings.

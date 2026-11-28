@@ -52,3 +52,4 @@ def requiring(need):
 
 def definitions():
     return "; ".join(f"`{status.name}` = {status.meaning}" for status in STATUSES) + "."
+

@@ -22,13 +22,13 @@ Propose, record, brief, start, then the check-ins below. Nothing moves to the ne
 
 ## Completion
 
-Each lane's cards are ticked in `tasks.md`, its landings confirmed by the Lead, its check-ins cancelled, and its session retired or given its next plan.
+Each lane's plans merged by the Lead into `release/<N>/main` in landing order, their completion PRs opened, the lane's State `done`, and its session retired or given its next plan.
 
-The [Lead responsibilities](../leader.md) continue to apply. The plan level (packets, reviews, plan-branch merges, proofs) is always the orchestrator's. The release level (the lane split with the owner, landing order, qualification, publication, cross-lane pins, and the release gate unless the brief grants it) is always the Lead's.
+The [Lead responsibilities](../leader.md) continue to apply. The plan level (packets, reviews, plan-branch merges, proofs) is always the orchestrator's. The release level (the lane split with the owner, landing order, qualification, publication, cross-lane pins, and merging each lane's ready plan PR into `release/<N>/main`) is always the Lead's.
 
 ## 1. Propose two or three groupings
 
-Post the proposal on the run board and tell the owner. Offer two or three genuinely different groupings, not one grouping with variants. For each:
+Post the proposal on the Lead board (`board: release <N> lead`) and tell the owner. Offer two or three genuinely different groupings, not one grouping with variants: at least one option puts some plan in a different lane, not only merges or splits lanes. For each:
 
 - **Which plans go together and in what order**, and which run alone and why (use the [lane rules](../leader.md#divide-the-release-into-lanes));
 - **How each lane runs**, `hosted` or `packets` ([how it runs](#how-it-runs)), and the **orchestrator's route** (X or S);
@@ -36,7 +36,7 @@ Post the proposal on the run board and tell the owner. Offer two or three genuin
 - **Cross-lane coordination:** shared files, fixtures, machines, CI and pins, and how their merges are ordered;
 - **The cost to the owner:** how many lanes they follow, and what each would ask of them.
 
-End with a **recommendation** and the reason. Then stop. The owner chooses, and may change a grouping. Write no brief until they have.
+Give every option all five, in the same table, so the owner compares like with like. End with a **recommendation** and the reason. Then stop. The owner chooses, and may change a grouping. Write no brief until they have.
 
 ## 2. Record the agreed split on the run board
 
@@ -50,7 +50,7 @@ Bring each brief to the owner. **State stays `prepared` and `**Go:**` stays `Pen
 
 ## 4. The owner sends each launch
 
-Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the brief, sets the session up, creates it with a placeholder prompt and hands over the three-part launch line, which is the template's [Launch](../../../templates/release/lane.md#launch). The owner sends every lane launch. The Lead never sends one for a lane. Anything that must survive a replacement belongs in the brief, not the launch line.
+Before handing over a launch, run the [agent tests](../../shared/workstreams/improve.md#agent-tests) that name the brief and record them on a run sheet; a brief with no case gets one. Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the brief, sets the session up, creates it with a placeholder prompt and hands over the three-part launch line, which is the template's [Launch](../../../templates/release/lane.md#launch). The owner sends every lane launch. The Lead never sends one for a lane. Anything that must survive a replacement belongs in the brief, not the launch line.
 
 ## How it runs
 

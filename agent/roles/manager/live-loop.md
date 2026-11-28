@@ -18,7 +18,7 @@ The accepted loop plan and its scenario set, a running stack built from the plan
 
 ## Procedure
 
-Run the scenarios live, record the round, ask the strategist, pick the smallest fixes, land each as an Iterate PR into the plan branch, rebuild and rerun.
+Run the scenarios live, record the round, ask the strategist, pick the smallest fixes, land each as a task merged into the plan branch, rebuild and rerun.
 
 ## Completion
 
@@ -40,7 +40,7 @@ Use when the plan is a [loop plan](../../shared/glossary.md): its end state is k
 2. **Record a round row** in the plan's `rounds.md`: what saved; what was refused, with the reason shown; timings; anything that vanished; the stack's versions.
 3. **Ask the strategist:** give it the row and the previous rows, not your conclusion.
 4. **Pick the fixes.** Each is one failing scenario, a cause, and the smallest change at its source.
-5. **Fix** each as an ordinary [Iterate](../../shared/workstreams/iterate.md) run, a PR into the plan branch, with the failing live scenario as its red test.
+5. **Fix** each as an ordinary [Iterate](../../shared/workstreams/iterate.md) run, a task merged into the plan branch, with the failing live scenario as its red test.
 6. **Rebuild the stack and rerun** from step 1.
 
 Append each round's rows, picks and PRs under the loop card in `tasks.md`; progress PRs follow [whole project](whole-project.md#progress-is-always-current).

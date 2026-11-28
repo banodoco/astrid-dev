@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-A draft can use a short outline with unknowns. Before dispatch, every task needs one bounded outcome, its input and deliverable, dependencies, a suitable route, and focused proof. Name source identity where one task consumes another project's output. Reuse the prior-art and source identities in [inputs.md](inputs.md); don't repeat them.
+A draft can use a short outline with unknowns. Before dispatch, every task needs one bounded outcome, its input and deliverable, dependencies, a suitable route, and focused proof given as the exact command a worker runs. Name source identity where one task consumes another project's output. Reuse the prior-art and source identities in [inputs.md](inputs.md); don't repeat them.
 
 **Task ids:** one short prefix for the project and a number (`AB-1`, `AB-2`, …). **Critical path:** the ordered ids that bound the finish. **Test inventory:** the existing test files this plan affects.
 

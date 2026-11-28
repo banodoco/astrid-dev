@@ -239,3 +239,19 @@ class StatusViewTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PipelineTableTests(unittest.TestCase):
+    """agent/shared/pipeline.md's Who does what table names the same states the checks accept."""
+
+    def row(self, level):
+        text = (Path(__file__).resolve().parent.parent / "agent/shared/pipeline.md").read_text(encoding="utf-8")
+        line = next(line for line in text.splitlines() if line.startswith(f"| **{level}** |"))
+        return [cell.strip() for cell in line.strip("|").split("|")]
+
+    def test_lane_states_match_the_lane_check(self):
+        from records import LANE_STATES
+        self.assertEqual(self.row("Lane")[2], ", ".join(f"`{state}`" for state in LANE_STATES))
+
+    def test_plan_states_are_the_lifecycle(self):
+        self.assertEqual(self.row("Plan")[2], ", ".join(f"`{name}`" for name in lifecycle.names()))

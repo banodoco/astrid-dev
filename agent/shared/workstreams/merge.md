@@ -25,7 +25,7 @@ Read the untrusted diff safely, gather independent findings, request bounded rep
 
 The PR receives a complete, actionable disposition with source-linked findings and any required owner decision.
 
-Enter through [astrid-dev](../../start.md). Use this for **one pull request someone else wrote**, in any Astrid repository: most often an outside contributor's. A project's own task PRs are landed by its manager ([Manage](../../roles/manager.md)); bringing several PRs together into a release is [Release](release.md), which calls this skill once per PR.
+Enter through [astrid-dev](../../start.md). Use this for **one pull request someone else wrote**, in any Astrid repository: most often an outside contributor's. A project's own tasks are merged by its manager ([Manage](../../roles/manager.md)); bringing several PRs together into a release is [Release](release.md), which calls this skill once per PR.
 
 ## The answer
 
@@ -58,7 +58,7 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 
 A pull request lands where its plan or issue lands. First find what it belongs to, then:
 
-1. **It belongs to a plan that is in a release.** Its base becomes that plan's branch, `release/<N>/plan-<PP>`, in that repository. The plan's manager reviews and merges it there, and merging closes it. A pull request from a fork can target the plan branch directly. It reaches the release when the plan branch lands, like the rest of the plan.
+1. **It belongs to a plan that is in a release.** The plan's manager, or the lane orchestrator where a lane brief runs the plan, reviews it and merges its commits into `release/<N>/plan-<PP>` in that repository, as [the pipeline](../pipeline.md#branches-and-pull-requests) says, then closes the pull request with a link. It reaches the release when the plan branch lands, like the rest of the plan.
 2. **It fixes an issue that is in a release.** It lands in `release/<N>/main` from a fix branch. If it already comes from a `release/<N>/<topic>` branch, retarget it and merge. If it comes from a fork or an older branch, whose name cannot satisfy the landing check, whoever takes it merges the contributor's commits unchanged into a new `release/<N>/<topic>` branch in the repository, opens the pull request from there naming the issue and the original pull request, and closes the original with a link. Authorship is kept; nothing is rewritten.
 3. **It belongs to a plan that is in no release.** There is no branch to merge into. Record it in the plan's `inputs.md` as contributed work (repository, number, head commit, what it offers), comment on it naming the plan, and close it; the contributor's branch stays. When the plan joins a release, its manager brings the work into the plan branch by merging those commits, or asks the contributor to reopen against the plan branch.
 4. **It belongs to nothing yet.** File the issue (label `release:<N>` or `plan:<P>`) or point to the plan, then follow 1 to 3. A change nobody wants is closed with the reason.

@@ -36,7 +36,7 @@ Send X and S work to sub-agents, and run independent tasks at the same time. **K
 
 ## Hard rules
 - **Main and releases:** never push to `main` in any repo, and never publish or tag a release.
-- **Branches and PRs:** task branches land in `release/<NN>/plan-<PP>` through merge commits. For astrid-dev, push a fresh branch and open a PR with `POST /repos/banodoco/astrid-dev/pulls`. Never push to a branch whose PR has merged.
+- **Branches and PRs:** [the pipeline](../../shared/pipeline.md#branches-and-pull-requests) sets how task branches return and merge. For astrid-dev, push a fresh branch and open a PR with `POST /repos/banodoco/astrid-dev/pulls`. Never push to a branch whose PR has merged.
 - **Add commits only:** never force-push, rebase or amend. Put no model name in a commit message. ([Run contract](../../shared/run-contract.md#scope-source-identity-and-state), for reference.)
 - **Manage skill under Codex:** its cloud-session rules (one-repo sessions, allow lists, `list_sessions`, `send_message`, `AskUserQuestion`) don't apply; their intent does: one repository's scope per brief, one worktree per task, commits only, evidence for every claim. The mailbox stands in for `send_message`.
 - **Checks:** never edit, skip or weaken a test, a fixture or a check to get a pass. If a card would make a pinned test untrue, the worker stops and reports the lines; you rule at once.

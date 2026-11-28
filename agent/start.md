@@ -24,7 +24,7 @@ skill: true
 | Running one accepted project | [Manage](roles/manager.md); ask the advisor ([Orchestrate](roles/orchestrator.md)) for a genuine blocker or consequential choice |
 | Someone else's pull request, usually an outside contributor's | [Merge](shared/workstreams/merge.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
 | Test results: is a candidate worse than its baseline, or why is a `main` red | [Get to green](shared/workstreams/green.md): measure completely, then gate on no new failures or retire old red by cause |
-| Work that ships in a release: a plan's task or a fix | A release is one branch per repository that its plans and fixes merge into, tested as a whole and published on the owner's go; your pull request goes into a plan or fix branch `release/<NN>/…`: [How a release runs](shared/workstreams/release.md#how-a-release-runs) |
+| Work that ships in a release: a plan's task or a fix | A release is one branch per repository that its plans and fixes merge into, tested as a whole and published on the owner's go; a task merges into its plan branch `release/<NN>/plan-<PP>`, and a fix's pull request goes into `release/<NN>/main`: [How a release runs](shared/workstreams/release.md#how-a-release-runs) |
 | Integration, release or publication | [Release](shared/workstreams/release.md), with explicit current authorization; start at [How a release runs](shared/workstreams/release.md#how-a-release-runs) |
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](shared/workstreams/gpu-validate.md), within the owner's standing budget |
 | Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](shared/workstreams/improve.md): find the rule's one home, change only that, prove it |
@@ -38,7 +38,7 @@ skill: true
 3. **Decide:** Agree the smallest complete result and test of success. Reuse accepted scope; challenge consequential designs without creating a mandatory second planning ritual.
 4. **Build:** Work on the authorized source using [Iterate](shared/workstreams/iterate.md); protect existing work and respect the current run's constraints.
 5. **Prove:** Record proof as the [run contract](shared/run-contract.md#checks-and-failure-repair) and its [route provenance](shared/run-contract.md#actual-route-provenance) say. A green wrapper is not product proof.
-6. **Land:** Link issue/project and implementation PRs, merged into the plan branch of the release they ship in (a fix goes to its fix branch); use ordinary review and [Release](shared/workstreams/release.md) for cross-repo integration and separately authorized promotion.
+6. **Land:** Link issue/project and implementation, merged into the plan branch of the release they ship in (a fix goes to its fix branch, then to `release/<N>/main` by pull request); use ordinary review and [Release](shared/workstreams/release.md) for cross-repo integration and separately authorized promotion.
 
 Start at the first stage **not already established by evidence**; a fact-finding task can end after investigation, and a known small fix needn't revisit architectural planning.
 

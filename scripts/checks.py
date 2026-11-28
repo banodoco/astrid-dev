@@ -193,6 +193,13 @@ def _lane_briefs(context):
                         errors.append(prefix + f"{plan}: not in releases/{release}.md ## Included plans; list the plan there or fix the Release cell")
             if brief["state"] in LANE_ACTIVE_STATES:
                 active.setdefault(folder, []).append(relative)
+            if brief["state"] == "done":
+                import lifecycle
+                from records import project_fields
+                status = project_fields((root / plan).read_text(encoding="utf-8")).get("Status")
+                if status not in lifecycle.terminal():
+                    errors.append(prefix + f"{plan}: Status is {status} while the lane is done; a done lane's plans are done or cancelled, "
+                                  "and a plan that moves to another lane or the Lead leaves this brief's Plans and order")
             if brief["state"] in ("running", "paused"):
                 inputs = f"plans/{folder}/inputs.md"
                 inputs_file = root / inputs
@@ -353,6 +360,11 @@ def _obsolete_templates(context):
     errors = []
     errors.extend(obsolete_template_paths(root))
     return errors
+
+
+def _agent_tests(context):
+    from agent_tests import validate
+    return validate(context.root)
 
 
 def _ledger(context):
@@ -614,6 +626,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('obsolete-sources', 'always', 'Validate obsolete sources', _obsolete_sources),
     Check('canonical-principles', 'always', 'Validate canonical principles', _canonical_principles),
     Check('obsolete-templates', 'always', 'Validate obsolete templates', _obsolete_templates),
+    Check('agent-tests', 'always', 'Validate agent-test cases: fields, sections, covered files, chains and results', _agent_tests),
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
     Check('link-anchors', 'always', 'Validate links to headings in agent documents, templates and top-level docs', _link_anchors),

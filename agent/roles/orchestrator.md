@@ -149,7 +149,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Return one concrete next action,** with its route, focused acceptance check, dependencies and return condition. For a high-judgment choice, give the simplest viable option, its trade-off, and a challenge against over-engineering.
 - **Stay inside the run contract's limits** ([review and promotion boundaries](../shared/run-contract.md#review-and-promotion-boundaries), [checks and failure repair](../shared/run-contract.md#checks-and-failure-repair)), and never invent a model ID.
 
-## Path 3: check in (only when the owner asks)
+## Path 3: check in (when the owner or the brief sets a cadence)
 
 For delegated multi-manager release work use the [dispatch checklist](orchestrator/multi-manager-dispatch.md#every-hour); the Lead retains release-wide review and issue intake. Otherwise use this general project check-in path.
 
@@ -175,7 +175,7 @@ After three check-ins in a row with nothing to report, you may recommend a slowe
 
 ## Path 4: close
 
-**Cancel the check-ins when the project is done.** When the project is complete, cancel every check-in you scheduled. Do the same when its end condition is met or the owner says stop. A project is complete when its completion PR merges. Confirm none remain, and tell the owner they have stopped.
+**Cancel your check-in when the project is done,** by the run contract's [waking rule](../shared/run-contract.md#coordination-boards-and-check-ins). A project is done when its completion PR merges.
 
 ## Shared workstreams
 

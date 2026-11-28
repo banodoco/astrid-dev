@@ -8,6 +8,7 @@ This directory holds the authored Markdown-first agent instructions: the one sou
 
 ## Where instructions live
 
+- [The pipeline](shared/pipeline.md): how work moves from a gap to a published release, who does what at each level, and how branches and pull requests are used. Read it first.
 - [Start](start.md) routes requests to an existing contribution, procedure, or accountable role.
 - [Roles](roles/) define a continuing identity and its authority. Each role is a single file: Leader, Orchestrator, Manager, Worker.
 - Role-specific workstreams live in the sibling folder of their role file (for example manager/chatgpt-packet.md). They inherit that role's authority and are usually loaded through it.
@@ -49,6 +50,19 @@ In the new `agent/` tree, sources are not authored as `SKILL.md`; the former aut
 A role contains sections for Responsibility, Authority, Responsibilities, and Handoff. A workstream contains sections for When to use, Outcome, Inputs, Procedure, and Completion. Keep actual steps in the procedure rather than repeating a separate five-field contract. Authorization comes from the owner and active run, never from choosing a skill.
 
 Each workstream has a defined, independently verifiable outcome. Keep its full execution instructions and authoritative discovery metadata in its own document; a role's navigation summary is not a second source. Never replace actual steps or proof with placeholder summaries. Shared run policy and shared workstreams have one authoritative home; do not duplicate their instructions. Keep role responsibilities, defaults, selection rules and composability guidance in the role document. Do not add folders for workstreams that need no variant. The source checks validate structure, not the correctness of instructions, sufficiency of evidence or authority of the actor.
+
+### Write it as an explainer
+
+A skill is read cold by the cheapest model that may hold the role. Write it so that model can apply it to cases nobody listed:
+
+- **Lead with the governing idea:** what this is for and the one rule that decides most cases. Then the path, in order. Then only the few rules that path can't imply.
+- **State the parent, not the cases.** When three special cases share a reason, write the reason once and delete the cases. A rule a session can derive is a rule you don't need.
+- **Every rule earns its place** by naming the failure it prevents, ideally a ledger entry. A rule with no failure behind it is a candidate for deletion.
+- **Defaults, not absolutes,** where a brief may change them; the run contract says the brief wins.
+- **Link, don't restate.** A fact has one home; elsewhere, a link.
+- **Shorter after, not longer.** A fix that only adds words usually hides a missing parent. Look for it first ([synthesize, don't react](shared/workstreams/improve.md#synthesize-dont-react)).
+
+A role or workstream is proved by its [agent tests](../agent-tests/README.md): cases that give a fresh session only its starting message and check what it does.
 
 ## Build and install
 

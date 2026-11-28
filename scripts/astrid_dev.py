@@ -29,6 +29,8 @@ def main(argv=None, *, root=ROOT, registry=None):
     install.add_argument("--destination", type=Path, action="append",
                          help="Already existing skills directory; repeat to install into several")
 
+    from agent_tests import add_arguments as add_agent_test_arguments
+    add_agent_test_arguments(commands.add_parser("agent-test", help="Agent tests: declared cases for role documents"))
     release_command = commands.add_parser("release", help="Release coordination tools")
     release_subcommands = release_command.add_subparsers(dest="release_action", required=True)
     status = release_subcommands.add_parser("status", help="Reconcile included plan records")
@@ -50,6 +52,9 @@ def main(argv=None, *, root=ROOT, registry=None):
         except (ValueError, OSError) as exc:
             print(f"ERROR projects: {exc}")
             return 1
+    if args.command == "agent-test":
+        from agent_tests import run as run_agent_tests
+        return run_agent_tests(Path(root), args)
     if args.command == "release":
         from release_status import run
         try:
