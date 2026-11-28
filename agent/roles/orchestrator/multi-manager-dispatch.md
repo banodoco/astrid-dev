@@ -51,7 +51,7 @@ Standing rulings: the brief's Standing rulings section; they bind you.
 Board: <issue URL>, run <run id>, format in its first post. You are <mailbox name>;
 the orchestrator is <name>.
 [Replacing <prior session>: continue from <branch> at <head> and <last STATUS link>;
- apply Lead decisions <comment IDs> not yet done.]
+ apply orchestrator decisions <comment IDs> not yet done.]
 Write this packet's code and tests and push after each task; run its Proof command here if it names one; do not clone or build. Post STATUS or BLOCKED as comments on the board,
 the first as soon as your first branch is pushed and its draft pull request open.
 End with READY-PROOF <repo> <PR> <head> <selectors>, then stop.

@@ -14,11 +14,11 @@ One meaning per word; two meanings, two terms.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it creates a new ChatGPT manager session per packet, owns liveness and handoffs, and leaves acceptance/integration to the Lead.
+**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it creates a new ChatGPT manager session per packet, owns liveness and handoffs, and in a lane's packets option it reviews and merges into plan branches itself ([run contract](run-contract.md#who-answers-for-a-run)).
 
 **release lead:** the agent leading delivery across all plans of a release; the release manager named in the release brief.
 
-**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff. In fresh-packet dispatch the Lead also oversees plan-branch integration.
+**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff.
 
 **advisor:** the role a blocking question goes to, named once in the lane brief's Roles (or the run's `run.yaml` outside a lane): a delegate asks its orchestrator; the orchestrator asks the Lead for release-level questions or the reviewer binding for technical judgment. A lane orchestrator advises only its own delegates.
 
@@ -58,7 +58,7 @@ One meaning per word; two meanings, two terms.
 
 **task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
 
-**project scope:** the outcome and work the owner accepted; adding to it needs her decision.
+**project scope:** the outcome and work the owner accepted; adding to it needs the owner's decision.
 
 **task route:** `N`, `X`, `S` or `T` (taste), the capability band a task runs on.
 
@@ -106,7 +106,7 @@ One meaning per word; two meanings, two terms.
 
 **decision log:** a manager's append-only list of its own rulings.
 
-**decisions ledger:** decisions made while the owner is away, for her to accept or revert.
+**decisions ledger:** decisions made while the owner is away, for the owner to accept or revert.
 
 **Owner decisions:** the `inputs.md` section of what the owner must decide.
 

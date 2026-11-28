@@ -19,7 +19,7 @@ skill: true
 | What we're doing now, next and later | [Strategy](../strategy.md): read it first for release and version direction; see [the hierarchy](../docs/contribution-workflow.md#review-the-strategy) |
 | A gap, or the strategy across several plans | [Gap](shared/workstreams/gap.md): define or reassess the outcome, write its closure approach and route to closure |
 | Planning a new project | [Planner](shared/workstreams/plan.md): define the accepted scope and tasks |
-| Leading release delivery, including setting up a Codex orchestrator to farm tasks out to ChatGPT managers | [Lead](roles/leader.md): own the overall outcome; select the [multi-manager workstream](roles/leader/lane-orchestrators.md) when applicable |
+| Leading release delivery, including setting up a Codex orchestrator to farm tasks out to ChatGPT managers | [Lead](roles/leader.md): select the [lane workstream](roles/leader/lane-orchestrators.md) when applicable |
 | Supervising managers or dispatching work sessions | [Orchestrate](roles/orchestrator.md): keep manager runs and handoffs moving, advise and check in |
 | Running one accepted project | [Manage](roles/manager.md); ask the advisor ([Orchestrate](roles/orchestrator.md)) for a genuine blocker or consequential choice |
 | Someone else's pull request, usually an outside contributor's | [Merge](shared/workstreams/merge.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
