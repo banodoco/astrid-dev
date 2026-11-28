@@ -193,6 +193,13 @@ def _lane_briefs(context):
                         errors.append(prefix + f"{plan}: not in releases/{release}.md ## Included plans; list the plan there or fix the Release cell")
             if brief["state"] in LANE_ACTIVE_STATES:
                 active.setdefault(folder, []).append(relative)
+            if brief["state"] == "done":
+                import lifecycle
+                from records import project_fields
+                status = project_fields((root / plan).read_text(encoding="utf-8")).get("Status")
+                if status not in lifecycle.terminal():
+                    errors.append(prefix + f"{plan}: Status is {status} while the lane is done; a done lane's plans are done or cancelled, "
+                                  "and a plan that moves to another lane or the Lead leaves this brief's Plans and order")
             if brief["state"] in ("running", "paused"):
                 inputs = f"plans/{folder}/inputs.md"
                 inputs_file = root / inputs

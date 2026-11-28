@@ -22,9 +22,9 @@ Propose, record, brief, start, then the check-ins below. Nothing moves to the ne
 
 ## Completion
 
-Each lane's cards are ticked in `tasks.md`, its landings confirmed by the Lead, its check-ins cancelled, and its session retired or given its next plan.
+Each lane's plans merged by the Lead into `release/<N>/main` in landing order, their completion PRs opened, the lane's State `done`, and its session retired or given its next plan.
 
-The [Lead responsibilities](../leader.md) continue to apply. The plan level (packets, reviews, plan-branch merges, proofs) is always the orchestrator's. The release level (the lane split with the owner, landing order, qualification, publication, cross-lane pins, and the release gate unless the brief grants it) is always the Lead's.
+The [Lead responsibilities](../leader.md) continue to apply. The plan level (packets, reviews, plan-branch merges, proofs) is always the orchestrator's. The release level (the lane split with the owner, landing order, qualification, publication, cross-lane pins, and merging each lane's ready plan PR into `release/<N>/main`) is always the Lead's.
 
 ## 1. Propose two or three groupings
 

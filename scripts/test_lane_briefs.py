@@ -250,6 +250,18 @@ class LaneBriefCheckTests(unittest.TestCase):
                              "releases/16/briefs/beta.md": brief(lane="beta", state="done", go="owner go 1 Dec 2026")})
             self.assertEqual([line for line in lane_errors(root) if "active lane" in line], [])
 
+    def test_done_lane_needs_its_plans_done(self):
+        finished = brief(state="done", go="owner go 1 Dec 2026")
+        with self.subTest(case="plan still queued"), tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            make_root(root, {"releases/16/briefs/alpha.md": finished})
+            assert_reports(self, lane_errors(root), ("plans/66-alpha/plan.md", "while the lane is done"))
+        with self.subTest(case="plan done"), tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            make_root(root, {"releases/16/briefs/alpha.md": finished})
+            (root / "plans/66-alpha/plan.md").write_text(plan_text("done"), encoding="utf-8")
+            self.assertEqual([line for line in lane_errors(root) if "while the lane is done" in line], [])
+
     def test_failure_6_started_lane_plan_needs_run_start_pointer(self):
         started = brief(state="running", go="owner go 1 Dec 2026")
         with self.subTest(case="no pointer"), tempfile.TemporaryDirectory() as directory:

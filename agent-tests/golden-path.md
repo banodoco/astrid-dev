@@ -97,7 +97,7 @@ A session that can't build doesn't run proofs: CI on the PR is the proof, and a 
 - **Brief:** the release brief's Included plans and the run board ([release](../agent/shared/workstreams/release.md)).
 - **Lanes:** it proposes the lane split, and the owner chooses. It writes the briefs, and never sends a lane's launch ([leader](../agent/roles/leader.md)).
 - **Check-in and posting:** hourly check-in [3]; posts on `board: release <N> lead`.
-- **Code:** reads no code and runs no tests. It merges into `release/<N>/main` only where no lane brief takes that gate [1].
+- **Code:** reads no code and runs no tests. It merges each lane's ready plan PR into `release/<N>/main`, ordering overlapping lanes.
 
 ### Lane orchestrator
 
@@ -112,7 +112,8 @@ A session that can't build doesn't run proofs: CI on the PR is the proof, and a 
   7. post the first progress PR;
   8. post the baseline from CI [4].
 - **Delegates:** it gives each one the brief's start message [2]. A delegate it can't create (a Codex-app manager) gets a LAUNCH post for the owner to paste.
-- **Code:** it doesn't write code itself. On the brief's fallback it runs units through workers [1]. It merges unit PRs into plan branches, and plan branches into `release/<N>/main` only if the brief gives it that gate [1].
+- **Code:** it doesn't write code itself. On the brief's fallback it runs units through workers [1]. It merges unit PRs into plan branches and ticks them.
+- **Landing and close:** it makes each finished plan ready (`release/<N>/main` merged forward, conflicts settled through workers, CI green), opens the PR into `release/<N>/main` and posts it on the Lead's board. The Lead merges it. It then opens the plan's completion PR. After the last plan, its progress PR sets the brief's State to `done`, it tells the manager to stop, cancels its check-in and posts a closing note to the Lead.
 - **Proof:** it runs no full suite locally. It answers READY-PROOF by checking CI against the unit's focused tests [4].
 - **Escalation:** it brings only the brief's owner-only points to the owner.
 
