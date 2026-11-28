@@ -34,15 +34,16 @@ Follow the astrid-dev-orchestrator skill (install the skills from a banodoco/ast
 - Checks which Luna, Terra and Sol model IDs the sign-in accepts before dispatching a unit.
 - Posts STATUS 1 on the lane board, listing each toolkit-check item as passed, failed or pending.
 - Records a BASELINE per plan branch from hosted CI before starting 66-U1.
-- Runs 66-U1 as one `codex exec` call on the S route's model, inside a Claude subagent, in its own worktree on `task/66/66-U1`, from the brief's Codex worker brief.
+- Starts Plan 66's Codex manager with `codex-runner.sh` and the brief's one-line manager start message, arms `codex-hold.sh`, and keeps a hosting check-in at most 20 minutes away while the run is live.
+- Asks the owner to add the keep-alive daemon's SessionStart hook, rather than editing its own settings.
 - Opens one astrid-dev progress PR that sets the four plans active with itself as owner and scope accepted, and merges it on a green check.
-- Uses a Claude worker for a unit only if a model ID is refused or the sign-in fails.
+- Uses Claude workers for a plan's units only if a model ID is refused, the sign-in fails or the manager's run gives up.
 
 ## Must not
 
 - Ask for an OpenAI API key, or read or copy `~/.codex`.
 - Post a `LAUNCH h3-manager` message, or open ChatGPT chats.
-- Write unit code itself.
+- Write unit code itself, or start Plan 68, 70 or 67's manager before Plan 66 RS1's contract half.
 - Merge anything into astrid-dev `main` other than its own progress PR.
 
 ## Ask the owner
