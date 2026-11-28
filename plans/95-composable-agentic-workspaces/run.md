@@ -2,9 +2,43 @@
 
 The live state of Plan 95's run, rewritten by the orchestrator at each check-in. The plan's [`tasks.md`](tasks.md) stays the record of progress; this board holds the authority, the rulings and the packet queue. Packets are in [packets/](packets/).
 
-## Now (19:15 UTC, Wed 25 Nov)
+## Now (28 Nov 2026)
 
-Plans 71, 72 and 73 are on `main` (`7cf00a5ed5ded3f4ca1b34b97214d693ab584fdd`). The Otto repository `banodoco/otto` exists, public and empty, and the orchestrator has push access. Ready: P95-03 (Otto package skeleton), P95-04 (contract design, Pro) and P95-15 (rule-preservation map, Pro), after the orchestrator's OT-1 and OT-2 are posted. The manager checks in **every 20 minutes** while any packet is Running or in Review, and hourly when idle.
+Read from the mailbox to 22:19 UTC on 27 Nov, Otto `main` at `2ad2550` and `project/95-otto`. An independent sense check on 28 Nov confirmed each fact below against commits.
+
+**The Otto library is built; the Dev migration is stalled at OT-19 part d.** The acting Lead (`p95-acting-lead-codex-1`) has no running packet.
+
+**Done.** On Otto `main`: OT-3 to OT-14, OT-16, OT-17 and OT-18, plus P95-06b, P95-PK and P95-SK. On `project/95-otto`: OT-1, OT-15 and OT-19 parts a, b and c. Otto has no tags and its `__version__` is `"0.0.0"`. [Tasks](tasks.md) holds the card-by-card record.
+
+**Blocked: OT-19 part d** ([P95-19d](packets/P95-19d.md), astrid-dev PR #2054, unmerged). Its own proof is legacy parity (`list`, `check`, `sync`, the unit suite, golden output), and the Lead's run of it was clean. The Lead then also ran Otto's generic `otto check` on the real tree and found two things:
+
+- **Skill configuration mismatch.** Fixed in Otto by P95-SK. Dev has not re-pinned or added its `[skills]` table, and no packet owns that step.
+- **Link-anchor findings** (64 at the first strict run; 55 on the Lead's later strict base and candidate scans, SHA-256 `32c4e62c9941b274616d987cc419ebcd4e51d03fabe8656d56cef009b805a83e`). Nine of them are real `<a id=...>` targets in table cells of `plans/39-green-mains/evidence/release-14-record/tasks.md`, which Otto does not recognise.
+
+**The anchor detour.** Packet P95-ANCHOR (Otto PR #20) tried to teach Otto to recognise explicit anchors with a hand-written, fail-closed scanner. Its heads were repeatedly rejected on 27 Nov (including `c8681932`, `7c53cb1` and `19674be`) after each differential run against GitHub's real GFM renderer found another false pass. On 27 Nov the Lead reported that ten expectations at Otto `tests/test_fragment_targets.py:385` disagree with GitHub's renderer, and that a disposable `cmarkgfm` proof rejected the false passes but was verified only on macOS ARM64 with Python 3.11 and breaks the stdlib-only rule ([mailbox 7229223038](https://github.com/banodoco/astrid-dev/issues/1886#issuecomment-7229223038)). Two corrections to how that was first recorded here: the ten expectations are in the packet's own unmerged Otto PR, not in astrid-dev, so they are not the owner-reserved kind of assertion; and the `cmarkgfm` route would need a stdlib-only exception.
+
+**Scope finding.** The anchor target scope is Dev policy under the RS1-reviewed contract (`docs/contract.md`, check-registry table: "Dev mandatory source list, catalog gate and anchor target regex in Dev"; Otto's `target_pattern=None` means all relative Markdown targets), and Otto's `_link_anchors` already takes a `target_pattern`. Requiring Dev to pass a strict full-tree anchor audit comes from advice during the run, not from the plan. Even a perfect P95-ANCHOR leaves the remaining findings, which would need P95-ANCHOR-POLICY, a new ratchet feature outside Otto v0.
+
+### Proposed path (not adopted)
+
+Needs the acting Lead's decision on the technical steps and the owner's confirmation of the owner steps. Serial chain 2, 4, 5, 6, 7, 8, 9; step 3 runs beside step 2, and OT-21's slices run beside OT-20.
+
+1. **Owner:** confirm `banodoco/otto` is public and protected (it showed `internal` on 25 Nov); say who cuts the tag; authorise progress pull requests to `main`; endorse "Dev's `link-anchors` keeps its legacy target scope" and decline the compiled parser.
+2. **Lead:** finish 19d's own proof and merge PR #2054, completing OT-19.
+3. **One small Otto packet, route N:** an opt-in `link-anchors` target pattern in `otto.toml`, strict by default. Park P95-ANCHOR (PR #20) and P95-ANCHOR-POLICY as post-v0.1 Otto issues.
+4. **Dev consumer configuration**, folded into OT-20's first step: re-pin Otto, add `[skills]` and the anchor pattern, re-enable the check and view registrations.
+5. **OT-20** (X) and **OT-21** slices a to f (X, at most three at once), the slices integrating once OT-20's pre-overlay skill manifest is captured.
+6. **Merge `main` into `project/95-otto`** and re-baseline the parity oracles, with the owner accepting the OT-1 drift.
+7. **OT-22.** Add one explicit install of the real `otto-*` and `astrid-dev-*` namespaces into a temporary destination, removing one (Completion 5).
+8. **Bump Otto to `0.1.0`, then OT-23:** tag, pin by tag, tell Plan 96's board.
+9. **R** (S), then **OT-24** on the owner's go, with a final progress pull request that ticks `tasks.md`.
+
+### Risks the sense check raised
+
+- The record trail has stalled because merges to `main` were treated as unauthorised publication, and live packets are briefed from draft commits that are not on `main`.
+- One acting Lead runs every proof locally; proof attempts have already hit disk-space and `TMPDIR` problems.
+- If nobody rules on literal OT-1 parity, R will flag it.
+- If Otto is still internal, a consumer pinning a `git+https` tag will fail.
 
 ## Authority
 
@@ -59,34 +93,18 @@ Post one STATUS with each as passed or failed; dispatch nothing until the orches
 
 ## Dispatch queue
 
-Cap: three Running or Review at once (ruling 6). Priority: P95-09 (critical path), then P95-17, P95-12.
+Cap: three Running or Review at once (ruling 6). Nothing is running as of 28 Nov. Merged packets are listed once, not repeated per card.
 
-| Packet brief | Source tasks | Handoff | Session | Mode and next action |
-|---|---|---|---|---|
-| [P95-03](packets/P95-03.md) Otto package skeleton and CLI | OT-3 | Ready after OT-2 | — | High. First packet, alone; Otto repository |
-| [P95-04](packets/P95-04.md) Contract design | OT-4 | Ready after OT-1 | — | Pro. After P95-03's early STATUS |
-| [P95-15](packets/P95-15.md) Rule-preservation map | OT-15 | Ready after OT-1 | — | Pro. Beside P95-04 within the cap |
-| [P95-05](packets/P95-05.md) Lift the Markdown, Git, check and view engines | OT-5 | Ready (OT-3 merged; Otto main `ef946b9d`) | — | High. Beside P95-04 and P95-06 |
-| [P95-06](packets/P95-06.md) Lift the skill reader, builder and installer | OT-6 | Ready (OT-3 merged; Otto main `ef946b9d`) | — | Extra High. Beside P95-04 and P95-05 |
-| [P95-07](packets/P95-07.md) Workspace config and record kinds as data | OT-7 | Ready (RS1 accepted; OT-5 merged; Otto main `4179ba5f`) | — | Extra High. Alone on the critical path; OT-8 and OT-11 follow it |
-| [P95-16](packets/P95-16.md) Otto guidance: stand-up playbook, run-contract core, glossary | OT-16 | Ready (OT-15 merged into `project/95-otto`) | — | Extra High. Beside P95-17 and P95-07 |
-| [P95-17](packets/P95-17.md) Otto guidance: generic roles and workstreams | OT-17 | Ready (OT-15 merged; merges after P95-16) | — | High. Beside P95-16 and P95-07 |
-| [P95-08](packets/P95-08.md) Relation kinds and cardinality as data | OT-8 | Ready (OT-7 merged; Otto main `608ef135`) | — | Extra High. Critical path; first priority |
-| [P95-11](packets/P95-11.md) Template selection and manifests | OT-11 | Ready (OT-7 merged; Otto main `608ef135`) | — | Extra High. Beside P95-08 within the cap |
-| [P95-09](packets/P95-09.md) Pipeline declarations, listing and traversal | OT-9 | Ready (OT-8 merged; Otto main `cefbfc1e`) | — | Extra High. Critical path (then OT-10, OT-13) |
-| [P95-12](packets/P95-12.md) Standard and loop templates; a third with no code change | OT-12 | Ready (OT-11 merged; Otto main `cefbfc1e`) | — | High |
-| [P95-10](packets/P95-10.md) Pipeline conformance check | OT-10 | Ready (OT-9 merged; Otto main `d67cacfb`) | — | Extra High. Critical path (then OT-13) |
-| [P95-PK](packets/P95-PK.md) Package the templates and guidance for installed Otto | gap from OT-12 | Ready (OT-12 and OT-17 merged) | — | Extra High. Beside P95-10; needed before OT-22 |
-| [P95-13](packets/P95-13.md) `otto check` assembly and workspace registration | OT-13 | Ready (OT-6, OT-10, OT-12 merged; Otto main `223086a9`) | — | High. Critical path (then OT-14, OT-22) |
-| [P95-19a](packets/P95-19a.md) Dev import swap, part 1: Otto pin, `otto.toml`, Markdown/Git/lifecycle helpers | OT-19 | Ready (OT-5 merged) | — | Extra High. Riskiest card; parity gate after each part; 19b skills, 19c relationships, 19d engines follow |
-| [P95-19b](packets/P95-19b.md) Dev import swap, part 2: skill reader, builder, installer | OT-19 | Waits for P95-19a merged | — | Extra High. Tests patch private names of the Dev skill modules; Step 1 must list each and ask. Parity gate: OT-1 skill tree hash |
-| [P95-14](packets/P95-14.md) Marketing and blank fixture workspaces | OT-14 | Ready (OT-13 merged) | — | High. Otto repo only. Completes the specimen into runnable workspaces; planted violations must fail with the contract's messages |
-| [P95-18](packets/P95-18.md) Voice of the stand-up playbook | OT-18 | Ready (OT-16, OT-13 merged) | — | T (taste). The owner sees the before and after at Step 1; relay it. Words only: a rule-preservation table must show nothing moved |
-| [P95-06b](packets/P95-06b.md) Otto skills: opt-in parity seams (generated header, lock names, legacy link ownership) | OT-6 follow-up | Ready (found by P95-19b Step 1; blocks 19b) | — | Extra High. Otto repo only. Defaults must not change; the orchestrator re-pins astrid-dev after merge |
-| [P95-19c](packets/P95-19c.md) Dev import swap, part 3: relationship layer and the Dev records adapter | OT-19 | Ready (19a merged; runs beside 19b) | — | Extra High. Step 1 must find every Otto-versus-Dev difference first (lesson from 19b); output byte-identical, `project_delivery.py check` 249 records / 309 relationships |
-| [P95-19d](packets/P95-19d.md) Dev import swap, part 4: the check runner and the view engine | OT-19 | Waits for P95-19b and P95-19c merged | — | Extra High. Step 1 difference table first; `list`, `check` and `sync` output byte-identical; 24 Dev checks stay registrations |
-| [P95-RV](packets/P95-RV.md) High-judgment review (RS1, R) | RS1, R | On REQUEST only | — | Pro. A fresh session for each REQUEST |
-| Other cards (OT-7 to OT-14, OT-16 to OT-21) | per [tasks.md](tasks.md) | Blocked on the cards they depend on | — | Packets are written by the orchestrator when each becomes Ready |
+| Packet | Source tasks | State | Route |
+|---|---|---|---|
+| P95-03 to P95-12, P95-13, P95-14, P95-16, P95-17, P95-18, [P95-06b](packets/P95-06b.md), [P95-PK](packets/P95-PK.md), P95-SK | OT-3 to OT-14, OT-16 to OT-18, and follow-ups | Merged into Otto `main` | N, X or T per [tasks](tasks.md) |
+| [P95-15](packets/P95-15.md) | OT-15 | Merged into `project/95-otto` | S |
+| [P95-19a](packets/P95-19a.md), [19b](packets/P95-19b.md), [19c](packets/P95-19c.md) | OT-19 | Merged into `project/95-otto` | X |
+| [P95-19d](packets/P95-19d.md) | OT-19 | Open (PR #2054), blocked on the anchor decision above | X |
+| `P95-ANCHOR` | Otto `link-anchors` fragment targets | Open draft (Otto PR #20), not accepted; proposed to be parked | X |
+| `P95-ANCHOR-POLICY` | Historical-link ratchet | Draft, not started; proposed to be parked | X |
+| `P95-20`, `P95-21`, `P95-21a` to `21f` | OT-20, OT-21 | Drafts on `p95/packets-20-21`, not on `main`, not ready | X |
+| [P95-RV](packets/P95-RV.md) | RS1 (done), R | On REQUEST only | S |
 
 ## Manager launch message
 
