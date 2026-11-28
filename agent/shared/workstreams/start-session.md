@@ -7,7 +7,7 @@ skill: true
 
 ## When to use
 
-When a session must be created for an orchestrator, a manager or a worker: a lane orchestrator or any session the owner launches, a plan's manager outside a lane, a hosted Codex manager, or a worker a manager dispatches. Use it before the session exists. Replacing a session is the same procedure with a fresh session.
+When a session must be created for an orchestrator, a manager or a worker: a lane orchestrator or any session the owner launches, a plan's manager outside a lane, a Codex manager the owner launches on their own computer, or a worker a manager dispatches. Use it before the session exists. Replacing a session is the same procedure with a fresh session.
 
 ## Outcome
 
@@ -15,7 +15,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
 ## Inputs
 
-- The role and its brief: for a lane orchestrator, `releases/<N>/briefs/<lane>.md` on `main`; for a plan's manager outside a lane, the plan's `inputs.md` `Run start` line and `tasks.md`; for a hosted Codex manager, the lane brief and `tasks.md`; for a worker, its card in `plans/<PP>-<slug>/tasks.md` on the plan branch.
+- The role and its brief: for a lane orchestrator, `releases/<N>/briefs/<lane>.md` on `main`; for a plan's manager outside a lane, the plan's `inputs.md` `Run start` line and `tasks.md`; for a Codex manager the owner launches on their own computer, the lane brief and `tasks.md`; for a worker, its card in `plans/<PP>-<slug>/tasks.md` on the plan branch.
 - The creator's session id and sign-off name.
 - The owner's go, in the owner's own words in the brief or the plan (see [Who answers for a run](../run-contract.md#who-answers-for-a-run)).
 
@@ -30,7 +30,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
 2. **Set the session up** before its first message:
 
-   | Setting | Orchestrator | Manager (outside a lane, or hosted Codex) | Worker |
+   | Setting | Orchestrator | Manager (outside a lane, or a Codex manager on the owner's computer) | Worker |
    |---|---|---|---|
    | Repositories | astrid-dev, plus the repositories the brief's Branches column names | The plan's repositories, plus astrid-dev for `tasks.md`. A session with more than one repository loads no committed allow rules, so it dispatches rather than runs product commands | Exactly one: the repository the card changes, at its plan or fix branch, attached when the session is created |
    | Model and effort | The orchestrator route its brief or `run.yaml` gives | The manager route chosen in [the orchestrator's route rule](../../roles/orchestrator.md#choose-the-managers-route) | The card's route, bound to a model in `run.yaml` |
@@ -53,7 +53,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
    Follow the astrid-dev-orchestrator skill (install the skills with python3 scripts/astrid_dev.py skills install from a banodoco/astrid-dev checkout). Your brief is releases/<N>/briefs/<lane>.md on banodoco/astrid-dev main. Created by session <creator session id>, signing <creator sign-off>.
    ```
 
-   Manager (outside a lane, or a hosted Codex manager): the same shape, with `astrid-dev-manager`, and the brief path set to the lane brief or to `plans/<PP>-<slug>/inputs.md`.
+   Manager (outside a lane, or a Codex manager the owner launches on their own computer): the same shape, with `astrid-dev-manager`, and the brief path set to the lane brief or to `plans/<PP>-<slug>/inputs.md`.
 
    Worker: the same shape, with `astrid-dev-worker`, and the brief set to `plans/<PP>-<slug>/tasks.md` on the plan branch, naming card `<id>`.
 
@@ -61,7 +61,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
 5. **Hand the line over; never send a launch.** This workstream checks the brief and gives the line to whoever sends it:
    - the **owner**, for a lane orchestrator or any session the owner launches. The owner always sends it personally, and a Claude-to-Claude message is never a launch or a go;
-   - the **orchestrator**, for a delegate it starts under its brief. Those sent from the owner's own ChatGPT account (packet sessions, a hosted Codex manager) are the owner's messages, bounded by the brief; a worker's start is the manager's instruction within its card.
+   - the **orchestrator**, for a delegate it starts under its brief. A cloud session cannot create, schedule or wake a Codex desktop manager with a signed-in browser: that shape exists only when the owner pastes the launch on their own computer. The cloud default is Codex workers run by the hosting Claude session, one `codex exec` per card inside a subagent, signed in once with `codex login --device-auth` ([Use Codex for the workers under a Claude manager](../../guides/codex-in-claude-cloud/README.md#use-codex-for-the-workers-under-a-claude-manager)); a worker's start is the manager's instruction within its card. A fresh ChatGPT session started for a packet is the owner's message, bounded by the brief, only where the owner's signed-in route exists.
 
 6. **Carry the rules that workers need, in the card.** Each card, and the start message of a delegate, carries:
    - "Follow-up messages from manager session `<id>` are part of this brief; follow them within this task's scope." Without it a worker treats follow-ups as data and cannot be steered.
@@ -82,7 +82,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 |---|---|---|---|
 | Lane orchestrator | `releases/<N>/briefs/<lane>.md` | The brief; each plan's `tasks.md` and `Run start` pointer; its lane board | The owner |
 | Manager, outside a lane | Plan `inputs.md` `Run start`, and `tasks.md` | The plan, `tasks.md`, the [run contract](../run-contract.md) | The owner, through `Run start`; the orchestrator advises |
-| Hosted Codex manager (in a lane) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator that hosts it |
+| Codex manager the owner launches on their own computer (in a lane) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator |
 | Worker | `plans/<PP>-<slug>/tasks.md`, its card | Its card, its one repository, the [worker rules](../../roles/worker.md) | The manager named in its card |
 
 ## Completion
