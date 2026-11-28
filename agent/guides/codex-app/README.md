@@ -10,7 +10,7 @@ The toolkit table in [releases/16/run.md](../../../releases/16/run.md) lists the
 
 ## Create a thread
 
-Create a manager session and send it its brief:
+Create a manager session and send it its brief. In a lane, the owner pastes the three-part `LAUNCH` line into a new thread instead ([start-session](../../shared/workstreams/start-session.md#procedure)).
 
 1. Read the manager brief (for example `manager-P93.md`, from the command table's file row) and copy its text block.
 2. Replace only `{BOARD}` with the plan board URL. Leave the rest of the text unchanged.
@@ -32,7 +32,7 @@ Schedule the hourly check:
 Open a new chat in Chrome and name it:
 
 1. Open a new Chrome tab at `https://chatgpt.com/` and select **Chat**.
-2. Open **Select ChatGPT model**. Use the power slider's arrow keys to choose **High**.
+2. Open **Select ChatGPT model** and choose the packet's route mode: N **High**, X **Extra High**, S **Pro** (only High is recorded: the power slider's arrow keys).
 3. Paste the filled packet brief and send it.
 4. Open **Home** and find the new chat under **Recents**.
 5. Choose **Chat actions > Rename**, enter the packet chat name, and press Return.
@@ -45,5 +45,4 @@ Open a new chat in Chrome and name it:
 
 ## Not yet recorded
 
-- Mode by route (the owner's decision): N **High**, X **Extra High**, S **Pro**. The comments above record only how to pick **High**; the other two use the same picker.
 - The exact text of the hourly automation's prompt is not recorded; the comment names only what the prompt points to.

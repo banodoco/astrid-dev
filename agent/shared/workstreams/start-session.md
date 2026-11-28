@@ -59,7 +59,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
    Anything that should survive a replacement goes in the brief, never in the launch line. The orchestrator's sign-off name (`<lane>-orchestrator`) and "open the board first, then post one STATUS" are brief content. A replacement session started with the same three parts loses nothing.
 
-5. **Set the check-in.** The new session sets its own hourly check-in with its host's scheduler, and names that check-in in its first STATUS:
+5. **Set the check-in.** The new session sets its own hourly check-in with its host's scheduler, at a minute other than :30, checks that it fires, and names it in its first STATUS:
    - Claude: `/loop` or a scheduled task.
    - Codex app: its automation tool.
 
@@ -87,7 +87,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 | Lane orchestrator | `releases/<N>/briefs/<lane>.md` | The brief; each plan's `tasks.md` and `Run start` pointer; its lane board | The owner |
 | Manager, outside a lane | Plan `inputs.md` `Run start`, and `tasks.md` | The plan, `tasks.md`, the [run contract](../run-contract.md) | The owner, through `Run start`; the orchestrator advises |
 | Codex manager, in a lane (hosted in the orchestrator's container) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator (its host) |
-| Codex desktop manager, in a lane (a Codex desktop manager the owner launches on their own computer, not the hosted Codex manager above) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator: it posts the three-part launch line on the lane board as `LAUNCH <name>` and tells the owner; the owner pastes it into the Codex app; the orchestrator then waits for its first STATUS |
+| Codex desktop manager, in a lane (launched by the owner on their own computer; not the hosted one above) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator: it posts the three-part launch line on the lane board as `LAUNCH <name>` and tells the owner; the owner pastes it into the Codex app; the orchestrator then waits for its first STATUS |
 | Worker | `plans/<PP>-<slug>/tasks.md`, its card | Its card, its one repository, the [worker rules](../../roles/worker.md) | The manager named in its card |
 
 ## Completion
