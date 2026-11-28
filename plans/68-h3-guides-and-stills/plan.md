@@ -4,9 +4,9 @@
 
 **Goal:** An agent steers a shot softly with an image, clip or sound at any frame, and pins exact stills at any frame, including start and end images.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** h3-orchestrator, session [`session_011EzfW4exucHx4FeFWbexak`](https://claude.ai/code/session_011EzfW4exucHx4FeFWbexak)
 
 **Target milestone:** 0.2
 

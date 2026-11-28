@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — Owner agreed on 27 November 2026 in ChatGPT to make 66 provider-ready and 67 a full default-companion and composable-pack proof, with NKD as the first real provider; both are allocated to Release 16 in the proposed brief. Earlier one-compiler and CPU-only decisions remain. Next: independent critique of the amended interface and release-base readiness; record the accepted scope/run start with the Lead.
+**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 (#2065)
 
 **Prior art:**
 - **The request already has the model's shape.** `request.v2.json` holds timeline and reference items, per-item `edit[]` grants, and `hard` and `latent_pin` fields that nothing uses ([direction review §1](research/direction.md)).

@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — Owner agreed in ChatGPT on 27 Nov 2026 to the revised first real, default-installed but removable NKD companion, generic composable packs, and full delivery of 66/67 in Release 16. The brief also allocates required 68/70 producer plans, preserving their existing scopes. Next: independent critique of the exact default/activation interface and Lead run start; no execution or publication claimed by this planning PR.
+**Scope decision:** Accepted — the redesigned programme, agreed by the owner on 28 Nov 2026 (#2065)
 
 **Prior art:**
 - **NKD Basic Tools** (commit `c157722a2b484d80dee6b6d3f166c90d9ec197b8`, GPL-3.0) has two relevant nodes ([research/nkd-speech.md](research/nkd-speech.md)):
