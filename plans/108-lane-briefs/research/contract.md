@@ -22,6 +22,17 @@ Four rungs, each linking the rungs next to it:
 3. **Plan** (`plans/<PP>-<slug>/plan.md` with its `inputs.md`): one plan's scope, end state, decisions and evidence; in a lane, its `Run start` is a pointer to the lane brief.
 4. **Task card** (a row of the plan's `tasks.md`): one unit's outcome, route, dependencies, May touch, focused proof and progress.
 
+Each rung has one template, one writer and one ready-to-start check:
+
+| Rung | Template | Writer | Ready-to-start check |
+| --- | --- | --- | --- |
+| Release brief | [releases/TEMPLATE.md](../../../releases/TEMPLATE.md), with its run board from [templates/release/run.md](../../../templates/release/run.md) | The Lead (whoever starts the release) | `python3 scripts/astrid_dev.py check` passes, and the owner's go is recorded (each plan joins by a PR the owner approves) |
+| Lane brief | [templates/release/lane.md](../../../templates/release/lane.md) | The Lead, with the owner | The L-7 `lane-briefs` check passes; State `prepared` until the go; `**Go:**` recorded and State `running` before the launch is sent |
+| Plan | [templates/project/plan.md](../../../templates/project/plan.md) and [inputs.md](../../../templates/project/inputs.md) | The plan's author | The plan and inputs checks in `astrid_dev.py check` pass, and `inputs.md` has its `Run start` line (in a lane, the pointer to the brief) |
+| Task card | A row of the execution-units table in [templates/project/tasks.md](../../../templates/project/tasks.md) | The plan's manager (in a lane, the orchestrator) | Its dependencies are merged and its card fields are complete: one bounded outcome, route, dependencies, scope and focused proof |
+
+**The principle: very minimal and elegant.** The role skill says how, the brief says what, and the launch line only connects them. Anything that should survive a session replacement belongs in the brief. Authority lives in the brief on `main`; the launch line only points to it. **L-9's start-session workstream runs the ready-to-start check of the session's rung before starting any session** (§3).
+
 **Each fact has one home on this ladder, at the rung it belongs to, and is never copied down.** A lower rung links the rung above for anything it needs from it (a lane brief links the release's Included plans; a card links its plan's decisions), and a higher rung links down rather than restating (a lane brief's Queue links `tasks.md`; it never copies a card).
 
 ## 2. The brief's fields
