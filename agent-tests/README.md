@@ -94,5 +94,12 @@ The check validates structure only: fields, sections, covered files, chains and 
 
 ## Depths
 
-- **Cold read** (this runner): the actor describes what it would do. It works for every host, including the Codex app and ChatGPT chats, which cannot run a harness.
-- **Mocked act** (later, Claude hosts only): the same case run through `claude plugin eval`, with GitHub and remote-session tools mocked, so the grader sees the tools actually called.
+Three tiers, from cheapest to closest to real:
+
+- **Cold read** (this runner): the actor describes what it would do. It works for every host, including the Codex app and ChatGPT chats, which cannot run a harness. It catches unclear, missing and contradictory instructions, which is most of what stalls a run. It cannot catch a tool that doesn't work, timing, or two sessions at once.
+- **Mocked act** (Claude hosts): the same case run through `claude plugin eval`, with GitHub and remote-session tools mocked, so the grader sees the tools actually called and an actor cannot call a real one.
+- **Live rehearsal:** real sessions on a toy plan with a scratch board and real scheduling, before a lane's first launch. It is the only test of the Codex app, ChatGPT modes and the clock; the brief's toolkit check covers the rest at first real use.
+
+## Hand-offs
+
+An actor puts every message it would hand to another session in a fenced block opening ```` ```handover <recipient> ````. A chained case names its `after` case and the `handover` recipient it receives, and `agent-test prompt <case> --upstream-report <upstream report>` fills its `{upstream}` with that block. Run a chain in order, on the same commit, so each case receives what its upstream actually wrote.

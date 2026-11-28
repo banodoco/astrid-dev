@@ -20,7 +20,7 @@ HOSTS = ("claude-cloud", "claude-subagent", "codex-app", "codex-in-claude", "cha
 ACTORS = ("N", "X", "S")
 SECTIONS = ("Given", "Fixture", "Expect", "Must not", "Ask the owner")
 REQUIRED = ("Given", "Expect", "Must not")
-FIELDS = ("id", "role", "covers", "brief", "host", "actor", "after")
+FIELDS = ("id", "role", "covers", "brief", "host", "actor", "after", "handover")
 _ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 _UPSTREAM = "{upstream}"
 
@@ -35,6 +35,7 @@ class Case:
     covers: list[str]
     brief: str | None
     after: str | None
+    handover: str | None
     title: str
     sections: dict[str, str] = field(default_factory=dict)
 
@@ -111,7 +112,8 @@ def parse_case(root: Path, path: Path) -> Case:
         if not sections.get(name):
             raise ValueError(f"section '## {name}' is missing or empty")
     case = Case(path, meta["id"], meta["role"], meta["host"], actor, covers,
-                meta.get("brief") or None, meta.get("after") or None, title, sections)
+                meta.get("brief") or None, meta.get("after") or None, meta.get("handover") or None,
+                title, sections)
     for name in ("Expect", "Must not"):
         if not case.lines(name):
             raise ValueError(f"section '## {name}' needs at least one '- ' line")
@@ -213,10 +215,34 @@ Report, concretely and in order:
 3. Your recurring check-in, if any: how you set it, how often, what each run does; or why you have none.
 4. Where you post or report, in what format, to whom; how others reach you.
 5. Whom you start or hand work to, and the full verbatim text of every message, launch line or post you would send.
+   Put each one in its own fenced block whose opening line is ```handover <recipient>, for example
+   ```handover h3-manager or ```handover worker or ```handover owner. A final report you return is
+   ```handover creator.
 6. Code and tests: what you write, commit or push yourself, to which branch; which tests you run, where and when; who merges.
 7. What you would bring to the owner, and what you decide alone.
 8. Every point where you were unsure, documents disagreed, or you guessed. Quote lines with file paths. Be blunt.
 """
+
+
+_HANDOVER = re.compile(r"```handover[ \t]+([^\n]*)\n(.*?)\n```", re.S)
+
+
+def handovers(report: str) -> list[tuple[str, str]]:
+    """Every (recipient, text) block an actor tagged as a hand-over, in order."""
+    return [(who.strip(), text.strip()) for who, text in _HANDOVER.findall(report)]
+
+
+def pick_handover(report: str, recipient: str | None) -> str:
+    """The hand-over text a chained case receives: the first block for its recipient, or the first block."""
+    blocks = handovers(report)
+    if not blocks:
+        raise ValueError("the upstream report has no ```handover block")
+    if recipient:
+        for who, text in blocks:
+            if who == recipient:
+                return text
+        raise ValueError(f"the upstream report has no ```handover {recipient} block")
+    return blocks[0][1]
 
 
 def actor_prompt(root: Path, case: Case, checkout: str, upstream: str | None = None) -> str:
@@ -417,6 +443,8 @@ def run(root: Path, args) -> int:
     try:
         if action == "prompt":
             upstream = args.upstream.read_text(encoding="utf-8") if args.upstream else None
+            if args.upstream_report:
+                upstream = pick_handover(args.upstream_report.read_text(encoding="utf-8"), case.handover)
             print(actor_prompt(root, case, args.checkout or str(root), upstream))
         elif action == "judge":
             print(judge_prompt(case, args.report.read_text(encoding="utf-8"), args.checkout or str(root)))
@@ -436,7 +464,9 @@ def add_arguments(parser) -> None:
     prompt = sub.add_parser("prompt", help="Print the actor's prompt (never the expectations)")
     prompt.add_argument("case")
     prompt.add_argument("--checkout", help="Path the actor reads; defaults to this repository")
-    prompt.add_argument("--upstream", type=Path, help="The upstream case's output, for a case with 'after'")
+    prompt.add_argument("--upstream", type=Path, help="The hand-over text itself, for a case with 'after'")
+    prompt.add_argument("--upstream-report", type=Path,
+                        help="The upstream actor's report; its ```handover block for this case's 'handover' recipient is used")
     judge = sub.add_parser("judge", help="Print the judge's prompt for an actor report")
     judge.add_argument("case")
     judge.add_argument("--report", type=Path, required=True)
