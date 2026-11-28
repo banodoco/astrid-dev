@@ -37,3 +37,4 @@ Follow the astrid-dev-worker skill (install the skills from a banodoco/astrid-de
 - Merge, tick `tasks.md`, or start another unit.
 - Run the whole test suite locally.
 - Edit, skip or loosen a test to get a pass.
+- Edit `tasks.md`.

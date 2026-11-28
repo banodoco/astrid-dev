@@ -32,9 +32,10 @@ Check-in. You are p108-manager, the whole-project manager for Plan 108; follow t
 - Re-runs the card's focused tests itself on that commit before merging.
 - Runs `python3 scripts/astrid_dev.py check`.
 - Pushes the card's branch itself, because a subagent does not, and merges it into `project/108-lane-briefs` only after the re-run passes.
-- Records progress through its own `tasks.md` progress PR.
+- Ticks the card (`[x]`, with its merge) in its own `tasks.md`-only progress PR into `main`, not on the plan branch.
 
 ## Must not
 
 - Merge without re-running the focused tests.
 - Rewrite the worker's commit.
+- Set a second check-in.

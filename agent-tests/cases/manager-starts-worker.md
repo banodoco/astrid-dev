@@ -50,3 +50,4 @@ Follow-up messages from manager session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y are par
 ## Ask the owner
 
 - Is Plan 107's run authorized now? Its plan.md still reads `queued`.
+- Edit `tasks.md`.

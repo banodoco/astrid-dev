@@ -8,6 +8,7 @@ brief: releases/16/briefs/h3.md
 host: chatgpt-web
 actor: S
 after: h3-codex-manager-start
+handover: worker
 ---
 
 # A ChatGPT chat writing 66-U1

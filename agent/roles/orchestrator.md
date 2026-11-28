@@ -175,7 +175,7 @@ After three check-ins in a row with nothing to report, you may recommend a slowe
 
 ## Path 4: close
 
-**Cancel the check-ins when the project is done.** When the project is complete, cancel every check-in you scheduled. Do the same when its end condition is met or the owner says stop. A project is complete when its completion PR merges. Confirm none remain, and tell the owner they have stopped.
+**Cancel your check-in when the project is done,** by the run contract's [waking rule](../shared/run-contract.md#coordination-boards-and-check-ins). A project is done when its completion PR merges.
 
 ## Shared workstreams
 

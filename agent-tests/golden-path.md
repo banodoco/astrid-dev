@@ -35,6 +35,7 @@ Every edge from a parent to a child (owner to Lead, owner to orchestrator, orche
 - the base SHA it starts from;
 - its branch, named for the card or unit (`p<PP>/<id>`);
 - that it commits its own work, and what it pushes and where; a PR into the plan branch starts as a draft and is marked ready at READY-PROOF;
+- that whoever merges its work ticks the task in `tasks.md`, and it never does;
 - how it returns: one milestone vocabulary;
 - whom it escalates to: its creator, never a third session.
 
@@ -60,7 +61,7 @@ Role documents link to it and don't restate it.
 
 *Written into the [run contract](../agent/shared/run-contract.md#coordination-boards-and-check-ins), items 5, 7 and 8, on 28 Nov 2026.*
 
-A long-running role (Lead, orchestrator, manager) sets an hourly check-in at start with its own host's scheduler. On Claude that is a scheduled task or `/loop`; in the Codex app, its automation tool. It names the check-in in its first STATUS. A one-shot role (worker, chat, reviewer) sets none and posts milestones only.
+A long-running role (Lead, orchestrator, manager) sets an hourly check-in at start with its own host's scheduler. On Claude that is a scheduled task or `/loop`; in the Codex app, its automation tool. It names the check-in and its end condition in its first STATUS, never sets a second one when it wakes, and cancels it at the end condition, confirming none remain; no other session disables it. A one-shot role (worker, chat, reviewer) sets none and posts milestones only.
 
 Liveness has one clock: a parent nudges a silent child at 2 hours, and at 3 hours resumes, replaces or falls back, and tells the owner. A child that nothing can wake (a Codex-app session, a ChatGPT chat) moves to the parent's fallback at that point.
 
