@@ -13,6 +13,8 @@ Deliver the engineering quality of the assigned outcome.
 
 Stay inside the accepted tasks, run authority and evidence limits.
 
+In a lane, the orchestrator answers for the run; you deliver your plan for it, under the brief. The lane brief and your plan's `tasks.md` are all you read; there is no separate manager brief.
+
 ## Responsibilities
 
 Investigate, implement or coordinate, qualify and hand off.
