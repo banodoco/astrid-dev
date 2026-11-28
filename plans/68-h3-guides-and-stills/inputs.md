@@ -16,7 +16,7 @@
 
 **Review rounds:** None of its own beyond the focused proofs; the integrated review after [Plan 70](../70-h3-continuation-bridges-inserts/plan.md) covers it. Next: the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: the owner starts a run after its dependencies land.
+**Run start:** Pending — this plan runs in the H3 lane; its run starts when the owner records her go in the lane brief [releases/16/briefs/h3.md](../../releases/16/briefs/h3.md) (its "Owner's go" line). Next: the owner launches the lane.
 
 ## Owner decisions
 

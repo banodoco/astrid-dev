@@ -53,7 +53,7 @@ The published [Release 15 manifest](https://github.com/banodoco/astrid-app/blob/
 
 **Review rounds:** Recommend 1 at the end. Next: the owner confirms.
 
-**Run start:** Pending — no product execution or release authorized. Next: confirm independent boundary review, Plan 66 contract, release placement and owner run authorization.
+**Run start:** Pending — this plan runs in the H3 lane; its run starts when the owner records her go in the lane brief [releases/16/briefs/h3.md](../../releases/16/briefs/h3.md) (its "Owner's go" line). Next: the owner launches the lane.
 
 ## Owner decisions
 
