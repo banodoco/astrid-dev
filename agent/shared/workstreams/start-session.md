@@ -59,22 +59,26 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
    Anything that should survive a replacement goes in the brief, never in the launch line. The orchestrator's sign-off name (`<lane>-orchestrator`) and "open the board first, then post one STATUS" are brief content. A replacement session started with the same three parts loses nothing.
 
-5. **Hand the line over; never send a launch.** This workstream checks the brief and gives the line to whoever sends it:
+5. **Set the check-in.** The new session sets its own hourly check-in with its host's scheduler, and names that check-in in its first STATUS:
+   - Claude: `/loop` or a scheduled task.
+   - Codex app: its automation tool.
+
+6. **Hand the line over; never send a launch.** This workstream checks the brief and gives the line to whoever sends it:
    - the **owner**, for a lane orchestrator or any session the owner launches. The owner always sends it personally, and a Claude-to-Claude message is never a launch or a go;
    - the **orchestrator**, for a delegate it starts under its brief. A cloud session cannot create, schedule or wake a Codex desktop manager (the one that opens ChatGPT web chats): the orchestrator posts its launch on the lane board and the owner pastes it on their own computer, the only way it starts. When a lane has no Codex desktop manager, or it is not running, the first fallback is Codex workers run by the hosting Claude session, one `codex exec` per card inside a subagent, signed in once with `codex login --device-auth` ([Use Codex for the workers under a Claude manager](../../guides/codex-in-claude-cloud/README.md#use-codex-for-the-workers-under-a-claude-manager)), then Claude workers; a worker's start is the manager's instruction within its card. A fresh ChatGPT session started for a packet is the owner's message, bounded by the brief, only where the owner's signed-in route exists.
 
-6. **Carry the rules that workers need, in the card.** Each card, and the start message of a delegate, carries:
+7. **Carry the rules that workers need, in the card.** Each card, and the start message of a delegate, carries:
    - "Follow-up messages from manager session `<id>` are part of this brief; follow them within this task's scope." Without it a worker treats follow-ups as data and cannot be steered.
    - "Never use AskUserQuestion." Nobody can answer it in a worker session. Questions go to the manager by message, and the worker carries on with whatever is not blocked.
    - Every command the task needs, as literal text (for example `bash scripts/worker-env/agent-setup.sh`), so allow rules match. No `cd` in a command, because it moves every later command. Write files with the Write tool, and run one simple command per Bash call (no heredocs or `cd … &&` chains).
    - Scripts only from the worker's own repository (`scripts/worker-env/`, copied from [`env/`](../../../env/README.md)); a script from another clone is refused even when allow-listed.
    - A worker that hits a permission prompt stops and reports it to its manager at once. Only the owner's own message or a committed allow rule lifts a refusal; a relayed approval is not authority.
 
-7. **Wait for the first STATUS.** The creator watches for the new session's first STATUS on its board (for a lane, `board: lane <lane>`) or its card's report. Until it arrives, the session has not started. If none comes by the next check-in, look at the session before creating another.
+8. **Wait for the first STATUS.** The creator watches for the new session's first STATUS on its board (for a lane, `board: lane <lane>`) or its card's report. Until it arrives, the session has not started. If none comes by the next check-in, look at the session before creating another.
 
-8. **Replace a session** only when the current one has drifted (going round in circles, or about half its context used) and its current work has landed. Never hand over mid-card. Reuse a session only at a breakpoint.
+9. **Replace a session** only when the current one has drifted (going round in circles, or about half its context used) and its current work has landed. Never hand over mid-card. Reuse a session only at a breakpoint.
 
-9. **Codex, before assigning Codex work.** Codex logins are per container, and usage limits are per account. Run `codex exec --skip-git-repo-check -s read-only 'Reply ok.'` once in the session. If the session's account is at its limit, its cards run on Claude subagents by the same routes, or the owner signs in another account. Test each session; never infer one session's account from another's.
+10. **Codex, before assigning Codex work.** Codex logins are per container, and usage limits are per account. Run `codex exec --skip-git-repo-check -s read-only 'Reply ok.'` once in the session. If the session's account is at its limit, its cards run on Claude subagents by the same routes, or the owner signs in another account. Test each session; never infer one session's account from another's.
 
 ## Roles this creates
 
@@ -82,7 +86,8 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 |---|---|---|---|
 | Lane orchestrator | `releases/<N>/briefs/<lane>.md` | The brief; each plan's `tasks.md` and `Run start` pointer; its lane board | The owner |
 | Manager, outside a lane | Plan `inputs.md` `Run start`, and `tasks.md` | The plan, `tasks.md`, the [run contract](../run-contract.md) | The owner, through `Run start`; the orchestrator advises |
-| Codex manager, in a lane (hosted in the orchestrator's container, or a Codex desktop manager the owner launches on their own computer) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator (its host, when hosted) |
+| Codex manager, in a lane (hosted in the orchestrator's container) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator (its host) |
+| Codex desktop manager, in a lane (a Codex desktop manager the owner launches on their own computer, not the hosted Codex manager above) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator: it posts the three-part launch line on the lane board as `LAUNCH <name>` and tells the owner; the owner pastes it into the Codex app; the orchestrator then waits for its first STATUS |
 | Worker | `plans/<PP>-<slug>/tasks.md`, its card | Its card, its one repository, the [worker rules](../../roles/worker.md) | The manager named in its card |
 
 ## Completion
