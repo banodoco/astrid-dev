@@ -3,7 +3,7 @@
 **Lane:** <lane>
 **Releases:** <N>, continuing in <M>
 **State:** <prepared, running, paused or done>; <one line of note>
-**Go:** Pending
+**Go:** <Pending while prepared; otherwise the owner's go: date, the owner, and a link to where the owner gave it>
 **Orchestrator:** route <X or S>; session <session id, once started>
 **Reviewer:** <the high-judgment binding and its brief>
 **Board:** `board: lane <lane>`, linked once opened
@@ -22,13 +22,13 @@ This is the one home for how the <lane> lane runs. Its plans, order, rulings and
 
 ## Queue
 
-The execution-units tables in each plan's `tasks.md` are the queue. Link each plan's `tasks.md` here (`plans/<PP>-<slug>/tasks.md`, linked from this brief's folder); never copy its table.
+The execution-units tables in each plan's `tasks.md` are the queue. Link each plan's `tasks.md` here, one link per plan (`plans/<PP>-<slug>/tasks.md`); never copy its table.
 
 ## How it runs
 
 **Option:** <hosted or packets>
 
-- **Start.** <The startup checks, each posted as one STATUS line: passed or failed. Start the session as the Launch line says.>
+- **Start.** Open the lane board first, then post one STATUS. <The startup checks, each posted as one STATUS line: passed or failed.>
 - **Dispatch.** <The in-flight cap, whether the first unit runs alone, and the route and mode for each unit. Replacement rules. The hourly cadence.>
 - **Proof.** <Who runs the focused proof, where it runs, and what counts as evidence. Hosted CI as the final check.>
 - **Reviews.** <Which stops need the reviewer's ACCEPT, which units merge on green CI and shown proof, and how findings return.>
@@ -37,7 +37,7 @@ The execution-units tables in each plan's `tasks.md` are the queue. Link each pl
 
 ## Roles
 
-- **Orchestrator:** <accountable for every plan in this lane, and answers to the owner. What it may do without asking.>
+- **Orchestrator:** <accountable for every plan in this lane, and answers to the owner. Signs its comments `<lane>-orchestrator`. What it may do without asking.>
 - **Manager or packet sessions:** <bounded delegates: what each may do and may never do.>
 - **Reviewer:** <the high-judgment binding, and when it is started.>
 - **Advisor:** <the chain: delegates ask the orchestrator; the orchestrator asks the release Lead for release-level questions, and the reviewer for technical judgment.>
@@ -52,6 +52,7 @@ Dated and append-only; this is the one home for this lane's rulings. Each entry 
 ## Context
 
 - **Decisions and their reasons:** <each with a link to its issue, plan or record.>
+- **Skills:** <hand-written guides this lane's work follows, and which pack or plan writes each.>
 
 ## Cut line and coordination
 
@@ -69,7 +70,7 @@ Dated and append-only; this is the one home for this lane's rulings. Each entry 
 The owner sends this one line to a new orchestrator session:
 
 ```text
-You are the <lane> lane orchestrator. Follow the astrid-dev-orchestrator skill (install skills with `python3 scripts/astrid_dev.py skills install`); your brief is releases/<N>/briefs/<lane>.md on banodoco/astrid-dev main; creator session <creator session id>, sign comments <lane>-orchestrator.
+Follow the astrid-dev-orchestrator skill (install the skills with python3 scripts/astrid_dev.py skills install from a banodoco/astrid-dev checkout). Your brief is releases/<N>/briefs/<lane>.md on banodoco/astrid-dev main. Created by session <creator session id>, signing <creator sign-off>.
 ```
 
 ## Status
