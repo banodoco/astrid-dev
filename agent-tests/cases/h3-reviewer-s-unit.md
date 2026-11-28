@@ -30,6 +30,8 @@ Reply ACCEPT, or HOLD with numbered findings, each giving:
 - the proof that would show it fixed.
 
 For review stops, also check that later units can build on the result without rework. Do not edit code, merge, or widen scope.
+
+Post your verdict on the board, signed h3-reviewer, then stop. This review covers only its target; a later review stop is a separate review.
 ```
 
 ## Fixture
