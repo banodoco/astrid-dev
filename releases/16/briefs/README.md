@@ -12,6 +12,6 @@ Every message the Release 16 run sends, prepared in advance. A sender copies the
 | [board.md](board.md) | the Lead, at start-up | the first comment of each new board |
 | [messages.md](messages.md) | anyone | nudge, resume and replace |
 
-## Proposed H3 programme (not activated)
+## H3 programme (prepared for handover)
 
-[Plan 66](manager-P66.md) · [Plan 68](manager-P68.md) · [Plan 70](manager-P70.md) · [Plan 67](manager-P67.md). Use only after existing Lead approves the [H3 queue](../run.md#proposed-h3-programme-queue-66-68-70-67), freezes actual base/baseline/authority/capacity and explicitly activates rows. These preserve current READY-PROOF custody; active briefs remain unchanged.
+[h3.md](h3.md) is the lane brief: the one home for how the H3 programme runs, including the owner's one-line launch. [reviewer-h3.md](reviewer-h3.md) is sent by the orchestrator to a top-tier reviewer for each review stop and S-route unit. The per-plan H3 manager briefs and `orchestrator-h3.md` are superseded.
