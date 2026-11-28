@@ -40,7 +40,7 @@ Every rule below serves one question: **does this candidate leave anyone worse o
 
 A release is one numbered set of work across the repositories. Its plans and fixes merge into one release branch per repository, `release/<NN>/main`, which is tested as a whole and becomes `main` only at publication. A plan joins a release by its line in the brief and an issue by its label; every branch and pull request names the plan or issue it belongs to. The release manager runs the release; the owner decides what ships and gives the go.
 
-This is the one home for a release's branches and order. Each step says who acts, on which branch, what must be true and where it is recorded; the section it links holds the detail. The **release manager** is the [Release Lead](../../roles/leader.md) named on the brief ([glossary](../glossary.md)). Ordinarily a plan manager runs one plan; under [fresh-packet dispatch](../../roles/leader/multi-manager-release.md), the Lead is accountable for participating plan runs and integrates the short-lived managers' accepted task PRs. No other release or PR authority changes.
+This is the one home for a release's branches and order. Each step says who acts, on which branch, what must be true and where it is recorded; the section it links holds the detail. The **release manager** is the [Release Lead](../../roles/leader.md) named on the brief ([glossary](../glossary.md)). Ordinarily a plan manager runs one plan. In a [lane](../glossary.md), the lane's orchestrator is accountable for its plans' runs, under its brief, and the Lead holds the release level. No other release or PR authority changes.
 
 **Branches.** In each repository the release changes (the product repositories, and `astrid-dev` for a plan that changes only this repository):
 - `release/<NN>/main`, the **release branch**, is the release's one canonical branch. Work reaches it only by merge from a plan or fix branch. [Tester builds](../glossary.md) and the [candidate](../glossary.md) come only from it.
@@ -69,7 +69,7 @@ A fix release to the published release always takes the served number plus one, 
 
 ## Keep the release's records
 
-The **release manager** named in the brief is the [Release Lead](../../roles/leader.md); this does not change an incumbent's authority without an owner-recorded handoff. When a Lead uses [fresh-session dispatch](../../roles/leader/multi-manager-release.md), its packet queue is a section of the existing `run.md`, not a second release state store.
+The **release manager** named in the brief is the [Release Lead](../../roles/leader.md); this does not change an incumbent's authority without an owner-recorded handoff. Lanes are listed in `run.md`'s Lanes table; packet handoff state lives on the lane board, not in `run.md`.
 
 Every release has its brief, `releases/<N>.md`, from [`releases/TEMPLATE.md`](../../../releases/TEMPLATE.md); see [kind](../glossary.md) and the [hierarchy](../../../docs/contribution-workflow.md#review-the-strategy). The approach opens with the current plan; keep earlier plans below, dated.
 
@@ -77,17 +77,28 @@ A release with more than one lane, or with a deadline, also keeps a folder, `rel
 
 | File | Holds | How it changes |
 |---|---|---|
-| `run.md` ([template](../../../templates/release/run.md)) | The live board: the timeline to publish, the cut line, each lane's state, and who runs it in which session | Rewritten at every check-in, so it's always current |
+| `run.md` ([template](../../../templates/release/run.md)) | The live board: the timeline to publish, the cut line, and a Lanes table linking each lane's brief (the lane's state is in its brief). No launch or dispatch queue for lanes | Rewritten at every check-in, so it's always current |
 | `decisions.md` | Dated rulings, each with its reason and evidence, plus the owned slips and every owner override with its exact scope | Append-only. A correction is a new entry that names the one it corrects |
 | `tests.md` | The test gate: the per-test comparison against the served release ([measure](green.md#2-measure)), and the rows still blocking with their owners | Updated by the test lane at each comparison |
 | `ledger.md` | Only when the owner accepts one: each new failure grouped by root cause, with its user impact, its issue and the release that fixes it | Shrinks as fixes land; never grows without a new owner acceptance |
-| `briefs/`, `evidence/` | Each lane's brief, and the evidence files the claims cite | Added to; the board links each lane's brief |
+| `briefs/`, `evidence/` | Each lane's brief (`<lane>.md`, the [lane](../glossary.md) the brief defines), and the evidence files the claims cite | Added to; the board's Lanes table links each lane's brief |
 
 **Every deferral is an issue the moment it is decided,** labelled for the release that will take it and linking the ruling. "Later" without an issue is lost. When a release ships with a ledger, one tracking issue in the next release lists its clusters.
 
 **Timeline and cut line.** The timeline runs from now to publish, with an owner for each milestone. The cut line names what ships without, and by when, if a lane isn't done. Decide that early, so the deadline doesn't decide it for you.
 
-**Give each lane its own session,** with a manager and its brief in `briefs/`. The release manager runs the paid and live steps itself.
+**Give each lane its own session,** as the [glossary](../glossary.md) defines a lane, with its brief in `briefs/`. The release manager runs the paid and live steps itself.
+
+**The brief ladder.** Each fact has one rung and is never copied down; a lower rung links the one above. Each rung has one template, one writer and one ready-to-start check:
+
+| Rung | Template | Writer | Ready-to-start check |
+| --- | --- | --- | --- |
+| Release brief | [releases/TEMPLATE.md](../../../releases/TEMPLATE.md), with its run board from [templates/release/run.md](../../../templates/release/run.md) | The Lead (whoever starts the release) | `python3 scripts/astrid_dev.py check` passes, and the owner's go is recorded (each plan joins by a PR the owner approves) |
+| Lane brief | [templates/release/lane.md](../../../templates/release/lane.md) | The Lead, with the owner | The `lane-briefs` check passes; State `prepared` until the go; `**Go:**` recorded and State `running` before the launch is sent |
+| Plan | [templates/project/plan.md](../../../templates/project/plan.md) and [inputs.md](../../../templates/project/inputs.md) | The plan's author | The plan and inputs checks in `astrid_dev.py check` pass, and `inputs.md` has its `Run start` line (in a lane, the pointer to the brief) |
+| Task card | A row of the execution-units table in [templates/project/tasks.md](../../../templates/project/tasks.md) | The plan's manager (in a lane, the orchestrator) | Its dependencies are merged and its card fields are complete: one bounded outcome, route, dependencies, scope and focused proof |
+
+The role skill says how, the brief says what, and the launch line only connects them. Authority lives in the brief on `main`; the launch line only points to it. The start-session workstream runs the ready-to-start check of the session's rung before starting any session.
 
 ## Pull and freeze issues
 
@@ -105,7 +116,7 @@ python3 scripts/astrid_dev.py release status <N> --check
 
 The first command reads the brief's Included plans, each plan's canonical header, its Progress tables in `tasks.md`, and recorded plan branch rows. It is local and read-only; it reports unclassified progress rather than guessing, and never claims GitHub ancestry, qualification or completion from a tick or merge. Use the existing branch check, issue refresh and qualification evidence alongside it. The refresh writes only the generated Plan status snapshot in the Draft brief; commit the refreshed brief through the normal reviewed record PR, then check against current sources before asking to publish. Do not refresh a Final brief; its snapshot is the recorded state at finalization, not a live catalogue. PR validation checks new or changed snapshots against their sources and requires a current snapshot when Release 15 or later becomes Final; earlier historical backfills are not assigned retrospective live statuses.
 
-At check-in use the findings to choose the next work and assign repairs, not just report them. The whole-project manager owns `plan.md` and `tasks.md` updates; the lane orchestrator checks and chases those updates; under fresh-packet delivery the accountable Lead performs them. Confirm the fixes on `main` and refresh again. Correct active/queued/blocked/paused/done/cancelled only from actual authorized scope and evidence. A plan spanning releases may remain active after its release slice lands. No unchecked row, non-checkbox disposition, stale owner, or missing evidence should be silently interpreted as complete.
+At check-in use the findings to choose the next work and assign repairs, not just report them. The whole-project manager owns `plan.md` and `tasks.md` updates; outside a lane the orchestrator checks and chases those updates; in a lane the lane orchestrator makes them. Confirm the fixes on `main` and refresh again. Correct active/queued/blocked/paused/done/cancelled only from actual authorized scope and evidence. A plan spanning releases may remain active after its release slice lands. No unchecked row, non-checkbox disposition, stale owner, or missing evidence should be silently interpreted as complete.
 
 At landing, ask whether the whole plan is complete or only a slice; record the proof and disposition of every outstanding release commitment in the existing task and release records. At freeze and before publication, resolve discrepancies or name the accountable agent, evidence still needed, and the owner's accepted deferral/known issue. A mechanically current snapshot is not permission to publish; the existing qualification and owner gate still apply. Prepare completion assessments as soon as eligible; for product plans the existing post-publication closure step applies. Do not close partial plans. No additional lifecycle field or new board is introduced.
 
@@ -190,7 +201,7 @@ A publish never turns a passing test red unless the owner has accepted that fail
 
 **Publishing an installer release** (the producers and the App to `main`):
 0. **Cover real install states.** Before publishing, list the install states real users are in (diagnostics received, past releases, migrations they went through) and have CI cover each one from that real starting state. A proof row is named after its literal starting state. After publishing, the owner checks the release through the normal App path on a real long-lived install, with no custom commands. Plan 29 is not done until that check passes. Only the owner may waive that session, for one release, recorded in `decisions.md`; the paths it alone would have covered become issues in the next release.
-1. **Owner's go, in this session.** Once the candidate qualifies and step 11 of How a release runs holds, ask the owner for the go here, naming the exact SHAs. The owner may make the go conditional on the qualification verdict. Record which SHAs the go covers, and come back to her if anything else changes. A go recorded elsewhere, in a plan's `inputs.md` or another session, does not satisfy this session's permission check. If a merge is refused as a production action, stop and ask the owner; don't retry another way.
+1. **Owner's go, in this session.** Once the candidate qualifies and step 11 of How a release runs holds, ask the owner for the go here, naming the exact SHAs. The owner may make the go conditional on the qualification verdict. Record which SHAs the go covers, and come back to the owner if anything else changes. A go recorded elsewhere, in a plan's `inputs.md` or another session, does not satisfy this session's permission check. If a merge is refused as a production action, stop and ask the owner; don't retry another way.
 2. **Record what is served now.** Before any push, record the served App commit and the SHA-256 of astrid.haus's `index.html`, `build.json` and `install-manifest.json`. That is the rollback reference; the planned response to a bad release is still to fix forward.
 3. **Publish producers first, App last.** Fast-forward each producer's `main` (Runtime, VibeComfy, Agent; `git push`, never forced) to the exact reviewed commit on its `release/<NN>/main`, checking first that `main` is an ancestor. Run the App's release guard against the served commit (`node scripts/installer/release-guard.mjs <served> <candidate> --pins`), then fast-forward App `main`. That push is the publication: Railway deploys App `main` to production by itself.
 4. **Verify what is served.** The served-manifest canary runs only when the deployment succeeds, so a canary run before then shows as skipped. Wait for both, then confirm that `build.json` and `install-manifest.json` on astrid.haus carry the release and the exact SHAs, and that the manifest's hash equals the frozen one.

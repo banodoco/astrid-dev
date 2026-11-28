@@ -129,7 +129,7 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
 
 **Review rounds:** Recommend 1. This replaces the pack's compiler and request identity, and it's the base for every future H3 skill. Next: the owner confirms.
 
-**Run start:** Pending — this plan runs in the H3 lane; its run starts when the owner records her go in the lane brief [releases/16/briefs/h3.md](../../releases/16/briefs/h3.md) (its "Owner's go" line). Next: the owner launches the lane.
+**Run start:** Lane [h3](../../releases/16/briefs/h3.md): the brief records the owner's go, authority and limits.
 
 ## Owner decisions
 

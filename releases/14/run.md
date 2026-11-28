@@ -85,7 +85,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 ## Standing rulings
 
-Rulings that recur, set by the Lead in the decision linked. Read the group that applies to you before acting. Anything not listed here was a one-off. General rules live in their skills: failures are compared by test ID and flips told by isolated runs ([Green 3A](../../agent/shared/workstreams/green.md#3a-no-new-failures)), and a gate packet's threat model is in the [Lead workstream](../../agent/roles/leader/multi-manager-release.md#set-up-once).
+Rulings that recur, set by the Lead in the decision linked. Read the group that applies to you before acting. Anything not listed here was a one-off. General rules live in their skills: failures are compared by test ID and flips told by isolated runs ([Green 3A](../../agent/shared/workstreams/green.md#3a-no-new-failures)), and a gate packet's threat model is in the [Lead workstream](../../agent/roles/leader/lane-orchestrators.md).
 
 **Every packet**
 1. **A known-failing test stays executed,** in its own visible step, rather than deselected to make a new step green. ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6971546393))
@@ -212,7 +212,7 @@ Of the triage’s 34 remaining unowned errors, P39-24 covers four in this wave. 
 
 The review stops are the Lead's, not packets: Plan 39 RS1 after P39-04, Plan 55 RS1 after P55-01, and each plan's final R.
 
-**Issue packets** (FIX-*) group release issues; their fix branches `release/14/<topic>` target `release/14/main`, per the [Lead workstream](../../agent/roles/leader/multi-manager-release.md#set-up-once). Pinokio's half of Plan 52 II-8 has no release branch; the Lead does it.
+**Issue packets** (FIX-*) group release issues; their fix branches `release/14/<topic>` target `release/14/main`, per the [Lead workstream](../../agent/roles/leader/lane-orchestrators.md). Pinokio's half of Plan 52 II-8 has no release branch; the Lead does it.
 
 **Not dispatched:** #839 (App) and #842 (Agent), the editor's refusals on long-lived timelines. Another session has been fixing them on `release/14/edit-refusals` since 22:48 UTC. The Lead reviews them when they reach `release/14/main`; a packet would make a second writer.
 

@@ -14,13 +14,13 @@ One meaning per word; two meanings, two terms.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it creates a new ChatGPT manager session per packet, owns liveness and handoffs, and leaves acceptance/integration to the Lead.
+**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it has a new ChatGPT manager session per packet started (by the owner pasting, or by itself where an owner-signed-in route exists), owns liveness and handoffs, and in a lane's packets option it reviews and merges into plan branches itself ([run contract](run-contract.md#who-answers-for-a-run)).
 
 **release lead:** the agent leading delivery across all plans of a release; the release manager named in the release brief.
 
-**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff. In fresh-packet dispatch the Lead also oversees plan-branch integration.
+**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff.
 
-**advisor:** the `run.yaml` role answering blocking questions: the orchestrator or else a fresh high-judgment sub-agent.
+**advisor:** the role a blocking question goes to, named once in the lane brief's Roles (or the run's `run.yaml` outside a lane): a delegate asks its orchestrator; the orchestrator asks the Lead for release-level questions or the reviewer binding for technical judgment. A lane orchestrator advises only its own delegates.
 
 **manager:** an agent executing an accepted engineering assignment. In the standard whole-project setup it owns a plan run; in the fresh ChatGPT packet workstream it implements **one packet in one session**, submitting PRs/proof without owning the plan.
 
@@ -58,7 +58,7 @@ One meaning per word; two meanings, two terms.
 
 **task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
 
-**project scope:** the outcome and work the owner accepted; adding to it needs her decision.
+**project scope:** the outcome and work the owner accepted; adding to it needs the owner's decision.
 
 **task route:** `N`, `X`, `S` or `T` (taste), the capability band a task runs on.
 
@@ -106,7 +106,7 @@ One meaning per word; two meanings, two terms.
 
 **decision log:** a manager's append-only list of its own rulings.
 
-**decisions ledger:** decisions made while the owner is away, for her to accept or revert.
+**decisions ledger:** decisions made while the owner is away, for the owner to accept or revert.
 
 **Owner decisions:** the `inputs.md` section of what the owner must decide.
 
@@ -122,6 +122,6 @@ One meaning per word; two meanings, two terms.
 
 **kind:** a release’s declared version step: `patch`, `minor` or `major`; an absent declaration defaults to `patch`.
 
-**lane:** one stream of work within a release, run in its own session with its brief in `releases/<N>/briefs/`.
+**lane:** the set of plans one orchestrator session runs and answers for, possibly across releases, with one brief at `releases/<N>/briefs/<lane>.md`. Its plans' `Run start` lines point to that brief, and it has one board.
 
-**standing lane:** the continuing lane of a release for fixes and small plans arising from actual usage and user reports, alongside its theme.
+**standing lane:** an ordinary lane whose Plans table grows during the release, carrying fixes and small plans that arise from actual usage and user reports, alongside its theme.

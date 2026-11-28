@@ -14,7 +14,7 @@ description: Qualify a release against its served baseline and installed user jo
 
 ## Who
 
-One **Qualifier** session per release reports to the release [Lead](../roles/leader.md). It has its own board, `board: release <N> qualification`, and rolling ChatGPT queue ([rolling queue](../roles/leader/multi-manager-release.md#rolling-queue)). Its launch message is a short pointer to this page and `run.md`; [check-ins](run-contract.md#coordination-boards-and-check-ins) follow the run contract. It reports; acceptance is the Lead's recommendation and the owner's call.
+One **Qualifier** session per release reports to the release [Lead](../roles/leader.md). It has its own board, `board: release <N> qualification`, and rolling ChatGPT queue ([rolling queue](../roles/leader/lane-orchestrators.md#rolling-queue)). Its launch message is a short pointer to this page and `run.md`; [check-ins](run-contract.md#coordination-boards-and-check-ins) follow the run contract. It reports; acceptance is the Lead's recommendation and the owner's call.
 
 ## The bar
 

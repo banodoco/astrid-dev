@@ -56,7 +56,7 @@ The owner accepted all of the Release 15 Lead's recommendations, in the Lead's s
 ### Waiting on the owner
 
 - **The cut line and the headline.** The release is named for every platform and rented machines; what is running is speed and editing. The Lead recommends naming it for what will ship and moving Plans 63, 76, 18 and 39 to the next release.
-- **Plan 56: a standby Lead.** A Lead whose session stops is not covered for Release 15 yet; name a standby Lead session (the other model family) under `releases/15/lead/` ([how](../../agent/roles/leader/multi-manager-release.md#standby-lead)), or accept that the owner restarts the Lead by hand.
+- **Plan 56: a standby Lead.** A Lead whose session stops is not covered for Release 15 yet; name a standby Lead session (the other model family) under `releases/15/lead/` ([how](../../agent/roles/leader/lane-orchestrators.md#standby-lead)), or accept that the owner restarts the Lead by hand.
 - **Starting the two new lanes:** Plan 84, and Plans 78 with 40.
 - **Plan 84:** appoint a delivery owner and confirm the release window and site sky-session interface before work; live 3D with clock-coupled horizontal rotation is the selected medium. Make no product integration without a fresh go.
 - **Plan 81:** whether its new short check of the speed guard becomes a required check, when its orchestrator brings the measured duration.
@@ -217,7 +217,7 @@ If a check fails, say which manual step the owner must do instead of promising a
 
 Added 23 November 2026 at the owner's request. It works like [Plan 56 dispatch](#plan-56-dispatch) above, with these names:
 
-- **Orchestrator:** each plan's Claude lane session. It takes the Lead's part of the [packet workstream](../../agent/roles/leader/multi-manager-release.md) for its own plan: it writes packets, reviews them, merges them into its plan branch, runs the live proofs and requests the landing gate.
+- **Orchestrator:** each plan's Claude lane session. It takes the Lead's part of the [packet workstream](../../agent/roles/leader/lane-orchestrators.md) for its own plan: it writes packets, reviews them, merges them into its plan branch, runs the live proofs and requests the landing gate.
 - **Manager:** a separate session that starts and minds a fresh ChatGPT session for each packet. It takes the Orchestrator's part of [multi-manager dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), with its plan's orchestrator as "the Lead".
 - **Release 15 Lead:** above both, in `session_011EzfW1gtAhRQwk8pgJMzhG`, posting as `r15-release-lead`. Packets live in [packets/](packets/), and each plan's `tasks.md` stays the record of progress.
 
@@ -226,10 +226,10 @@ Added 23 November 2026 at the owner's request. It works like [Plan 56 dispatch](
 On 23 November 2026, in the Release 15 Lead's session (`session_011EzfW1gtAhRQwk8pgJMzhG`), the owner asked for Plans 87 and 89 to farm their remaining tasks out this way, and for Plan 88 to finish as it runs now.
 
 - **Release 15 Lead.** It addresses the orchestrators ([chain](../../agent/shared/run-contract.md#coordination-boards-and-check-ins)). A DECISION from `r15-release-lead` binds all of them and overrides an orchestrator's, within this Authority and the owner's reserved items. A comment still grants nothing beyond this section. Its own gate covers only the landing into `release/15/main`; otherwise it steers and rules.
-- **Orchestrators.** For Plan 87, `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-orchestrator`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-orchestrator`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../agent/roles/leader/multi-manager-release.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
+- **Orchestrators.** For Plan 87, `session_011EzfW2YgL2GSmbJMr9r9SG` (mailbox `r15-p87-orchestrator`); for Plan 89, `session_011EzfW2o5WfJcvHwr8fSDzC` (`r15-p89-orchestrator`). Each is the accountable agent for its plan, as in the [Lead's packet workstream](../../agent/roles/leader/lane-orchestrators.md): it writes and orders packets, has each submission reviewed on the run contract's routes, applies the fix-it-yourself rule, merges accepted PRs into `release/<15>/plan-<P>`, merges `release/15/main` into the plan branch, keeps `tasks.md` true, runs every proof that needs an installed stack or the network, dispatches hosted CI under the standing rulings, and asks the Release 15 Lead for the landing gate. Its Codex manager finishes its current card, pushes, writes a handover and stops. The lane keeps Claude subagents for reviews and live proofs.
 - **Managers.** `r15-p87-manager-1` and `r15-p89-manager-1`, one per plan, each started by the owner the same way as Plan 56's Orchestrator and acting in her ChatGPT account at her request. A manager may start, resume, stop and replace its own plan's packet sessions and comment on its mailbox. It does not edit the repository, merge, approve or dispatch hosted CI. It reports to its plan's orchestrator and follows the Release 15 Lead's DECISIONs.
 - **Packet sessions** may push to the branches their packet's PR destination names, open pull requests there and comment on their plan's mailbox. They never merge, never edit `tasks.md`, never rebase a shared branch, never dispatch hosted CI and never take a second packet. Their mode follows the packet's Route: N High, X Extra High, S Pro.
-- **What stays in the lane:** see the [packet rules](../../agent/roles/leader/multi-manager-release.md#set-up-once).
+- **What stays in the lane:** see the [packet rules](../../agent/roles/leader/lane-orchestrators.md).
 - **Needs the owner:** publishing, anything paid, her install or media, and changing an existing test's assertion.
 
 ### Standing rulings (Plans 87 and 89)
@@ -301,7 +301,7 @@ Plan branches: `release/15/plan-82` in astrid-agent, astrid-runtime and VibeComf
 
 ### Rulings for Plan 82
 
-The packet and dispatch rules from Plans 56, 87 and 89 are in the [Lead's packet workstream](../../agent/roles/leader/multi-manager-release.md#set-up-once) and [dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md#every-hour). Plan-specific: split RA-2 (S) into the prepared-template contract and key, the approval compile split, then the 53-template differential. RA-0a and every installed timing are the lane's.
+The packet and dispatch rules from Plans 56, 87 and 89 are in the [Lead's packet workstream](../../agent/roles/leader/lane-orchestrators.md) and [dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md#every-hour). Plan-specific: split RA-2 (S) into the prepared-template contract and key, the approval compile split, then the 53-template differential. RA-0a and every installed timing are the lane's.
 
 **Order:** RA-6 first (it gates every cache); RA-1b in parallel; RA-0b after RA-6, RA-0a and Plan 87's RN-4 on `release/15/main` (until then RA-0b may be built against RN-4's commit on `release/15/plan-87`, cherry-picked under the standing rulings); the RA-2 packets after RA-6; R last, in the lane.
 
@@ -329,7 +329,7 @@ Added 24 November 2026 by the Release 15 Qualifier (`r15-qualifier`, `session_01
 
 ### Rules for qualification packets
 
-1. **Issue packets only** ([rolling queue](../../agent/roles/leader/multi-manager-release.md#rolling-queue)): a failing test id or an exact repro that a sandbox with no network can target, a fix of about 3 hours or less, one contract, no owning lane. A failure in a plan's own code goes to that plan's orchestrator.
+1. **Issue packets only** ([rolling queue](../../agent/roles/leader/lane-orchestrators.md#rolling-queue)): a failing test id or an exact repro that a sandbox with no network can target, a fix of about 3 hours or less, one contract, no owning lane. A failure in a plan's own code goes to that plan's orchestrator.
 2. **Never packet work:** anything needing an installed build, a GPU, a render, a real timing or hosted CI to reproduce.
 3. **Each packet carries** its exact selectors, the failing ids, the tests that must pass unchanged, and "no existing assertion changes".
 4. **PR destination:** `p15q/<packet id>` → `release/15/q-<topic>` (a topic branch the Qualifier cuts from `release/15/main`), then `release/15/q-<topic>` → `release/15/main` through the Lead's gate.

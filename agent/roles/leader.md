@@ -1,5 +1,5 @@
 ---
-description: Lead Astrid release delivery across plans, including preparing bounded work for an Orchestrator to dispatch to fresh ChatGPT sessions.
+description: Lead Astrid release delivery across plans, dividing each release into lanes with the owner and writing each lane brief only after the owner has chosen the split.
 skill: true
 ---
 
@@ -26,7 +26,7 @@ Enter through [astrid-dev](../start.md). The **Lead is the release manager named
 ## Always: Lead responsibilities
 
 1. **Own the release outcome.** Choose priorities, resolve cross-plan questions and keep the next work ready, within accepted scope.
-2. **Keep responsibility clear.** Each plan run names one accountable agent: a plan manager or, under [fresh-packet dispatch](leader/multi-manager-release.md), **you**, with each ChatGPT session owning only its packet.
+2. **Keep responsibility clear.** Each plan run names one accountable agent: the lane's orchestrator, or the plan manager outside a lane. Plan-level work (packets, reviews, plan-branch merges, proofs) is theirs; release-level work (the lane split, landing order, qualification, publication, cross-lane pins) is yours. A ChatGPT packet session owns only its packet.
 3. **Judge results.** Accept a submission or name its rework; landed work shows in `tasks.md`, not a second checklist.
 4. **Keep progress legible.** Own [release reconciliation](../shared/workstreams/release.md#reconcile-plan-status) at every check-in and landing, regardless of delivery workstream. Use the generated status to decide what to start, unblock, qualify or close; require the accountable plan agent to correct source records and verify those corrections on `main`. Maintain the release brief, run board and decisions, and tell the owner what moved, what is blocked and which decisions need them.
 5. **Own release integration.** Follow [Release](../shared/workstreams/release.md) for landing order, branch health, qualification and a separate owner's go to publish.
@@ -42,7 +42,7 @@ They apply in every workstream.
 
 ## Divide the release into lanes
 
-A [lane](../shared/glossary.md) is the plans one orchestrator session answers for. You choose the lanes and each orchestrator's route, and keep both on the run board.
+A [lane](../shared/glossary.md) is the set of plans one orchestrator answers for, with one brief in `releases/<N>/briefs/`. **You propose the lanes and the owner chooses them.** Follow [Lanes, divided with the owner](leader/lane-orchestrators.md): propose two or three groupings with a recommendation, stop for the owner's choice, record the agreed split on the run board, and only then write briefs. The owner gives the go on each brief and sends each launch. Re-lane only with the owner, at a real change. The rules below are what a good grouping rests on.
 
 **Same lane** when plans:
 - edit the same files, or one builds on another: the lane runs them in order and owns the merges between them;
@@ -56,7 +56,7 @@ A [lane](../shared/glossary.md) is the plans one orchestrator session answers fo
 
 **Start a fresh session at a landing** once a lane's session has used about half its context; a long session loses its early decisions. Never hand over mid-plan.
 
-**Count lanes by the owner's attention.** Each is a conversation she follows and answers. Lanes share CI runners, so stagger their release-branch runs.
+**Count lanes by the owner's attention.** Each is a conversation they follow and answer. Lanes share CI runners, so stagger their release-branch runs.
 
 **The orchestrator's route** is judged like [the manager's](orchestrator.md#choose-the-managers-route), by what the orchestrator itself must do:
 
@@ -65,19 +65,20 @@ A [lane](../shared/glossary.md) is the plans one orchestrator session answers fo
 | **X** | The default. Its plans are complete: it starts and resumes managers, tells a stalled manager from a slow one, settles routine questions, escalates the rest and reports plainly. The hard judgment sits with the managers, the reviewer and you. |
 | **S** | It chooses direction from evidence each round (a loop plan), or holds release-level correctness itself: landing order, pins, data or a migration. |
 
-Never `N`: a hosting orchestrator answers for its runs. A taste lane's judgment is its `T` manager's; its orchestrator is `X`.
+Never `N`: a hosting orchestrator answers for its runs. A taste lane's judgment is its `T` manager's; its orchestrator is `X`. A hosted orchestrator that also holds the manager role takes the higher of the orchestrator and manager routes.
+
+The release's [brief ladder](../shared/workstreams/release.md#keep-the-releases-records) says which record holds each fact; write each lane's brief from the [lane template](../../templates/release/lane.md).
 
 ## Workstreams
 
 A [workstream](../README.md) adds situation-specific steps **under this role**, not another role or approval system.
 
-**Direct release leadership** is the default when a separate dispatcher is unnecessary: use [Release](../shared/workstreams/release.md) and work directly with the relevant managers. For lane orchestration or fresh-session dispatch, choose the appropriate workstream below.
+**Direct release leadership** is the default when a separate dispatcher is unnecessary: use [Release](../shared/workstreams/release.md) and work directly with the relevant managers. For dividing a release into lanes and running them, use the workstream below.
 
 
 <!-- workstreams:start -->
 <!-- Generated by Astrid Dev view: workstream-index-leader; sources: agent/roles/leader/*.md. Do not edit. -->
-- [lane orchestrators in Claude cloud](leader/lane-orchestrators.md) — Launch and steer one Claude-hosted orchestrator per lane, each running a Codex manager through a carded plan, with the Lead as strategist and gatekeeper rather than dispatcher.
-- [fresh-session ChatGPT packet dispatch](leader/multi-manager-release.md) — Prepare and lead fresh-session packet delivery across accepted release work without delegating the Lead's review or integration authority.
+- [Lanes, divided with the owner](leader/lane-orchestrators.md) — Divide a release into lanes with the owner, record the agreed split, then write briefs and run each lane hosted or by fresh-session packets, with the Lead as strategist and gatekeeper.
 <!-- workstreams:end -->
 
 

@@ -33,13 +33,7 @@ The Qualifier's bar and coverage map are `releases/NN/qualification.md` ([workst
 |---|---|---|---|
 | <lane> | <session id> | `briefs/<lane>.md` | <one line> |
 
-### Dispatch queue (only when using the Lead's multi-manager workstream)
-
-| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
-|---|---|---|---|---|
-| `packets/RNN-PXX-01.md` (link when created) | <tasks.md IDs> | Ready | — | <next action> |
-
-Each packet is a short, stable Markdown assignment at `releases/NN/packets/<packet-id>.md`, implemented in **one fresh ChatGPT session**, including its source tasks, up-to-3-day estimate, outcome, dependencies, inherited proof/permissions and handoff recipient ([format](packet.md)). The table tracks Ready / Running / Review / Blocked / Done **handoffs**, not engineering completion; the plan's `tasks.md` remains authoritative. Delete this section when dispatch is not used. Its board is found by title ([Boards](#boards)).
+Each lane's launch is in its brief ([lane template](lane.md#launch)); packet handoff state lives on the lane board and in each plan's `tasks.md`.
 
 ### Waiting on the owner
 
@@ -48,21 +42,3 @@ Each packet is a short, stable Markdown assignment at `releases/NN/packets/<pack
 ## Standing rulings
 
 Rulings the Lead has made that recur, each with the decision that set it. Read before acting. A ruling not listed here was a one-off and binds no other packet.
-
-## Orchestrator launch message
-
-Only when dispatching packets. The owner pastes it into the Orchestrator's own session; fill each `<…>`.
-
-```text
-You are the Orchestrator for Release <N>, reporting to the Lead (mailbox name <lead name>).
-Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev.
-Read releases/<N>/run.md at <SHA>, then on main at every hourly check. Ready rows link the packets.
-Board: the astrid-dev issue titled `board: release <N> <scope>` (<issue URL>), format in its first post. Your mailbox name: <name>.
-First do the board's startup checks and post one STATUS with each result; dispatch nothing until
-the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in the mode its packet's Route sets (N High, X Extra High, S Pro),
-with the workstream's packet start message. Every hour: read by cursor, check every open packet,
-resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
-You may start, resume and replace packet sessions and comment on the board. You may not merge,
-edit the repository or approve anything. Send anything reserved to the owner to the Lead.
-If a check fails, say which manual step the owner must do instead of promising automation.
-```

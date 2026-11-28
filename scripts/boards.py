@@ -11,10 +11,13 @@ import subprocess
 import sys
 import urllib.parse
 from datetime import datetime, timezone
+from pathlib import Path
 
 from contribution_api import request
+from records import is_lane_brief, lane_brief
 
 REPO = "banodoco/astrid-dev"
+ROOT = Path(__file__).resolve().parents[1]
 QUIET_HOURS, STALE_HOURS = 2, 24
 ROW = re.compile(r"^\|[^|]*\|\s*`([^`<>]+)`\s*\|(.*)\|\s*$")
 SESSION = re.compile(r"session_[A-Za-z0-9]+")
@@ -29,11 +32,35 @@ def api(path: str):
     return json.loads(subprocess.run(["gh", "api", path], check=True, capture_output=True, text=True).stdout)
 
 
-def find_boards(release: str) -> list[dict]:
-    q = urllib.parse.quote(f'repo:{REPO} is:issue is:open in:title "board: release {release}"', safe=":")
+def lane_names(release: str, root: Path = ROOT) -> list[str]:
+    """Lanes whose lane brief lists `release` in its Releases header (contract §1, §3)."""
+    try:
+        number = int(release)
+    except ValueError:
+        return []
+    names = []
+    for path in sorted((root / "releases").glob("*/briefs/*.md")):
+        text = path.read_text(encoding="utf-8")
+        if is_lane_brief(text):
+            brief = lane_brief(text, path.relative_to(root).as_posix())
+            if brief["lane"] and number in brief["releases"]:
+                names.append(brief["lane"])
+    return sorted(set(names))
+
+
+def search_boards(title: str, pattern: re.Pattern) -> list[dict]:
+    q = urllib.parse.quote(f'repo:{REPO} is:issue is:open in:title "{title}"', safe=":")
     found = api(f"/search/issues?q={q}&per_page=100")["items"]
-    pat = re.compile(rf"^board: release {re.escape(release)}( .+)?$")
-    return sorted((i for i in found if pat.match(i["title"])), key=lambda i: i["number"])
+    return [i for i in found if pattern.match(i["title"])]
+
+
+def find_boards(release: str, root: Path = ROOT) -> list[dict]:
+    """Open release boards (`board: release <N> ...`) and, for each lane brief listing <N>, its `board: lane <lane>`."""
+    found = search_boards(f"board: release {release}", re.compile(rf"^board: release {re.escape(release)}( .+)?$"))
+    for lane in lane_names(release, root):
+        found += search_boards(f"board: lane {lane}", re.compile(rf"^board: lane {re.escape(lane)}$"))
+    unique = {i["number"]: i for i in found}
+    return sorted(unique.values(), key=lambda i: i["number"])
 
 
 def comments(number: int) -> list[dict]:

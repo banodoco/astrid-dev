@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 
 from lifecycle import names
-from records import project_fields, release_brief, section, split_table_row
+from records import is_lane_brief, lane_brief, project_fields, release_brief, section, split_table_row
 
 START = "<!-- release-status:start -->"
 END = "<!-- release-status:end -->"
@@ -66,6 +66,26 @@ def landing(text, number):
     return "open"
 
 
+def lanes_for_release(root, number):
+    """Map each plan folder in release `number` to its lane, from the lane briefs (contract §1).
+
+    A plan belongs to the lane whose brief lists it with Release `number`. Returns {folder: lane}.
+    """
+    lanes = {}
+    for path in sorted((root / "releases").glob("*/briefs/*.md")):
+        text = path.read_text(encoding="utf-8")
+        if not is_lane_brief(text):
+            continue
+        brief = lane_brief(text, path.relative_to(root).as_posix())
+        for plan in brief["plans"]:
+            if plan["release"] != number or not plan["path"]:
+                continue
+            parts = plan["path"].split("/")
+            if len(parts) == 3 and parts[0] == "plans" and parts[2] == "plan.md" and brief["lane"]:
+                lanes.setdefault(parts[1], set()).add(brief["lane"])
+    return {folder: ", ".join(sorted(names)) for folder, names in lanes.items()}
+
+
 def cell(value):
     # Keep repository text as table data, not Markdown/HTML control syntax.
     return str(value).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("|", "&#124;").replace("\n", " ")
@@ -75,12 +95,13 @@ def report(root, number, text):
     brief = release_brief(text)
     if brief["number"] != str(number) or brief["state"] not in ("Draft", "Final"):
         raise ValueError("release number or state does not match brief")
+    lanes = lanes_for_release(root, int(number))
     lines = [
-        "Generated from the current included plan headers, task Progress tables and recorded branch rows.",
+        "Generated from the current included plan headers, task Progress tables, recorded branch rows and lane briefs.",
         "Counts are task-table rows (ticked / open / other), not percentage complete. Landing is recorded, not live-verified. No state implies qualification or publication.",
         "",
-        "| Plan | Status | Accountable owner (recorded) | Task rows | Recorded landing |",
-        "| --- | --- | --- | --- | --- |",
+        "| Plan | Lane | Status | Accountable owner (recorded) | Task rows | Recorded landing |",
+        "| --- | --- | --- | --- | --- | --- |",
     ]
     findings = []
     seen = set()
@@ -101,7 +122,10 @@ def report(root, number, text):
         # Owner values may contain plan-relative links. The plan is linked; keep
         # owner as readable text without misdirected relative links.
         owner_text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", owner)
-        lines.append(f"| [Plan {n}](../plans/{folder}/plan.md) | {status} | {cell(owner_text)} | {row} | {branch} |")
+        lane = lanes.get(folder, "—")
+        lines.append(f"| [Plan {n}](../plans/{folder}/plan.md) | {cell(lane)} | {status} | {cell(owner_text)} | {row} | {branch} |")
+        if lane == "—":
+            findings.append(f"- Plan {n} has no lane: the Lead proposes lanes with the owner (agent/roles/leader.md#divide-the-release-into-lanes).")
         flags = []
         if owner.lower().startswith("unassigned") and (status == "active" or branch in ("open", "partial", "merged")):
             flags.append("check accountable owner")

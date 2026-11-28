@@ -1,5 +1,5 @@
 ---
-description: Deploy and supervise Astrid manager sessions, keep authorized work moving, unblock or escalate stalls; for a Lead-prepared packet queue launch a fresh ChatGPT session per packet.
+description: Run the plans in an Astrid lane from its lane brief: deploy and supervise manager sessions, keep authorized work moving, and escalate only at the brief's listed points; for packets, launch a fresh ChatGPT session per unit.
 skill: true
 ---
 
@@ -21,14 +21,14 @@ Dispatch, advise and unblock according to the run.
 
 Report where managers stand and who must act next.
 
-**Your job:** get authorized work into manager sessions and keep it moving. The default is a continuing project manager; the [fresh-packet workstream](orchestrator/multi-manager-dispatch.md) uses a **new ChatGPT manager session for each packet**, with the Lead owning plan-level integration.
-1. **Deploy:** brief managers from accepted project tasks, or a Lead-prepared dispatch queue; do not invent scope.
+**Your job:** get authorized work into manager sessions and keep it moving. In a lane, the lane brief is your whole job: its plans, order, authority and limits. The default is a continuing project manager; the [packets option](orchestrator/multi-manager-dispatch.md) uses a **new ChatGPT manager session for each packet**, and you still answer for its review and merges.
+1. **Deploy:** brief managers from accepted project tasks; do not invent scope.
 2. **Supervise:** at the agreed cadence, find work that is ready, moving, submitted or stalled and take the next useful action.
 3. **Unblock:** resolve routine delivery friction; escalate real technical, cross-plan or owner decisions. Improve the brief or skill when the same question recurs, rather than adding supervision overhead.
 
-**One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
+**You answer for your lane.** In a lane, you are the one [accountable agent](../shared/run-contract.md#who-answers-for-a-run) for every plan run in it, in either option, and you answer to the owner. Your managers and packet sessions are bounded delegates. Outside a lane, if you host the manager, you answer for the run too: when Codex runs the project inside your session, you are its accountable agent, not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
-**Across a release, the [Release Lead](leader.md) owns the release,** and [chooses your lane and your route](leader.md#divide-the-release-into-lanes). An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
+**Across a release, the [Release Lead](leader.md) owns the release,** and proposes lanes with the owner, who chooses them, and [sets your route](leader.md#divide-the-release-into-lanes). An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
 
 **You orchestrate; the manager manages.** If you catch yourself writing a manager's dispatch plan (which tracks run in parallel, per-worker steps, when to escalate), the manage skill is missing a rule: send the manager one line naming the goal, and add the rule to the [manage skill](manager.md) by PR.
 
@@ -37,16 +37,16 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 | Asked for | Path |
 |---|---|
 | "Do this project", or an outcome with no plan yet | 1. Start a project |
-| "Farm these packets out to ChatGPT managers" | [Multi-manager dispatch workstream](orchestrator/multi-manager-dispatch.md) under the Release Lead |
+| "Farm these packets out to ChatGPT managers" | [Packets option](orchestrator/multi-manager-dispatch.md), when the lane brief's How it runs names it |
 | A blocked planner, manager or worker asks a question | 2. Advise |
 | The owner wants regular updates on a run | 3. Check in |
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
-**Report and check in as the run contract's [coordination rules](../shared/run-contract.md#coordination-boards-and-check-ins) say.** **Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
+**Report and check in as the run contract's [coordination rules](../shared/run-contract.md#coordination-boards-and-check-ins) say.** **Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the lane board's STATUS records handoffs, not a second task history.
 
 **A queue is yours to keep moving.** For an ordered queue (phases of a plan, or several projects):
-- **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.
-- **Get the go once:** one standing go from the owner for the whole queue, given in the manager's session and recorded on each `Run start` line. Without it, every item waits for her.
+- **Prepare the next item before the current one ends:** its cards re-planned against what just landed, and its start message (outside a lane, its `Run start` line too).
+- **Get the go once:** one standing go from the owner for the whole queue, given in the manager's session and recorded in the brief's Go (outside a lane, on each `Run start` line). Without it, every item waits for the owner.
 - **At each check-in, confirm the manager has moved on.** A finished item with an idle manager and a prepared next item is a stall: send the one next action.
 - **An item gated on an outside event** (a release publishing, an owner setting) is still built on its plan branch, with only publication to `main` waiting. Say what is gated, and on whom, in every report.
 
@@ -56,7 +56,7 @@ The [Release Lead](leader.md) (the release manager named on the brief) owns rele
 
 ## Path 1: start a project
 
-When the Lead has prepared accepted release packets, use the [fresh-session dispatch workstream](orchestrator/multi-manager-dispatch.md) instead of this standard whole-project handoff. Its sessions do **not** persist across packets.
+When the lane brief's How it runs names the packets option, use the [packets option](orchestrator/multi-manager-dispatch.md) instead of this standard whole-project handoff. Its sessions do **not** persist across packets.
 
 1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../strategy.md) and the [catalog](../../plans/index.md). With no accepted plan, write one with [Plan](../shared/workstreams/plan.md) (you may plan it yourself) and get the owner's scope decision. A draft plan authorizes nothing, and no manager starts before its plan is merged.
    - **Fix the scope when the run starts.** If the owner adds scope to a running release, say what it reopens (tests, re-pins, review) and offer the next release instead; add it only if the owner decides to.
@@ -86,7 +86,7 @@ Decide this once per run, separately from its tasks' routes. Judge it by what th
 - **Pick the lowest route that fits,** and say why in one line. If two rows fit, take the higher.
 - **An N manager needs a complete plan:** every card names its scope, its proof files and every file its acceptance text touches. Otherwise the run needs an X manager.
 - **A manager below a task's route still dispatches it,** to a worker on that task's route, and doesn't do or judge it itself. Name the sub-agent or session for each T task and each review in the plan.
-- **Record the choice** on the `Run start` line, and the model under `roles.manager` in `run.yaml`.
+- **Record the choice** in the lane brief's How it runs (outside a lane, on the `Run start` line), and the model under `roles.manager` in `run.yaml`.
 - **Don't swap managers mid-run:** the new one loses the run's context. Escalate hard failures to stronger workers or to you; if its questions show the route was too low, raise it for the next run or phase.
 
 The run contract defines the routes and the model each one uses; this is its copy, for the routes you assign:
@@ -95,22 +95,22 @@ See [routing and bindings](../shared/run-contract.md#routing-and-bindings) in th
 
 ## The start message
 
-A run starts with one short message; the plan carries the rest. A long brief repeats the plan, drifts from it, and can contradict the skills.
+A lane starts from the owner's one-line launch in its brief, not from this section: the brief carries the plans, order, authority and limits. How any start is checked and handed over is the [start-session workstream](../shared/workstreams/start-session.md), not this section. This section is the outside-lane form only. A run outside a lane starts with one short message; the plan carries the rest. The three-part launch line is held only in the [start-session workstream](../shared/workstreams/start-session.md#procedure), so this section does not repeat it. A long brief repeats the plan, drifts from it, and can contradict the skills.
 
-1. **Record the run first.** Fill the `Run start` line in the plan's `inputs.md` ([its fields](../../templates/project/inputs.md)) and merge it.
-2. **Draft the message for the owner to paste.** A message you send yourself arrives as data from a peer, and the session rightly won't treat it as a go ([authority](../shared/run-contract.md#who-answers-for-a-run)).
+1. **Record the run first (outside a lane).** Fill the `Run start` line in the plan's `inputs.md` ([its fields](../../templates/project/inputs.md)) and merge it. In a lane the Lead writes the brief and each plan's pointer `Run start` line, and you never write `Run start`.
+2. **Draft the message for the owner to paste.** The owner always sends it personally. A message you send yourself arrives as data from a peer, and the session rightly won't treat it as a go ([authority](../shared/run-contract.md#who-answers-for-a-run)).
 
    ```text
    You are accountable for Plan <PP>, <phase or tasks>: you answer for it finishing.
    Follow the astrid-dev-manager skill. The plan is plans/<PP>-<name>/ on astrid-dev main at <sha>;
-   start from the Run start line in inputs.md and the dispatch notes in tasks.md.
+   start from the Run start line in inputs.md and the plan's tasks.md.
    It ships in Release <NN> (releases/<NN>.md; release manager: session <id>). Cut the plan branch
    `release/<NN>/plan-<PP>` from `release/<NN>/main` at <sha> and land work there. You may <what it may do without asking>.
    Come to me for <what needs the owner's go>. Your advisor for hard questions is session <id>.
    ```
 
 3. **Add nothing the plan should hold.** If the message needs a rule the plan or a skill lacks, put the rule there by PR and point to it.
-4. **Don't add a second accountable agent.** A separate plan manager answers for its run and you advise or supervise; a packet session is a bounded delegate of the run's accountable agent (the Lead, under fresh-packet dispatch), not another plan owner. The Release Lead owns release delivery, not a second copy of the plan run.
+4. **Don't add a second accountable agent.** Outside a lane, a separate plan manager answers for its run and you advise or supervise. In a lane, you answer for the run, and its managers and packet sessions are your bounded delegates, not other plan owners. The Release Lead owns release delivery, not a second copy of the plan run.
 
 ## Claude Cloud setup: no permission prompts
 
@@ -127,8 +127,8 @@ Choose the workstream that fits the environment and assignment; these are **path
 <!-- Generated by Astrid Dev view: workstream-index-orchestrator; sources: agent/roles/orchestrator/*.md. Do not edit. -->
 - [separate Codex Cloud sessions](orchestrator/codex-cloud-sessions.md) — Coordinate separate Codex Cloud sessions through the shared GitHub mailbox and durable session handoffs.
 - [Codex hosted inside Claude Cloud](orchestrator/codex-in-claude-cloud.md) — Host Codex workers or a manager inside Claude Cloud while preserving explicit ownership, permissions and recovery.
-- [Workstream: run a lane for the Release Lead](orchestrator/lane-orchestrator.md) — Run one lane of a release for the Release Lead end to end, deciding inside the plan and coming to the Lead only at anchor points.
-- [dispatch to fresh ChatGPT sessions](orchestrator/multi-manager-dispatch.md) — Dispatch and supervise Lead-approved packets in fresh ChatGPT sessions while leaving review and integration to the Lead.
+- [Workstream: run a lane from its brief](orchestrator/lane-orchestrator.md) — Run one lane end to end from its lane brief: decide inside the brief and its plans' tasks.md, and come to the Lead or owner only at the points the brief lists.
+- [dispatch to fresh ChatGPT sessions](orchestrator/multi-manager-dispatch.md) — Run a lane's packets option: dispatch and supervise fresh ChatGPT packet sessions, with the orchestrator's review and merges as the lane brief sets them.
 <!-- workstreams:end -->
 
 
@@ -153,7 +153,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 
 For delegated multi-manager release work use the [dispatch checklist](orchestrator/multi-manager-dispatch.md#every-hour); the Lead retains release-wide review and issue intake. Otherwise use this general project check-in path.
 
-Record the agreed cadence and end condition on the plan's `Run start` line, and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. Without a verified path, poll in the foreground while active and tell the owner when a manual nudge is needed ([what works](../guides/codex-cloud/README.md#what-works-and-what-does-not)). A [hosted Codex manager's keep-alive check-in](orchestrator/codex-in-claude-cloud.md#use-codex-from-claude-cloud) is a different timer. These documents never start a check-in themselves.
+Record the agreed cadence and end condition on the plan's `Run start` line (in a lane, in the brief's Check-ins), and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. Without a verified path, poll in the foreground while active and tell the owner when a manual nudge is needed ([what works](../guides/codex-cloud/README.md#what-works-and-what-does-not)). A [hosted Codex manager's keep-alive check-in](orchestrator/codex-in-claude-cloud.md#use-codex-from-claude-cloud) is a different timer. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, wake it with one next action.

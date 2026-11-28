@@ -10,7 +10,13 @@ The Plan 91 mailbox records the owner-directed [STOP](https://github.com/banodoc
 
 ## H3 programme lane
 
-One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It answers to the owner. Everything about how it runs is in the lane brief [briefs/h3.md](briefs/h3.md): plans and order, queue, dispatch, proof, reviews, merges, rulings, cut line, coordination and launch. State: prepared, not started.
+One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It answers to the owner. Everything about how it runs is in the lane brief [briefs/h3.md](briefs/h3.md): plans and order, queue, dispatch, proof, reviews, merges, rulings, cut line, coordination and launch. State: running; the owner gave the go on 28 November 2026 (see the Lanes table and the brief's `**Go:**`).
+
+### Lanes
+
+| Lane | Session | Brief | State |
+|---|---|---|---|
+| h3 (Plans 66, 68, 70, 67; board `board: lane h3`) | not yet recorded; the orchestrator records it in its brief at its first progress PR | [briefs/h3.md](briefs/h3.md) | running, from the owner's go of 28 November |
 
 ## Proposed H3 programme queue (66, 68, 70, 67)
 
@@ -200,6 +206,8 @@ Your mailbox name is only the name you sign with; there is no other mailbox.
 | Packet | Read the repository, push a branch, open a draft PR and comment, through the chat's GitHub connector | — |
 
 **Toolkit check, the first time each role starts:** first read the Lead board's `TOOLKIT` comments; a row already recorded there is just followed. For a row not yet recorded, your first real use of it is the trial: the Lead's first manager is the real one, a manager's first chat is its first packet, and the Sol row is recorded the first time a Sol is sent. Once a row works, post one comment on the Lead board: `TOOLKIT <row>: <the exact steps that worked>`. A row you can't do is one `PARKED <role>: can't <row>` for the owner. The comments are the record; the table only lists the rows.
+
+The recorded steps for these rows are in the [Codex app guide](../../agent/guides/codex-app/README.md).
 
 **The packet row** is proved by the first packet's early STATUS. If that packet instead posts BLOCKED because the chat can't reach GitHub, the manager posts `PARKED plan <PP>: packet chats can't reach GitHub`, and the Lead starts no more managers until the owner answers.
 
@@ -406,7 +414,7 @@ The mailbox names keep their `r15-` prefix, as they were opened before the move.
 ### Standing rulings (Plan 91)
 
 1. Release 15's Plans 87 and 89 rulings 1–3, 5 and 6 apply as written.
-2. Release 15's [rulings for Plan 82](../15/run.md#rulings-for-plan-82-from-the-first-three-dispatches) apply to Plan 91, from the Release 15 Lead's review of the first twelve merged packets:
+2. Release 15's [rulings for Plan 82](../15/run.md#rulings-for-plan-82) apply to Plan 91, from the Release 15 Lead's review of the first twelve merged packets:
    - packets have no network and run no hosted test, so each packet's list of already-failing IDs and its focused selectors come from AG-0's [card lists](../../plans/91-agent-main-green/evidence/release-15-514499de/cards/);
    - one contract per PR, aimed at about three hours; a larger card is delivered as consecutive PRs at its seams;
    - every packet lists what must pass unchanged, and an existing assertion changes only as the triage rules allow; a packet that finds this untrue posts `BLOCKED` once with the exact list;

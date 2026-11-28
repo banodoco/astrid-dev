@@ -844,7 +844,6 @@ class SharedBlockTests(unittest.TestCase):
             "guides/codex-in-claude-cloud/README.md": "../../shared/run-contract.md#routing-and-bindings",
             "guides/codex-in-claude-cloud/manager-brief.md": "../../shared/run-contract.md#routing-and-bindings",
             "roles/leader/lane-orchestrators.md": "../../shared/run-contract.md#routing-and-bindings",
-            "roles/leader/multi-manager-release.md": "../../shared/run-contract.md#routing-and-bindings",
             "roles/manager/astra-reflection.md": "../../shared/run-contract.md#routing-and-bindings",
             "roles/orchestrator.md": "../shared/run-contract.md#routing-and-bindings",
             "roles/orchestrator/codex-in-claude-cloud.md": "../../shared/run-contract.md#routing-and-bindings",
