@@ -62,7 +62,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
    - **One run per ref.** Workflows that cancel in progress cancel on any second dispatch or push to the same ref, with no author shown. Never dispatch twice on one ref or push to a ref while its qualifying run is in flight, and never dispatch on another project's ref.
 2. **Dispatch.** Send each ready task to a subagent on its route. In the card put its outcome, scope (what it may change; a path includes its own tests, wherever they live), dependencies, exact starting versions, acceptance check and authority.
    - Tell an X or S task to delegate research, reading, mechanical edits and checks to N helpers. Send a T task what [its rule](../../shared/run-contract.md#who-answers-for-a-run) lists and have it return the exact before and after.
-   - Tell every task to add commits only ([run contract](../../shared/run-contract.md#scope-source-identity-and-state)).
+   - Tell every worker session to add commits only (a subagent returns its tree, and you commit) ([run contract](../../shared/run-contract.md#scope-source-identity-and-state)).
    - Escalate by the [stopping thresholds](../../shared/run-contract.md#cheapest-model-first): re-route a failure to X with the worker's notes, don't try again.
    - Keep independent tasks moving while one is blocked.
    - **Do a task yourself** when no worker can be started for it, or briefing one costs more than the work: on its task branch, to the same card, if [your route](../orchestrator.md#choose-the-managers-route) is at least the task's. Note it in the progress row; rule 9 still applies.

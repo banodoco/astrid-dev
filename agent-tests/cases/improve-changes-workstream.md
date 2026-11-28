@@ -5,7 +5,7 @@ covers:
   - agent/shared/workstreams/improve.md
   - agent/roles/worker.md
 host: claude-cloud
-actor: N
+actor: X
 ---
 
 # Changing one line of the worker role through the improve workstream
