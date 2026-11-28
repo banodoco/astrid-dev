@@ -102,4 +102,4 @@ Three tiers, from cheapest to closest to real:
 
 ## Hand-offs
 
-An actor puts every message it would hand to another session in a fenced block opening ```` ```handover <recipient> ````. A chained case names its `after` case and the `handover` recipient it receives, and `agent-test prompt <case> --upstream-report <upstream report>` fills its `{upstream}` with that block. Run a chain in order, on the same commit, so each case receives what its upstream actually wrote.
+An actor puts every message it would hand to another session in a fenced block opening ```` ```handover <recipient> ````. A chained case names its `after` case and the `handover` recipient it receives, and `agent-test prompt <case> --upstream-report <upstream report>` fills its `{upstream}` with every block for that recipient, in order, as a board read would return them. Run a chain in order, on the same commit, so each case receives what its upstream actually wrote.

@@ -233,15 +233,16 @@ def handovers(report: str) -> list[tuple[str, str]]:
 
 
 def pick_handover(report: str, recipient: str | None) -> str:
-    """The hand-over text a chained case receives: the first block for its recipient, or the first block."""
+    """The hand-over text a chained case receives: every block for its recipient, in order, as a board read
+    returns them, or the first block when the case names no recipient."""
     blocks = handovers(report)
     if not blocks:
         raise ValueError("the upstream report has no ```handover block")
     if recipient:
-        for who, text in blocks:
-            if who == recipient:
-                return text
-        raise ValueError(f"the upstream report has no ```handover {recipient} block")
+        mine = [text for who, text in blocks if who == recipient]
+        if not mine:
+            raise ValueError(f"the upstream report has no ```handover {recipient} block")
+        return "\n\n".join(mine)
     return blocks[0][1]
 
 
