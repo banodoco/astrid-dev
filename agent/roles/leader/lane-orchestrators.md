@@ -81,7 +81,7 @@ At each check-in, first run [release reconciliation](../../shared/workstreams/re
 
 ## At each Lead check-in
 
-**Inputs:** your boards since your cursor, open PRs, `python3 scripts/release_branches.py check <N>`, and [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status).
+**Inputs:** your board and every lane board since your cursor (lanes write to you on your board; you write to a lane on its lane board, never only on yours), open PRs, `python3 scripts/release_branches.py check <N>`, and [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status).
 
 **Each review (release-gate and cross-lane PRs):** accept and merge, or list the rework on the PR. Accept a gate only after the reviewer injects the realistic failures in its brief and sees the gate reject them. Judge against that threat model and leave crafted bypasses out of the findings.
 
