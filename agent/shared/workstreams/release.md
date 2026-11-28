@@ -89,7 +89,16 @@ A release with more than one lane, or with a deadline, also keeps a folder, `rel
 
 **Give each lane its own session,** as the [glossary](../glossary.md) defines a lane, with its brief in `briefs/`. The release manager runs the paid and live steps itself.
 
-**The brief ladder.** Each fact has one rung, and a lower rung links the one above instead of copying it: (1) the release brief `releases/<N>.md` and its `run.md`; (2) a lane brief in `releases/<N>/briefs/<lane>.md`; (3) a plan's `plan.md` with its `inputs.md`, where a lane's plan has a `Run start` pointer to the lane brief; (4) a task card, a row of the plan's `tasks.md`.
+**The brief ladder.** Each fact has one rung and is never copied down; a lower rung links the one above. Each rung has one template, one writer and one ready-to-start check:
+
+| Rung | Template | Writer | Ready-to-start check |
+| --- | --- | --- | --- |
+| Release brief | [releases/TEMPLATE.md](../../../releases/TEMPLATE.md), with its run board from [templates/release/run.md](../../../templates/release/run.md) | The Lead (whoever starts the release) | `python3 scripts/astrid_dev.py check` passes, and the owner's go is recorded (each plan joins by a PR the owner approves) |
+| Lane brief | [templates/release/lane.md](../../../templates/release/lane.md) | The Lead, with the owner | The `lane-briefs` check passes; State `prepared` until the go; `**Go:**` recorded and State `running` before the launch is sent |
+| Plan | [templates/project/plan.md](../../../templates/project/plan.md) and [inputs.md](../../../templates/project/inputs.md) | The plan's author | The plan and inputs checks in `astrid_dev.py check` pass, and `inputs.md` has its `Run start` line (in a lane, the pointer to the brief) |
+| Task card | A row of the execution-units table in [templates/project/tasks.md](../../../templates/project/tasks.md) | The plan's manager (in a lane, the orchestrator) | Its dependencies are merged and its card fields are complete: one bounded outcome, route, dependencies, scope and focused proof |
+
+The role skill says how, the brief says what, and the launch line only connects them. Authority lives in the brief on `main`; the launch line only points to it. The start-session workstream runs the ready-to-start check of the session's rung before starting any session.
 
 ## Pull and freeze issues
 
