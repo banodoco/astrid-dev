@@ -77,17 +77,19 @@ A release with more than one lane, or with a deadline, also keeps a folder, `rel
 
 | File | Holds | How it changes |
 |---|---|---|
-| `run.md` ([template](../../../templates/release/run.md)) | The live board: the timeline to publish, the cut line, each lane's state, and who runs it in which session | Rewritten at every check-in, so it's always current |
+| `run.md` ([template](../../../templates/release/run.md)) | The live board: the timeline to publish, the cut line, and a Lanes table linking each lane's brief (the lane's state is in its brief). No launch or dispatch queue for lanes | Rewritten at every check-in, so it's always current |
 | `decisions.md` | Dated rulings, each with its reason and evidence, plus the owned slips and every owner override with its exact scope | Append-only. A correction is a new entry that names the one it corrects |
 | `tests.md` | The test gate: the per-test comparison against the served release ([measure](green.md#2-measure)), and the rows still blocking with their owners | Updated by the test lane at each comparison |
 | `ledger.md` | Only when the owner accepts one: each new failure grouped by root cause, with its user impact, its issue and the release that fixes it | Shrinks as fixes land; never grows without a new owner acceptance |
-| `briefs/`, `evidence/` | Each lane's brief, and the evidence files the claims cite | Added to; the board links each lane's brief |
+| `briefs/`, `evidence/` | Each lane's brief (`<lane>.md`, the [lane](../glossary.md) the brief defines), and the evidence files the claims cite | Added to; the board's Lanes table links each lane's brief |
 
 **Every deferral is an issue the moment it is decided,** labelled for the release that will take it and linking the ruling. "Later" without an issue is lost. When a release ships with a ledger, one tracking issue in the next release lists its clusters.
 
 **Timeline and cut line.** The timeline runs from now to publish, with an owner for each milestone. The cut line names what ships without, and by when, if a lane isn't done. Decide that early, so the deadline doesn't decide it for you.
 
-**Give each lane its own session,** with a manager and its brief in `briefs/`. The release manager runs the paid and live steps itself.
+**Give each lane its own session,** as the [glossary](../glossary.md) defines a lane, with its brief in `briefs/`. The release manager runs the paid and live steps itself.
+
+**The brief ladder.** Each fact has one rung, and a lower rung links the one above instead of copying it: (1) the release brief `releases/<N>.md` and its `run.md`; (2) a lane brief in `releases/<N>/briefs/<lane>.md`; (3) a plan's `plan.md` with its `inputs.md`, where a lane's plan has a `Run start` pointer to the lane brief; (4) a task card, a row of the plan's `tasks.md`.
 
 ## Pull and freeze issues
 

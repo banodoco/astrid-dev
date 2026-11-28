@@ -18,7 +18,7 @@ A compact record for a **new project's** decision. Bugs and small fixes use thei
 
 **Review rounds:** Pending — None for a simple, bounded project; otherwise recommend a number and say why ([guide](../../agent/shared/run-contract.md#review-and-promotion-boundaries)). Next: the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../agent/shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
+**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../agent/shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one. In a [lane](../../agent/shared/glossary.md), write only the pointer form instead: `**Run start:** Lane <lane>: the brief records the owner's go, authority and limits.`, with `<lane>` a relative link to the lane brief.
 
 ## Owner decisions
 
