@@ -139,7 +139,7 @@ A session that can't build doesn't run proofs: CI on the PR is the proof, and a 
 
 - **Reads:** its card, at the ref its start message names [2].
 - **Branch and tests:** works on `p<PP>/<id>` from the pinned base, and runs only the card's focused tests [4].
-- **Returns:** to its creator. Every worker runs only its card's focused tests and commits its own work. A worker session also pushes its branch and opens a draft PR; a subagent returns the commit SHA, and its creator pushes [2].
+- **Returns:** to its creator, after running the card start to finish. It commits its own work. A worker session runs only its card's focused tests, pushes its branch and opens a draft PR; a subagent returns the commit SHA, and its creator pushes and runs the focused tests as its proof re-run [2].
 - **Check-in:** none [3].
 - **Never:** merge, edit a test to pass, use AskUserQuestion, or touch a file outside its Scope. A needed file outside Scope is a BLOCKED naming the lines ([run contract](../agent/shared/run-contract.md#checks-and-failure-repair)).
 
