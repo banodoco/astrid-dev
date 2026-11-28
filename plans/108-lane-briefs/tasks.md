@@ -2,6 +2,14 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+**Owner:** `p108-manager`, session `session_011EzfW15uV913PPYnNg8J91` (Claude Sonnet). Advisor: `session_011EzfW1gtAhRQwk8pgJMzhG`. Board: [#2069](https://github.com/banodoco/astrid-dev/issues/2069). Project branch: `project/108-lane-briefs`, cut from `main` at `c3089bb`.
+
+## Rulings
+
+**Now (28 Nov 2026):** run started; L-1 dispatching (N). Nothing blocked. No spend. D1 (name) is open and must be settled before L-2; recommendation "lane".
+
+- **R1.** Manager's session id recorded on this Owner line (and in `plan.md`'s Owner line, which the plan itself names as the place), in the first progress PR. Easy to undo.
+
 **Task ids:** `L-1` … `L-8`, review `L-R`, application `H-1` … `H-3`.
 
 **Critical path:** L-1 → L-2 → L-3 → L-7 → L-8 → L-R → H-1 → H-2. L-4, L-5 and L-6 run beside L-3 after L-2. H-3 starts when L-4 has landed.

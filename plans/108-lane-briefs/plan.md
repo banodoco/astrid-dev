@@ -6,7 +6,7 @@
 
 **Status:** active
 
-**Owner:** The Plan 108 manager `p108-manager`, a Claude Sonnet session launched on 28 November 2026 by the planning session `session_011EzfW1gtAhRQwk8pgJMzhG` (advisor); it records its own session id in its first progress PR
+**Owner:** The Plan 108 manager `p108-manager`, a Claude Sonnet session launched on 28 November 2026 by the planning session `session_011EzfW1gtAhRQwk8pgJMzhG` (advisor); session `session_011EzfW15uV913PPYnNg8J91`
 
 **Estimate:** 6–7 days (units of at most 3 days; planning figures)
 
