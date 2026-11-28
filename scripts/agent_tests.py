@@ -16,6 +16,8 @@ from pathlib import Path
 
 CASES_DIR = Path("agent-tests/cases")
 RESULTS_DIR = Path("agent-tests/results")
+RUNS_DIR = Path("agent-tests/runs")
+RUN_SECTIONS = ("Governing finding", "Round 1", "Synthesis", "Changes", "Round 2", "Owner questions", "Next")
 HOSTS = ("claude-cloud", "claude-subagent", "codex-app", "codex-in-claude", "chatgpt-web")
 ACTORS = ("N", "X", "S")
 SECTIONS = ("Given", "Fixture", "Expect", "Must not", "Ask the owner")
@@ -163,6 +165,22 @@ def validate(root: Path) -> list[str]:
                     break
                 seen.add(step)
                 step = cases[step].after
+    runs = root / RUNS_DIR
+    for path in sorted(runs.glob("*.md")) if runs.is_dir() else ():
+        if path.name in ("TEMPLATE.md", "README.md"):
+            continue
+        rel = path.relative_to(root).as_posix()
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}-[a-z0-9-]+", path.stem):
+            errors.append(f"{rel}: a run sheet is named YYYY-MM-DD-<subject>.md")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for heading in RUN_SECTIONS:
+            if f"\n## {heading}\n" not in text:
+                errors.append(f"{rel}: missing section '## {heading}'")
+        named = re.search(r"\*\*Cases:\*\*(.*)", text)
+        for case_id in re.findall(r"[a-z0-9]+(?:-[a-z0-9]+)+", named.group(1) if named else ""):
+            if case_id not in cases:
+                errors.append(f"{rel}: names an unknown case: {case_id}")
     results = root / RESULTS_DIR
     for path in sorted(results.glob("*.md")) if results.is_dir() else ():
         if path.name != "README.md" and path.stem not in cases:

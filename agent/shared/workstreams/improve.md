@@ -70,7 +70,7 @@ Run it when a process ledger entry from a run names friction in the skills, or t
 
 An agent test checks that a fresh session, given a role's documents and one starting message, does what the [golden path](../../../agent-tests/golden-path.md) says. The format is in [agent-tests/README.md](../../../agent-tests/README.md). Run them when a covered document, brief or start message changes, before a lane launches, and as an audit. An audit's inventories feed the golden path.
 
-1. **Pick the cases.** `python3 scripts/astrid_dev.py agent-test status` and `coverage`. Run every case that covers a changed file, and every case after it in a chain.
+1. **Open a run sheet** from [the template](../../../agent-tests/runs/TEMPLATE.md), and fill it in as you go. **Pick the cases.** `python3 scripts/astrid_dev.py agent-test status` and `coverage`. Run every case that covers a changed file, and every case after it in a chain.
 2. **Prepare a checkout** of the documents under test: `agent-test checkout <dest>` exports the head with the cases, results and golden path withheld. The actor reads only that.
 3. **Run the actor.** `agent-test prompt <case> --checkout <path>` prints its prompt. Give that text, unchanged, to a fresh subagent on the case's route (N: Haiku), read-only. Never show the actor the case file, its Expect lines or an earlier report. For a chained case, pass the upstream actor's text with `--upstream <file>`.
 4. **Judge.** `agent-test judge <case> --report <file>` prints the judge's prompt. Give it to a separate high-judgment session ([routing](../run-contract.md#routing-and-bindings)), never the author of the change.

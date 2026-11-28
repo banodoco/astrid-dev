@@ -19,6 +19,7 @@ after: h3-orchestrator-start
 
 ## Fixture
 
+- Stand-ins: board issue 9999 is `board: lane h3`.
 - The board holds the orchestrator's first post, STATUS 1, `BASELINE 66 4a2bad187f12e7b0d1ba5bd1164b4a076787516a <run link>` and `READY 66-U1` from h3-orchestrator.
 
 ## Expect

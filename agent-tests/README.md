@@ -10,6 +10,7 @@ A test is a **case**. Each case is declared in one file, and names the documents
 | --- | --- |
 | One case | `agent-tests/cases/<id>.md` |
 | A case's latest result | `agent-tests/results/<id>.md`, written by `agent-test record` |
+| One run's sheet: what was found, synthesized, changed and re-run | `agent-tests/runs/<YYYY-MM-DD>-<subject>.md`, from [the template](runs/TEMPLATE.md) |
 | The golden path the cases encode | [golden-path.md](golden-path.md) |
 | The runner | `python3 scripts/astrid_dev.py agent-test list \| status \| coverage \| prompt \| judge \| record` |
 | The structure check | `agent-tests` in `python3 scripts/astrid_dev.py check` |
@@ -73,6 +74,18 @@ The person running the tests does not fix misses one by one: they group them by 
 - **doc-gap:** the documents are missing, wrong or contradictory. Fix the document, then re-run.
 - **actor-error:** the documents were clear. Note it; re-run once on the next route up if it repeats.
 - **ambiguity:** only the owner can decide. Ask, record the answer in its one home, then re-run.
+
+## Run sheets
+
+Every run gets one sheet, copied from [the template](runs/TEMPLATE.md) and filled in as the run goes, in pyramid order:
+1. the governing finding;
+2. round 1;
+3. the synthesis into parent ideas;
+4. the changes;
+5. round 2 on the changed documents;
+6. the owner's questions and answers.
+
+Result files say where each case stands now. Sheets say how it got there, so a later run can see what was tried. The check validates a sheet's name, sections and case ids.
 
 ## When cases run
 
