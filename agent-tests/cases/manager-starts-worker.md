@@ -8,7 +8,7 @@ covers:
   - agent/shared/run-contract.md
 brief: plans/107-h3-passes/tasks.md
 host: claude-subagent
-actor: N
+actor: S
 ---
 
 # A worker subagent takes card HP-1

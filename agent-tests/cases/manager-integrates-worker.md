@@ -8,7 +8,7 @@ covers:
   - agent/shared/run-contract.md
 brief: plans/108-lane-briefs/tasks.md
 host: claude-cloud
-actor: N
+actor: X
 ---
 
 # A manager taking a worker's commit for one card

@@ -8,7 +8,7 @@ covers:
   - agent/shared/run-contract.md
 brief: releases/16/briefs/h3.md
 host: claude-cloud
-actor: N
+actor: S
 ---
 
 # A Claude worker writing 66-U1 after the ChatGPT route fell back

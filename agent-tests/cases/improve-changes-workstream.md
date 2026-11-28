@@ -19,6 +19,7 @@ Follow the astrid-dev-improve skill (install the skills from a banodoco/astrid-d
 ## Fixture
 
 - Stand-ins: treat `agent/shared/workstreams/start-session.md` step 5 as reading, unscoped, "**Set the check-in.** The new session sets its own hourly check-in with its host's scheduler…", even where the checkout differs.
+- The actor checkout withholds `agent-tests/cases/`. Assume `agent-test status` lists `h3-claude-worker-fallback`, `manager-starts-worker` and `plan-manager-start` as covering `start-session.md`, each `stale`.
 - `docs/ledger/2026-11-28-agent-path-dry-runs.md` is open: its `Resolved by:` line reads `—`.
 
 ## Expect

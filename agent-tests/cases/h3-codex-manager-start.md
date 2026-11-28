@@ -7,7 +7,7 @@ covers:
   - agent/shared/run-contract.md
 brief: releases/16/briefs/h3.md
 host: codex-app
-actor: N
+actor: X
 after: h3-orchestrator-start
 ---
 

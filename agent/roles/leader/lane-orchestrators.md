@@ -50,7 +50,7 @@ Bring each brief to the owner. **State stays `prepared` and `**Go:**` stays `Pen
 
 ## 4. The owner sends each launch
 
-Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the brief, sets the session up, creates it with a placeholder prompt and hands over the three-part launch line, which is the template's [Launch](../../../templates/release/lane.md#launch). The owner sends every lane launch. The Lead never sends one for a lane. Anything that must survive a replacement belongs in the brief, not the launch line.
+Before handing over a launch, run the [agent tests](../../shared/workstreams/improve.md#agent-tests) that name the brief and record them on a run sheet; a brief with no case gets one. Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the brief, sets the session up, creates it with a placeholder prompt and hands over the three-part launch line, which is the template's [Launch](../../../templates/release/lane.md#launch). The owner sends every lane launch. The Lead never sends one for a lane. Anything that must survive a replacement belongs in the brief, not the launch line.
 
 ## How it runs
 

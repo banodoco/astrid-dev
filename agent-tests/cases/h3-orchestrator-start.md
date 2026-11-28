@@ -9,7 +9,7 @@ covers:
   - agent/shared/run-contract.md
 brief: releases/16/briefs/h3.md
 host: claude-cloud
-actor: N
+actor: S
 ---
 
 # The H3 orchestrator's first two hours

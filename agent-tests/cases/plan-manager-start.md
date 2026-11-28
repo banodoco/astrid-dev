@@ -8,7 +8,7 @@ covers:
   - agent/shared/run-contract.md
 brief: plans/108-lane-briefs/inputs.md
 host: claude-cloud
-actor: N
+actor: X
 ---
 
 # A whole-project manager's first hour on Plan 108

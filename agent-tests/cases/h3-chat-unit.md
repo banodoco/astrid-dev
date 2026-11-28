@@ -6,7 +6,7 @@ covers:
   - agent/shared/run-contract.md
 brief: releases/16/briefs/h3.md
 host: chatgpt-web
-actor: N
+actor: S
 after: h3-codex-manager-start
 ---
 
