@@ -10,9 +10,9 @@
 
 **Target milestone:** 0.3
 
-**Estimate:** 18–28 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days, including the extension contract, test kit and first-frame encoder; the live check comes after)
+**Estimate:** 21–33 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days, including the extension contract, test kit and first-frame encoder; the live check comes after)
 
-**Waiting on:** Independent review of the revised provider seam, refreshed Plan 59/64/65 baseline on Release 16, and Lead run start. No Plan 17 or 67 dependency.
+**Waiting on:** Refreshed Plan 59/64/65 baseline on Release 16 and Lead run start; the extension contract is reviewed at RS1. No Plan 17 or 67 dependency.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -34,7 +34,7 @@ Context and Process only influence.
 
 **Three rules for Output.** Placed material is kept. Time nothing covers is generated. An edit opens placed material for change. Continue, start image, bridge, insert, inpaint, redub and Character Swap are all requests in this one shape. None is a route, a flag or preset code.
 
-**Six mechanisms.** The compiler merges levers into six things:
+**Six internal mechanisms.** Internally, the compiler merges levers into six things:
 1. the latent and its ownership mask;
 2. timed rows;
 3. untimed rows;
@@ -54,7 +54,7 @@ Composition then restores every kept pixel and sample. A new lever adds a kind t
 
 Stacking sockets accept any number of contributions; guider and loop accept one per pass. H3 alone encodes branches, writes the noise mask, composes and verifies, so no pack can change content the request keeps. The job record carries `passes[]` and `branches[]` from the start. This plan executes one pass; [Plan 107](../107-h3-passes/plan.md) executes several in Release 17. Agents choose by creative intent (`describe --intent`) and read exact, soft, verified and untested in the dry run. Detail: [tasks](tasks.md#extension-contract).
 
-**Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` here; [Plan 67](../67-h3-community-steering/plan.md) adds it) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
+**Two clocks for authors of requests.** Packs get eight typed clocks ([tasks](tasks.md#extension-contract)). Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` here; [Plan 67](../67-h3-community-steering/plan.md) adds it) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
 
 **Invariants.**
 - No code names or classifies a kind of job.
@@ -66,6 +66,8 @@ Stacking sockets accept any number of contributions; guider and loop accept one 
 - `compiles`: the default;
 - `live-tested`: only with a cited render and date;
 - `unavailable`: no lowering exists yet.
+
+`verified` and `untested` label *combinations* from test-kit receipts; they do not replace a kind's status.
 
 Plans 64–70 are proven by compiling. The owner's live test comes after.
 

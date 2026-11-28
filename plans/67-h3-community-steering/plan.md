@@ -10,9 +10,9 @@
 
 **Target milestone:** 0.2
 
-**Estimate:** 19–33 days CPU (re-estimated 28 Nov 2026 as units of at most 3 days, including H3 Experiments, Dials, the combined proof and the integrated review of Plans 66, 68 and 70). Live qualification separately authorized.
+**Estimate:** 19–34 days CPU (re-estimated 28 Nov 2026 as units of at most 3 days, including H3 Experiments, Dials, the combined proof and the integrated review of Plans 66, 68 and 70). Live qualification separately authorized.
 
-**Waiting on:** Plan 66's reviewed provider contract; verified 64/65 inputs; Plan 68 for guides; Plan 70 for continuation recipe (all allocated to Release 16 in the proposed brief); Lead run start. External activation waits only for CS-0, not all of Plan 17.
+**Waiting on:** Plan 66's reviewed extension contract (RS1); verified 64/65 inputs; Plan 68 for guides; Plan 70 for continuation recipe (all allocated to Release 16 in the proposed brief); Lead run start. External activation waits only for CS-0, not all of Plan 17.
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -20,11 +20,11 @@
 
 ## Outcome and scope
 
-Plan 66 gives every H3 job one shape: three families of levers (Output, Context, Process), a capability table keyed by lever kind, six compile mechanisms and composition. This plan adds the nuanced, community-proven ways of steering a shot on top of that, each as a lever kind, a table row, one lowering function and a recipe. It adds no new request structure and no seventh mechanism.
+Plan 66 gives every H3 job one shape: three families of levers (Output, Context, Process), a capability table keyed by lever kind, six compile mechanisms and composition. This plan adds the nuanced, community-proven ways of steering a shot on top of that, each as a lever kind, a table row, one lowering function and a recipe. Native kinds are rows and lowerings; packs use Plan 66's sockets.
 
 **Included:**
 - **Timed prompts.** `prompt` may be a list of `{during, text}`. It lowers to one prompt in H3's own timed shot format and is soft: it biases when things happen, and never guarantees it.
-- **`phase` on guides.** A guide can act only during part of the denoising (`phase: [0, 0.2]`). It lowers to a schedule over the timed rows: stock conditioning time ranges if they compile, otherwise NKD's MiniMax Guides node.
+- **`phase` on guides.** A guide can act only during part of the denoising (`phase: [0, 0.2]`). It lowers to H3's own schedule over stock conditioning ranges.
 - **`phase` on LoRAs**, only if a lowering is proven to compile with the H3 model. Otherwise it stays `unavailable`, and says so.
 - **Curve audio guides.** A thin Astrid tool runs NKD's Event Curve node and saves its output as an ordinary audio file, which the agent then uses as an audio `guide`. The curve is a tool that makes an input, not a lever.
 - **ControlNet** as `role: control`, through the official `MiniMaxH3FunControlNetApply`: a control video, optional mask and source, strength, and `phase` as the node's start and end percent.
@@ -63,7 +63,7 @@ Plan 66 gives every H3 job one shape: three families of levers (Output, Context,
   - Records per-cycle seeds. Checkpoint writing is forced off, because its files carry the prompt and workflow outside managed custody.
 - **Not exposed:** Latent Composite, because the starting latent belongs to H3's arrangement.
 
-The regional guiders need the first-frame branch encoder that Plan 66 CC-15 adds. Astrid makes no quality claim for any of these; the live test judges them, including whether Astrid's attention backend accepts the regional attention mask. Exactness still holds: H3 checks the delivered length and time map, no strategy touches composition, and composition restores and verifies kept content.
+The regional guiders need the first-frame branch encoder that Plan 66 CC-15 adds. Astrid makes no quality claim for any of these; the live test judges them, including whether Astrid's attention backend accepts the regional attention mask. Exactness still holds: H3 checks the delivered length and time map, no contribution touches composition, and composition restores and verifies kept content.
 
 **Third provider: Dials (D6).** Ship Matlow's [ComfyUI-Dials](https://github.com/matlowai/ComfyUI-Dials) (pinned at `a0a8a8f6`; a synced copy of the `dials/` subpackage of ComfyUI-MAINodes) as an optional, beta `dials` pack. It contributes:
 - **Make Dial,** an action that turns prompt pairs, pictures or videos into a ~14 KB steering vector;
@@ -75,7 +75,7 @@ Dials proves three things NKD and H3 Experiments do not:
 - one contribution with three clocks;
 - a model contribution that makes extra model calls (time curves run the model twice on early steps).
 
-Under the continuation loop its clip-time curves restart per window, so they are refused there until [Plan 107](../107-h3-passes/plan.md) carries the time map across passes. A worker loads either standalone Dials or MAINodes, never both, because both register the same node classes. See CS-14.
+Under the continuation loop its clip-time curves restart per window, so they are refused there until [Plan 107](../107-h3-passes/plan.md) carries the time map across passes. Node-class collisions with ComfyUI-MAINodes, which carries the same rack, are computed from declared node classes; with MAINodes present its copy provides the rack and needs its own receipts. See CS-14.
 
 **Not in this plan. Do not build these:**
 - a GPU or live run (D1). The owner tests afterwards;
@@ -139,7 +139,7 @@ Order:
 
 CPU tests prove each of these:
 - A two-segment timed prompt serializes, in time order, into H3's timed shot format, and the dry run shows the final string.
-- A guide with `phase: [0, 0.2]` compiles with proven stock scheduling, otherwise through the installed NKD provider's MiniMax Guides with that `until`, at the right frame.
+- A guide with `phase: [0, 0.2]` compiles through H3's phase schedule over stock conditioning ranges, at the right frame.
 - The curve tool writes an audio file from an Event Curve recipe, and that file works as an audio guide at frame 0.
 - A pose control video with `phase: [0, 0.6]` compiles to `MiniMaxH3FunControlNetApply` with matching start and end percent.
 - `describe` shows each new kind's status.

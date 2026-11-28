@@ -10,7 +10,7 @@
 
 **Estimate:** 15–23 days (CPU only; units of at most 3 days; planning figures, not measurements; live check separately authorized)
 
-**Waiting on:** Plan 66's extension contract and test kit (CC-13, CC-14); Plan 70's arrangements and time map; Plan 67's combined stacking proof (CS-13). All are in Release 16.
+**Waiting on:** Plan 66's extension contract, socket assembly and test kit (CC-13a, CC-13b, CC-14); Plan 70's arrangements and time map; Plan 67's combined stacking proof (CS-13). All are in Release 16.
 
 **Start:** [Astrid agent start document](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

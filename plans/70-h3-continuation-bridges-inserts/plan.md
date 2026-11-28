@@ -10,7 +10,7 @@
 
 **Target milestone:** 0.2
 
-**Estimate:** 5–8 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days; the live check comes after)
+**Estimate:** 4–8 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days; the live check comes after)
 
 **Waiting on:** Plan 66's contract review (RS1) and composition by occurrence (CC-10); Plan 68 CC-4 for guides inside a continuation.
 
@@ -25,7 +25,7 @@ On the [Plan 66](../66-h3-composable-core/plan.md) core, a clip shorter than the
 - **bridge:** a clip, a generated gap, a clip;
 - **insert:** a clip inside generated time.
 
-They lower through the pinned motion-context nodes, chosen by the one arrangement function Plan 66 reserves. This plan fills the dry run's delivered-to-sampled frame map, maps guides inside a continuation, deletes the captured continuation workflows and the `continuation` flag (Plan 66 D3), ships recipes and one skill section, does the final trim pass over the skill, and holds the integrated review of Plans 66, 68 and 70.
+They lower through the pinned motion-context nodes, chosen by the one arrangement function Plan 66 reserves. This plan fills the dry run's delivered-to-sampled frame map, maps guides inside a continuation, deletes the captured continuation workflows and the `continuation` flag (Plan 66 D3), and ships recipe files. The skill section, final trim and integrated review are Plan 67's (CS-8, R).
 
 **Not in this plan. Do not build these:**
 - a GPU or live run (D1);
@@ -43,7 +43,7 @@ CC-7a starts at Plan 66 RS1 and CC-10, with Plan 68 CC-4 for guides inside a con
 
 ## Interfaces and handoff
 
-**Consumes:** Plan 66's job, table, dry-run view, composition and arrangement function; Plan 68's full-canvas builder and guide lowering.
+**Consumes:** Plan 66's job, table, dry-run view, composition and arrangement function; Plan 68's guide lowering.
 
 **Produces:** prefix, bridge and insert preparation in one function; the filled delivered-to-sampled frame map; removal of the captured workflows and the `continuation` flag; their recipes and skill lines. Plan 67's `speech-continue` recipe builds on it.
 
@@ -57,4 +57,4 @@ CPU tests prove each of these:
 - With the Character Swap adapter on, continuation and bridge graphs carry both LoRAs in the model chain.
 - The captured workflows and the `continuation` flag are gone, and every recipe fills, dry-runs and compiles.
 
-The integrated review then closes Plans 66, 68 and 70 together. The owner's live check judges seams against saved takes.
+Plan 67 R, the programme's integrated review, closes Plans 66, 68, 70 and 67 together. The owner's live check judges seams against saved takes.
