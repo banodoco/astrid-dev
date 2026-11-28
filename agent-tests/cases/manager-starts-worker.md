@@ -37,7 +37,7 @@ Follow-up messages from manager session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y are par
 - Runs only the focused test file the start message names, through the repository's `scripts/worker-env/` script, and no broader suite ([run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair); [start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
 - Stops at the needed `shared/generation.py` change and reports BLOCKED, naming the file and the lines, since that file is outside its Scope ([golden path, worker](../golden-path.md#worker-claude-session-or-subagent); [run contract, checks](../../agent/shared/run-contract.md#checks-and-failure-repair)).
 - Sends any question to p107-manager by message, and does not use AskUserQuestion ([start-session, step 7](../../agent/shared/workstreams/start-session.md#procedure)).
-- Returns its changed tree to p107-manager and does not commit it; its creator commits ([golden path, worker, returns](../golden-path.md#worker-claude-session-or-subagent)).
+- Commits its own work on `p107/HP-1`, returns the commit SHA to p107-manager, and does not push: as a subagent, its creator pushes ([start-session, the way back](../../agent/shared/workstreams/start-session.md#procedure)).
 
 ## Must not
 
@@ -49,5 +49,4 @@ Follow-up messages from manager session session_01Ka2Wx9Tp4Rn7Vb3Lc8Qe5Y are par
 
 ## Ask the owner
 
-- The whole-project workstream says "tell every task to add commits only", but the golden path says a subagent returns its tree and its creator commits. Which should a subagent follow?
 - Is Plan 107's run authorized now? Its plan.md still reads `queued`.
