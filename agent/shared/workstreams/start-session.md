@@ -86,7 +86,8 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 |---|---|---|---|
 | Lane orchestrator | `releases/<N>/briefs/<lane>.md` | The brief; each plan's `tasks.md` and `Run start` pointer; its lane board | The owner |
 | Manager, outside a lane | Plan `inputs.md` `Run start`, and `tasks.md` | The plan, `tasks.md`, the [run contract](../run-contract.md) | The owner, through `Run start`; the orchestrator advises |
-| Codex manager, in a lane (hosted in the orchestrator's container, or a Codex desktop manager the owner launches on their own computer) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator (its host, when hosted) |
+| Codex manager, in a lane (hosted in the orchestrator's container) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator (its host) |
+| Codex desktop manager, in a lane (a Codex desktop manager the owner launches on their own computer, not the hosted Codex manager above) | The lane brief and `tasks.md` | The same, under its Roles and Merges | The lane orchestrator: it posts the three-part launch line on the lane board as `LAUNCH <name>` and tells the owner; the owner pastes it into the Codex app; the orchestrator then waits for its first STATUS |
 | Worker | `plans/<PP>-<slug>/tasks.md`, its card | Its card, its one repository, the [worker rules](../../roles/worker.md) | The manager named in its card |
 
 ## Completion
