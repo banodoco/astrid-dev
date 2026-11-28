@@ -40,7 +40,7 @@
 
 ## Owner decisions
 
-- **D1 — Name (open).** "Lane" (recommended: it already exists) or "batch". Decide before L-2.
+- **D1 — Name (decided 28 Nov 2026, owner).** "Lane", which already exists in astrid-dev, not "batch".
 - **D2 — Lane division (decided 28 Nov 2026).** The Lead divides each release into lanes *with* the owner: it proposes options and the owner chooses; the Lead never decides lanes alone.
 
 ## Source identities
