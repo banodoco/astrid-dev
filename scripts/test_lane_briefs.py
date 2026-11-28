@@ -160,6 +160,41 @@ class LaneBriefCheckTests(unittest.TestCase):
             make_root(root, {"releases/16/briefs/alpha.md": good.replace("A fixture lane.", "A fixture <lane> prose.")})
             self.assertEqual(lane_errors(root), [])
 
+    def test_plans_table_with_no_data_rows_is_an_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            make_root(root, {"releases/16/briefs/alpha.md": brief(rows=())})
+            assert_reports(self, lane_errors(root), ("## Plans and order lists no plan",))
+
+    def test_releases_must_hold_numbers_only(self):
+        good = brief()
+        dated = brief(releases="16 (since 28 Nov 2026)")
+        parsed = lane_brief(dated, "releases/16/briefs/alpha.md")
+        self.assertEqual(parsed["releases"], [])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            make_root(root, {"releases/16/briefs/alpha.md": dated})
+            assert_reports(self, lane_errors(root), ("header **Releases:** must hold release numbers only",))
+        for value in ("16", "16, continuing in 17", "16, 17"):
+            with self.subTest(value=value):
+                parsed = lane_brief(brief(releases=value), "releases/16/briefs/alpha.md")
+                self.assertEqual(parsed["errors"], [])
+                self.assertEqual(parsed["releases"], [int(n) for n in value.replace("continuing in ", "").split(", ")])
+        self.assertEqual(lane_brief(good, "releases/16/briefs/alpha.md")["releases"], [16])
+
+    def test_autolink_in_a_header_is_not_a_placeholder(self):
+        good = brief()
+        linked = good.replace("linked once opened", "<https://github.com/banodoco/astrid-dev/issues/1>")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            make_root(root, {"releases/16/briefs/alpha.md": linked})
+            self.assertEqual(lane_errors(root), [])
+        still = good.replace("linked once opened", "<board link>")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            make_root(root, {"releases/16/briefs/alpha.md": still})
+            assert_reports(self, lane_errors(root), ("header **Board:**", "placeholder"))
+
     def test_failure_2_malformed_header_or_reused_lane(self):
         cases = {
             "Lane differs from the file name": ({"releases/16/briefs/alpha.md": brief().replace("**Lane:** alpha", "**Lane:** beta")},
