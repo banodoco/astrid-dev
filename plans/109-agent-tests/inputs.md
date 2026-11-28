@@ -23,3 +23,17 @@
 **Review rounds:** One (AT-R), on the high-judgment role.
 
 **Run start:** Whole project, owner-authorized on 28 November 2026 in the [planning session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG). **Accountable agent:** that session, with `N` Haiku helpers for inventories, drafts and actors.
+
+## Owner decisions
+
+None.
+
+## Source identities
+
+astrid-dev only: `main`, landed through the planning session's branch; no product repository changes.
+
+## References
+
+- [improve: agent tests](../../agent/shared/workstreams/improve.md#agent-tests)
+- [agent-tests/README.md](../../agent-tests/README.md)
+- [The pipeline](../../agent/shared/pipeline.md)
