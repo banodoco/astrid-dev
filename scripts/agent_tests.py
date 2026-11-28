@@ -194,8 +194,8 @@ shared rules and workstreams are under agent/shared/). Find and read what your m
 Pretend: {host_line}
 You may be a smaller model than the role's route names; that is expected. Don't stop or refuse on
 those grounds: act as the role would, and note the difference once.
-Issue, PR and session numbers that the state below calls stand-ins do not exist on GitHub. Assume
-they hold what the state says; don't stop because a read of them fails.
+Issues, PRs, sessions, branches and SHAs that the state below calls stand-ins, or says exist, may not
+exist on GitHub. Assume they hold what the state says; don't stop because a read of them fails.
 """
 
 HOST_LINES = {
