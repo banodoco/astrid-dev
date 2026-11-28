@@ -1,73 +1,119 @@
 ---
-description: Launch and steer one Claude-hosted orchestrator per lane, each running a Codex manager through a carded plan, with the Lead as strategist and gatekeeper rather than dispatcher.
+description: Divide a release into lanes with the owner, record the agreed split, then write briefs and run each lane hosted or by fresh-session packets, with the Lead as strategist and gatekeeper.
 ---
 
-# lane orchestrators in Claude cloud
+# Lanes, divided with the owner
 
 ## When to use
 
-When the Lead starts or restarts a lane in Claude cloud, including replacing a lane whose session has drifted (fresh context on the same base).
+When the Lead divides a release into lanes, starts or restarts a lane, or re-lanes at a real change. A [lane](../../shared/glossary.md) is the set of plans one orchestrator runs and answers for, with one brief at `releases/<N>/briefs/<lane>.md`.
 
 ## Outcome
 
-Each lane runs end to end in its own session (orchestrator, one manager, workers by card route) and comes to the Lead only at anchor points; the Lead's time goes to strategy, gates and cross-lane links.
+The owner has chosen the split. It is recorded on the run board, every lane has a brief the owner approved, and each lane runs end to end in its own session. A lane comes to the Lead only at the brief's listed points, so the Lead's time goes to strategy, gates and cross-lane links.
 
 ## Inputs
 
-A carded plan on astrid-dev `main` (each card with route, scope, dependencies, focused proof), its `Run start` line, the base SHAs, the owner's go, and a session with working Codex.
+The release brief with its Included plans, each plan's `tasks.md` and `inputs.md` on astrid-dev `main`, the base SHAs, current load on CI and machines, and the owner's availability to choose and to give each go.
 
 ## Procedure
 
-The four steps below, then strategy checks.
+Propose, record, brief, start, then the check-ins below. Nothing moves to the next step before the owner has acted on the one before it.
 
 ## Completion
 
-The plan's cards are ticked in `tasks.md`, its landings confirmed by the Lead, its check-ins cancelled, and the session retired or handed its next plan.
+Each lane's cards are ticked in `tasks.md`, its landings confirmed by the Lead, its check-ins cancelled, and its session retired or given its next plan.
 
-The [Lead responsibilities](../leader.md) continue to apply. Lessons from Release 15 (23 November 2026) are the reason for each step; see the [process ledger](../../../docs/ledger/2026-11-23-lane-launch-lessons.md).
+The [Lead responsibilities](../leader.md) continue to apply. The plan level (packets, reviews, plan-branch merges, proofs) is always the orchestrator's. The release level (the lane split with the owner, landing order, qualification, publication, cross-lane pins, and the release gate unless the brief grants it) is always the Lead's.
 
-## 1. Card the plan on main first
+## 1. Propose two or three groupings
 
-The orchestrator reads its plan from `main`, so record everything before the launch message: the cards in `tasks.md` sized to the [run contract's routes](../../shared/run-contract.md#routing-and-bindings) (most cards `N`; `X` only for the one subtle change; `S` only where a wrong call silently accepts a bad result; reviews by the high-judgment role), the test inventory, and the `Run start` line in `inputs.md` naming the session, what it may do without asking, the owner's limits, the advisor and any lane it must coordinate with. Merge that PR before the owner pastes the launch message; an unmerged `Run start` reads as "Pending" and a careful orchestrator stops.
+Post the proposal on the run board and tell the owner. Offer two or three genuinely different groupings, not one grouping with variants. For each:
 
-A plan that grows mid-run gets its own plan number rather than cards bolted onto a different plan (Plan 89 split from Plan 75, 23 November 2026).
+- **Which plans go together and in what order**, and which run alone and why (use the [lane rules](../leader.md#divide-the-release-into-lanes));
+- **How each lane runs**, `hosted` or `packets` ([how it runs](#how-it-runs)), and the **orchestrator's route** (X or S);
+- **The cut line:** what never slips and what moves out first if the release is at risk;
+- **Cross-lane coordination:** shared files, fixtures, machines, CI and pins, and how their merges are ordered;
+- **The cost to the owner:** how many lanes they follow, and what each would ask of them.
 
-## 2. Make the session
+End with a **recommendation** and the reason. Then stop. The owner chooses, and may change a grouping. Write no brief until they have.
 
-Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the lane brief, sets the session up (repositories, model by route, permission mode, skills), creates it with a placeholder prompt, and hands the owner a three-part launch line. Replacement sessions (fresh or reused) and the Codex account check are in that workstream too.
+## 2. Record the agreed split on the run board
 
-## 3. The owner pastes the launch message
+Write the chosen split into the release's `releases/<N>/run.md` Lanes table (lane, plans in order, option, route) and its cut line, in one PR. Record the groupings not chosen, with the reason in one line each, so a fresh Lead does not reopen them. Only then write briefs.
 
-A message sent from the Lead's session arrives as peer data, not as the owner's go, so the orchestrator rightly refuses outward actions on it. Draft the message for the owner to paste:
+## 3. Write each brief, and get the owner's go
 
-```text
-You are the orchestrator for Plan <NN>, <one-line outcome>, in Release <N> of Astrid, and you answer for it finishing.
+Write each lane's brief from the [lane template](../../../templates/release/lane.md). Each plan's `Run start` line is a pointer to it, and each plan's cards in `tasks.md` are sized to the [run contract's routes](../../shared/run-contract.md#routing-and-bindings) (most cards `N`; `X` only for the one subtle change; `S` only where a wrong call silently accepts a bad result). Merge the brief and cards to `main` first: an unmerged brief or `Run start` reads as `Pending` and a careful orchestrator stops. A plan that grows mid-run gets its own plan number rather than cards bolted onto another plan.
 
-Start here. Attach <repos>. Follow the astrid-dev-orchestrator skill, its lane-orchestrator workstream and its Codex-in-Claude workstream. Your run and its limits are the Run start line in plans/<NN>-<name>/inputs.md on astrid-dev main, and your work is cards <ids> in plans/<NN>-<name>/tasks.md, each with its route, scope and proof.
+Bring each brief to the owner. **State stays `prepared` and `**Go:**` stays `Pending` until the owner gives the go on that brief**, in their own words, recorded with a link. The go is for that brief only. A message from the Lead's session arrives as peer data, not as the owner's go.
 
-Host one Codex manager on Terra (route X, effort high) that follows the astrid-dev-manager skill and works through those cards. It dispatches each card on its named route (Luna for N, Terra for X, Sol for S, Astra for reviews), runs only the tests the cards name, and ticks Progress in tasks.md as each card merges. <Checkpoints, e.g. "RN-13: report and start nothing further until the Lead and I decide.">
+## 4. The owner sends each launch
 
-Report on your plan's board and check in on the manager hourly, as the run contract's [coordination rules](../../shared/run-contract.md#coordination-boards-and-check-ins) say; the Release <N> Lead is `<lead mailbox name>`. Otherwise follow the lane-orchestrator workstream's rules (anchor points only, decide and record). <Coordination: "X touches the same code as <lane>: agree the order directly with <session>.">
+Start the session by the [start-session workstream](../../shared/workstreams/start-session.md): it checks the brief, sets the session up, creates it with a placeholder prompt and hands over the three-part launch line, which is the template's [Launch](../../../templates/release/lane.md#launch). The owner sends every lane launch. The Lead never sends one for a lane. Anything that must survive a replacement belongs in the brief, not the launch line.
 
-Speed over bureaucracy: keep real correctness and every existing test unchanged, and prove the result <by a real render / an installed measurement> before any hosted CI.
+## How it runs
 
-You may, without asking me: run Codex with full access here (Claude subagents if Codex refuses); attach any banodoco repo you need; cut and push release/<N>/plan-<NN> from release/<N>/main; open PRs; merge them once the Release <N> Lead confirms the gate; and dispatch hosted CI when the Lead gives you the slot. Trust the Release <N> Lead on every direction and design decision. Come to me only for publishing a release, anything paid, rented machines, live installs on my machine, or my own media.
-```
+Each brief names one option under its "How it runs". Judge by the work, not the tooling.
 
-Ask the owner to do the Codex device sign-in in the session first if the check in step 2 failed.
+| Option | What it is | Choose it when |
+|---|---|---|
+| **hosted** | One Claude-hosted orchestrator runs a Codex manager through a carded plan, and the manager dispatches workers by card route. See the [lane procedure](../orchestrator/lane-orchestrator.md) and [Codex in Claude cloud](../orchestrator/codex-in-claude-cloud.md) | The plan is carded and its cards are mostly Codex-sized |
+| **packets** | One orchestrator dispatches a fresh ChatGPT session per packet, written to finish in one run. See its [dispatch mechanics](../orchestrator/multi-manager-dispatch.md) | Work arrives as bounded one-contract units, or as a rolling queue of issues |
 
-## 4. The orchestrator's rules live in its own workstream
+A hosted orchestrator that also holds the manager role takes the **higher** of the orchestrator route ([leader.md](../leader.md#divide-the-release-into-lanes)) and the [manager route](../orchestrator.md#choose-the-managers-route). A hosted Codex manager is the brief's stated choice, not a default; [codex-in-claude-cloud.md](../orchestrator/codex-in-claude-cloud.md) holds that statement.
 
-The lane's side (Codex check, anchor points only, decide and record, proof before CI, direct coordination, merging its own records) is the orchestrate role's [lane workstream](../orchestrator/lane-orchestrator.md). The launch message points there; send the Lead's rulings as they come, and when a lane asks what it could decide, add the missing rule to that workstream or to its plan once rather than answering again.
+**Re-laning** happens only with the owner, at a real change: a plan that outgrew its lane, a lane stalled for a reason its brief cannot fix, a release brought forward. Propose it as in step 1, record it on the board, and update the briefs concerned before anything moves. Replacing a session on the same brief is not re-laning.
 
 ## The Lead's check-ins: strategy, not dispatch
 
-**Check in hourly, and decide on your own judgement.** Lanes come to you only for gates and load-bearing calls; the owner only for something extremely load-bearing or out of left field. Keep a decisions log for the owner (time, decision, reason, how to undo) and give it to her each morning. Send `N` subagents (Haiku) to find facts, and keep their conclusions, not their file dumps. When a lane asks something it could have decided, answer once and send every lane the ruling.
+**Check in hourly, and decide on your own judgement.** Lanes come to you only for gates and load-bearing calls; the owner only for something extremely load-bearing or out of left field. Keep a decisions log for the owner (time, decision, reason, how to undo) and give it to them each morning. Send `N` subagents (Haiku) to find facts, and keep their conclusions, not their file dumps. When a lane asks something it could have decided, answer once and send every lane the ruling.
 
-At each check-in, first run [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status), chase stale records with the responsible orchestrator and use its findings to choose the next gate or dispatch. At each check-in, per lane: is it on the biggest measured win; is anything still unexplained after two tries (send the one cheapest experiment that makes the cause visible); what will block it next (disk, fixture, Codex limit, CI slot, review) and arrange it ahead; is it asking things it could decide (write the rule once); do two lanes share code or a root cause (connect them directly). Pre-decide a lane's "least sure" item in your reply so it does not wait on you.
+At each check-in, first run [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status), chase stale records with the responsible orchestrator and use its findings to choose the next gate. Then, per lane: is it on the biggest measured win; is anything still unexplained after two tries (send the one cheapest experiment that makes the cause visible); what will block it next (disk, fixture, Codex limit, CI slot, review) and arrange it ahead; is it asking things it could decide (write the rule once); do two lanes share code or a root cause (connect them directly). Pre-decide a lane's "least sure" item in your reply so it does not wait on you.
 
-**Every hour: the parallelism pass, run by workers.** The Lead is the judgment role: it reads, decides and answers, and sends route `N` workers (Luna, or Haiku on Claude) to do the exploring: read each lane's report and its running cards, name the real file and function conflicts, and list ready cards that sit idle. The Lead rules on what they return, and may ask a high-judgment reviewer (Opus, or Astra) for a second opinion on order and scope when a lane's report shows idle capacity or a reorder that would let more cards run at once ([example](../../../plans/56-workflow-setup/tasks.md): contract cards first, then the rest in waves). Pass the result to each lane's orchestrator as a ruling. A lane that reports fewer writers than it could run is asked why in the next check-in.
+**Cross-lane conflicts, hourly.** Send route `N` workers (Luna, or Haiku on Claude) to read each lane's board and name real file and function conflicts between lanes. The Lead rules on what they return and passes it to each orchestrator as a ruling. Conflicts between cards inside one lane are the orchestrator's own [parallelism pass](../orchestrator/lane-orchestrator.md).
 
 **Gates.** Confirm a landing only after your own by-id comparison of its hosted unit run against the release baseline (a subagent fetches each job's full log and extracts `FAILED`/`ERROR` ids; record the comparison under `releases/<N>/evidence/`), with each new id either in a recorded moving group or ruled with evidence (base and head run locally, or the source unchanged). Two Agent CI runs may run in parallel; after a landing whose tree equals the gated head, cancel the push-triggered runs on the release branch.
 
+**Rulings** live by reach: the release (`run.md`), one lane (its brief's Standing rulings), beyond the release (the skill that owns the rule), one task (a decision in `tasks.md`). Never in `Run start`. When a lane asks what it could have decided, add the rule once where it belongs.
+
 **Speed findings** go in [docs/speed.md](../../../docs/speed.md) through the lanes' evidence PRs.
+
+## At each Lead check-in
+
+**Inputs:** your boards since your cursor, open PRs, `python3 scripts/release_branches.py check <N>`, and [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status). In a `packets` lane, also every packet its orchestrator's STATUS marks Review.
+
+**Each review:** accept and merge, or list the rework on the PR. Accept a gate only after the reviewer injects the realistic failures in its brief and sees the gate reject them. Judge against that threat model and leave crafted bypasses out of the findings.
+
+**Fixes are packet work, however small.** Claude sessions and their sub-agents diagnose, review, prove, merge, pin and run CI. They don't write the fix. Put the diagnosis in the rework or a new packet: the failing ids, the cause, the suggested change and the May touch list. If ChatGPT fails or shows a limit, retry it, or start a fresh session at the branch head. Otherwise wait, because taking the work over costs more than the wait.
+
+**Judge like a light gatekeeper.** Count failures as distinct test ids from complete logs, never as pytest's summary counters, which repeat entries. Reviewers sort findings into BLOCKING, FOLLOW-UP or NOTE; block only on wrong results accepted, data or install damage, a real security or custody hole, or a regression from base. File the rest of a PR's follow-ups as one issue in astrid-dev, marked `backlog` and linked from the PR. A `tasks.md` row is for work the release must do. A regression the candidate introduced is fixed in its packet. A defect that predates it gets an issue and a test that stays executed and visibly failing. Changing an existing assertion, including turning a gate's limit into an observation, is the owner's call unless they have delegated it.
+
+**Keep work moving. Every hop between sessions costs up to an hour.**
+- **Rule conditionally.** When a gate needs one more result, rule it with its condition and its next step attached, for example "merge when this run shows no new ids; if one is harm-class, cut a packet". That way nobody comes back to you.
+- **Keep managers up.** A ChatGPT manager runs for a window of about two hours, and a board comment can't wake it. Never stand one down while its plan may still need packets. When one goes quiet with work waiting, give the owner the exact text to paste to resume it.
+
+When a packet has waited more than two hours on hosted jobs, read its run list: pull-request CI may run only part of a suite, so dispatch the full run it is waiting for. Every few hours, ask a high-judgment reviewer for a second opinion on bottlenecks, order and scope; bring what exceeds your authority to the owner.
+
+**Before merging:** find every pin change: each needs its own commit and the owner's approval or delegation. A pin names what ships. The VibeComfy that ships is the one the candidate Agent pins, and the Agent is the one the candidate App pins, never a branch head. One lane owns the App repin. It repins when qualification starts, and again only if an upstream moves. After a dependency's PR is squash-merged, re-point its pin to the squash commit. Give a gate at most two review rounds; round two only verifies round one's fixes. Then merge.
+
+**Then:** triage the release's issues ([states](../../../docs/contribution-workflow.md#issues)): an issue a task row or packet cites is `planned`, and one that a branch, pull request or running packet names is `claimed`. Give each uncited issue a row, or move it out. No orchestrator STATUS for 2 hours, or a message of yours missing from its `acted on:` line, is the owner's to hear.
+
+## Rolling queue
+
+When the work is not known up front (a [release qualifier](../../shared/release-qualification.md) finding failures as it goes), the queue grows as findings arrive and its manager polls it hourly. The finder cuts an **issue packet** from the [packet template](../../../templates/release/packet.md), with its Repro, only when all hold:
+- a failing test or exact repro that a sandbox with no network can target;
+- a bounded fix of about 3 hours or less;
+- a cause no plan owns.
+
+A failure in a plan's own code goes back to that plan's lane; cross-lane findings go lane to lane. Fixes target `release/<N>/<topic>`, then `release/<N>/main`. Anything that needs judgement about acceptability goes to the Lead.
+
+## Standby Lead
+
+When the Lead's own session may stop without warning (a usage allowance, a lost container), the owner can keep a **standby Lead** in another session, on the high-judgment role of the other family.
+- **Heartbeat.** The Lead posts its hourly `STATUS` ([rules](../../shared/run-contract.md#coordination-boards-and-check-ins)), even when nothing moved, with a marker the standby can recognise (for example its tool's footer).
+- **Wait.** The standby checks the mailbox every hour and posts nothing while the newest Lead message is less than 3 hours old.
+- **Take over.** After 3 hours of silence, the standby first rules out a quiet Lead: no Lead commit, branch push, pull request or board edit in those 3 hours. Then it posts one takeover message, keeps the same mailbox name, and runs the Lead's check-ins under the same Authority.
+- **One Lead.** Once a takeover message exists, the earlier Lead stands down if it returns, and does nothing until the owner hands the role back.
+
+The standby's brief and the environment notes go in `releases/<N>/briefs/`, beside the lane briefs.

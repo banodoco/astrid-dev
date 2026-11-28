@@ -496,9 +496,9 @@ Source: `skills/roles/astrid-dev-worker/SKILL.md` at M. Destination: `agent/role
 Count: 16 found; 16 kept; 0 restored; 0 moved; 0 superseded.
 
 
-## agent/roles/leader/multi-manager-release.md
+## agent/roles/leader/lane-orchestrators.md
 
-Source: `skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md` at M. Destination: `agent/roles/leader/multi-manager-release.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
+Source: `skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md` at M. Destination: `agent/roles/leader/lane-orchestrators.md`. Workstream contract summary is represented by the new five headed sections; procedure/authority and proof boundaries are also checked against the body.
 
 | Rule (source excerpt) | Source line | Agent line | Status |
 | --- | --- | --- | --- |
@@ -2052,7 +2052,7 @@ Count: 105 found; 87 kept; 0 restored; 18 moved; 0 superseded.
 | `agent/roles/orchestrator.md` | 210 | 193 | 0 | 17 | 0 |
 | `agent/roles/manager.md` | 48 | 48 | 0 | 0 | 0 |
 | `agent/roles/worker.md` | 16 | 16 | 0 | 0 | 0 |
-| `agent/roles/leader/multi-manager-release.md` | 152 | 134 | 0 | 18 | 0 |
+| `agent/roles/leader/lane-orchestrators.md` | 152 | 134 | 0 | 18 | 0 |
 | `agent/roles/leader/lane-orchestrators.md` | 98 | 98 | 0 | 0 | 0 |
 | `agent/roles/manager/chatgpt-packet.md` | 59 | 59 | 0 | 0 | 0 |
 | `agent/roles/manager/whole-project.md` | 248 | 248 | 0 | 0 | 0 |

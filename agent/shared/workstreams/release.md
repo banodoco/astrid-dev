@@ -40,7 +40,7 @@ Every rule below serves one question: **does this candidate leave anyone worse o
 
 A release is one numbered set of work across the repositories. Its plans and fixes merge into one release branch per repository, `release/<NN>/main`, which is tested as a whole and becomes `main` only at publication. A plan joins a release by its line in the brief and an issue by its label; every branch and pull request names the plan or issue it belongs to. The release manager runs the release; the owner decides what ships and gives the go.
 
-This is the one home for a release's branches and order. Each step says who acts, on which branch, what must be true and where it is recorded; the section it links holds the detail. The **release manager** is the [Release Lead](../../roles/leader.md) named on the brief ([glossary](../glossary.md)). Ordinarily a plan manager runs one plan. In a [lane](../glossary.md), the lane's orchestrator is accountable for its plans' runs, under its brief, and the Lead holds the release level. Outside a lane, under [fresh-packet dispatch](../../roles/leader/multi-manager-release.md), the Lead is accountable for participating plan runs and integrates the short-lived managers' accepted task PRs. No other release or PR authority changes.
+This is the one home for a release's branches and order. Each step says who acts, on which branch, what must be true and where it is recorded; the section it links holds the detail. The **release manager** is the [Release Lead](../../roles/leader.md) named on the brief ([glossary](../glossary.md)). Ordinarily a plan manager runs one plan. In a [lane](../glossary.md), the lane's orchestrator is accountable for its plans' runs, under its brief, and the Lead holds the release level. Outside a lane, under [fresh-packet dispatch](../../roles/leader/lane-orchestrators.md), the Lead is accountable for participating plan runs and integrates the short-lived managers' accepted task PRs. No other release or PR authority changes.
 
 **Branches.** In each repository the release changes (the product repositories, and `astrid-dev` for a plan that changes only this repository):
 - `release/<NN>/main`, the **release branch**, is the release's one canonical branch. Work reaches it only by merge from a plan or fix branch. [Tester builds](../glossary.md) and the [candidate](../glossary.md) come only from it.
@@ -69,7 +69,7 @@ A fix release to the published release always takes the served number plus one, 
 
 ## Keep the release's records
 
-The **release manager** named in the brief is the [Release Lead](../../roles/leader.md); this does not change an incumbent's authority without an owner-recorded handoff. When a Lead uses [fresh-session dispatch](../../roles/leader/multi-manager-release.md), its packet queue is a section of the existing `run.md`, not a second release state store.
+The **release manager** named in the brief is the [Release Lead](../../roles/leader.md); this does not change an incumbent's authority without an owner-recorded handoff. When a Lead uses [fresh-session dispatch](../../roles/leader/lane-orchestrators.md), its packet queue is a section of the existing `run.md`, not a second release state store.
 
 Every release has its brief, `releases/<N>.md`, from [`releases/TEMPLATE.md`](../../../releases/TEMPLATE.md); see [kind](../glossary.md) and the [hierarchy](../../../docs/contribution-workflow.md#review-the-strategy). The approach opens with the current plan; keep earlier plans below, dated.
 

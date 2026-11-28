@@ -18,7 +18,7 @@ One packet starts **one fresh ChatGPT session**. This one opens no pull request:
 - The REQUEST, then the diff of the named head against its base (the PR's "Files changed", or the compare view the REQUEST links).
 - For a packet review: that packet's file in [packets/](./), especially **May touch**, **Must not touch** and **Contract**, and the card it closes in [tasks.md](../tasks.md#completion-run-owner-go-24-november-2026).
 - For R: the plan's [Completion](../plan.md#completion), the Completion run table and the rulings in [inputs.md](../inputs.md#owner-decisions).
-- The run contract's [review rules](../../../agent/shared/run-contract.md#review-and-promotion-boundaries) and [the gatekeeper standard](../../../agent/roles/leader/multi-manager-release.md#at-each-lead-check-in).
+- The run contract's [review rules](../../../agent/shared/run-contract.md#review-and-promotion-boundaries) and [the gatekeeper standard](../../../agent/roles/leader/lane-orchestrators.md#at-each-lead-check-in).
 
 The orchestrator has already run the proof. Your job is judgment: does the change do what its contract says, and only that? Is anything accepted that should be refused? Is any test or check weakened? Is there a second code path or silent fallback? And for a design, is it the smallest sound one?
 

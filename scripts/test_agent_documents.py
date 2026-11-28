@@ -207,7 +207,7 @@ class AgentDocumentTests(unittest.TestCase):
             "guides/codex-cloud/README.md",
             "guides/codex-in-claude-cloud/README.md",
             "guides/codex-in-claude-cloud/manager-brief.md",
-            "roles/leader/multi-manager-release.md",
+            "roles/leader/lane-orchestrators.md",
             "roles/manager/chatgpt-packet.md",
             "roles/manager/whole-project.md",
             "roles/orchestrator/codex-cloud-sessions.md",

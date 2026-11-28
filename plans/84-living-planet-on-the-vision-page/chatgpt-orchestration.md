@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Tasks](tasks.md) · [Art direction](art-direction.md) · [Creative units](creative-units.md) · [Visual assets](assets/README.md)
 
-**Purpose:** A ready-to-use, *Plan 84-specific* handoff for an owner-appointed Orchestrator. This is not a second task queue or permission to begin an unstarted run. Follow Astrid's actual [Lead packet preparation](../../agent/roles/leader/multi-manager-release.md), [Orchestrator dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), [one-packet execution](../../agent/roles/manager/chatgpt-packet.md), and [run contract](../../agent/shared/run-contract.md). For this plan, use `tasks.md` as the one source of task progress.
+**Purpose:** A ready-to-use, *Plan 84-specific* handoff for an owner-appointed Orchestrator. This is not a second task queue or permission to begin an unstarted run. Follow Astrid's actual [Lead packet preparation](../../agent/roles/leader/lane-orchestrators.md), [Orchestrator dispatch](../../agent/roles/orchestrator/multi-manager-dispatch.md), [one-packet execution](../../agent/roles/manager/chatgpt-packet.md), and [run contract](../../agent/shared/run-contract.md). For this plan, use `tasks.md` as the one source of task progress.
 
 ## Owner-facing introduction — post before the first dispatch
 
