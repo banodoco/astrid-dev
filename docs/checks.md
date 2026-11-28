@@ -14,6 +14,7 @@
 - `obsolete-sources always Validate obsolete sources`
 - `canonical-principles always Validate canonical principles`
 - `obsolete-templates always Validate obsolete templates`
+- `agent-tests always Validate agent-test cases: fields, sections, covered files, chains and results`
 - `ledger always Validate ledger`
 - `markdown-links always Validate markdown links`
 - `link-anchors always Validate links to headings in agent documents, templates and top-level docs`

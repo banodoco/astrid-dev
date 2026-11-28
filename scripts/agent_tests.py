@@ -1,0 +1,389 @@
+"""Agent tests: declared cases that check a role's documents make a fresh session do the right thing.
+
+A case lives at agent-tests/cases/<id>.md. It declares the documents it covers, the brief it runs
+under, the host it simulates and the exact message the session receives. Its Expect and Must not
+lines never reach the actor: the actor gets only what the role would get. A judge compares the
+actor's report with those lines. See agent-tests/README.md.
+"""
+from __future__ import annotations
+
+import hashlib
+import re
+import subprocess
+from dataclasses import dataclass, field
+from datetime import date
+from pathlib import Path
+
+CASES_DIR = Path("agent-tests/cases")
+RESULTS_DIR = Path("agent-tests/results")
+HOSTS = ("claude-cloud", "claude-subagent", "codex-app", "codex-in-claude", "chatgpt-web")
+ACTORS = ("N", "X", "S")
+SECTIONS = ("Given", "Fixture", "Expect", "Must not", "Ask the owner")
+REQUIRED = ("Given", "Expect", "Must not")
+FIELDS = ("id", "role", "covers", "brief", "host", "actor", "after")
+_ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+_UPSTREAM = "{upstream}"
+
+
+@dataclass
+class Case:
+    path: Path
+    id: str
+    role: str
+    host: str
+    actor: str
+    covers: list[str]
+    brief: str | None
+    after: str | None
+    title: str
+    sections: dict[str, str] = field(default_factory=dict)
+
+    def lines(self, name: str) -> list[str]:
+        return [line[2:].strip() for line in self.sections.get(name, "").splitlines()
+                if line.startswith("- ")]
+
+
+def _frontmatter(text: str) -> tuple[dict, str]:
+    if not text.startswith("---\n"):
+        raise ValueError("must start with a --- frontmatter block")
+    end = text.find("\n---\n", 4)
+    if end < 0:
+        raise ValueError("frontmatter block is not closed")
+    meta: dict = {}
+    key = None
+    for raw in text[4:end].splitlines():
+        if not raw.strip():
+            continue
+        if raw.startswith("  - ") and key:
+            if not isinstance(meta.get(key), list):
+                raise ValueError(f"field {key!r} mixes a value and a list")
+            meta[key].append(raw[4:].strip())
+            continue
+        if ":" not in raw or raw.startswith(" "):
+            raise ValueError(f"unreadable frontmatter line: {raw!r}")
+        key, value = raw.split(":", 1)
+        key, value = key.strip(), value.strip()
+        if key in meta:
+            raise ValueError(f"duplicate field {key!r}")
+        meta[key] = value if value else []
+    return meta, text[end + 5:]
+
+
+def _sections(body: str) -> tuple[str, dict[str, str]]:
+    lines = body.splitlines()
+    title = next((line[2:].strip() for line in lines if line.startswith("# ")), "")
+    found: dict[str, list[str]] = {}
+    current = None
+    for line in lines:
+        if line.startswith("## "):
+            current = line[3:].strip()
+            if current in found:
+                raise ValueError(f"duplicate section '## {current}'")
+            found[current] = []
+        elif current is not None:
+            found[current].append(line)
+    return title, {name: "\n".join(text).strip() for name, text in found.items()}
+
+
+def parse_case(root: Path, path: Path) -> Case:
+    meta, body = _frontmatter(path.read_text(encoding="utf-8"))
+    unknown = set(meta) - set(FIELDS)
+    if unknown:
+        raise ValueError(f"unknown fields {sorted(unknown)}")
+    for name in ("id", "role", "covers", "host"):
+        if not meta.get(name):
+            raise ValueError(f"missing field {name!r}")
+    if meta["id"] != path.stem or not _ID.fullmatch(meta["id"]):
+        raise ValueError("id must equal the file name and be lowercase kebab-case")
+    if meta["host"] not in HOSTS:
+        raise ValueError(f"host must be one of {', '.join(HOSTS)}")
+    actor = meta.get("actor") or "N"
+    if actor not in ACTORS:
+        raise ValueError("actor must be a route: N, X or S")
+    covers = meta["covers"] if isinstance(meta["covers"], list) else [meta["covers"]]
+    title, sections = _sections(body)
+    if not title:
+        raise ValueError("needs a # title")
+    extra = set(sections) - set(SECTIONS)
+    if extra:
+        raise ValueError(f"unknown sections {sorted(extra)}; allowed: {', '.join(SECTIONS)}")
+    for name in REQUIRED:
+        if not sections.get(name):
+            raise ValueError(f"section '## {name}' is missing or empty")
+    case = Case(path, meta["id"], meta["role"], meta["host"], actor, covers,
+                meta.get("brief") or None, meta.get("after") or None, title, sections)
+    for name in ("Expect", "Must not"):
+        if not case.lines(name):
+            raise ValueError(f"section '## {name}' needs at least one '- ' line")
+    if _UPSTREAM in sections["Given"] and not case.after:
+        raise ValueError("Given uses {upstream} but the case names no 'after' case")
+    return case
+
+
+def load_cases(root: Path) -> dict[str, Case]:
+    cases: dict[str, Case] = {}
+    folder = Path(root) / CASES_DIR
+    for path in sorted(folder.glob("*.md")) if folder.is_dir() else ():
+        cases[path.stem] = parse_case(Path(root), path)
+    return cases
+
+
+def _target(root: Path, ref: str) -> Path:
+    return Path(root) / ref.split("#", 1)[0]
+
+
+def validate(root: Path) -> list[str]:
+    root = Path(root)
+    errors: list[str] = []
+    folder = root / CASES_DIR
+    cases: dict[str, Case] = {}
+    for path in sorted(folder.glob("*.md")) if folder.is_dir() else ():
+        rel = path.relative_to(root).as_posix()
+        try:
+            cases[path.stem] = parse_case(root, path)
+        except (OSError, UnicodeError, ValueError) as exc:
+            errors.append(f"{rel}: {exc}")
+    for case in cases.values():
+        rel = case.path.relative_to(root).as_posix()
+        for ref in case.covers + ([case.brief] if case.brief else []):
+            if not _target(root, ref).is_file():
+                errors.append(f"{rel}: covered file does not exist: {ref}")
+        if case.after:
+            seen, step = {case.id}, case.after
+            while step:
+                if step not in cases:
+                    errors.append(f"{rel}: after names an unknown case: {step}")
+                    break
+                if step in seen:
+                    errors.append(f"{rel}: after forms a cycle through {step}")
+                    break
+                seen.add(step)
+                step = cases[step].after
+    results = root / RESULTS_DIR
+    for path in sorted(results.glob("*.md")) if results.is_dir() else ():
+        if path.stem not in cases:
+            errors.append(f"{path.relative_to(root).as_posix()}: result for an unknown case")
+    return errors
+
+
+def _digest(root: Path, ref: str) -> str:
+    return hashlib.sha256(_target(root, ref).read_bytes()).hexdigest()[:12]
+
+
+def _fingerprint(root: Path, case: Case) -> list[tuple[str, str]]:
+    refs = sorted(set(case.covers + ([case.brief] if case.brief else [])))
+    return [(ref.split("#", 1)[0], _digest(root, ref)) for ref in refs]
+
+
+ACTOR_PREAMBLE = """DRY RUN of an astrid-dev agent test. You are role-playing a session that has just been started.
+Take no real action: do not post on GitHub, push, commit, open pull requests, create sessions,
+scheduled tasks, automations or issues, or send messages. Read files, and read GitHub only with
+read-only `gh api` GET requests. Then describe exactly what you would do.
+
+The astrid-dev repository is checked out at {checkout}; treat it as banodoco/astrid-dev `main`.
+Its skills are the Markdown files under agent/ (a role is agent/roles/<role>.md plus its folder;
+shared rules and workstreams are under agent/shared/). Find and read what your message leads you to.
+
+Pretend: {host_line}
+"""
+
+HOST_LINES = {
+    "claude-cloud": "you are a Claude Code cloud session (claude.ai/code) with the claude-code-remote tools.",
+    "claude-subagent": "you are a Claude subagent started by another Claude session; you return one final report.",
+    "codex-app": "you are a Codex session in the Codex app on the owner's computer, with Chrome signed in to ChatGPT.",
+    "codex-in-claude": "you are a Codex process run by `codex exec` inside a Claude cloud container.",
+    "chatgpt-web": "you are a fresh ChatGPT web chat with a GitHub connector and a sandbox; no local clone, no build.",
+}
+
+ACTOR_REPORT = """
+Report, concretely and in order:
+1. What you read, in order, and which skill and brief you are following.
+2. Your first steps, each with the exact tool, command or post and where (issue title, file, branch).
+3. Your recurring check-in, if any: how you set it, how often, what each run does; or why you have none.
+4. Where you post or report, in what format, to whom; how others reach you.
+5. Whom you start or hand work to, and the full verbatim text of every message, launch line or post you would send.
+6. Code and tests: what you write, commit or push yourself, to which branch; which tests you run, where and when; who merges.
+7. What you would bring to the owner, and what you decide alone.
+8. Every point where you were unsure, documents disagreed, or you guessed. Quote lines with file paths. Be blunt.
+"""
+
+
+def actor_prompt(root: Path, case: Case, checkout: str, upstream: str | None = None) -> str:
+    given = case.sections["Given"]
+    if case.after:
+        if upstream is None:
+            raise ValueError(f"{case.id} runs after {case.after}: pass that case's output with --upstream")
+        given = given.replace(_UPSTREAM, upstream.strip())
+    parts = [ACTOR_PREAMBLE.format(checkout=checkout, host_line=HOST_LINES[case.host]),
+             "This is the first and only message you received:\n\n" + given]
+    if case.sections.get("Fixture"):
+        parts.append("You may assume this state:\n\n" + case.sections["Fixture"])
+    parts.append(ACTOR_REPORT)
+    return "\n".join(parts)
+
+
+JUDGE = """You are judging an astrid-dev agent test. A fresh {actor}-route session played the role below,
+read only what it was given, and reported what it would do. Judge the report, not the documents' intent.
+
+Case: {id}, {title}. Role: {role}. Host: {host}.
+Documents covered: {covers}. Brief: {brief}.
+The repository is checked out at {checkout}; check any claim against the files.
+
+Expected (each must be met):
+{expect}
+
+Must not (each must be avoided):
+{must_not}
+
+For every Expect and Must not line, give: met or missed or partial; one quoted line of evidence from
+the report; and for a miss, its cause: doc-gap (the documents are missing, wrong or contradictory; name
+the file and line and the smallest fix), actor-error (the documents were clear; quote them), or
+ambiguity (needs an owner decision; state the question). Then list any wrong or harmful behaviour the
+lines did not anticipate, with the same causes.
+
+Then write, for the owner, at most twelve lines: what this session would actually do, in plain words,
+followed by these questions for the owner:
+{ask}
+
+End with one line: VERDICT: pass (every line met), or VERDICT: fail (<n> missed: <ids>).
+
+The actor's report:
+<report>
+{report}
+</report>
+"""
+
+
+def judge_prompt(case: Case, report: str, checkout: str) -> str:
+    expect = "\n".join(f"E{i}. {line}" for i, line in enumerate(case.lines("Expect"), 1))
+    must_not = "\n".join(f"M{i}. {line}" for i, line in enumerate(case.lines("Must not"), 1))
+    ask = case.sections.get("Ask the owner") or "- (none)"
+    return JUDGE.format(actor=case.actor, id=case.id, title=case.title, role=case.role, host=case.host,
+                        covers=", ".join(case.covers), brief=case.brief or "none", checkout=checkout,
+                        expect=expect, must_not=must_not, ask=ask, report=report.strip())
+
+
+def _head(root: Path) -> str:
+    try:
+        return subprocess.run(["git", "-C", str(root), "rev-parse", "--short=12", "HEAD"],
+                              capture_output=True, text=True, check=True).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return "unknown"
+
+
+def record(root: Path, case: Case, verdict_text: str, actor_model: str, judge_model: str,
+           today: str | None = None) -> Path:
+    root = Path(root)
+    match = re.search(r"VERDICT:\s*(pass|fail)", verdict_text)
+    if not match:
+        raise ValueError("the judge's text has no 'VERDICT: pass|fail' line")
+    lines = [f"# Result — {case.id}", "",
+             f"**Date:** {today or date.today().isoformat()}",
+             f"**Verdict:** {match.group(1)}",
+             f"**Actor:** {actor_model} (route {case.actor})",
+             f"**Judge:** {judge_model}",
+             f"**Commit:** {_head(root)}",
+             "**Inputs:** " + "; ".join(f"`{ref}` {digest}" for ref, digest in _fingerprint(root, case)),
+             "", "## Judgement", "", verdict_text.strip(), ""]
+    out = root / RESULTS_DIR / f"{case.id}.md"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(lines), encoding="utf-8")
+    return out
+
+
+def status(root: Path) -> list[tuple[str, str]]:
+    """Each case's state: never run, stale (a covered file changed since its result), fail or pass."""
+    root = Path(root)
+    rows = []
+    for case in load_cases(root).values():
+        path = root / RESULTS_DIR / f"{case.id}.md"
+        if not path.is_file():
+            rows.append((case.id, "never run"))
+            continue
+        text = path.read_text(encoding="utf-8")
+        recorded = dict(re.findall(r"`([^`]+)` ([0-9a-f]{12})", text))
+        current = dict(_fingerprint(root, case))
+        verdict = re.search(r"\*\*Verdict:\*\* (pass|fail)", text)
+        if recorded != current:
+            rows.append((case.id, "stale"))
+        else:
+            rows.append((case.id, verdict.group(1) if verdict else "fail"))
+    return rows
+
+
+def coverage(root: Path) -> tuple[dict[str, list[str]], list[str]]:
+    """Cases per skill document, and the skill documents no case covers."""
+    from agent_documents import discover_documents
+    root = Path(root)
+    cases = load_cases(root)
+    by_doc: dict[str, list[str]] = {}
+    for case in cases.values():
+        for ref in case.covers:
+            by_doc.setdefault(ref.split("#", 1)[0], []).append(case.id)
+    skills = [("agent/" + doc.relative.as_posix()) for doc in discover_documents(root) if doc.skill]
+    return by_doc, [doc for doc in skills if doc not in by_doc]
+
+
+def run(root: Path, args) -> int:
+    root = Path(root)
+    errors = validate(root)
+    if errors:
+        for error in errors:
+            print(f"ERROR agent-tests: {error}")
+        return 1
+    cases = load_cases(root)
+    action = args.agent_test_action
+    if action == "list":
+        for case in cases.values():
+            chain = f" after {case.after}" if case.after else ""
+            print(f"{case.id}\t{case.host}\t{case.role}{chain}")
+        return 0
+    if action == "status":
+        rows = status(root)
+        for case_id, state in rows:
+            print(f"{case_id}\t{state}")
+        return 0
+    if action == "coverage":
+        by_doc, uncovered = coverage(root)
+        for doc in sorted(by_doc):
+            print(f"{doc}\t{', '.join(sorted(by_doc[doc]))}")
+        for doc in uncovered:
+            print(f"{doc}\t(no case)")
+        return 0
+    case = cases.get(args.case)
+    if case is None:
+        print(f"ERROR agent-tests: unknown case {args.case}")
+        return 1
+    try:
+        if action == "prompt":
+            upstream = args.upstream.read_text(encoding="utf-8") if args.upstream else None
+            print(actor_prompt(root, case, args.checkout or str(root), upstream))
+        elif action == "judge":
+            print(judge_prompt(case, args.report.read_text(encoding="utf-8"), args.checkout or str(root)))
+        elif action == "record":
+            out = record(root, case, args.verdict.read_text(encoding="utf-8"), args.actor_model, args.judge_model)
+            print(out.relative_to(root).as_posix())
+    except (OSError, ValueError) as exc:
+        print(f"ERROR agent-tests: {exc}")
+        return 1
+    return 0
+
+
+def add_arguments(parser) -> None:
+    sub = parser.add_subparsers(dest="agent_test_action", required=True)
+    sub.add_parser("list", help="List the declared cases")
+    sub.add_parser("status", help="Each case: never run, stale, fail or pass")
+    sub.add_parser("coverage", help="Cases per covered document, and skill documents with none")
+    prompt = sub.add_parser("prompt", help="Print the actor's prompt (never the expectations)")
+    prompt.add_argument("case")
+    prompt.add_argument("--checkout", help="Path the actor reads; defaults to this repository")
+    prompt.add_argument("--upstream", type=Path, help="The upstream case's output, for a case with 'after'")
+    judge = sub.add_parser("judge", help="Print the judge's prompt for an actor report")
+    judge.add_argument("case")
+    judge.add_argument("--report", type=Path, required=True)
+    judge.add_argument("--checkout")
+    rec = sub.add_parser("record", help="Write agent-tests/results/<case>.md from the judge's text")
+    rec.add_argument("case")
+    rec.add_argument("--verdict", type=Path, required=True)
+    rec.add_argument("--actor-model", required=True)
+    rec.add_argument("--judge-model", required=True)

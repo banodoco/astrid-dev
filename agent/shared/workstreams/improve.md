@@ -59,6 +59,7 @@ Enter through [astrid-dev](../../start.md). Words follow the [glossary](../gloss
 3. If you add words, cut as many.
 4. Change what a check accepts, or add a check, in a separate, announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../run-contract.md#checks-and-failure-repair).
 5. Prove it. Run `python3 scripts/astrid_dev.py check`; the tests of what you touched (`python3 -m unittest discover -s scripts -p "test_<file>.py"`); and `sync` if a generated page changed. `check` confirms that a linked file exists and (`link-anchors`) that a `#heading` link into a skill, template or top-level doc names an existing heading. A pull request is checked with `check --base <base commit> --body-file /dev/null`.
+   For a change to a role, workstream, start message or brief, also run the [agent tests](agent-test.md) that cover it (`agent-test status` lists them) and commit their results; a changed document with no case gets one.
 6. Add a `fix` entry to the process ledger that ends `Follows: <entry it resolves>`.
 
 ## Audit

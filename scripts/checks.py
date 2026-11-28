@@ -355,6 +355,11 @@ def _obsolete_templates(context):
     return errors
 
 
+def _agent_tests(context):
+    from agent_tests import validate
+    return validate(context.root)
+
+
 def _ledger(context):
     from check_docs import read, ledger_errors
     root = context.root
@@ -614,6 +619,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('obsolete-sources', 'always', 'Validate obsolete sources', _obsolete_sources),
     Check('canonical-principles', 'always', 'Validate canonical principles', _canonical_principles),
     Check('obsolete-templates', 'always', 'Validate obsolete templates', _obsolete_templates),
+    Check('agent-tests', 'always', 'Validate agent-test cases: fields, sections, covered files, chains and results', _agent_tests),
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
     Check('link-anchors', 'always', 'Validate links to headings in agent documents, templates and top-level docs', _link_anchors),
