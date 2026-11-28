@@ -90,6 +90,20 @@ So that later plans add rows and functions without reshaping this one:
 2. **One function reads how placed items are arranged.** In this plan it knows two arrangements, a source covering the canvas and a prefix through the captured bundle, and refuses the rest from the table.
 3. **A slot in the dry-run view for the delivered-to-sampled frame map.** Here it is the identity plus the tail trim. Plan 70 fills it for continuations.
 4. **The guide seam:** guides enter through one function that takes ordered guides and returns conditioning (see the lowering table above).
+5. **Pass stages and contribution kinds, for Plan 67's two providers (D5 there, 28 Nov 2026).** This reserves the shape and freezes it at RS1; it implements no external strategy here.
+    - **Stages.** Each pass runs eight stages in a fixed order: make inputs; encode branches; transform branches; attach rows; model chain; guide the model; arrange and sample; compose and verify. Stacking stages (inputs, transforms, rows, model chain) accept any number of contributions, placed by H3. Choose-one stages (guider, arrangement and sampler) accept exactly one. Branch encoding and composition are H3 only.
+    - **Job record.** It reserves `branches` (at least one, each with `encoder`, optional `region` and optional `transform`), `guider`, `sampler` and `model` entries, namespaced kinds `<pack>.<key>` with `params` validated by the contribution's schema, and the pass list. It also reserves the delivered length and time map as values H3 computes and checks, including when a sampler brings its own arrangement. Today's requests are one Omni branch with the built-in guider and standard sampler, and behave exactly as now.
+    - **Contribution kinds.** Two are reserved in the H3 provider point's contribution schema:
+        - actions, which make media;
+        - graph fragments: one or more nodes with a typed port signature, placed at a stage or a published anchor (`conditioning.after_rows`, `model.after_adapters`), with an optional pure `admit(job_facts)` check that imports nothing and runs before claim.
+      A guider fragment takes the model handle after the chain. H3's assembler stays the only writer of guide positions and phase schedules unless a fragment declares that write.
+    - **Footprint vocabulary.** Every row and contribution declares:
+        - `writes` on named resources (`model.attention_forward`, `model.text_preprocess`, `model.position_ids`, `conditioning.keyframes`, `conditioning.schedule`, `guider`, `sampler`), each `exclusive`, `additive` or single instance;
+        - the request features and other strategies it `requires` and `refuses`;
+        - `cost` in conditioning entries and evaluations per step;
+        - its sample-time-only checks;
+        - for samplers, the delivered length and time map.
+      Parameters are typed by clock: delivered frame, frame range, mask over time (`frames` or `latent` space), audio time, denoising progress, reference-media time, or out-of-canvas position. Each also states its policy on kept or unsampled spans (refuse or clip). H3 converts each through the time map and trims frame-aligned media. Admission refuses two exclusive writers, a refused feature, a missing requirement, a failed `admit()` or excess cost before claim. A combination is labelled `verified` only from a proof receipt, otherwise `untested`. The footprint lives in the point's contribution schema, not in `effects`, which accepts only `none`/`read`/`edit`.
 
 ## Design file
 

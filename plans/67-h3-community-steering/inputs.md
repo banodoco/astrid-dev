@@ -68,9 +68,25 @@ The published [Release 15 manifest](https://github.com/banodoco/astrid-app/blob/
 
 - **D3 — first external provider (owner direction, 27 Nov 2026).** Use ordinary independently installed `h3_nkd_steering`, not a nested loader. Base H3 owns semantics, native kinds and exact composition. Separate NKD-specific tool and only necessary lowering; ControlNet packaging is conditional, not a new mandatory pack. Use CS-0 to close the proven shared prerequisite, without starting the full paused Plan 17. Preserve D1/D2 and review the exact extension protocol before execution.
 
+- **D5 — second real provider: H3 Experiments (owner direction, 28 Nov 2026, Claude Code session).** Add [ComfyUI-MiniMaxH3-Experiment](https://github.com/Kentskooking/ComfyUI-MiniMaxH3-Experiment) beside NKD, so the plan proves two real providers stacking rather than one. It is optional (not a default) and beta-labelled, uses the same pinned-external-node rule as D2 (MIT licence, nothing copied into astrid-agent), and is the test case for Plan 66's strategy and node-descriptor contract. The design and its alternatives are in [#2065](https://github.com/banodoco/astrid-dev/issues/2065#issuecomment-7238057362) and the H3 guidance redesign document. See CS-12 and CS-13. This is scope direction, not GPU or publication authorization.
+
+### H3 Experiments source evidence (28 Nov 2026)
+
+Read at `14cc4824d965f7c900b427b4d2d0241c8e7df58c`; nothing was run. The pack registers 11 nodes (`__init__.py`):
+- **Omni Reference Blend** (`conditioning/reference_blend.py`) takes two complete `ReferenceToVideo` conditionings, lerps their Qwen embeddings and reference latents (optionally along a time curve), and refuses inputs that already carry `control`, `hooks`, `gligen`, `model_conds` or `minimax_keyframes`. Guides must therefore be attached after it.
+- **Regional Attention Guider** (`sampling/regional_attention.py`) joins branch contexts into one sequence and object-patches every block's `attn.forward` and `preprocess_text_embeds`. It refuses `minimax_refs` (Omni references) and `area`, `hooks`, `control`, `gligen`, `start_percent` and `end_percent`.
+- **Masked Conditioning Guider** (`sampling/masked_guider.py`) blends per-branch predictions, with an embedding-overlap mode for pairs.
+- **Continuation Sampler** (`sampling/continuation.py`) replaces `SamplerCustomAdvanced` and accepts only a regional guider (`:306`). It requires a schedule ending at 0 (`:312`), seeds each cycle as seed + index, and runs cycles that protect the previous AV latent tail without the arrangement's noise mask after cycle 1. The output is longer than the input: window + (cycles − 1) × (window − context). It adds a `DIFFUSION_MODEL` wrapper offsetting position IDs per cycle, and by default saves checkpoints under `output/h3_continuation` that embed the prompt and workflow (`:236–242`).
+- **Generated Timeline Forward Offset** (`timeline/timeline_offset.py`) is a `DIFFUSION_MODEL` wrapper shifting generated position IDs. It removes its own earlier wrapper by key, so a second copy replaces the first (`:43–47`).
+- **Virtual Head Start** (`timeline/virtual_head_start.py`) rewrites frame-zero keyframes' `resolved_frame_index` to a negative value. Stock `MiniMaxH3AddGuide` resolves negative indices from the end and rejects out-of-range ones, so this needs the pack's node.
+- **Masked Conditioning Guider** overlap mode (`conditioning/overlap_conditioning.py`) refuses branch-specific `control`, `hooks`, `gligen` and `model_conds`, and strips `start_percent`/`end_percent`.
+- **Mask Profile** and **Latent Composite Masked** are mask and latent utilities.
+
+The author labels the regional guiders and the sampler beta, with full-model quality unverified.
+
 ## Source identities
 
-Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin/release/14/main` (`9f614dff`); ComfyUI `6bfaacc`; the H3 motion pack `361624fb`; NKD Basic Tools `c157722a2b484d80dee6b6d3f166c90d9ec197b8`. At dispatch, record the release, its `release/<NN>/main` SHA, the Plan 64–66 merge SHAs and the `release/<NN>/plan-67` head.
+Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin/release/14/main` (`9f614dff`); ComfyUI `6bfaacc`; the H3 motion pack `361624fb`; NKD Basic Tools `c157722a2b484d80dee6b6d3f166c90d9ec197b8`; ComfyUI-MiniMaxH3-Experiment `14cc4824d965f7c900b427b4d2d0241c8e7df58c` (added 28 Nov 2026). The Release 16 programme baseline is Agent `release/16/main` `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`. At dispatch, record the release, its `release/<NN>/main` SHA, the Plan 64–66 merge SHAs and the `release/<NN>/plan-67` head.
 
 ## References
 
