@@ -8,7 +8,7 @@
 
 **Owner:** The Plan 108 manager `p108-manager`, a Claude Sonnet session launched on 28 November 2026 by the planning session `session_011EzfW1gtAhRQwk8pgJMzhG` (advisor); session `session_011EzfW15uV913PPYnNg8J91`
 
-**Estimate:** 6–7 days (units of at most 3 days; planning figures)
+**Estimate:** 7–8 days (units of at most 3 days; planning figures)
 
 **Waiting on:** —
 
@@ -35,6 +35,7 @@ Included:
 - the template;
 - the Lead's procedure, which merges the two leader lane workstreams into one;
 - the orchestrator's procedure;
+- one shared `start-session` workstream that every role uses to start an orchestrator, manager or worker;
 - definitions and run-contract rows that resolve today's contradictions;
 - a structure check;
 - a lane column in `release status`;
@@ -79,6 +80,7 @@ L-1 → L-2 (design, `S`). Then L-3 → L-7 → L-8, with L-4, L-5 and L-6 along
 
 - A cold-read agent given only Release 16 produces a lane proposal with options and trade-offs and stops for the owner; it does not write briefs first.
 - A cold-read orchestrator given only a brief names its plans, its first dispatchable units and its owner-only points.
+- A cold-read agent given only `start-session` starts each of the three roles correctly, and refuses when the brief is missing, failing its check or unauthorized.
 - The check catches each injected failure: a missing field, an unknown plan, a plan in two active lanes, and a plan not in the named release.
 - `release status 16` and `17` show each plan's lane.
 - Searching the role documents finds every one of the eleven recorded contradictions resolved.
