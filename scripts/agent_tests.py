@@ -198,6 +198,8 @@ You may be a smaller model than the role's route names; that is expected. Don't 
 those grounds: act as the role would, and note the difference once.
 Issues, PRs, sessions, branches and SHAs that the state below calls stand-ins, or says exist, may not
 exist on GitHub. Assume they hold what the state says; don't stop because a read of them fails.
+Where you would create one (a PR, a branch, a commit), give it a stand-in value, such as PR 9001
+or SHA 2222222222222222222222222222222222222222, and use it in every message you hand over.
 """
 
 HOST_LINES = {
@@ -277,7 +279,8 @@ For every Expect and Must not line, give: met or missed or partial; one quoted l
 the report; and for a miss, its cause: doc-gap (the documents are missing, wrong or contradictory; name
 the file and line and the smallest fix), actor-error (the documents were clear; quote them), or
 ambiguity (needs an owner decision; state the question). Then list any wrong or harmful behaviour the
-lines did not anticipate, with the same causes.
+lines did not anticipate, with the same causes. Then say whether the case itself is wrong: a start
+state that contradicts the documents or the repository, or a line no document supports (a case defect).
 
 Then write, for the owner, at most twelve lines: what this session would actually do, in plain words,
 followed by these questions for the owner:

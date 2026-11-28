@@ -10,7 +10,7 @@ A test is a **case**. Each case is declared in one file, and names the documents
 | --- | --- |
 | One case | `agent-tests/cases/<id>.md` |
 | One run's sheet: what was found, synthesized, changed and re-run | `agent-tests/runs/<YYYY-MM-DD>-<subject>.md`, from [the template](runs/TEMPLATE.md) |
-| The golden path the cases encode | [golden-path.md](golden-path.md) |
+| The parent rules the cases rest on | [golden-path.md](golden-path.md) |
 | The runner | `python3 scripts/astrid_dev.py agent-test list \| status \| coverage \| checkout \| prompt \| judge` |
 | The structure check | `agent-tests` in `python3 scripts/astrid_dev.py check` |
 
@@ -60,10 +60,10 @@ The exact first message, as the role receives it.
 | `covers` | The documents whose instructions the case tests. A changed covered file makes the result stale. |
 | `brief` | The brief the session works under, if any (a lane brief, a plan's `tasks.md`). Also part of the result's fingerprint. |
 | `host` | `claude-cloud`, `claude-subagent`, `codex-app`, `codex-in-claude` or `chatgpt-web`. Sets the role-play line. |
-| `actor` | The role's own route: the model family that really holds it (a lane orchestrator on `S`, a plan manager on `X`). Default `N`. Every case runs first on `N`, the cheapest; a clear document passes there. |
+| `actor` | The role's own route: the model family that really holds it (a lane orchestrator on `S`, a plan manager on `X`). Default `N`. A case runs first on `N`, the cheapest, where a clear document passes; a case on `S`, which tests judgment, runs there directly. |
 | `after` | A chained case: its Given contains `{upstream}`, filled with the text the upstream case's actor produced (for example the manager launch an orchestrator posted). Chains test hand-offs. Pass only the text the upstream session would hand over, not its whole report. |
 
-**Writing expectations.** Take each one from [the golden path](golden-path.md), which names the document line it rests on. A behaviour the documents don't state is not an expectation yet: fix the document first, through [improve](../agent/shared/workstreams/improve.md). Phrase each line so the report can show it, for example "posts its first STATUS on `board: lane h3`", not "communicates well".
+**Writing expectations.** Take each one from a document line, resting on one of [the golden path's](golden-path.md) parent rules. A behaviour the documents don't state is not an expectation yet: fix the document first, through [improve](../agent/shared/workstreams/improve.md). Phrase each line so the report can show it, for example "posts its first STATUS on `board: lane h3`", not "communicates well".
 
 ## Run sheets
 
