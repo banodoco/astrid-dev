@@ -6,7 +6,7 @@ Review request: completion
 ## Completion assessment — Plan NN
 
 Evidence: <URL of the real integrated proof, or its full 40-character commit SHA>
-Completion: <Yes or No> — <name the acceptance criteria that were demonstrated>
+Completion: Yes — <name the acceptance criteria that were demonstrated>
 Implementation PRs: <links to every required product PR, or a reason none is needed>
 Integrated candidate: Exact candidate SHA(s)/versioned receipt (or None — non-code work)
 Routes used: <each route the run used and the tasks it ran, plus any model override, or Unknown — reason>
