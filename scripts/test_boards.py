@@ -1,5 +1,7 @@
 import json
+import tempfile
 import unittest
+from pathlib import Path
 from datetime import datetime, timezone
 from unittest import mock
 
@@ -56,6 +58,32 @@ class BoardsTest(unittest.TestCase):
         text = boards.render(boards.rows_for(BOARD, FIXTURE, NOW))
         self.assertIn("STALE-ROSTER", text)
         self.assertIn("r15-p87-orchestrator", text)
+
+    def test_roster_finds_lane_boards_for_briefs_listing_the_release(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            briefs = root / "releases" / "16" / "briefs"
+            briefs.mkdir(parents=True)
+            for lane, releases in (("h3", "16, continuing in 17"), ("later", "17")):
+                (briefs / f"{lane}.md").write_text(
+                    f"# Lane brief — {lane}\n\n**Lane:** {lane}\n**Releases:** {releases}\n\n## Outcome\n\nFixture.\n",
+                    encoding="utf-8")
+            items = {"board: lane h3": [{"title": "board: lane h3", "number": 2100}],
+                     "board: release 16": [{"title": "board: release 16 plan 66", "number": 2101},
+                                           {"title": "board: lane h3 old", "number": 2999}]}
+            queries = []
+
+            def fake_api(path):
+                queries.append(path)
+                key = "board: lane h3" if "lane%20h3" in path else "board: release 16"
+                return {"items": items.get(key, [])}
+
+            with mock.patch.object(boards, "api", side_effect=fake_api):
+                found = boards.find_boards("16", root)
+                self.assertEqual([b["title"] for b in found], ["board: lane h3", "board: release 16 plan 66"])
+                self.assertEqual(boards.lane_names("16", root), ["h3"])
+                self.assertEqual(boards.lane_names("17", root), ["h3", "later"])
+                self.assertFalse(any("later" in q for q in queries))
 
     def test_comments_pages_until_short_page(self):
         pages = [[{"n": i} for i in range(100)], [{"n": 100}]]
