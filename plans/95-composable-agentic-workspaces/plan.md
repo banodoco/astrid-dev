@@ -10,7 +10,7 @@
 
 **Estimate:** About 12 engineering days (10–14) after Plans 71–73 land: pipelines about 2.5, organisation guidance about 3, project templates about 1.5, extraction and config about 3, Dev migration about 2, reviews about 1. The critical path to the tagged Otto v0.1.0 that Plan 96 waits on is about 7 days of elapsed work.
 
-**Waiting on:** the owner's two decisions on how Otto recognises explicit `<a id>` anchors (the ten test expectations at Otto `tests/test_fragment_targets.py:385`, and stdlib-only subset versus a GFM parser exception), which block OT-19 part d ([run board](run.md#now-28-nov-mailbox-read-to-2219-utc-fri-27-nov)); astrid-dev `main` merges of the project branch need the owner's go at the end (OT-24).
+**Waiting on:** the acting Lead's decision on how Dev's `link-anchors` check is scoped, which blocks OT-19 part d, and the owner's actions on the [run board](run.md#now-28-nov-2026): Otto public before the tag, who cuts the tag, and authority for progress pull requests to `main`; astrid-dev `main` merges of the project branch need the owner's go at the end (OT-24).
 
 **Run route:** astrid-dev-only
 
