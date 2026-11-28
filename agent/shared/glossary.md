@@ -58,7 +58,7 @@ One meaning per word; two meanings, two terms.
 
 **task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
 
-**project scope:** the outcome and work the owner accepted; adding to it needs her decision.
+**project scope:** the outcome and work the owner accepted; adding to it needs the owner's decision.
 
 **task route:** `N`, `X`, `S` or `T` (taste), the capability band a task runs on.
 
@@ -106,7 +106,7 @@ One meaning per word; two meanings, two terms.
 
 **decision log:** a manager's append-only list of its own rulings.
 
-**decisions ledger:** decisions made while the owner is away, for her to accept or revert.
+**decisions ledger:** decisions made while the owner is away, for the owner to accept or revert.
 
 **Owner decisions:** the `inputs.md` section of what the owner must decide.
 
