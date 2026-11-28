@@ -19,11 +19,11 @@ Read from the mailbox to 22:19 UTC on 27 Nov, Otto `main` at `2ad2550` and `proj
 
 **Scope finding.** The anchor target scope is Dev policy under the RS1-reviewed contract (`docs/contract.md`, check-registry table: "Dev mandatory source list, catalog gate and anchor target regex in Dev"; Otto's `target_pattern=None` means all relative Markdown targets), and Otto's `_link_anchors` already takes a `target_pattern`. Requiring Dev to pass a strict full-tree anchor audit comes from advice during the run, not from the plan. Even a perfect P95-ANCHOR leaves the remaining findings, which would need P95-ANCHOR-POLICY, a new ratchet feature outside Otto v0.
 
-### Proposed path (not adopted)
+### Path (adopted 28 Nov 2026)
 
-Needs the acting Lead's decision on the technical steps and the owner's confirmation of the owner steps. Serial chain 2, 4, 5, 6, 7, 8, 9; step 3 runs beside step 2, and OT-21's slices run beside OT-20.
+Adopted by the owner-delegated rulings in [Authority](#authority). The acting Lead sequences the technical steps. Serial chain 2, 4, 5, 6, 7, 8, 9; step 3 runs beside step 2, and OT-21's slices run beside OT-20.
 
-1. **Owner:** confirm `banodoco/otto` is public and protected (it showed `internal` on 25 Nov); say who cuts the tag; authorise progress pull requests to `main`; endorse "Dev's `link-anchors` keeps its legacy target scope" and decline the compiled parser.
+1. **Rulings, done:** Otto is public (branch protection to be verified); the acting Lead cuts the tag; progress pull requests for Plan 95's records are authorised; Dev's `link-anchors` keeps its legacy target scope and no compiled parser is added.
 2. **Lead:** finish 19d's own proof and merge PR #2054, completing OT-19.
 3. **One small Otto packet, route N:** an opt-in `link-anchors` target pattern in `otto.toml`, strict by default. Park P95-ANCHOR (PR #20) and P95-ANCHOR-POLICY as post-v0.1 Otto issues.
 4. **Dev consumer configuration**, folded into OT-20's first step: re-pin Otto, add `[skills]` and the anchor pattern, re-enable the check and view registrations.
@@ -43,6 +43,16 @@ Needs the acting Lead's decision on the technical steps and the owner's confirma
 ## Authority
 
 On 27 November 2026, the owner appointed Codex session `p95-acting-lead-codex-1` acting Lead in place of the unavailable `p71-73-orchestrator` to carry out the existing Plan 95 Lead responsibilities. The owner directed the acting Lead to farm implementation out to ChatGPT packet sessions and seek guidance if work deviates from the agreed completion plan. The owner retains the final go for the merge into astrid-dev `main`; all existing packet-session boundaries remain in force. The handoff is recorded in [mailbox comment 7221454707](https://github.com/banodoco/astrid-dev/issues/1886#issuecomment-7221454707). References below to the orchestrator as Lead apply to the acting Lead during this handoff.
+
+On 28 November 2026 the owner delegated five open rulings to a Claude Code session ("YOU DECIDE THAT"), recorded on the mailbox as [comment 7245203000](https://github.com/banodoco/astrid-dev/issues/1886#issuecomment-7245203000). Each stays within D2 and D3 in [inputs](inputs.md#owner-decisions); none widens the owner-authorized dev-tooling exception.
+
+1. **The path under "Path" in [Now](#now-28-nov-2026) is adopted.** P95-ANCHOR (Otto PR #20) and P95-ANCHOR-POLICY are parked as post-v0.1 Otto issues; stdlib only stays and no compiled parser is added. The acting Lead may correct the ten expectations at Otto `tests/test_fragment_targets.py:385` in its own PR or close it.
+2. **Tag authority:** as D3 says, the accountable agent cuts Otto `v0.x` tags after the integrated proof (OT-22) passes, after bumping `__version__` to `0.1.0`. Fixes after R ship as `v0.1.n`.
+3. **Progress pull requests to astrid-dev `main` are authorised for Plan 95's own records only** (`plan.md`, `tasks.md`, `run.md`, `evidence/`), through a PR whose required checks pass. Nothing else reaches `main` without the owner's go, and the merge of `project/95-otto` (OT-24) still needs it.
+4. **Parity drift:** re-baseline the oracles from like inputs at a recorded `main` SHA in `evidence/parity/`, keeping OT-1's summary as history. Every oracle that changed is recorded with its reason, and R reviews that difference. Other Completion 1 requirements are unchanged.
+5. **Otto visibility:** `banodoco/otto` was anonymously readable (public) on 28 November. Its branch protection is unverified: the acting Lead checks and reports.
+
+Not ruled: OT-18's before and after sign-off, and the final go at OT-24, both the owner's own.
 
 On 25 November 2026, in orchestrator session `session_011EzfW1Urc5P4hpm2SvVy5d`, the owner approved Plan 95 to run once Plans 71–73 were on `main`, decided D2 to D5 ([inputs](inputs.md#owner-decisions)), and said the plan should simply run. The owner-authorized dev-tooling exception covers astrid-dev, the public `banodoco/otto` and the private `banodoco/astrid-marketing`, and nothing else: no product repository, no Astrid release, no publication or spend.
 
@@ -101,8 +111,8 @@ Cap: three Running or Review at once (ruling 6). Nothing is running as of 28 Nov
 | [P95-15](packets/P95-15.md) | OT-15 | Merged into `project/95-otto` | S |
 | [P95-19a](packets/P95-19a.md), [19b](packets/P95-19b.md), [19c](packets/P95-19c.md) | OT-19 | Merged into `project/95-otto` | X |
 | [P95-19d](packets/P95-19d.md) | OT-19 | Open (PR #2054), blocked on the anchor decision above | X |
-| `P95-ANCHOR` | Otto `link-anchors` fragment targets | Open draft (Otto PR #20), not accepted; proposed to be parked | X |
-| `P95-ANCHOR-POLICY` | Historical-link ratchet | Draft, not started; proposed to be parked | X |
+| `P95-ANCHOR` | Otto `link-anchors` fragment targets | Open draft (Otto PR #20), not accepted; parked (ruling 1) | X |
+| `P95-ANCHOR-POLICY` | Historical-link ratchet | Draft, not started; parked (ruling 1) | X |
 | `P95-20`, `P95-21`, `P95-21a` to `21f` | OT-20, OT-21 | Drafts on `p95/packets-20-21`, not on `main`, not ready | X |
 | [P95-RV](packets/P95-RV.md) | RS1 (done), R | On REQUEST only | S |
 

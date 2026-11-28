@@ -52,13 +52,13 @@ Packets the run added, with their state as of 28 November 2026 (evidence: Otto m
 | P95-SK | One validated workspace skill configuration | Merged into Otto `main` (PR 19, `2ad2550`). Dev has not yet re-pinned to it or added its `[skills]` table, and no packet owns that step |
 | P95-19a, 19b, 19c | OT-19 parts 1 to 3 | Merged into `project/95-otto` |
 | P95-19d | OT-19 part 4: Dev check runner and view engine | Open (PR #2054), blocked |
-| P95-ANCHOR | Recognise explicit `<a id>` fragment targets in Otto's `link-anchors` (Otto PR #20) | Open draft, not accepted after repeated rejected heads; proposed to be parked, below |
-| P95-ANCHOR-POLICY | An audited ratchet for historical broken links | Draft, not started; proposed to be parked |
+| P95-ANCHOR | Recognise explicit `<a id>` fragment targets in Otto's `link-anchors` (Otto PR #20) | Open draft, not accepted after repeated rejected heads; parked (run board ruling 1), below |
+| P95-ANCHOR-POLICY | An audited ratchet for historical broken links | Draft, not started; parked (run board ruling 1) |
 | P95-20, P95-21 and 21a to 21f | OT-20 and OT-21 | Drafts on `p95/packets-20-21`, not on `main`, not ready |
 
 ### Open items found by the 28 November sense check
 
-Not decided. Each needs the acting Lead's or the owner's ruling; the [run board](run.md#now-28-nov-2026) has the proposed path.
+Items 2 to 6 were ruled on 28 November 2026 under [Authority](run.md#authority) rulings 2 to 4; items 1 and 5 need cards. The [run board](run.md#now-28-nov-2026) has the adopted path.
 
 1. **Version.** Otto's `__version__` is still `"0.0.0"` and no card bumps it to `0.1.0` before OT-23.
 2. **Side-by-side install.** [Completion](plan.md#completion) 5 asks for `otto-*` and `astrid-dev-*` skills to install side by side into one temporary destination and for either to be removed alone. OT-6 proved it only with fixture namespaces and OT-21 only builds, so no card clearly covers it with the real namespaces.
