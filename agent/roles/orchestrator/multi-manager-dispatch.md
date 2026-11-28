@@ -26,7 +26,7 @@ Every dispatched packet has an identified session, current state and evidence or
 
 Use when a lane brief's How it runs names this option. The lane brief sets which plans and units it covers; the general [Orchestrate role](../orchestrator.md) still applies.
 
-**Packets go only to a new normal chat in ChatGPT on the web:** open chatgpt.com in your browser, signed in to the owner's own account. Never ChatGPT for Work, never Codex. For the Codex-app route, see the Codex-app guide at `agent/guides/codex-app/README.md` (to be linked after it merges).
+**Packets go only to a new normal chat in ChatGPT on the web:** open chatgpt.com in your browser, signed in to the owner's own account. Never ChatGPT for Work, never Codex. For the Codex-app route, see the [Codex-app guide](../../guides/codex-app/README.md).
 
 **The packet's Route sets the session's mode, every time** (normal tasks N, hard X, very hard S): N High, X Extra High, S Pro ([run contract](../../shared/run-contract.md#chatgpt-session-modes)), never one mode for all or by feel. If a mode isn't offered, say so in STATUS and ask the owner.
 

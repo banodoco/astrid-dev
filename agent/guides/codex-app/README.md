@@ -45,5 +45,5 @@ Open a new chat in Chrome and name it:
 
 ## Not yet recorded
 
-- The other modes in the chat's mode picker are not recorded yet. Only **High** appears in the comments above.
+- Mode by route (the owner's decision): N **High**, X **Extra High**, S **Pro**. The comments above record only how to pick **High**; the other two use the same picker.
 - The exact text of the hourly automation's prompt is not recorded; the comment names only what the prompt points to.
