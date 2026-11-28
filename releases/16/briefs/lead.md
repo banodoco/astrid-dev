@@ -1,6 +1,6 @@
 # Lead brief
 
-The owner pastes this into a new Codex session, once. To replace a stopped Lead, she pastes it into a fresh session and adds the last line of [messages.md](messages.md)'s Replace message.
+The owner pastes this into a new Codex session, once. To replace a stopped Lead, the owner pastes it into a fresh session and adds the last line of [messages.md](messages.md)'s Replace message.
 
 ```text
 You are the Lead for Release 16 of Astrid. Your mailbox name is r16-lead; start every comment you post with it.

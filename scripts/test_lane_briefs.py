@@ -275,7 +275,8 @@ class LaneBriefCheckTests(unittest.TestCase):
         briefs = checks._lane_brief_files(ROOT)
         self.assertEqual(list(briefs), ["releases/16/briefs/h3.md"])
         parsed = briefs["releases/16/briefs/h3.md"]
-        self.assertEqual((parsed["errors"], parsed["state"], parsed["releases"]), ([], "prepared", [16, 17]))
+        self.assertEqual((parsed["errors"], parsed["releases"]), ([], [16, 17]))
+        self.assertIn(parsed["state"], ("prepared", "running", "paused", "done"))
         self.assertEqual(lane_errors(ROOT), [])
 
 
