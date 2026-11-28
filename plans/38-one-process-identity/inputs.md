@@ -156,3 +156,5 @@ Retain P38's minimal common role ABI C1/C2/R2 because one-home role authority is
 Carry P52/P53's recorded R16 move explicitly. Recommendation: complete bounded existing product-facing residuals and their prepublication proof in this shipment, while owner issue-transfer administration and genuinely post-live observation remain separately named closure tasks. Do not claim all adjunct tasks complete or silently call them nonproduct. If the owner intends every administrative closure to block the product go, add that specific gate and owner availability; do not create a circular “live page before publication” dependency. §4.17 gives exact rows.
 
 reconcile owner-requested role work with open D1 wording under D-SYN-4; retain D5 review limits and E1.1 conditional Windows transport effort. Replace “after31/30” whole-plan start recommendation with exact consumer/proof edges. No weaker native predicate, timeout allowance or strict-xfail removal without actual evidence.
+
+**Run start:** Lane [dependable](../../releases/16/briefs/dependable.md): the brief records the owner's go, authority and limits.

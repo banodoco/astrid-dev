@@ -17,6 +17,7 @@ One orchestrator runs Plans 66, 68, 70 and 67, then Plan 107 in Release 17. It a
 | Lane | Session | Brief | State |
 |---|---|---|---|
 | h3 (Plans 66, 68, 70, 67; board `board: lane h3`) | not yet recorded; the orchestrator records it in its brief at its first progress PR | [briefs/h3.md](briefs/h3.md) | running, from the owner's go of 28 November |
+| dependable (Plans 93, 94, 38, 79; board `board: lane dependable`) | not yet recorded; the orchestrator records it in its brief at its first progress PR | [briefs/dependable.md](briefs/dependable.md) | running, from the owner's go of 28 November; takes over 93, 94 and 38 from the Codex Lead |
 
 ## Proposed H3 programme queue (66, 68, 70, 67)
 
@@ -126,6 +127,8 @@ The brief holds strategy; each plan's tasks hold work and progress. This section
 At every check-in: read all current mailbox messages; reconcile predecessor moves, task receipts, exact writer conflicts and proof availability; start ready work within actual authorized capacity; report blocked contracts/resources with owner and next action. Agent CI remains subject to existing shared authority and the current Release Lead's priority and capacity decisions. P91's historical launch text is not new R16 authorization. No new permanent scheduler, strategy file or tracker is introduced.
 
 ## Delivery: Lead and managers
+
+*Superseded on 28 November 2026 for Plans 93, 94 and 38 by the [dependable lane](briefs/dependable.md), and for the release by the Release 16 Lead named in [releases/16.md](../16.md); kept as history.*
 
 How Release 16 runs unattended for days. **All judgment happens once, in advance, before anyone is left running; every brief is prepared in [briefs/](briefs/README.md).** After that, each role repeats one short loop. This section is each role's whole job for this run: where it differs from a skill, this section wins. Don't open the skills to look for more work.
 

@@ -6,9 +6,9 @@
 
 **Goal:** A creator or agent adds a clip from their own computer at any size the Runtime accepts, with one limit, one message and no extra step, and the original file is never touched.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** the dependable lane orchestrator (`dependable-orchestrator`, [lane brief](../../releases/16/briefs/dependable.md))
 
 **Estimate:** Historical estimate 7–9 engineering days; re-size using existing transport and P77 retry path
 

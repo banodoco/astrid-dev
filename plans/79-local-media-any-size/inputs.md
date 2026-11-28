@@ -49,7 +49,7 @@
 
 **Review rounds:** One round at the end, because the change crosses three repositories and a flow every creator uses. Agreed by the owner on 21 November 2026 in the Release 15 Lead session: "Yeah, I agree with your recommendations".
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking and what still needs the owner's go.
+**Run start:** Lane [dependable](../../releases/16/briefs/dependable.md): the brief records the owner's go, authority and limits.
 
 ## Owner decisions
 
