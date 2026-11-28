@@ -32,7 +32,7 @@ agent/
     orchestrator.md
     manager.md
     worker.md
-    leader/multi-manager-release.md
+    leader/lane-orchestrators.md
     orchestrator/{codex-cloud-sessions,codex-in-claude-cloud,multi-manager-dispatch}.md
     manager/{whole-project,chatgpt-packet}.md
   shared/

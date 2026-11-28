@@ -1,6 +1,6 @@
 # Release 14 standby Lead
 
-The owner keeps a standby Lead in a Codex session (Astra), so that Release 14 keeps moving if the Claude Lead session stops. The standby waits, and takes over only after 3 hours without a Lead heartbeat. The general rule is in the [Lead workstream](../../../agent/roles/leader/multi-manager-release.md#standby-lead).
+The owner keeps a standby Lead in a Codex session (Astra), so that Release 14 keeps moving if the Claude Lead session stops. The standby waits, and takes over only after 3 hours without a Lead heartbeat. The general rule is in the [Lead workstream](../../../agent/roles/leader/lane-orchestrators.md#standby-lead).
 
 ## Heartbeat
 
@@ -33,7 +33,7 @@ Start at the last page and page backwards until you find one. The last page is â
 ## Taking over
 
 1. Read, in order:
-   - the [Lead role skill](../../../agent/roles/leader.md) and its [workstream](../../../agent/roles/leader/multi-manager-release.md);
+   - the [Lead role skill](../../../agent/roles/leader.md) and its [workstream](../../../agent/roles/leader/lane-orchestrators.md);
    - the [run board](../run.md): Authority, Standing rulings, Dispatch queue and Waiting on the owner;
    - this folder: [README](README.md), [notes](lead-notes.md), [review tiers](review-tiers.md) and [gate review notes](gate-common.md);
    - the mailbox from the board's Lead cursor onwards.

@@ -72,6 +72,7 @@ def mapped_target(match: str, kind: str) -> str | None:
         "skills/shared/templates/decisions-ledger.md": "agent/shared/templates/decisions-ledger.md",
         "skills/shared/workstreams/astrid-dev-release/references/sources.md": "agent/shared/release-sources.md",
         "skills/roles/astrid-dev-plan": "agent/shared/workstreams/plan.md",
+        "skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md": "agent/roles/leader/lane-orchestrators.md",
     }
     if path in fixed:
         return fixed[path]

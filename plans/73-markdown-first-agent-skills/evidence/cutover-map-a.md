@@ -7,7 +7,7 @@ Each source's last commit is its latest path-specific commit reachable from M. T
 | Source path | Destination path | Last source commit at M | Disposition |
 | --- | --- | --- | --- |
 | `skills/roles/astrid-dev-lead/SKILL.md` | `agent/roles/leader.md` | `e092cc55fcf5555b008005bf18062df4966b4cbc` | ported |
-| `skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md` | `agent/roles/leader/multi-manager-release.md` | `9cb8eb9d1b136f902f64fff00c8799e0b3b06e07` | ported |
+| `skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md` | `agent/roles/leader/lane-orchestrators.md` | `9cb8eb9d1b136f902f64fff00c8799e0b3b06e07` | ported |
 | `skills/roles/astrid-dev-lead/workstreams/lane-orchestrators.md` | `agent/roles/leader/lane-orchestrators.md` | `e092cc55fcf5555b008005bf18062df4966b4cbc` | new |
 | `skills/roles/astrid-dev-manage/SKILL.md` | `agent/roles/manager.md` | `e092cc55fcf5555b008005bf18062df4966b4cbc` | ported |
 | `skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md` | `agent/roles/manager/chatgpt-packet.md` | `9cb8eb9d1b136f902f64fff00c8799e0b3b06e07` | ported |
