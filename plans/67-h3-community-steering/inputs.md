@@ -70,6 +70,18 @@ The published [Release 15 manifest](https://github.com/banodoco/astrid-app/blob/
 
 - **D5 — second real provider: H3 Experiments (owner direction, 28 Nov 2026, Claude Code session).** Add [ComfyUI-MiniMaxH3-Experiment](https://github.com/Kentskooking/ComfyUI-MiniMaxH3-Experiment) beside NKD, so the plan proves two real providers stacking rather than one. It is optional (not a default) and beta-labelled, uses the same pinned-external-node rule as D2 (MIT licence, nothing copied into astrid-agent), and is the test case for Plan 66's strategy and node-descriptor contract. The design and its alternatives are in [#2065](https://github.com/banodoco/astrid-dev/issues/2065#issuecomment-7238057362) and the H3 guidance redesign document. See CS-12 and CS-13. This is scope direction, not GPU or publication authorization.
 
+- **D6 — third real provider: Dials (owner direction, 28 Nov 2026, Claude Code session).** Add Matlow's ComfyUI-Dials as an optional beta pack and design the contract for all four reviewed packs, with MAINodes de-rope in [Plan 107](../107-h3-passes/plan.md). Licensing is settled by the owner: all components used are open source. Pin standalone ComfyUI-Dials, not MAINodes, on workers. See CS-14.
+
+### Dials source evidence (28 Nov 2026)
+
+Read at `a0a8a8f6ebe3f2b78904a6a106501f1bfdcb3a0c`; nothing was run.
+- A post dial is a `DIFFUSION_MODEL` wrapper (`ContextShift`, key `mai_dial_post`) that adds a BF16 [5376] vector to the refined context each call (`dials/core.py:105-118, 148-154`).
+- A pre dial is a `diff` patch on `diffusion_model.condition_proj.bias`.
+- Rack envelopes are per-sampler-call `SAMPLER_SAMPLE` wrappers reading `transformer_options["sigmas"]` (`dials/envelopes.py:180-196`).
+- Block strengths chain `patches_replace` entries on `("dit","double_block",i)` (`dials/blocks.py:110-117`).
+- Time curves run an undialled and a dialled call on the first k steps and blend per latent frame. Rows sharing a curve share one branch. The clock comes from the latent's own shape, so it cannot be rebased (`dials/timecurve.py:160-176, 189-207`).
+- ComfyUI-Dials and ComfyUI-MAINodes register the same rack node ids, resolved by `ownership.py`.
+
 ### H3 Experiments source evidence (28 Nov 2026)
 
 Read at `14cc4824d965f7c900b427b4d2d0241c8e7df58c`; nothing was run. The pack registers 11 nodes (`__init__.py`):
@@ -86,7 +98,7 @@ The author labels the regional guiders and the sampler beta, with full-model qua
 
 ## Source identities
 
-Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin/release/14/main` (`9f614dff`); ComfyUI `6bfaacc`; the H3 motion pack `361624fb`; NKD Basic Tools `c157722a2b484d80dee6b6d3f166c90d9ec197b8`; ComfyUI-MiniMaxH3-Experiment `14cc4824d965f7c900b427b4d2d0241c8e7df58c` (added 28 Nov 2026). The Release 16 programme baseline is Agent `release/16/main` `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`. At dispatch, record the release, its `release/<NN>/main` SHA, the Plan 64–66 merge SHAs and the `release/<NN>/plan-67` head.
+Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin/release/14/main` (`9f614dff`); ComfyUI `6bfaacc`; the H3 motion pack `361624fb`; NKD Basic Tools `c157722a2b484d80dee6b6d3f166c90d9ec197b8`; ComfyUI-MiniMaxH3-Experiment `14cc4824d965f7c900b427b4d2d0241c8e7df58c` (added 28 Nov 2026). ComfyUI-Dials `a0a8a8f6ebe3f2b78904a6a106501f1bfdcb3a0c` (added 28 Nov 2026). The Release 16 programme baseline is Agent `release/16/main` `4a2bad187f12e7b0d1ba5bd1164b4a076787516a`. At dispatch, record the release, its `release/<NN>/main` SHA, the Plan 64–66 merge SHAs and the `release/<NN>/plan-67` head.
 
 ## References
 

@@ -2,7 +2,7 @@
 
 **Project:** H3 one compiler
 
-**Goal:** Every H3 request goes through one compiler, one capability table and one dry-run view, so later plans add capabilities as table rows and functions instead of routes, and agents learn one shape from one page.
+**Goal:** Every H3 request goes through one compiler, one capability table and one dry-run view, and every capability, built-in or community pack, plugs in through one typed extension contract that stacks safely, so agents learn one shape from one page.
 
 **Status:** queued
 
@@ -10,7 +10,7 @@
 
 **Target milestone:** 0.3
 
-**Estimate:** 8 days (CPU only; the live check comes after)
+**Estimate:** 18–28 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days, including the extension contract, test kit and first-frame encoder; the live check comes after)
 
 **Waiting on:** Independent review of the revised provider seam, refreshed Plan 59/64/65 baseline on Release 16, and Lead run start. No Plan 17 or 67 dependency.
 
@@ -42,9 +42,17 @@ Context and Process only influence.
 5. the model chain;
 6. the sampler.
 
-Composition then restores every kept pixel and sample. A new lever adds a kind to the table and a function that feeds one mechanism. It never adds a request structure or a compiler branch.
+Composition then restores every kept pixel and sample. A new lever adds a kind to the table and a function that feeds one mechanism. There is one request grammar, one capability authority and one compile orchestration. Internal preparation may differ by arrangement where the actual nodes differ; that never creates a public route or a second set of ownership rules.
 
 **Provider-ready core.** Keep one H3-owned, versioned, typed registration/assembly seam around the capability table and six lowering mechanisms. Built-ins and a separately authored test provider enter through the same deterministic, immutable per-job snapshot for admission, describe, dry run and compile. The host owns validation, scheduling, exact ownership/composition and requirements; providers return only validated contributions to the existing mechanisms. Refuse duplicate IDs, unsupported API versions, unmet dependencies and conflicts; report selected provider identity and only used node/model requirements. Providers can expose validated references to ordinary pack-owned preprocessing actions/recipes in the same capability discovery; a curve-producing tool remains an input-making action, not a seventh mechanism or fake lever. The base compiler never depends on the presence of a default companion. Keep the provider input an explicit host-supplied value, following the existing workflow hook/engine-facts boundary: H3's kept modules import no Astrid code and do not discover installed packs. No external loading, pack installer or VibeComfy family migration in 66. Plan 67 activates genuine independent providers through Astrid's existing registry; 66 needs no Plan 17 work.
+
+**Extension contract (owner direction, 28 Nov 2026).** The six mechanisms are H3's internal compile boundaries. Outside packs see one contract:
+- typed **sockets** named by ComfyUI wire types: actions, conditioning, model, guider, sampler wrap, loop and media;
+- **data points** for content such as dial libraries;
+- a **footprint** per contribution, named by ComfyUI's patch surface, from which H3 computes compatibility;
+- a **test kit** that measures each contribution and refuses hidden or global patches.
+
+Stacking sockets accept any number of contributions; guider and loop accept one per pass. H3 alone encodes branches, writes the noise mask, composes and verifies, so no pack can change content the request keeps. The job record carries `passes[]` and `branches[]` from the start. This plan executes one pass; [Plan 107](../107-h3-passes/plan.md) executes several in Release 17. Agents choose by creative intent (`describe --intent`) and read exact, soft, verified and untested in the dry run. Detail: [tasks](tasks.md#extension-contract).
 
 **Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` here; [Plan 67](../67-h3-community-steering/plan.md) adds it) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
 
@@ -80,7 +88,7 @@ Plans 64–70 are proven by compiling. The owner's live test comes after.
 - timed prompts, `phase` on guides or LoRAs, ControlNet, a curve-to-audio-guide tool, or per-actor binding work ([Plan 67](../67-h3-community-steering/plan.md)). No GPL node is vendored into Astrid;
 - shot-plan schema changes, or automatic take recording on shots;
 - an endless-continuation skill, take lineage or continue-from-take;
-- variations or multi-pass chains in the core;
+- executing more than one pass, media transforms between passes, or variations ([Plan 107](../107-h3-passes/plan.md), Release 17); this plan reserves `passes[]` and executes one;
 - a planner that picks the method, a workflow engine, or a template language beyond named holes;
 - normalized mask coordinates or a second model.
 
@@ -95,7 +103,7 @@ It adds the capability table as lever kinds, the dry-run view, end-relative time
 
 ## Sequence and readiness
 
-Plans 59, 64 and 65 are recorded done, and their integration is an ancestor of published Agent main. Refresh the exact release base, focused CPU baseline and caller/pin inventory; resolve the independent critique of the revised provider seam before freezing the contract. No Plan 17 dependency. Then, in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities, as lever kinds), CC-3 (the dry-run view), CC-9 (end-relative time), CC-10 (composition by occurrence and exact delivery), CC-5 (templates and recipes for existing capabilities), CC-6 (the base skill rewrite and thin Recast), and the closing review. Plans 68 and 70 follow, in that order; Plan 67's first cards can start once this plan closes. [Task cards](tasks.md)
+Plans 59, 64 and 65 are recorded done, and their integration is an ancestor of published Agent main. Refresh the exact release base, focused CPU baseline and caller/pin inventory. No Plan 17 dependency. The order is the [execution units](tasks.md#execution-units): the job record (CC-1.1 with CC-9) and its early review first. Then the compile orchestration, callers and v1 retirement, with the capability table, extension contract, test kit and first-frame encoder beside them; then the contract review (RS1). Plans 68, 70 and 67 start at RS1 and the specific cards they name. They do not wait for this whole plan. [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
@@ -122,6 +130,9 @@ CPU tests prove each of these:
 - `branch_for` is gone, and a v1 request is refused with a message to write it as v2.
 - `describe --entry h3 --json` shows the same capabilities admission uses, with the reserved rows marked `unavailable`.
 - A separately authored CPU fixture registers a kind through the same seam as built-ins, compiles via an existing mechanism, and appears with its provenance and used requirements in the one job snapshot. Missing, duplicate, incompatible or conflicting providers fail before claim; base H3 remains unchanged without the fixture. Core/SDK remain pack-neutral. A provider may advertise an admitted pack-owned preprocessing action without registering a fictitious lowering; the action's output enters ordinary request bindings. An absent optional provider cannot alter base request admission or require its nodes.
+- A contribution in each socket, including one that fills two sockets, is admitted from its YAML and schema alone, without importing code. Two exclusive writers, a refused feature, a missing requirement, a failed `admit()` and excess cost are each refused before claim, naming both items.
+- The test kit measures a fixture's patches and model calls and matches its declaration. A hidden wrapper, a class-level patch and a write outside managed scratch are each refused.
+- A first-frame branch request compiles; today's one-branch, one-pass requests and their receipts are unchanged.
 - Unsupported pairs are refused, naming both items and a fix. A late LoRA, a mouth edit inside a continuation prefix, `role: control`, `role: guide` and an off-zero still are refused before claim, with no build.
 - Every kept or supplied span is byte-identical per channel in the decoded published file, including asymmetric stereo and off-by-one cases; the permission and strength masks are separate, and a vanished grant fails loudly.
 - The dry run reports each tag's actual binding, and each occurrence's retained frames, audio and resource estimate.

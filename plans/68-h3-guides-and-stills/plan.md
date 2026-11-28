@@ -10,9 +10,9 @@
 
 **Target milestone:** 0.2
 
-**Estimate:** 2 days (CPU only; the live check comes after)
+**Estimate:** 3–5 days (CPU only; re-estimated 28 Nov 2026 as units of at most 3 days; the live check comes after)
 
-**Waiting on:** Owner greenlight of scope, and Plan 66.
+**Waiting on:** Plan 66's contract review (RS1), its view writer (CC-3) and composition by occurrence (CC-10).
 
 **Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -38,7 +38,7 @@ The cards CC-4 and CC-8 were written as part of Plan 66 and moved here unchanged
 
 ## Sequence and readiness
 
-Plan 66 lands first. Then CC-4 (guides), CC-8 (exact stills at any frame) and CC-11 (recipes and the skill section). [Plan 70](../70-h3-continuation-bridges-inserts/plan.md) follows, because its first step compares against this plan's full-canvas source. [Task cards](tasks.md)
+CC-4 (guides) starts at Plan 66 RS1 and CC-3; CC-8 (exact stills) also needs Plan 66 CC-10; CC-11 ships example inputs and recipe files, and the final cold-read integration happens once in [Plan 67 CS-8](../67-h3-community-steering/tasks.md). [Plan 70](../70-h3-continuation-bridges-inserts/plan.md) no longer waits for stills: it needs only CC-4, for guides inside a continuation (28 Nov 2026). Guides are rows: H3's assembler is the only writer of guide positions and phase schedules, positions are clock-typed and converted through the time map, and a pack may add a guide-position fragment (for example Virtual Head Start) only by declaring that write. [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
