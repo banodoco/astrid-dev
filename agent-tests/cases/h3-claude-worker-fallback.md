@@ -19,6 +19,10 @@ actor: N
 Follow the astrid-dev-worker skill (install the skills from a banodoco/astrid-dev checkout: mkdir -p ~/.claude/skills && python3 scripts/astrid_dev.py skills install --destination ~/.claude/skills). Your brief is unit 66-U1 (cards CC-1.1, CC-9) in plans/66-h3-composable-core/tasks.md on banodoco/astrid-dev main, under the lane brief releases/16/briefs/h3.md. Work in banodoco/astrid-agent from release/16/plan-66 at 4a2bad187f12e7b0d1ba5bd1164b4a076787516a, branch p66/66-U1. Created by session session_011EzfW4exucHx4FeFWbexak, signing h3-orchestrator; you report to it, not to a manager. Follow-up messages from that session are part of this brief, within this unit's scope. Never use AskUserQuestion. Post only milestones on the board (https://github.com/banodoco/astrid-dev/issues/9999): early STATUS, READY-PROOF or BLOCKED; set no scheduled task. Then stop.
 ```
 
+## Fixture
+
+- Stand-ins: board issue 9999 is `board: lane h3`. It holds the orchestrator's fallback notice, `BASELINE 66 4a2bad187f12e7b0d1ba5bd1164b4a076787516a <run link>` and `READY 66-U1`.
+
 ## Expect
 
 - Finds and follows the worker skill, and reads the 66-U1 cards on astrid-dev `main`.

@@ -124,6 +124,8 @@ def load_cases(root: Path) -> dict[str, Case]:
     cases: dict[str, Case] = {}
     folder = Path(root) / CASES_DIR
     for path in sorted(folder.glob("*.md")) if folder.is_dir() else ():
+        if path.name == "README.md":
+            continue
         cases[path.stem] = parse_case(Path(root), path)
     return cases
 
@@ -138,6 +140,8 @@ def validate(root: Path) -> list[str]:
     folder = root / CASES_DIR
     cases: dict[str, Case] = {}
     for path in sorted(folder.glob("*.md")) if folder.is_dir() else ():
+        if path.name == "README.md":
+            continue
         rel = path.relative_to(root).as_posix()
         try:
             cases[path.stem] = parse_case(root, path)
@@ -161,7 +165,7 @@ def validate(root: Path) -> list[str]:
                 step = cases[step].after
     results = root / RESULTS_DIR
     for path in sorted(results.glob("*.md")) if results.is_dir() else ():
-        if path.stem not in cases:
+        if path.name != "README.md" and path.stem not in cases:
             errors.append(f"{path.relative_to(root).as_posix()}: result for an unknown case")
     return errors
 
@@ -185,6 +189,10 @@ Its skills are the Markdown files under agent/ (a role is agent/roles/<role>.md 
 shared rules and workstreams are under agent/shared/). Find and read what your message leads you to.
 
 Pretend: {host_line}
+You may be a smaller model than the role's route names; that is expected. Don't stop or refuse on
+those grounds: act as the role would, and note the difference once.
+Issue, PR and session numbers that the state below calls stand-ins do not exist on GitHub. Assume
+they hold what the state says; don't stop because a read of them fails.
 """
 
 HOST_LINES = {
@@ -261,6 +269,34 @@ def judge_prompt(case: Case, report: str, checkout: str) -> str:
     return JUDGE.format(actor=case.actor, id=case.id, title=case.title, role=case.role, host=case.host,
                         covers=", ".join(case.covers), brief=case.brief or "none", checkout=checkout,
                         expect=expect, must_not=must_not, ask=ask, report=report.strip())
+
+
+WITHHELD = "# Withheld\n\nThis file is withheld from agent-test actors.\n"
+
+
+def make_checkout(root: Path, dest: Path) -> Path:
+    """Export HEAD to dest as a fresh git repository, withholding the cases, results and golden path."""
+    root, dest = Path(root), Path(dest)
+    if dest.exists() and any(dest.iterdir()):
+        raise ValueError(f"{dest} exists and is not empty")
+    dest.mkdir(parents=True, exist_ok=True)
+    archive = subprocess.run(["git", "-C", str(root), "archive", "HEAD"], capture_output=True, check=True)
+    subprocess.run(["tar", "-x", "-C", str(dest)], input=archive.stdout, check=True)
+    tests = dest / "agent-tests"
+    for sub in (CASES_DIR.name, RESULTS_DIR.name):
+        folder = tests / sub
+        if folder.is_dir():
+            for path in folder.glob("*.md"):
+                path.unlink()
+            (folder / "README.md").write_text(WITHHELD, encoding="utf-8")
+    for name in ("golden-path.md",):
+        if (tests / name).is_file():
+            (tests / name).write_text(WITHHELD, encoding="utf-8")
+    git = ["git", "-C", str(dest), "-c", "user.name=agent-test", "-c", "user.email=agent-test@invalid"]
+    subprocess.run(git[:3] + ["init", "-q", "-b", "main"], check=True)
+    subprocess.run(git + ["add", "-A"], check=True)
+    subprocess.run(git + ["commit", "-q", "-m", f"agent-test checkout of {_head(root)}"], check=True)
+    return dest
 
 
 def _head(root: Path) -> str:
@@ -350,6 +386,13 @@ def run(root: Path, args) -> int:
         for doc in uncovered:
             print(f"{doc}\t(no case)")
         return 0
+    if action == "checkout":
+        try:
+            print(make_checkout(root, args.dest))
+        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+            print(f"ERROR agent-tests: {exc}")
+            return 1
+        return 0
     case = cases.get(args.case)
     if case is None:
         print(f"ERROR agent-tests: unknown case {args.case}")
@@ -374,6 +417,8 @@ def add_arguments(parser) -> None:
     sub.add_parser("list", help="List the declared cases")
     sub.add_parser("status", help="Each case: never run, stale, fail or pass")
     sub.add_parser("coverage", help="Cases per covered document, and skill documents with none")
+    checkout = sub.add_parser("checkout", help="Export HEAD for actors, with cases, results and golden path withheld")
+    checkout.add_argument("dest", type=Path)
     prompt = sub.add_parser("prompt", help="Print the actor's prompt (never the expectations)")
     prompt.add_argument("case")
     prompt.add_argument("--checkout", help="Path the actor reads; defaults to this repository")

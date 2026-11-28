@@ -34,7 +34,7 @@ For review stops, also check that later units can build on the result without re
 
 ## Fixture
 
-- PR 9998 does not exist. Describe the review you would do against release/16/plan-66 at 4a2bad187f12e7b0d1ba5bd1164b4a076787516a.
+- Stand-ins: PR 9998 and head 1111…, and board issue 9999 (`board: lane h3`), do not exist. PR 9998 changes the cards' Scope files. Describe the review you would do against release/16/plan-66 at 4a2bad187f12e7b0d1ba5bd1164b4a076787516a.
 
 ## Expect
 
