@@ -58,7 +58,7 @@ Each brief names one option under its "How it runs". Judge by the work, not the 
 
 | Option | What it is | Choose it when |
 |---|---|---|
-| **hosted** | One Claude-hosted orchestrator runs a Codex manager through a carded plan, and the manager dispatches workers by card route. See the [lane procedure](../orchestrator/lane-orchestrator.md) and [Codex in Claude cloud](../orchestrator/codex-in-claude-cloud.md) | The plan is carded and its cards are mostly Codex-sized |
+| **hosted** | One Claude-hosted orchestrator manages each plan itself and dispatches each card to a Codex worker by route; a hosted Codex manager only when the brief says so. See the [lane procedure](../orchestrator/lane-orchestrator.md) and [Codex in Claude cloud](../orchestrator/codex-in-claude-cloud.md) | The plan is carded and its cards are mostly Codex-sized |
 | **packets** | One orchestrator dispatches a fresh ChatGPT session per packet, written to finish in one run. See its [dispatch mechanics](../orchestrator/multi-manager-dispatch.md) | Work arrives as bounded one-contract units, or as a rolling queue of issues |
 
 A hosted orchestrator that also holds the manager role takes the **higher** of the orchestrator route ([leader.md](../leader.md#divide-the-release-into-lanes)) and the [manager route](../orchestrator.md#choose-the-managers-route). A hosted Codex manager is the brief's stated choice, not a default; [codex-in-claude-cloud.md](../orchestrator/codex-in-claude-cloud.md) holds that statement.
@@ -81,9 +81,9 @@ At each check-in, first run [release reconciliation](../../shared/workstreams/re
 
 ## At each Lead check-in
 
-**Inputs:** your boards since your cursor, open PRs, `python3 scripts/release_branches.py check <N>`, and [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status). In a `packets` lane, also every packet its orchestrator's STATUS marks Review.
+**Inputs:** your boards since your cursor, open PRs, `python3 scripts/release_branches.py check <N>`, and [release reconciliation](../../shared/workstreams/release.md#reconcile-plan-status).
 
-**Each review:** accept and merge, or list the rework on the PR. Accept a gate only after the reviewer injects the realistic failures in its brief and sees the gate reject them. Judge against that threat model and leave crafted bypasses out of the findings.
+**Each review (release-gate and cross-lane PRs):** accept and merge, or list the rework on the PR. Accept a gate only after the reviewer injects the realistic failures in its brief and sees the gate reject them. Judge against that threat model and leave crafted bypasses out of the findings.
 
 **Fixes are packet work, however small.** Claude sessions and their sub-agents diagnose, review, prove, merge, pin and run CI. They don't write the fix. Put the diagnosis in the rework or a new packet: the failing ids, the cause, the suggested change and the May touch list. If ChatGPT fails or shows a limit, retry it, or start a fresh session at the branch head. Otherwise wait, because taking the work over costs more than the wait.
 
@@ -91,7 +91,7 @@ At each check-in, first run [release reconciliation](../../shared/workstreams/re
 
 **Keep work moving. Every hop between sessions costs up to an hour.**
 - **Rule conditionally.** When a gate needs one more result, rule it with its condition and its next step attached, for example "merge when this run shows no new ids; if one is harm-class, cut a packet". That way nobody comes back to you.
-- **Keep managers up.** A ChatGPT manager runs for a window of about two hours, and a board comment can't wake it. Never stand one down while its plan may still need packets. When one goes quiet with work waiting, give the owner the exact text to paste to resume it.
+- **Keep managers up.** A packet session runs for a window of about two hours, and a board comment can't wake it. Never stand one down while its plan may still need packets. When one goes quiet with work waiting, give the owner the exact text to paste to resume it.
 
 When a packet has waited more than two hours on hosted jobs, read its run list: pull-request CI may run only part of a suite, so dispatch the full run it is waiting for. Every few hours, ask a high-judgment reviewer for a second opinion on bottlenecks, order and scope; bring what exceeds your authority to the owner.
 

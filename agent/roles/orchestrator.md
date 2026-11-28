@@ -22,13 +22,13 @@ Dispatch, advise and unblock according to the run.
 Report where managers stand and who must act next.
 
 **Your job:** get authorized work into manager sessions and keep it moving. In a lane, the lane brief is your whole job: its plans, order, authority and limits. The default is a continuing project manager; the [packets option](orchestrator/multi-manager-dispatch.md) uses a **new ChatGPT manager session for each packet**, and you still answer for its review and merges.
-1. **Deploy:** brief managers from accepted project tasks, or a Lead-prepared dispatch queue; do not invent scope.
+1. **Deploy:** brief managers from accepted project tasks; do not invent scope.
 2. **Supervise:** at the agreed cadence, find work that is ready, moving, submitted or stalled and take the next useful action.
 3. **Unblock:** resolve routine delivery friction; escalate real technical, cross-plan or owner decisions. Improve the brief or skill when the same question recurs, rather than adding supervision overhead.
 
 **You answer for your lane.** In a lane, you are the one [accountable agent](../shared/run-contract.md#who-answers-for-a-run) for every plan run in it, in either option, and you answer to the owner. Your managers and packet sessions are bounded delegates. Outside a lane, if you host the manager, you answer for the run too: when Codex runs the project inside your session, you are its accountable agent, not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
-**Across a release, the [Release Lead](leader.md) owns the release,** and [chooses your lane and your route](leader.md#divide-the-release-into-lanes). An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
+**Across a release, the [Release Lead](leader.md) owns the release,** and proposes lanes with the owner, who chooses them, and [sets your route](leader.md#divide-the-release-into-lanes). An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
 
 **You orchestrate; the manager manages.** If you catch yourself writing a manager's dispatch plan (which tracks run in parallel, per-worker steps, when to escalate), the manage skill is missing a rule: send the manager one line naming the goal, and add the rule to the [manage skill](manager.md) by PR.
 
@@ -42,7 +42,7 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 | The owner wants regular updates on a run | 3. Check in |
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
-**Report and check in as the run contract's [coordination rules](../shared/run-contract.md#coordination-boards-and-check-ins) say.** **Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
+**Report and check in as the run contract's [coordination rules](../shared/run-contract.md#coordination-boards-and-check-ins) say.** **Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the lane board's STATUS records handoffs, not a second task history.
 
 **A queue is yours to keep moving.** For an ordered queue (phases of a plan, or several projects):
 - **Prepare the next item before the current one ends:** its cards re-planned against what just landed, and its start message (outside a lane, its `Run start` line too).
