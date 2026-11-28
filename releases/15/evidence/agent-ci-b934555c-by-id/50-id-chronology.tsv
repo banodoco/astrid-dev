@@ -1,0 +1,51 @@
+test_id	edfc2dc9	23ace564	89768ef9	b934555c	first_failure
+tests/core/generation/test_readiness_missing_models.py::test_defaults_is_ready_once_the_files_are_listed	YES	no	YES	YES	edfc2dc9
+tests/core/generation/test_readiness_missing_models.py::test_list_and_defaults_agree_when_files_are_missing	YES	no	YES	YES	edfc2dc9
+tests/integrations/test_managed_media_saved_visualize.py::test_saved_revision_with_managed_media_visualizes_a_frame	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_remotion_render_contract.py::RemotionTypecheckSmokeTest::test_remotion_typecheck_when_dependencies_present	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[0-None]	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-0]	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-4294967296]	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-None]	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_timeline_visualize_motion_views.py::test_a_real_v6_push_comes_from_the_element	YES	YES	YES	YES	edfc2dc9
+tests/packs/rendering/test_timeline_visualize_motion_views.py::test_the_fallback_mirror_still_matches_the_element_on_v6_pushes	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='editorial')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='fal')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='foley')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='moirae')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='understanding')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='video_editing')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds SUBFAILED(pack='youtube')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='editorial')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='fal')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='foley')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='moirae')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='understanding')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='video_editing')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk SUBFAILED(pack='youtube')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.editorial.actions.boundary_candidates.run', parser_path=(), dest='kind')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.editorial.actions.transcribe.run', parser_path=(), dest='diarize')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.foley.actions.foley_map.run', parser_path=(), dest='stop_after')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.rendering.actions.sprite_sheet.run', parser_path=(), dest='ai_upscale_provider')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.audio_understand.run', parser_path=(), dest='audition_reel')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.audio_understand.run', parser_path=(), dest='mode')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.understand.run', parser_path=(), dest='mode')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.video_understand.run', parser_path=(), dest='mode')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.visual_understand.run', parser_path=(), dest='detail')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.understanding.actions.visual_understand.run', parser_path=(), dest='mode')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.cut.run', parser_path=(), dest='renderer')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.logo_ideas.run', parser_path=(), dest='output_format')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.logo_ideas.run', parser_path=(), dest='provider')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='output_format')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='quality')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='reference_mode')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='visual_mode')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.vary_grid.run', parser_path=(), dest='output_format')	YES	YES	YES	YES	edfc2dc9
+tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices SUBFAILED(module='astrid.packs.video_editing.actions.vary_grid.run', parser_path=(), dest='quality')	YES	YES	YES	YES	edfc2dc9
+tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[interrupted]	YES	YES	YES	YES	edfc2dc9
+tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[stale]	YES	YES	YES	YES	edfc2dc9
+tests/test_core_pack_boundary_guard.py::test_core_pack_boundary_ratchet_holds	YES	YES	YES	YES	edfc2dc9
+tests/test_pinokio_platform_adapter.py::test_cli_help_and_local_receipt_is_never_hosted	YES	YES	YES	YES	edfc2dc9
+tests/test_pinokio_platform_adapter.py::test_real_local_start_http_readiness_snapshot_stop_and_port_free	YES	YES	YES	YES	edfc2dc9
+tests/test_provider_route_grant.py::test_provider_route_grant_reads_runtime_nested_task_inputs	YES	YES	YES	YES	edfc2dc9
+tests/test_provider_route_grant.py::test_provider_run_requires_explicit_grant	YES	YES	YES	YES	edfc2dc9
