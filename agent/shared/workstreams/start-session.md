@@ -59,7 +59,7 @@ A new session, or a launch line ready to hand over, that is set up for its role,
 
    Anything that should survive a replacement goes in the brief, never in the launch line. The orchestrator's sign-off name (`<lane>-orchestrator`) and "open the board first, then post one STATUS" are brief content. A replacement session started with the same three parts loses nothing.
 
-5. **Set the check-in.** A Lead, orchestrator or manager sets its own hourly check-in; a worker, chat or reviewer sets none ([run contract](../run-contract.md#coordination-boards-and-check-ins)). The new long-running session sets it with its host's scheduler, following that scheduler's own guidance on which minute to use, checks that it fires, and names it in its first STATUS:
+5. **Set the check-in.** A Lead, orchestrator or manager sets its own hourly check-in; a worker, chat or reviewer sets none ([run contract](../run-contract.md#coordination-boards-and-check-ins)). The new long-running session sets it before its first STATUS, with its host's scheduler, following that scheduler's own guidance on which minute to use, checks that it fires, and names it in its first STATUS:
    - Claude: `/loop` or a scheduled task.
    - Codex app: its automation tool.
 

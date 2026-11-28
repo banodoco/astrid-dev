@@ -28,7 +28,7 @@ The [Lead responsibilities](../leader.md) continue to apply. The plan level (pac
 
 ## 1. Propose two or three groupings
 
-Post the proposal on the run board and tell the owner. Offer two or three genuinely different groupings, not one grouping with variants. For each:
+Post the proposal on the Lead board (`board: release <N> lead`) and tell the owner. Offer two or three genuinely different groupings, not one grouping with variants: at least one option puts some plan in a different lane, not only merges or splits lanes. For each:
 
 - **Which plans go together and in what order**, and which run alone and why (use the [lane rules](../leader.md#divide-the-release-into-lanes));
 - **How each lane runs**, `hosted` or `packets` ([how it runs](#how-it-runs)), and the **orchestrator's route** (X or S);
