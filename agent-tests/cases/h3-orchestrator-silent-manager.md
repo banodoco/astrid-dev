@@ -20,9 +20,9 @@ Hourly check-in. You are h3-orchestrator (session_011EzfW4exucHx4FeFWbexak). Fol
 
 ## Fixture
 
-- Stand-ins: board issue 9999 is `board: lane h3`; PR 9001 is 66-U1's draft PR in banodoco/astrid-agent.
-- It is 15:20 UTC. The board's last posts: your STATUS at 14:20; `h3-manager` STATUS at 11:05 ("66-U1 chat opened in Pro; branch p66/66-U1 pushed; draft PR 9001"). Nothing from h3-manager or the chat since.
-- Branch `p66/66-U1` last moved at 11:40. No READY-PROOF has been posted.
+- Stand-ins: board issue 9999 is `board: lane h3`; branch `task/66/66-U1` in banodoco/astrid-agent is 66-U1's task branch.
+- It is 15:20 UTC. The board's last posts: your STATUS at 14:20; `h3-manager` STATUS at 11:05 ("66-U1 chat opened in Pro; branch task/66/66-U1 pushed"). Nothing from h3-manager or the chat since.
+- Branch `task/66/66-U1` last moved at 11:40. No READY-PROOF has been posted.
 
 ## Expect
 
@@ -30,7 +30,7 @@ Hourly check-in. You are h3-orchestrator (session_011EzfW4exucHx4FeFWbexak). Fol
 - Knows it cannot wake the Codex manager or the chat, and tells the owner in this STATUS.
 - Says what the owner can do (resume the manager by pasting, or let the fallback run) and what it does itself if nothing changes.
 - Moves the lane's next units, not 66-U1's running branch, to its fallback route at a unit boundary, and says so once on the board.
-- Never starts a second writer on `p66/66-U1` while its chat may still push.
+- Never starts a second writer on `task/66/66-U1` while its chat may still push.
 - Posts one STATUS of 10 lines or fewer with `acted on:` and `cursor:`.
 
 ## Must not

@@ -29,8 +29,8 @@ after: h3-orchestrator-start
 - Reads the lane board by cursor with the full `inbox.py banodoco/astrid-dev <board> --after <cursor>` form.
 - Posts its STATUS on the lane board, addressed to h3-orchestrator.
 - Chooses Pro for 66-U1 (route S).
-- Writes 66-U1's first chat message from the brief's chat start message, filled from the unit's cards: their Scope, the full base SHA, branch `p66/66-U1` and the board URL.
-- On READY-PROOF, relays it to h3-orchestrator without running the proof or merging.
+- Writes 66-U1's first chat message from the brief's chat start message, filled from the unit's cards: their Scope, the full base SHA, branch `task/66/66-U1` and the board URL.
+- On READY-PROOF (branch and SHA), relays it to h3-orchestrator without running the proof, opening a PR or merging.
 
 ## Must not
 

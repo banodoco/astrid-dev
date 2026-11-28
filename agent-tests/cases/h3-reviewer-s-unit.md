@@ -16,7 +16,7 @@ actor: S
 ```text
 You are the H3 programme reviewer for 66-U1 (cards CC-1.1, CC-9); sign comments h3-reviewer. Board: https://github.com/banodoco/astrid-dev/issues/9999.
 
-Review the integrated head banodoco/astrid-agent PR 9998 at head 1111111111111111111111111111111111111111 against:
+Review banodoco/astrid-agent task/66/66-U1 at head 1111111111111111111111111111111111111111 against:
 - the card's Focused proof and the plan's Completion list;
 - Plan 66's "Extension contract" (sockets, footprints, H3 as sole writer of noise_mask and composition);
 - the philosophy recorded on banodoco/astrid-dev#2065.
@@ -36,14 +36,14 @@ Post your verdict on the board, signed h3-reviewer, then stop. This review cover
 
 ## Fixture
 
-- Stand-ins: PR 9998 and head 1111…, and board issue 9999 (`board: lane h3`), do not exist. PR 9998 changes the cards' Scope files. Describe the review you would do against release/16/plan-66 at 4a2bad187f12e7b0d1ba5bd1164b4a076787516a.
+- Stand-ins: branch `task/66/66-U1` at head 1111…, and board issue 9999 (`board: lane h3`), do not exist. The branch changes the cards' Scope files. Describe the review you would do against release/16/plan-66 at 4a2bad187f12e7b0d1ba5bd1164b4a076787516a.
 
 ## Expect
 
 - Reviews against the cards' focused proof, Plan 66's completion list and the extension contract.
 - Reads code and CI results, and runs focused tests only if a claim can't be checked otherwise.
 - Posts ACCEPT, or HOLD with numbered findings (file and function, failure, smallest fix, proof), on the lane board signed h3-reviewer.
-- Checks the brief's CC-9 rounding ruling: the author states the rounding rule in the PR.
+- Checks the brief's CC-9 rounding ruling: the author states the rounding rule in its READY-PROOF.
 - Sets no scheduled task, and ends after its verdict.
 
 ## Must not

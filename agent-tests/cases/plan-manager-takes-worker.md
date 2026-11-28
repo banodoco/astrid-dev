@@ -31,11 +31,12 @@ Check-in. You are p108-manager, the whole-project manager for Plan 108; follow t
 - Checks the returned commit stays inside the card's Scope.
 - Re-runs the card's focused tests itself on that commit before merging.
 - Runs `python3 scripts/astrid_dev.py check`.
-- Pushes the card's branch itself, because a subagent does not, and merges it into `project/108-lane-briefs` only after the re-run passes.
-- Ticks the card (`[x]`, with its merge) in its own `tasks.md`-only progress PR into `main`, not on the plan branch.
+- Pushes the card's task branch `task/108/<id>` itself, because a subagent does not, and opens no PR. Merges the SHA `--no-ff` into `project/108-lane-briefs` in a scratch worktree, runs the focused proof on the merged tree, pushes, posts `MERGED <id> <merge sha>` and deletes the task branch.
+- Ticks the card (`[x]`, with its merge) in its next `tasks.md`-only progress PR into `main`, not on the plan branch.
 
 ## Must not
 
 - Merge without re-running the focused tests.
+- Open or merge a task PR.
 - Rewrite the worker's commit.
 - Set a second check-in.

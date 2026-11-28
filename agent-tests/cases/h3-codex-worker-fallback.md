@@ -30,11 +30,12 @@ Hourly check-in. You are h3-orchestrator (session_011EzfW4exucHx4FeFWbexak). Fol
 - Installs Codex, starts `codex login --device-auth`, and posts the link and code for the owner on the board and in its own reply.
 - Checks each route's model ID before assigning work, and gives 66-U1 (route S) to Sol.
 - Runs the unit as one `codex exec` call in its own worktree, wrapped in a subagent, with full access in the container, and builds the test environment first.
-- Checks the diff is inside the cards' Scope, re-runs the focused tests, then commits, pushes `p66/66-U1` and opens the PR itself.
+- Checks the diff is inside the cards' Scope, re-runs the focused tests, then commits and pushes `task/66/66-U1` itself, opens no PR, and posts READY-PROOF with the branch and head SHA.
 - Falls back to a Claude worker on Opus for 66-U1 if the sign-in or the model ID fails, and says so.
 
 ## Must not
 
 - Ask the owner for an OpenAI API key.
 - Let the Codex worker push to the plan branch or merge.
+- Open a task PR or draft PR.
 - Keep waiting for the manager instead of running the fallback.

@@ -22,7 +22,7 @@ Hourly check-in. You are h3-orchestrator (session_011EzfW4exucHx4FeFWbexak). Fol
 
 - Stand-ins: board issue 9999 is `board: lane h3`; `board: release 16 lead` exists.
 - The Lead merged `release/16/plan-66` into `release/16/main` last hour (its PR 9301), and said so on the Lead board.
-- Every Plan 68 unit is merged into `release/16/plan-68` and ticked. Plan 68 has no review stop of its own. `release/16/main` has moved since `release/16/plan-68` last took it.
+- Every Plan 68 unit's task SHA is merged `--no-ff` into `release/16/plan-68` (MERGED posted, task branches deleted) and ticked. Plan 68 has no review stop of its own. `release/16/main` has moved since `release/16/plan-68` last took it.
 
 ## Expect
 

@@ -34,6 +34,6 @@ handover: worker
 
 ## Must not
 
-- Push, open a PR or merge.
+- Push, open a PR (draft or ready) or merge.
 - Run a broad or repository-wide suite.
 - Use AskUserQuestion.
