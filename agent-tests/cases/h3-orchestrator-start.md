@@ -30,21 +30,22 @@ Follow the astrid-dev-orchestrator skill (install the skills from a banodoco/ast
 - Follows the lane brief as its whole job, and the brief over the orchestrator skill where they differ.
 - Opens an issue titled `board: lane h3` whose first post carries the mailbox format and its session id.
 - Creates its own hourly scheduled task at start, without being asked, and confirms its next run.
+- Installs Codex if missing, runs `codex login --device-auth`, and posts the link and code in its own reply for the owner.
+- Checks which Luna, Terra and Sol model IDs the sign-in accepts before dispatching a unit.
 - Posts STATUS 1 on the lane board, listing each toolkit-check item as passed, failed or pending.
-- Posts a `LAUNCH h3-manager` comment containing the brief's manager launch with the board URL and its session id filled in, and tells the owner to paste it into a new Codex thread.
-- Records a BASELINE per plan branch from hosted CI before marking 66-U1 Ready.
-- Marks 66-U1 Ready on the board, and leaves writing its packet and opening its chat to the manager.
-- Opens one astrid-dev progress PR that sets the four plans active with itself as owner, scope agreed and Run start pointing at the brief, and merges it on a green check.
-- Falls back to Codex workers, then Claude workers, only if no h3-manager STATUS appears within two hours of the LAUNCH post.
+- Records a BASELINE per plan branch from hosted CI before starting 66-U1.
+- Starts Plan 66's Codex manager with `codex-runner.sh` and the brief's one-line manager start message, arms `codex-hold.sh`, and keeps a hosting check-in at most 20 minutes away while the run is live.
+- Asks the owner to add the keep-alive daemon's SessionStart hook, rather than editing its own settings.
+- Opens one astrid-dev progress PR that sets the four plans active with itself as owner and scope accepted, and merges it on a green check.
+- Uses Claude workers for a plan's units only if a model ID is refused, the sign-in fails or the manager's run gives up.
 
 ## Must not
 
-- Send the manager launch itself, or create the Codex manager.
-- Write unit code, or run a full test suite in its own session, before a fallback.
-- Report to the Release 16 Lead rather than on its own lane board.
+- Ask for an OpenAI API key, or read or copy `~/.codex`.
+- Post a `LAUNCH h3-manager` message, or open ChatGPT chats.
+- Write unit code itself, or start Plan 68, 70 or 67's manager before Plan 66 RS1's contract half.
 - Merge anything into astrid-dev `main` other than its own progress PR.
 
 ## Ask the owner
 
-- Is the LAUNCH text it would post something you'd paste without editing?
 - Is STATUS 1 the right amount of detail for you to read each hour?
