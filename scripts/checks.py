@@ -113,16 +113,102 @@ def _active_plans_in_releases(context):
         if re.search(r"(?m)^\*\*Run route:\*\* astrid-dev-only\s*$", body):
             inputs = path.parent / 'inputs.md'
             evidence = inputs.read_text(encoding='utf-8') if inputs.is_file() else ''
-            if (not re.search(r"(?m)^\*\*Run start:\*\* .+", evidence)
-                    or 'owner-authorized' not in
-                    next((line for line in evidence.splitlines()
-                          if line.startswith('**Run start:**')), '')):
-                errors.append(f"{path.relative_to(root)}: astrid-dev-only active run requires an explicit owner-authorized Run start in inputs.md")
+            pointed = _running_lane_pointer(root, inputs.relative_to(root).as_posix(), evidence)
+            if (not pointed
+                    and (not re.search(r"(?m)^\*\*Run start:\*\* .+", evidence)
+                         or 'owner-authorized' not in
+                         next((line for line in evidence.splitlines()
+                               if line.startswith('**Run start:**')), ''))):
+                errors.append(f"{path.relative_to(root)}: astrid-dev-only active run requires an explicit owner-authorized Run start in inputs.md, or a Run start pointer to a running lane brief")
             continue
         active[path.parent.name[:2]] = path.parent.name
     briefs = [release_brief(read(root, p.relative_to(root)), strict=False)
               for p in sorted((root / 'releases').glob('[0-9]*.md')) if p.stem.isdigit()]
     return [*errors, *active_plan_errors(active, briefs)]
+
+
+LANE_BRIEF_PATH = re.compile(r"releases/[0-9]+/briefs/[a-z0-9-]+\.md")
+LANE_ACTIVE_STATES = ("prepared", "running", "paused")
+
+
+def _running_lane_pointer(root, inputs, text):
+    """True when the inputs.md Run start line links a lane brief whose State is running (contract §3, §5)."""
+    from records import is_lane_brief, lane_brief, run_start_briefs
+    for target in run_start_briefs(text, inputs):
+        brief = root / target
+        if LANE_BRIEF_PATH.fullmatch(target) and brief.is_file():
+            body = brief.read_text(encoding="utf-8")
+            if is_lane_brief(body) and lane_brief(body, target)["state"] == "running":
+                return True
+    return False
+
+
+def _lane_brief_files(root):
+    """Parsed lane briefs under releases/*/briefs/, keyed by root-relative path; files without **Lane:** are ignored."""
+    from records import is_lane_brief, lane_brief
+    briefs = {}
+    for path in sorted((root / "releases").glob("*/briefs/*.md")):
+        text = path.read_text(encoding="utf-8")
+        if is_lane_brief(text):
+            relative = path.relative_to(root).as_posix()
+            briefs[relative] = lane_brief(text, relative)
+    return briefs
+
+
+def _lane_briefs(context):
+    from records import LANE_PLAN_FILE, release_brief, run_start_briefs
+    root = context.root
+    briefs = _lane_brief_files(root)
+    errors = []
+    lanes = {}
+    active = {}
+    for relative, brief in briefs.items():
+        prefix = f"{relative}: "
+        errors.extend(prefix + message for message in brief["errors"])
+        number = Path(relative).parts[1]
+        stem = Path(relative).stem
+        lane = brief["lane"]
+        if lane and lane != stem:
+            errors.append(prefix + f"**Lane:** {lane} differs from the file name {stem}; the lane slug is the file name without .md")
+        if lane:
+            lanes.setdefault(lane, []).append(relative)
+        if brief["releases"] and str(brief["releases"][0]) != number:
+            errors.append(prefix + f"the first **Releases:** number {brief['releases'][0]} differs from the path's release {number}")
+        for row in brief["plans"]:
+            plan = row["path"]
+            if plan is None or not LANE_PLAN_FILE.fullmatch(plan) or not (root / plan).is_file():
+                errors.append(prefix + f"Plans and order row {row['label']} does not link an existing plans/<PP>-<slug>/plan.md")
+                continue
+            folder = Path(plan).parent.name
+            release = row["release"]
+            if release is not None and release not in brief["releases"]:
+                errors.append(prefix + f"{plan}: Release {release} is not in this brief's **Releases:** line")
+            if release is not None:
+                release_file = root / "releases" / f"{release}.md"
+                if not release_file.is_file():
+                    errors.append(prefix + f"{plan}: releases/{release}.md does not exist, so the plan is in no Release {release}")
+                else:
+                    included = {item["folder"] for item in release_brief(release_file.read_text(encoding="utf-8"), strict=False)["plans"]}
+                    if folder not in included:
+                        errors.append(prefix + f"{plan}: not in releases/{release}.md ## Included plans; list the plan there or fix the Release cell")
+            if brief["state"] in LANE_ACTIVE_STATES:
+                active.setdefault(folder, []).append(relative)
+            if brief["state"] in ("running", "paused"):
+                inputs = f"plans/{folder}/inputs.md"
+                inputs_file = root / inputs
+                text = inputs_file.read_text(encoding="utf-8") if inputs_file.is_file() else ""
+                if relative not in run_start_briefs(text, inputs):
+                    errors.append(prefix + f"{inputs}: the **Run start:** line must link this lane brief ({relative}) while the lane is {brief['state']}")
+    for lane, paths in sorted(lanes.items()):
+        if len(paths) > 1:
+            for relative in paths:
+                others = ", ".join(other for other in paths if other != relative)
+                errors.append(f"{relative}: lane {lane} is also in {others}; a lane slug names one brief")
+    for folder, paths in sorted(active.items()):
+        owners = sorted(set(paths))
+        if len(owners) > 1:
+            errors.append(f"plans/{folder}/plan.md: in more than one active lane brief ({', '.join(owners)}); a plan belongs to one lane")
+    return errors
 
 
 def _strategy_consistency(context):
@@ -519,6 +605,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('unique-project-numbers', 'always', 'Require unique project numbers', _unique_project_numbers),
     Check('release-documents', 'always', 'Validate release documents', _release_documents),
     Check('active-plans-in-releases', 'always', 'Require every active plan in an unpublished release brief', _active_plans_in_releases),
+    Check('lane-briefs', 'always', 'Validate lane briefs: shape, plans, releases, active lanes and Run start pointers', _lane_briefs),
     Check('strategy-consistency', 'always', 'Validate strategy structure and release kinds', _strategy_consistency),
     Check('catalog-paths', 'always', 'Validate catalog paths', _catalog_paths),
     Check('gap-structure', 'always', 'Validate gap structure', _gap_structure),

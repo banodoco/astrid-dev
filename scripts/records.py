@@ -1,6 +1,7 @@
 """Small, policy-driven readers for Astrid's Markdown and Git records."""
 from __future__ import annotations
 
+import posixpath
 import re
 import subprocess
 from pathlib import Path
@@ -463,6 +464,130 @@ def release_brief(text: str, *, strict: bool = True) -> dict:
     if strict and errors:
         raise ValueError("; ".join(errors))
     return result
+
+LANE_STATES = ("prepared", "running", "paused", "done")
+LANE_HEADER_FIELDS = ("Lane", "Releases", "State", "Go", "Orchestrator", "Reviewer", "Board")
+LANE_SECTIONS = ("Outcome", "Plans and order", "Queue", "How it runs", "Roles", "Standing rulings",
+                 "Context", "Cut line and coordination", "Owner only", "Launch", "Status")
+LANE_PLAN_COLUMNS = ["Plan", "Release", "Starts when", "Branches"]
+LANE_LABELS = ("Start.", "Dispatch.", "Proof.", "Reviews.", "Merges.", "Check-ins.")
+LANE_PLACEHOLDER = re.compile(r"<[^<>\n]+>")
+LANE_PLAN_FILE = re.compile(r"plans/[0-9]{2,}-[a-z0-9-]+/plan\.md")
+LANE_TASKS_LINK = re.compile(r"\]\([^)\s]*plans/[0-9]{2,}-[a-z0-9-]+/tasks\.md\)")
+MARKDOWN_TARGET = re.compile(r"\]\(([^)\s]+)\)")
+
+
+def lane_header(text: str) -> str:
+    return re.split(r"^## ", text, maxsplit=1, flags=re.M)[0]
+
+
+def is_lane_brief(text: str) -> bool:
+    """A file is a lane brief exactly when its header has a **Lane:** line (contract §1)."""
+    return re.search(r"^\*\*Lane:\*\*", lane_header(text), re.M) is not None
+
+
+def lane_brief(text: str, path: str) -> dict:
+    """Parse one lane brief's shape. `path` is its root-relative posix path, which resolves the Plans links.
+
+    Returns the header fields, each Plans and order row and every shape error. Cross-file rules
+    (file names, plan existence, release membership, active lanes, pointers) belong to checks.py.
+    """
+    errors: list[str] = []
+    values: dict[str, list[str]] = {}
+    for key, separator, value in key_value_lines(lane_header(text), style="bold"):
+        if separator and key in LANE_HEADER_FIELDS:
+            values.setdefault(key, []).append(value)
+    fields: dict[str, str | None] = {}
+    for key in LANE_HEADER_FIELDS:
+        found = values.get(key, [])
+        if not found:
+            errors.append(f"header **{key}:** is missing")
+            fields[key] = None
+            continue
+        if len(found) > 1:
+            errors.append(f"header **{key}:** is duplicated; keep one line")
+        value = found[0]
+        if not value:
+            errors.append(f"header **{key}:** is empty")
+        elif LANE_PLACEHOLDER.search(value):
+            errors.append(f"header **{key}:** still holds a template placeholder; write its value")
+        fields[key] = value or None
+
+    state_match = re.match(r"(prepared|running|paused|done)\b", fields["State"] or "")
+    state = state_match.group(1) if state_match else None
+    if fields["State"] and state is None:
+        errors.append("**State:** must start with prepared, running, paused or done")
+    go = fields["Go"] or ""
+    if go.startswith("Pending") and state not in (None, "prepared"):
+        errors.append(f"**Go:** is Pending while State is {state}; record the owner's go before the lane runs")
+    releases = [int(number) for number in re.findall(r"\d+", fields["Releases"] or "")]
+
+    sections: dict[str, str] = {}
+    for name in LANE_SECTIONS:
+        body = section(text, name, missing="none")
+        if body is None:
+            errors.append(f"section ## {name} is missing")
+        elif not body:
+            errors.append(f"section ## {name} is empty")
+        sections[name] = body or ""
+
+    plans = []
+    rows = [line for line in sections["Plans and order"].splitlines() if line.strip().startswith("|")]
+    if sections["Plans and order"] and not rows:
+        errors.append("## Plans and order has no table")
+    if rows:
+        if split_table_row(rows[0]) != LANE_PLAN_COLUMNS:
+            errors.append("## Plans and order: the columns must be exactly Plan | Release | Starts when | Branches")
+        if len(rows) < 2 or not re.fullmatch(r"\|(\s*-{3,}\s*\|)+", rows[1].strip()):
+            errors.append("## Plans and order: the table needs its --- separator row under the header")
+    for line in rows[2:]:
+        cells = split_table_row(line)
+        if len(cells) != 4:
+            errors.append(f"## Plans and order: a row has {len(cells)} cells, not 4: {line.strip()}")
+            continue
+        plan_cell, release_cell = cells[0], cells[1]
+        label = plan_cell or line.strip()
+        if any(LANE_PLACEHOLDER.search(cell) for cell in cells):
+            errors.append(f"## Plans and order: row {label} still holds a template placeholder")
+        targets = MARKDOWN_TARGET.findall(plan_cell)
+        plan_path = (posixpath.normpath(posixpath.join(posixpath.dirname(path), targets[0].split("#")[0]))
+                     if targets else None)
+        release = int(release_cell) if re.fullmatch(r"\d+", release_cell) else None
+        if release is None and not LANE_PLACEHOLDER.search(release_cell):
+            errors.append(f"## Plans and order: row {label} has Release {release_cell!r}, not a release number")
+        plans.append({"label": label, "path": plan_path, "release": release})
+
+    queue = sections["Queue"]
+    if queue and not LANE_TASKS_LINK.search(queue):
+        errors.append("## Queue needs at least one link to a plan's tasks.md")
+    if queue and any(line.strip().startswith("|") for line in queue.splitlines()):
+        errors.append("## Queue holds a table row; link each plan's tasks.md instead of copying it")
+
+    how = sections["How it runs"]
+    if how and not re.search(r"^\*\*Option:\*\*\s*(hosted|packets)\b", how, re.M):
+        errors.append("## How it runs needs an **Option:** line saying hosted or packets")
+    for label in LANE_LABELS:
+        if how and not re.search(rf"^- \*\*{re.escape(label)}\*\*", how, re.M):
+            errors.append(f"## How it runs has no bullet labelled **{label}**")
+
+    launch = sections["Launch"]
+    fences = re.findall(r"^```", launch, re.M)
+    blocks = re.findall(r"^```text\s*\n.*?^```\s*$", launch, re.M | re.S)
+    if launch and (len(fences) != 2 or len(blocks) != 1):
+        errors.append("## Launch needs exactly one fenced text block")
+    if LANE_PLACEHOLDER.search(launch):
+        errors.append("## Launch still holds a template placeholder; write the owner's launch line")
+
+    return {"path": path, "lane": fields["Lane"], "releases": releases, "state": state,
+            "go": fields["Go"], "plans": plans, "errors": errors}
+
+
+def run_start_briefs(text: str, path: str) -> list[str]:
+    """Root-relative paths that the first **Run start:** line of an inputs.md links to."""
+    line = next((found for found in text.splitlines() if found.startswith("**Run start:**")), "")
+    return [posixpath.normpath(posixpath.join(posixpath.dirname(path), target.split("#")[0]))
+            for target in MARKDOWN_TARGET.findall(line)]
+
 
 def priority_order(text: str | None) -> list[str]:
     return re.findall(r"^-\s+([^\s]+)\s*$", section(text or "", "Order"), re.M)

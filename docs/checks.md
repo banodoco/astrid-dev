@@ -5,6 +5,7 @@
 - `unique-project-numbers always Require unique project numbers`
 - `release-documents always Validate release documents`
 - `active-plans-in-releases always Require every active plan in an unpublished release brief`
+- `lane-briefs always Validate lane briefs: shape, plans, releases, active lanes and Run start pointers`
 - `strategy-consistency always Validate strategy structure and release kinds`
 - `catalog-paths always Validate catalog paths`
 - `gap-structure always Validate gap structure`
