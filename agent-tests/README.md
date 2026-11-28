@@ -2,7 +2,7 @@
 
 Programmatic tests check what code does. Agent tests check what a fresh session does when it is given a role's documents and one starting message: whether it finds the right skill and brief, takes the right first steps, sets its check-in, posts in the right place, pushes only what it should, runs the right tests, and hands the right text to the next session.
 
-A test is a **case**. Each case is declared in one file, and names the documents it covers and the brief it runs under. A **cheap actor** plays the role from the starting message alone and reports what it would do. A **judge** compares the report with the case's expectations. The **owner** reads a short account of what the session would do and answers the case's questions. The procedure is the [agent-test workstream](../agent/shared/workstreams/agent-test.md).
+A test is a **case**. Each case is declared in one file, and names the documents it covers and the brief it runs under. A **cheap actor** plays the role from the starting message alone and reports what it would do. A **judge** compares the report with the case's expectations. The **owner** reads a short account of what the session would do and answers the case's questions. The procedure is in [improve](../agent/shared/workstreams/improve.md#agent-tests).
 
 ## Where things live
 
@@ -61,7 +61,7 @@ The exact first message, as the role receives it.
 | `brief` | The brief the session works under, if any (a lane brief, a plan's `tasks.md`). Also part of the result's fingerprint. |
 | `host` | `claude-cloud`, `claude-subagent`, `codex-app`, `codex-in-claude` or `chatgpt-web`. Sets the role-play line. |
 | `actor` | The route that plays the role. Default `N`, the cheapest: if the cheapest model follows the documents, they are clear. |
-| `after` | A chained case: its Given contains `{upstream}`, filled with the text the upstream case's actor produced (for example the manager launch an orchestrator posted). Chains test hand-offs. |
+| `after` | A chained case: its Given contains `{upstream}`, filled with the text the upstream case's actor produced (for example the manager launch an orchestrator posted). Chains test hand-offs. Pass only the text the upstream session would hand over, not its whole report. |
 
 **Writing expectations.** Take each one from [the golden path](golden-path.md), which names the document line it rests on. A behaviour the documents don't state is not an expectation yet: fix the document first, through [improve](../agent/shared/workstreams/improve.md). Phrase each line so the report can show it, for example "posts its first STATUS on `board: lane h3`", not "communicates well".
 
@@ -69,7 +69,7 @@ The exact first message, as the role receives it.
 
 A result records the date, verdict, the actor's and judge's models, the commit, and a digest of every covered file and the brief. `agent-test status` reports each case as `never run`, `stale` (a covered file changed since), `fail` or `pass`.
 
-A miss has one of three causes, which the judge names:
+The person running the tests does not fix misses one by one: they group them by cause, name the parent idea behind each group, and fix that ([synthesize, don't react](../agent/shared/workstreams/improve.md#synthesize-dont-react)). A miss has one of three causes, which the judge names:
 - **doc-gap:** the documents are missing, wrong or contradictory. Fix the document, then re-run.
 - **actor-error:** the documents were clear. Note it; re-run once on the next route up if it repeats.
 - **ambiguity:** only the owner can decide. Ask, record the answer in its one home, then re-run.

@@ -1,5 +1,5 @@
 ---
-description: Change astrid-dev itself, whether a rule, term, skill, template, check or generated page: start from a recorded failure, change the one home, prove it and record the fix.
+description: Change astrid-dev itself, whether a rule, term, skill, template, check or generated page: start from a recorded failure, change the one home, prove it with checks and agent tests, and record the fix.
 skill: true
 ---
 
@@ -7,7 +7,7 @@ skill: true
 
 ## When to use
 
-When changing an Astrid Dev rule, term, skill, template, check or generated document.
+When changing an Astrid Dev rule, term, skill, template, check or generated document; when auditing them; or when testing that a role's documents make a fresh session do the right thing.
 
 ## Outcome
 
@@ -59,9 +59,39 @@ Enter through [astrid-dev](../../start.md). Words follow the [glossary](../gloss
 3. If you add words, cut as many.
 4. Change what a check accepts, or add a check, in a separate, announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../run-contract.md#checks-and-failure-repair).
 5. Prove it. Run `python3 scripts/astrid_dev.py check`; the tests of what you touched (`python3 -m unittest discover -s scripts -p "test_<file>.py"`); and `sync` if a generated page changed. `check` confirms that a linked file exists and (`link-anchors`) that a `#heading` link into a skill, template or top-level doc names an existing heading. A pull request is checked with `check --base <base commit> --body-file /dev/null`.
-   For a change to a role, workstream, start message or brief, also run the [agent tests](agent-test.md) that cover it (`agent-test status` lists them) and commit their results; a changed document with no case gets one.
+   For a change to a role, workstream, start message or brief, also run the [agent tests](#agent-tests) that cover it (`agent-test status` lists them) and commit their results; a changed document with no case gets one.
 6. Add a `fix` entry to the process ledger that ends `Follows: <entry it resolves>`.
 
 ## Audit
 
 Run it when a process ledger entry from a run names friction in the skills, or the owner asks; never on a schedule. `N` helpers each map one area read-only: a skill, a guide, the templates. One high-judgment critic then verifies their claims against the code and judges them. The output is ledger entries and at most one proposal, not edits.
+
+## Agent tests
+
+An agent test checks that a fresh session, given a role's documents and one starting message, does what the [golden path](../../../agent-tests/golden-path.md) says. The format is in [agent-tests/README.md](../../../agent-tests/README.md). Run them when a covered document, brief or start message changes, before a lane launches, and as an audit. An audit's inventories feed the golden path.
+
+1. **Pick the cases.** `python3 scripts/astrid_dev.py agent-test status` and `coverage`. Run every case that covers a changed file, and every case after it in a chain.
+2. **Prepare a checkout** of the documents under test, at the PR's head, with `agent-tests/` removed so the actor can't read the cases. The actor reads only that.
+3. **Run the actor.** `agent-test prompt <case> --checkout <path>` prints its prompt. Give that text, unchanged, to a fresh subagent on the case's route (N: Haiku), read-only. Never show the actor the case file, its Expect lines or an earlier report. For a chained case, pass the upstream actor's text with `--upstream <file>`.
+4. **Judge.** `agent-test judge <case> --report <file>` prints the judge's prompt. Give it to a separate high-judgment session ([routing](../run-contract.md#routing-and-bindings)), never the author of the change.
+5. **Synthesize before fixing** ([below](#synthesize-dont-react)). Then **fix and re-run.** Each parent fix lands at its home through the [steps](#steps) above. Re-run the actor on the fixed documents until the case passes or only owner questions remain. Don't edit a case's Expect lines to get a pass; a wrong expectation is fixed in the [golden path](../../../agent-tests/golden-path.md) first, with its source.
+6. **Record.** `agent-test record <case> --verdict <file> --actor-model <model> --judge-model <model>` writes `agent-tests/results/<case>.md`. Commit it with the change.
+7. **Owner.** Post each case's walkthrough and its Ask-the-owner questions on the PR, and record the answers where they belong.
+
+Run independent cases side by side; run a chain in order.
+
+### Synthesize, don't react
+
+A run's findings are evidence about the documents, not a to-do list. Thirty misses answered one by one become thirty patches and a longer, less coherent skill. The person running the tests reads them for causes:
+
+1. **Group by cause, not by symptom.** Gather the misses from every case and every level before fixing any. Misses in different roles often share one cause.
+2. **Name each group's kind.**
+   - **Structural:** a fact has two homes, or none.
+   - **Precedence:** two documents both apply and neither says which wins.
+   - **Missing parent idea:** many specific rules exist because one general rule was never written.
+   - **Sequence or priority:** the right steps, in an order or with a weight that misleads.
+   - **Wording:** one document, unclear.
+3. **State the parent idea for each group,** as one sentence a fresh session could apply to cases nobody listed. Prefer the parent that lets you delete specific rules ([subtract before adding](../../../docs/contribution-design-principles.md#the-principles)).
+4. **Write it as a pyramid.** Lead with the governing thought. Under it, the few parent ideas, ranked by consequence times likelihood. Under each, only the findings it settles, as evidence. A finding no parent explains is the only kind fixed on its own.
+5. **Fix the parents, then re-run.** A parent fix is right when re-running the same cases clears its whole group. Misses that survive point to a different parent.
+6. **Bring the owner the pyramid,** not the list: the governing thought, the parent ideas with the choice each needs, and what each removes.
